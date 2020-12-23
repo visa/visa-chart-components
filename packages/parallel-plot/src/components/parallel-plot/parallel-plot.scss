@@ -1,0 +1,108 @@
+/**
+* Copyright (c) 2020 Visa, Inc.
+*
+* This source code is licensed under the MIT license
+* https://github.com/visa/visa-chart-components/blob/master/LICENSE
+*
+**/
+parallel-plot {
+  .annotations {
+    pointer-events: none;
+    .handle {
+      pointer-events: all;
+    }
+  }
+
+  .screen-reader-info {
+    position: absolute;
+    left: -9999px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .data-table-link {
+    color: #767676;
+    text-decoration: none;
+    font-size: 12px;
+    margin-left: 5%;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  cursor: default;
+  .axis {
+    font-size: 12px;
+    text {
+      //font: 0.65rem;
+      fill: #767676;
+    }
+
+    &-label {
+      text-anchor: middle;
+      font: 1rem sans-serif;
+    }
+    path {
+      stroke: #767676;
+    }
+  }
+
+  .grid {
+    line {
+      stroke: #767676;
+      shape-rendering: crispEdges;
+    }
+
+    path {
+      stroke-width: 0;
+      stroke: #767676;
+    }
+    &.left {
+      line {
+        stroke-dasharray: 4, 4;
+        stroke-opacity: 0.6;
+      }
+    }
+  }
+
+  .parallel-group {
+    transition: opacity 0.5s linear;
+
+    &__inactive {
+      opacity: 0;
+    }
+
+    .parallel-plot {
+      fill: none;
+    }
+
+    .dot {
+      stroke: #ffffff;
+    }
+    .parallel-series-label {
+      font-size: 1em;
+    }
+  }
+
+  .parallel-dataLabel-group {
+    text {
+      //font-size: 12px;
+    }
+  }
+
+  .parallel-legend {
+    font-size: 1em;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+
+    .legend {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+    }
+  }
+}

@@ -1,0 +1,6899 @@
+[
+  {
+    "Zip": "93001",
+    "County": "Santa Barbara",
+    "Metric 1": 32.247775432231876,
+    "Metric 2": -0.2648472707119051,
+    "MSA Name": "Oxnard-Thousand Oaks-Ventura, CA"
+  },
+  {
+    "Zip": "93003",
+    "County": "Ventura",
+    "Metric 1": 18.58051619827758,
+    "Metric 2": 5.060347013369352,
+    "MSA Name": "Oxnard-Thousand Oaks-Ventura, CA"
+  },
+  {
+    "Zip": "93004",
+    "County": "Ventura",
+    "Metric 1": 1.398819826697094,
+    "Metric 2": 2.752383259774641,
+    "MSA Name": "Oxnard-Thousand Oaks-Ventura, CA"
+  },
+  {
+    "Zip": "93010",
+    "County": "Ventura",
+    "Metric 1": 10.111194249127493,
+    "Metric 2": 2.0152412293433217,
+    "MSA Name": "Oxnard-Thousand Oaks-Ventura, CA"
+  },
+  {
+    "Zip": "93012",
+    "County": "Ventura",
+    "Metric 1": 21.678059832845648,
+    "Metric 2": 3.2278095012328736,
+    "MSA Name": "Oxnard-Thousand Oaks-Ventura, CA"
+  },
+  {
+    "Zip": "93013",
+    "County": "Santa Barbara",
+    "Metric 1": 41.861756246187404,
+    "Metric 2": 4.922510037580444,
+    "MSA Name": "Santa Maria-Santa Barbara, CA"
+  },
+  {
+    "Zip": "93015",
+    "County": "Ventura",
+    "Metric 1": 36.216760381357375,
+    "Metric 2": 4.318432949548114,
+    "MSA Name": "Oxnard-Thousand Oaks-Ventura, CA"
+  },
+  {
+    "Zip": "93021",
+    "County": "Ventura",
+    "Metric 1": 23.25308194944688,
+    "Metric 2": 3.573031719436952,
+    "MSA Name": "Oxnard-Thousand Oaks-Ventura, CA"
+  },
+  {
+    "Zip": "93022",
+    "County": "Ventura",
+    "Metric 1": 36.58541883210658,
+    "Metric 2": 3.4451290516150164,
+    "MSA Name": "Oxnard-Thousand Oaks-Ventura, CA"
+  },
+  {
+    "Zip": "93023",
+    "County": "Santa Barbara",
+    "Metric 1": 47.04811595860083,
+    "Metric 2": 1.9735507937088936,
+    "MSA Name": "Oxnard-Thousand Oaks-Ventura, CA"
+  },
+  {
+    "Zip": "93030",
+    "County": "Ventura",
+    "Metric 1": 31.503453571795824,
+    "Metric 2": 1.0036171249062513,
+    "MSA Name": "Oxnard-Thousand Oaks-Ventura, CA"
+  },
+  {
+    "Zip": "93033",
+    "County": "Ventura",
+    "Metric 1": 24.38545890974616,
+    "Metric 2": 4.622189413450371,
+    "MSA Name": "Oxnard-Thousand Oaks-Ventura, CA"
+  },
+  {
+    "Zip": "93035",
+    "County": "Ventura",
+    "Metric 1": 23.0361716944551,
+    "Metric 2": 2.0893752559179664,
+    "MSA Name": "Oxnard-Thousand Oaks-Ventura, CA"
+  },
+  {
+    "Zip": "93036",
+    "County": "Ventura",
+    "Metric 1": 40.50388140465079,
+    "Metric 2": 0.7113476656690461,
+    "MSA Name": "Oxnard-Thousand Oaks-Ventura, CA"
+  },
+  {
+    "Zip": "93040",
+    "County": "Los Angeles",
+    "Metric 1": 22.682874117877088,
+    "Metric 2": 0.7283764279159889,
+    "MSA Name": "Oxnard-Thousand Oaks-Ventura, CA"
+  },
+  {
+    "Zip": "93041",
+    "County": "Ventura",
+    "Metric 1": -5.153178484755154,
+    "Metric 2": 4.020595124676945,
+    "MSA Name": "Oxnard-Thousand Oaks-Ventura, CA"
+  },
+  {
+    "Zip": "93042",
+    "County": "Ventura",
+    "Metric 1": 17.69873733574334,
+    "Metric 2": 5.218725916204198,
+    "MSA Name": "Oxnard-Thousand Oaks-Ventura, CA"
+  },
+  {
+    "Zip": "93043",
+    "County": "Ventura",
+    "Metric 1": 40.63053228135421,
+    "Metric 2": 0.9820313852040219,
+    "MSA Name": "Oxnard-Thousand Oaks-Ventura, CA"
+  },
+  {
+    "Zip": "93060",
+    "County": "Ventura",
+    "Metric 1": -2.975371548317242,
+    "Metric 2": -0.06528641473525942,
+    "MSA Name": "Oxnard-Thousand Oaks-Ventura, CA"
+  },
+  {
+    "Zip": "93063",
+    "County": "Los Angeles",
+    "Metric 1": 33.68794222877256,
+    "Metric 2": 4.394411278186688,
+    "MSA Name": "Oxnard-Thousand Oaks-Ventura, CA"
+  },
+  {
+    "Zip": "93064",
+    "County": "Ventura",
+    "Metric 1": 31.725916381603675,
+    "Metric 2": 0.24917411012280524,
+    "MSA Name": "Oxnard-Thousand Oaks-Ventura, CA"
+  },
+  {
+    "Zip": "93065",
+    "County": "Ventura",
+    "Metric 1": 29.539895865200982,
+    "Metric 2": -0.08676963571422558,
+    "MSA Name": "Oxnard-Thousand Oaks-Ventura, CA"
+  },
+  {
+    "Zip": "93066",
+    "County": "Ventura",
+    "Metric 1": 11.42605340702966,
+    "Metric 2": -0.2862178771082716,
+    "MSA Name": "Oxnard-Thousand Oaks-Ventura, CA"
+  },
+  {
+    "Zip": "93067",
+    "County": "Santa Barbara",
+    "Metric 1": -3.707689036706743,
+    "Metric 2": 1.7025833070587026,
+    "MSA Name": "Santa Maria-Santa Barbara, CA"
+  },
+  {
+    "Zip": "93101",
+    "County": "Santa Barbara",
+    "Metric 1": 23.746667848114036,
+    "Metric 2": -0.18082526355138767,
+    "MSA Name": "Santa Maria-Santa Barbara, CA"
+  },
+  {
+    "Zip": "93103",
+    "County": "Santa Barbara",
+    "Metric 1": 30.020130331845234,
+    "Metric 2": -0.3358652941222978,
+    "MSA Name": "Santa Maria-Santa Barbara, CA"
+  },
+  {
+    "Zip": "93105",
+    "County": "Santa Barbara",
+    "Metric 1": 4.592467214592867,
+    "Metric 2": 0.215329203253566,
+    "MSA Name": "Santa Maria-Santa Barbara, CA"
+  },
+  {
+    "Zip": "93108",
+    "County": "Santa Barbara",
+    "Metric 1": 2.9186078716156234,
+    "Metric 2": 3.7169968955029153,
+    "MSA Name": "Santa Maria-Santa Barbara, CA"
+  },
+  {
+    "Zip": "93109",
+    "County": "Santa Barbara",
+    "Metric 1": 28.447056468065625,
+    "Metric 2": -0.21001348836939443,
+    "MSA Name": "Santa Maria-Santa Barbara, CA"
+  },
+  {
+    "Zip": "93110",
+    "County": "Santa Barbara",
+    "Metric 1": 22.784424106079015,
+    "Metric 2": 4.363034373463651,
+    "MSA Name": "Santa Maria-Santa Barbara, CA"
+  },
+  {
+    "Zip": "93111",
+    "County": "Santa Barbara",
+    "Metric 1": 10.943185989226448,
+    "Metric 2": 1.5929712817930375,
+    "MSA Name": "Santa Maria-Santa Barbara, CA"
+  },
+  {
+    "Zip": "93117",
+    "County": "Santa Barbara",
+    "Metric 1": 3.9352314677753486,
+    "Metric 2": 1.5048537947696299,
+    "MSA Name": "Santa Maria-Santa Barbara, CA"
+  },
+  {
+    "Zip": "93201",
+    "County": "Kern",
+    "Metric 1": 14.889720077995236,
+    "Metric 2": 0.09678623641046713,
+    "MSA Name": "Visalia-Porterville, CA"
+  },
+  {
+    "Zip": "93202",
+    "County": "Kings",
+    "Metric 1": 54.27426211265725,
+    "Metric 2": 4.116131457020453,
+    "MSA Name": "Hanford-Corcoran, CA"
+  },
+  {
+    "Zip": "93203",
+    "County": "Kern",
+    "Metric 1": 5.393023074081659,
+    "Metric 2": 1.8837493675336443,
+    "MSA Name": "Bakersfield, CA"
+  },
+  {
+    "Zip": "93204",
+    "County": "Fresno",
+    "Metric 1": 34.976786231050184,
+    "Metric 2": 0.9704455989511046,
+    "MSA Name": "Hanford-Corcoran, CA"
+  },
+  {
+    "Zip": "93205",
+    "County": "Kern",
+    "Metric 1": 24.426107126875188,
+    "Metric 2": 1.8419876353464861,
+    "MSA Name": "Bakersfield, CA"
+  },
+  {
+    "Zip": "93206",
+    "County": "Kern",
+    "Metric 1": 18.521275677861265,
+    "Metric 2": 4.757360967631328,
+    "MSA Name": "Bakersfield, CA"
+  },
+  {
+    "Zip": "93207",
+    "County": "Tulare",
+    "Metric 1": 4.888279834826241,
+    "Metric 2": 0.34450004308550286,
+    "MSA Name": "Visalia-Porterville, CA"
+  },
+  {
+    "Zip": "93208",
+    "County": "Tulare",
+    "Metric 1": 22.0605221390882,
+    "Metric 2": 0.5588104115274597,
+    "MSA Name": "Visalia-Porterville, CA"
+  },
+  {
+    "Zip": "93210",
+    "County": "Fresno",
+    "Metric 1": 36.863839483261664,
+    "Metric 2": 5.166304469601341,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93212",
+    "County": "Kings",
+    "Metric 1": 9.130288144005089,
+    "Metric 2": 2.2661274481052125,
+    "MSA Name": "Hanford-Corcoran, CA"
+  },
+  {
+    "Zip": "93215",
+    "County": "Kern",
+    "Metric 1": -2.588700129949152,
+    "Metric 2": 1.1479312924080842,
+    "MSA Name": "Bakersfield, CA"
+  },
+  {
+    "Zip": "93218",
+    "County": "Tulare",
+    "Metric 1": 7.263346653703835,
+    "Metric 2": 3.2495847018513535,
+    "MSA Name": "Visalia-Porterville, CA"
+  },
+  {
+    "Zip": "93219",
+    "County": "Kern",
+    "Metric 1": -8.848702717052259,
+    "Metric 2": 3.8054451870806916,
+    "MSA Name": "Visalia-Porterville, CA"
+  },
+  {
+    "Zip": "93220",
+    "County": "Kern",
+    "Metric 1": 33.850660354492696,
+    "Metric 2": 2.8455145031659668,
+    "MSA Name": "Bakersfield, CA"
+  },
+  {
+    "Zip": "93221",
+    "County": "Tulare",
+    "Metric 1": 37.52395616997154,
+    "Metric 2": 0.0021746943956321707,
+    "MSA Name": "Visalia-Porterville, CA"
+  },
+  {
+    "Zip": "93222",
+    "County": "Kern",
+    "Metric 1": 1.581995572291343,
+    "Metric 2": 0.6450731297006274,
+    "MSA Name": "Bakersfield, CA"
+  },
+  {
+    "Zip": "93223",
+    "County": "Tulare",
+    "Metric 1": 47.57135134249344,
+    "Metric 2": 2.847110298915049,
+    "MSA Name": "Visalia-Porterville, CA"
+  },
+  {
+    "Zip": "93224",
+    "County": "Kern",
+    "Metric 1": -2.078861471234568,
+    "Metric 2": 4.287278649496607,
+    "MSA Name": "Bakersfield, CA"
+  },
+  {
+    "Zip": "93225",
+    "County": "Kern",
+    "Metric 1": 30.517976599968666,
+    "Metric 2": 2.615616157889702,
+    "MSA Name": "Bakersfield, CA"
+  },
+  {
+    "Zip": "93226",
+    "County": "Kern",
+    "Metric 1": 12.023065886799285,
+    "Metric 2": 4.376061504363987,
+    "MSA Name": "Bakersfield, CA"
+  },
+  {
+    "Zip": "93230",
+    "County": "Fresno",
+    "Metric 1": 23.38670267166912,
+    "Metric 2": 0.7798200425358813,
+    "MSA Name": "Hanford-Corcoran, CA"
+  },
+  {
+    "Zip": "93234",
+    "County": "Fresno",
+    "Metric 1": -5.235562422727816,
+    "Metric 2": 4.473340497335584,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93235",
+    "County": "Tulare",
+    "Metric 1": 26.35506351179083,
+    "Metric 2": 0.5414693003789363,
+    "MSA Name": "Visalia-Porterville, CA"
+  },
+  {
+    "Zip": "93238",
+    "County": "Kern",
+    "Metric 1": 3.8224855669745263,
+    "Metric 2": 1.8926541726788986,
+    "MSA Name": "Bakersfield, CA"
+  },
+  {
+    "Zip": "93239",
+    "County": "Fresno",
+    "Metric 1": 38.84060798947974,
+    "Metric 2": 0.9045842069143579,
+    "MSA Name": "Hanford-Corcoran, CA"
+  },
+  {
+    "Zip": "93240",
+    "County": "Kern",
+    "Metric 1": 28.75386231490127,
+    "Metric 2": 3.8625592628529404,
+    "MSA Name": "Bakersfield, CA"
+  },
+  {
+    "Zip": "93241",
+    "County": "Kern",
+    "Metric 1": 35.129917084052295,
+    "Metric 2": 4.131422826926188,
+    "MSA Name": "Bakersfield, CA"
+  },
+  {
+    "Zip": "93242",
+    "County": "Fresno",
+    "Metric 1": 9.930085074011059,
+    "Metric 2": 0.7205633361727817,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93243",
+    "County": "Kern",
+    "Metric 1": 6.91338426639301,
+    "Metric 2": 0.009653727748809432,
+    "MSA Name": "Bakersfield, CA"
+  },
+  {
+    "Zip": "93244",
+    "County": "Tulare",
+    "Metric 1": 5.3742804732636955,
+    "Metric 2": 3.914155470836138,
+    "MSA Name": "Visalia-Porterville, CA"
+  },
+  {
+    "Zip": "93245",
+    "County": "Kings",
+    "Metric 1": -2.0143615863538855,
+    "Metric 2": 0.94777411996816,
+    "MSA Name": "Hanford-Corcoran, CA"
+  },
+  {
+    "Zip": "93247",
+    "County": "Tulare",
+    "Metric 1": 23.977586089431902,
+    "Metric 2": 0.12167613907220803,
+    "MSA Name": "Visalia-Porterville, CA"
+  },
+  {
+    "Zip": "93249",
+    "County": "Kern",
+    "Metric 1": 25.028076722342295,
+    "Metric 2": 4.471526395120773,
+    "MSA Name": "Bakersfield, CA"
+  },
+  {
+    "Zip": "93250",
+    "County": "Kern",
+    "Metric 1": 37.41568220931623,
+    "Metric 2": -0.5836277231314634,
+    "MSA Name": "Bakersfield, CA"
+  },
+  {
+    "Zip": "93251",
+    "County": "Kern",
+    "Metric 1": 10.798763426930435,
+    "Metric 2": 1.2813117498683138,
+    "MSA Name": "Bakersfield, CA"
+  },
+  {
+    "Zip": "93252",
+    "County": "Kern",
+    "Metric 1": 38.31979841807782,
+    "Metric 2": 3.393712442282224,
+    "MSA Name": "Bakersfield, CA"
+  },
+  {
+    "Zip": "93254",
+    "County": "San Luis Obispo",
+    "Metric 1": 7.025610843935641,
+    "Metric 2": 0.12046089106821672,
+    "MSA Name": "Santa Maria-Santa Barbara, CA"
+  },
+  {
+    "Zip": "93255",
+    "County": "Kern",
+    "Metric 1": 14.56490150953309,
+    "Metric 2": 0.515897729260904,
+    "MSA Name": "Bakersfield, CA"
+  },
+  {
+    "Zip": "93256",
+    "County": "Tulare",
+    "Metric 1": 2.4261735868330385,
+    "Metric 2": 1.3340369686733737,
+    "MSA Name": "Visalia-Porterville, CA"
+  },
+  {
+    "Zip": "93257",
+    "County": "Kern",
+    "Metric 1": 9.998106335179806,
+    "Metric 2": 0.2378946500078806,
+    "MSA Name": "Visalia-Porterville, CA"
+  },
+  {
+    "Zip": "93258",
+    "County": "Tulare",
+    "Metric 1": 16.866978308523976,
+    "Metric 2": 4.745287373972424,
+    "MSA Name": "Visalia-Porterville, CA"
+  },
+  {
+    "Zip": "93260",
+    "County": "Kern",
+    "Metric 1": 12.159035890835991,
+    "Metric 2": 1.8051812587982885,
+    "MSA Name": "Visalia-Porterville, CA"
+  },
+  {
+    "Zip": "93261",
+    "County": "Tulare",
+    "Metric 1": 39.429478963789975,
+    "Metric 2": 4.01441541442477,
+    "MSA Name": "Visalia-Porterville, CA"
+  },
+  {
+    "Zip": "93262",
+    "County": "Tulare",
+    "Metric 1": 24.71890294604545,
+    "Metric 2": 3.3802285298941843,
+    "MSA Name": "Visalia-Porterville, CA"
+  },
+  {
+    "Zip": "93263",
+    "County": "Kern",
+    "Metric 1": 17.80874153577642,
+    "Metric 2": 2.1736263482333262,
+    "MSA Name": "Bakersfield, CA"
+  },
+  {
+    "Zip": "93265",
+    "County": "Tulare",
+    "Metric 1": 16.191581007676632,
+    "Metric 2": 0.4722394129966676,
+    "MSA Name": "Visalia-Porterville, CA"
+  },
+  {
+    "Zip": "93266",
+    "County": "Fresno",
+    "Metric 1": 21.868681117721938,
+    "Metric 2": 1.5715864166341307,
+    "MSA Name": "Hanford-Corcoran, CA"
+  },
+  {
+    "Zip": "93267",
+    "County": "Tulare",
+    "Metric 1": 10.537459041216382,
+    "Metric 2": 3.122841619158585,
+    "MSA Name": "Visalia-Porterville, CA"
+  },
+  {
+    "Zip": "93268",
+    "County": "Kern",
+    "Metric 1": 24.113461829339084,
+    "Metric 2": 3.978186669187708,
+    "MSA Name": "Bakersfield, CA"
+  },
+  {
+    "Zip": "93270",
+    "County": "Tulare",
+    "Metric 1": 32.459007696622834,
+    "Metric 2": 0.8801630852956908,
+    "MSA Name": "Visalia-Porterville, CA"
+  },
+  {
+    "Zip": "93271",
+    "County": "Tulare",
+    "Metric 1": 11.480342538221247,
+    "Metric 2": 0.770682314171484,
+    "MSA Name": "Visalia-Porterville, CA"
+  },
+  {
+    "Zip": "93272",
+    "County": "Tulare",
+    "Metric 1": 3.9342286739981454,
+    "Metric 2": 4.910145317851034,
+    "MSA Name": "Visalia-Porterville, CA"
+  },
+  {
+    "Zip": "93274",
+    "County": "Kings",
+    "Metric 1": 15.457188202104627,
+    "Metric 2": 1.9356309683533386,
+    "MSA Name": "Visalia-Porterville, CA"
+  },
+  {
+    "Zip": "93276",
+    "County": "Kern",
+    "Metric 1": 44.31699484530988,
+    "Metric 2": 1.6995390171671978,
+    "MSA Name": "Bakersfield, CA"
+  },
+  {
+    "Zip": "93277",
+    "County": "Tulare",
+    "Metric 1": 46.268184413601595,
+    "Metric 2": 0.01933097914270196,
+    "MSA Name": "Visalia-Porterville, CA"
+  },
+  {
+    "Zip": "93280",
+    "County": "Kern",
+    "Metric 1": 15.180364713998657,
+    "Metric 2": 1.2802739669649128,
+    "MSA Name": "Bakersfield, CA"
+  },
+  {
+    "Zip": "93283",
+    "County": "Kern",
+    "Metric 1": 32.73646279201614,
+    "Metric 2": 1.2213092245909074,
+    "MSA Name": "Bakersfield, CA"
+  },
+  {
+    "Zip": "93285",
+    "County": "Kern",
+    "Metric 1": 25.38286112066519,
+    "Metric 2": 3.985872276920067,
+    "MSA Name": "Bakersfield, CA"
+  },
+  {
+    "Zip": "93286",
+    "County": "Tulare",
+    "Metric 1": -5.920277493728785,
+    "Metric 2": 0.24531277110419858,
+    "MSA Name": "Visalia-Porterville, CA"
+  },
+  {
+    "Zip": "93287",
+    "County": "Kern",
+    "Metric 1": 3.4311762874863496,
+    "Metric 2": 3.442656038093932,
+    "MSA Name": "Bakersfield, CA"
+  },
+  {
+    "Zip": "93291",
+    "County": "Tulare",
+    "Metric 1": 10.161685730819967,
+    "Metric 2": 0.913370131347559,
+    "MSA Name": "Visalia-Porterville, CA"
+  },
+  {
+    "Zip": "93292",
+    "County": "Tulare",
+    "Metric 1": 8.339898227422712,
+    "Metric 2": 2.664152227218884,
+    "MSA Name": "Visalia-Porterville, CA"
+  },
+  {
+    "Zip": "93301",
+    "County": "Kern",
+    "Metric 1": 29.675472061062507,
+    "Metric 2": 1.7911389699706208,
+    "MSA Name": "Bakersfield, CA"
+  },
+  {
+    "Zip": "93304",
+    "County": "Kern",
+    "Metric 1": 37.32582357456941,
+    "Metric 2": 1.5004000571616691,
+    "MSA Name": "Bakersfield, CA"
+  },
+  {
+    "Zip": "93305",
+    "County": "Kern",
+    "Metric 1": 19.742536000211864,
+    "Metric 2": 0.27618485093462813,
+    "MSA Name": "Bakersfield, CA"
+  },
+  {
+    "Zip": "93306",
+    "County": "Kern",
+    "Metric 1": 38.329245471444736,
+    "Metric 2": 2.3008880244214858,
+    "MSA Name": "Bakersfield, CA"
+  },
+  {
+    "Zip": "93307",
+    "County": "Kern",
+    "Metric 1": 15.51736542698161,
+    "Metric 2": 1.502135460776769,
+    "MSA Name": "Bakersfield, CA"
+  },
+  {
+    "Zip": "93308",
+    "County": "Kern",
+    "Metric 1": 41.24806836700186,
+    "Metric 2": 4.771544157797797,
+    "MSA Name": "Bakersfield, CA"
+  },
+  {
+    "Zip": "93309",
+    "County": "Kern",
+    "Metric 1": 29.43061096123884,
+    "Metric 2": 0.8176788630727965,
+    "MSA Name": "Bakersfield, CA"
+  },
+  {
+    "Zip": "93311",
+    "County": "Kern",
+    "Metric 1": 16.653095121125254,
+    "Metric 2": 1.1577607078321441,
+    "MSA Name": "Bakersfield, CA"
+  },
+  {
+    "Zip": "93312",
+    "County": "Kern",
+    "Metric 1": 19.542020320033604,
+    "Metric 2": 2.015044528112088,
+    "MSA Name": "Bakersfield, CA"
+  },
+  {
+    "Zip": "93313",
+    "County": "Kern",
+    "Metric 1": 1.1717872941860843,
+    "Metric 2": 5.4869523832664004,
+    "MSA Name": "Bakersfield, CA"
+  },
+  {
+    "Zip": "93314",
+    "County": "Kern",
+    "Metric 1": 18.635416527576268,
+    "Metric 2": -0.3179451842184249,
+    "MSA Name": "Bakersfield, CA"
+  },
+  {
+    "Zip": "93401",
+    "County": "San Luis Obispo",
+    "Metric 1": 10.311798276496653,
+    "Metric 2": 0.14278392696934628,
+    "MSA Name": "San Luis Obispo-Paso Robles-Arroyo Grande, CA"
+  },
+  {
+    "Zip": "93402",
+    "County": "San Luis Obispo",
+    "Metric 1": 14.412729066204621,
+    "Metric 2": 3.602083278422477,
+    "MSA Name": "San Luis Obispo-Paso Robles-Arroyo Grande, CA"
+  },
+  {
+    "Zip": "93405",
+    "County": "San Luis Obispo",
+    "Metric 1": 54.40287849579164,
+    "Metric 2": 1.236719643454727,
+    "MSA Name": "San Luis Obispo-Paso Robles-Arroyo Grande, CA"
+  },
+  {
+    "Zip": "93410",
+    "County": "San Luis Obispo",
+    "Metric 1": -4.469681923497129,
+    "Metric 2": 4.477847803827845,
+    "MSA Name": "San Luis Obispo-Paso Robles-Arroyo Grande, CA"
+  },
+  {
+    "Zip": "93420",
+    "County": "San Luis Obispo",
+    "Metric 1": 31.1803897780993,
+    "Metric 2": 4.1483223985240105,
+    "MSA Name": "San Luis Obispo-Paso Robles-Arroyo Grande, CA"
+  },
+  {
+    "Zip": "93422",
+    "County": "San Luis Obispo",
+    "Metric 1": 0.9538977508827706,
+    "Metric 2": -0.08533298646794099,
+    "MSA Name": "San Luis Obispo-Paso Robles-Arroyo Grande, CA"
+  },
+  {
+    "Zip": "93424",
+    "County": "San Luis Obispo",
+    "Metric 1": 9.369081164024331,
+    "Metric 2": 0.6279229290698469,
+    "MSA Name": "San Luis Obispo-Paso Robles-Arroyo Grande, CA"
+  },
+  {
+    "Zip": "93426",
+    "County": "Monterey",
+    "Metric 1": 49.72060163394293,
+    "Metric 2": 0.5812685988846704,
+    "MSA Name": "Salinas, CA"
+  },
+  {
+    "Zip": "93427",
+    "County": "Santa Barbara",
+    "Metric 1": 20.61720584594236,
+    "Metric 2": 4.417206120399689,
+    "MSA Name": "Santa Maria-Santa Barbara, CA"
+  },
+  {
+    "Zip": "93428",
+    "County": "San Luis Obispo",
+    "Metric 1": 13.817346410448685,
+    "Metric 2": -0.42402160873976885,
+    "MSA Name": "San Luis Obispo-Paso Robles-Arroyo Grande, CA"
+  },
+  {
+    "Zip": "93429",
+    "County": "Santa Barbara",
+    "Metric 1": 33.51926291670477,
+    "Metric 2": 3.0968193496322662,
+    "MSA Name": "Santa Maria-Santa Barbara, CA"
+  },
+  {
+    "Zip": "93430",
+    "County": "San Luis Obispo",
+    "Metric 1": 24.829982759833527,
+    "Metric 2": 0.8218121227567525,
+    "MSA Name": "San Luis Obispo-Paso Robles-Arroyo Grande, CA"
+  },
+  {
+    "Zip": "93432",
+    "County": "San Luis Obispo",
+    "Metric 1": 42.606829006677735,
+    "Metric 2": 0.9472036482933072,
+    "MSA Name": "San Luis Obispo-Paso Robles-Arroyo Grande, CA"
+  },
+  {
+    "Zip": "93433",
+    "County": "San Luis Obispo",
+    "Metric 1": 10.43433926100423,
+    "Metric 2": 1.3330426367905006,
+    "MSA Name": "San Luis Obispo-Paso Robles-Arroyo Grande, CA"
+  },
+  {
+    "Zip": "93434",
+    "County": "San Luis Obispo",
+    "Metric 1": 20.98823692630553,
+    "Metric 2": 0.742357467239143,
+    "MSA Name": "Santa Maria-Santa Barbara, CA"
+  },
+  {
+    "Zip": "93436",
+    "County": "Santa Barbara",
+    "Metric 1": 11.146198222196958,
+    "Metric 2": 2.830118003035741,
+    "MSA Name": "Santa Maria-Santa Barbara, CA"
+  },
+  {
+    "Zip": "93437",
+    "County": "Santa Barbara",
+    "Metric 1": 43.97483708331244,
+    "Metric 2": 3.5612796932152047,
+    "MSA Name": "Santa Maria-Santa Barbara, CA"
+  },
+  {
+    "Zip": "93440",
+    "County": "Santa Barbara",
+    "Metric 1": 36.20029928591134,
+    "Metric 2": 1.7229116322585625,
+    "MSA Name": "Santa Maria-Santa Barbara, CA"
+  },
+  {
+    "Zip": "93441",
+    "County": "Santa Barbara",
+    "Metric 1": 6.651861384354363,
+    "Metric 2": 0.8285424297997103,
+    "MSA Name": "Santa Maria-Santa Barbara, CA"
+  },
+  {
+    "Zip": "93442",
+    "County": "San Luis Obispo",
+    "Metric 1": 1.7498360265788562,
+    "Metric 2": 4.097266910160722,
+    "MSA Name": "San Luis Obispo-Paso Robles-Arroyo Grande, CA"
+  },
+  {
+    "Zip": "93444",
+    "County": "San Luis Obispo",
+    "Metric 1": 16.464651801035924,
+    "Metric 2": 1.0220065740128985,
+    "MSA Name": "San Luis Obispo-Paso Robles-Arroyo Grande, CA"
+  },
+  {
+    "Zip": "93445",
+    "County": "San Luis Obispo",
+    "Metric 1": 13.639727996052924,
+    "Metric 2": 0.9697586829032824,
+    "MSA Name": "San Luis Obispo-Paso Robles-Arroyo Grande, CA"
+  },
+  {
+    "Zip": "93446",
+    "County": "Monterey",
+    "Metric 1": -2.1840080652913456,
+    "Metric 2": 5.190662326632699,
+    "MSA Name": "San Luis Obispo-Paso Robles-Arroyo Grande, CA"
+  },
+  {
+    "Zip": "93449",
+    "County": "San Luis Obispo",
+    "Metric 1": -7.152426850813516,
+    "Metric 2": -0.5404754262013391,
+    "MSA Name": "San Luis Obispo-Paso Robles-Arroyo Grande, CA"
+  },
+  {
+    "Zip": "93450",
+    "County": "Fresno",
+    "Metric 1": 46.268727900551745,
+    "Metric 2": 4.806972774924431,
+    "MSA Name": "Salinas, CA"
+  },
+  {
+    "Zip": "93451",
+    "County": "Kings",
+    "Metric 1": 51.39433720988469,
+    "Metric 2": 5.076569709541681,
+    "MSA Name": "San Luis Obispo-Paso Robles-Arroyo Grande, CA"
+  },
+  {
+    "Zip": "93452",
+    "County": "San Luis Obispo",
+    "Metric 1": 19.89569889950815,
+    "Metric 2": 4.076998881425635,
+    "MSA Name": "San Luis Obispo-Paso Robles-Arroyo Grande, CA"
+  },
+  {
+    "Zip": "93453",
+    "County": "San Luis Obispo",
+    "Metric 1": 21.0124066319445,
+    "Metric 2": 2.7418593628847177,
+    "MSA Name": "San Luis Obispo-Paso Robles-Arroyo Grande, CA"
+  },
+  {
+    "Zip": "93454",
+    "County": "San Luis Obispo",
+    "Metric 1": 29.55455948689355,
+    "Metric 2": 3.703960991248567,
+    "MSA Name": "Santa Maria-Santa Barbara, CA"
+  },
+  {
+    "Zip": "93455",
+    "County": "Santa Barbara",
+    "Metric 1": 27.4740666244284,
+    "Metric 2": -0.9545876167625456,
+    "MSA Name": "Santa Maria-Santa Barbara, CA"
+  },
+  {
+    "Zip": "93458",
+    "County": "San Luis Obispo",
+    "Metric 1": 4.630753478412355,
+    "Metric 2": 1.313349997252834,
+    "MSA Name": "Santa Maria-Santa Barbara, CA"
+  },
+  {
+    "Zip": "93460",
+    "County": "Santa Barbara",
+    "Metric 1": 46.15659301838052,
+    "Metric 2": 3.2999710680034577,
+    "MSA Name": "Santa Maria-Santa Barbara, CA"
+  },
+  {
+    "Zip": "93461",
+    "County": "Kern",
+    "Metric 1": 29.001260179897958,
+    "Metric 2": 1.2045921450486972,
+    "MSA Name": "San Luis Obispo-Paso Robles-Arroyo Grande, CA"
+  },
+  {
+    "Zip": "93463",
+    "County": "Santa Barbara",
+    "Metric 1": 36.767430152498015,
+    "Metric 2": 0.9812578860279296,
+    "MSA Name": "Santa Maria-Santa Barbara, CA"
+  },
+  {
+    "Zip": "93465",
+    "County": "San Luis Obispo",
+    "Metric 1": -0.052110019517960515,
+    "Metric 2": 1.6702429480163956,
+    "MSA Name": "San Luis Obispo-Paso Robles-Arroyo Grande, CA"
+  },
+  {
+    "Zip": "93501",
+    "County": "Kern",
+    "Metric 1": 33.14577870387868,
+    "Metric 2": 3.4022396390979592,
+    "MSA Name": "Bakersfield, CA"
+  },
+  {
+    "Zip": "93505",
+    "County": "Kern",
+    "Metric 1": 31.426539509364094,
+    "Metric 2": 1.6129397594280208,
+    "MSA Name": "Bakersfield, CA"
+  },
+  {
+    "Zip": "93510",
+    "County": "Los Angeles",
+    "Metric 1": 0.5194530716753493,
+    "Metric 2": 2.411460834453508,
+    "MSA Name": "Los Angeles-Long Beach-Anaheim, CA"
+  },
+  {
+    "Zip": "93512",
+    "County": "Mono",
+    "Metric 1": -1.2266458131116473,
+    "Metric 2": 0.6502456618464298,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "93513",
+    "County": "Fresno",
+    "Metric 1": 20.359370042858696,
+    "Metric 2": 4.268101768275435,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "93514",
+    "County": "Fresno",
+    "Metric 1": 21.770378264188178,
+    "Metric 2": -0.3319902379425696,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "93516",
+    "County": "Kern",
+    "Metric 1": 7.382687714589757,
+    "Metric 2": 0.8787937904641698,
+    "MSA Name": "Bakersfield, CA"
+  },
+  { "Zip": "93517", "County": "Lyon", "Metric 1": -1.290781238211408, "Metric 2": 5.136252189830825, "MSA Name": "NA" },
+  {
+    "Zip": "93518",
+    "County": "Kern",
+    "Metric 1": 11.915846620266203,
+    "Metric 2": 0.7951943138302873,
+    "MSA Name": "Bakersfield, CA"
+  },
+  {
+    "Zip": "93519",
+    "County": "Kern",
+    "Metric 1": 7.88566664051245,
+    "Metric 2": 2.445857342658468,
+    "MSA Name": "Bakersfield, CA"
+  },
+  { "Zip": "93522", "County": "Inyo", "Metric 1": 33.39209784178773, "Metric 2": 4.627774792841497, "MSA Name": "NA" },
+  {
+    "Zip": "93523",
+    "County": "Kern",
+    "Metric 1": 24.32615786097453,
+    "Metric 2": 4.28952501324452,
+    "MSA Name": "Bakersfield, CA"
+  },
+  {
+    "Zip": "93524",
+    "County": "Kern",
+    "Metric 1": 2.3384293155204032,
+    "Metric 2": 0.24350464707016733,
+    "MSA Name": "Bakersfield, CA"
+  },
+  {
+    "Zip": "93526",
+    "County": "Fresno",
+    "Metric 1": 3.990786882690757,
+    "Metric 2": 4.204689901961523,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "93527",
+    "County": "Inyo",
+    "Metric 1": 33.31353359383534,
+    "Metric 2": 3.54266868461886,
+    "MSA Name": "Bakersfield, CA"
+  },
+  {
+    "Zip": "93528",
+    "County": "Kern",
+    "Metric 1": 36.93520311068551,
+    "Metric 2": -0.09624993096007922,
+    "MSA Name": "Bakersfield, CA"
+  },
+  { "Zip": "93529", "County": "Mono", "Metric 1": 40.83451618014289, "Metric 2": 4.494463938307214, "MSA Name": "NA" },
+  { "Zip": "93530", "County": "Inyo", "Metric 1": 24.4107587408923, "Metric 2": 2.077006055873918, "MSA Name": "NA" },
+  {
+    "Zip": "93531",
+    "County": "Kern",
+    "Metric 1": 14.535779046424462,
+    "Metric 2": 4.5581518627369455,
+    "MSA Name": "Bakersfield, CA"
+  },
+  {
+    "Zip": "93532",
+    "County": "Los Angeles",
+    "Metric 1": 32.57148446500943,
+    "Metric 2": -0.5034723851012838,
+    "MSA Name": "Los Angeles-Long Beach-Anaheim, CA"
+  },
+  {
+    "Zip": "93534",
+    "County": "Los Angeles",
+    "Metric 1": 7.841003083676956,
+    "Metric 2": 0.8997291370961087,
+    "MSA Name": "Los Angeles-Long Beach-Anaheim, CA"
+  },
+  {
+    "Zip": "93535",
+    "County": "Los Angeles",
+    "Metric 1": 6.870344834710821,
+    "Metric 2": 3.8847883727658705,
+    "MSA Name": "Los Angeles-Long Beach-Anaheim, CA"
+  },
+  {
+    "Zip": "93536",
+    "County": "Kern",
+    "Metric 1": -2.2467037481429197,
+    "Metric 2": 0.20353988581432747,
+    "MSA Name": "Los Angeles-Long Beach-Anaheim, CA"
+  },
+  {
+    "Zip": "93541",
+    "County": "Madera",
+    "Metric 1": 41.09853224517009,
+    "Metric 2": 1.687423472587402,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "93543",
+    "County": "Los Angeles",
+    "Metric 1": 4.975218100627468,
+    "Metric 2": 1.530943825345955,
+    "MSA Name": "Los Angeles-Long Beach-Anaheim, CA"
+  },
+  {
+    "Zip": "93544",
+    "County": "Los Angeles",
+    "Metric 1": 11.25251538581338,
+    "Metric 2": 0.9924846918681339,
+    "MSA Name": "Los Angeles-Long Beach-Anaheim, CA"
+  },
+  { "Zip": "93545", "County": "Inyo", "Metric 1": 28.572998754352962, "Metric 2": 2.266378442600284, "MSA Name": "NA" },
+  {
+    "Zip": "93546",
+    "County": "Fresno",
+    "Metric 1": 6.92099450296028,
+    "Metric 2": 5.2705263021725575,
+    "MSA Name": "NA"
+  },
+  { "Zip": "93549", "County": "Inyo", "Metric 1": 43.33152413817818, "Metric 2": 1.7288990935125448, "MSA Name": "NA" },
+  {
+    "Zip": "93550",
+    "County": "Los Angeles",
+    "Metric 1": 24.939771282271185,
+    "Metric 2": 1.3796909008757736,
+    "MSA Name": "Los Angeles-Long Beach-Anaheim, CA"
+  },
+  {
+    "Zip": "93551",
+    "County": "Los Angeles",
+    "Metric 1": 19.449129440064752,
+    "Metric 2": 1.1734943282282264,
+    "MSA Name": "Los Angeles-Long Beach-Anaheim, CA"
+  },
+  {
+    "Zip": "93552",
+    "County": "Los Angeles",
+    "Metric 1": 23.14248376462434,
+    "Metric 2": 4.955719987626467,
+    "MSA Name": "Los Angeles-Long Beach-Anaheim, CA"
+  },
+  {
+    "Zip": "93553",
+    "County": "Los Angeles",
+    "Metric 1": 41.58611335468001,
+    "Metric 2": 3.446587102856433,
+    "MSA Name": "Los Angeles-Long Beach-Anaheim, CA"
+  },
+  {
+    "Zip": "93554",
+    "County": "Kern",
+    "Metric 1": 11.359779431393575,
+    "Metric 2": 0.3525948471604573,
+    "MSA Name": "Bakersfield, CA"
+  },
+  {
+    "Zip": "93555",
+    "County": "Kern",
+    "Metric 1": 56.37018498311309,
+    "Metric 2": 4.672882045245283,
+    "MSA Name": "Bakersfield, CA"
+  },
+  {
+    "Zip": "93558",
+    "County": "Kern",
+    "Metric 1": 12.484105243689456,
+    "Metric 2": 0.5623768314166597,
+    "MSA Name": "Bakersfield, CA"
+  },
+  {
+    "Zip": "93560",
+    "County": "Kern",
+    "Metric 1": 41.43991153512916,
+    "Metric 2": 2.0100505214391333,
+    "MSA Name": "Bakersfield, CA"
+  },
+  {
+    "Zip": "93561",
+    "County": "Kern",
+    "Metric 1": 31.239128845585885,
+    "Metric 2": 5.149271271788315,
+    "MSA Name": "Bakersfield, CA"
+  },
+  {
+    "Zip": "93562",
+    "County": "Inyo",
+    "Metric 1": -2.9632601205763236,
+    "Metric 2": 4.433538542767187,
+    "MSA Name": "Riverside-San Bernardino-Ontario, CA"
+  },
+  {
+    "Zip": "93563",
+    "County": "Los Angeles",
+    "Metric 1": 2.681699627251698,
+    "Metric 2": 0.27922558999479585,
+    "MSA Name": "Los Angeles-Long Beach-Anaheim, CA"
+  },
+  {
+    "Zip": "93591",
+    "County": "Los Angeles",
+    "Metric 1": 9.797442408231198,
+    "Metric 2": 0.49607051671433544,
+    "MSA Name": "Los Angeles-Long Beach-Anaheim, CA"
+  },
+  {
+    "Zip": "93592",
+    "County": "Inyo",
+    "Metric 1": 28.666888783540166,
+    "Metric 2": 4.154389084209582,
+    "MSA Name": "Riverside-San Bernardino-Ontario, CA"
+  },
+  {
+    "Zip": "93601",
+    "County": "Madera",
+    "Metric 1": 25.42664617688773,
+    "Metric 2": 3.896532754323067,
+    "MSA Name": "Madera, CA"
+  },
+  {
+    "Zip": "93602",
+    "County": "Fresno",
+    "Metric 1": 15.59900097289439,
+    "Metric 2": 4.320176235066805,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93603",
+    "County": "Tulare",
+    "Metric 1": 1.5902805607187778,
+    "Metric 2": 0.21757739213049293,
+    "MSA Name": "Visalia-Porterville, CA"
+  },
+  {
+    "Zip": "93604",
+    "County": "Fresno",
+    "Metric 1": 8.622683896342584,
+    "Metric 2": 1.0347965223023907,
+    "MSA Name": "Madera, CA"
+  },
+  {
+    "Zip": "93605",
+    "County": "Fresno",
+    "Metric 1": 23.04958975304924,
+    "Metric 2": 2.1956934639283983,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93606",
+    "County": "Fresno",
+    "Metric 1": 28.56126612082399,
+    "Metric 2": 3.821711269192019,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93608",
+    "County": "Fresno",
+    "Metric 1": 27.64112303555837,
+    "Metric 2": 4.001624242990328,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93609",
+    "County": "Fresno",
+    "Metric 1": 6.155742697344184,
+    "Metric 2": -0.16922042842853885,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93610",
+    "County": "Madera",
+    "Metric 1": 38.6572307303357,
+    "Metric 2": 1.0784868375647483,
+    "MSA Name": "Madera, CA"
+  },
+  {
+    "Zip": "93611",
+    "County": "Fresno",
+    "Metric 1": 3.4972553933124733,
+    "Metric 2": 3.9006595639191124,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93612",
+    "County": "Fresno",
+    "Metric 1": 19.15476719475778,
+    "Metric 2": 2.6199167495456726,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93614",
+    "County": "Madera",
+    "Metric 1": 18.898809191916076,
+    "Metric 2": 3.73577822114377,
+    "MSA Name": "Madera, CA"
+  },
+  {
+    "Zip": "93615",
+    "County": "Tulare",
+    "Metric 1": 7.64883802351598,
+    "Metric 2": 5.136818219149126,
+    "MSA Name": "Visalia-Porterville, CA"
+  },
+  {
+    "Zip": "93616",
+    "County": "Fresno",
+    "Metric 1": -3.3598536347439505,
+    "Metric 2": 4.823245804863985,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93618",
+    "County": "Fresno",
+    "Metric 1": 8.175905072391657,
+    "Metric 2": 2.7834126414740377,
+    "MSA Name": "Visalia-Porterville, CA"
+  },
+  {
+    "Zip": "93619",
+    "County": "Fresno",
+    "Metric 1": 7.326663971487111,
+    "Metric 2": 1.637653600694811,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93620",
+    "County": "Fresno",
+    "Metric 1": 19.0184883847866,
+    "Metric 2": 0.07188374082342908,
+    "MSA Name": "Merced, CA"
+  },
+  {
+    "Zip": "93621",
+    "County": "Fresno",
+    "Metric 1": 16.112449557094305,
+    "Metric 2": 0.19075849414067161,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93622",
+    "County": "Fresno",
+    "Metric 1": 31.047344795745868,
+    "Metric 2": 2.857706376384245,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93623",
+    "County": "Madera",
+    "Metric 1": -0.8280301772192689,
+    "Metric 2": 1.6965451307258035,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "93624",
+    "County": "Fresno",
+    "Metric 1": 20.09986887450767,
+    "Metric 2": 3.286931444401589,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93625",
+    "County": "Fresno",
+    "Metric 1": 13.891494647545782,
+    "Metric 2": 2.4979164464869137,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93626",
+    "County": "Fresno",
+    "Metric 1": 2.4439637992387726,
+    "Metric 2": 3.521340739524798,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93627",
+    "County": "Fresno",
+    "Metric 1": 20.908358445656134,
+    "Metric 2": 2.4232841329069457,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93628",
+    "County": "Fresno",
+    "Metric 1": 8.098617166327623,
+    "Metric 2": 1.1094104121303936,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93630",
+    "County": "Fresno",
+    "Metric 1": 25.260952390063224,
+    "Metric 2": -0.15531217720882104,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93631",
+    "County": "Fresno",
+    "Metric 1": -1.404337357509905,
+    "Metric 2": 0.41931912691526063,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93633",
+    "County": "Fresno",
+    "Metric 1": 7.534660011449266,
+    "Metric 2": 0.3219126098184101,
+    "MSA Name": "Visalia-Porterville, CA"
+  },
+  {
+    "Zip": "93634",
+    "County": "Fresno",
+    "Metric 1": 37.75003600156535,
+    "Metric 2": 3.15425086406964,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93635",
+    "County": "Merced",
+    "Metric 1": 8.176430745714104,
+    "Metric 2": 0.07127964611744267,
+    "MSA Name": "Merced, CA"
+  },
+  {
+    "Zip": "93636",
+    "County": "Fresno",
+    "Metric 1": 33.37726242140076,
+    "Metric 2": 2.862422491148732,
+    "MSA Name": "Madera, CA"
+  },
+  {
+    "Zip": "93637",
+    "County": "Fresno",
+    "Metric 1": 52.6874091398504,
+    "Metric 2": 2.6619847796200444,
+    "MSA Name": "Madera, CA"
+  },
+  {
+    "Zip": "93638",
+    "County": "Madera",
+    "Metric 1": 3.276945809724335,
+    "Metric 2": 2.7515174831294025,
+    "MSA Name": "Madera, CA"
+  },
+  {
+    "Zip": "93640",
+    "County": "Fresno",
+    "Metric 1": 22.387641860097435,
+    "Metric 2": 1.3240310507160655,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93641",
+    "County": "Fresno",
+    "Metric 1": 11.73310848160323,
+    "Metric 2": 1.6283593733965183,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93643",
+    "County": "Fresno",
+    "Metric 1": 19.159625896804087,
+    "Metric 2": 0.7044115247037006,
+    "MSA Name": "Madera, CA"
+  },
+  {
+    "Zip": "93644",
+    "County": "Madera",
+    "Metric 1": -1.809805159630823,
+    "Metric 2": 1.000233850508481,
+    "MSA Name": "Madera, CA"
+  },
+  {
+    "Zip": "93645",
+    "County": "Madera",
+    "Metric 1": 7.978067382404003,
+    "Metric 2": 1.3394523927271396,
+    "MSA Name": "Madera, CA"
+  },
+  {
+    "Zip": "93646",
+    "County": "Fresno",
+    "Metric 1": 47.21802206682191,
+    "Metric 2": 1.171145016378545,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93647",
+    "County": "Fresno",
+    "Metric 1": 5.558060789042456,
+    "Metric 2": 3.139703061404317,
+    "MSA Name": "Visalia-Porterville, CA"
+  },
+  {
+    "Zip": "93648",
+    "County": "Fresno",
+    "Metric 1": 18.066499333715463,
+    "Metric 2": 1.6519992621845037,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93650",
+    "County": "Fresno",
+    "Metric 1": 6.209405208123971,
+    "Metric 2": 3.6613641771300536,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93651",
+    "County": "Fresno",
+    "Metric 1": 44.23942589422839,
+    "Metric 2": -0.23703179133841012,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93652",
+    "County": "Fresno",
+    "Metric 1": 30.442791825237258,
+    "Metric 2": 4.785590720759839,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93653",
+    "County": "Madera",
+    "Metric 1": 40.579245980841456,
+    "Metric 2": -0.36029107438667024,
+    "MSA Name": "Madera, CA"
+  },
+  {
+    "Zip": "93654",
+    "County": "Fresno",
+    "Metric 1": 23.742604531116417,
+    "Metric 2": 3.917214476326275,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93656",
+    "County": "Fresno",
+    "Metric 1": -2.208877260345463,
+    "Metric 2": 1.4755151819487275,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93657",
+    "County": "Fresno",
+    "Metric 1": 50.271128577997494,
+    "Metric 2": 2.1039620937905634,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93660",
+    "County": "Fresno",
+    "Metric 1": 33.830734782286775,
+    "Metric 2": 4.365993200515539,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93662",
+    "County": "Fresno",
+    "Metric 1": 1.299253959391923,
+    "Metric 2": -0.22172775023289093,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93664",
+    "County": "Fresno",
+    "Metric 1": 10.977687950273706,
+    "Metric 2": 4.515049369438909,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93665",
+    "County": "Merced",
+    "Metric 1": -0.10065976213648777,
+    "Metric 2": 2.6996597200674284,
+    "MSA Name": "Merced, CA"
+  },
+  {
+    "Zip": "93666",
+    "County": "Tulare",
+    "Metric 1": -0.2697058160997093,
+    "Metric 2": 2.9503361847694345,
+    "MSA Name": "Visalia-Porterville, CA"
+  },
+  {
+    "Zip": "93667",
+    "County": "Fresno",
+    "Metric 1": 21.525616726142648,
+    "Metric 2": 0.6752866121413379,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93668",
+    "County": "Fresno",
+    "Metric 1": 25.991607040819847,
+    "Metric 2": 0.32370401692346257,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93669",
+    "County": "Madera",
+    "Metric 1": 29.856923599761565,
+    "Metric 2": 0.4143658795923465,
+    "MSA Name": "Madera, CA"
+  },
+  {
+    "Zip": "93673",
+    "County": "Tulare",
+    "Metric 1": 0.022214668872849036,
+    "Metric 2": 1.3143050059404522,
+    "MSA Name": "Visalia-Porterville, CA"
+  },
+  {
+    "Zip": "93675",
+    "County": "Fresno",
+    "Metric 1": 8.63605171668183,
+    "Metric 2": 4.795486395994828,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93701",
+    "County": "Fresno",
+    "Metric 1": -3.8567600908015467,
+    "Metric 2": 2.4475680549344303,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93702",
+    "County": "Fresno",
+    "Metric 1": -3.3086217427329476,
+    "Metric 2": 1.3911388606513446,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93703",
+    "County": "Fresno",
+    "Metric 1": 16.50137445733485,
+    "Metric 2": 0.9659438229913669,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93704",
+    "County": "Fresno",
+    "Metric 1": -2.324449403151984,
+    "Metric 2": 0.6888294864091802,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93705",
+    "County": "Fresno",
+    "Metric 1": 36.406873090587474,
+    "Metric 2": 1.7897139565568816,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93706",
+    "County": "Fresno",
+    "Metric 1": 8.554313204454512,
+    "Metric 2": 5.288873051095971,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93710",
+    "County": "Fresno",
+    "Metric 1": 46.53472720018033,
+    "Metric 2": 3.0487241201029613,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93711",
+    "County": "Fresno",
+    "Metric 1": 12.106731060733289,
+    "Metric 2": 4.223573114546398,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93720",
+    "County": "Fresno",
+    "Metric 1": 0.8139393587289476,
+    "Metric 2": 0.8727061906422894,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93721",
+    "County": "Fresno",
+    "Metric 1": 8.808636452776572,
+    "Metric 2": 1.2627640121243233,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93722",
+    "County": "Fresno",
+    "Metric 1": 13.699710563534484,
+    "Metric 2": 2.74869805942814,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93723",
+    "County": "Fresno",
+    "Metric 1": 39.57335991465452,
+    "Metric 2": 0.03259971871969601,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93725",
+    "County": "Fresno",
+    "Metric 1": 24.14793131250972,
+    "Metric 2": 0.6387676904980578,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93726",
+    "County": "Fresno",
+    "Metric 1": 20.657450310704373,
+    "Metric 2": 1.8806302559423314,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93727",
+    "County": "Fresno",
+    "Metric 1": 34.15022627275507,
+    "Metric 2": 2.427990674212897,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93728",
+    "County": "Fresno",
+    "Metric 1": 44.947276601438865,
+    "Metric 2": 2.286240160327639,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93730",
+    "County": "Fresno",
+    "Metric 1": 24.236305314493087,
+    "Metric 2": -0.24561954087074322,
+    "MSA Name": "Fresno, CA"
+  },
+  {
+    "Zip": "93901",
+    "County": "Monterey",
+    "Metric 1": 3.5437718475795923,
+    "Metric 2": 3.534981676797856,
+    "MSA Name": "Salinas, CA"
+  },
+  {
+    "Zip": "93905",
+    "County": "Monterey",
+    "Metric 1": 18.340307180157588,
+    "Metric 2": 1.5590005464612557,
+    "MSA Name": "Salinas, CA"
+  },
+  {
+    "Zip": "93906",
+    "County": "Monterey",
+    "Metric 1": 32.90034866725815,
+    "Metric 2": 3.872863804311983,
+    "MSA Name": "Salinas, CA"
+  },
+  {
+    "Zip": "93907",
+    "County": "Monterey",
+    "Metric 1": 17.640699025240806,
+    "Metric 2": 0.6663485219392519,
+    "MSA Name": "Salinas, CA"
+  },
+  {
+    "Zip": "93908",
+    "County": "Monterey",
+    "Metric 1": 37.91438498895984,
+    "Metric 2": 4.149162839985087,
+    "MSA Name": "Salinas, CA"
+  },
+  {
+    "Zip": "93920",
+    "County": "Monterey",
+    "Metric 1": 41.13871639084267,
+    "Metric 2": 3.8036352524060257,
+    "MSA Name": "Salinas, CA"
+  },
+  {
+    "Zip": "93921",
+    "County": "Monterey",
+    "Metric 1": 32.76243688351798,
+    "Metric 2": 3.8476598229954044,
+    "MSA Name": "Salinas, CA"
+  },
+  {
+    "Zip": "93923",
+    "County": "Monterey",
+    "Metric 1": 10.513975411364632,
+    "Metric 2": 0.35266203241323957,
+    "MSA Name": "Salinas, CA"
+  },
+  {
+    "Zip": "93924",
+    "County": "Monterey",
+    "Metric 1": -1.8036853731652112,
+    "Metric 2": 2.188911093221897,
+    "MSA Name": "Salinas, CA"
+  },
+  {
+    "Zip": "93925",
+    "County": "Monterey",
+    "Metric 1": 18.07657033750887,
+    "Metric 2": -0.1015225897768103,
+    "MSA Name": "Salinas, CA"
+  },
+  {
+    "Zip": "93926",
+    "County": "Monterey",
+    "Metric 1": 55.866757971150435,
+    "Metric 2": 5.715178929936191,
+    "MSA Name": "Salinas, CA"
+  },
+  {
+    "Zip": "93927",
+    "County": "Monterey",
+    "Metric 1": 3.0972552946439045,
+    "Metric 2": 1.2379260876869875,
+    "MSA Name": "Salinas, CA"
+  },
+  {
+    "Zip": "93928",
+    "County": "Monterey",
+    "Metric 1": -6.610210738025158,
+    "Metric 2": 3.9999732639952272,
+    "MSA Name": "Salinas, CA"
+  },
+  {
+    "Zip": "93930",
+    "County": "Monterey",
+    "Metric 1": 25.23192863673063,
+    "Metric 2": 2.178717660213431,
+    "MSA Name": "Salinas, CA"
+  },
+  {
+    "Zip": "93932",
+    "County": "Monterey",
+    "Metric 1": 0.52540165051458,
+    "Metric 2": -0.636723328938247,
+    "MSA Name": "Salinas, CA"
+  },
+  {
+    "Zip": "93933",
+    "County": "Monterey",
+    "Metric 1": 8.683510014414795,
+    "Metric 2": 0.08259696718600738,
+    "MSA Name": "Salinas, CA"
+  },
+  {
+    "Zip": "93940",
+    "County": "Monterey",
+    "Metric 1": 12.047450170803826,
+    "Metric 2": 1.0146302037729498,
+    "MSA Name": "Salinas, CA"
+  },
+  {
+    "Zip": "93943",
+    "County": "Monterey",
+    "Metric 1": 16.21029160131386,
+    "Metric 2": 1.2422588434164714,
+    "MSA Name": "Salinas, CA"
+  },
+  {
+    "Zip": "93950",
+    "County": "Monterey",
+    "Metric 1": 15.105446133456656,
+    "Metric 2": 1.783445294816779,
+    "MSA Name": "Salinas, CA"
+  },
+  {
+    "Zip": "93953",
+    "County": "Monterey",
+    "Metric 1": 3.7829834775052475,
+    "Metric 2": 0.3465875525214467,
+    "MSA Name": "Salinas, CA"
+  },
+  {
+    "Zip": "93954",
+    "County": "Monterey",
+    "Metric 1": 41.69226563666183,
+    "Metric 2": 2.287853431263197,
+    "MSA Name": "Salinas, CA"
+  },
+  {
+    "Zip": "93955",
+    "County": "Monterey",
+    "Metric 1": 2.3299638413220065,
+    "Metric 2": 2.2685263076315985,
+    "MSA Name": "Salinas, CA"
+  },
+  {
+    "Zip": "93960",
+    "County": "Monterey",
+    "Metric 1": 28.18207974617779,
+    "Metric 2": 0.7810443348494801,
+    "MSA Name": "Salinas, CA"
+  },
+  {
+    "Zip": "93962",
+    "County": "Monterey",
+    "Metric 1": 10.130672529849944,
+    "Metric 2": 4.210643361030699,
+    "MSA Name": "Salinas, CA"
+  },
+  {
+    "Zip": "94002",
+    "County": "San Mateo",
+    "Metric 1": 6.378824400103634,
+    "Metric 2": -0.3964528861054838,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94005",
+    "County": "San Francisco",
+    "Metric 1": 32.332274079801074,
+    "Metric 2": 0.5894551007534211,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94010",
+    "County": "San Mateo",
+    "Metric 1": 11.478789290103206,
+    "Metric 2": 3.1999725262476986,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94014",
+    "County": "San Francisco",
+    "Metric 1": 24.224530904940234,
+    "Metric 2": 0.7813736929686774,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94015",
+    "County": "San Francisco",
+    "Metric 1": 46.51739675961113,
+    "Metric 2": 1.846464576888579,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94019",
+    "County": "San Mateo",
+    "Metric 1": 30.480612695335836,
+    "Metric 2": 1.3919104106338076,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94020",
+    "County": "San Mateo",
+    "Metric 1": 9.546153656464453,
+    "Metric 2": 3.5704692045641546,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94021",
+    "County": "San Mateo",
+    "Metric 1": 6.073906562065294,
+    "Metric 2": 2.171917483860005,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94022",
+    "County": "San Mateo",
+    "Metric 1": 13.771835670057541,
+    "Metric 2": 4.3550814193983625,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "94024",
+    "County": "Santa Clara",
+    "Metric 1": 38.19356035975234,
+    "Metric 2": 0.039691321224043716,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "94025",
+    "County": "San Mateo",
+    "Metric 1": 24.10925296782344,
+    "Metric 2": 3.5289227271633594,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94027",
+    "County": "San Mateo",
+    "Metric 1": 36.89722413770482,
+    "Metric 2": -0.040924917460045396,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94028",
+    "County": "San Mateo",
+    "Metric 1": 51.1647801013385,
+    "Metric 2": 2.013619338717902,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94030",
+    "County": "San Mateo",
+    "Metric 1": 26.382689399018368,
+    "Metric 2": 1.8147596637281143,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94037",
+    "County": "San Mateo",
+    "Metric 1": -2.9653516043619987,
+    "Metric 2": 4.124560966147234,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94038",
+    "County": "San Mateo",
+    "Metric 1": 24.20100197263084,
+    "Metric 2": -0.2956867140894669,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94040",
+    "County": "Santa Clara",
+    "Metric 1": 19.30084907332663,
+    "Metric 2": -0.542208113362097,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "94041",
+    "County": "Santa Clara",
+    "Metric 1": 10.507572099114007,
+    "Metric 2": 0.7543553110880864,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "94043",
+    "County": "Santa Clara",
+    "Metric 1": 25.15469527888486,
+    "Metric 2": 0.31364541676905433,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "94044",
+    "County": "San Mateo",
+    "Metric 1": -7.261346845921094,
+    "Metric 2": 4.533006953618718,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94060",
+    "County": "San Mateo",
+    "Metric 1": 38.57852583992649,
+    "Metric 2": 5.638522873378028,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94061",
+    "County": "San Mateo",
+    "Metric 1": 9.430289969835695,
+    "Metric 2": 2.9255936331693055,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94062",
+    "County": "San Mateo",
+    "Metric 1": 29.627371782422923,
+    "Metric 2": -0.5800836702270378,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94063",
+    "County": "San Mateo",
+    "Metric 1": 31.745953299724604,
+    "Metric 2": 0.003907853176993124,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94065",
+    "County": "San Mateo",
+    "Metric 1": 20.123304356588,
+    "Metric 2": -0.8819409836064742,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94066",
+    "County": "San Mateo",
+    "Metric 1": 6.5316287995928795,
+    "Metric 2": 0.9893572846845418,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94070",
+    "County": "San Mateo",
+    "Metric 1": 7.102996167121847,
+    "Metric 2": 0.2627512499005884,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94074",
+    "County": "San Mateo",
+    "Metric 1": 26.874241768176066,
+    "Metric 2": 1.950936575561577,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94080",
+    "County": "San Mateo",
+    "Metric 1": -0.253758116654082,
+    "Metric 2": 1.9832947185670542,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94085",
+    "County": "Santa Clara",
+    "Metric 1": 8.498130490029455,
+    "Metric 2": -0.27646698248686685,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "94086",
+    "County": "Santa Clara",
+    "Metric 1": 48.30321096937848,
+    "Metric 2": 2.1191404845871094,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "94087",
+    "County": "Santa Clara",
+    "Metric 1": 5.018797872781009,
+    "Metric 2": 0.561070437421951,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "94089",
+    "County": "Santa Clara",
+    "Metric 1": 42.97834710909151,
+    "Metric 2": -0.312763303086645,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "94102",
+    "County": "San Francisco",
+    "Metric 1": 27.823217981904286,
+    "Metric 2": 1.9747804965762503,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94103",
+    "County": "San Francisco",
+    "Metric 1": 15.401893038085273,
+    "Metric 2": 1.280334549214455,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94104",
+    "County": "San Francisco",
+    "Metric 1": -8.380927345119156,
+    "Metric 2": 3.1887636171001126,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94105",
+    "County": "San Francisco",
+    "Metric 1": 33.37754536752162,
+    "Metric 2": -0.03489454793406191,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94107",
+    "County": "San Francisco",
+    "Metric 1": 50.39517744392972,
+    "Metric 2": 0.07573862120654695,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94108",
+    "County": "San Francisco",
+    "Metric 1": 4.490788501997649,
+    "Metric 2": 4.75623361096707,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94109",
+    "County": "San Francisco",
+    "Metric 1": 12.620124167369795,
+    "Metric 2": 0.26853736332892125,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94110",
+    "County": "San Francisco",
+    "Metric 1": 32.44107070439524,
+    "Metric 2": 2.65412953389198,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94111",
+    "County": "San Francisco",
+    "Metric 1": 33.36702590693612,
+    "Metric 2": 3.7433784895773368,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94112",
+    "County": "San Francisco",
+    "Metric 1": 11.36062029501148,
+    "Metric 2": 5.601856832528911,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94114",
+    "County": "San Francisco",
+    "Metric 1": 53.47970190038922,
+    "Metric 2": 1.429412549232337,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94115",
+    "County": "San Francisco",
+    "Metric 1": 25.511515976130774,
+    "Metric 2": 4.010604511322821,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94116",
+    "County": "San Francisco",
+    "Metric 1": 0.8660411184592459,
+    "Metric 2": 4.881865620148088,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94117",
+    "County": "San Francisco",
+    "Metric 1": 8.243389211668005,
+    "Metric 2": 0.8617231760943661,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94118",
+    "County": "San Francisco",
+    "Metric 1": 47.10773152839487,
+    "Metric 2": 3.3356614331065844,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94121",
+    "County": "San Francisco",
+    "Metric 1": 5.687513801992458,
+    "Metric 2": 3.3444551381810994,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94122",
+    "County": "San Francisco",
+    "Metric 1": 41.46816538609964,
+    "Metric 2": 1.4135455759468099,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94123",
+    "County": "San Francisco",
+    "Metric 1": -3.5211410747140404,
+    "Metric 2": 4.680783317545662,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94124",
+    "County": "San Francisco",
+    "Metric 1": 41.81483663900135,
+    "Metric 2": 3.3339400087372937,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94127",
+    "County": "San Francisco",
+    "Metric 1": -1.045316055856188,
+    "Metric 2": 3.021332245514138,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94128",
+    "County": "San Mateo",
+    "Metric 1": 4.687364759458641,
+    "Metric 2": 2.9793641119385965,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94129",
+    "County": "San Francisco",
+    "Metric 1": 6.169709953906252,
+    "Metric 2": 1.6215897419489833,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94130",
+    "County": "San Francisco",
+    "Metric 1": 33.349117301495106,
+    "Metric 2": 3.1629168450321252,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94131",
+    "County": "San Francisco",
+    "Metric 1": 32.45952597141137,
+    "Metric 2": 4.9793678236948615,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94132",
+    "County": "San Francisco",
+    "Metric 1": 2.658970079452598,
+    "Metric 2": 4.100946463726547,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94133",
+    "County": "San Francisco",
+    "Metric 1": 37.912943752215035,
+    "Metric 2": 4.759311979835584,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94134",
+    "County": "San Francisco",
+    "Metric 1": 40.18275195049013,
+    "Metric 2": 2.9492073463791355,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94158",
+    "County": "San Francisco",
+    "Metric 1": -0.9184897195644748,
+    "Metric 2": 1.2444934770609837,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94301",
+    "County": "San Mateo",
+    "Metric 1": 27.507111623783686,
+    "Metric 2": 0.7422788444950184,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "94303",
+    "County": "San Mateo",
+    "Metric 1": 2.5406692773004482,
+    "Metric 2": 0.5594714927671149,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "94304",
+    "County": "San Mateo",
+    "Metric 1": 53.33127385688914,
+    "Metric 2": 1.514624084887656,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "94305",
+    "County": "Santa Clara",
+    "Metric 1": 31.411150496742103,
+    "Metric 2": 0.6567028347464767,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "94306",
+    "County": "Santa Clara",
+    "Metric 1": -3.432536391413421,
+    "Metric 2": 4.305770553992503,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "94401",
+    "County": "San Mateo",
+    "Metric 1": 2.48943243304201,
+    "Metric 2": 0.791371000935796,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94402",
+    "County": "San Mateo",
+    "Metric 1": -5.381129681560666,
+    "Metric 2": -0.49235510406722327,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94403",
+    "County": "San Mateo",
+    "Metric 1": 51.616892228849984,
+    "Metric 2": 3.945430098948963,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94404",
+    "County": "San Mateo",
+    "Metric 1": 54.57088290100235,
+    "Metric 2": 1.0419663346141943,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94501",
+    "County": "Alameda",
+    "Metric 1": 24.092868440280483,
+    "Metric 2": 0.9819097959120746,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94502",
+    "County": "Alameda",
+    "Metric 1": 8.046653491387994,
+    "Metric 2": 0.5422320205506752,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94503",
+    "County": "Napa",
+    "Metric 1": 28.40531219522935,
+    "Metric 2": 2.9550677890116788,
+    "MSA Name": "Napa, CA"
+  },
+  {
+    "Zip": "94505",
+    "County": "Alameda",
+    "Metric 1": 49.10153536721512,
+    "Metric 2": -0.995195453180907,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94506",
+    "County": "Contra Costa",
+    "Metric 1": 18.53902331756302,
+    "Metric 2": 1.1130901129839201,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94507",
+    "County": "Contra Costa",
+    "Metric 1": 31.54094709591664,
+    "Metric 2": 3.743668804752771,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94508",
+    "County": "Napa",
+    "Metric 1": -5.126827694523842,
+    "Metric 2": 0.2522453044507794,
+    "MSA Name": "Napa, CA"
+  },
+  {
+    "Zip": "94509",
+    "County": "Contra Costa",
+    "Metric 1": -2.4535533402028964,
+    "Metric 2": 1.5391117682219566,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94510",
+    "County": "Contra Costa",
+    "Metric 1": 45.47235154742264,
+    "Metric 2": 3.792263142065766,
+    "MSA Name": "Vallejo-Fairfield, CA"
+  },
+  {
+    "Zip": "94511",
+    "County": "Contra Costa",
+    "Metric 1": 16.126811215950422,
+    "Metric 2": 3.989999463900009,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94512",
+    "County": "Solano",
+    "Metric 1": 53.63814692153177,
+    "Metric 2": 1.1632978602545432,
+    "MSA Name": "Vallejo-Fairfield, CA"
+  },
+  {
+    "Zip": "94513",
+    "County": "Contra Costa",
+    "Metric 1": 10.599046548922232,
+    "Metric 2": 3.2794287533807114,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94514",
+    "County": "Alameda",
+    "Metric 1": 4.2861442988807035,
+    "Metric 2": 3.992142164447613,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94515",
+    "County": "Lake",
+    "Metric 1": 4.815705256717197,
+    "Metric 2": 4.534990774138512,
+    "MSA Name": "Napa, CA"
+  },
+  {
+    "Zip": "94516",
+    "County": "Contra Costa",
+    "Metric 1": 1.3029681286443102,
+    "Metric 2": -0.8281111505411305,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94517",
+    "County": "Contra Costa",
+    "Metric 1": 16.693726196221682,
+    "Metric 2": -0.46978968884563754,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94518",
+    "County": "Contra Costa",
+    "Metric 1": 22.39838587270779,
+    "Metric 2": 1.3147569006970696,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94519",
+    "County": "Contra Costa",
+    "Metric 1": 5.989334850257716,
+    "Metric 2": 0.9755660523144959,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94520",
+    "County": "Contra Costa",
+    "Metric 1": 23.51490142705677,
+    "Metric 2": 3.467603259288945,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94521",
+    "County": "Contra Costa",
+    "Metric 1": -0.9124290841805938,
+    "Metric 2": 5.721826978070337,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94523",
+    "County": "Contra Costa",
+    "Metric 1": 32.02283239011221,
+    "Metric 2": 2.465084530815436,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94525",
+    "County": "Contra Costa",
+    "Metric 1": 25.588944524560375,
+    "Metric 2": -0.42043731357109915,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94526",
+    "County": "Contra Costa",
+    "Metric 1": 7.0361421523840635,
+    "Metric 2": 2.6030343596281993,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94528",
+    "County": "Contra Costa",
+    "Metric 1": 11.615575397595565,
+    "Metric 2": 3.7775663150766343,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94530",
+    "County": "Alameda",
+    "Metric 1": 2.2310514318152785,
+    "Metric 2": 0.8688689623691559,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94531",
+    "County": "Contra Costa",
+    "Metric 1": -4.123242155261892,
+    "Metric 2": 3.365145978468196,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94533",
+    "County": "Solano",
+    "Metric 1": 3.654616691766728,
+    "Metric 2": 4.162441784918163,
+    "MSA Name": "Vallejo-Fairfield, CA"
+  },
+  {
+    "Zip": "94534",
+    "County": "Napa",
+    "Metric 1": 19.718108371258907,
+    "Metric 2": 4.402659718203515,
+    "MSA Name": "Vallejo-Fairfield, CA"
+  },
+  {
+    "Zip": "94535",
+    "County": "Solano",
+    "Metric 1": 37.19372197732325,
+    "Metric 2": 4.090657507131389,
+    "MSA Name": "Vallejo-Fairfield, CA"
+  },
+  {
+    "Zip": "94536",
+    "County": "Alameda",
+    "Metric 1": 24.363424424688652,
+    "Metric 2": 1.5792607841164954,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94538",
+    "County": "Alameda",
+    "Metric 1": 4.942191185119662,
+    "Metric 2": 3.6543018626332513,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94539",
+    "County": "Alameda",
+    "Metric 1": 12.746901321014898,
+    "Metric 2": 4.175245332212149,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94541",
+    "County": "Alameda",
+    "Metric 1": -0.2875795618282731,
+    "Metric 2": 0.2986066573331467,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94542",
+    "County": "Alameda",
+    "Metric 1": -1.6505220440552242,
+    "Metric 2": 0.6526324894858788,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94544",
+    "County": "Alameda",
+    "Metric 1": 1.473528552032897,
+    "Metric 2": 0.5272831753982823,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94545",
+    "County": "Alameda",
+    "Metric 1": 34.83134218497102,
+    "Metric 2": 1.044453048071851,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94546",
+    "County": "Alameda",
+    "Metric 1": 13.665284344383247,
+    "Metric 2": 0.01131285312207339,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94547",
+    "County": "Contra Costa",
+    "Metric 1": 11.91166774802141,
+    "Metric 2": 4.6972985469661594,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94548",
+    "County": "Contra Costa",
+    "Metric 1": 25.643485647637164,
+    "Metric 2": 1.1400285124556637,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94549",
+    "County": "Contra Costa",
+    "Metric 1": 52.333545099305766,
+    "Metric 2": -0.34298713018721105,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94550",
+    "County": "Alameda",
+    "Metric 1": 14.987208675107599,
+    "Metric 2": 3.1711030819060704,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94551",
+    "County": "Alameda",
+    "Metric 1": 33.28793800018319,
+    "Metric 2": 3.934890909795109,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94552",
+    "County": "Alameda",
+    "Metric 1": 11.518972726534466,
+    "Metric 2": 3.774665537345361,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94553",
+    "County": "Contra Costa",
+    "Metric 1": 42.95370265088557,
+    "Metric 2": 2.9302884337742805,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94555",
+    "County": "Alameda",
+    "Metric 1": 5.30085105750824,
+    "Metric 2": 0.8519962321980868,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94556",
+    "County": "Contra Costa",
+    "Metric 1": 6.350487530434402,
+    "Metric 2": 2.3466892084164295,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94558",
+    "County": "Napa",
+    "Metric 1": 15.046613351834756,
+    "Metric 2": 3.197744120930701,
+    "MSA Name": "Napa, CA"
+  },
+  {
+    "Zip": "94559",
+    "County": "Napa",
+    "Metric 1": 39.308152564424965,
+    "Metric 2": 1.5113156311166664,
+    "MSA Name": "Napa, CA"
+  },
+  {
+    "Zip": "94560",
+    "County": "Alameda",
+    "Metric 1": 24.29934265644819,
+    "Metric 2": 1.6179836269967107,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94561",
+    "County": "Contra Costa",
+    "Metric 1": 3.747733754957938,
+    "Metric 2": 3.0682340352742745,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94563",
+    "County": "Alameda",
+    "Metric 1": 42.41677143002072,
+    "Metric 2": 1.3833460245872597,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94564",
+    "County": "Contra Costa",
+    "Metric 1": 34.13511565204338,
+    "Metric 2": 1.6776490152457773,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94565",
+    "County": "Contra Costa",
+    "Metric 1": 4.643480851258466,
+    "Metric 2": 1.393037731261881,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94566",
+    "County": "Alameda",
+    "Metric 1": 54.757602170767036,
+    "Metric 2": 5.509802959105096,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94567",
+    "County": "Lake",
+    "Metric 1": 4.532562641013195,
+    "Metric 2": 0.4896861126869513,
+    "MSA Name": "Napa, CA"
+  },
+  {
+    "Zip": "94568",
+    "County": "Alameda",
+    "Metric 1": 16.599115005037135,
+    "Metric 2": -0.038454152932770824,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94569",
+    "County": "Contra Costa",
+    "Metric 1": 40.93877177154382,
+    "Metric 2": 1.267132424894935,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94571",
+    "County": "Contra Costa",
+    "Metric 1": 28.26491301764368,
+    "Metric 2": 0.9425044649865659,
+    "MSA Name": "Vallejo-Fairfield, CA"
+  },
+  {
+    "Zip": "94572",
+    "County": "Contra Costa",
+    "Metric 1": 17.930668069446966,
+    "Metric 2": 2.8877409966490886,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94573",
+    "County": "Napa",
+    "Metric 1": 2.6032568615633354,
+    "Metric 2": 3.3998100491953065,
+    "MSA Name": "Napa, CA"
+  },
+  {
+    "Zip": "94574",
+    "County": "Napa",
+    "Metric 1": -0.6300182372212206,
+    "Metric 2": 1.6487198006028643,
+    "MSA Name": "Napa, CA"
+  },
+  {
+    "Zip": "94575",
+    "County": "Contra Costa",
+    "Metric 1": 20.1761724382219,
+    "Metric 2": 1.9530481287018888,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94576",
+    "County": "Napa",
+    "Metric 1": 2.1989701800904076,
+    "Metric 2": 3.3095108679463063,
+    "MSA Name": "Napa, CA"
+  },
+  {
+    "Zip": "94577",
+    "County": "Alameda",
+    "Metric 1": 15.535709695946965,
+    "Metric 2": 1.0261021477820416,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94578",
+    "County": "Alameda",
+    "Metric 1": 17.35137350577994,
+    "Metric 2": 0.7547409271475172,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94579",
+    "County": "Alameda",
+    "Metric 1": 4.6598030165820274,
+    "Metric 2": 4.060045810639466,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94580",
+    "County": "Alameda",
+    "Metric 1": 11.60286071043806,
+    "Metric 2": 4.537559860382024,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94582",
+    "County": "Contra Costa",
+    "Metric 1": 0.16452514392688022,
+    "Metric 2": 0.6003697787383032,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94583",
+    "County": "Alameda",
+    "Metric 1": 36.87980899782804,
+    "Metric 2": 1.8680459178805635,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94585",
+    "County": "Solano",
+    "Metric 1": -5.198225392915328,
+    "Metric 2": 0.7265051718324677,
+    "MSA Name": "Vallejo-Fairfield, CA"
+  },
+  {
+    "Zip": "94586",
+    "County": "Alameda",
+    "Metric 1": 31.857683392480535,
+    "Metric 2": 1.4031881228099063,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94587",
+    "County": "Alameda",
+    "Metric 1": 17.24663978305155,
+    "Metric 2": 0.8561371903047461,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94588",
+    "County": "Alameda",
+    "Metric 1": 18.098755647081155,
+    "Metric 2": 1.439724194354043,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94589",
+    "County": "Napa",
+    "Metric 1": 28.913085171063923,
+    "Metric 2": 3.1773843443622307,
+    "MSA Name": "Vallejo-Fairfield, CA"
+  },
+  {
+    "Zip": "94590",
+    "County": "Contra Costa",
+    "Metric 1": 7.555375235383847,
+    "Metric 2": 3.699337376820273,
+    "MSA Name": "Vallejo-Fairfield, CA"
+  },
+  {
+    "Zip": "94591",
+    "County": "Contra Costa",
+    "Metric 1": 13.518530242879839,
+    "Metric 2": 2.9148443472843146,
+    "MSA Name": "Vallejo-Fairfield, CA"
+  },
+  {
+    "Zip": "94592",
+    "County": "Solano",
+    "Metric 1": 14.567367785833115,
+    "Metric 2": 4.978399614928247,
+    "MSA Name": "Vallejo-Fairfield, CA"
+  },
+  {
+    "Zip": "94595",
+    "County": "Contra Costa",
+    "Metric 1": 6.629330758778485,
+    "Metric 2": 3.7453500104933157,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94596",
+    "County": "Contra Costa",
+    "Metric 1": 11.845734799987333,
+    "Metric 2": 4.658376721708968,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94597",
+    "County": "Contra Costa",
+    "Metric 1": 33.41898633855318,
+    "Metric 2": 0.2397658181722645,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94598",
+    "County": "Contra Costa",
+    "Metric 1": 7.007061959258934,
+    "Metric 2": 4.677735850908537,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94599",
+    "County": "Napa",
+    "Metric 1": 40.61831297469802,
+    "Metric 2": 0.828243233309306,
+    "MSA Name": "Napa, CA"
+  },
+  {
+    "Zip": "94601",
+    "County": "Alameda",
+    "Metric 1": 46.82403770134607,
+    "Metric 2": 4.461705592559943,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94602",
+    "County": "Alameda",
+    "Metric 1": 15.101323496094091,
+    "Metric 2": 0.7782337939946294,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94603",
+    "County": "Alameda",
+    "Metric 1": 17.835188644458015,
+    "Metric 2": 3.850471482220261,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94605",
+    "County": "Alameda",
+    "Metric 1": -4.235512800574327,
+    "Metric 2": -0.14394134173170467,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94606",
+    "County": "Alameda",
+    "Metric 1": 24.270884878160977,
+    "Metric 2": 0.833719952942975,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94607",
+    "County": "Alameda",
+    "Metric 1": 9.611806709583565,
+    "Metric 2": 3.9151941809068767,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94608",
+    "County": "Alameda",
+    "Metric 1": 37.73964816249371,
+    "Metric 2": 4.783449354965692,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94609",
+    "County": "Alameda",
+    "Metric 1": 12.157084653536968,
+    "Metric 2": 0.345194414916395,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94610",
+    "County": "Alameda",
+    "Metric 1": 8.91211914691798,
+    "Metric 2": 0.6127223560895086,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94611",
+    "County": "Alameda",
+    "Metric 1": 28.242978069552354,
+    "Metric 2": 3.1784308632428857,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94612",
+    "County": "Alameda",
+    "Metric 1": 18.78797311294605,
+    "Metric 2": -0.18544360157211054,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94613",
+    "County": "Alameda",
+    "Metric 1": 48.69917929937469,
+    "Metric 2": 4.608765754276733,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94618",
+    "County": "Alameda",
+    "Metric 1": -2.669622709799371,
+    "Metric 2": 2.1572511279212296,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94619",
+    "County": "Alameda",
+    "Metric 1": 23.11260098026155,
+    "Metric 2": 2.503239444251962,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94621",
+    "County": "Alameda",
+    "Metric 1": 26.400746196200636,
+    "Metric 2": 2.1609379509539055,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94702",
+    "County": "Alameda",
+    "Metric 1": 16.80528261919466,
+    "Metric 2": 2.854102079210685,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94703",
+    "County": "Alameda",
+    "Metric 1": 52.411323688770516,
+    "Metric 2": 3.379426898661694,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94704",
+    "County": "Alameda",
+    "Metric 1": 11.31223725124572,
+    "Metric 2": -0.34850202773458483,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94705",
+    "County": "Alameda",
+    "Metric 1": 6.999912230821128,
+    "Metric 2": 1.4666100994534443,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94706",
+    "County": "Alameda",
+    "Metric 1": 3.3789261549351606,
+    "Metric 2": -0.5458363829723111,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94707",
+    "County": "Alameda",
+    "Metric 1": -3.3856523876613456,
+    "Metric 2": 1.6274203102335236,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94708",
+    "County": "Alameda",
+    "Metric 1": 35.82723498013929,
+    "Metric 2": 1.2648175269504711,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94709",
+    "County": "Alameda",
+    "Metric 1": 38.10095362925278,
+    "Metric 2": 1.6759654639817967,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94710",
+    "County": "Alameda",
+    "Metric 1": -1.0469331507516684,
+    "Metric 2": 2.9217600756412896,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94720",
+    "County": "Alameda",
+    "Metric 1": 44.88607740799654,
+    "Metric 2": 1.3081129908630527,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94801",
+    "County": "Contra Costa",
+    "Metric 1": 9.576680931343033,
+    "Metric 2": -0.5850488602127215,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94803",
+    "County": "Contra Costa",
+    "Metric 1": 23.876111065610925,
+    "Metric 2": 1.1937230545530837,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94804",
+    "County": "Alameda",
+    "Metric 1": 26.04436309402126,
+    "Metric 2": 3.841524875023985,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94805",
+    "County": "Contra Costa",
+    "Metric 1": 3.4940683674755446,
+    "Metric 2": 4.187879336661247,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94806",
+    "County": "Contra Costa",
+    "Metric 1": 29.461870436406983,
+    "Metric 2": 1.192132931073184,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94850",
+    "County": "Contra Costa",
+    "Metric 1": 24.362062544303164,
+    "Metric 2": 2.215902598196007,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94901",
+    "County": "Marin",
+    "Metric 1": 32.527841565726646,
+    "Metric 2": 2.1227493984250096,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94903",
+    "County": "Marin",
+    "Metric 1": 9.452050849975771,
+    "Metric 2": 1.012256697052007,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94904",
+    "County": "Marin",
+    "Metric 1": 34.37977693954468,
+    "Metric 2": 3.884441895962067,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94920",
+    "County": "Marin",
+    "Metric 1": -0.7205050297031015,
+    "Metric 2": 3.311335396920725,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94922",
+    "County": "Marin",
+    "Metric 1": 42.48465647145905,
+    "Metric 2": 2.0917500537403955,
+    "MSA Name": "Santa Rosa, CA"
+  },
+  {
+    "Zip": "94923",
+    "County": "Marin",
+    "Metric 1": 51.151399146752176,
+    "Metric 2": 2.559050003206943,
+    "MSA Name": "Santa Rosa, CA"
+  },
+  {
+    "Zip": "94924",
+    "County": "Marin",
+    "Metric 1": 35.136754283159476,
+    "Metric 2": 4.1220675892023335,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94925",
+    "County": "Marin",
+    "Metric 1": 20.76898096499356,
+    "Metric 2": 3.552234381075853,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94928",
+    "County": "Sonoma",
+    "Metric 1": 52.920500357686386,
+    "Metric 2": 0.6174827055134806,
+    "MSA Name": "Santa Rosa, CA"
+  },
+  {
+    "Zip": "94929",
+    "County": "Marin",
+    "Metric 1": 16.538175775377812,
+    "Metric 2": 5.112745911894766,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94930",
+    "County": "Marin",
+    "Metric 1": 24.631664917259894,
+    "Metric 2": -0.13265733914615357,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94931",
+    "County": "Sonoma",
+    "Metric 1": 28.13307240204132,
+    "Metric 2": 4.978943185847216,
+    "MSA Name": "Santa Rosa, CA"
+  },
+  {
+    "Zip": "94933",
+    "County": "Marin",
+    "Metric 1": 14.872533209297723,
+    "Metric 2": 0.611502923824985,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94937",
+    "County": "Marin",
+    "Metric 1": 18.36771960791938,
+    "Metric 2": 4.274930625597118,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94938",
+    "County": "Marin",
+    "Metric 1": 32.911381188683656,
+    "Metric 2": 3.8681442560919543,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94939",
+    "County": "Marin",
+    "Metric 1": 9.59097723481517,
+    "Metric 2": 1.264702458909336,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94940",
+    "County": "Marin",
+    "Metric 1": 51.1960586452306,
+    "Metric 2": 5.006925102664908,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94941",
+    "County": "Marin",
+    "Metric 1": 31.879100532544808,
+    "Metric 2": 4.1610467364309205,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94945",
+    "County": "Marin",
+    "Metric 1": 17.58513509531758,
+    "Metric 2": -0.05322339008053345,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94946",
+    "County": "Marin",
+    "Metric 1": 27.102964931710115,
+    "Metric 2": 1.6893283856121322,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94947",
+    "County": "Marin",
+    "Metric 1": 13.822247470470609,
+    "Metric 2": 3.667215070116148,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94949",
+    "County": "Marin",
+    "Metric 1": 35.92601475423321,
+    "Metric 2": 3.416971627134282,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94950",
+    "County": "Marin",
+    "Metric 1": 20.26980796574866,
+    "Metric 2": 1.6319492324695601,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94951",
+    "County": "Sonoma",
+    "Metric 1": 33.30617137066834,
+    "Metric 2": 3.3778043966634708,
+    "MSA Name": "Santa Rosa, CA"
+  },
+  {
+    "Zip": "94952",
+    "County": "Marin",
+    "Metric 1": 27.878373668009882,
+    "Metric 2": 2.0847985121847934,
+    "MSA Name": "Santa Rosa, CA"
+  },
+  {
+    "Zip": "94954",
+    "County": "Marin",
+    "Metric 1": 15.819807985822857,
+    "Metric 2": 0.1678797303392164,
+    "MSA Name": "Santa Rosa, CA"
+  },
+  {
+    "Zip": "94956",
+    "County": "Marin",
+    "Metric 1": 25.92941898991208,
+    "Metric 2": 2.7000357717532357,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94957",
+    "County": "Marin",
+    "Metric 1": 5.591144996315715,
+    "Metric 2": 3.8478715291864085,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94960",
+    "County": "Marin",
+    "Metric 1": 37.48573667864294,
+    "Metric 2": -0.1394957351915911,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94963",
+    "County": "Marin",
+    "Metric 1": 51.294603148893955,
+    "Metric 2": 3.535185081276034,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94964",
+    "County": "Marin",
+    "Metric 1": 9.191096693698128,
+    "Metric 2": 1.7816017435896874,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94965",
+    "County": "Marin",
+    "Metric 1": 22.61195666241379,
+    "Metric 2": -0.18560264207656926,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94970",
+    "County": "Marin",
+    "Metric 1": 31.98161176024329,
+    "Metric 2": 0.8954504987130084,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94971",
+    "County": "Marin",
+    "Metric 1": 33.67405303558628,
+    "Metric 2": 3.159535336890995,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "94972",
+    "County": "Marin",
+    "Metric 1": 14.383515073914893,
+    "Metric 2": 3.732412740790542,
+    "MSA Name": "Santa Rosa, CA"
+  },
+  {
+    "Zip": "94973",
+    "County": "Marin",
+    "Metric 1": 22.567393746829406,
+    "Metric 2": 4.0926105733711555,
+    "MSA Name": "San Francisco-Oakland-Hayward, CA"
+  },
+  {
+    "Zip": "95002",
+    "County": "Alameda",
+    "Metric 1": 4.135783179966354,
+    "Metric 2": 3.6908771701380596,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "95003",
+    "County": "Santa Cruz",
+    "Metric 1": 38.56554246996986,
+    "Metric 2": 0.452790001886763,
+    "MSA Name": "Santa Cruz-Watsonville, CA"
+  },
+  {
+    "Zip": "95004",
+    "County": "Monterey",
+    "Metric 1": 17.65880396933884,
+    "Metric 2": 3.233651321848904,
+    "MSA Name": "Salinas, CA"
+  },
+  {
+    "Zip": "95005",
+    "County": "Santa Cruz",
+    "Metric 1": 22.4856840967442,
+    "Metric 2": 0.7210697487722724,
+    "MSA Name": "Santa Cruz-Watsonville, CA"
+  },
+  {
+    "Zip": "95006",
+    "County": "San Mateo",
+    "Metric 1": 24.978352817640275,
+    "Metric 2": 3.8184667737577693,
+    "MSA Name": "Santa Cruz-Watsonville, CA"
+  },
+  {
+    "Zip": "95007",
+    "County": "Santa Cruz",
+    "Metric 1": 21.223027629180887,
+    "Metric 2": 2.601826814787924,
+    "MSA Name": "Santa Cruz-Watsonville, CA"
+  },
+  {
+    "Zip": "95008",
+    "County": "Santa Clara",
+    "Metric 1": 27.752596256446992,
+    "Metric 2": 1.5564716256941153,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "95010",
+    "County": "Santa Cruz",
+    "Metric 1": 8.572643011215728,
+    "Metric 2": 0.9565395065922239,
+    "MSA Name": "Santa Cruz-Watsonville, CA"
+  },
+  {
+    "Zip": "95012",
+    "County": "Monterey",
+    "Metric 1": 38.48455091094753,
+    "Metric 2": 1.368326921383227,
+    "MSA Name": "Salinas, CA"
+  },
+  {
+    "Zip": "95013",
+    "County": "Santa Clara",
+    "Metric 1": 40.230946612654385,
+    "Metric 2": 4.568789645732884,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "95014",
+    "County": "Santa Clara",
+    "Metric 1": 29.988761388743608,
+    "Metric 2": 3.2967100799185056,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "95017",
+    "County": "San Mateo",
+    "Metric 1": 14.595048625162457,
+    "Metric 2": 4.982877161550143,
+    "MSA Name": "Santa Cruz-Watsonville, CA"
+  },
+  {
+    "Zip": "95018",
+    "County": "Santa Cruz",
+    "Metric 1": 44.04915783442065,
+    "Metric 2": 1.530966450780624,
+    "MSA Name": "Santa Cruz-Watsonville, CA"
+  },
+  {
+    "Zip": "95019",
+    "County": "Santa Cruz",
+    "Metric 1": 11.7112536395961,
+    "Metric 2": 3.989601804278484,
+    "MSA Name": "Santa Cruz-Watsonville, CA"
+  },
+  {
+    "Zip": "95020",
+    "County": "San Benito",
+    "Metric 1": 6.677955261419688,
+    "Metric 2": 2.96036649724501,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "95023",
+    "County": "Merced",
+    "Metric 1": 42.02268971204703,
+    "Metric 2": -0.0036973520048523036,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "95030",
+    "County": "Santa Clara",
+    "Metric 1": 18.79097632772218,
+    "Metric 2": 1.976890664583995,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "95032",
+    "County": "Santa Clara",
+    "Metric 1": 34.31243196099393,
+    "Metric 2": 4.182386509883157,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "95033",
+    "County": "San Mateo",
+    "Metric 1": -0.6922108131916717,
+    "Metric 2": 5.138335191250483,
+    "MSA Name": "Santa Cruz-Watsonville, CA"
+  },
+  {
+    "Zip": "95035",
+    "County": "Alameda",
+    "Metric 1": 0.33420903511131583,
+    "Metric 2": 4.780323828515049,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "95037",
+    "County": "Santa Clara",
+    "Metric 1": 6.244038050431054,
+    "Metric 2": 1.3962857247012588,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "95039",
+    "County": "Monterey",
+    "Metric 1": 15.144960563822416,
+    "Metric 2": 4.467535041970926,
+    "MSA Name": "Salinas, CA"
+  },
+  {
+    "Zip": "95041",
+    "County": "Santa Cruz",
+    "Metric 1": 44.943093117907196,
+    "Metric 2": 3.018760695388022,
+    "MSA Name": "Santa Cruz-Watsonville, CA"
+  },
+  {
+    "Zip": "95043",
+    "County": "Fresno",
+    "Metric 1": 0.7367949358639325,
+    "Metric 2": 4.203846004965052,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "95045",
+    "County": "Monterey",
+    "Metric 1": 39.697829785444064,
+    "Metric 2": 3.396051541771292,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "95046",
+    "County": "Santa Clara",
+    "Metric 1": 18.425871087078132,
+    "Metric 2": 0.48416448189993955,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "95050",
+    "County": "Santa Clara",
+    "Metric 1": 19.188035378405235,
+    "Metric 2": -0.28153826843820895,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "95051",
+    "County": "Santa Clara",
+    "Metric 1": 18.846415761272056,
+    "Metric 2": 1.771732859601999,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "95053",
+    "County": "Santa Clara",
+    "Metric 1": 1.2069314124752475,
+    "Metric 2": 3.6149676373069664,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "95054",
+    "County": "Santa Clara",
+    "Metric 1": 22.704399682093502,
+    "Metric 2": 2.074404184080971,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "95060",
+    "County": "Santa Cruz",
+    "Metric 1": 5.848954279842937,
+    "Metric 2": 3.2841246453220885,
+    "MSA Name": "Santa Cruz-Watsonville, CA"
+  },
+  {
+    "Zip": "95062",
+    "County": "Santa Cruz",
+    "Metric 1": 18.580640503504625,
+    "Metric 2": 0.8780938094524999,
+    "MSA Name": "Santa Cruz-Watsonville, CA"
+  },
+  {
+    "Zip": "95064",
+    "County": "Santa Cruz",
+    "Metric 1": -0.9853410390427753,
+    "Metric 2": 1.7072165720893338,
+    "MSA Name": "Santa Cruz-Watsonville, CA"
+  },
+  {
+    "Zip": "95065",
+    "County": "Santa Cruz",
+    "Metric 1": 10.775065104028684,
+    "Metric 2": 3.734027020344819,
+    "MSA Name": "Santa Cruz-Watsonville, CA"
+  },
+  {
+    "Zip": "95066",
+    "County": "Santa Cruz",
+    "Metric 1": 27.396549782095715,
+    "Metric 2": 0.27902194124770197,
+    "MSA Name": "Santa Cruz-Watsonville, CA"
+  },
+  {
+    "Zip": "95070",
+    "County": "Santa Clara",
+    "Metric 1": 22.12922514058099,
+    "Metric 2": 3.0710950894610045,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "95073",
+    "County": "Santa Cruz",
+    "Metric 1": 3.0575646912620797,
+    "Metric 2": 0.9692883991688848,
+    "MSA Name": "Santa Cruz-Watsonville, CA"
+  },
+  {
+    "Zip": "95075",
+    "County": "Merced",
+    "Metric 1": 8.716431639398337,
+    "Metric 2": 0.0704181891425125,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "95076",
+    "County": "Monterey",
+    "Metric 1": 2.1994041468412604,
+    "Metric 2": 1.847578644521034,
+    "MSA Name": "Santa Cruz-Watsonville, CA"
+  },
+  {
+    "Zip": "95110",
+    "County": "Santa Clara",
+    "Metric 1": 1.7492789592806048,
+    "Metric 2": 3.6271822756166134,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "95111",
+    "County": "Santa Clara",
+    "Metric 1": 23.702069082355198,
+    "Metric 2": 3.9386331782045096,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "95112",
+    "County": "Santa Clara",
+    "Metric 1": 0.4178439517387167,
+    "Metric 2": 1.9683028118330008,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "95113",
+    "County": "Santa Clara",
+    "Metric 1": 3.779743525454002,
+    "Metric 2": -0.0040375351523733866,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "95116",
+    "County": "Santa Clara",
+    "Metric 1": 15.210974009710739,
+    "Metric 2": 4.7174445551647155,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "95117",
+    "County": "Santa Clara",
+    "Metric 1": 32.66180122761173,
+    "Metric 2": 4.282238810789398,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "95118",
+    "County": "Santa Clara",
+    "Metric 1": 26.374483717350056,
+    "Metric 2": -0.3851563668340849,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "95119",
+    "County": "Santa Clara",
+    "Metric 1": 0.30267602716595177,
+    "Metric 2": 2.274519557909709,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "95120",
+    "County": "Santa Clara",
+    "Metric 1": 8.587324548411182,
+    "Metric 2": 5.830424940437862,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "95121",
+    "County": "Santa Clara",
+    "Metric 1": 12.390202746033,
+    "Metric 2": 4.461007316161851,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "95122",
+    "County": "Santa Clara",
+    "Metric 1": 18.948997279501594,
+    "Metric 2": -0.5485385054782086,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "95123",
+    "County": "Santa Clara",
+    "Metric 1": 5.574669446533854,
+    "Metric 2": -0.5690829175462371,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "95124",
+    "County": "Santa Clara",
+    "Metric 1": 1.6770224498247264,
+    "Metric 2": 3.6023508368764445,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "95125",
+    "County": "Santa Clara",
+    "Metric 1": 42.82729830541273,
+    "Metric 2": 0.8066117712693408,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "95126",
+    "County": "Santa Clara",
+    "Metric 1": 20.918663158518036,
+    "Metric 2": -0.07899579021560021,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "95127",
+    "County": "Santa Clara",
+    "Metric 1": 29.03186426954375,
+    "Metric 2": 3.7315606953248954,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "95128",
+    "County": "Santa Clara",
+    "Metric 1": 7.082199489646358,
+    "Metric 2": -0.07402772458832273,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "95129",
+    "County": "Santa Clara",
+    "Metric 1": 24.1576488063577,
+    "Metric 2": 2.937736281684995,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "95130",
+    "County": "Santa Clara",
+    "Metric 1": 43.36923946557626,
+    "Metric 2": 0.10955371745207365,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "95131",
+    "County": "Santa Clara",
+    "Metric 1": 26.503613446605996,
+    "Metric 2": 4.791215103801184,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "95132",
+    "County": "Alameda",
+    "Metric 1": 13.78233335840674,
+    "Metric 2": 3.8581170405700482,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "95133",
+    "County": "Santa Clara",
+    "Metric 1": 8.48905913524595,
+    "Metric 2": 3.9125640396342725,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "95134",
+    "County": "Alameda",
+    "Metric 1": 13.027473966834657,
+    "Metric 2": 3.3160699684236006,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "95135",
+    "County": "Santa Clara",
+    "Metric 1": 53.32491847710761,
+    "Metric 2": 0.8566739497259055,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "95136",
+    "County": "Santa Clara",
+    "Metric 1": 19.137249576420444,
+    "Metric 2": 2.835443591184992,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "95138",
+    "County": "Santa Clara",
+    "Metric 1": 32.68907625261949,
+    "Metric 2": 4.134474215250209,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "95139",
+    "County": "Santa Clara",
+    "Metric 1": 25.37857843613524,
+    "Metric 2": 2.032259772899613,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "95140",
+    "County": "Alameda",
+    "Metric 1": -2.007122242666944,
+    "Metric 2": 2.6087863359023773,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "95148",
+    "County": "Santa Clara",
+    "Metric 1": 23.532214447120555,
+    "Metric 2": 2.2549160658779352,
+    "MSA Name": "San Jose-Sunnyvale-Santa Clara, CA"
+  },
+  {
+    "Zip": "95202",
+    "County": "San Joaquin",
+    "Metric 1": 13.143835101499752,
+    "Metric 2": 0.11521839840279238,
+    "MSA Name": "Stockton-Lodi, CA"
+  },
+  {
+    "Zip": "95203",
+    "County": "San Joaquin",
+    "Metric 1": 32.17371648914699,
+    "Metric 2": 1.7424012708876022,
+    "MSA Name": "Stockton-Lodi, CA"
+  },
+  {
+    "Zip": "95204",
+    "County": "San Joaquin",
+    "Metric 1": 28.031129393680175,
+    "Metric 2": 3.630172680722924,
+    "MSA Name": "Stockton-Lodi, CA"
+  },
+  {
+    "Zip": "95205",
+    "County": "San Joaquin",
+    "Metric 1": 20.40904691911795,
+    "Metric 2": 4.035899238946422,
+    "MSA Name": "Stockton-Lodi, CA"
+  },
+  {
+    "Zip": "95206",
+    "County": "Contra Costa",
+    "Metric 1": 36.59746279015767,
+    "Metric 2": 1.2817449279932602,
+    "MSA Name": "Stockton-Lodi, CA"
+  },
+  {
+    "Zip": "95207",
+    "County": "San Joaquin",
+    "Metric 1": 10.555574509569835,
+    "Metric 2": 2.284356460140665,
+    "MSA Name": "Stockton-Lodi, CA"
+  },
+  {
+    "Zip": "95209",
+    "County": "San Joaquin",
+    "Metric 1": 32.31723381006266,
+    "Metric 2": 3.494379037087154,
+    "MSA Name": "Stockton-Lodi, CA"
+  },
+  {
+    "Zip": "95210",
+    "County": "San Joaquin",
+    "Metric 1": 7.417183045594953,
+    "Metric 2": 1.0054189833197549,
+    "MSA Name": "Stockton-Lodi, CA"
+  },
+  {
+    "Zip": "95211",
+    "County": "San Joaquin",
+    "Metric 1": 26.169593154642474,
+    "Metric 2": 5.245675771881641,
+    "MSA Name": "Stockton-Lodi, CA"
+  },
+  {
+    "Zip": "95212",
+    "County": "San Joaquin",
+    "Metric 1": 17.141981823044627,
+    "Metric 2": 1.3114395208345195,
+    "MSA Name": "Stockton-Lodi, CA"
+  },
+  {
+    "Zip": "95215",
+    "County": "San Joaquin",
+    "Metric 1": 9.881907699858479,
+    "Metric 2": 2.761021416394771,
+    "MSA Name": "Stockton-Lodi, CA"
+  },
+  {
+    "Zip": "95219",
+    "County": "Contra Costa",
+    "Metric 1": 42.05474679680714,
+    "Metric 2": 2.3652102898814453,
+    "MSA Name": "Stockton-Lodi, CA"
+  },
+  {
+    "Zip": "95220",
+    "County": "Sacramento",
+    "Metric 1": 26.82844441712053,
+    "Metric 2": 1.4820658881631625,
+    "MSA Name": "Stockton-Lodi, CA"
+  },
+  {
+    "Zip": "95222",
+    "County": "Calaveras",
+    "Metric 1": 43.111246501026976,
+    "Metric 2": 0.6956918864963597,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95223",
+    "County": "Alpine",
+    "Metric 1": 50.851713741450276,
+    "Metric 2": 0.7953871472194723,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95224",
+    "County": "Calaveras",
+    "Metric 1": 10.865622016412878,
+    "Metric 2": 0.46076676259453886,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95225",
+    "County": "Calaveras",
+    "Metric 1": 16.638428817225456,
+    "Metric 2": 0.5784627557805293,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95226",
+    "County": "Amador",
+    "Metric 1": 29.5563498740405,
+    "Metric 2": 1.5613812175930626,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95227",
+    "County": "Calaveras",
+    "Metric 1": 33.21578111882913,
+    "Metric 2": 3.425653814127819,
+    "MSA Name": "Stockton-Lodi, CA"
+  },
+  {
+    "Zip": "95228",
+    "County": "Calaveras",
+    "Metric 1": 18.728181915670923,
+    "Metric 2": 0.9738346471876305,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95230",
+    "County": "Calaveras",
+    "Metric 1": 6.88406142572137,
+    "Metric 2": 0.4718549116084415,
+    "MSA Name": "Modesto, CA"
+  },
+  {
+    "Zip": "95231",
+    "County": "San Joaquin",
+    "Metric 1": -9.943098897037173,
+    "Metric 2": 4.14796628275438,
+    "MSA Name": "Stockton-Lodi, CA"
+  },
+  {
+    "Zip": "95232",
+    "County": "Calaveras",
+    "Metric 1": 5.190578336841753,
+    "Metric 2": 3.341253968086677,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95233",
+    "County": "Calaveras",
+    "Metric 1": -0.51989953241241,
+    "Metric 2": 1.48460313941159,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95234",
+    "County": "Contra Costa",
+    "Metric 1": 24.410050282733394,
+    "Metric 2": 3.585014395752308,
+    "MSA Name": "Stockton-Lodi, CA"
+  },
+  {
+    "Zip": "95236",
+    "County": "Calaveras",
+    "Metric 1": 52.08977478660404,
+    "Metric 2": -0.10407266671969354,
+    "MSA Name": "Stockton-Lodi, CA"
+  },
+  {
+    "Zip": "95237",
+    "County": "San Joaquin",
+    "Metric 1": 43.415851646565336,
+    "Metric 2": 3.4723511262267825,
+    "MSA Name": "Stockton-Lodi, CA"
+  },
+  {
+    "Zip": "95240",
+    "County": "San Joaquin",
+    "Metric 1": 37.7689707714927,
+    "Metric 2": -0.10082035020211252,
+    "MSA Name": "Stockton-Lodi, CA"
+  },
+  {
+    "Zip": "95242",
+    "County": "San Joaquin",
+    "Metric 1": 21.623901385512262,
+    "Metric 2": 3.6942494714905783,
+    "MSA Name": "Stockton-Lodi, CA"
+  },
+  {
+    "Zip": "95245",
+    "County": "Amador",
+    "Metric 1": 45.50841953177729,
+    "Metric 2": 0.7976490700113601,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95246",
+    "County": "Calaveras",
+    "Metric 1": 21.259444010790034,
+    "Metric 2": 3.975439260585146,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95247",
+    "County": "Calaveras",
+    "Metric 1": 6.394636185685785,
+    "Metric 2": 0.9612847870672356,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95248",
+    "County": "Calaveras",
+    "Metric 1": 12.75577575584098,
+    "Metric 2": -0.6629717679900546,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95249",
+    "County": "Calaveras",
+    "Metric 1": 8.079140398085496,
+    "Metric 2": 3.680883082358344,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95250",
+    "County": "Calaveras",
+    "Metric 1": 14.806016971932825,
+    "Metric 2": 4.3153596516718995,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95251",
+    "County": "Calaveras",
+    "Metric 1": 9.825063253863986,
+    "Metric 2": 1.8961040499508228,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95252",
+    "County": "Amador",
+    "Metric 1": 23.617770673161555,
+    "Metric 2": 1.3462971582503278,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95254",
+    "County": "Calaveras",
+    "Metric 1": 10.642566737886897,
+    "Metric 2": -0.25237055416528253,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95255",
+    "County": "Amador",
+    "Metric 1": 5.450081648211002,
+    "Metric 2": 2.841953289234069,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95257",
+    "County": "Calaveras",
+    "Metric 1": 16.402455381511356,
+    "Metric 2": -0.7591289592784425,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95258",
+    "County": "San Joaquin",
+    "Metric 1": 6.7413513353963435,
+    "Metric 2": 3.5760670349877266,
+    "MSA Name": "Stockton-Lodi, CA"
+  },
+  {
+    "Zip": "95301",
+    "County": "Merced",
+    "Metric 1": -0.5511311229315599,
+    "Metric 2": 5.060151806947389,
+    "MSA Name": "Merced, CA"
+  },
+  {
+    "Zip": "95303",
+    "County": "Merced",
+    "Metric 1": 6.699921277495399,
+    "Metric 2": 1.5714875574292582,
+    "MSA Name": "Merced, CA"
+  },
+  {
+    "Zip": "95304",
+    "County": "Alameda",
+    "Metric 1": 0.5635461902409415,
+    "Metric 2": 3.6892803348167003,
+    "MSA Name": "Stockton-Lodi, CA"
+  },
+  {
+    "Zip": "95305",
+    "County": "Tuolumne",
+    "Metric 1": 47.51603605590012,
+    "Metric 2": 0.9785570916530845,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95306",
+    "County": "Mariposa",
+    "Metric 1": 41.363723590810906,
+    "Metric 2": 1.0217076496310804,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95307",
+    "County": "Stanislaus",
+    "Metric 1": 22.717864377853513,
+    "Metric 2": 1.1955845967360028,
+    "MSA Name": "Modesto, CA"
+  },
+  {
+    "Zip": "95310",
+    "County": "Calaveras",
+    "Metric 1": 13.672184339000657,
+    "Metric 2": 4.737276318891542,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95311",
+    "County": "Mariposa",
+    "Metric 1": 25.7891059501629,
+    "Metric 2": 0.6485212451449335,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95312",
+    "County": "Merced",
+    "Metric 1": 19.998697600037286,
+    "Metric 2": 4.383132367100332,
+    "MSA Name": "Merced, CA"
+  },
+  {
+    "Zip": "95313",
+    "County": "Merced",
+    "Metric 1": 32.46516699248696,
+    "Metric 2": 4.487796613532306,
+    "MSA Name": "Modesto, CA"
+  },
+  {
+    "Zip": "95314",
+    "County": "Tuolumne",
+    "Metric 1": 21.13893755541327,
+    "Metric 2": 4.039784051150822,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95315",
+    "County": "Merced",
+    "Metric 1": 37.11321519994972,
+    "Metric 2": 3.93327727366531,
+    "MSA Name": "Merced, CA"
+  },
+  {
+    "Zip": "95316",
+    "County": "Merced",
+    "Metric 1": 40.60506720435253,
+    "Metric 2": 1.5328024963051123,
+    "MSA Name": "Modesto, CA"
+  },
+  {
+    "Zip": "95317",
+    "County": "Madera",
+    "Metric 1": 37.309097152296374,
+    "Metric 2": 0.4981437394178957,
+    "MSA Name": "Merced, CA"
+  },
+  {
+    "Zip": "95318",
+    "County": "Mariposa",
+    "Metric 1": 16.481187834079666,
+    "Metric 2": 1.1579620526254102,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95319",
+    "County": "Stanislaus",
+    "Metric 1": 14.585258006562581,
+    "Metric 2": 3.417651784542619,
+    "MSA Name": "Modesto, CA"
+  },
+  {
+    "Zip": "95320",
+    "County": "San Joaquin",
+    "Metric 1": 0.32259320018706017,
+    "Metric 2": 4.392028859399466,
+    "MSA Name": "Stockton-Lodi, CA"
+  },
+  {
+    "Zip": "95321",
+    "County": "Mariposa",
+    "Metric 1": -0.8051673069599122,
+    "Metric 2": 1.3899875063243259,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95322",
+    "County": "Merced",
+    "Metric 1": 14.135938748071625,
+    "Metric 2": 1.149258393184373,
+    "MSA Name": "Merced, CA"
+  },
+  {
+    "Zip": "95323",
+    "County": "Stanislaus",
+    "Metric 1": 50.92094699295985,
+    "Metric 2": 3.2700383778184667,
+    "MSA Name": "Modesto, CA"
+  },
+  {
+    "Zip": "95324",
+    "County": "Merced",
+    "Metric 1": 14.637322663228428,
+    "Metric 2": 1.9822262179106787,
+    "MSA Name": "Merced, CA"
+  },
+  {
+    "Zip": "95325",
+    "County": "Mariposa",
+    "Metric 1": 13.068841146763516,
+    "Metric 2": 1.2934599003578573,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95326",
+    "County": "Stanislaus",
+    "Metric 1": 54.52805101573088,
+    "Metric 2": 1.2866162868898046,
+    "MSA Name": "Modesto, CA"
+  },
+  {
+    "Zip": "95327",
+    "County": "Calaveras",
+    "Metric 1": 30.724873612878213,
+    "Metric 2": 0.9635705023660724,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95328",
+    "County": "Stanislaus",
+    "Metric 1": 11.16033000594881,
+    "Metric 2": 4.011665316572518,
+    "MSA Name": "Modesto, CA"
+  },
+  {
+    "Zip": "95329",
+    "County": "Mariposa",
+    "Metric 1": 33.19113753262142,
+    "Metric 2": 3.081842610284999,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95330",
+    "County": "San Joaquin",
+    "Metric 1": 21.181694393714707,
+    "Metric 2": 3.3423804856612387,
+    "MSA Name": "Stockton-Lodi, CA"
+  },
+  {
+    "Zip": "95333",
+    "County": "Madera",
+    "Metric 1": 8.983839233342692,
+    "Metric 2": 1.4428491113906414,
+    "MSA Name": "Merced, CA"
+  },
+  {
+    "Zip": "95334",
+    "County": "Merced",
+    "Metric 1": 24.787050640936833,
+    "Metric 2": 5.410525795671598,
+    "MSA Name": "Merced, CA"
+  },
+  {
+    "Zip": "95335",
+    "County": "Tuolumne",
+    "Metric 1": 22.17100511288314,
+    "Metric 2": 0.6564473907624447,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95336",
+    "County": "San Joaquin",
+    "Metric 1": 0.692384160054382,
+    "Metric 2": 3.6000709640602677,
+    "MSA Name": "Stockton-Lodi, CA"
+  },
+  {
+    "Zip": "95337",
+    "County": "San Joaquin",
+    "Metric 1": 28.99179807840201,
+    "Metric 2": 5.029599865807618,
+    "MSA Name": "Stockton-Lodi, CA"
+  },
+  {
+    "Zip": "95338",
+    "County": "Mariposa",
+    "Metric 1": 25.717442501585115,
+    "Metric 2": 1.2691004532155143,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95340",
+    "County": "Merced",
+    "Metric 1": 17.200752802948738,
+    "Metric 2": 0.6303393913248445,
+    "MSA Name": "Merced, CA"
+  },
+  {
+    "Zip": "95341",
+    "County": "Merced",
+    "Metric 1": 4.566166835864772,
+    "Metric 2": 0.7116141267626721,
+    "MSA Name": "Merced, CA"
+  },
+  {
+    "Zip": "95345",
+    "County": "Mariposa",
+    "Metric 1": 45.759971081673655,
+    "Metric 2": 1.7626638286835887,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95346",
+    "County": "Tuolumne",
+    "Metric 1": 29.008875868190167,
+    "Metric 2": 3.197462486772133,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95348",
+    "County": "Merced",
+    "Metric 1": 51.496455599013245,
+    "Metric 2": 0.6209709951157015,
+    "MSA Name": "Merced, CA"
+  },
+  {
+    "Zip": "95350",
+    "County": "Stanislaus",
+    "Metric 1": 33.23145905997035,
+    "Metric 2": 0.7079431994166641,
+    "MSA Name": "Modesto, CA"
+  },
+  {
+    "Zip": "95351",
+    "County": "Stanislaus",
+    "Metric 1": 1.6129482341847676,
+    "Metric 2": 1.0681428746690005,
+    "MSA Name": "Modesto, CA"
+  },
+  {
+    "Zip": "95354",
+    "County": "Stanislaus",
+    "Metric 1": -0.35500722491638714,
+    "Metric 2": -0.5699479773045805,
+    "MSA Name": "Modesto, CA"
+  },
+  {
+    "Zip": "95355",
+    "County": "Stanislaus",
+    "Metric 1": 1.32714958307531,
+    "Metric 2": 4.877799956435599,
+    "MSA Name": "Modesto, CA"
+  },
+  {
+    "Zip": "95356",
+    "County": "San Joaquin",
+    "Metric 1": 34.416360316969076,
+    "Metric 2": 5.561197879401796,
+    "MSA Name": "Modesto, CA"
+  },
+  {
+    "Zip": "95357",
+    "County": "Stanislaus",
+    "Metric 1": 12.712006338099524,
+    "Metric 2": 0.9025493026429304,
+    "MSA Name": "Modesto, CA"
+  },
+  {
+    "Zip": "95358",
+    "County": "San Joaquin",
+    "Metric 1": -2.3619813508253094,
+    "Metric 2": 1.1846118026333947,
+    "MSA Name": "Modesto, CA"
+  },
+  {
+    "Zip": "95360",
+    "County": "Merced",
+    "Metric 1": 20.22813794749316,
+    "Metric 2": 0.3468616063725348,
+    "MSA Name": "Modesto, CA"
+  },
+  {
+    "Zip": "95361",
+    "County": "San Joaquin",
+    "Metric 1": 23.53453948013529,
+    "Metric 2": 4.006149339633466,
+    "MSA Name": "Modesto, CA"
+  },
+  {
+    "Zip": "95363",
+    "County": "Santa Clara",
+    "Metric 1": 29.35115911854762,
+    "Metric 2": 1.352947237324556,
+    "MSA Name": "Modesto, CA"
+  },
+  {
+    "Zip": "95364",
+    "County": "Alpine",
+    "Metric 1": 9.603981233430192,
+    "Metric 2": 2.592881583361277,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95365",
+    "County": "Merced",
+    "Metric 1": 26.81144372791977,
+    "Metric 2": 1.1678732443331332,
+    "MSA Name": "Merced, CA"
+  },
+  {
+    "Zip": "95366",
+    "County": "San Joaquin",
+    "Metric 1": 38.494186203919625,
+    "Metric 2": 2.0377634730286474,
+    "MSA Name": "Stockton-Lodi, CA"
+  },
+  {
+    "Zip": "95367",
+    "County": "San Joaquin",
+    "Metric 1": 46.22902251013385,
+    "Metric 2": 1.5234225115308049,
+    "MSA Name": "Modesto, CA"
+  },
+  {
+    "Zip": "95368",
+    "County": "San Joaquin",
+    "Metric 1": 13.123583009008069,
+    "Metric 2": 2.694464670520176,
+    "MSA Name": "Modesto, CA"
+  },
+  {
+    "Zip": "95369",
+    "County": "Mariposa",
+    "Metric 1": 18.01545598149133,
+    "Metric 2": 4.266952904652869,
+    "MSA Name": "Merced, CA"
+  },
+  {
+    "Zip": "95370",
+    "County": "Calaveras",
+    "Metric 1": 36.889010780582915,
+    "Metric 2": 3.203226162155558,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95372",
+    "County": "Tuolumne",
+    "Metric 1": 26.567805872659743,
+    "Metric 2": 3.5768481822465508,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95374",
+    "County": "Merced",
+    "Metric 1": 35.00004542393617,
+    "Metric 2": 3.24094489601487,
+    "MSA Name": "Merced, CA"
+  },
+  {
+    "Zip": "95375",
+    "County": "Tuolumne",
+    "Metric 1": 14.243758700448847,
+    "Metric 2": 3.8207220919258744,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95376",
+    "County": "San Joaquin",
+    "Metric 1": 36.827511048269216,
+    "Metric 2": 3.1349898658234654,
+    "MSA Name": "Stockton-Lodi, CA"
+  },
+  {
+    "Zip": "95377",
+    "County": "Alameda",
+    "Metric 1": 24.92772259026788,
+    "Metric 2": 5.140952638541948,
+    "MSA Name": "Stockton-Lodi, CA"
+  },
+  {
+    "Zip": "95379",
+    "County": "Tuolumne",
+    "Metric 1": 9.528039962347377,
+    "Metric 2": 2.2696343550403646,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95380",
+    "County": "Merced",
+    "Metric 1": 9.993986824244331,
+    "Metric 2": 3.1409206117024984,
+    "MSA Name": "Modesto, CA"
+  },
+  {
+    "Zip": "95382",
+    "County": "Stanislaus",
+    "Metric 1": -1.7917935384900072,
+    "Metric 2": 1.8165525710028083,
+    "MSA Name": "Modesto, CA"
+  },
+  {
+    "Zip": "95383",
+    "County": "Tuolumne",
+    "Metric 1": 29.739738533086324,
+    "Metric 2": 2.062325453418536,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95385",
+    "County": "San Joaquin",
+    "Metric 1": 39.8731010322751,
+    "Metric 2": 0.7820999191505075,
+    "MSA Name": "Modesto, CA"
+  },
+  {
+    "Zip": "95386",
+    "County": "Stanislaus",
+    "Metric 1": 18.282932246986913,
+    "Metric 2": 1.174913493815101,
+    "MSA Name": "Modesto, CA"
+  },
+  {
+    "Zip": "95387",
+    "County": "Santa Clara",
+    "Metric 1": 11.527487530540133,
+    "Metric 2": 2.1759057159987636,
+    "MSA Name": "Modesto, CA"
+  },
+  {
+    "Zip": "95388",
+    "County": "Merced",
+    "Metric 1": 23.683588049568723,
+    "Metric 2": 2.6433114231712693,
+    "MSA Name": "Merced, CA"
+  },
+  {
+    "Zip": "95389",
+    "County": "Mariposa",
+    "Metric 1": 4.857850565122954,
+    "Metric 2": 0.4785293455681371,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95391",
+    "County": "Alameda",
+    "Metric 1": 5.619327334515657,
+    "Metric 2": 1.3866675858101598,
+    "MSA Name": "Stockton-Lodi, CA"
+  },
+  {
+    "Zip": "95401",
+    "County": "Sonoma",
+    "Metric 1": 6.421140562052933,
+    "Metric 2": 1.5192633282867274,
+    "MSA Name": "Santa Rosa, CA"
+  },
+  {
+    "Zip": "95403",
+    "County": "Sonoma",
+    "Metric 1": 27.528236284787035,
+    "Metric 2": 1.566467733569004,
+    "MSA Name": "Santa Rosa, CA"
+  },
+  {
+    "Zip": "95404",
+    "County": "Napa",
+    "Metric 1": 16.982376196929565,
+    "Metric 2": 2.3276748966220056,
+    "MSA Name": "Santa Rosa, CA"
+  },
+  {
+    "Zip": "95405",
+    "County": "Sonoma",
+    "Metric 1": 33.472980503551184,
+    "Metric 2": 3.5847255965315554,
+    "MSA Name": "Santa Rosa, CA"
+  },
+  {
+    "Zip": "95407",
+    "County": "Sonoma",
+    "Metric 1": 14.94791454978783,
+    "Metric 2": 4.082062651781188,
+    "MSA Name": "Santa Rosa, CA"
+  },
+  {
+    "Zip": "95409",
+    "County": "Napa",
+    "Metric 1": 21.85430653174048,
+    "Metric 2": 3.4375909368684043,
+    "MSA Name": "Santa Rosa, CA"
+  },
+  {
+    "Zip": "95410",
+    "County": "Mendocino",
+    "Metric 1": 26.83940366718257,
+    "Metric 2": 0.3807385258389908,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95412",
+    "County": "Mendocino",
+    "Metric 1": 11.462407074055365,
+    "Metric 2": -0.13365152059165372,
+    "MSA Name": "Santa Rosa, CA"
+  },
+  {
+    "Zip": "95415",
+    "County": "Mendocino",
+    "Metric 1": 9.767204400093698,
+    "Metric 2": 3.0066013927967727,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95417",
+    "County": "Mendocino",
+    "Metric 1": 16.210095624096173,
+    "Metric 2": 4.148060505740792,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95420",
+    "County": "Mendocino",
+    "Metric 1": 30.409215616895125,
+    "Metric 2": 1.300590066661917,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95421",
+    "County": "Mendocino",
+    "Metric 1": 29.05577452807806,
+    "Metric 2": 4.513225240183846,
+    "MSA Name": "Santa Rosa, CA"
+  },
+  {
+    "Zip": "95422",
+    "County": "Lake",
+    "Metric 1": 6.03003153701369,
+    "Metric 2": 1.3426056950800982,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95423",
+    "County": "Colusa",
+    "Metric 1": 6.324403212878268,
+    "Metric 2": 0.14153056431799316,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95425",
+    "County": "Lake",
+    "Metric 1": 3.1064039627674163,
+    "Metric 2": 1.834838165726923,
+    "MSA Name": "Santa Rosa, CA"
+  },
+  {
+    "Zip": "95426",
+    "County": "Lake",
+    "Metric 1": 33.514937372700494,
+    "Metric 2": 1.2946716046190743,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95427",
+    "County": "Mendocino",
+    "Metric 1": 20.61322686758787,
+    "Metric 2": -0.0012046382038131964,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95428",
+    "County": "Glenn",
+    "Metric 1": 36.97184352256143,
+    "Metric 2": 1.5531163634089147,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95429",
+    "County": "Mendocino",
+    "Metric 1": 20.92041082175669,
+    "Metric 2": 1.7771847405116832,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95430",
+    "County": "Sonoma",
+    "Metric 1": 7.301955466923251,
+    "Metric 2": 0.25165618150612523,
+    "MSA Name": "Santa Rosa, CA"
+  },
+  {
+    "Zip": "95431",
+    "County": "Sonoma",
+    "Metric 1": 20.945167916135944,
+    "Metric 2": 3.216226449995327,
+    "MSA Name": "Santa Rosa, CA"
+  },
+  {
+    "Zip": "95432",
+    "County": "Mendocino",
+    "Metric 1": 15.409173572288424,
+    "Metric 2": 4.565326201133736,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95435",
+    "County": "Lake",
+    "Metric 1": 5.362646070853301,
+    "Metric 2": 3.860059188786197,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95436",
+    "County": "Sonoma",
+    "Metric 1": 28.5859337250707,
+    "Metric 2": 1.3568113003308708,
+    "MSA Name": "Santa Rosa, CA"
+  },
+  {
+    "Zip": "95437",
+    "County": "Mendocino",
+    "Metric 1": 40.41089197918677,
+    "Metric 2": 5.325933199104758,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95439",
+    "County": "Sonoma",
+    "Metric 1": 36.34762692471233,
+    "Metric 2": 2.6086913629033397,
+    "MSA Name": "Santa Rosa, CA"
+  },
+  {
+    "Zip": "95441",
+    "County": "Sonoma",
+    "Metric 1": 28.634515467873094,
+    "Metric 2": 1.5509800000971266,
+    "MSA Name": "Santa Rosa, CA"
+  },
+  {
+    "Zip": "95442",
+    "County": "Napa",
+    "Metric 1": 4.424634184137818,
+    "Metric 2": 4.0195121796721605,
+    "MSA Name": "Santa Rosa, CA"
+  },
+  {
+    "Zip": "95443",
+    "County": "Lake",
+    "Metric 1": 25.39399109476269,
+    "Metric 2": 3.509268589414213,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95444",
+    "County": "Sonoma",
+    "Metric 1": 4.876271676407523,
+    "Metric 2": 3.139078051757935,
+    "MSA Name": "Santa Rosa, CA"
+  },
+  {
+    "Zip": "95445",
+    "County": "Mendocino",
+    "Metric 1": 30.363275319625753,
+    "Metric 2": 5.4712610015892995,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95446",
+    "County": "Sonoma",
+    "Metric 1": -1.6408821682129655,
+    "Metric 2": 2.733992846892365,
+    "MSA Name": "Santa Rosa, CA"
+  },
+  {
+    "Zip": "95448",
+    "County": "Sonoma",
+    "Metric 1": 4.498689098631854,
+    "Metric 2": 3.700960737197833,
+    "MSA Name": "Santa Rosa, CA"
+  },
+  {
+    "Zip": "95449",
+    "County": "Lake",
+    "Metric 1": 6.135213370201396,
+    "Metric 2": 4.090756668561574,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95450",
+    "County": "Sonoma",
+    "Metric 1": 25.047490986949917,
+    "Metric 2": 3.7746147461454744,
+    "MSA Name": "Santa Rosa, CA"
+  },
+  {
+    "Zip": "95451",
+    "County": "Lake",
+    "Metric 1": 30.85609306844937,
+    "Metric 2": 0.7031446237004351,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95452",
+    "County": "Napa",
+    "Metric 1": 15.87826457430522,
+    "Metric 2": -0.25658345754545264,
+    "MSA Name": "Santa Rosa, CA"
+  },
+  {
+    "Zip": "95453",
+    "County": "Lake",
+    "Metric 1": 39.421918747798955,
+    "Metric 2": 1.2141909280403185,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95454",
+    "County": "Humboldt",
+    "Metric 1": 24.04419546155128,
+    "Metric 2": 1.1168683037235523,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95456",
+    "County": "Mendocino",
+    "Metric 1": 29.040710676021487,
+    "Metric 2": 0.3854754801649335,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95457",
+    "County": "Lake",
+    "Metric 1": -0.9348218494173042,
+    "Metric 2": 2.662036017981091,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95458",
+    "County": "Lake",
+    "Metric 1": 6.557150682198105,
+    "Metric 2": 2.5126001126801256,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95459",
+    "County": "Mendocino",
+    "Metric 1": 19.234488411317653,
+    "Metric 2": 4.001629971297601,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95460",
+    "County": "Mendocino",
+    "Metric 1": 10.864902212861205,
+    "Metric 2": 4.069836177390466,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95461",
+    "County": "Lake",
+    "Metric 1": 23.009510180333674,
+    "Metric 2": 1.0865535563145343,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95462",
+    "County": "Sonoma",
+    "Metric 1": 22.437313267531405,
+    "Metric 2": 2.826850518602293,
+    "MSA Name": "Santa Rosa, CA"
+  },
+  {
+    "Zip": "95463",
+    "County": "Mendocino",
+    "Metric 1": 44.10231437627618,
+    "Metric 2": 0.27303195311095146,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95464",
+    "County": "Lake",
+    "Metric 1": 11.274413274776386,
+    "Metric 2": 3.994382411966674,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95465",
+    "County": "Sonoma",
+    "Metric 1": 35.19684499769528,
+    "Metric 2": 0.08490209629098786,
+    "MSA Name": "Santa Rosa, CA"
+  },
+  {
+    "Zip": "95466",
+    "County": "Mendocino",
+    "Metric 1": 4.020969762944643,
+    "Metric 2": 2.1466853795804015,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95467",
+    "County": "Lake",
+    "Metric 1": 47.476048687005154,
+    "Metric 2": 2.5237741910138842,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95468",
+    "County": "Mendocino",
+    "Metric 1": 25.314216028657942,
+    "Metric 2": 1.47715555621278,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95469",
+    "County": "Lake",
+    "Metric 1": 45.51328212703698,
+    "Metric 2": 3.700854142976912,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95470",
+    "County": "Mendocino",
+    "Metric 1": 14.89634422218527,
+    "Metric 2": 4.010832670094377,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95471",
+    "County": "Sonoma",
+    "Metric 1": 20.26787143819888,
+    "Metric 2": 1.3627944192863397,
+    "MSA Name": "Santa Rosa, CA"
+  },
+  {
+    "Zip": "95472",
+    "County": "Sonoma",
+    "Metric 1": 20.935958106888332,
+    "Metric 2": 1.0123565815748046,
+    "MSA Name": "Santa Rosa, CA"
+  },
+  {
+    "Zip": "95476",
+    "County": "Napa",
+    "Metric 1": 17.547834185986012,
+    "Metric 2": 1.9983081381863834,
+    "MSA Name": "Santa Rosa, CA"
+  },
+  {
+    "Zip": "95482",
+    "County": "Lake",
+    "Metric 1": 14.958100387227821,
+    "Metric 2": 1.4265174088565051,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95485",
+    "County": "Lake",
+    "Metric 1": 15.316864349127195,
+    "Metric 2": 3.346637909004839,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95486",
+    "County": "Sonoma",
+    "Metric 1": 11.844420512403271,
+    "Metric 2": 2.8652282013368424,
+    "MSA Name": "Santa Rosa, CA"
+  },
+  {
+    "Zip": "95488",
+    "County": "Mendocino",
+    "Metric 1": 2.4651753490993564,
+    "Metric 2": 4.717916862542223,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95490",
+    "County": "Mendocino",
+    "Metric 1": 26.672994517091077,
+    "Metric 2": 0.5546756019139126,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95492",
+    "County": "Sonoma",
+    "Metric 1": 12.429654610531177,
+    "Metric 2": 4.3783952716734795,
+    "MSA Name": "Santa Rosa, CA"
+  },
+  {
+    "Zip": "95493",
+    "County": "Lake",
+    "Metric 1": 11.2698868685874,
+    "Metric 2": 3.3577880960449393,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95494",
+    "County": "Mendocino",
+    "Metric 1": 17.492365766796038,
+    "Metric 2": 0.5376485838310275,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95497",
+    "County": "Sonoma",
+    "Metric 1": 13.971595224304512,
+    "Metric 2": 2.9093513912953695,
+    "MSA Name": "Santa Rosa, CA"
+  },
+  {
+    "Zip": "95501",
+    "County": "Humboldt",
+    "Metric 1": -4.168258106796391,
+    "Metric 2": -0.3298202815893607,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95503",
+    "County": "Humboldt",
+    "Metric 1": -2.9701593030453983,
+    "Metric 2": 5.311748920763697,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95511",
+    "County": "Humboldt",
+    "Metric 1": 35.06109847586514,
+    "Metric 2": 1.602340999627716,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95514",
+    "County": "Humboldt",
+    "Metric 1": 14.980295551627643,
+    "Metric 2": 1.0429940142187253,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95519",
+    "County": "Humboldt",
+    "Metric 1": 15.564485144984625,
+    "Metric 2": 0.41044387592413045,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95521",
+    "County": "Humboldt",
+    "Metric 1": 15.505245910824739,
+    "Metric 2": 2.079278867735236,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95524",
+    "County": "Humboldt",
+    "Metric 1": 26.36744531908539,
+    "Metric 2": 2.8965606433385984,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95525",
+    "County": "Humboldt",
+    "Metric 1": 4.043695486533306,
+    "Metric 2": -0.003760158303443093,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95526",
+    "County": "Humboldt",
+    "Metric 1": -0.25011516660935657,
+    "Metric 2": 4.536199529797291,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95527",
+    "County": "Humboldt",
+    "Metric 1": 38.51110203290634,
+    "Metric 2": 3.4707108802569273,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95528",
+    "County": "Humboldt",
+    "Metric 1": 46.597539491380736,
+    "Metric 2": 0.1498655295517753,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95531",
+    "County": "Del Norte",
+    "Metric 1": 24.608513327813117,
+    "Metric 2": 1.7564983744197724,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95536",
+    "County": "Humboldt",
+    "Metric 1": 17.59040387212556,
+    "Metric 2": 2.623912361562477,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95537",
+    "County": "Humboldt",
+    "Metric 1": 43.29687471671211,
+    "Metric 2": 3.31990965892639,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95540",
+    "County": "Humboldt",
+    "Metric 1": 24.951340101152276,
+    "Metric 2": 1.561852662649443,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95542",
+    "County": "Humboldt",
+    "Metric 1": 13.235448846826358,
+    "Metric 2": 2.7621413853472045,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95543",
+    "County": "Del Norte",
+    "Metric 1": 10.217905683880653,
+    "Metric 2": 1.35067365851533,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95545",
+    "County": "Humboldt",
+    "Metric 1": -8.413599950877165,
+    "Metric 2": 4.057015426401613,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95546",
+    "County": "Humboldt",
+    "Metric 1": 14.095327265112372,
+    "Metric 2": 1.4429713884879605,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95547",
+    "County": "Humboldt",
+    "Metric 1": 10.198455209910353,
+    "Metric 2": 0.534240880117796,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95548",
+    "County": "Del Norte",
+    "Metric 1": 15.847632819955356,
+    "Metric 2": 3.8055437864101913,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95549",
+    "County": "Humboldt",
+    "Metric 1": 8.065621885426609,
+    "Metric 2": 0.9671552325760588,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95550",
+    "County": "Humboldt",
+    "Metric 1": -4.553992356503432,
+    "Metric 2": 5.011274960523419,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95551",
+    "County": "Humboldt",
+    "Metric 1": 42.379988693979406,
+    "Metric 2": 1.334166079901347,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95552",
+    "County": "Humboldt",
+    "Metric 1": 53.643882943978106,
+    "Metric 2": 0.10679296168459715,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95553",
+    "County": "Humboldt",
+    "Metric 1": 44.50610679836501,
+    "Metric 2": 1.7094471406627116,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95554",
+    "County": "Humboldt",
+    "Metric 1": 13.893484750346586,
+    "Metric 2": 5.627835445301487,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95555",
+    "County": "Humboldt",
+    "Metric 1": -0.07652859438118421,
+    "Metric 2": 1.868985867160485,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95556",
+    "County": "Del Norte",
+    "Metric 1": 42.91325940860503,
+    "Metric 2": 3.0811734887654874,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95558",
+    "County": "Humboldt",
+    "Metric 1": 20.85139118714737,
+    "Metric 2": -0.5483389727135382,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95559",
+    "County": "Humboldt",
+    "Metric 1": 19.546913494430456,
+    "Metric 2": 2.150512484592361,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95560",
+    "County": "Humboldt",
+    "Metric 1": 43.36694840558158,
+    "Metric 2": 0.5273419779415487,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95562",
+    "County": "Humboldt",
+    "Metric 1": 37.02635409623222,
+    "Metric 2": 0.2982279219302524,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95563",
+    "County": "Humboldt",
+    "Metric 1": 20.76175579163811,
+    "Metric 2": 3.275507700336844,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95564",
+    "County": "Humboldt",
+    "Metric 1": 25.991428254179993,
+    "Metric 2": 3.511540813871263,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95565",
+    "County": "Humboldt",
+    "Metric 1": 17.87746110108948,
+    "Metric 2": 2.2895711619876566,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95567",
+    "County": "Del Norte",
+    "Metric 1": 50.51215865816261,
+    "Metric 2": 0.8546694224806471,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95568",
+    "County": "Humboldt",
+    "Metric 1": 19.23386637386854,
+    "Metric 2": -0.17676035707774768,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95569",
+    "County": "Humboldt",
+    "Metric 1": 10.372546597847812,
+    "Metric 2": 3.5318677026050613,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95570",
+    "County": "Humboldt",
+    "Metric 1": 27.466517434348148,
+    "Metric 2": -0.166361788249422,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95571",
+    "County": "Humboldt",
+    "Metric 1": 31.4068396847211,
+    "Metric 2": 3.925956739290923,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95573",
+    "County": "Humboldt",
+    "Metric 1": 5.1553535824987335,
+    "Metric 2": 3.1262544173713733,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95585",
+    "County": "Mendocino",
+    "Metric 1": 13.745015362401414,
+    "Metric 2": 3.7266375147139574,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95587",
+    "County": "Humboldt",
+    "Metric 1": 14.050826275182239,
+    "Metric 2": -0.10132543218616438,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95589",
+    "County": "Humboldt",
+    "Metric 1": 28.669416028980226,
+    "Metric 2": 2.6288159098801374,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95595",
+    "County": "Humboldt",
+    "Metric 1": 38.0307523773243,
+    "Metric 2": 0.8751650966823814,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95601",
+    "County": "Amador",
+    "Metric 1": 13.148192775025622,
+    "Metric 2": 1.1383928803526302,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95602",
+    "County": "Nevada",
+    "Metric 1": 43.03380149953079,
+    "Metric 2": -0.24075443643328842,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95603",
+    "County": "El Dorado",
+    "Metric 1": 18.808542466152108,
+    "Metric 2": 4.879938251059909,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95604",
+    "County": "Placer",
+    "Metric 1": 48.59389038120939,
+    "Metric 2": 2.075293179852051,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95605",
+    "County": "Sacramento",
+    "Metric 1": 30.856102469550994,
+    "Metric 2": 1.362725692406508,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95606",
+    "County": "Yolo",
+    "Metric 1": -8.750762397469513,
+    "Metric 2": 0.005712049542516938,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95607",
+    "County": "Napa",
+    "Metric 1": 35.96948494460533,
+    "Metric 2": 0.9894600966787641,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95608",
+    "County": "Sacramento",
+    "Metric 1": 42.3009580644867,
+    "Metric 2": 3.1939339082884777,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95610",
+    "County": "Placer",
+    "Metric 1": 37.792920821569524,
+    "Metric 2": 4.049851571683646,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95612",
+    "County": "Sacramento",
+    "Metric 1": -1.0158260601499955,
+    "Metric 2": 4.587040026367544,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95614",
+    "County": "El Dorado",
+    "Metric 1": 30.945070961866705,
+    "Metric 2": 1.4059688675908384,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95615",
+    "County": "Sacramento",
+    "Metric 1": 46.773017314887674,
+    "Metric 2": 3.602787575894072,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95616",
+    "County": "Solano",
+    "Metric 1": 11.917676949863827,
+    "Metric 2": 2.2668279535538365,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95618",
+    "County": "Solano",
+    "Metric 1": 28.785724029351954,
+    "Metric 2": 2.3844382382137836,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95619",
+    "County": "El Dorado",
+    "Metric 1": 3.3429581552158387,
+    "Metric 2": 0.52104294415235,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95620",
+    "County": "Solano",
+    "Metric 1": 52.23265993391617,
+    "Metric 2": 2.658728135893833,
+    "MSA Name": "Vallejo-Fairfield, CA"
+  },
+  {
+    "Zip": "95621",
+    "County": "Placer",
+    "Metric 1": 26.419452403046296,
+    "Metric 2": 5.053531175482275,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95623",
+    "County": "Amador",
+    "Metric 1": 14.424929426325791,
+    "Metric 2": 2.4179995157719576,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95624",
+    "County": "Sacramento",
+    "Metric 1": 18.859695259943642,
+    "Metric 2": 3.3636299419790614,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95625",
+    "County": "Solano",
+    "Metric 1": 12.864209692169204,
+    "Metric 2": 4.739285536030237,
+    "MSA Name": "Vallejo-Fairfield, CA"
+  },
+  {
+    "Zip": "95626",
+    "County": "Placer",
+    "Metric 1": 21.319955240299514,
+    "Metric 2": -0.017424331567940966,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95627",
+    "County": "Yolo",
+    "Metric 1": 25.46062593133223,
+    "Metric 2": 2.8000918784543813,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95628",
+    "County": "Sacramento",
+    "Metric 1": 21.377050320724372,
+    "Metric 2": 2.9576557898562363,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95629",
+    "County": "Amador",
+    "Metric 1": 2.1856682319110763,
+    "Metric 2": 0.04903659965357604,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95630",
+    "County": "El Dorado",
+    "Metric 1": -0.9739829622653202,
+    "Metric 2": 3.9220321736017203,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95631",
+    "County": "El Dorado",
+    "Metric 1": 13.462360903002523,
+    "Metric 2": 3.3203049322604006,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95632",
+    "County": "Sacramento",
+    "Metric 1": 15.757081473335719,
+    "Metric 2": -0.4210996361228814,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95633",
+    "County": "El Dorado",
+    "Metric 1": 17.277574461614055,
+    "Metric 2": 3.792007877604495,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95634",
+    "County": "El Dorado",
+    "Metric 1": 8.630907687406108,
+    "Metric 2": 1.2141303876513478,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95635",
+    "County": "El Dorado",
+    "Metric 1": 38.26133046385456,
+    "Metric 2": 4.118207948639433,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95636",
+    "County": "Amador",
+    "Metric 1": 36.04546867438118,
+    "Metric 2": 2.016515695891408,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95637",
+    "County": "Napa",
+    "Metric 1": 5.728467633245579,
+    "Metric 2": 3.1120432477151945,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95638",
+    "County": "Amador",
+    "Metric 1": 13.220546432557528,
+    "Metric 2": 0.7437294517182689,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95639",
+    "County": "Sacramento",
+    "Metric 1": 33.88832900071727,
+    "Metric 2": 3.992027200014354,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95640",
+    "County": "Amador",
+    "Metric 1": 16.504996063050946,
+    "Metric 2": 1.0714558996430674,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95641",
+    "County": "Sacramento",
+    "Metric 1": 8.093759981544206,
+    "Metric 2": 5.421262500656342,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95642",
+    "County": "Amador",
+    "Metric 1": 32.423401421556456,
+    "Metric 2": 3.103233522038644,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95645",
+    "County": "Colusa",
+    "Metric 1": 0.8646522378163977,
+    "Metric 2": 4.4520138986509945,
+    "MSA Name": "Yuba City, CA"
+  },
+  {
+    "Zip": "95646",
+    "County": "Alpine",
+    "Metric 1": 13.237997994085982,
+    "Metric 2": 0.21294846073362753,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95648",
+    "County": "Nevada",
+    "Metric 1": 14.537830593249634,
+    "Metric 2": 1.8401864282001608,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95650",
+    "County": "Placer",
+    "Metric 1": 30.58396547942278,
+    "Metric 2": 0.8293627790938256,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95651",
+    "County": "El Dorado",
+    "Metric 1": 11.915911470302749,
+    "Metric 2": 1.587972059925698,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95652",
+    "County": "Sacramento",
+    "Metric 1": 16.802354426529785,
+    "Metric 2": 4.3975584906314085,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95653",
+    "County": "Yolo",
+    "Metric 1": 22.39544241157721,
+    "Metric 2": 3.306512516558191,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95655",
+    "County": "Sacramento",
+    "Metric 1": 2.6408122563108263,
+    "Metric 2": 2.8187835307533318,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95658",
+    "County": "Placer",
+    "Metric 1": 16.413586427683967,
+    "Metric 2": 0.23647565911218318,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95659",
+    "County": "Sutter",
+    "Metric 1": 25.793829492629833,
+    "Metric 2": 0.6759144315997248,
+    "MSA Name": "Yuba City, CA"
+  },
+  {
+    "Zip": "95660",
+    "County": "Sacramento",
+    "Metric 1": 8.01155124859314,
+    "Metric 2": 2.572214877253172,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95661",
+    "County": "Placer",
+    "Metric 1": 3.5306446244703036,
+    "Metric 2": 4.442616225689925,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95662",
+    "County": "Placer",
+    "Metric 1": 5.296213731622837,
+    "Metric 2": 1.3647498219892071,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95663",
+    "County": "Placer",
+    "Metric 1": 29.83312666569975,
+    "Metric 2": 4.259742145682982,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95664",
+    "County": "El Dorado",
+    "Metric 1": 27.13360654051136,
+    "Metric 2": 2.2881489617942035,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95665",
+    "County": "Amador",
+    "Metric 1": 41.55573365801075,
+    "Metric 2": 2.5056729359292556,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95666",
+    "County": "Amador",
+    "Metric 1": 43.23375183673658,
+    "Metric 2": 4.1554281417184065,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95667",
+    "County": "El Dorado",
+    "Metric 1": 23.29674497722683,
+    "Metric 2": 3.5267807646036204,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95668",
+    "County": "Placer",
+    "Metric 1": 33.16699164344795,
+    "Metric 2": -0.36432828346077906,
+    "MSA Name": "Yuba City, CA"
+  },
+  {
+    "Zip": "95669",
+    "County": "Amador",
+    "Metric 1": 14.540803116674766,
+    "Metric 2": 0.9883445687597223,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95670",
+    "County": "Sacramento",
+    "Metric 1": 41.59775680384221,
+    "Metric 2": 1.3126084227599655,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95672",
+    "County": "El Dorado",
+    "Metric 1": 7.876318019632883,
+    "Metric 2": 1.4066044129880484,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95673",
+    "County": "Sacramento",
+    "Metric 1": 17.801998137477295,
+    "Metric 2": 3.157343513478787,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95674",
+    "County": "Placer",
+    "Metric 1": 2.992378310243811,
+    "Metric 2": 3.496909742662523,
+    "MSA Name": "Yuba City, CA"
+  },
+  {
+    "Zip": "95675",
+    "County": "Amador",
+    "Metric 1": 19.854977370628486,
+    "Metric 2": 3.4437359710583855,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95677",
+    "County": "Placer",
+    "Metric 1": 32.86764811516021,
+    "Metric 2": 1.4395105580089949,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95678",
+    "County": "Placer",
+    "Metric 1": 23.50433382560136,
+    "Metric 2": 1.7680648126878888,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95679",
+    "County": "Colusa",
+    "Metric 1": 20.12555684037292,
+    "Metric 2": 0.9951680963430809,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95680",
+    "County": "Sacramento",
+    "Metric 1": 21.89782166899581,
+    "Metric 2": 3.0577727137194497,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95681",
+    "County": "Placer",
+    "Metric 1": 7.196517982264504,
+    "Metric 2": 0.8061034407325639,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95682",
+    "County": "El Dorado",
+    "Metric 1": 32.55931123457474,
+    "Metric 2": 1.9607812178835786,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95683",
+    "County": "Amador",
+    "Metric 1": 34.84693072943528,
+    "Metric 2": 5.84157071271653,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95684",
+    "County": "Amador",
+    "Metric 1": 33.16650292392488,
+    "Metric 2": 3.076500425746669,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95685",
+    "County": "Amador",
+    "Metric 1": 38.90482713114884,
+    "Metric 2": 0.9398142634946924,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95686",
+    "County": "Sacramento",
+    "Metric 1": -0.0715425990183767,
+    "Metric 2": 0.7713568328663011,
+    "MSA Name": "Stockton-Lodi, CA"
+  },
+  {
+    "Zip": "95687",
+    "County": "Solano",
+    "Metric 1": -8.672436932561665,
+    "Metric 2": -0.37638973187368263,
+    "MSA Name": "Vallejo-Fairfield, CA"
+  },
+  {
+    "Zip": "95688",
+    "County": "Napa",
+    "Metric 1": 31.628773785430873,
+    "Metric 2": 3.7223010499735434,
+    "MSA Name": "Vallejo-Fairfield, CA"
+  },
+  {
+    "Zip": "95689",
+    "County": "Amador",
+    "Metric 1": 18.395429491169203,
+    "Metric 2": -0.725872437513862,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95690",
+    "County": "Sacramento",
+    "Metric 1": 42.68342388834543,
+    "Metric 2": 3.947788884289026,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95691",
+    "County": "Sacramento",
+    "Metric 1": -5.740231653716787,
+    "Metric 2": 1.8247493802330894,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95692",
+    "County": "Nevada",
+    "Metric 1": 27.8005091897391,
+    "Metric 2": 4.668086125894803,
+    "MSA Name": "Yuba City, CA"
+  },
+  {
+    "Zip": "95693",
+    "County": "Sacramento",
+    "Metric 1": 27.09151138367398,
+    "Metric 2": 1.0113026019563236,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95694",
+    "County": "Napa",
+    "Metric 1": 11.301905161137253,
+    "Metric 2": 1.198419656709398,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95695",
+    "County": "Yolo",
+    "Metric 1": 4.965453551017725,
+    "Metric 2": 0.49608626341499706,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95697",
+    "County": "Yolo",
+    "Metric 1": 10.70736821931032,
+    "Metric 2": 1.3354326789171067,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95698",
+    "County": "Yolo",
+    "Metric 1": 5.586570905841778,
+    "Metric 2": 4.6483681252349935,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95699",
+    "County": "Amador",
+    "Metric 1": 48.358887557942026,
+    "Metric 2": 0.9413772326428795,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95701",
+    "County": "Nevada",
+    "Metric 1": 17.595906404914626,
+    "Metric 2": 1.814442268256726,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95703",
+    "County": "Placer",
+    "Metric 1": 1.3355473210552595,
+    "Metric 2": 0.562299790253429,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95709",
+    "County": "El Dorado",
+    "Metric 1": 0.8205729735529906,
+    "Metric 2": -0.8629223344986313,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95713",
+    "County": "Nevada",
+    "Metric 1": 23.782338785325546,
+    "Metric 2": 2.6483655370037513,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95714",
+    "County": "Nevada",
+    "Metric 1": 32.87161253183967,
+    "Metric 2": 4.418698466868023,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95715",
+    "County": "Nevada",
+    "Metric 1": 28.231030440126215,
+    "Metric 2": 2.110055256332946,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95717",
+    "County": "Nevada",
+    "Metric 1": 19.200600723119006,
+    "Metric 2": 3.0273341341403057,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95720",
+    "County": "Amador",
+    "Metric 1": 28.78416402421481,
+    "Metric 2": 1.7139456947771512,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95721",
+    "County": "El Dorado",
+    "Metric 1": 19.568175724000582,
+    "Metric 2": 4.610074015756068,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95722",
+    "County": "Nevada",
+    "Metric 1": 27.780258551860836,
+    "Metric 2": 1.1256324052734201,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95724",
+    "County": "Nevada",
+    "Metric 1": 2.6556768040591385,
+    "Metric 2": 0.7874448114815878,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95726",
+    "County": "El Dorado",
+    "Metric 1": 6.86377838547272,
+    "Metric 2": 2.072606965673816,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95728",
+    "County": "Nevada",
+    "Metric 1": 22.817248309867672,
+    "Metric 2": 0.29209918326213913,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95735",
+    "County": "El Dorado",
+    "Metric 1": 22.73431830928832,
+    "Metric 2": 2.9047858198391707,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95736",
+    "County": "Placer",
+    "Metric 1": -1.870183513301086,
+    "Metric 2": 1.8120353901585773,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95742",
+    "County": "Sacramento",
+    "Metric 1": 1.0089272547485608,
+    "Metric 2": 1.457288115758063,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95746",
+    "County": "Placer",
+    "Metric 1": 11.263480641691858,
+    "Metric 2": -0.000012109608482913092,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95747",
+    "County": "Placer",
+    "Metric 1": 29.237731397321575,
+    "Metric 2": 2.8296607568496386,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95757",
+    "County": "Sacramento",
+    "Metric 1": 39.98596090651222,
+    "Metric 2": 2.031715608185255,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95758",
+    "County": "Sacramento",
+    "Metric 1": -0.2002986069442464,
+    "Metric 2": 0.37710853041042913,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95762",
+    "County": "El Dorado",
+    "Metric 1": 32.29638210950659,
+    "Metric 2": 3.525766834398454,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95765",
+    "County": "Placer",
+    "Metric 1": 27.705141165488133,
+    "Metric 2": -0.3636995562877282,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95776",
+    "County": "Sutter",
+    "Metric 1": 39.628363283251865,
+    "Metric 2": 3.374834373511038,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95811",
+    "County": "Sacramento",
+    "Metric 1": 2.2707660383756227,
+    "Metric 2": 4.580566064337242,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95814",
+    "County": "Sacramento",
+    "Metric 1": 35.51753915402389,
+    "Metric 2": 5.494730751996166,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95815",
+    "County": "Sacramento",
+    "Metric 1": 0.9878709735844232,
+    "Metric 2": 1.1256330806269614,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95816",
+    "County": "Sacramento",
+    "Metric 1": 1.1677119078375222,
+    "Metric 2": 1.5625530564902104,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95817",
+    "County": "Sacramento",
+    "Metric 1": 17.39844489333834,
+    "Metric 2": 0.80698887015225,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95818",
+    "County": "Sacramento",
+    "Metric 1": 28.661023115822417,
+    "Metric 2": 1.283140393982516,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95819",
+    "County": "Sacramento",
+    "Metric 1": 9.199920061768228,
+    "Metric 2": 0.6585914050380337,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95820",
+    "County": "Sacramento",
+    "Metric 1": 22.750929995932438,
+    "Metric 2": 1.2296975146148925,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95821",
+    "County": "Sacramento",
+    "Metric 1": 31.50937459676036,
+    "Metric 2": -0.02459797335106803,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95822",
+    "County": "Sacramento",
+    "Metric 1": 18.417855125141745,
+    "Metric 2": 5.205988784387127,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95823",
+    "County": "Sacramento",
+    "Metric 1": 23.731829622843414,
+    "Metric 2": 0.5682987859508775,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95824",
+    "County": "Sacramento",
+    "Metric 1": -3.5631308982342893,
+    "Metric 2": 4.517372992051493,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95825",
+    "County": "Sacramento",
+    "Metric 1": -6.192790205005447,
+    "Metric 2": 2.6219266390793505,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95826",
+    "County": "Sacramento",
+    "Metric 1": 4.559235859476789,
+    "Metric 2": 4.4333353037143315,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95827",
+    "County": "Sacramento",
+    "Metric 1": -5.915094754772018,
+    "Metric 2": 0.7107529740581819,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95828",
+    "County": "Sacramento",
+    "Metric 1": 24.645924867025297,
+    "Metric 2": 0.5504729499657833,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95829",
+    "County": "Sacramento",
+    "Metric 1": 8.182173018724594,
+    "Metric 2": -0.2897678514020331,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95830",
+    "County": "Sacramento",
+    "Metric 1": 0.3057533938647793,
+    "Metric 2": 3.5617842012218004,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95831",
+    "County": "Sacramento",
+    "Metric 1": 27.332797800515134,
+    "Metric 2": 3.5792587686679327,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95832",
+    "County": "Sacramento",
+    "Metric 1": 27.166880889965256,
+    "Metric 2": 4.987329854571858,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95833",
+    "County": "Sacramento",
+    "Metric 1": 9.219783036689352,
+    "Metric 2": 1.7818000639199556,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95834",
+    "County": "Sacramento",
+    "Metric 1": -4.789712683304581,
+    "Metric 2": 1.5889432489208313,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95835",
+    "County": "Sacramento",
+    "Metric 1": 9.86167575842404,
+    "Metric 2": 2.1968434929392626,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95837",
+    "County": "Sacramento",
+    "Metric 1": 21.394376922561843,
+    "Metric 2": 3.3574061153581614,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95838",
+    "County": "Sacramento",
+    "Metric 1": 16.760865244294298,
+    "Metric 2": 4.655865057905263,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95841",
+    "County": "Sacramento",
+    "Metric 1": 23.693363028250413,
+    "Metric 2": 2.14451063943265,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95842",
+    "County": "Sacramento",
+    "Metric 1": 16.62261041983743,
+    "Metric 2": 5.147269102690782,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95843",
+    "County": "Placer",
+    "Metric 1": 20.80302563609618,
+    "Metric 2": 4.660435476952928,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95864",
+    "County": "Sacramento",
+    "Metric 1": 5.994202589462898,
+    "Metric 2": 5.799387582801012,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95901",
+    "County": "Butte",
+    "Metric 1": -3.490357453107197,
+    "Metric 2": -0.5580785749106433,
+    "MSA Name": "Yuba City, CA"
+  },
+  {
+    "Zip": "95903",
+    "County": "Yuba",
+    "Metric 1": 48.72933046576756,
+    "Metric 2": 3.250961451288581,
+    "MSA Name": "Yuba City, CA"
+  },
+  {
+    "Zip": "95910",
+    "County": "Nevada",
+    "Metric 1": 10.659804329248855,
+    "Metric 2": 2.9209451369552593,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95912",
+    "County": "Colusa",
+    "Metric 1": 22.238006547845668,
+    "Metric 2": 0.41862241148400436,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95914",
+    "County": "Butte",
+    "Metric 1": 0.4980509959801732,
+    "Metric 2": 1.1211824965865809,
+    "MSA Name": "Chico, CA"
+  },
+  {
+    "Zip": "95915",
+    "County": "Plumas",
+    "Metric 1": 16.037124209459197,
+    "Metric 2": 0.02537794691642642,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95916",
+    "County": "Butte",
+    "Metric 1": -3.620346830570213,
+    "Metric 2": 1.2830149338012167,
+    "MSA Name": "Chico, CA"
+  },
+  {
+    "Zip": "95917",
+    "County": "Butte",
+    "Metric 1": 36.70343954401489,
+    "Metric 2": 4.156071718344611,
+    "MSA Name": "Chico, CA"
+  },
+  {
+    "Zip": "95918",
+    "County": "Nevada",
+    "Metric 1": 16.302452112553294,
+    "Metric 2": 2.183867803440727,
+    "MSA Name": "Yuba City, CA"
+  },
+  {
+    "Zip": "95919",
+    "County": "Yuba",
+    "Metric 1": 24.677682578972355,
+    "Metric 2": 1.7074978677856887,
+    "MSA Name": "Yuba City, CA"
+  },
+  { "Zip": "95920", "County": "Butte", "Metric 1": 46.962438149812456, "Metric 2": 3.63040992898656, "MSA Name": "NA" },
+  {
+    "Zip": "95922",
+    "County": "Nevada",
+    "Metric 1": 6.222787604761436,
+    "Metric 2": 2.820930565929942,
+    "MSA Name": "Yuba City, CA"
+  },
+  {
+    "Zip": "95923",
+    "County": "Plumas",
+    "Metric 1": 2.8871914203309883,
+    "Metric 2": 2.8054468378040065,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95925",
+    "County": "Butte",
+    "Metric 1": 35.2242332354947,
+    "Metric 2": -0.6589725704210341,
+    "MSA Name": "Chico, CA"
+  },
+  {
+    "Zip": "95926",
+    "County": "Butte",
+    "Metric 1": 0.772774048750624,
+    "Metric 2": 2.2794096014102196,
+    "MSA Name": "Chico, CA"
+  },
+  {
+    "Zip": "95928",
+    "County": "Butte",
+    "Metric 1": 28.653208351006327,
+    "Metric 2": -0.3744198776410487,
+    "MSA Name": "Chico, CA"
+  },
+  {
+    "Zip": "95930",
+    "County": "Butte",
+    "Metric 1": 14.412393334473329,
+    "Metric 2": 0.6453496541056171,
+    "MSA Name": "Chico, CA"
+  },
+  {
+    "Zip": "95932",
+    "County": "Colusa",
+    "Metric 1": 18.46485120158256,
+    "Metric 2": 1.4804363659493849,
+    "MSA Name": "NA"
+  },
+  { "Zip": "95934", "County": "Plumas", "Metric 1": 15.95895747015038, "Metric 2": 4.45291171911603, "MSA Name": "NA" },
+  {
+    "Zip": "95935",
+    "County": "Nevada",
+    "Metric 1": 16.98756045328237,
+    "Metric 2": 2.0866289450982776,
+    "MSA Name": "Yuba City, CA"
+  },
+  {
+    "Zip": "95936",
+    "County": "Plumas",
+    "Metric 1": 22.853709972232224,
+    "Metric 2": 0.16429378054220484,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95937",
+    "County": "Colusa",
+    "Metric 1": 2.6807463098926636,
+    "Metric 2": -0.42398201335602226,
+    "MSA Name": "Sacramento--Roseville--Arden-Arcade, CA"
+  },
+  {
+    "Zip": "95938",
+    "County": "Butte",
+    "Metric 1": 23.878226851990703,
+    "Metric 2": 3.0684037395379105,
+    "MSA Name": "Chico, CA"
+  },
+  {
+    "Zip": "95939",
+    "County": "Colusa",
+    "Metric 1": 12.13138247883519,
+    "Metric 2": 3.5820216819539406,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95941",
+    "County": "Butte",
+    "Metric 1": 25.16352183490367,
+    "Metric 2": 0.3748624218861987,
+    "MSA Name": "Chico, CA"
+  },
+  {
+    "Zip": "95942",
+    "County": "Butte",
+    "Metric 1": 7.806217243463712,
+    "Metric 2": 0.41781755960302636,
+    "MSA Name": "Chico, CA"
+  },
+  {
+    "Zip": "95943",
+    "County": "Butte",
+    "Metric 1": 26.201209995989927,
+    "Metric 2": 1.8641762583555475,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95944",
+    "County": "Sierra",
+    "Metric 1": 33.63422104057855,
+    "Metric 2": 0.4883305559861126,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95945",
+    "County": "Nevada",
+    "Metric 1": 41.24096215139767,
+    "Metric 2": 2.609907488981777,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95946",
+    "County": "Nevada",
+    "Metric 1": 14.491346837502517,
+    "Metric 2": -0.279587716395267,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95947",
+    "County": "Lassen",
+    "Metric 1": 27.38639497015346,
+    "Metric 2": -0.4265330809274506,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95948",
+    "County": "Butte",
+    "Metric 1": 52.81809889381841,
+    "Metric 2": 4.506355853606672,
+    "MSA Name": "Chico, CA"
+  },
+  {
+    "Zip": "95949",
+    "County": "Nevada",
+    "Metric 1": 19.52969272098025,
+    "Metric 2": 0.41710857316766536,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95950",
+    "County": "Colusa",
+    "Metric 1": 20.416885581647776,
+    "Metric 2": 3.738114110008523,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95951",
+    "County": "Butte",
+    "Metric 1": 33.186995820971234,
+    "Metric 2": 3.4535466640424515,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95953",
+    "County": "Butte",
+    "Metric 1": 0.39291283850332803,
+    "Metric 2": 1.5646962691125765,
+    "MSA Name": "Yuba City, CA"
+  },
+  {
+    "Zip": "95954",
+    "County": "Butte",
+    "Metric 1": 28.05242537419267,
+    "Metric 2": 4.6546236009160875,
+    "MSA Name": "Chico, CA"
+  },
+  {
+    "Zip": "95955",
+    "County": "Colusa",
+    "Metric 1": 23.55112898914897,
+    "Metric 2": 5.145543580775547,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95956",
+    "County": "Butte",
+    "Metric 1": 41.57473743296451,
+    "Metric 2": 2.1899277273591293,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95957",
+    "County": "Colusa",
+    "Metric 1": 29.51066953126562,
+    "Metric 2": 2.8586233140659374,
+    "MSA Name": "Yuba City, CA"
+  },
+  {
+    "Zip": "95959",
+    "County": "Nevada",
+    "Metric 1": 52.86704903593791,
+    "Metric 2": -0.5149020097228627,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95960",
+    "County": "Nevada",
+    "Metric 1": 13.132504972650674,
+    "Metric 2": 0.44873656950435575,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95961",
+    "County": "Sutter",
+    "Metric 1": 54.70297500683488,
+    "Metric 2": 2.8853420739661555,
+    "MSA Name": "Yuba City, CA"
+  },
+  {
+    "Zip": "95962",
+    "County": "Nevada",
+    "Metric 1": 28.609853727096883,
+    "Metric 2": 3.5905682281399502,
+    "MSA Name": "Yuba City, CA"
+  },
+  { "Zip": "95963", "County": "Butte", "Metric 1": 7.38949586442567, "Metric 2": 1.642126676810367, "MSA Name": "NA" },
+  {
+    "Zip": "95965",
+    "County": "Butte",
+    "Metric 1": 5.577661006010658,
+    "Metric 2": 4.236484715822966,
+    "MSA Name": "Chico, CA"
+  },
+  {
+    "Zip": "95966",
+    "County": "Butte",
+    "Metric 1": 39.779244440143394,
+    "Metric 2": 0.8495440135155885,
+    "MSA Name": "Chico, CA"
+  },
+  {
+    "Zip": "95968",
+    "County": "Butte",
+    "Metric 1": 46.73216295429633,
+    "Metric 2": 3.0820838758241753,
+    "MSA Name": "Chico, CA"
+  },
+  {
+    "Zip": "95969",
+    "County": "Butte",
+    "Metric 1": 2.168488152004945,
+    "Metric 2": 0.9218973594354586,
+    "MSA Name": "Chico, CA"
+  },
+  {
+    "Zip": "95970",
+    "County": "Colusa",
+    "Metric 1": 21.13922003682176,
+    "Metric 2": 3.0234544880811054,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95971",
+    "County": "Plumas",
+    "Metric 1": 23.380374458440063,
+    "Metric 2": 4.17223545208878,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95973",
+    "County": "Butte",
+    "Metric 1": 39.47053620491752,
+    "Metric 2": 0.37506483125623014,
+    "MSA Name": "Chico, CA"
+  },
+  {
+    "Zip": "95974",
+    "County": "Butte",
+    "Metric 1": 7.675120483053163,
+    "Metric 2": 2.4574540807744603,
+    "MSA Name": "Chico, CA"
+  },
+  {
+    "Zip": "95975",
+    "County": "Nevada",
+    "Metric 1": 40.713773855776545,
+    "Metric 2": 0.41134322010701374,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95977",
+    "County": "Nevada",
+    "Metric 1": 30.619218772807876,
+    "Metric 2": 3.3361110255126096,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95978",
+    "County": "Butte",
+    "Metric 1": 26.89100261344166,
+    "Metric 2": 4.389781145664044,
+    "MSA Name": "Chico, CA"
+  },
+  {
+    "Zip": "95979",
+    "County": "Colusa",
+    "Metric 1": 50.70238872879783,
+    "Metric 2": 0.38562484528581964,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95981",
+    "County": "Plumas",
+    "Metric 1": 1.8675028769789555,
+    "Metric 2": 2.244743056046494,
+    "MSA Name": "Yuba City, CA"
+  },
+  {
+    "Zip": "95982",
+    "County": "Sutter",
+    "Metric 1": 23.025398502230317,
+    "Metric 2": 1.9257507299892132,
+    "MSA Name": "Yuba City, CA"
+  },
+  {
+    "Zip": "95983",
+    "County": "Plumas",
+    "Metric 1": 9.925264576284516,
+    "Metric 2": 4.388296011182203,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95984",
+    "County": "Plumas",
+    "Metric 1": 5.419799493361601,
+    "Metric 2": 3.433091795354656,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95986",
+    "County": "Nevada",
+    "Metric 1": 22.312189383509384,
+    "Metric 2": 5.381812713127626,
+    "MSA Name": "Other Micropolitan Areas"
+  },
+  {
+    "Zip": "95987",
+    "County": "Colusa",
+    "Metric 1": 15.430932008016732,
+    "Metric 2": 1.859308503894939,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95988",
+    "County": "Colusa",
+    "Metric 1": 28.726609395573828,
+    "Metric 2": 1.2927745987043942,
+    "MSA Name": "NA"
+  },
+  {
+    "Zip": "95991",
+    "County": "Sutter",
+    "Metric 1": 42.50689054314902,
+    "Metric 2": 4.381667069282837,
+    "MSA Name": "Yuba City, CA"
+  },
+  {
+    "Zip": "95993",
+    "County": "Sutter",
+    "Metric 1": 1.413118136183894,
+    "Metric 2": 3.019351289366411,
+    "MSA Name": "Yuba City, CA"
+  }
+]

@@ -1,0 +1,39 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+node_modules
+/.pnp
+.pnp.js
+packages/visa-charts-demo/public/apidocs.json
+packages/visa-charts-demo/public/mono-packages.json
+packages/charts-react/src/mono-packages.json
+packages/charts-react-hooks/src/mono-packages.json
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.idea/
+visa-charts-lib/src/components.d.ts
+*.d.ts
+
+# react/angular binding auto-generated files
+packages/charts-angular*/src/directives/
+packages/charts-react*/src/components/
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*-lock.json
+*-debug.log
+*yarn.lock
+.yo-rc.json
+
+dist/
+www/
+build/
+.stencil/
+coverage/
+

@@ -1,0 +1,74 @@
+/**
+* Copyright (c) 2020 Visa, Inc.
+*
+* This source code is licensed under the MIT license
+* https://github.com/visa/visa-chart-components/blob/master/LICENSE
+*
+**/
+app-stacked-bar-chart {
+  font-family: OpenSans, sans-serif;
+
+  main {
+    padding: 3rem 6.25rem;
+  }
+  h1 {
+    color: #1e237e;
+    font-size: 1rem;
+    font-weight: 300;
+    letter-spacing: 0.01429rem;
+    margin: 1.12857rem 0rem 1.07143rem 0rem;
+    text-transform: capitalize;
+  }
+  h2 {
+    color: #003ea9;
+    font-family: OpenSans, sans-serif;
+    font-size: 1rem;
+    font-weight: 300;
+    letter-spacing: 0.01429rem;
+    text-transform: none;
+    margin-block-end: 0;
+  }
+  h3 {
+    color: #565656;
+    font-family: OpenSans, sans-serif;
+    font-size: 1.22857rem;
+    font-weight: 700;
+    letter-spacing: 0rem;
+    margin: 0.71429rem 0rem 0.35714rem 0rem;
+    text-transform: none;
+  }
+  h4,
+  h5,
+  h6 {
+    color: #565656;
+    font-family: OpenSans, sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0rem;
+    line-height: 1.42857rem;
+  }
+  .visa-ui-text--body {
+    color: #565656;
+    font-family: OpenSans, sans-serif;
+    font-size: 1em;
+    font-weight: 500;
+    line-height: 1.78571rem;
+  }
+  .visa-ui-text--instructions {
+    color: #57587d;
+    font-family: OpenSans, sans-serif;
+    font-size: 0.8em;
+    margin-block-start: 0;
+  }
+  .sparkline {
+    display: inline-block;
+    position: relative;
+    top: 3px;
+  }
+  .bar-rows {
+    display: inline-block;
+    position: relative;
+    width: 195px;
+    align-content: center;
+  }
+}

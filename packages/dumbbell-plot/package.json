@@ -1,0 +1,58 @@
+{
+  "name": "@visa/dumbbell-plot",
+  "version": "5.0.1",
+  "description": "Visa charts dumbbell plot component",
+  "license": "SEE LICENCE IN LICENSE",
+  "module": "dist/index.mjs",
+  "main": "dist/index.js",
+  "es2015": "dist/esm/index.mjs.js",
+  "es2017": "dist/esm/index.mjs.js",
+  "jsnext:main": "dist/esm/index.mjs.js",
+  "unpkg": "dist/dumbbell-plot.js",
+  "types": "dist/types/components.d.ts",
+  "collection": "dist/collection/collection-manifest.json",
+  "files": [
+    "dist/"
+  ],
+  "author": "Visa Data Visualization Team",
+  "scripts": {
+    "build": "stencil build",
+    "start-dev": "stencil build --dev --watch --serve",
+    "watch": "chokidar -d=4  '**/*.{tsx,ts,scss}' 'node_modules/@visa/visa-charts-utils/src' -i '/^src/(.*)/*.(d|spec|test|e2e).ts$|dist/(.*)/' -c 'npm run build'",
+    "tslint-check": "tslint-config-prettier-check ./tslint.json",
+    "test": "stencil test --spec --no-cache --color --coverage",
+    "update-snapshot": "jest --updateSnapshot --color"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/visa/visa-chart-components.git",
+    "directory": "/packages/dumbbell-plot"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "dependencies": {
+    "@visa/charts-types": "^0.2.1",
+    "@visa/visa-charts-data-table": "^2.0.2",
+    "@visa/visa-charts-utils": "^4.1.1",
+    "d3-array": "^2.0.3",
+    "d3-scale": "^2.2.2",
+    "d3-selection": "^1.4.0",
+    "d3-transition": "1.1.3",
+    "uuid": "7.0.0"
+  },
+  "devDependencies": {
+    "@visa/visa-charts-utils-dev": "^3.3.2"
+  },
+  "jest": {
+    "preset": "@stencil/core/testing",
+    "collectCoverageFrom": [
+      "**/*.{tsx,ts}",
+      "!**/node_modules/**",
+      "!**/*.d.ts",
+      "!**/*.{e2e.ts,spec.ts}",
+      "!**/(app-**).{tsx}",
+      "!**/**-values.{ts}"
+    ]
+  }
+}

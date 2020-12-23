@@ -1,0 +1,25 @@
+{
+  "name": "@visa/charts-types",
+  "version": "0.2.1",
+  "description": "Types for charts lib",
+  "license": "SEE LICENCE IN LICENSE",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "author": "Visa Data Visualization Team",
+  "scripts": {
+    "build": "rm -rf dist && tsc",
+    "watch": "tsc -w",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/visa/visa-chart-components.git",
+    "directory": "/packages/types"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "typescript": "^3.1.6"
+  }
+}

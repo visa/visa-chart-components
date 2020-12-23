@@ -1,0 +1,41 @@
+/**
+* Copyright (c) 2020 Visa, Inc.
+*
+* This source code is licensed under the MIT license
+* https://github.com/visa/visa-chart-components/blob/master/LICENSE
+*
+**/
+circle-packing {
+  .screen-reader-info {
+    position: absolute;
+    left: -9999px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .annotations {
+    pointer-events: none;
+    .handle {
+      pointer-events: all;
+    }
+  }
+
+  .label {
+    font: 12px 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    text-anchor: middle;
+  }
+
+  .label,
+  .node--root {
+    pointer-events: none;
+  }
+
+  // .label,
+  // .node--root,
+  // .node--leaf,
+  // .node--leaf--highlight {
+  //   pointer-events: none;
+  // }
+}

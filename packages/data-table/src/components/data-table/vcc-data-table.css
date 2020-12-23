@@ -1,0 +1,269 @@
+/**
+* Copyright (c) 2020 Visa, Inc.
+*
+* This source code is licensed under the MIT license
+* https://github.com/visa/visa-chart-components/blob/master/LICENSE
+*
+**/
+.vcc-thead .vcc-th {
+  background-color: var(--theme-data-table-header-background, #fff);
+  box-shadow: 0 -2px 0 var(--theme-data-table-header-underline, #333333) inset;
+}
+
+.vcc-tbody .vcc-tr:nth-child(odd) {
+  background: var(--theme-data-table-row-background, #fff);
+}
+
+.vcc-tbody .vcc-tr:nth-child(even) {
+  background: var(--theme-data-table-row-background--alt, #f2f4f8);
+}
+
+.vcc-th {
+  color: var(--theme-data-table-header-text, #333333);
+  font-weight: var(--theme-font-weight--semibold, 600);
+  height: var(--theme-data-tableheader-height, 48px);
+  text-align: left;
+  vertical-align: middle;
+}
+
+.vcc-td {
+  height: var(--theme-data-tablerow-height, 72px);
+}
+
+.vcc-td,
+.vcc-th {
+  padding: 0 var(--theme-data-table-padding, 14px);
+}
+
+.vcc-data-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.vcc-data-table.vcc-state--single-select .vcc-tbody .vcc-tr:hover,
+.vcc-data-table.vcc-state--multi-select .vcc-tbody .vcc-tr:hover {
+  background-color: var(--theme-data-table-row-background--hover, #e0eafa);
+}
+
+.vcc-data-table.vcc-state--single-select .vcc-tbody .vcc-tr:active,
+.vcc-data-table.vcc-state--multi-select .vcc-tbody .vcc-tr:active {
+  background-color: var(--theme-data-table-row-background--pressed, #d7d7de);
+}
+
+.vcc-data-table.vcc-state--single-select .vcc-tbody .vcc-tr:focus,
+.vcc-data-table.vcc-state--multi-select .vcc-tbody .vcc-tr:focus {
+  background-color: var(--theme-data-table-row-background--focus, #e0eafa);
+  outline: 1px dashed var(--theme-focus-outline-color, #373737);
+}
+
+.vcc-data-table.vcc-state--single-select .vcc-tbody .vcc-tr:focus.vcc-state--selected,
+.vcc-data-table.vcc-state--multi-select .vcc-tbody .vcc-tr:focus.vcc-state--selected {
+  background-color: var(--theme-data-table-row-background--selected, #d7d7de);
+}
+
+.vcc-data-table.vcc-state--single-select .vcc-tbody .vcc-tr.vcc-state--selected,
+.vcc-data-table.vcc-state--multi-select .vcc-tbody .vcc-tr.vcc-state--selected {
+  background-color: var(--theme-data-table-row-background--selected, #d7d7de);
+}
+
+.vcc-data-table.vcc-state--multi-select .vcc-th:first-child,
+.vcc-data-table.vcc-state--multi-select .vcc-th:first-child,
+.vcc-data-table.vcc-state--multi-select .vcc-td:first-child,
+.vcc-data-table.vcc-state--multi-select .vcc-td:first-child {
+  padding: 0 0 0 0.3125rem;
+}
+
+.vcc-data-table.vcc-state--multi-select .vcc-th:nth-child(2),
+.vcc-data-table.vcc-state--multi-select .vcc-th:nth-child(2),
+.vcc-data-table.vcc-state--multi-select .vcc-td:nth-child(2),
+.vcc-data-table.vcc-state--multi-select .vcc-td:nth-child(2) {
+  padding-left: 0;
+}
+
+.vcc-data-table.vcc-state--compact .vcc-td {
+  height: var(--theme-data-tablerow-height--compact, 44px);
+}
+
+.vcc-data-table.vcc-state--customizable-columns .vcc-thead .vcc-data-table--column-control {
+  padding-right: 0;
+}
+
+.vcc-data-table.vcc-state--key-value-pairs .vcc-th {
+  background-color: var(--theme-transparent, rgba(0, 0, 0, 0));
+  box-shadow: none;
+  font-weight: var(--theme-font-weight--semibold, 600);
+}
+
+.vcc-data-table.vcc-state--key-value-pairs .vcc-tr:nth-child(odd) {
+  background: var(--theme-data-table-row-background--alt, #f2f4f8);
+}
+
+.vcc-data-table.vcc-state--key-value-pairs .vcc-tr:nth-child(even) {
+  background: var(--theme-data-table-row-background, #fff);
+}
+
+.vcc-data-table.vcc-state--divider-lines .vcc-tr:nth-child(n) {
+  background-color: var(--theme-data-table-row-background, #fff);
+}
+
+.vcc-data-table.vcc-state--divider-lines .vcc-tr:not(:last-child) .vcc-td,
+.vcc-data-table.vcc-state--divider-lines .vcc-tr:not(:last-child) .vcc-th {
+  border-bottom: 1px solid var(--theme-data-table-divider-line, #d7d7de);
+}
+
+.vcc-data-table.vcc-state--reveal-first-column .vcc-th:first-child,
+.vcc-data-table.vcc-state--reveal-first-column .vcc-th:first-child,
+.vcc-data-table.vcc-state--reveal-first-column .vcc-td:first-child,
+.vcc-data-table.vcc-state--reveal-first-column .vcc-td:first-child {
+  display: none;
+}
+
+.vcc-data-table.vcc-state--reveal-last-column .vcc-th:last-child,
+.vcc-data-table.vcc-state--reveal-last-column .vcc-th:last-child,
+.vcc-data-table.vcc-state--reveal-last-column .vcc-td:last-child,
+.vcc-data-table.vcc-state--reveal-last-column .vcc-td:last-child {
+  display: none;
+}
+
+.vcc-data-table.vcc-state--reveal:hover .vcc-th:first-child,
+.vcc-data-table.vcc-state--reveal:hover .vcc-th:first-child,
+.vcc-data-table.vcc-state--reveal:hover .vcc-th:last-child,
+.vcc-data-table.vcc-state--reveal:hover .vcc-th:last-child,
+.vcc-data-table.vcc-state--reveal:hover .vcc-td:first-child,
+.vcc-data-table.vcc-state--reveal:hover .vcc-td:first-child,
+.vcc-data-table.vcc-state--reveal:hover .vcc-td:last-child,
+.vcc-data-table.vcc-state--reveal:hover .vcc-td:last-child,
+.vcc-data-table.vcc-state--reveal:hover .vcc-th:first-child,
+.vcc-data-table.vcc-state--reveal:hover .vcc-th:first-child,
+.vcc-data-table.vcc-state--reveal:hover .vcc-th:last-child,
+.vcc-data-table.vcc-state--reveal:hover .vcc-th:last-child,
+.vcc-data-table.vcc-state--reveal:hover .vcc-td:first-child,
+.vcc-data-table.vcc-state--reveal:hover .vcc-td:first-child,
+.vcc-data-table.vcc-state--reveal:hover .vcc-td:last-child,
+.vcc-data-table.vcc-state--reveal:hover .vcc-td:last-child {
+  display: table-cell;
+}
+
+.vcc-data-table.vcc-state--reveal:hover .vcc-data-table-inline-actions-cell {
+  padding: 0 var(--theme-data-table-padding, 14px);
+}
+
+.vcc-data-table.vcc-state--reveal:hover .vcc-btn-group {
+  display: block;
+}
+
+.vcc-data-table.vcc-state--reveal.vcc-state--multi-select .vcc-th:nth-child(2),
+.vcc-data-table.vcc-state--reveal.vcc-state--multi-select .vcc-th:nth-child(2),
+.vcc-data-table.vcc-state--reveal.vcc-state--multi-select .vcc-td:nth-child(2),
+.vcc-data-table.vcc-state--reveal.vcc-state--multi-select .vcc-td:nth-child(2) {
+  padding-left: var(--theme-data-table-padding, 14px);
+}
+
+.vcc-data-table.vcc-state--sticky-header .vcc-th {
+  position: sticky;
+}
+
+.vcc-data-table-inline-actions-cell {
+  padding: 0;
+  width: 0;
+}
+
+.vcc-data-table-inline-actions-cell .vcc-btn-group {
+  display: none;
+  white-space: nowrap;
+}
+
+.vcc-data-table-inline-actions-row:hover .vcc-data-table-inline-actions-cell {
+  padding: 0 var(--theme-data-table-padding, 14px);
+}
+
+.vcc-data-table-inline-actions-row:hover .vcc-btn-group {
+  display: block;
+}
+
+.vcc-data-table--border-left .vcc-th:not(:first-child),
+.vcc-data-table--border-left .vcc-th:not(:first-child),
+.vcc-data-table--border-left .vcc-td:not(:first-child),
+.vcc-data-table--border-left .vcc-td:not(:first-child) {
+  border-left: 1px solid var(--theme-data-table-divider-line, #d7d7de);
+}
+
+.vcc-data-table .vcc-btn-icon {
+  display: inline-block;
+  margin-right: 0.25rem;
+}
+
+.vcc-data-table .vcc-data-table-cell-border-left {
+  border-left: 1px solid var(--theme-data-table-divider-line, #d7d7de);
+}
+
+.vcc-data-table .vcc-data-table-color-background-alt {
+  background-color: var(--theme-data-table-row-background--alt, #f2f4f8);
+}
+
+.vcc-data-table .vcc-text--right {
+  text-align: right;
+}
+
+.vcc-pagination-bar .col {
+  align-items: center;
+  display: flex;
+}
+
+.vcc-pagination-bar .col.col--no-gutter {
+  flex-direction: row;
+}
+
+.vcc-pagination-bar .col--align-end {
+  justify-content: flex-end;
+}
+
+.vcc-pagination {
+  margin-right: 0;
+  width: auto;
+}
+
+.vcc-pagination-page-items-count {
+  margin-left: 1.6875rem;
+}
+
+.vcc-pagination .vcc-btn-split {
+  margin: 0;
+}
+
+.vcc-btn-sortable {
+  -webkit-font-smoothing: antialiased;
+  align-items: center;
+  background: var(--theme-transparent, rgba(0, 0, 0, 0));
+  border: 0;
+  box-sizing: border-box;
+  color: var(--theme-font-color, #222);
+  cursor: pointer;
+  display: inline-flex;
+  font-family: var(--theme-font, OpenSans, sans-serif);
+  font-size: var(--theme-font-size, 14px);
+  font-weight: var(--theme-font-weight--semibold, 600);
+  height: auto;
+  justify-content: flex-start;
+  outline: none;
+  padding: 0;
+  text-align: left;
+}
+
+.vcc-btn-sortable.focus-visible {
+  outline: 1px dashed var(--theme-focus-outline-color, #373737);
+}
+
+html:not(.js-focus-visible) .vcc-btn-sortable:focus {
+  outline: 1px dashed var(--theme-focus-outline-color, #373737);
+}
+
+.vcc-btn-sortable-icon {
+  display: flex;
+  height: 2rem;
+  width: 2rem;
+}
+
+.vcc-btn-sortable-icon .vcc-icon--tiny {
+  margin: auto;
+}

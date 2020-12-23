@@ -1,0 +1,55 @@
+{
+  "name": "@visa/visa-charts-utils",
+  "version": "4.1.1",
+  "description": "Utilities for charts lib",
+  "main": "dist/visa-charts-utils.cjs.js",
+  "module": "dist/visa-charts-utils.esm.js",
+  "browser": "dist/visa-charts-utils.umd.js",
+  "license": "SEE LICENCE IN LICENSE",
+  "author": "Visa Data Visualization Team",
+  "scripts": {
+    "prepare": "npm run build",
+    "build": "rollup -c",
+    "watch": "rollup -c -w",
+    "test": "jest --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/visa/visa-chart-components.git",
+    "directory": "/packages/utils"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "dependencies": {
+    "ally.js": "^1.4.1",
+    "d3": "^4.13.0",
+    "d3-axis": "^1.0.12",
+    "d3-color": "1.3.0",
+    "d3-ease": "^1.0.5",
+    "d3-format": "^1.3.2",
+    "d3-scale": "^2.2.2",
+    "d3-selection": "^1.4.0",
+    "d3-shape": "^1.3.4",
+    "d3-svg-annotation": "^2.5.1",
+    "d3-time-format": "^2.1.3",
+    "d3-transition": "1.1.3",
+    "ua-parser-js": "^0.7.21",
+    "yup": "^0.28.1"
+  },
+  "devDependencies": {
+    "@types/node": "^11.13.5",
+    "rollup": "^1.0.0",
+    "rollup-plugin-commonjs": "^9.2.0",
+    "rollup-plugin-node-resolve": "^4.0.0",
+    "rollup-plugin-typescript": "^1.0.0",
+    "rollup-plugin-typescript2": "0.27.1",
+    "ts-jest": "^24.0.2",
+    "ts-node": "^7.0.1",
+    "tslib": "^1.9.3",
+    "typescript": "^3.2.2"
+  },
+  "files": [
+    "dist"
+  ]
+}

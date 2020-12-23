@@ -1,0 +1,63 @@
+/**
+* Copyright (c) 2020 Visa, Inc.
+*
+* This source code is licensed under the MIT license
+* https://github.com/visa/visa-chart-components/blob/master/LICENSE
+*
+**/
+pie-chart {
+  .annotations {
+    pointer-events: none;
+    .handle {
+      pointer-events: all;
+    }
+  }
+
+  .screen-reader-info {
+    position: absolute;
+    left: -9999px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .data-table-link {
+    color: #767676;
+    text-decoration: none;
+    font-size: 12px;
+    margin-left: 5%;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .pie-tooltip {
+    z-index: 1;
+  }
+
+  .arc {
+    text {
+      font: 0.625rem sans-serif;
+      text-anchor: middle;
+      cursor: default;
+    }
+  }
+
+  .pie-dataLabel-highlight {
+    font-size: 1.5rem;
+    font-weight: 300;
+  }
+  .pie-dataLabel-note {
+    font-size: 0.75rem;
+    fill: #767676;
+  }
+
+  .pie-center-title-group {
+    fill: #767676;
+    .visa-ui-header--1 {
+      font-size: 2rem;
+    }
+  }
+}

@@ -1,0 +1,500 @@
+/**
+* Copyright (c) 2020 Visa, Inc.
+*
+* This source code is licensed under the MIT license
+* https://github.com/visa/visa-chart-components/blob/master/LICENSE
+*
+**/
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  .vcc-btn-label,
+  .vcc-btn-split .vcc-btn--action {
+    position: relative;
+  }
+}
+
+@-moz-document url-prefix() {
+  .vcc-btn-split .vcc-btn-label {
+    display: block !important;
+    float: left;
+    text-align: center;
+  }
+}
+
+@-moz-document url-prefix() {
+  .vcc-btn-split .vcc-btn--action {
+    display: block !important;
+    float: right;
+    text-align: center;
+  }
+}
+
+.vcc-btn.vcc-state--flippable:active [class^='vcc-icon']:not([role]),
+.vcc-btn.vcc-state--flippable.vcc-state--active [class^='vcc-icon']:not([role]) {
+  transform: rotate(180deg);
+}
+
+.vcc-btn-container {
+  margin-bottom: 1.875rem;
+}
+
+.vcc-btn-group {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  align-items: center;
+}
+
+.vcc-btn-group > [class^='vcc-btn']:not(.vcc-btn-label) {
+  margin: 0 0.25rem 3px 0.25rem;
+}
+
+.vcc-btn-group > [class^='vcc-btn']:not(.vcc-btn-label):first-child {
+  margin-left: 0;
+}
+
+.vcc-btn-group > [class^='vcc-btn']:not(.vcc-btn-label):last-child {
+  margin-right: 0;
+}
+
+.vcc-btn-group--reverse {
+  -webkit-flex-direction: row-reverse;
+  -moz-flex-direction: row-reverse;
+  -ms-flex-direction: row-reverse;
+  -o-flex-direction: row-reverse;
+  flex-direction: row-reverse;
+}
+
+.vcc-btn-group--reverse > [class^='vcc-btn']:not(.vcc-btn-label):first-child {
+  margin-left: 0.25rem;
+  margin-right: 0;
+}
+
+.vcc-btn-group--reverse > [class^='vcc-btn']:not(.vcc-btn-label):last-child {
+  margin-left: 0;
+  margin-right: 0.25rem;
+}
+
+.vcc-btn-group--right {
+  justify-content: flex-end;
+}
+
+.vcc-btn-label {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  flex: 0 0 auto;
+  justify-content: center;
+  margin: auto;
+  max-width: 100%;
+  overflow-wrap: break-word;
+  padding: 0 1rem;
+  text-align: center;
+  word-break: normal;
+  word-wrap: normal;
+}
+
+.vcc-btn-label [class^='vcc-icon']:first-child {
+  margin-right: 0.25rem;
+}
+
+.vcc-btn-label [class^='vcc-icon']:last-child {
+  margin-left: 0.25rem;
+}
+
+@-moz-document url-prefix() {
+  .vcc-btn-label {
+    padding: 0 0.6875rem;
+  }
+}
+
+.vcc-btn-icon {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-font-smoothing: antialiased;
+  border-radius: var(--theme-button--radius, 2px);
+  cursor: pointer !important;
+  font-family: var(--theme-font, OpenSans, sans-serif);
+  font-size: var(--theme-font-size, 14px);
+  font-weight: var(--theme-font-weight--semibold, 600);
+  outline: none;
+  padding-bottom: 0;
+  padding-top: 0;
+  transition: background 0.25s ease;
+  white-space: nowrap;
+  align-items: center;
+  background: var(--theme-action-primary, #1f1f1f);
+  border: 0;
+  border-radius: 2.5rem;
+  box-sizing: border-box;
+  color: var(--theme-button--default-text, #fff);
+  height: 3rem;
+  justify-content: center;
+  min-width: 3rem;
+  position: relative;
+}
+
+.vcc-btn-icon.focus-visible {
+  outline: 1px dashed var(--theme-focus-outline-color, #373737);
+}
+
+html:not(.js-focus-visible) .vcc-btn-icon:focus {
+  outline: 1px dashed var(--theme-focus-outline-color, #373737);
+}
+
+.vcc-btn-icon[disabled],
+.vcc-btn-icon.vcc-state--disabled {
+  cursor: default !important;
+  pointer-events: none;
+}
+
+.vcc-btn-icon[disabled] .vcc-btn-label,
+.vcc-btn-icon[disabled] .vcc-btn--action,
+.vcc-btn-icon.vcc-state--disabled .vcc-btn-label,
+.vcc-btn-icon.vcc-state--disabled .vcc-btn--action {
+  cursor: default !important;
+}
+
+.vcc-btn-icon[disabled] .vcc-btn--action,
+.vcc-btn-icon.vcc-state--disabled .vcc-btn--action {
+  border-color: var(--theme-button--default-text, #fff);
+}
+
+.vcc-btn-icon [class^='vcc-icon'] {
+  fill: var(--theme-button--default-text, #fff);
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.vcc-btn-icon _:-ms-fullscreen,
+.vcc-btn-icon .ie11up,
+.vcc-btn-icon {
+  display: inline;
+}
+
+.vcc-btn-icon [class^='vcc-icon'] {
+  fill: var(--theme-button--default-text, #fff);
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.vcc-btn-icon:hover,
+.vcc-btn-icon:active,
+.vcc-btn-icon:focus {
+  background: var(--theme-action-primary--hover, #d8d8d8);
+  color: var(--theme-button--default-text--hover, #fff);
+}
+
+.vcc-btn-icon:hover::-moz-focus-inner,
+.vcc-btn-icon:active::-moz-focus-inner,
+.vcc-btn-icon:focus::-moz-focus-inner {
+  border: 0;
+}
+
+.vcc-btn-icon:hover [class^='vcc-icon'],
+.vcc-btn-icon:active [class^='vcc-icon'],
+.vcc-btn-icon:focus [class^='vcc-icon'] {
+  fill: var(--theme-button--default-text--hover, #fff);
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.vcc-btn-icon:focus .vcc-btn-label {
+  text-decoration: none;
+}
+
+.vcc-btn-icon[disabled],
+.vcc-btn-icon.vcc-state--disabled {
+  background-color: var(--theme-transparent, rgba(0, 0, 0, 0));
+}
+
+.vcc-btn-icon[disabled] [class^='vcc-icon'],
+.vcc-btn-icon.vcc-state--disabled [class^='vcc-icon'] {
+  fill: var(--theme-button-icon-light--diabled, #d7d7de);
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.vcc-btn-icon.vcc-state--active {
+  background: var(--theme-action-primary--selected, #1f1f1f);
+  color: var(--theme-button--default-text--selected, #fff);
+}
+
+.vcc-btn-icon.vcc-state--active [class^='vcc-icon'] {
+  fill: var(--theme-button--default-text--selected, #fff);
+  height: 1.25rem;
+  width: 1.25rem;
+}
+
+.vcc-btn-icon .vcc-btn-label {
+  padding: 0;
+}
+
+.vcc-btn-icon .vcc-btn-label [class^='vcc-icon']:first-child {
+  margin-right: 0;
+}
+
+.vcc-btn-icon .vcc-btn-label [class^='vcc-icon']:last-child {
+  margin-left: 0;
+}
+
+.vcc-btn-icon--light {
+  background-color: var(--theme-transparent, rgba(0, 0, 0, 0));
+}
+
+.vcc-btn-icon--light [class^='vcc-icon'] {
+  fill: var(--theme-button-icon, #1f1f1f);
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.vcc-btn-icon--light:active {
+  background-color: var(--theme-button-icon-light--hover, #484848);
+}
+
+.vcc-btn-icon--light:active [class^='vcc-icon'] {
+  fill: var(--theme-button--default-text--hover, #fff);
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.vcc-btn-icon--light:hover:not(:active),
+.vcc-btn-icon--light:focus:not(:active) {
+  background-color: var(--theme-button--secondary-text--background--hover, #e0eafa);
+}
+
+.vcc-btn-icon--light:hover:not(:active) [class^='vcc-icon'],
+.vcc-btn-icon--light:focus:not(:active) [class^='vcc-icon'] {
+  fill: var(--theme-button--secondary-text--hover, #484848);
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.vcc-btn-icon--light:disabled {
+  background-color: var(--theme-transparent, rgba(0, 0, 0, 0));
+}
+
+.vcc-btn-icon--light:disabled [class^='vcc-icon'] {
+  fill: var(--theme-button--default-text--disabled-background, #d7d7de);
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.vcc-btn-icon--light-outline {
+  background-color: var(--theme-transparent, rgba(0, 0, 0, 0));
+  border: 2px solid var(--theme-button-icon, #1f1f1f);
+}
+
+.vcc-btn-icon--light-outline [class^='vcc-icon'] {
+  fill: var(--theme-button-icon, #1f1f1f);
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.vcc-btn-icon--light-outline:active {
+  background-color: var(--theme-button-icon-light--hover, #484848);
+  border-color: var(--theme-button-icon-light--hover, #484848);
+}
+
+.vcc-btn-icon--light-outline:active [class^='vcc-icon'] {
+  fill: var(--theme-button--default-text--hover, #fff);
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.vcc-btn-icon--light-outline:hover:not(:active) {
+  background-color: var(--theme-button-icon-light-background--hover, #e0eafa);
+  border-color: var(--theme-button-icon-light--hover, #484848);
+}
+
+.vcc-btn-icon--light-outline:hover:not(:active) [class^='vcc-icon'] {
+  fill: var(--theme-button-icon-light--hover, #484848);
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.vcc-btn-icon--light-outline:focus:not(:active) {
+  background-color: var(--theme-button-icon-light-background--hover, #e0eafa);
+  border-color: var(--theme-button-icon-light--hover, #484848);
+}
+
+.vcc-btn-icon--light-outline:focus:not(:active) [class^='vcc-icon'] {
+  fill: var(--theme-button-icon-light--hover, #484848);
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.vcc-btn-icon--light-outline:disabled {
+  background-color: var(--theme-transparent, rgba(0, 0, 0, 0));
+  border-color: var(--theme-button--default-text--disabled-background, #d7d7de);
+}
+
+.vcc-btn-icon--light-outline:disabled [class^='vcc-icon'] {
+  fill: var(--theme-button--default-text--disabled-background, #d7d7de);
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.vcc-btn-icon--light-tiny {
+  background-color: var(--theme-transparent, rgba(0, 0, 0, 0));
+  color: var(--theme-button-icon-light, #484848);
+  height: 2rem;
+  min-width: 2rem;
+}
+
+.vcc-btn-icon--light-tiny [class^='vcc-icon'] {
+  fill: currentColor;
+  height: 1rem;
+  width: 1rem;
+}
+
+.vcc-btn-icon--light-tiny:active {
+  background-color: var(--theme-button-icon-light--hover, #484848);
+}
+
+.vcc-btn-icon--light-tiny:active [class^='vcc-icon'] {
+  fill: currentColor;
+  height: 1rem;
+  width: 1rem;
+}
+
+.vcc-btn-icon--light-tiny:hover:not(:active) {
+  background-color: var(--theme-button-icon-light-background--hover, #e0eafa);
+  color: var(--theme-button-icon-light, #484848);
+}
+
+.vcc-btn-icon--light-tiny:hover:not(:active) [class^='vcc-icon'] {
+  fill: currentColor;
+  height: 1rem;
+  width: 1rem;
+}
+
+.vcc-btn-icon--light-tiny:focus:not(:active) {
+  background-color: var(--theme-button-icon-light-background--hover, #e0eafa);
+  color: var(--theme-button-icon-light, #484848);
+}
+
+.vcc-btn-icon--light-tiny:focus:not(:active) [class^='vcc-icon'] {
+  fill: currentColor;
+  height: 1rem;
+  width: 1rem;
+}
+
+.vcc-btn-icon--light-tiny:disabled {
+  background-color: var(--theme-transparent, rgba(0, 0, 0, 0));
+  border-color: #d7d7de;
+}
+
+.vcc-btn-icon--light-tiny:disabled [class^='vcc-icon'] {
+  fill: var(--theme-button--default-text--disabled-background, #d7d7de);
+  height: 1rem;
+  width: 1rem;
+}
+
+.vcc-btn-icon--dark {
+  background-color: var(--theme-transparent, rgba(0, 0, 0, 0));
+}
+
+.vcc-btn-icon--dark:focus:not(:active) {
+  outline-color: var(--theme-button--default-text--focus, #fff);
+}
+
+.vcc-btn-icon--dark:hover,
+.vcc-btn-icon--dark:focus {
+  background-color: var(--theme-button-icon-light--hover, #484848);
+  border-color: var(--theme-button-icon-light--hover, #484848);
+}
+
+.vcc-btn-icon--dark:disabled {
+  background-color: var(--theme-transparent, rgba(0, 0, 0, 0));
+  border-color: var(--theme-button--default-text--disabled-background, #d7d7de);
+}
+
+.vcc-btn-icon--dark:disabled [class^='vcc-icon'] {
+  fill: var(--theme-button--default-text--disabled-background, #d7d7de);
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.vcc-btn-icon--dark-outline {
+  background-color: var(--theme-transparent, rgba(0, 0, 0, 0));
+  border: 2px solid var(--theme-button--default-text, #fff);
+}
+
+.vcc-btn-icon--dark-outline:focus:not(:active) {
+  outline-color: var(--theme-button--default-text--focus, #fff);
+}
+
+.vcc-btn-icon--dark-outline:hover,
+.vcc-btn-icon--dark-outline:focus {
+  background-color: var(--theme-button-icon-light--hover, #484848);
+  border-color: var(--theme-button-icon-light--hover, #484848);
+}
+
+.vcc-btn-icon--dark-outline:disabled {
+  background-color: var(--theme-transparent, rgba(0, 0, 0, 0));
+  border-color: var(--theme-button--default-text--disabled-background, #d7d7de);
+}
+
+.vcc-btn-icon--dark-outline:disabled [class^='vcc-icon'] {
+  fill: var(--theme-button--default-text--disabled-background, #d7d7de);
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.vcc-btn-icon--dark-tiny {
+  background-color: var(--theme-transparent, rgba(0, 0, 0, 0));
+  height: 2rem;
+  min-width: 2rem;
+}
+
+.vcc-btn-icon--dark-tiny:focus:not(:active) {
+  outline-color: var(--theme-button--default-text--focus, #fff);
+}
+
+.vcc-btn-icon--dark-tiny [class^='vcc-icon'] {
+  fill: var(--theme-button--default-text, #fff);
+  height: 1rem;
+  width: 1rem;
+}
+
+.vcc-btn-icon--dark-tiny:active {
+  background-color: var(--theme-button-icon-light--hover, #484848);
+}
+
+.vcc-btn-icon--dark-tiny:active [class^='vcc-icon'] {
+  fill: var(--theme-button--default-text--hover, #fff);
+  height: 1rem;
+  width: 1rem;
+}
+
+.vcc-btn-icon--dark-tiny:hover:not(:active),
+.vcc-btn-icon--dark-tiny:focus:not(:active) {
+  background-color: var(--theme-button-icon-light--hover, #484848);
+}
+
+.vcc-btn-icon--dark-tiny:hover:not(:active) [class^='vcc-icon'],
+.vcc-btn-icon--dark-tiny:focus:not(:active) [class^='vcc-icon'] {
+  fill: var(--theme-button--default-text--hover, #fff);
+  height: 1rem;
+  width: 1rem;
+}
+
+.vcc-btn-icon--dark-tiny:disabled {
+  background-color: var(--theme-transparent, rgba(0, 0, 0, 0));
+  border-color: #d7d7de;
+}
+
+.vcc-btn-icon--dark-tiny:disabled [class^='vcc-icon'] {
+  fill: var(--theme-button--default-text--disabled-background, #d7d7de);
+  height: 1rem;
+  width: 1rem;
+}

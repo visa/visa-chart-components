@@ -1,0 +1,109 @@
+{
+  "name": "@visa/charts",
+  "author": "Visa Data Visualization Team",
+  "license": "SEE LICENCE IN LICENSE",
+  "scripts": {
+    "dev": "node ./scripts/bootstrap.js",
+    "bootstrap": "npm-run-all -s  generate-lerna-json bootup build",
+    "serve": "npm-run-all -p watch:charts start",
+    "start": "npm-run-all -p generate-api-docs-json start:demo",
+    "start:demo": "npm -C ./packages/visa-charts-demo run start",
+    "start:angular-demo": "npm -C ./packages/charts-angular-demo run start",
+    "bootup": "lerna bootstrap --concurrency 2",
+    "build": "lerna run --stream --concurrency 8 build",
+    "start-dev": "lerna run --stream start-dev",
+    "watch:charts": "lerna run watch --stream --no-sort --concurrency 10 --scope=@visa/charts",
+    "watch": "lerna run watch --stream --no-sort --concurrency 999 --include-filtered-dependencies",
+    "start:react-demo": "npm -C ./packages/charts-react-demo run start",
+    "start:react-hooks-demo": "npm -C ./packages/charts-react-hooks-demo run start",
+    "install:react-demo": "npm install @visa/visa-charts-utils && npm -C ./packages/charts-react-demo run install:prod",
+    "build-demo:react-prod": "npm run install:react-demo && npm -C ./packages/charts-react-demo run build:prod",
+    "install:react-hooks-demo": "npm install @visa/visa-charts-utils && npm -C ./packages/charts-react-hooks-demo run install:prod",
+    "build-demo:react-hooks-prod": "npm run install:react-hooks-demo && npm -C ./packages/charts-react-hooks-demo run build:prod",
+    "clean": "lerna clean",
+    "generate-api-docs-json": "npm -C ./packages/visa-charts-demo run generate-api-docs-json",
+    "generate-lerna-json": "lerna ls -l --json > ./packages/visa-charts-demo/public/mono-packages.json && lerna ls -l --json > ./packages/charts-react/src/mono-packages.json",
+    "license-update": "node scripts/license-update.js",
+    "lint": "npm -C ./packages/visa-charts-demo run eslint",
+    "lint:fix": "npm -C ./packages/visa-charts-demo run eslint:fix",
+    "lint-lib": "npm -C ./packages/visa-charts-lib run tslint-check",
+    "prettier-all-check": "prettier --config  ./.prettierrc --ignore ./.prettierignore --debug-check \"**/*.{js,jsx,ts,tsx,html,jsx,json,css,scss,md}\"",
+    "prettier-all": "prettier --config  ./.prettierrc --ignore ./.prettierignore --write \"**/*.{js,jsx,ts,tsx,html,jsx,json,css,scss,md}\"",
+    "release": "node scripts/alter-change-log.js && lerna version --no-push --conventional-commits --conventional-graduate --no-commit-hooks",
+    "release:no-git-tag": "node scripts/alter-change-log.js && lerna version --no-push --no-git-tag-version --conventional-commits --conventional-graduate --no-commit-hooks",
+    "install:demo": "npm i @visa/visa-charts-utils && npm -C ./packages/visa-charts-demo run install:demo",
+    "install:angular-demo": "npm -C ./packages/charts-angular-demo run install:demo",
+    "build-demo:prod": "npm run install:demo && npm run generate-api-docs-json && npm -C ./packages/visa-charts-demo run build:prod",
+    "stats": "npm -C ./packages/visa-charts-demo run stats && npm run browse-stats",
+    "browse-stats": "npm -C ./packages/visa-charts-demo run browse-stats",
+    "publish": "npm login & lerna publish from-package",
+    "pre-release": "lerna version --no-push --conventional-commits --conventional-prerelease --no-commit-hooks",
+    "pre-release:no-git-tag": "lerna version --no-push --no-git-tag-version --conventional-commits --conventional-prerelease --no-commit-hooks",
+    "ls-scripts": "./node_modules/.bin/ls-scripts",
+    "ls-commit-types": "./node_modules/.bin/conventional-commit-types"
+  },
+  "dependencies": {
+    "d3-interpolate": "1.3.2"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "11.0.0",
+    "@commitlint/config-conventional": "11.0.0",
+    "@stencil/core": "1.9.0",
+    "chalk": "3.0.0",
+    "chokidar-cli": "2.1.0",
+    "commander": "4.0.1",
+    "conventional-commit-types-cli": "1.0.3",
+    "fs": "0.0.2",
+    "husky": "1.3.1",
+    "inquirer": "7.0.1",
+    "@types/jest": "24.9.1",
+    "@types/puppeteer": "1.20.3",
+    "jest": "24.9.0",
+    "jest-cli": "24.9.0",
+    "lerna": "^3.11.1",
+    "lint-staged": "8.1.4",
+    "npm-ls-scripts": "0.1.2",
+    "npm-run-all": "4.1.5",
+    "npmlog": "4.1.2",
+    "path": "0.12.7",
+    "prettier": "1.16.4",
+    "source-map-support": "0.4.3",
+    "typedoc": "0.19.2",
+    "@stencil/angular-output-target": "0.0.2",
+    "@stencil/react-output-target": "0.0.5",
+    "@stencil/sass": "^1.0.1",
+    "@stencil/utils": "latest",
+    "tslint": "^5.11.0",
+    "tslint-config-prettier": "^1.14.0",
+    "workbox-build": "4.3.1"
+  },
+  "config": {
+    "scripts": {
+      "bootstrap": "Install and builds all packages",
+      "serve": "Start demo application",
+      "build": "Builds all packages",
+      "watch": "Watch for changes in provided package",
+      "ls-commit-types": "List conventional commit types",
+      "ls-scripts": "List npm scripts",
+      "license-update": "Update license statement across all code files",
+      "generate-api-docs-json": "Generate api docs json for all components",
+      "clean": "Remove package's node_modules"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/visa/visa-chart-components.git"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "./node_modules/.bin/commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "lint-staged": {
+    "*": [
+      "prettier --config ./.prettierrc --write",
+      "git add"
+    ]
+  }
+}
