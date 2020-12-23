@@ -1,0 +1,15 @@
+{
+  "packages": ["packages/*"],
+  "version": "independent",
+  "npmClient": "yarn",
+  "command": {
+    "version": {
+      "message": "chore(release): publish",
+      "ignoreChanges": ["*.md", "*.txt"],
+      "allowBranch": ["master", "development", "feature/accessibility-textures"]
+    },
+    "publish": {
+      "conventionalCommits": true
+    }
+  }
+}

@@ -1,0 +1,69 @@
+/**
+* Copyright (c) 2020 Visa, Inc.
+*
+* This source code is licensed under the MIT license
+* https://github.com/visa/visa-chart-components/blob/master/LICENSE
+*
+**/
+pareto-chart {
+  .axis {
+    font-size: 12px;
+    text {
+      font: 0.65rem;
+      fill: #767676;
+    }
+
+    &-label {
+      text-anchor: middle;
+      font: 1rem sans-serif;
+    }
+    path {
+      stroke: #767676;
+    }
+  }
+
+  .patero-line {
+    path {
+      stroke: #767676;
+    }
+    .patero-highlight {
+      fill: black;
+    }
+  }
+
+  .grid {
+    line {
+      stroke: #767676;
+      stroke-opacity: 0.6;
+      shape-rendering: crispEdges;
+      stroke-dasharray: 4, 4;
+    }
+
+    path {
+      stroke-width: 0;
+      stroke: #767676;
+    }
+  }
+  .y.axis {
+    path {
+      stroke: #767676;
+      opacity: 0;
+    }
+  }
+  .x.axis {
+    path {
+      stroke: #767676;
+    }
+  }
+
+  .o-layout--chart {
+    .bar-dataLabel-vertical {
+      fill: #767676;
+      text-anchor: middle;
+    }
+    .bar-dataLabel-horizontal {
+      fill: #767676;
+      text-anchor: start;
+    }
+  }
+}

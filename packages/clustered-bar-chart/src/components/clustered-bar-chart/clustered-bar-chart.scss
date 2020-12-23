@@ -1,0 +1,159 @@
+/**
+* Copyright (c) 2020 Visa, Inc.
+*
+* This source code is licensed under the MIT license
+* https://github.com/visa/visa-chart-components/blob/master/LICENSE
+*
+**/
+clustered-bar-chart {
+  .annotations {
+    pointer-events: none;
+    .handle {
+      pointer-events: all;
+    }
+  }
+
+  .screen-reader-info {
+    position: absolute;
+    left: -9999px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .data-table-link {
+    color: #767676;
+    text-decoration: none;
+    font-size: 12px;
+    margin-left: 5%;
+  }
+
+  .hidden {
+    display: none;
+  }
+  cursor: default;
+  #visa-viz-d3-clustered-bar-container {
+    clear: both;
+  }
+
+  .clustered-bar-legend {
+    font-size: 1em;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    .legend {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      margin-right: 10px;
+    }
+
+    .key-dot {
+      margin: 3px 8px;
+    }
+  }
+
+  .light {
+    .grid {
+      line {
+        stroke: #767676;
+        stroke-opacity: 1;
+        stroke-width: 0.8;
+        // shape-rendering: crispEdges;
+        stroke-dasharray: 4, 4;
+      }
+      path {
+        stroke-width: 0;
+      }
+    }
+    .axis {
+      font-size: 12px;
+      .tick {
+        text {
+          fill: #767676;
+        }
+        line {
+          stroke: #767676;
+        }
+      }
+
+      &-label {
+        // axis label
+        text-anchor: middle;
+        font: 1rem sans-serif;
+      }
+    }
+
+    .y.axis {
+      path {
+        stroke: #767676;
+        opacity: 0;
+      }
+    }
+    .x.axis {
+      path {
+        stroke: #767676;
+      }
+    }
+  }
+  .dark {
+    .grid {
+      line {
+        stroke: lightgrey;
+        stroke-opacity: 0.7;
+        shape-rendering: crispEdges;
+      }
+      path {
+        stroke-width: 0;
+      }
+    }
+    .axis {
+      font-size: 12px;
+      .tick {
+        line {
+          stroke: lightgrey;
+        }
+        text {
+          fill: grey;
+        }
+      }
+      path {
+        stroke: black;
+      }
+
+      &-label {
+        text-anchor: middle;
+        font: 1rem sans-serif;
+      }
+    }
+    .o-layout--chart svg {
+      background: black;
+      .clustered-bar-dataLabel-vertical {
+        text-anchor: middle;
+      }
+      .clustered-bar-dataLabel-horizontal {
+        text-anchor: start;
+      }
+    }
+  }
+
+  //TBD: add color based on scheme
+  // .r.axis circle {
+  //   stroke: #cccccc;
+  //   stroke-width: 1px;
+  //   fill: none;
+  // }
+
+  //Text alignment, not impacted by color theme
+  // .a.axis text {
+  //   text-anchor: middle;
+  //   font-size: 10pt;
+  // }
+  //
+  // .r.axis text {
+  //   text-anchor: end;
+  //   font-size: 8pt;
+  // }
+}

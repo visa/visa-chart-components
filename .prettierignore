@@ -1,0 +1,25 @@
+*.lock
+**/node_modules/
+**/public/
+**/dist/
+**/www/
+**/.stencil/
+**/*.lock
+**/*.log
+**/*.d.ts
+**/*.config.js
+**/*.editorconfig
+**/*.gitignore
+**/LICENSE
+**/LICENSE HEADER
+.prettierignore
+*.log
+**/*.png
+**/*.jpg
+**/*.ico
+**/*.svg
+**/*.prod
+**/*.staging
+**/build/
+**/*.snap
+**/*.env

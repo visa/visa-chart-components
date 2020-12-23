@@ -1,0 +1,40 @@
+/**
+* Copyright (c) 2020 Visa, Inc.
+*
+* This source code is licensed under the MIT license
+* https://github.com/visa/visa-chart-components/blob/master/LICENSE
+*
+**/
+@import './vcc-button.css';
+@import './vcc-data-table.css';
+
+.vcc-sr {
+  height: 1px;
+  left: -1000000px;
+  overflow: hidden;
+  position: absolute !important;
+  top: auto;
+  width: 1px;
+}
+
+.visa-viz-data-table-outer-container {
+  .visa-viz-button-wrapper {
+    height: 0px;
+  }
+  .visa-viz-data-table-button {
+    position: relative;
+    padding: 0;
+    height: 32px;
+    width: 32px;
+  }
+  .vcc-btn-icon.vcc-state--active [class^='vcc-icon'] {
+    height: 1rem;
+    width: 1rem;
+  }
+  svg.vcc-icons {
+    display: none;
+  }
+  .vcc-data-table th {
+    text-align: left;
+  }
+}

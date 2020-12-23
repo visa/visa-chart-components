@@ -1,0 +1,32 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "E2E Test Current File",
+      "cwd": "${workspaceFolder}",
+      "program": "${workspaceFolder}/node_modules/.bin/stencil",
+      "args": ["test", "--e2e", "${relativeFile}"],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "disableOptimisticBPs": true,
+      "skipFiles": ["${workspaceFolder}/node_modules/**/*.js", "<node_internals>/**/*.js"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Spec Test Current File",
+      "cwd": "${workspaceFolder}",
+      "port": 9229,
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["--inspect-brk"],
+      "program": "${workspaceFolder}/node_modules/.bin/stencil",
+      "args": ["test", "--spec", "--max-workers=1", "${relativeFile}"],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "disableOptimisticBPs": true,
+      "skipFiles": ["${workspaceFolder}/node_modules/**/*.js", "<node_internals>/**/*.js"]
+    }
+  ]
+}

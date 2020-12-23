@@ -1,0 +1,12 @@
+{
+  "rules": {
+    "ordered-imports": false,
+    "object-literal-sort-keys": false,
+    "member-access": false,
+    "jsdoc-format": false,
+    "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore"],
+    "no-submodule-imports": [true, "@stencil/core/testing"],
+    "no-implicit-dependencies": false
+  },
+  "extends": ["tslint:latest", "tslint-config-prettier"]
+}

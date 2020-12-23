@@ -1,0 +1,2470 @@
+/**
+ * Copyright (c) 2020 Visa, Inc.
+ *
+ * This source code is licensed under the MIT license
+ * https://github.com/visa/visa-chart-components/blob/master/LICENSE
+ *
+ **/
+import { Component, Element, Prop, Watch, h, Event, EventEmitter } from '@stencil/core';
+import { select, event } from 'd3-selection'; // event
+import { min, max } from 'd3-array';
+import { scalePow, scaleQuantize, scaleOrdinal } from 'd3-scale';
+import { easeCircleIn } from 'd3-ease';
+import { nest } from 'd3-collection';
+import * as geo from 'd3-geo';
+import * as topojson from 'topojson';
+import worldData from './topodata';
+import worldSmall from './topodata-small';
+import { d3Projections } from './world-map-projections';
+import {
+  IBoxModelType,
+  IMapMarkerStyleType,
+  ICountryStyleType,
+  IDataLabelType,
+  ILegendType,
+  IHoverStyleType,
+  IClickStyleType,
+  ITooltipLabelType,
+  IAccessibilityType
+} from '@visa/charts-types';
+import { WorldMapDefaultValues } from './world-map-default-values';
+import { v4 as uuid } from 'uuid';
+import 'd3-transition';
+
+import Utils from '@visa/visa-charts-utils';
+
+const {
+  getContrastingStroke,
+  createTextStrokeFilter,
+  convertColorsToTextures,
+  findTagLevel,
+  initializeGeometryAccess,
+  initializeDescriptionRoot,
+  initializeGroupAccess,
+  setGeometryAccessLabel,
+  setGroupAccessLabel,
+  setRootSVGAccess,
+  hideNonessentialGroups,
+  setAccessTitle,
+  setAccessSubtitle,
+  setAccessLongDescription,
+  setAccessExecutiveSummary,
+  setAccessPurpose,
+  setAccessContext,
+  setAccessStatistics,
+  setAccessChartCounts,
+  setAccessStructure,
+  // setAccessAnnotation, // not yet supported
+  retainAccessFocus,
+  checkAccessFocus,
+  setElementInteractionAccessState,
+  setAccessibilityDescriptionWidth,
+  // annotate, // not yet supported
+  chartAccessors,
+  checkInteraction,
+  checkHovered,
+  checkClicked,
+  convertVisaColor,
+  drawLegend,
+  drawTooltip,
+  formatDataLabel,
+  getColors,
+  getLicenses,
+  getPadding,
+  getScopedData,
+  initTooltipStyle,
+  moveToFront,
+  overrideTitleTooltip,
+  scopeDataKeys,
+  transitionEndAll,
+  visaColors,
+  validateAccessibilityProps
+} = Utils;
+@Component({
+  tag: 'world-map',
+  styleUrl: 'world-map.scss'
+})
+export class WorldMap {
+  @Event() clickFunc: EventEmitter;
+  @Event() hoverFunc: EventEmitter;
+  @Event() mouseOutFunc: EventEmitter;
+  @Prop({ mutable: true }) highestHeadingLevel: string | number = WorldMapDefaultValues.highestHeadingLevel;
+  @Prop({ mutable: true }) height: number = WorldMapDefaultValues.height;
+  @Prop({ mutable: true }) width: number = WorldMapDefaultValues.width;
+  @Prop({ mutable: true }) mainTitle: string = WorldMapDefaultValues.mainTitle;
+  @Prop({ mutable: true }) subTitle: string = WorldMapDefaultValues.subTitle;
+  @Prop({ mutable: true }) margin: IBoxModelType = WorldMapDefaultValues.margin;
+  @Prop({ mutable: true }) padding: IBoxModelType = WorldMapDefaultValues.padding;
+
+  // map
+  @Prop({ mutable: true }) mapProjection: string = WorldMapDefaultValues.mapProjection;
+  @Prop({ mutable: true }) mapScaleZoom: number = WorldMapDefaultValues.mapScaleZoom;
+  @Prop({ mutable: true }) quality: string = WorldMapDefaultValues.quality;
+
+  // Data (2/7)
+  @Prop() data: object[];
+  @Prop() uniqueID: string;
+  @Prop({ mutable: true }) sortOrder: string = WorldMapDefaultValues.sortOrder;
+  @Prop({ mutable: true }) groupAccessor: string = WorldMapDefaultValues.groupAccessor;
+  @Prop({ mutable: true }) markerAccessor: string = WorldMapDefaultValues.markerAccessor;
+  @Prop({ mutable: true }) markerNameAccessor: string = WorldMapDefaultValues.markerNameAccessor;
+  @Prop({ mutable: true }) joinAccessor: string = WorldMapDefaultValues.joinAccessor;
+  @Prop({ mutable: true }) joinNameAccessor: string = WorldMapDefaultValues.joinNameAccessor;
+  @Prop({ mutable: true }) valueAccessor: string = WorldMapDefaultValues.valueAccessor;
+  @Prop({ mutable: true }) latitudeAccessor: string = WorldMapDefaultValues.latitudeAccessor;
+  @Prop({ mutable: true }) longitudeAccessor: string = WorldMapDefaultValues.longitudeAccessor;
+
+  // Color & Shape (4/7)
+  @Prop({ mutable: true }) colorPalette: string = WorldMapDefaultValues.colorPalette;
+  @Prop({ mutable: true }) colors: string[];
+  @Prop({ mutable: true }) colorSteps: number = WorldMapDefaultValues.colorSteps;
+  @Prop({ mutable: true }) markerStyle: IMapMarkerStyleType = WorldMapDefaultValues.markerStyle;
+  @Prop({ mutable: true }) countryStyle: ICountryStyleType = WorldMapDefaultValues.countryStyle;
+  @Prop({ mutable: true }) hoverStyle: IHoverStyleType = WorldMapDefaultValues.hoverStyle;
+  @Prop({ mutable: true }) clickStyle: IClickStyleType = WorldMapDefaultValues.clickStyle;
+  @Prop({ mutable: true }) cursor: string = WorldMapDefaultValues.cursor;
+  @Prop({ mutable: true }) hoverOpacity: number = WorldMapDefaultValues.hoverOpacity;
+
+  // Data label (5/7)
+  @Prop({ mutable: true }) showTooltip: boolean = WorldMapDefaultValues.showTooltip;
+  @Prop({ mutable: true }) accessibility: IAccessibilityType = WorldMapDefaultValues.accessibility;
+  @Prop({ mutable: true }) legend: ILegendType = WorldMapDefaultValues.legend;
+  @Prop({ mutable: true }) showGridlines: boolean = WorldMapDefaultValues.showGridLines;
+  @Prop({ mutable: true }) tooltipLabel: ITooltipLabelType = WorldMapDefaultValues.tooltipLabel;
+  @Prop({ mutable: true }) dataLabel: IDataLabelType = WorldMapDefaultValues.dataLabel;
+  @Prop({ mutable: true }) annotations: object[] = WorldMapDefaultValues.annotations;
+
+  // Calculation (6/7)
+  @Prop({ mutable: true }) maxValueOverride: number;
+  @Prop({ mutable: true }) minValueOverride: number;
+
+  // Interactivity (7/7)
+  @Prop({ mutable: true }) hoverHighlight: object;
+  @Prop({ mutable: true }) clickHighlight: object[] = WorldMapDefaultValues.clickHighlight;
+  @Prop({ mutable: true }) interactionKeys: string[];
+  @Prop() suppressEvents: boolean = WorldMapDefaultValues.suppressEvents;
+
+  @Element()
+  worldMapEl: HTMLElement;
+  svg: any;
+  root: any;
+  rootG: any;
+  projection: any;
+  path: any;
+  gridG: any;
+  gridOutlineG: any;
+  gridGraticuleG: any;
+  graticule: any;
+  colorScale: any;
+  baseColorScale: any;
+  precalculatedStrokes: any;
+  strokeFilter: any;
+  radiusScale: any;
+  features: any;
+  countries: any;
+  markers: any;
+  labels: any;
+  references: any;
+  defaults: boolean;
+  duration: number;
+  current: any;
+  currentMarker: any;
+  innerLegend: any;
+  enter: any;
+  enterMarker: any;
+  enteringLabels: any;
+  exit: any;
+  exitMarker: any;
+  exitingLabels: any;
+  update: any;
+  updateMarker: any;
+  updatingLabels: any;
+  innerHeight: number;
+  innerWidth: number;
+  innerPaddedHeight: number;
+  innerPaddedWidth: number;
+  innerXAxis: any;
+  innerYAxis: any;
+  innerMapProjection: string = 'Equal Earth';
+  innerClickStyle: any;
+  innerHoverStyle: any;
+  innerInteractionKeys: any;
+  innerMarkerAccessor: string;
+  innerMarkerNameAccessor: string;
+  colorArr: any;
+  preparedColors: any;
+  labelBackgrounds: any;
+  strokeColors: any;
+  preppedData: any;
+  placement: string;
+  legendData: any;
+  legendG: any;
+  tooltipG: any;
+  previousQuality: string;
+  tableData: any;
+  tableColumns: any;
+  updated: boolean = true;
+  enterSize: number;
+  exitSize: number;
+  enterMarkerSize: number;
+  exitMarkerSize: number;
+  chartID: string;
+  shouldValidateAccessibility: boolean = true;
+  shouldValidate: boolean = false;
+  shouldValidateClickStyle: boolean = false;
+  shouldValidateHoverStyle: boolean = false;
+  shouldResetRoot: boolean = false;
+  shouldUpdateRootIDs: boolean = false;
+  shouldUpdateLayoutVariables: boolean = false;
+  shouldUpdateGrid: boolean = false;
+  shouldSetGlobalProjection: boolean = false;
+  shouldSetGlobalSelections: boolean = false;
+  shouldSetMapFeatureQuality: boolean = false;
+  shouldEnterUpdateExit: boolean = false;
+  shouldUpdatePaths: boolean = false;
+  shouldUpdateMarkers: boolean = false;
+  shouldOrderMarkers: boolean = false;
+  shouldSetMarkerSelectionClass: boolean = false;
+  shouldUpdateLabels: boolean = false;
+  shouldUpdateLegend: boolean = false;
+  shouldUpdateScales: boolean = false;
+  shouldUpdateData: boolean = false;
+  shouldUpdateLegendData: boolean = false;
+  shouldUpdateTableData: boolean = false;
+  shouldDrawInteractionState: boolean = false;
+  shouldUpdateColorFill: boolean = false;
+  shouldUpdateMarkerStyle: boolean = false;
+  shouldUpdatePathStyle: boolean = false;
+  shouldUpdateLabelStyle: boolean = false;
+  shouldBindInteractivity: boolean = false;
+  shouldBindLegendInteractivity: boolean = false;
+  shouldUpdateCursor: boolean = false;
+  shouldUpdateLegendCursor: boolean = false;
+  shouldUpdateAnnotations: boolean = false;
+  shouldValidateMapProjection: boolean = false;
+  shouldValidateInteractionKeys: boolean = false;
+  shouldValidateMarkerAccessor: boolean = false;
+  shouldSetColors: boolean = false;
+  shouldUpdateDescriptionWrapper: boolean = false;
+  shouldSetChartAccessibilityTitle: boolean = false;
+  shouldSetChartAccessibilitySubtitle: boolean = false;
+  shouldSetChartAccessibilityLongDescription: boolean = false;
+  shouldSetChartAccessibilityExecutiveSummary: boolean = false;
+  shouldSetChartAccessibilityStatisticalNotes: boolean = false;
+  shouldSetChartAccessibilityStructureNotes: boolean = false;
+  shouldSetParentSVGAccessibility: boolean = false;
+  shouldSetGeometryAccessibilityAttributes: boolean = false;
+  shouldSetGeometryAriaLabels: boolean = false;
+  shouldSetGroupAccessibilityLabel: boolean = false;
+  shouldSetChartAccessibilityPurpose: boolean = false;
+  shouldSetChartAccessibilityContext: boolean = false;
+  shouldRedrawWrapper: boolean = false;
+  shouldSetTagLevels: boolean = false;
+  shouldSetChartAccessibilityCount: boolean = false;
+  // shouldSetAnnotationAccessibility: boolean = false; // not yet supported
+  shouldSetTextures: boolean = false;
+  shouldSetStrokes: boolean = false;
+  strokes: any = {};
+  topLevel: string = 'h2';
+  bottomLevel: string = 'p';
+
+  @Watch('data')
+  dataWatcher(_newData, _oldData) {
+    this.updated = true;
+    this.shouldUpdateData = true;
+    this.shouldUpdateLegendData = true;
+    this.shouldUpdateTableData = true;
+    this.shouldUpdateScales = true;
+    this.shouldSetGlobalSelections = true;
+    this.shouldEnterUpdateExit = true;
+    this.shouldUpdateMarkers = true;
+    this.shouldOrderMarkers = true;
+    this.shouldUpdateLabels = true;
+    this.shouldUpdateLegend = true;
+    this.shouldUpdateAnnotations = true;
+    this.shouldValidate = true;
+    this.shouldSetGeometryAccessibilityAttributes = true;
+    this.shouldSetGeometryAriaLabels = true;
+    this.shouldSetTextures = true;
+  }
+
+  @Watch('sortOrder')
+  sortWatcher(_newVal, _oldVal) {
+    this.shouldUpdateData = true;
+    this.shouldUpdateTableData = true;
+    this.shouldSetGlobalSelections = true;
+    this.shouldUpdateMarkers = true;
+    this.shouldOrderMarkers = true;
+  }
+
+  @Watch('groupAccessor')
+  groupAccessorWatcher(_newVal, _oldVal) {
+    this.shouldUpdateTableData = true;
+    this.shouldUpdateLegendData = true;
+    this.shouldUpdateScales = true;
+    this.shouldUpdateColorFill = true;
+    this.shouldUpdateLegend = true;
+    this.shouldSetGeometryAccessibilityAttributes = true;
+    this.shouldSetGeometryAriaLabels = true;
+    this.shouldSetTextures = true;
+    if (!(this.interactionKeys && this.interactionKeys.length)) {
+      this.shouldValidateInteractionKeys = true;
+      this.shouldSetMarkerSelectionClass = true;
+    }
+  }
+
+  @Watch('joinNameAccessor')
+  @Watch('joinAccessor')
+  joinAccessorWatcher(_newVal, _oldVal) {
+    this.shouldUpdateData = true;
+    this.shouldUpdateLegendData = true;
+    this.shouldUpdateTableData = true;
+    this.shouldUpdateScales = true;
+    this.shouldSetGlobalSelections = true;
+    this.shouldValidateMarkerAccessor = true;
+    this.shouldUpdateColorFill = true;
+    this.shouldUpdateMarkers = true;
+    this.shouldOrderMarkers = true;
+    this.shouldUpdateLabels = true;
+    this.shouldUpdateAnnotations = true;
+    this.shouldSetGeometryAriaLabels = true;
+    this.shouldSetTextures = true;
+    if (!(this.interactionKeys && this.interactionKeys.length)) {
+      this.shouldValidateInteractionKeys = true;
+      this.shouldSetMarkerSelectionClass = true;
+    }
+  }
+
+  @Watch('markerNameAccessor')
+  @Watch('markerAccessor')
+  @Watch('longitudeAccessor')
+  @Watch('latitudeAccessor')
+  markerAccessorWatcher(_newVal, _oldVal) {
+    this.shouldValidateMarkerAccessor = true;
+    this.shouldUpdateTableData = true;
+    this.shouldUpdateData = true;
+    this.shouldUpdateLegendData = true;
+    this.shouldUpdateScales = true;
+    this.shouldSetGlobalSelections = true;
+    this.shouldEnterUpdateExit = true;
+    this.shouldUpdateMarkers = true;
+    this.shouldOrderMarkers = true;
+    this.shouldUpdateLabels = true;
+    this.shouldUpdateLegend = true;
+    this.shouldUpdateAnnotations = true;
+    this.shouldSetGeometryAriaLabels = true;
+    this.shouldSetTextures = true;
+    if (!(this.interactionKeys && this.interactionKeys.length)) {
+      this.shouldValidateInteractionKeys = true;
+      this.shouldSetMarkerSelectionClass = true;
+    }
+  }
+
+  @Watch('valueAccessor')
+  valueAccessorWatcher(_newVal, _oldVal) {
+    this.shouldUpdateTableData = true;
+    this.shouldUpdateLegendData = true;
+    this.shouldUpdateScales = true;
+    this.shouldUpdateColorFill = true;
+    this.shouldUpdateMarkers = true;
+    this.shouldUpdateLegend = true;
+    this.shouldUpdateLabels = true;
+    this.shouldUpdateAnnotations = true;
+    this.shouldSetGeometryAriaLabels = true;
+    this.shouldSetTextures = true;
+  }
+
+  @Watch('maxValueOverride')
+  @Watch('minValueOverride')
+  valueOverrideWatcher(_newVal, _oldVal) {
+    this.shouldUpdateScales = true;
+    this.shouldUpdateMarkers = true;
+    this.shouldUpdateColorFill = true;
+    this.shouldUpdateLabels = true;
+    this.shouldUpdateLegend = true;
+    this.shouldUpdateAnnotations = true;
+    this.shouldSetTextures = true;
+  }
+
+  @Watch('highestHeadingLevel')
+  headingWatcher(_newVal, _oldVal) {
+    this.shouldRedrawWrapper = true;
+    this.shouldSetTagLevels = true;
+    this.shouldSetChartAccessibilityCount = true;
+    // this.shouldSetAnnotationAccessibility = true; // not yet supported
+    this.shouldUpdateDescriptionWrapper = true;
+    this.shouldSetChartAccessibilityTitle = true;
+    this.shouldSetChartAccessibilitySubtitle = true;
+    this.shouldSetChartAccessibilityLongDescription = true;
+    this.shouldSetChartAccessibilityContext = true;
+    this.shouldSetChartAccessibilityExecutiveSummary = true;
+    this.shouldSetChartAccessibilityPurpose = true;
+    this.shouldSetChartAccessibilityStatisticalNotes = true;
+    this.shouldSetChartAccessibilityStructureNotes = true;
+  }
+
+  @Watch('mainTitle')
+  titleWatcher(_newVal, _oldVal) {
+    this.shouldValidate = true;
+    this.shouldUpdateDescriptionWrapper = true;
+    this.shouldSetChartAccessibilityTitle = true;
+    this.shouldSetParentSVGAccessibility = true;
+  }
+
+  @Watch('subTitle')
+  subtitleWatcher(_newVal, _oldVal) {
+    this.shouldSetChartAccessibilitySubtitle = true;
+    this.shouldSetParentSVGAccessibility = true;
+  }
+
+  @Watch('colorPalette')
+  @Watch('colors')
+  @Watch('colorSteps')
+  colorsWatcher(_newVal, _oldVal) {
+    this.shouldSetColors = true;
+    this.shouldUpdateScales = true;
+    this.shouldUpdateColorFill = true;
+    this.shouldUpdateLegend = true;
+    this.shouldSetTextures = true;
+  }
+
+  @Watch('mapProjection')
+  @Watch('mapScaleZoom')
+  projectionWatcher(_newVal, _oldVal) {
+    this.shouldValidateMapProjection = true;
+    this.shouldSetGlobalProjection = true;
+    this.shouldUpdateData = true;
+    this.shouldUpdatePaths = true;
+    this.shouldUpdateMarkers = true;
+    this.shouldUpdateLabels = true;
+    this.shouldUpdateGrid = true;
+    this.shouldUpdateAnnotations = true;
+  }
+
+  @Watch('showGridlines')
+  gridLineWatcher(_newVal, _oldVal) {
+    this.shouldUpdateGrid = true;
+  }
+
+  @Watch('height')
+  @Watch('width')
+  @Watch('padding')
+  @Watch('margin')
+  dimensionWatcher(_newVal, _oldVal) {
+    this.shouldUpdateLayoutVariables = true;
+    this.shouldResetRoot = true;
+    this.shouldSetGlobalProjection = true;
+    this.shouldUpdateData = true;
+    this.shouldUpdatePaths = true;
+    this.shouldUpdateMarkers = true;
+    this.shouldUpdateLabels = true;
+    this.shouldUpdateLegend = true;
+    this.shouldUpdateGrid = true;
+    this.shouldUpdateAnnotations = true;
+  }
+
+  @Watch('quality')
+  qualityWatcher(_newVal, _oldVal) {
+    console.error(
+      'Change detected in prop quality from value ' +
+        _oldVal +
+        ' to value ' +
+        _newVal +
+        '. This prop cannot be changed after component has loaded.'
+    );
+  }
+
+  @Watch('dataLabel')
+  labelWatcher(_newVal, _oldVal) {
+    this.shouldUpdateLabels = true;
+    this.shouldUpdateTableData = true;
+    const newVisibleVal = _newVal && _newVal.visible;
+    const oldVisibleVal = _oldVal && _oldVal.visible;
+    if (newVisibleVal !== oldVisibleVal) {
+      this.shouldUpdateLabelStyle = true;
+    }
+  }
+
+  @Watch('legend')
+  legendWatcher(_newVal, _oldVal) {
+    this.shouldUpdateLegend = true;
+    const newInteractiveVal = _newVal && _newVal.interactive;
+    const oldInteractiveVal = _oldVal && _oldVal.interactive;
+    if (newInteractiveVal !== oldInteractiveVal) {
+      this.shouldBindLegendInteractivity = true;
+      this.shouldUpdateLegendCursor = true;
+    }
+  }
+
+  @Watch('tooltipLabel')
+  tooltipLabelWatcher(_newVal, _oldVal) {
+    this.shouldUpdateTableData = true;
+  }
+
+  @Watch('hoverOpacity')
+  hoverOpacityWatcher(_newVal, _oldVal) {
+    this.shouldDrawInteractionState = true;
+  }
+
+  @Watch('countryStyle')
+  countryStyleWatcher(_newVal, _oldVal) {
+    this.shouldUpdatePathStyle = true;
+    const newFillVal = _newVal && _newVal.fill ? _newVal.fill : false;
+    const oldFillVal = _oldVal && _oldVal.fill ? _oldVal.fill : false;
+    if (newFillVal !== oldFillVal) {
+      this.shouldUpdateCursor = true;
+      this.shouldBindInteractivity = true;
+    }
+    this.shouldSetTextures = true;
+  }
+
+  @Watch('markerStyle')
+  markerStyleWatcher(_newVal, _oldVal) {
+    this.shouldUpdateMarkerStyle = true;
+    this.shouldUpdateMarkers = true;
+    this.shouldUpdateLabels = true;
+    const newVisVal = _newVal && _newVal.visible;
+    const oldVisVal = _oldVal && _oldVal.visible;
+    if (newVisVal !== oldVisVal) {
+      this.shouldUpdateData = true;
+      this.shouldValidateInteractionKeys = true;
+      this.shouldSetGlobalSelections = true;
+      this.shouldUpdatePathStyle = true;
+      this.shouldUpdateCursor = true;
+      this.shouldBindInteractivity = true;
+    }
+    this.shouldUpdateScales = true;
+    this.shouldSetTextures = true;
+  }
+
+  @Watch('clickStyle')
+  clickStyleWatcher(_newVal, _oldVal) {
+    this.shouldDrawInteractionState = true;
+    this.shouldValidateClickStyle = true;
+    this.shouldSetTextures = true;
+  }
+
+  @Watch('hoverStyle')
+  hoverStyleWatcher(_newVal, _oldVal) {
+    this.shouldDrawInteractionState = true;
+    this.shouldValidateHoverStyle = true;
+    this.shouldSetTextures = true;
+  }
+
+  @Watch('clickHighlight')
+  clickWatcher(_newVal, _oldVal) {
+    this.shouldDrawInteractionState = true;
+    this.shouldSetMarkerSelectionClass = true;
+  }
+
+  @Watch('hoverHighlight')
+  hoverWatcher(_newVal, _oldVal) {
+    this.shouldDrawInteractionState = true;
+  }
+
+  @Watch('interactionKeys')
+  interactionWatcher(_newVal, _oldVal) {
+    this.shouldValidateInteractionKeys = true;
+    this.shouldUpdateTableData = true;
+    this.shouldDrawInteractionState = true;
+    this.shouldSetMarkerSelectionClass = true;
+    this.shouldSetGeometryAriaLabels = true;
+  }
+
+  @Watch('cursor')
+  cursorWatcher(_newVal, _oldVal) {
+    this.shouldUpdateCursor = true;
+  }
+
+  @Watch('accessibility')
+  accessibilityWatcher(_newVal, _oldVal) {
+    this.shouldValidate = true;
+    const newTitle = _newVal && _newVal.title ? _newVal.title : false;
+    const oldTitle = _oldVal && _oldVal.title ? _oldVal.title : false;
+    if (newTitle !== oldTitle) {
+      this.shouldUpdateDescriptionWrapper = true;
+      this.shouldSetChartAccessibilityTitle = true;
+      this.shouldSetParentSVGAccessibility = true;
+    }
+    const newExecutiveSummary = _newVal && _newVal.executiveSummary ? _newVal.executiveSummary : false;
+    const oldExecutiveSummary = _oldVal && _oldVal.executiveSummary ? _oldVal.executiveSummary : false;
+    if (newExecutiveSummary !== oldExecutiveSummary) {
+      this.shouldSetChartAccessibilityExecutiveSummary = true;
+    }
+    const newPurpose = _newVal && _newVal.purpose ? _newVal.purpose : false;
+    const oldPurpose = _oldVal && _oldVal.purpose ? _oldVal.purpose : false;
+    if (newPurpose !== oldPurpose) {
+      this.shouldSetChartAccessibilityPurpose = true;
+    }
+    const newLongDescription = _newVal && _newVal.longDescription ? _newVal.longDescription : false;
+    const oldLongDescription = _oldVal && _oldVal.longDescription ? _oldVal.longDescription : false;
+    if (newLongDescription !== oldLongDescription) {
+      this.shouldSetChartAccessibilityLongDescription = true;
+    }
+    const newContext = _newVal && _newVal.contextExplanation ? _newVal.contextExplanation : false;
+    const oldContext = _oldVal && _oldVal.contextExplanation ? _oldVal.contextExplanation : false;
+    if (newContext !== oldContext) {
+      this.shouldSetChartAccessibilityContext = true;
+    }
+    const newStatisticalNotes = _newVal && _newVal.statisticalNotes ? _newVal.statisticalNotes : false;
+    const oldStatisticalNotes = _oldVal && _oldVal.statisticalNotes ? _oldVal.statisticalNotes : false;
+    if (newStatisticalNotes !== oldStatisticalNotes) {
+      this.shouldSetChartAccessibilityStatisticalNotes = true;
+    }
+    const newStructureNotes = _newVal && _newVal.structureNotes ? _newVal.structureNotes : false;
+    const oldStructureNotes = _oldVal && _oldVal.structureNotes ? _oldVal.structureNotes : false;
+    if (newStructureNotes !== oldStructureNotes) {
+      this.shouldSetChartAccessibilityStructureNotes = true;
+    }
+    const newincludeDataKeyNames = _newVal && _newVal.includeDataKeyNames;
+    const oldincludeDataKeyNames = _oldVal && _oldVal.includeDataKeyNames;
+    const newElementDescriptionAccessor =
+      _newVal && _newVal.elementDescriptionAccessor ? _newVal.elementDescriptionAccessor : false;
+    const oldElementDescriptionAccessor =
+      _oldVal && _oldVal.elementDescriptionAccessor ? _oldVal.elementDescriptionAccessor : false;
+    if (
+      newincludeDataKeyNames !== oldincludeDataKeyNames ||
+      newElementDescriptionAccessor !== oldElementDescriptionAccessor
+    ) {
+      if (newincludeDataKeyNames !== oldincludeDataKeyNames) {
+        // this one is tricky because it needs to run after the lifecycle
+        // AND it could run in the off-chance this prop is changed
+        this.shouldSetGroupAccessibilityLabel = true;
+      }
+      this.shouldSetGeometryAriaLabels = true;
+      this.shouldSetParentSVGAccessibility = true;
+    }
+    const newTextures = _newVal && _newVal.hideTextures ? _newVal.hideTextures : false;
+    const oldTextures = _oldVal && _oldVal.hideTextures ? _oldVal.hideTextures : false;
+    const newExTextures = _newVal && _newVal.showExperimentalTextures ? _newVal.showExperimentalTextures : false;
+    const oldExTextures = _oldVal && _oldVal.showExperimentalTextures ? _oldVal.showExperimentalTextures : false;
+    if (newTextures !== oldTextures || newExTextures !== oldExTextures) {
+      this.shouldSetTextures = true;
+      this.shouldUpdateLegend = true;
+      this.shouldDrawInteractionState = true;
+      this.shouldUpdateScales = true;
+    }
+  }
+
+  @Watch('annotations')
+  annotationsWatcher(_newVal, _oldVal) {
+    this.shouldValidate = true;
+    this.shouldUpdateAnnotations = true;
+  }
+
+  @Watch('uniqueID')
+  idWatcher(_newVal, _oldVal) {
+    this.chartID = _newVal || 'world-map-' + uuid();
+    this.worldMapEl.id = this.chartID;
+    this.shouldUpdateRootIDs = true;
+    this.shouldValidate = true;
+    this.shouldUpdateDescriptionWrapper = true;
+    this.shouldSetParentSVGAccessibility = true;
+    this.shouldUpdateLegend = true;
+    this.shouldSetTextures = true;
+    this.shouldDrawInteractionState = true;
+    this.shouldSetStrokes = true;
+  }
+
+  @Watch('suppressEvents')
+  suppressWatcher(_newVal, _oldVal) {
+    this.shouldBindInteractivity = true;
+    this.shouldBindLegendInteractivity = true;
+    this.shouldUpdateCursor = true;
+  }
+
+  componentWillLoad() {
+    // contrary to componentWillUpdate, this method appears safe to use for
+    // any calculations we need. Keeping them here reduces future refactor,
+    // since componentWillUpdate should eventually mirror this method
+    return new Promise(resolve => {
+      this.duration = 0;
+      this.defaults = true;
+      this.chartID = this.uniqueID || 'world-map-' + uuid();
+      this.worldMapEl.id = this.chartID;
+      this.setTagLevels();
+      this.updateChartVariable(); // this sets innerPaddedWidth/Height needed by Projection
+      this.validateMapProjection();
+      this.validateMarkerAccessor();
+      this.setGlobalProjection(); // this creates projection, needed in MapFeatureQuality
+      this.setMapFeatureQuality(); // this creates features which is needed in prepareData
+      this.prepareData();
+      this.prepareLegendData();
+      this.validateClickStyle();
+      this.validateHoverStyle();
+      this.setColors();
+      this.prepareScales(); // NOTE that the range for colorScale is not set until we setTextures
+      this.validateInteractionKeys();
+      this.setTableData();
+      this.shouldValidateAccessibilityProps();
+      resolve('component will load');
+    });
+  }
+
+  componentDidLoad() {
+    return new Promise(resolve => {
+      this.renderRootElements();
+      this.reSetRoot();
+      this.setTextures();
+      this.setTooltipInitialStyle();
+      this.setChartDescriptionWrapper();
+      this.setChartAccessibilityTitle();
+      this.setChartAccessibilitySubtitle();
+      this.setChartAccessibilityLongDescription();
+      this.setChartAccessibilityExecutiveSummary();
+      this.setChartAccessibilityPurpose();
+      this.setChartAccessibilityContext();
+      this.setChartAccessibilityStatisticalNotes();
+      this.setChartAccessibilityStructureNotes();
+      this.setParentSVGAccessibility();
+      this.drawOutlineGrid();
+      this.drawGraticuleGrid();
+      this.setGlobalSelections();
+      this.enterPaths();
+      this.enterMarkers();
+      this.enterLabels();
+      this.drawMarkers();
+      this.addStrokeUnder();
+      this.setChartCountAccessibility();
+      this.setGeometryAccessibilityAttributes();
+      this.setGeometryAriaLabels();
+      this.drawLegendElements();
+      this.bindLegendInteractivity();
+      this.drawDataLabels();
+      this.setMarkerSelectedClass();
+      this.drawAnnotations();
+      // we want to hide all child <g> of this.root BUT we want to make sure not to hide the
+      // parent<g> that contains our geometries! In a subGroup chart (like stacked bars),
+      // we want to pass the PARENT of all the <g>s that contain bars
+      hideNonessentialGroups(this.root.node(), this.markers.node());
+      this.setGroupAccessibilityAttributes();
+      this.setGroupAccessibilityLabel();
+      this.onChangeHandler();
+      this.duration = 750;
+      this.defaults = false;
+      resolve('component did load');
+    });
+  }
+
+  componentWillUpdate() {
+    // NEVER put items in this method that rely on props (until stencil bug is resolved)
+    // All items that belong here are currently at the top of render
+    // see: https://github.com/ionic-team/stencil/issues/2061#issuecomment-578282178
+    return new Promise(resolve => {
+      resolve('component will update');
+    });
+  }
+
+  componentDidUpdate() {
+    return new Promise(resolve => {
+      if (this.shouldUpdateDescriptionWrapper) {
+        this.setChartDescriptionWrapper();
+        this.shouldUpdateDescriptionWrapper = false;
+      }
+      if (this.shouldSetChartAccessibilityCount) {
+        this.setChartCountAccessibility();
+        this.shouldSetChartAccessibilityCount = false;
+      }
+      if (this.shouldSetChartAccessibilityTitle) {
+        this.setChartAccessibilityTitle();
+        this.shouldSetChartAccessibilityTitle = false;
+      }
+      if (this.shouldSetChartAccessibilitySubtitle) {
+        this.setChartAccessibilitySubtitle();
+        this.shouldSetChartAccessibilitySubtitle = false;
+      }
+      if (this.shouldSetChartAccessibilityLongDescription) {
+        this.setChartAccessibilityLongDescription();
+        this.shouldSetChartAccessibilityLongDescription = false;
+      }
+      if (this.shouldSetChartAccessibilityExecutiveSummary) {
+        this.setChartAccessibilityExecutiveSummary();
+        this.shouldSetChartAccessibilityExecutiveSummary = false;
+      }
+      if (this.shouldSetChartAccessibilityPurpose) {
+        this.setChartAccessibilityPurpose();
+        this.shouldSetChartAccessibilityPurpose = false;
+      }
+      if (this.shouldSetChartAccessibilityContext) {
+        this.setChartAccessibilityContext();
+        this.shouldSetChartAccessibilityContext = false;
+      }
+      if (this.shouldSetChartAccessibilityStatisticalNotes) {
+        this.setChartAccessibilityStatisticalNotes();
+        this.shouldSetChartAccessibilityStatisticalNotes = false;
+      }
+      if (this.shouldSetChartAccessibilityStructureNotes) {
+        this.setChartAccessibilityStructureNotes();
+        this.shouldSetChartAccessibilityStructureNotes = false;
+      }
+      if (this.shouldSetParentSVGAccessibility) {
+        this.setParentSVGAccessibility();
+        this.shouldSetParentSVGAccessibility = false;
+      }
+      if (this.shouldResetRoot) {
+        this.reSetRoot();
+        this.shouldResetRoot = false;
+      }
+      if (this.shouldSetTextures) {
+        this.setTextures();
+        this.shouldSetTextures = false;
+      }
+      if (this.shouldSetGlobalSelections) {
+        this.setGlobalSelections();
+        this.shouldSetGlobalSelections = false;
+      }
+      if (this.shouldUpdateLabelStyle) {
+        this.updateLabelStyle();
+        this.shouldUpdateLabelStyle = false;
+      }
+      if (this.shouldEnterUpdateExit) {
+        this.enterPaths();
+        this.updatePathStyle(this.duration);
+        this.exitPaths();
+        this.enterMarkers();
+        this.updateMarkerStyle(this.duration);
+        this.exitMarkers();
+        this.enterLabels();
+        this.updateLabelStyle();
+        this.exitLabels();
+        this.shouldEnterUpdateExit = false;
+      }
+      if (this.shouldSetStrokes) {
+        this.addStrokeUnder();
+        this.shouldSetStrokes = false;
+      }
+      if (this.shouldDrawInteractionState) {
+        this.updatePathStyle(0);
+        this.updateMarkerStyle(0);
+        this.updateLabelStyle();
+        this.shouldDrawInteractionState = false;
+        this.shouldUpdateColorFill = false;
+        this.shouldUpdateMarkerStyle = false;
+        this.shouldUpdatePathStyle = false;
+      }
+      if (this.shouldUpdateColorFill) {
+        this.updatePathStyle(this.duration);
+        this.updateMarkerStyle(this.duration);
+        this.updateLabelStyle();
+        this.shouldUpdateColorFill = false;
+        this.shouldUpdateMarkerStyle = false;
+        this.shouldUpdatePathStyle = false;
+      }
+      if (this.shouldUpdateMarkerStyle) {
+        this.updateMarkerStyle(this.duration);
+        this.shouldUpdateMarkerStyle = false;
+      }
+      if (this.shouldUpdatePathStyle) {
+        this.updatePathStyle(this.duration);
+        this.shouldUpdatePathStyle = false;
+      }
+
+      if (this.shouldUpdateGrid) {
+        this.drawOutlineGrid();
+        this.drawGraticuleGrid();
+        this.shouldUpdateGrid = false;
+      }
+      if (this.shouldUpdateLegend) {
+        this.drawLegendElements();
+        this.shouldUpdateLegend = false;
+      }
+      if (this.shouldUpdateLabels) {
+        this.drawDataLabels();
+        this.shouldUpdateLabels = false;
+      }
+      if (this.shouldUpdatePaths) {
+        this.drawPaths();
+        this.shouldUpdatePaths = false;
+      }
+      if (this.shouldUpdateMarkers) {
+        this.drawMarkers();
+        this.shouldUpdateMarkers = false;
+      }
+      if (this.shouldOrderMarkers) {
+        this.orderMarkers();
+        this.shouldOrderMarkers = false;
+      }
+      if (this.shouldSetGeometryAccessibilityAttributes) {
+        this.setGeometryAccessibilityAttributes();
+        this.shouldSetGeometryAccessibilityAttributes = false;
+      }
+      if (this.shouldSetGeometryAriaLabels) {
+        this.setGeometryAriaLabels();
+        this.shouldSetGeometryAriaLabels = false;
+      }
+      if (this.shouldSetGroupAccessibilityLabel) {
+        this.setGroupAccessibilityLabel();
+        this.shouldSetGroupAccessibilityLabel = false;
+      }
+      if (this.shouldSetMarkerSelectionClass) {
+        this.setMarkerSelectedClass();
+        this.shouldSetMarkerSelectionClass = false;
+      }
+      if (this.shouldBindInteractivity) {
+        this.bindInteractivity();
+        this.shouldBindInteractivity = false;
+      }
+      if (this.shouldBindLegendInteractivity) {
+        this.bindLegendInteractivity();
+        this.shouldBindLegendInteractivity = false;
+      }
+      if (this.shouldUpdateCursor) {
+        this.updateCursor();
+        this.updateLegendCursor();
+        this.shouldUpdateCursor = false;
+        this.shouldUpdateLegendCursor = false;
+      }
+      if (!this.shouldUpdateCursor && this.shouldUpdateLegendCursor) {
+        this.updateLegendCursor();
+        this.shouldUpdateLegendCursor = false;
+      }
+      if (this.shouldUpdateAnnotations) {
+        this.drawAnnotations();
+        this.shouldUpdateAnnotations = false;
+      }
+      this.onChangeHandler();
+      resolve('component did update');
+    });
+  }
+
+  shouldValidateAccessibilityProps() {
+    if (this.shouldValidateAccessibility && !this.accessibility.disableValidation) {
+      this.shouldValidateAccessibility = false;
+      validateAccessibilityProps(
+        this.chartID,
+        { ...this.accessibility },
+        {
+          annotations: this.annotations,
+          data: this.preppedData,
+          uniqueID: this.uniqueID,
+          context: {
+            mainTitle: this.mainTitle,
+            onClickFunc: !this.suppressEvents ? this.clickFunc.emit : undefined
+          }
+        }
+      );
+    }
+  }
+
+  prepareData() {
+    // sort and prep data (we may not need sort for map, this could help with which marks is drawn on top for markers)
+    if (this.data) {
+      if (this.sortOrder === 'asc') {
+        this.preppedData = [...this.data].sort((a, b) => Number(b[this.valueAccessor]) - Number(a[this.valueAccessor]));
+      } else if (this.sortOrder === 'desc') {
+        this.preppedData = [...this.data].sort((a, b) => Number(a[this.valueAccessor]) - Number(b[this.valueAccessor]));
+      } else {
+        this.preppedData = this.data;
+      }
+    }
+    // sorting the features like this allows us to put the countries with data on top of other countries
+    // this helps their borders display correctly
+    this.features.sort(a => {
+      const aRecord = this.preppedData.find(obj => obj[this.joinAccessor] === a.id);
+      return aRecord ? 1 : -1;
+    });
+    this.preppedData.forEach(d => {
+      d[this.valueAccessor] = parseFloat(d[this.valueAccessor]);
+
+      if (this.latitudeAccessor && this.longitudeAccessor) {
+        d[this.latitudeAccessor] = parseFloat(d[this.latitudeAccessor]);
+        d[this.longitudeAccessor] = parseFloat(d[this.longitudeAccessor]);
+      }
+
+      // features requires that we have set/reset projection
+      const featureData = this.features.find(obj => obj.id === d[this.joinAccessor]);
+
+      d.innerLongitude = geo.geoPath().centroid(featureData)[0];
+      d.innerLatitude = geo.geoPath().centroid(featureData)[1];
+
+      // below we prepare the accessibliity message
+      const nameAccessor = this.innerMarkerNameAccessor || this.joinNameAccessor;
+      const lat = this.latitudeAccessor && d[this.latitudeAccessor] ? d[this.latitudeAccessor] : d.innerLatitude;
+      const long = this.longitudeAccessor && d[this.longitudeAccessor] ? d[this.longitudeAccessor] : d.innerLongitude;
+      const latLongName = 'Latitude: ' + lat + ', Longitude: ' + long;
+
+      // for the accessibility message we need to figure out if we are using:
+      // countries without markers + joinNameAccessor OR
+      // any nameAccessor OR
+      // lat long (first check if latLongs are provided, otherwise use innerLat+Long)
+      d['Location placed using'] =
+        !this.markerStyle.visible && this.joinNameAccessor
+          ? this.accessibility.includeDataKeyNames
+            ? this.joinNameAccessor + ': ' + d[this.joinNameAccessor]
+            : d[this.joinNameAccessor]
+          : nameAccessor && d[nameAccessor]
+          ? this.accessibility.includeDataKeyNames
+            ? nameAccessor + ': ' + d[nameAccessor]
+            : d[nameAccessor]
+          : latLongName;
+    });
+  }
+
+  prepareLegendData() {
+    const nested = nest()
+      .key(d => d[this.groupAccessor])
+      .entries(this.preppedData);
+
+    this.legendData = [];
+    nested.forEach(el => {
+      this.legendData.push(el.values[0]);
+    });
+  }
+
+  updateChartVariable() {
+    this.padding = typeof this.padding === 'string' ? getPadding(this.padding) : this.padding;
+
+    // before we render/load we need to set our height and width based on props
+    this.innerHeight = this.height - this.margin.top - this.margin.bottom;
+    this.innerWidth = this.width - this.margin.left - this.margin.right;
+
+    this.innerPaddedHeight = this.innerHeight - this.padding.top - this.padding.bottom;
+    this.innerPaddedWidth = this.innerWidth - this.padding.left - this.padding.right;
+  }
+
+  // new for world-map
+  validateMarkerAccessor() {
+    // if marker accessor or marker name accessor not provide default to join accessor
+    this.innerMarkerAccessor = this.markerAccessor ? this.markerAccessor : this.joinAccessor;
+    this.innerMarkerNameAccessor = this.markerNameAccessor ? this.markerNameAccessor : this.joinNameAccessor;
+  }
+
+  validateInteractionKeys() {
+    this.innerInteractionKeys =
+      this.interactionKeys && this.interactionKeys.length
+        ? this.interactionKeys
+        : this.markerStyle.visible
+        ? [this.groupAccessor || this.innerMarkerAccessor || this.joinAccessor]
+        : [this.groupAccessor || this.joinAccessor];
+  }
+
+  setTagLevels() {
+    this.topLevel = findTagLevel(this.highestHeadingLevel);
+    this.bottomLevel = findTagLevel(this.highestHeadingLevel, 3);
+  }
+
+  // needs to be updated for map based selections
+  setGlobalSelections() {
+    // set countries
+    const dataBoundToCountryPaths = this.countries.selectAll('.country').data(this.features, d => d.id);
+    this.enter = dataBoundToCountryPaths.enter().append('path');
+    this.exit = dataBoundToCountryPaths.exit();
+    this.update = dataBoundToCountryPaths.merge(this.enter);
+
+    // record change for accessibility
+    this.exitSize = this.exit.size();
+    this.enterSize = this.enter.size();
+
+    // set markers
+    const dataBoundtoMarkers = this.markers
+      .selectAll('.marker')
+      .data(this.preppedData, d => d[this.innerMarkerAccessor]);
+    this.enterMarker = dataBoundtoMarkers.enter().append('circle');
+    this.exitMarker = dataBoundtoMarkers.exit();
+    this.updateMarker = dataBoundtoMarkers.merge(this.enterMarker);
+
+    this.exitMarkerSize = this.exitMarker.size();
+    this.enterMarkerSize = this.enterMarker.size();
+
+    // set labels
+    const dataBoundToLabels = this.labels
+      .selectAll('.world-map-dataLabel')
+      .data(this.preppedData, d => d[this.markerStyle.visible ? this.innerMarkerAccessor : this.joinAccessor]);
+    this.enteringLabels = dataBoundToLabels.enter().append('text');
+    this.exitingLabels = dataBoundToLabels.exit();
+    this.updatingLabels = dataBoundToLabels.merge(this.enteringLabels);
+  }
+
+  setColors() {
+    this.preparedColors = this.colors ? convertVisaColor(this.colors) : getColors(this.colorPalette, this.colorSteps);
+  }
+
+  addStrokeUnder() {
+    this.strokeFilter = createTextStrokeFilter({
+      root: this.svg.node(),
+      id: this.chartID,
+      color: '#ffffff',
+      strokeSizeOverride: 1
+    });
+    const filter = createTextStrokeFilter({
+      root: this.svg.node(),
+      id: this.chartID,
+      color: '#ffffff'
+    });
+    this.labels.attr('filter', filter);
+    this.updateMarker.attr('filter', this.strokeFilter);
+  }
+
+  prepareScales() {
+    const minValue =
+      (this.minValueOverride || this.minValueOverride === 0) &&
+      this.minValueOverride < min(this.preppedData, d => d[this.valueAccessor])
+        ? this.minValueOverride
+        : min(this.preppedData, d => d[this.valueAccessor]);
+    const maxValue =
+      (this.maxValueOverride || this.maxValueOverride === 0) &&
+      this.maxValueOverride > max(this.preppedData, d => d[this.valueAccessor])
+        ? this.maxValueOverride
+        : max(this.preppedData, d => d[this.valueAccessor]);
+
+    const domain = this.groupAccessor ? this.preppedData.map(d => d[this.groupAccessor]) : [];
+    // will need to handle error checking in this process
+    this.colorScale = this.groupAccessor ? scaleOrdinal().domain(domain) : scaleQuantize().domain([minValue, maxValue]);
+
+    this.baseColorScale = this.groupAccessor
+      ? scaleOrdinal()
+          .domain(domain)
+          .range(this.preparedColors)
+      : scaleQuantize()
+          .domain([minValue, maxValue])
+          .range(this.preparedColors);
+
+    // calculating these early means we don't need to for every single country and marker. Performance, huzzah!
+    this.precalculatedStrokes = {};
+    let colorToPrep = visaColors[this.countryStyle.color] || this.countryStyle.color || 'base_grey';
+    this.precalculatedStrokes[colorToPrep] = getContrastingStroke(colorToPrep);
+    colorToPrep = visaColors[this.markerStyle.color] || this.markerStyle.color || 'base_grey';
+    this.precalculatedStrokes[colorToPrep] = getContrastingStroke(colorToPrep);
+    if (this.innerClickStyle.color) {
+      colorToPrep = visaColors[this.innerClickStyle.color] || this.innerClickStyle.color;
+      this.precalculatedStrokes[colorToPrep] = getContrastingStroke(colorToPrep);
+    }
+    if (this.innerHoverStyle.color) {
+      colorToPrep = visaColors[this.innerHoverStyle.color] || this.innerHoverStyle.color;
+      this.precalculatedStrokes[colorToPrep] = getContrastingStroke(colorToPrep);
+    }
+    this.precalculatedStrokes[visaColors['base_grey']] = '#ffffff';
+
+    if (this.groupAccessor) {
+      const strokes = [];
+      this.preparedColors.forEach(color => {
+        strokes.push(getContrastingStroke(color));
+      });
+
+      this.strokeColors = scaleQuantize()
+        .domain(domain)
+        .range(strokes);
+    } else {
+      this.strokeColors = baseColor => {
+        if (this.colorPalette.includes('diverging')) {
+          const i = this.preparedColors.indexOf(baseColor);
+          if (this.preparedColors.length % 2) {
+            const firstHalfIndex = (this.preparedColors.length - 1) / 2 - 1;
+            const middleIndex = firstHalfIndex + 1;
+            const secondHalfIndex = middleIndex + 1;
+            return i <= firstHalfIndex
+              ? this.preparedColors[0]
+              : i >= secondHalfIndex
+              ? this.preparedColors[this.preparedColors.length - 1]
+              : getContrastingStroke(baseColor);
+          } else {
+            const topHalfIndex = this.preparedColors.length / 2;
+            return i < topHalfIndex ? this.preparedColors[0] : this.preparedColors[this.preparedColors.length - 1];
+          }
+        } else {
+          // palette is sequential, we use the darkest color
+          return this.preparedColors[this.preparedColors.length - 1];
+        }
+      };
+    }
+
+    // size markers by area
+    this.radiusScale = this.markerStyle.radiusRange
+      ? scalePow()
+          .exponent(0.5)
+          .domain([minValue, maxValue])
+          .range(this.markerStyle.radiusRange)
+      : '';
+  }
+
+  setTableData() {
+    // generate scoped and formatted data for data-table component
+    const keys = scopeDataKeys(this, chartAccessors, 'world-map');
+    this.tableData = getScopedData(this.preppedData, keys);
+    this.tableColumns = Object.keys(keys);
+  }
+
+  updateMarkerStyle(innerDuration) {
+    this.updateMarker
+      .style('mix-blend-mode', this.markerStyle.blend ? 'multiply' : 'normal')
+      .transition('update-marker')
+      .duration(innerDuration || 0)
+      .ease(easeCircleIn)
+      .attr('fill-opacity', d => {
+        if ((d.innerLatitude && d.innerLongitude) || (d[this.latitudeAccessor] && d[this.longitudeAccessor])) {
+          return checkInteraction(
+            d,
+            this.markerStyle.opacity,
+            this.hoverOpacity,
+            this.hoverHighlight,
+            this.clickHighlight,
+            this.innerInteractionKeys
+          );
+        } else {
+          return 0;
+        }
+      })
+      .attr('stroke-opacity', d => {
+        if ((d.innerLatitude && d.innerLongitude) || (d[this.latitudeAccessor] && d[this.longitudeAccessor])) {
+          return checkInteraction(
+            d,
+            this.markerStyle.opacity,
+            this.hoverOpacity,
+            this.hoverHighlight,
+            this.clickHighlight,
+            this.innerInteractionKeys
+          );
+        } else {
+          return 0;
+        }
+      })
+      .attr('fill', (d, i, n) => this.setMarkerStyle(d, i, n))
+      .attr('stroke-width', d =>
+        checkClicked(d, this.clickHighlight, this.innerInteractionKeys) && this.innerClickStyle.strokeWidth
+          ? this.innerClickStyle.strokeWidth
+          : this.hoverHighlight &&
+            checkHovered(d, this.hoverHighlight, this.innerInteractionKeys) &&
+            this.innerHoverStyle.strokeWidth
+          ? this.innerHoverStyle.strokeWidth
+          : this.markerStyle.strokeWidth || 1
+      )
+      .attr('stroke-dasharray', d =>
+        checkClicked(d, this.clickHighlight, this.innerInteractionKeys)
+          ? ''
+          : this.hoverHighlight &&
+            checkHovered(d, this.hoverHighlight, this.innerInteractionKeys) &&
+            this.innerHoverStyle.strokeWidth
+          ? '4 3'
+          : ''
+      )
+      .call(transitionEndAll, () => {
+        // in case the fill/stroke contents change, we want to update our focus indicator to match
+        // (the focus indicator copies the whole element being focused to place it on top)
+        retainAccessFocus({
+          parentGNode: this.rootG.node()
+        });
+      });
+  }
+
+  updateLabelStyle() {
+    const opacity = this.dataLabel.visible ? 1 : 0;
+
+    this.updatingLabels.attr('opacity', d => {
+      const showText =
+        checkClicked(d, this.clickHighlight, this.innerInteractionKeys) ||
+        checkHovered(d, this.hoverHighlight, this.innerInteractionKeys);
+      const labelOpacity = showText ? 1 : opacity;
+      return checkInteraction(
+        d,
+        labelOpacity,
+        this.hoverOpacity,
+        this.hoverHighlight,
+        this.clickHighlight,
+        this.innerInteractionKeys
+      );
+    });
+  }
+
+  validateClickStyle() {
+    // interaction style default
+    this.innerClickStyle = this.clickStyle
+      ? this.clickStyle
+      : {
+          strokeWidth: 3
+        };
+  }
+
+  validateHoverStyle() {
+    // interaction style default
+    this.innerHoverStyle = this.hoverStyle
+      ? this.hoverStyle
+      : {
+          strokeWidth: 2
+        };
+  }
+
+  validateMapProjection() {
+    this.innerMapProjection = d3Projections.find(o => o.projectionName === this.mapProjection)
+      ? this.mapProjection
+      : 'Equal Earth';
+  }
+
+  setGlobalProjection() {
+    // set the projection based on the prop passed
+    const selectedProjection = d3Projections.find(o => o.projectionName === this.innerMapProjection);
+
+    this.projection = selectedProjection
+      .projection()
+      .translate([this.innerPaddedWidth / 2, this.innerPaddedHeight / 2])
+      .scale(this.innerPaddedWidth * selectedProjection.scaleMultiplier * this.mapScaleZoom);
+
+    // set the paths
+    this.path = geo.geoPath().projection(this.projection);
+
+    // set the grid
+    this.graticule = geo.geoGraticule();
+  }
+
+  setMapFeatureQuality() {
+    if (this.quality === 'Low' || this.quality === 'low') {
+      // first step in drawing paths is to set up the join function
+      this.features = topojson.feature(worldSmall, worldSmall.objects.collection).features;
+      this.features.map(feature => (feature.id = feature.properties.ISO_N3)); // add feature id cause it was bugging me
+    } else {
+      // first step in drawing paths is to set up the join function
+      this.features = topojson.feature(worldData, worldData.objects.collection).features;
+      this.features.map(feature => (feature.id = feature.properties.ISO_N3)); // add feature id cause it was bugging me
+    }
+  }
+
+  updateRootIDs() {
+    this.root.attr('id', 'visa-viz-margin-container-g-' + this.chartID);
+    this.rootG.attr('id', 'visa-viz-padding-container-g-' + this.chartID);
+  }
+
+  renderRootElements() {
+    this.svg = select(this.worldMapEl)
+      .select('.visa-viz-world-map-container')
+      .append('svg')
+      .attr('width', this.width)
+      .attr('height', this.height)
+      .attr('data-testid', 'root-svg')
+      .attr('viewBox', '0 0 ' + this.width + ' ' + this.height);
+
+    this.root = this.svg
+      .append('g')
+      .attr('id', 'visa-viz-margin-container-g-' + this.chartID)
+      .attr('data-testid', 'margin-container');
+
+    this.rootG = this.root
+      .append('g')
+      .attr('id', 'visa-viz-padding-container-g-' + this.chartID)
+      .attr('data-testid', 'padding-container');
+
+    // grid elements
+    this.gridG = this.rootG
+      .append('g')
+      .attr('class', 'grid-group')
+      .attr('data-testid', 'grid-group');
+
+    // path elements
+    this.countries = this.rootG
+      .append('g')
+      .attr('class', 'country-group')
+      .attr('data-testid', 'country-group');
+
+    // marker elements
+    this.markers = this.rootG
+      .append('g')
+      .attr('class', 'marker-group')
+      .attr('data-testid', 'marker-group');
+
+    // label elements
+    this.labels = this.rootG
+      .append('g')
+      .attr('class', 'world-map-dataLabel-group')
+      .attr('data-testid', 'dataLabel-group');
+
+    // legend
+    this.legendG = select(this.worldMapEl)
+      .select('.world-map-legend')
+      .append('svg');
+
+    this.tooltipG = select(this.worldMapEl).select('.world-map-tooltip');
+  }
+
+  // reset graph size based on window size
+  reSetRoot() {
+    this.svg
+      .transition('root_reset')
+      .duration(this.duration)
+      .ease(easeCircleIn)
+      .attr('width', this.width)
+      .attr('height', this.height)
+      .attr('viewBox', '0 0 ' + this.width + ' ' + this.height);
+
+    this.root
+      .transition('root_reset')
+      .duration(this.duration)
+      .ease(easeCircleIn)
+      .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`);
+
+    this.rootG
+      .transition('root_reset')
+      .duration(this.duration)
+      .ease(easeCircleIn)
+      .attr('transform', `translate(${this.padding.left}, ${this.padding.top})`);
+
+    setAccessibilityDescriptionWidth(this.chartID, this.width);
+  }
+
+  setTextures() {
+    const scheme =
+      this.colorPalette && this.colorPalette.includes('categorical')
+        ? 'categorical'
+        : this.colorPalette && this.colorPalette.includes('diverging')
+        ? 'diverging'
+        : 'sequential';
+    const limit = this.groupAccessor ? 6 : scheme === 'diverging' ? 11 : 9;
+    if (this.accessibility.hideTextures || this.colorSteps > limit || !this.accessibility.showExperimentalTextures) {
+      this.colorArr = this.preparedColors;
+    } else {
+      const textures = convertColorsToTextures({
+        colors: this.preparedColors,
+        rootSVG: this.svg.node(),
+        id: this.chartID,
+        scheme
+      });
+      this.colorArr = textures;
+    }
+    this.colorScale.range(this.colorArr);
+  }
+
+  // dashed line for graticule grid
+  drawOutlineGrid() {
+    let duration = this.duration + 200;
+    let opacity = 1;
+    if (!this.showGridlines) {
+      opacity = 0;
+    }
+
+    // first we handle the grid outline, select and check for existence
+    let grid = this.gridG.select('.graticule-outline');
+    // grid transition opacity 0, call end all transition, .remove()
+    // call the draw function inside the transition end all
+
+    // if the grid doesn't exist yet then we append it
+    if (!grid.node()) {
+      duration = 0;
+      grid = this.gridG.append('g').attr('class', 'grid graticule-outline');
+    }
+    grid = grid.selectAll('.graticule-outline-path').data([`${this.innerMapProjection},${this.mapScaleZoom}`], d => d);
+    grid
+      .enter()
+      .append('path')
+      .attr('class', 'graticule-outline-path')
+      .merge(grid)
+      .attr('opacity', 0)
+      .attr('d', this.path(this.graticule.outline()))
+      .transition('update-grid-outline')
+      .duration(duration)
+      .ease(easeCircleIn)
+      .attr('opacity', opacity);
+
+    grid.exit().remove();
+  }
+
+  drawGraticuleGrid() {
+    let duration = this.duration + 200;
+    let opacity = 1;
+    if (!this.showGridlines) {
+      opacity = 0;
+    }
+
+    // rinse and repeat for inner grid
+    let innerGrid = this.gridG.select('.graticule-grid');
+    if (!innerGrid.node()) {
+      duration = 0;
+      innerGrid = this.gridG.append('g').attr('class', 'grid graticule-grid');
+    }
+    innerGrid = innerGrid
+      .selectAll('.graticule-grid-path')
+      .data([`${this.innerMapProjection},${this.mapScaleZoom}`], d => d);
+
+    innerGrid
+      .enter()
+      .append('path')
+      .attr('class', 'graticule-grid-path')
+      .merge(innerGrid)
+      .attr('opacity', 0)
+      .attr('d', this.path(this.graticule()))
+      .transition('update-grid-path')
+      .duration(duration)
+      .ease(easeCircleIn)
+      .attr('opacity', opacity);
+
+    innerGrid.exit().remove();
+  }
+
+  setMarkerSelectedClass() {
+    this.updateMarker.classed('highlight', (d, i, n) => {
+      let selected = checkInteraction(d, true, false, '', this.clickHighlight, this.innerInteractionKeys);
+      selected = this.clickHighlight && this.clickHighlight.length ? selected : false;
+      const selectable = this.accessibility.elementsAreInterface;
+      setElementInteractionAccessState(n[i], selected, selectable);
+      return selected;
+    });
+  }
+
+  updateCursor() {
+    this.update.attr('cursor', d => {
+      const joinedDataRecord = this.preppedData.find(obj => obj[this.joinAccessor] === d.id);
+      return joinedDataRecord && !this.suppressEvents && this.countryStyle.fill && !this.markerStyle.visible
+        ? this.cursor
+        : null;
+    });
+    this.updateMarker.attr('cursor', !this.suppressEvents && this.markerStyle.visible ? this.cursor : null);
+    this.updatingLabels.attr('cursor', !this.suppressEvents && this.dataLabel.visible ? this.cursor : null);
+  }
+
+  updateLegendCursor() {
+    this.innerLegend.style('cursor', !this.suppressEvents && this.legend.interactive ? this.cursor : null);
+  }
+
+  bindLegendInteractivity() {
+    this.innerLegend
+      .on('click', this.legend.interactive && !this.suppressEvents ? d => this.onClickHandler(d) : null)
+      .on('mouseover', this.legend.interactive && !this.suppressEvents ? d => this.hoverFunc.emit(d) : null)
+      .on('mouseout', this.legend.interactive && !this.suppressEvents ? d => this.onMouseOutHandler(d) : null);
+  }
+
+  bindInteractivity() {
+    const interactiveToggle = !this.suppressEvents && this.countryStyle.fill && !this.markerStyle.visible;
+    this.update
+      .on(
+        'click',
+        interactiveToggle
+          ? d => {
+              const joinedDataRecord = this.preppedData.find(obj => obj[this.joinAccessor] === d.id);
+              return this.onClickHandler(joinedDataRecord);
+            }
+          : null
+      )
+      .on(
+        'mouseover',
+        interactiveToggle
+          ? d => {
+              const joinedDataRecord = this.preppedData.find(obj => obj[this.joinAccessor] === d.id);
+              return this.onHoverHandler(joinedDataRecord);
+            }
+          : null
+      )
+      .on(
+        'mouseout',
+        interactiveToggle
+          ? d => {
+              const joinedDataRecord = this.preppedData.find(obj => obj[this.joinAccessor] === d.id);
+              return this.onMouseOutHandler(joinedDataRecord);
+            }
+          : null
+      );
+
+    this.updateMarker
+      .on('click', !this.suppressEvents && this.markerStyle.visible ? d => this.onClickHandler(d) : null)
+      .on('mouseover', !this.suppressEvents && this.markerStyle.visible ? d => this.onHoverHandler(d) : null)
+      .on('mouseout', !this.suppressEvents && this.markerStyle.visible ? d => this.onMouseOutHandler(d) : null);
+
+    this.updatingLabels
+      .on(
+        'click',
+        !this.suppressEvents && this.dataLabel.visible
+          ? (d, i, n) => {
+              moveToFront(select(n[i]));
+              this.onClickHandler(d);
+            }
+          : null
+      )
+      .on(
+        'mouseover',
+        !this.suppressEvents
+          ? (d, i, n) => {
+              moveToFront(select(n[i]));
+              this.onHoverHandler(d);
+            }
+          : null
+      )
+      .on('mouseout', !this.suppressEvents ? d => this.onMouseOutHandler(d) : null);
+  }
+
+  enterPaths() {
+    const interactiveToggle = !this.suppressEvents && this.countryStyle.fill && !this.markerStyle.visible;
+    this.enter.interrupt();
+
+    this.enter
+      .attr('class', 'country')
+      .attr('data-testid', 'country')
+      .attr('data-id', d => `country-path-${d.id}`)
+      .attr('cursor', interactiveToggle ? this.cursor : null)
+      .on(
+        'click',
+        interactiveToggle
+          ? d => {
+              const joinedDataRecord = this.preppedData.find(obj => obj[this.joinAccessor] === d.id);
+              return this.onClickHandler(joinedDataRecord);
+            }
+          : null
+      )
+      .on(
+        'mouseover',
+        interactiveToggle
+          ? d => {
+              const joinedDataRecord = this.preppedData.find(obj => obj[this.joinAccessor] === d.id);
+              return this.onHoverHandler(joinedDataRecord);
+            }
+          : null
+      )
+      .on(
+        'mouseout',
+        interactiveToggle
+          ? d => {
+              const joinedDataRecord = this.preppedData.find(obj => obj[this.joinAccessor] === d.id);
+              return this.onMouseOutHandler(joinedDataRecord);
+            }
+          : null
+      )
+      .attr('d', this.path)
+      .attr('fill', (d, i, n) => this.setCountryStyle(d, i, n))
+      .attr('stroke-width', d => {
+        const joinedDataRecord = this.preppedData.find(obj => obj[this.joinAccessor] === d.id);
+        return joinedDataRecord &&
+          this.clickHighlight.length > 0 &&
+          checkClicked(joinedDataRecord, this.clickHighlight, this.innerInteractionKeys) &&
+          this.innerClickStyle.strokeWidth
+          ? this.innerClickStyle.strokeWidth
+          : joinedDataRecord &&
+            this.hoverHighlight &&
+            checkHovered(joinedDataRecord, this.hoverHighlight, this.innerInteractionKeys) &&
+            this.innerHoverStyle.strokeWidth &&
+            this.countryStyle.fill &&
+            !this.markerStyle.visible
+          ? this.innerHoverStyle.strokeWidth
+          : this.countryStyle.strokeWidth || 0.5;
+      })
+      .attr('stroke-dasharray', d => {
+        const joinedDataRecord = this.preppedData.find(obj => obj[this.joinAccessor] === d.id);
+        return joinedDataRecord &&
+          this.clickHighlight.length > 0 &&
+          checkClicked(joinedDataRecord, this.clickHighlight, this.innerInteractionKeys)
+          ? ''
+          : joinedDataRecord &&
+            this.hoverHighlight &&
+            checkHovered(joinedDataRecord, this.hoverHighlight, this.innerInteractionKeys) &&
+            this.innerHoverStyle.strokeWidth &&
+            this.countryStyle.fill &&
+            !this.markerStyle.visible
+          ? '4 3'
+          : '';
+      })
+      .attr('opacity', d => {
+        const joinedDataRecord = this.preppedData.find(obj => obj[this.joinAccessor] === d.id);
+        return this.markerStyle.visible
+          ? this.countryStyle.opacity
+          : joinedDataRecord
+          ? checkInteraction(
+              joinedDataRecord,
+              this.countryStyle.opacity,
+              this.hoverOpacity,
+              this.hoverHighlight,
+              this.clickHighlight,
+              this.innerInteractionKeys
+            )
+          : this.clickHighlight.length > 0 || this.hoverHighlight
+          ? this.hoverOpacity
+          : this.countryStyle.opacity;
+      });
+  }
+
+  updatePathStyle(innerDuration) {
+    this.update.interrupt('opacity');
+
+    this.update
+      .transition('update-path')
+      .duration(innerDuration || 0)
+      .ease(easeCircleIn)
+      .attr('opacity', d => {
+        const joinedDataRecord = this.preppedData.find(obj => obj[this.joinAccessor] === d.id);
+        return this.markerStyle.visible
+          ? this.countryStyle.opacity
+          : joinedDataRecord
+          ? checkInteraction(
+              joinedDataRecord,
+              this.countryStyle.opacity,
+              this.hoverOpacity,
+              this.hoverHighlight,
+              this.clickHighlight,
+              this.innerInteractionKeys
+            )
+          : this.clickHighlight.length > 0 || this.hoverHighlight
+          ? this.hoverOpacity
+          : this.countryStyle.opacity;
+      })
+      .attr('fill', (d, i, n) => this.setCountryStyle(d, i, n))
+      .attr('stroke-width', d => {
+        const joinedDataRecord = this.preppedData.find(obj => obj[this.joinAccessor] === d.id);
+        return joinedDataRecord &&
+          this.clickHighlight.length > 0 &&
+          checkClicked(joinedDataRecord, this.clickHighlight, this.innerInteractionKeys) &&
+          !this.markerStyle.visible
+          ? this.innerClickStyle.strokeWidth
+          : joinedDataRecord &&
+            this.hoverHighlight &&
+            checkHovered(joinedDataRecord, this.hoverHighlight, this.innerInteractionKeys) &&
+            this.innerHoverStyle.strokeWidth &&
+            this.countryStyle.fill &&
+            !this.markerStyle.visible
+          ? this.innerHoverStyle.strokeWidth
+          : this.countryStyle.strokeWidth || 1;
+      })
+      .attr('stroke-dasharray', d => {
+        const joinedDataRecord = this.preppedData.find(obj => obj[this.joinAccessor] === d.id);
+        return joinedDataRecord &&
+          this.clickHighlight.length > 0 &&
+          checkClicked(joinedDataRecord, this.clickHighlight, this.innerInteractionKeys) &&
+          !this.markerStyle.visible
+          ? ''
+          : joinedDataRecord &&
+            this.hoverHighlight &&
+            checkHovered(joinedDataRecord, this.hoverHighlight, this.innerInteractionKeys) &&
+            this.innerHoverStyle.strokeWidth &&
+            this.countryStyle.fill &&
+            !this.markerStyle.visible
+          ? '4 3'
+          : '';
+      });
+  }
+
+  exitPaths() {
+    this.exit.interrupt();
+
+    // this fades the countries out, we never actually remove them (just hide them)
+    this.exit
+      .transition('exit-country')
+      .duration(this.duration)
+      .ease(easeCircleIn)
+      .attr('opacity', 0);
+  }
+
+  drawPaths() {
+    this.update
+      .transition('update-paths')
+      .duration(this.duration)
+      .ease(easeCircleIn)
+      .attr('d', this.path);
+  }
+
+  setCountryStyle(d, i, n) {
+    const joinedDataRecord = this.preppedData.find(obj => obj[this.joinAccessor] === d.id);
+    let fillColor;
+    let strokeColor;
+    if (!this.countryStyle.fill || !joinedDataRecord) {
+      fillColor = visaColors[this.countryStyle.color] || this.countryStyle.color || 'base_grey';
+    } else if (!this.markerStyle.visible) {
+      if (
+        this.clickHighlight.length > 0 &&
+        checkClicked(joinedDataRecord, this.clickHighlight, this.innerInteractionKeys) &&
+        this.innerClickStyle.color
+      ) {
+        fillColor = visaColors[this.innerClickStyle.color] || this.innerClickStyle.color;
+      } else if (
+        this.hoverHighlight &&
+        checkHovered(joinedDataRecord, this.hoverHighlight, this.innerInteractionKeys) &&
+        this.innerHoverStyle.color
+      ) {
+        fillColor = visaColors[this.innerHoverStyle.color] || this.innerHoverStyle.color;
+      } else if (this.groupAccessor) {
+        strokeColor = this.strokeColors(this.baseColorScale(joinedDataRecord[this.groupAccessor]));
+        fillColor = this.colorScale(joinedDataRecord[this.groupAccessor]);
+      } else {
+        strokeColor = this.strokeColors(this.baseColorScale(joinedDataRecord[this.valueAccessor]));
+        fillColor = this.colorScale(joinedDataRecord[this.valueAccessor]);
+      }
+    } else {
+      strokeColor = this.strokeColors(this.baseColorScale(joinedDataRecord[this.valueAccessor]));
+      fillColor = this.colorScale(joinedDataRecord[this.valueAccessor]);
+    }
+    select(n[i]).attr('stroke', strokeColor || this.precalculatedStrokes[fillColor]);
+    return fillColor;
+  }
+
+  enterLabels() {
+    const opacity = this.dataLabel.visible ? 1 : 0;
+
+    this.enteringLabels
+      .attr('class', 'world-map-dataLabel')
+      .attr('data-testid', 'dataLabel')
+      .attr('text-anchor', 'middle')
+      .attr('cursor', !this.suppressEvents ? this.cursor : null)
+      .attr('opacity', d => {
+        const showText =
+          checkClicked(d, this.clickHighlight, this.innerInteractionKeys) ||
+          checkHovered(d, this.hoverHighlight, this.innerInteractionKeys);
+        const labelOpacity = showText ? 1 : opacity;
+        return checkInteraction(
+          d,
+          labelOpacity,
+          this.hoverOpacity,
+          this.hoverHighlight,
+          this.clickHighlight,
+          this.innerInteractionKeys
+        );
+      })
+      .attr('x', d =>
+        this.latitudeAccessor && this.longitudeAccessor
+          ? this.projection([+d[this.longitudeAccessor], +d[this.latitudeAccessor]])[0]
+          : isNaN(d.innerLongitude)
+          ? 0
+          : this.projection([+d.innerLongitude, +d.innerLatitude])[0]
+      )
+      .attr('y', d =>
+        this.latitudeAccessor && this.longitudeAccessor
+          ? this.projection([+d[this.longitudeAccessor], +d[this.latitudeAccessor]])[1]
+          : isNaN(d.innerLatitude)
+          ? 0
+          : this.projection([+d.innerLongitude, +d.innerLatitude])[1]
+      )
+      .attr('dy', d =>
+        this.markerStyle.visible
+          ? (typeof this.radiusScale === 'function'
+              ? this.radiusScale(d[this.valueAccessor])
+              : this.markerStyle.radius || 5) + 15
+          : 0
+      )
+      .on(
+        'click',
+        !this.suppressEvents && this.dataLabel.visible
+          ? (d, i, n) => {
+              moveToFront(select(n[i]));
+              this.onClickHandler(d);
+            }
+          : null
+      )
+      .on(
+        'mouseover',
+        !this.suppressEvents
+          ? (d, i, n) => {
+              moveToFront(select(n[i]));
+              this.onHoverHandler(d);
+            }
+          : null
+      )
+      .on('mouseout', !this.suppressEvents ? d => this.onMouseOutHandler(d) : null);
+  }
+
+  exitLabels() {
+    this.exitingLabels
+      .transition('exit')
+      .ease(easeCircleIn)
+      .duration(this.duration / 2)
+      .attr('opacity', 0)
+      .remove();
+  }
+
+  drawDataLabels() {
+    const opacity = this.dataLabel.visible ? 1 : 0;
+
+    this.updatingLabels
+      .transition('update-labels')
+      .ease(easeCircleIn)
+      .duration(this.duration)
+      .text(d => {
+        let showText = false;
+
+        showText =
+          checkClicked(d, this.clickHighlight, this.innerInteractionKeys) ||
+          checkHovered(d, this.hoverHighlight, this.innerInteractionKeys) ||
+          opacity;
+
+        // if we don't have marker latitude and longitude don't show labels
+        if (
+          (this.latitudeAccessor && this.longitudeAccessor
+            ? this.projection([+d[this.longitudeAccessor], +d[this.latitudeAccessor]])[1]
+            : isNaN(d.innerLatitude)
+            ? 0
+            : this.projection([+d.innerLongitude, +d.innerLatitude])[1]) === 0
+        ) {
+          showText = false;
+        }
+        if (
+          (this.latitudeAccessor && this.longitudeAccessor
+            ? this.projection([+d[this.longitudeAccessor], +d[this.latitudeAccessor]])[0]
+            : isNaN(d.innerLongitude)
+            ? 0
+            : this.projection([+d.innerLongitude, +d.innerLatitude])[0]) === 0
+        ) {
+          showText = false;
+        }
+        if (this.markerStyle.visible) {
+          return showText ? this.getMarkerLabelText(d) : '';
+        } else {
+          return showText ? this.getMarkerLabelText(d) : '';
+        }
+      })
+      .attr('x', d =>
+        this.latitudeAccessor && this.longitudeAccessor
+          ? this.projection([+d[this.longitudeAccessor], +d[this.latitudeAccessor]])[0]
+          : isNaN(d.innerLongitude)
+          ? 0
+          : this.projection([+d.innerLongitude, +d.innerLatitude])[0]
+      )
+      .attr('y', d =>
+        this.latitudeAccessor && this.longitudeAccessor
+          ? this.projection([+d[this.longitudeAccessor], +d[this.latitudeAccessor]])[1]
+          : isNaN(d.innerLatitude)
+          ? 0
+          : this.projection([+d.innerLongitude, +d.innerLatitude])[1]
+      )
+      .attr('dy', d =>
+        this.markerStyle.visible
+          ? (typeof this.radiusScale === 'function'
+              ? this.radiusScale(d[this.valueAccessor])
+              : this.markerStyle.radius || 5) + 15
+          : 0
+      )
+      .attr('text-anchor', 'middle');
+  }
+
+  getMarkerLabelText(d) {
+    return this.dataLabel.labelAccessor
+      ? this.dataLabel.format
+        ? formatDataLabel(d, this.dataLabel.labelAccessor, this.dataLabel.format)
+        : d[this.dataLabel.labelAccessor]
+      : this.markerStyle.visible
+      ? d[this.innerMarkerNameAccessor || this.innerMarkerAccessor]
+      : d[this.joinNameAccessor || this.joinAccessor];
+  }
+
+  enterMarkers() {
+    this.enterMarker.interrupt();
+
+    // enter new markers with pre-defined properities
+    this.enterMarker
+      .attr('filter', this.strokeFilter)
+      .attr('class', 'marker')
+      .attr('data-testid', 'marker')
+      .attr('data-id', d => `marker-${d[this.innerMarkerAccessor]}`)
+      .attr('cursor', !this.suppressEvents && this.markerStyle.visible ? this.cursor : null)
+      .style('mix-blend-mode', this.markerStyle.blend ? 'multiply' : 'normal')
+      .attr('cx', d => {
+        if (this.latitudeAccessor && this.longitudeAccessor) {
+          return this.projection([+d[this.longitudeAccessor], +d[this.latitudeAccessor]])[0];
+        } else {
+          return isNaN(d.innerLongitude) ? 0 : this.projection([+d.innerLongitude, +d.innerLatitude])[0];
+        }
+      })
+      .attr('cy', d => {
+        if (this.latitudeAccessor && this.longitudeAccessor) {
+          return this.projection([+d[this.longitudeAccessor], +d[this.latitudeAccessor]])[1];
+        } else {
+          return isNaN(d.innerLatitude) ? 0 : this.projection([+d.innerLongitude, +d.innerLatitude])[1];
+        }
+      })
+      .attr('r', 0)
+      .attr('fill', (d, i, n) => this.setMarkerStyle(d, i, n))
+      .attr('stroke-width', d =>
+        checkClicked(d, this.clickHighlight, this.innerInteractionKeys) && this.innerClickStyle.strokeWidth
+          ? this.innerClickStyle.strokeWidth
+          : this.hoverHighlight &&
+            checkHovered(d, this.hoverHighlight, this.innerInteractionKeys) &&
+            this.innerHoverStyle.strokeWidth
+          ? this.innerHoverStyle.strokeWidth
+          : this.markerStyle.strokeWidth || 1
+      )
+      .attr('stroke-dasharray', d =>
+        checkClicked(d, this.clickHighlight, this.innerInteractionKeys)
+          ? ''
+          : this.hoverHighlight &&
+            checkHovered(d, this.hoverHighlight, this.innerInteractionKeys) &&
+            this.innerHoverStyle.strokeWidth
+          ? '4 3'
+          : ''
+      )
+      .attr('fill-opacity', d => {
+        if ((d.innerLatitude && d.innerLongitude) || (d[this.latitudeAccessor] && d[this.longitudeAccessor])) {
+          return checkInteraction(
+            d,
+            this.markerStyle.opacity,
+            this.hoverOpacity,
+            this.hoverHighlight,
+            this.clickHighlight,
+            this.innerInteractionKeys
+          );
+        } else {
+          return 0;
+        }
+      })
+      .attr('stroke-opacity', d => {
+        if ((d.innerLatitude && d.innerLongitude) || (d[this.latitudeAccessor] && d[this.longitudeAccessor])) {
+          return checkInteraction(
+            d,
+            this.markerStyle.opacity,
+            this.hoverOpacity,
+            this.hoverHighlight,
+            this.clickHighlight,
+            this.innerInteractionKeys
+          );
+        } else {
+          return 0;
+        }
+      })
+      .each((_d, i, n) => {
+        initializeGeometryAccess({
+          node: n[i]
+        });
+      })
+      .on('click', !this.suppressEvents && this.markerStyle.visible ? d => this.onClickHandler(d) : null)
+      .on('mouseover', !this.suppressEvents && this.markerStyle.visible ? d => this.onHoverHandler(d) : null)
+      .on('mouseout', !this.suppressEvents && this.markerStyle.visible ? d => this.onMouseOutHandler(d) : null);
+  }
+
+  exitMarkers() {
+    this.exitMarker
+      .transition('exit')
+      .duration(this.hoverHighlight ? 0 : this.duration)
+      .ease(easeCircleIn)
+      .style('fill-opacity', 0)
+      .style('stroke-opacity', 0)
+      .attr('r', 0);
+
+    this.updateMarker
+      .transition('accessibilityAfterExit')
+      .duration(this.duration)
+      .ease(easeCircleIn)
+      .call(transitionEndAll, () => {
+        // before we exit geometries, we need to check if a focus exists or not
+        const focusDidExist = checkAccessFocus(this.rootG.node());
+        // then we must remove the exiting elements
+        this.exitMarker.remove();
+        // then our util can count geometries
+        this.setChartCountAccessibility();
+        // our group's label should update with new counts too
+        this.setGroupAccessibilityLabel();
+        // since items exited, labels must receive updated values
+        this.setGeometryAriaLabels();
+        // and also make sure the user's focus isn't lost
+        retainAccessFocus({
+          parentGNode: this.rootG.node(),
+          focusDidExist
+          // recursive: true
+        });
+      });
+  }
+
+  // parsing this out as we only want to re-order the DOM when necessary (sort or data udpate)
+  orderMarkers() {
+    this.updateMarker.order();
+    this.update.order();
+    this.updatingLabels.order();
+  }
+
+  drawMarkers() {
+    this.updateMarker
+      .transition('update-markers')
+      .duration(this.duration)
+      .ease(easeCircleIn)
+      .attr('cx', d => {
+        if (this.latitudeAccessor && this.longitudeAccessor) {
+          return this.projection([+d[this.longitudeAccessor], +d[this.latitudeAccessor]])[0];
+        } else {
+          return isNaN(d.innerLongitude) ? 0 : this.projection([+d.innerLongitude, +d.innerLatitude])[0];
+        }
+      })
+      .attr('cy', d => {
+        if (this.latitudeAccessor && this.longitudeAccessor) {
+          return this.projection([+d[this.longitudeAccessor], +d[this.latitudeAccessor]])[1];
+        } else {
+          return isNaN(d.innerLatitude) ? 0 : this.projection([+d.innerLongitude, +d.innerLatitude])[1];
+        }
+      })
+      .attr('r', d =>
+        this.markerStyle.visible
+          ? this.radiusScale
+            ? this.radiusScale(d[this.valueAccessor])
+            : this.markerStyle.radius || 5
+          : 0
+      )
+      .call(transitionEndAll, () => {
+        // we must make sure if geometries move, that our focus indicator does too
+        retainAccessFocus({
+          parentGNode: this.rootG.node()
+        });
+      });
+  }
+
+  setMarkerStyle(d, i, n) {
+    let markerColor;
+    let strokeColor;
+    if (checkClicked(d, this.clickHighlight, this.innerInteractionKeys) && this.innerClickStyle.color) {
+      markerColor = visaColors[this.innerClickStyle.color] || this.innerClickStyle.color;
+    } else if (checkHovered(d, this.hoverHighlight, this.innerInteractionKeys) && this.innerHoverStyle.color) {
+      markerColor = visaColors[this.innerHoverStyle.color] || this.innerHoverStyle.color;
+    } else if (!this.markerStyle.fill) {
+      markerColor = visaColors[this.markerStyle.color] || this.markerStyle.color || 'base_grey';
+    } else if (this.groupAccessor) {
+      markerColor = this.baseColorScale(d[this.groupAccessor]);
+      strokeColor = this.strokeColors(markerColor);
+    } else {
+      markerColor = this.baseColorScale(d[this.valueAccessor]);
+      strokeColor = this.strokeColors(markerColor);
+    }
+    select(n[i]).attr('stroke', strokeColor || this.precalculatedStrokes[markerColor]);
+    return markerColor;
+  }
+
+  // for the time being we are going to emit a warning as annotations do not work on world-map yet
+  drawAnnotations() {
+    if (this.annotations && this.annotations.length) {
+      console.warn(
+        'Annotations prop submitted to world-map. The annotations prop is currently not supported on world-map component.'
+      );
+    }
+    // annotate({
+    //   source: this.rootG.node(),
+    //   data: this.annotations // ,
+    //   // xScale: this.x,
+    //   // xAccessor: this.ordinalAccessor,
+    //   // yScale: this.y,
+    //   // yAccessor: this.valueAccessor
+    // });
+
+    // setAccessAnnotation(this.worldMapEl, this.annotations);
+  }
+
+  // utilize the legend component to draw the map's legend.
+  drawLegendElements() {
+    drawLegend({
+      root: this.legendG,
+      uniqueID: this.chartID,
+      width: this.innerPaddedWidth,
+      height: this.margin.top + 20,
+      colorArr: this.colorArr,
+      baseColorArr:
+        (this.colorPalette && this.colorPalette.includes('categorical')) ||
+        (this.colorPalette && this.colorPalette.includes('diverging'))
+          ? this.preparedColors
+          : [this.preparedColors[this.preparedColors.length - 1]],
+      scale: this.colorScale,
+      steps: this.colorSteps,
+      margin: this.margin,
+      padding: this.padding,
+      duration: this.duration,
+      type: this.groupAccessor ? 'bar' : this.legend.type, // force to bar if we have a group accessor
+      fontSize: 16,
+      data: this.legendData,
+      labelKey: this.groupAccessor,
+      label: this.legend.labels,
+      format: this.legend.format,
+      hide: !this.legend.visible
+    });
+
+    // now that we have drawn our legend elements we need to udpate our selection
+    this.innerLegend = select(this.worldMapEl).selectAll('.legend');
+  }
+
+  // new accessibility functions added here
+  setChartDescriptionWrapper() {
+    // this initializes the accessibility description section of the chart
+    initializeDescriptionRoot({
+      rootEle: this.worldMapEl,
+      geomType: 'marker',
+      title: this.accessibility.title || this.mainTitle,
+      chartTag: 'world-map',
+      uniqueID: this.chartID,
+      highestHeadingLevel: this.highestHeadingLevel,
+      redraw: this.shouldRedrawWrapper
+    });
+    this.shouldRedrawWrapper = false;
+  }
+
+  setParentSVGAccessibility() {
+    // this sets the accessibility features of the root SVG element
+    setRootSVGAccess({
+      node: this.svg.node(),
+      chartTag: 'world-map',
+      title: this.accessibility.title || this.mainTitle,
+      description: this.subTitle,
+      uniqueID: this.chartID,
+      geomType: 'marker',
+      includeKeyNames: this.accessibility.includeDataKeyNames,
+      dataKeys: scopeDataKeys(this, chartAccessors, 'world-map'),
+      groupAccessor: this.groupAccessor
+    });
+  }
+
+  setGeometryAccessibilityAttributes() {
+    // this makes sure every geom element has correct event handlers + semantics (role, tabindex, etc)
+    this.updateMarker.each((_d, i, n) => {
+      initializeGeometryAccess({
+        node: n[i]
+      });
+    });
+  }
+
+  setGeometryAriaLabels() {
+    // this adds an ARIA label to each geom (a description read by screen readers)
+    const keys = scopeDataKeys(this, chartAccessors, 'world-map');
+    this.updateMarker.each((_d, i, n) => {
+      setGeometryAccessLabel({
+        node: n[i],
+        geomType: 'marker',
+        includeKeyNames: this.accessibility.includeDataKeyNames,
+        dataKeys: keys,
+        uniqueID: this.chartID
+      });
+    });
+  }
+
+  setGroupAccessibilityAttributes() {
+    // if a component's <g> elements can enter/exit, this will need to be called in the
+    // lifecycle more than just initially, like how setGeometryAccessibilityAttributes works
+    initializeGroupAccess(this.markers.node());
+  }
+
+  setGroupAccessibilityLabel() {
+    // this sets an ARIA label on all the g elements in the chart
+    this.markers.each((_, i, n) => {
+      setGroupAccessLabel({
+        node: n[i],
+        geomType: 'marker',
+        includeKeyNames: this.accessibility.includeDataKeyNames,
+        groupAccessor: this.groupAccessor,
+        uniqueID: this.chartID
+      });
+    });
+  }
+
+  setChartAccessibilityTitle() {
+    setAccessTitle(this.worldMapEl, this.accessibility.title || this.mainTitle);
+  }
+
+  setChartAccessibilitySubtitle() {
+    setAccessSubtitle(this.worldMapEl, this.subTitle);
+  }
+
+  setChartAccessibilityLongDescription() {
+    setAccessLongDescription(this.worldMapEl, this.accessibility.longDescription);
+  }
+
+  setChartAccessibilityExecutiveSummary() {
+    setAccessExecutiveSummary(this.worldMapEl, this.accessibility.executiveSummary);
+  }
+
+  setChartAccessibilityPurpose() {
+    setAccessPurpose(this.worldMapEl, this.accessibility.purpose);
+  }
+
+  setChartAccessibilityContext() {
+    setAccessContext(this.worldMapEl, this.accessibility.contextExplanation);
+  }
+
+  setChartAccessibilityStatisticalNotes() {
+    setAccessStatistics(this.worldMapEl, this.accessibility.statisticalNotes);
+  }
+
+  setChartCountAccessibility() {
+    // this is our automated section that describes the chart contents
+    // (like geometry and gorup counts, etc)
+    setAccessChartCounts({
+      rootEle: this.worldMapEl,
+      parentGNode: this.markers.node(), // pass the wrapper to <g> or geometries here, should be single node selection
+      chartTag: 'world-map',
+      geomType: 'marker'
+    });
+  }
+
+  setChartAccessibilityStructureNotes() {
+    setAccessStructure(this.worldMapEl, this.accessibility.structureNotes);
+  }
+  // new accessibility stuff ends here
+
+  onChangeHandler() {
+    if (this.accessibility && typeof this.accessibility.onChangeFunc === 'function') {
+      const d = {
+        updated: this.updated,
+        added: this.enterSize,
+        removed: this.exitSize
+      };
+      this.accessibility.onChangeFunc(d);
+    }
+    this.updated = false;
+    this.enterSize = 0;
+    this.exitSize = 0;
+  }
+
+  onClickHandler(d) {
+    if (d) {
+      this.clickFunc.emit(d);
+    }
+  }
+
+  // handle mouse over of countries
+  onHoverHandler(d) {
+    overrideTitleTooltip(this.chartID, true);
+    if (d) {
+      this.hoverFunc.emit(d);
+      if (this.showTooltip) {
+        this.eventsTooltip({ data: d, evt: event, isToShow: true });
+      }
+    }
+  }
+
+  // handle mouse out of countries
+  onMouseOutHandler(d) {
+    overrideTitleTooltip(this.chartID, false);
+    if (d) {
+      this.mouseOutFunc.emit();
+      if (this.showTooltip) {
+        this.eventsTooltip({ isToShow: false });
+      }
+    }
+  }
+
+  // set initial style (instead of copying css class across the lib)
+  setTooltipInitialStyle() {
+    initTooltipStyle(this.tooltipG);
+  }
+
+  // tooltip
+  eventsTooltip({ data, evt, isToShow }: { data?: any; evt?: any; isToShow: boolean }) {
+    drawTooltip({
+      root: this.tooltipG,
+      data,
+      event: evt,
+      isToShow,
+      tooltipLabel: this.tooltipLabel,
+      dataLabel: this.dataLabel,
+      xAccessor:
+        isToShow && evt.target.getAttribute('data-testid') === 'country'
+          ? this.joinNameAccessor
+          : this.innerMarkerNameAccessor || this.joinNameAccessor,
+      yAccessor:
+        isToShow && evt.target.getAttribute('data-testid') === 'country'
+          ? this.joinAccessor
+          : this.innerMarkerAccessor || this.joinAccessor,
+      valueAccessor: this.valueAccessor,
+      chartType: 'world-map'
+    });
+  }
+
+  render() {
+    // harcoding theme to light until we add the functionality
+    const theme = 'light';
+
+    // everything between this comment and the third should eventually
+    // be moved into componentWillUpdate (if the stenicl bug is fixed)
+    this.init();
+    if (this.shouldSetTagLevels) {
+      this.setTagLevels();
+      this.shouldSetTagLevels = false;
+    }
+    if (this.shouldUpdateLayoutVariables) {
+      this.updateChartVariable();
+      this.shouldUpdateLayoutVariables = false;
+    }
+    if (this.shouldUpdateRootIDs) {
+      this.updateRootIDs();
+      this.shouldUpdateRootIDs = false;
+    }
+    if (this.shouldValidateMapProjection) {
+      this.validateMapProjection();
+      this.shouldValidateMapProjection = false;
+    }
+    if (this.shouldSetGlobalProjection) {
+      this.setGlobalProjection();
+      this.setMapFeatureQuality(); // we will not change the quality, but need to recreate features in these cases
+      this.shouldSetGlobalProjection = false;
+    }
+    if (this.shouldValidateMarkerAccessor) {
+      this.validateMarkerAccessor();
+      this.shouldValidateMarkerAccessor = false;
+    }
+    if (this.shouldValidateInteractionKeys) {
+      this.validateInteractionKeys();
+      this.shouldValidateInteractionKeys = false;
+    }
+    if (this.shouldValidateClickStyle) {
+      this.validateClickStyle();
+      this.shouldValidateClickStyle = false;
+    }
+    if (this.shouldValidateHoverStyle) {
+      this.validateHoverStyle();
+      this.shouldValidateHoverStyle = false;
+    }
+    if (this.shouldUpdateData) {
+      this.prepareData();
+      this.shouldUpdateData = false;
+    }
+    if (this.shouldUpdateTableData) {
+      this.setTableData();
+      this.shouldUpdateTableData = false;
+    }
+    if (this.shouldUpdateLegendData) {
+      this.prepareLegendData();
+      this.shouldUpdateLegendData = false;
+    }
+    if (this.shouldSetColors) {
+      this.setColors();
+      this.shouldSetColors = false;
+    }
+    if (this.shouldUpdateScales) {
+      this.prepareScales();
+      this.shouldUpdateScales = false;
+    }
+    if (this.shouldValidate) {
+      this.shouldValidateAccessibilityProps();
+      this.shouldValidate = false;
+    }
+    // Everything between this comment and the first should eventually
+    // be moved into componentWillUpdate (if the stenicl bug is fixed)
+
+    return (
+      <div class={`o-layout ${theme}`} data-testid="outer-layout">
+        <div class="o-layout--chart" data-testid="layout-chart">
+          <this.topLevel data-testid="main-title">{this.mainTitle}</this.topLevel>
+          <this.bottomLevel class="visa-ui-text--instructions" data-testid="sub-title">
+            {this.subTitle}
+          </this.bottomLevel>
+          <div
+            class="world-map-legend vcl-legend"
+            data-testid="legend-container"
+            style={{ display: this.legend.visible ? 'block' : 'none' }}
+          />
+          <div class="visa-viz-world-map-container" data-testid="chart-container" />
+          <div
+            class="world-map-tooltip vcl-tooltip"
+            data-testid="tooltip-container"
+            style={{ display: this.showTooltip ? 'block' : 'none' }}
+          />
+          <data-table
+            uniqueID={this.chartID}
+            isCompact
+            tableColumns={this.tableColumns}
+            data={this.tableData}
+            padding={this.padding}
+            margin={this.margin}
+            hideDataTable={this.accessibility.hideDataTableButton}
+          />
+        </div>
+      </div>
+    );
+  }
+
+  private init() {
+    // reading properties
+    const keys = Object.keys(WorldMapDefaultValues);
+    let i = 0;
+    const exceptions = {
+      showTooltip: {
+        exception: false
+      },
+      showGridlines: {
+        exception: false
+      },
+      hoverOpacity: {
+        exception: 0
+      },
+      mainTitle: {
+        exception: ''
+      },
+      subTitle: {
+        exception: ''
+      }
+    };
+    for (i = 0; i < keys.length; i++) {
+      const exception = !exceptions[keys[i]] ? false : this[keys[i]] === exceptions[keys[i]].exception;
+      this[keys[i]] = this[keys[i]] || exception ? this[keys[i]] : WorldMapDefaultValues[keys[i]];
+    }
+  }
+}
+
+// incorporate OSS licenses into build
+window['VisaChartsLibOSSLicenses'] = getLicenses(); // tslint:disable-line no-string-literal

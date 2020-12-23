@@ -1,0 +1,258 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<circle-packing> rendered-html generic test suite accessibility: should not print accessibility console warnings and logs when accessibility.disableValidation set to true 1`] = `Array []`;
+
+exports[`<circle-packing> rendered-html generic test suite accessibility: should not print accessibility console warnings and logs when accessibility.disableValidation set to true 2`] = `Array []`;
+
+exports[`<circle-packing> rendered-html generic test suite accessibility: should not print accessibility console warnings and logs when accessibility.disableValidation set to true 3`] = `Array []`;
+
+exports[`<circle-packing> rendered-html generic test suite accessibility: should print accessibility console warnings and logs when accessibility.disableValidation defaults to false 1`] = `
+Array [
+  Array [
+    "%c longDescription: Either accessibility.longDescription or accessibility.contextExplanation is required",
+    "color: #C6003F;font-size:medium;",
+  ],
+  Array [
+    "%c executiveSummary: Either accessibility.purpose or accessibility.executiveSummary is required",
+    "color: #C6003F;font-size:medium;",
+  ],
+  Array [
+    "%c elementsAreInterface: accessibility.elementsAreInterface needs a boolean value either true or false",
+    "color: #C6003F;font-size:medium;",
+  ],
+]
+`;
+
+exports[`<circle-packing> rendered-html generic test suite accessibility: should print accessibility console warnings and logs when accessibility.disableValidation defaults to false 2`] = `
+Array [
+  Array [
+    "%c longDescription: Either accessibility.longDescription or accessibility.contextExplanation should have minimum 40 characters and a combined length between 40 and 500 characters",
+    "font-size:medium;",
+  ],
+  Array [
+    "%c executiveSummary: Either accessibility.purpose or accessibility.executiveSummary should have minimum 40 characters and a combined length between 40 and 250 characters",
+    "font-size:medium;",
+  ],
+  Array [
+    "%c statisticalNotes: accessibility.statisticalNotes should have length between 40 and 250 characters",
+    "font-size:medium;",
+  ],
+  Array [
+    "%c structureNotes: accessibility.structureNotes should have length between 40 and 250 characters",
+    "font-size:medium;",
+  ],
+]
+`;
+
+exports[`<circle-packing> rendered-html generic test suite accessibility: should print accessibility console warnings and logs when accessibility.disableValidation defaults to false 3`] = `
+Array [
+  Array [
+    "%c circle-packing-test has accessibility warnings and other messages",
+    "color: #C6003F;font-size:medium;",
+  ],
+]
+`;
+
+exports[`<circle-packing> rendered-html render should render with minimal props[data,accessor(s)] given 1`] = `
+<circle-packing id="circle-packing-test">
+  <div class="o-layout" data-testid="outer-layout">
+    <div class="vcl-accessibility-instructions" id="chart-instructions-circle-packing-test" style="position: absolute; width: 400px;">
+      <p class="screen-reader-info vcl-region-label" tabindex="0">
+        Keyboard interactive circle-packing, Titled: Circle Packing Title. The next TAB will focus the chart area. Pressing ENTER once on the chart will enter it and focus the chart's first node. If there are multiple nodes, they can be navigated among using ARROW keys. You may access the group's child nodes by pressing ENTER again. You may then use the arrow keys to navigate among nodes and SPACEBAR to select them. Use ESCAPE to drill up one level of the chart or TAB to leave it entirely. If you are using a screen reader, this section contains additional information and instructions.
+      </p>
+      <p class="screen-reader-info vcl-access-title">
+        Chart title: Circle Packing Title
+      </p>
+      <p class="screen-reader-info vcl-access-subtitle">
+        Chart subtitle: This is the circle packing chart's subtitle
+      </p>
+      <p class="screen-reader-info vcl-access-executive-summary" data-level="p"></p>
+      <p class="screen-reader-info vcl-access-purpose" data-level="p"></p>
+      <p class="screen-reader-info vcl-access-long-description" data-level="p"></p>
+      <p class="screen-reader-info vcl-access-context" data-level="p"></p>
+      <p class="screen-reader-info vcl-access-structure-heading">
+        Structure
+      </p>
+      <p class="screen-reader-info vcl-access-statistics" data-level="p"></p>
+      <p class="screen-reader-info vcl-access-chart-layout-heading">
+        Chart Layout Description
+      </p>
+      <p class="screen-reader-info vcl-access-layout">
+        This is a circle-packing with 13 nodes (more nodes may be revealed upon interaction).
+      </p>
+      <p class="screen-reader-info vcl-access-xAxis"></p>
+      <p class="screen-reader-info vcl-access-yAxis"></p>
+      <p class="screen-reader-info vcl-access-notes" data-annotationlevel="p" data-level="p"></p>
+      <p class="screen-reader-info vcl-interaction-instructions">
+        Interaction Instructions
+      </p>
+      <p class="screen-reader-info">
+        Use Regions/Landmarks or TAB to skip ahead to the chart area or the data table. The following subsections explain how to use this chart's interactivity.
+      </p>
+      <p class="screen-reader-info">
+        Enabling this chart's interactivity
+      </p>
+      <p class="screen-reader-info">
+        Screen readers that are able to switch between Browse and Forms mode will need to turn on Forms mode once the chart area is reached.
+      </p>
+      <p class="screen-reader-info">
+        Using the TAB key outside the Chart area and Exposing new Layers with the ENTER key
+      </p>
+      <p class="screen-reader-info">
+        Each chart has three main TAB areas at first: the information and instructions (which is this), the chart area, and the data table. You may TAB out of this section to the chart area at any time. Once on the chart area, you may focus the chart's first node by pressing ENTER. Doing this will navigate you into the chart area, which enables you to use the ARROW keys focus new elements.
+      </p>
+      <p class="screen-reader-info">
+        Using the ESCAPE key
+      </p>
+      <p class="screen-reader-info">
+        When in the chart area, pressing the ESCAPE key will always move your keyboard focus to the parent of the node or node you are currently on, until you reach the root of the chart.
+      </p>
+      <p class="screen-reader-info">
+        Exploring Sibling Groups and Elements with LEFT and RIGHT
+      </p>
+      <p class="screen-reader-info">
+        When in the chart area, pressing RIGHT ARROW will move your focus to the next available node or node at the same level, within the same group. If there is not another node or node at the same level within your group, focus will move back to the first node or node among the siblings to your node or node. Pressing LEFT ARROW works in the same circular manner, but in reverse. This functionality is intended to allow easier comparison and navigation among siblings at the beginning and end of a group without leaving the group. This can be helpful when elements are sorted or ordered, because you can jump from the first to last elements easily.
+      </p>
+      <p class="screen-reader-info">
+        A note about navigating Hierarchical Charts
+      </p>
+      <p class="screen-reader-info">
+        This chart contains a nested hierarchy, which means that there could be children contained inside any chart element that you navigate to and this nested structure could be multiple levels deep depending on the chart's data. Your current element will always explain if it contains children or not within it but these elements may be hidden until your current element is activated using SPACEBAR. If the children elements are not hidden, they can be navigated to using ENTER or DOWN ARROW keys and you can always exit your current level by using the ESCAPE or UP ARROW keys.
+      </p>
+      <p class="screen-reader-info">
+        Selecting Elements with SPACEBAR
+      </p>
+      <p class="screen-reader-info">
+        If a node is selectable and that selection causes something to happen, it will be marked up as a BUTTON and you may select it using SPACEBAR. Note that if you use SPACEBAR while on a node, it will have no effect. Only using SPACEBAR on a node may have effects.)
+      </p>
+    </div>
+    <div class="o-layout--chart" data-testid="layout-chart">
+      <h2 data-testid="main-title">
+        Circle Packing Title
+      </h2>
+      <p class="visa-ui-text--instructions" data-testid="sub-title">
+        This is the circle packing chart's subtitle
+      </p>
+      <div class="visa-viz-circle-packing-container" data-testid="chart-container">
+        <div aria-label="Circle Packing Title. This is the circle packing chart's subtitle.  Navigate into the chart area by pressing ENTER. ID: circle-packing-test" class="VCL-controller screen-reader-info" id="chart-area-circle-packing-test" role="application" tabindex="0">
+          Interactive circle-packing.
+        </div>
+        <svg class="vcl-svg" data-testid="root-svg" focusable="false" height="400" role="presentation" tabindex="-1" viewBox="0 0 400 400" width="400" style="overflow: hidden;">
+          <g data-testid="margin-container" id="visa-viz-margin-container-g-circle-packing-test">
+            <g data-testid="padding-container" id="visa-viz-padding-container-g-circle-packing-test">
+              <g class="circle-pack-group" data-testid="circle-group">
+                <g class="g-level-0" id="circle-in-pack-World-circle-packing-test">
+                  <circle class="moving node node--root node-level-0" cursor="default" data-id="circle--World" data-role="img" data-testid="circle" data-x="0" data-y="0" fill="url(#circle-packing-test_texture_0)" focusable="false" id="circle-packing-test-123457-123457-123457" opacity="1" r="0" role="presentation" stroke="#8c8c8c" stroke-dasharray="" stroke-width="1" tabindex="-1" transform="translate(0,0)"></circle>
+                  <g class="g-level-1" id="circle-in-pack-Mexico-circle-packing-test">
+                    <circle class="moving node node-level-1" cursor="default" data-id="circle-World-Mexico" data-role="img" data-testid="circle" data-x="-84.1188" data-y="-26.8081" fill="url(#circle-packing-test_texture_1)" focusable="false" id="circle-packing-test-123457-123457-123457" opacity="1" r="0" role="presentation" stroke="#666666" stroke-dasharray="" stroke-width="1" tabindex="-1" transform="translate(-84.1188,-26.8081)"></circle>
+                    <g class="g-level-2" id="circle-in-pack-A-circle-packing-test">
+                      <circle class="moving node node-level-2" cursor="default" data-id="circle-Mexico-A" data-role="img" data-testid="circle" data-x="-125.3304" data-y="-35.2901" fill="url(#circle-packing-test_texture_2)" focusable="false" id="circle-packing-test-123457-123457-123457" opacity="1" r="0" role="presentation" stroke="#efefef" stroke-dasharray="" stroke-width="1" tabindex="-1" transform="translate(-125.3304,-35.2901)"></circle>
+                    </g>
+                    <g class="g-level-2" id="circle-in-pack-B-circle-packing-test">
+                      <circle class="moving node node-level-2" cursor="default" data-id="circle-Mexico-B" data-role="img" data-testid="circle" data-x="-28.903" data-y="-35.2901" fill="url(#circle-packing-test_texture_2)" focusable="false" id="circle-packing-test-123457-123457-123457" opacity="1" r="0" role="presentation" stroke="#efefef" stroke-dasharray="" stroke-width="1" tabindex="-1" transform="translate(-28.903,-35.2901)"></circle>
+                    </g>
+                    <g class="g-level-2" id="circle-in-pack-E-circle-packing-test">
+                      <circle class="moving node node-level-2" cursor="default" data-id="circle-Mexico-E" data-role="img" data-testid="circle" data-x="-65.1811" data-y="32.1497" fill="url(#circle-packing-test_texture_2)" focusable="false" id="circle-packing-test-123457-123457-123457" opacity="1" r="0" role="presentation" stroke="#efefef" stroke-dasharray="" stroke-width="1" tabindex="-1" transform="translate(-65.1811,32.1497)"></circle>
+                    </g>
+                  </g>
+                  <g class="g-level-1" id="circle-in-pack-United-States-circle-packing-test">
+                    <circle class="moving node node-level-1" cursor="default" data-id="circle-World-United States" data-role="img" data-testid="circle" data-x="101.8865" data-y="-26.8081" fill="url(#circle-packing-test_texture_1)" focusable="false" id="circle-packing-test-123457-123457-123457" opacity="1" r="0" role="presentation" stroke="#666666" stroke-dasharray="" stroke-width="1" tabindex="-1" transform="translate(101.8865,-26.8081)"></circle>
+                    <g class="g-level-2" id="circle-in-pack-C-circle-packing-test">
+                      <circle class="moving node node-level-2" cursor="default" data-id="circle-United States-C" data-role="img" data-testid="circle" data-x="67.9789" data-y="-4.8826" fill="url(#circle-packing-test_texture_2)" focusable="false" id="circle-packing-test-123457-123457-123457" opacity="1" r="0" role="presentation" stroke="#efefef" stroke-dasharray="" stroke-width="1" tabindex="-1" transform="translate(67.9789,-4.8826)"></circle>
+                    </g>
+                    <g class="g-level-2" id="circle-in-pack-F-circle-packing-test">
+                      <circle class="moving node node-level-2" cursor="default" data-id="circle-United States-F" data-role="img" data-testid="circle" data-x="135.7942" data-y="-4.8826" fill="url(#circle-packing-test_texture_2)" focusable="false" id="circle-packing-test-123457-123457-123457" opacity="1" r="0" role="presentation" stroke="#efefef" stroke-dasharray="" stroke-width="1" tabindex="-1" transform="translate(135.7942,-4.8826)"></circle>
+                    </g>
+                    <g class="g-level-2" id="circle-in-pack-G-circle-packing-test">
+                      <circle class="moving node node-level-2" cursor="default" data-id="circle-United States-G" data-role="img" data-testid="circle" data-x="101.8865" data-y="34.9247" fill="url(#circle-packing-test_texture_2)" focusable="false" id="circle-packing-test-123457-123457-123457" opacity="1" r="0" role="presentation" stroke="#efefef" stroke-dasharray="" stroke-width="1" tabindex="-1" transform="translate(101.8865,34.9247)"></circle>
+                    </g>
+                    <g class="g-level-2" id="circle-in-pack-I-circle-packing-test">
+                      <circle class="moving node node-level-2" cursor="default" data-id="circle-United States-I" data-role="img" data-testid="circle" data-x="101.8865" data-y="-68.6287" fill="url(#circle-packing-test_texture_2)" focusable="false" id="circle-packing-test-123457-123457-123457" opacity="1" r="0" role="presentation" stroke="#efefef" stroke-dasharray="" stroke-width="1" tabindex="-1" transform="translate(101.8865,-68.6287)"></circle>
+                    </g>
+                  </g>
+                  <g class="g-level-1" id="circle-in-pack-Canada-circle-packing-test">
+                    <circle class="moving node node-level-1" cursor="default" data-id="circle-World-Canada" data-role="img" data-testid="circle" data-x="24.2872" data-y="112.3584" fill="url(#circle-packing-test_texture_1)" focusable="false" id="circle-packing-test-123457-123457-123457" opacity="1" r="0" role="presentation" stroke="#666666" stroke-dasharray="" stroke-width="1" tabindex="-1" transform="translate(24.2872,112.3584)"></circle>
+                    <g class="g-level-2" id="circle-in-pack-D-circle-packing-test">
+                      <circle class="moving node node-level-2" cursor="default" data-id="circle-Canada-D" data-role="img" data-testid="circle" data-x="-17.5878" data-y="112.3584" fill="url(#circle-packing-test_texture_2)" focusable="false" id="circle-packing-test-123457-123457-123457" opacity="1" r="0" role="presentation" stroke="#efefef" stroke-dasharray="" stroke-width="1" tabindex="-1" transform="translate(-17.5878,112.3584)"></circle>
+                    </g>
+                    <g class="g-level-2" id="circle-in-pack-H-circle-packing-test">
+                      <circle class="moving node node-level-2" cursor="default" data-id="circle-Canada-H" data-role="img" data-testid="circle" data-x="52.9293" data-y="112.3584" fill="url(#circle-packing-test_texture_2)" focusable="false" id="circle-packing-test-123457-123457-123457" opacity="1" r="0" role="presentation" stroke="#efefef" stroke-dasharray="" stroke-width="1" tabindex="-1" transform="translate(52.9293,112.3584)"></circle>
+                    </g>
+                  </g>
+                </g>
+              </g>
+              <g aria-hidden="true" class="circle-pack-text-group" data-testid="dataLabel-group" focusable="false" role="presentation">
+                <text class="circle-packing-dataLabel label" cursor="default" data-testid="dataLabel" data-x="-84.1188" data-y="-26.8081" filter="url(#VCL-t-s-f-ffffffcircle-packing-test)" opacity="1" text-anchor="middle" transform="translate(-84.1188,-26.8081)">
+                  Mexico
+                </text>
+                <text class="circle-packing-dataLabel label" cursor="default" data-testid="dataLabel" data-x="101.8865" data-y="-26.8081" filter="url(#VCL-t-s-f-ffffffcircle-packing-test)" opacity="1" text-anchor="middle" transform="translate(101.8865,-26.8081)">
+                  United States
+                </text>
+                <text class="circle-packing-dataLabel label" cursor="default" data-testid="dataLabel" data-x="24.2872" data-y="112.3584" filter="url(#VCL-t-s-f-ffffffcircle-packing-test)" opacity="1" text-anchor="middle" transform="translate(24.2872,112.3584)">
+                  Canada
+                </text>
+              </g>
+              <g aria-hidden="true" class="vcl-annotation-group" data-testid="annotation-group" focusable="false" role="presentation"></g>
+              <g aria-hidden="true" class="editable vcl-annotation-group" data-testid="editable-annotation-group" focusable="false" role="presentation"></g>
+            </g>
+          </g>
+          <defs>
+            <filter class="vcl-inversion-filter" color-interpolation-filters="sRGB" id="inversion-circle-packing-test">
+              <feColorMatrix in="SourceGraphic" type="matrix" values="-1 0 0 0 1 
+        0 -1 0 0 1 
+        0 0 -1 0 1
+        0 0 0 1 0"></feColorMatrix>
+              <feColorMatrix type="hueRotate" values="180"></feColorMatrix>
+            </filter>
+            <pattern class="VCL-texture-pattern" height="12" id="circle-packing-test_texture_0" patternContentUnits="userSpaceOnUse" patternUnits="userSpaceOnUse" width="12" x="0" y="0">
+              <rect class="VCL-t-p-e" fill="#f2f2f2" height="12" width="12"></rect>
+              <path class="VCL-t-p-e" d="M 0,0 l 12,12 M -3,9 l 6,6 M 9,-3 l 6,6" shape-rendering="auto" stroke="#8c8c8c" stroke-linecap="square" stroke-width="1"></path>
+            </pattern>
+            <pattern class="VCL-texture-pattern" height="12" id="circle-packing-test_texture_1" patternContentUnits="userSpaceOnUse" patternUnits="userSpaceOnUse" width="12" x="0" y="0">
+              <rect class="VCL-t-p-e" fill="#bdbdbd" height="12" width="12"></rect>
+              <circle class="VCL-t-p-e" cx="6" cy="6" fill="#666666" r="1" stroke="#343434" stroke-width="0"></circle>
+              <circle class="VCL-t-p-e" cx="0" cy="0" fill="#666666" r="1" stroke="#343434" stroke-width="0"></circle>
+              <circle class="VCL-t-p-e" cx="0" cy="12" fill="#666666" r="1" stroke="#343434" stroke-width="0"></circle>
+              <circle class="VCL-t-p-e" cx="12" cy="0" fill="#666666" r="1" stroke="#343434" stroke-width="0"></circle>
+              <circle class="VCL-t-p-e" cx="12" cy="12" fill="#666666" r="1" stroke="#343434" stroke-width="0"></circle>
+            </pattern>
+            <pattern class="VCL-texture-pattern" height="24" id="circle-packing-test_texture_2" patternContentUnits="userSpaceOnUse" patternUnits="userSpaceOnUse" width="24" x="0" y="0">
+              <rect class="VCL-t-p-e" fill="#898989" height="24" width="24"></rect>
+              <path class="VCL-t-p-e" d="M 0,0 l 24,24 M -6,18 l 12,12 M 18,-6 l 12,12" shape-rendering="auto" stroke="#efefef" stroke-linecap="square" stroke-width="1"></path>
+              <path class="VCL-t-p-e" d="M 0,24 l 24,-24 M -6,6 l 12,-12 M 18,30 l 12,-12" shape-rendering="auto" stroke="#efefef" stroke-linecap="square" stroke-width="1"></path>
+            </pattern>
+            <pattern class="VCL-texture-pattern" height="12" id="circle-packing-test_texture_3" patternContentUnits="userSpaceOnUse" patternUnits="userSpaceOnUse" width="12" x="0" y="0">
+              <rect class="VCL-t-p-e" fill="#595959" height="12" width="12"></rect>
+              <path class="VCL-t-p-e" d="M 4.5,4.5l3,3M4.5,7.5l3,-3" fill="transparent" shape-rendering="auto" stroke="#ababab" stroke-linecap="square" stroke-width="1"></path>
+            </pattern>
+            <filter class="VCL-t-s-f-ffffff" id="VCL-t-s-f-ffffffcircle-packing-test">
+              <feMorphology in="SourceAlpha" operator="dilate" radius="1.5" result="dilatedText"></feMorphology>
+              <feFlood flood-color="#ffffff" flood-opacity="1" result="whiteTextFlood"></feFlood>
+              <feComposite in="whiteTextFlood" in2="dilatedText" operator="in" result="textOutline"></feComposite>
+              <feMerge>
+                <feMergeNode in="textOutline"></feMergeNode>
+                <feMergeNode in="textOutline"></feMergeNode>
+                <feMergeNode in="textOutline"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+              </feMerge>
+            </filter>
+            <filter class="VCL-t-s-f-ffffff1" id="VCL-t-s-f-ffffff1circle-packing-test1">
+              <feMorphology in="SourceAlpha" operator="dilate" radius="1" result="dilatedText"></feMorphology>
+              <feFlood flood-color="#ffffff" flood-opacity="1" result="whiteTextFlood"></feFlood>
+              <feComposite in="whiteTextFlood" in2="dilatedText" operator="in" result="textOutline"></feComposite>
+              <feMerge>
+                <feMergeNode in="textOutline"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+              </feMerge>
+            </filter>
+          </defs>
+        </svg>
+      </div>
+      <div class="circle-packing-tooltip vcl-tooltip" data-testid="tooltip-container" style="display: block; position: absolute; padding: 0.5rem; opacity: 0; background-color: #ffffff; font-size: 14px; font-weight: 400; color: #222222; border: 1px solid #565656; border-radius: 3px; pointer-events: none; min-width: 80px; max-width: 300px;">
+        <p style="margin: 0;"></p>
+      </div>
+      <data-table iscompact="" uniqueid="circle-packing-test"></data-table>
+    </div>
+  </div>
+</circle-packing>
+`;

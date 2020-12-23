@@ -1,0 +1,34 @@
+/**
+* Copyright (c) 2020 Visa, Inc.
+*
+* This source code is licensed under the MIT license
+* https://github.com/visa/visa-chart-components/blob/master/LICENSE
+*
+**/
+.indicator {
+  .indicator-grid {
+    line {
+      stroke: #767676;
+      stroke-opacity: 1;
+    }
+    path {
+      stroke-width: 0;
+      stroke: #767676;
+    }
+    text {
+      fill: #767676;
+    }
+  }
+  .indicator-label {
+    font-size: 0.8em;
+    fill: #767676;
+    text-anchor: start;
+  }
+
+  .indicator-chart {
+    stroke: #767676;
+    rect {
+      stroke: none;
+    }
+  }
+}
