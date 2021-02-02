@@ -40,7 +40,8 @@
     "pre-release": "lerna version --no-push --conventional-commits --conventional-prerelease --no-commit-hooks",
     "pre-release:no-git-tag": "lerna version --no-push --no-git-tag-version --conventional-commits --conventional-prerelease --no-commit-hooks",
     "ls-scripts": "./node_modules/.bin/ls-scripts",
-    "ls-commit-types": "./node_modules/.bin/conventional-commit-types"
+    "ls-commit-types": "./node_modules/.bin/conventional-commit-types",
+    "oss-file-copy": "node scripts/oss-move-files.js"
   },
   "dependencies": {
     "d3-interpolate": "1.3.2"
