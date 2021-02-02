@@ -90,6 +90,12 @@ We use [vscode](https://code.visualstudio.com/) as our development environment, 
 
 <br>
 
+##### Component change history
+
+As VCC is a monorepo, changes for each component package will be maintained in their own changelog files. Refer to `packages/<component-name>/CHANGELOG.MD` for the history of changes made to any particular component.
+
+<br>
+
 ##### Cleaning the repo
 
 _caution: this will require you to re-install the entire monorepo, which can take some time_
