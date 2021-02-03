@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2021 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -17,16 +17,19 @@ const DEFAULTHOVEROPACITY = propDefaultValues.hoverOpacity;
 const CUSTOMHOVEROPACITY = 0.5;
 
 const DEFAULTCLICKSTYLE = propDefaultValues.clickStyle;
+const DEFAULTSYMBOLCLICKSTYLE = propDefaultValues.symbolClickStyle;
 const CUSTOMCLICKSTYLE = {
-  color: visaColors.categorical_rose,
+  color: visaColors.categorical_light_purple,
   strokeWidth: 4
 };
 
 const DEFAULTHOVERSTYLE = propDefaultValues.hoverStyle;
+const DEFAULTSYMBOLHOVERSTYLE = propDefaultValues.symbolHoverStyle;
 
 const checkRGB = element =>
   element.getAttribute('fill').substr(0, 3) === 'rgb' || element.style.getPropertyValue('fill').substr(0, 3) === 'rgb';
-const checkURL = element => element.getAttribute('fill').substr(0, 4) === 'url(';
+const checkURL = element =>
+  element.getAttribute('fill') ? element.getAttribute('fill').substr(0, 4) === 'url(' : false;
 
 // this is only needed for parsing the complex style object
 // no longer needed after flushTransition() was added
@@ -152,10 +155,7 @@ export const interaction_clickStyle_default_load = {
   prop: 'clickStyle',
   group: 'interaction',
   name: 'on click the selected mark should be default clickStyle and others should have hoverOpacity',
-  testProps: {
-    hoverOpacity: DEFAULTHOVEROPACITY,
-    clickStyle: DEFAULTCLICKSTYLE
-  },
+  testProps: {},
   testSelector: '[data-testid=mark]',
   negTestSelector: '[data-testid=mark]',
   testFunc: async (
@@ -165,9 +165,15 @@ export const interaction_clickStyle_default_load = {
     testSelector: string,
     negTestSelector: string
   ) => {
+    let useFilter = true;
+    let fillStrokeOpacity = false;
     if (Object.keys(testProps).length) {
       Object.keys(testProps).forEach(testProp => {
-        if (testProp !== 'clickHighlight') {
+        if (testProp === 'useFilter') {
+          useFilter = testProps[testProp];
+        } else if (testProp === 'fillStrokeOpacity') {
+          fillStrokeOpacity = testProps[testProp];
+        } else if (testProp !== 'clickHighlight') {
           component[testProp] = testProps[testProp];
         }
       });
@@ -183,6 +189,9 @@ export const interaction_clickStyle_default_load = {
     // GET MARKS SELECTED AND NOT
     const selectedMark = page.doc.querySelector(testSelector);
     const notSelectedMark = page.doc.querySelector(negTestSelector);
+    flushTransitions(selectedMark);
+    flushTransitions(notSelectedMark);
+    await page.waitForChanges();
 
     // FIGURE OUT WHAT COLOR THEY ARE AND DETERMINE EXPECTED STROKE USING OUR UTIL
     const notSelectedMarkColor = checkURL(notSelectedMark)
@@ -197,27 +206,46 @@ export const interaction_clickStyle_default_load = {
           .getAttribute('fill')
       : selectedMark.getAttribute('fill');
     const expectedStrokeColor = getAccessibleStrokes(notSelectedMarkColor)[0];
+    const expectedScatterStrokeWidth = DEFAULTSYMBOLCLICKSTYLE.strokeWidth / component.dotRadius;
 
-    // GET THE FILTER OF THE SELECTED MARK AND STORE KEY ATTRIBUTES INTO AN OBJECT FOR EASE OF TESTING
-    const selectedMarkFilter = page.doc.querySelector(
-      selectedMark
-        .getAttribute('filter')
-        .replace('url(', '')
-        .replace(')', '')
-    );
-    const selectedMarkFilterPrimaryColorFlood = selectedMarkFilter.querySelector('feFlood[result=primary-color]');
-    const selectedMarkMorphs = selectedMarkFilter.querySelectorAll('feMorphology');
+    // DETERMINE WHICH TYPE OF TEST WE ARE DOING (TEXTURE BASED FILTER OR NOT)
+    if (useFilter) {
+      // GET THE FILTER OF THE SELECTED MARK AND STORE KEY ATTRIBUTES INTO AN OBJECT FOR EASE OF TESTING
+      const selectedMarkFilter = page.doc.querySelector(
+        selectedMark
+          .getAttribute('filter')
+          .replace('url(', '')
+          .replace(')', '')
+      );
 
-    // STROKE WIDTH TESTS
-    selectedMarkMorphs.forEach((morph, i) => {
-      expect(morph).toEqualAttribute('radius', expectedMorphRadius[i]);
-    });
+      const selectedMarkFilterPrimaryColorFlood = selectedMarkFilter.querySelector('feFlood[result=primary-color]');
+      const selectedMarkMorphs = selectedMarkFilter.querySelectorAll('feMorphology');
 
-    // STROKE COLOR TEST
-    expect(selectedMarkFilterPrimaryColorFlood).toEqualAttribute('flood-color', expectedStrokeColor);
+      // STROKE WIDTH TESTS
+      selectedMarkMorphs.forEach((morph, i) => {
+        expect(morph).toEqualAttribute('radius', expectedMorphRadius[i]);
+      });
+
+      // STROKE COLOR TEST
+      expect(selectedMarkFilterPrimaryColorFlood).toEqualAttribute('flood-color', expectedStrokeColor);
+    } else {
+      // STROKE WIDTH TESTS
+      expect(selectedMark).toEqualAttribute(
+        'stroke-width',
+        component.tagName.toLowerCase() === 'scatter-plot' ? expectedScatterStrokeWidth : DEFAULTCLICKSTYLE.strokeWidth
+      );
+
+      // STROKE COLOR TEST
+      expect(selectedMark).toEqualAttribute('stroke', expectedStrokeColor);
+    }
 
     // HOVER OPACITY TEST
-    expect(notSelectedMark).toEqualAttribute('opacity', DEFAULTHOVEROPACITY);
+    if (fillStrokeOpacity) {
+      expect(notSelectedMark).toEqualAttribute('fill-opacity', DEFAULTHOVEROPACITY);
+      expect(notSelectedMark).toEqualAttribute('stroke-opacity', DEFAULTHOVEROPACITY);
+    } else {
+      expect(notSelectedMark).toEqualAttribute('opacity', DEFAULTHOVEROPACITY);
+    }
   }
 };
 
@@ -241,9 +269,15 @@ export const interaction_clickStyle_custom_load = {
     // ARRANGE
     const EXPECTEDCLICKSTYLE = testProps['clickStyle'] ? testProps['clickStyle'] : CUSTOMCLICKSTYLE;
     const EXPECTEDHOVEROPACITY = testProps['hoverOpacity'] ? testProps['hoverOpacity'] : CUSTOMHOVEROPACITY;
+    let useFilter = true;
+    let fillStrokeOpacity = false;
     if (Object.keys(testProps).length) {
       Object.keys(testProps).forEach(testProp => {
-        if (testProp !== 'clickStyle' && testProp !== 'hoverOpacity') {
+        if (testProp === 'useFilter') {
+          useFilter = testProps[testProp];
+        } else if (testProp === 'fillStrokeOpacity') {
+          fillStrokeOpacity = testProps[testProp];
+        } else if (testProp !== 'clickStyle' && testProp !== 'hoverOpacity') {
           component[testProp] = testProps[testProp];
         }
       });
@@ -251,7 +285,7 @@ export const interaction_clickStyle_custom_load = {
     component.clickHighlight = [component.data[0]];
     component.clickStyle = EXPECTEDCLICKSTYLE;
     component.hoverOpacity = EXPECTEDHOVEROPACITY;
-    const expectedMorphRadius = [1, 0, 1, EXPECTEDCLICKSTYLE.strokeWidth + 1, EXPECTEDCLICKSTYLE.strokeWidth + 2];
+    const expectedMorphRadius = [1, 0, EXPECTEDCLICKSTYLE.strokeWidth, EXPECTEDCLICKSTYLE.strokeWidth + 1];
 
     // ACT
     page.root.appendChild(component);
@@ -261,33 +295,58 @@ export const interaction_clickStyle_custom_load = {
     // GET MARKS SELECTED AND NOT
     const selectedMark = page.doc.querySelector(testSelector);
     const notSelectedMark = page.doc.querySelector(negTestSelector);
+    flushTransitions(selectedMark);
+    flushTransitions(notSelectedMark);
+    await page.waitForChanges();
 
     // FIGURE OUT WHAT COLOR THEY ARE AND DETERMINE EXPECTED STROKE USING OUR UTIL
     const expectedStrokeColor = getAccessibleStrokes(EXPECTEDCLICKSTYLE.color)[0];
+    const expectedScatterStrokeWidth = EXPECTEDCLICKSTYLE.strokeWidth / component.dotRadius;
 
-    // GET THE FILTER OF THE SELECTED MARK AND STORE KEY ATTRIBUTES INTO AN OBJECT FOR EASE OF TESTING
-    const selectedMarkFilter = page.doc.querySelector(
-      selectedMark
-        .getAttribute('filter')
-        .replace('url(', '')
-        .replace(')', '')
-    );
-    const selectedMarkFilterPrimaryColorFlood = selectedMarkFilter.querySelector('feFlood[result=primary-color]');
-    const selectedMarkMorphs = selectedMarkFilter.querySelectorAll('feMorphology');
+    // DETERMINE WHICH TYPE OF TEST WE ARE DOING (TEXTURE BASED FILTER OR NOT)
+    if (useFilter) {
+      // GET THE FILTER OF THE SELECTED MARK AND STORE KEY ATTRIBUTES INTO AN OBJECT FOR EASE OF TESTING
+      const selectedMarkFilter = page.doc.querySelector(
+        selectedMark
+          .getAttribute('filter')
+          .replace('url(', '')
+          .replace(')', '')
+      );
 
-    // STROKE WIDTH TESTS
-    selectedMarkMorphs.forEach((morph, i) => {
-      expect(morph).toEqualAttribute('radius', expectedMorphRadius[i]);
-    });
+      const selectedMarkFilterPrimaryColorFlood = selectedMarkFilter.querySelector('feFlood[result=primary-color]');
+      const selectedMarkMorphs = selectedMarkFilter.querySelectorAll('feMorphology');
 
-    // STROKE COLOR TEST
-    expect(selectedMarkFilterPrimaryColorFlood).toEqualAttribute('flood-color', expectedStrokeColor);
+      // STROKE WIDTH TESTS
+      selectedMarkMorphs.forEach((morph, i) => {
+        expect(morph).toEqualAttribute('radius', expectedMorphRadius[i]);
+      });
 
-    // FILL COLOR TEST
-    expect(selectedMark).toEqualAttribute('fill', EXPECTEDCLICKSTYLE.color);
+      // STROKE COLOR TEST
+      expect(selectedMarkFilterPrimaryColorFlood).toEqualAttribute('flood-color', expectedStrokeColor);
+
+      // FILL COLOR TEST
+      expect(selectedMark).toEqualAttribute('fill', EXPECTEDCLICKSTYLE.color);
+    } else {
+      // STROKE WIDTH TESTS
+      expect(selectedMark).toEqualAttribute(
+        'stroke-width',
+        component.tagName.toLowerCase() === 'scatter-plot' ? expectedScatterStrokeWidth : EXPECTEDCLICKSTYLE.strokeWidth
+      );
+
+      // STROKE COLOR TEST
+      expect(selectedMark).toEqualAttribute('stroke', expectedStrokeColor);
+
+      // FILL COLOR TEST
+      expect(selectedMark).toEqualAttribute('fill', EXPECTEDCLICKSTYLE.color);
+    }
 
     // HOVER OPACITY TEST
-    expect(notSelectedMark).toEqualAttribute('opacity', EXPECTEDHOVEROPACITY);
+    if (fillStrokeOpacity) {
+      expect(notSelectedMark).toEqualAttribute('fill-opacity', EXPECTEDHOVEROPACITY);
+      expect(notSelectedMark).toEqualAttribute('stroke-opacity', EXPECTEDHOVEROPACITY);
+    } else {
+      expect(notSelectedMark).toEqualAttribute('opacity', EXPECTEDHOVEROPACITY);
+    }
   }
 };
 
@@ -311,16 +370,22 @@ export const interaction_clickStyle_custom_update = {
     // ARRANGE
     const EXPECTEDCLICKSTYLE = testProps['clickStyle'] ? testProps['clickStyle'] : CUSTOMCLICKSTYLE;
     const EXPECTEDHOVEROPACITY = testProps['hoverOpacity'] ? testProps['hoverOpacity'] : CUSTOMHOVEROPACITY;
+    let useFilter = true;
+    let fillStrokeOpacity = false;
     if (Object.keys(testProps).length) {
       Object.keys(testProps).forEach(testProp => {
-        if (testProp !== 'clickStyle' && testProp !== 'hoverOpacity') {
+        if (testProp === 'useFilter') {
+          useFilter = testProps[testProp];
+        } else if (testProp === 'fillStrokeOpacity') {
+          fillStrokeOpacity = testProps[testProp];
+        } else if (testProp !== 'clickStyle' && testProp !== 'hoverOpacity') {
           component[testProp] = testProps[testProp];
         }
       });
     }
     component.clickStyle = EXPECTEDCLICKSTYLE;
     component.hoverOpacity = EXPECTEDHOVEROPACITY;
-    const expectedMorphRadius = [1, 0, 1, EXPECTEDCLICKSTYLE.strokeWidth + 1, EXPECTEDCLICKSTYLE.strokeWidth + 2];
+    const expectedMorphRadius = [1, 0, EXPECTEDCLICKSTYLE.strokeWidth, EXPECTEDCLICKSTYLE.strokeWidth + 1];
 
     // ACT RENDER
     page.root.appendChild(component);
@@ -334,33 +399,58 @@ export const interaction_clickStyle_custom_update = {
     // GET MARKS SELECTED AND NOT
     const selectedMark = page.doc.querySelector(testSelector);
     const notSelectedMark = page.doc.querySelector(negTestSelector);
+    flushTransitions(selectedMark);
+    flushTransitions(notSelectedMark);
+    await page.waitForChanges();
 
     // FIGURE OUT WHAT COLOR THEY ARE AND DETERMINE EXPECTED STROKE USING OUR UTIL
     const expectedStrokeColor = getAccessibleStrokes(EXPECTEDCLICKSTYLE.color)[0];
+    const expectedScatterStrokeWidth = EXPECTEDCLICKSTYLE.strokeWidth / component.dotRadius;
 
-    // GET THE FILTER OF THE SELECTED MARK AND STORE KEY ATTRIBUTES INTO AN OBJECT FOR EASE OF TESTING
-    const selectedMarkFilter = page.doc.querySelector(
-      selectedMark
-        .getAttribute('filter')
-        .replace('url(', '')
-        .replace(')', '')
-    );
-    const selectedMarkFilterPrimaryColorFlood = selectedMarkFilter.querySelector('feFlood[result=primary-color]');
-    const selectedMarkMorphs = selectedMarkFilter.querySelectorAll('feMorphology');
+    // DETERMINE WHICH TYPE OF TEST WE ARE DOING (TEXTURE BASED FILTER OR NOT)
+    if (useFilter) {
+      // GET THE FILTER OF THE SELECTED MARK AND STORE KEY ATTRIBUTES INTO AN OBJECT FOR EASE OF TESTING
+      const selectedMarkFilter = page.doc.querySelector(
+        selectedMark
+          .getAttribute('filter')
+          .replace('url(', '')
+          .replace(')', '')
+      );
 
-    // STROKE WIDTH TESTS
-    selectedMarkMorphs.forEach((morph, i) => {
-      expect(morph).toEqualAttribute('radius', expectedMorphRadius[i]);
-    });
+      const selectedMarkFilterPrimaryColorFlood = selectedMarkFilter.querySelector('feFlood[result=primary-color]');
+      const selectedMarkMorphs = selectedMarkFilter.querySelectorAll('feMorphology');
 
-    // STROKE COLOR TEST
-    expect(selectedMarkFilterPrimaryColorFlood).toEqualAttribute('flood-color', expectedStrokeColor);
+      // STROKE WIDTH TESTS
+      selectedMarkMorphs.forEach((morph, i) => {
+        expect(morph).toEqualAttribute('radius', expectedMorphRadius[i]);
+      });
 
-    // FILL COLOR TEST
-    expect(selectedMark).toEqualAttribute('fill', EXPECTEDCLICKSTYLE.color);
+      // STROKE COLOR TEST
+      expect(selectedMarkFilterPrimaryColorFlood).toEqualAttribute('flood-color', expectedStrokeColor);
+
+      // FILL COLOR TEST
+      expect(selectedMark).toEqualAttribute('fill', EXPECTEDCLICKSTYLE.color);
+    } else {
+      // STROKE WIDTH TESTS
+      expect(selectedMark).toEqualAttribute(
+        'stroke-width',
+        component.tagName.toLowerCase() === 'scatter-plot' ? expectedScatterStrokeWidth : EXPECTEDCLICKSTYLE.strokeWidth
+      );
+
+      // STROKE COLOR TEST
+      expect(selectedMark).toEqualAttribute('stroke', expectedStrokeColor);
+
+      // FILL COLOR TEST
+      expect(selectedMark).toEqualAttribute('fill', EXPECTEDCLICKSTYLE.color);
+    }
 
     // HOVER OPACITY TEST
-    expect(notSelectedMark).toEqualAttribute('opacity', EXPECTEDHOVEROPACITY);
+    if (fillStrokeOpacity) {
+      expect(notSelectedMark).toEqualAttribute('fill-opacity', EXPECTEDHOVEROPACITY);
+      expect(notSelectedMark).toEqualAttribute('stroke-opacity', EXPECTEDHOVEROPACITY);
+    } else {
+      expect(notSelectedMark).toEqualAttribute('opacity', EXPECTEDHOVEROPACITY);
+    }
   }
 };
 
@@ -381,9 +471,15 @@ export const interaction_hoverStyle_default_load = {
     testSelector: string,
     negTestSelector: string
   ) => {
+    let useFilter = true;
+    let fillStrokeOpacity = false;
     if (Object.keys(testProps).length) {
       Object.keys(testProps).forEach(testProp => {
-        if (testProp !== 'hoverHighlight') {
+        if (testProp === 'useFilter') {
+          useFilter = testProps[testProp];
+        } else if (testProp === 'fillStrokeOpacity') {
+          fillStrokeOpacity = testProps[testProp];
+        } else if (testProp !== 'hoverHighlight') {
           component[testProp] = testProps[testProp];
         }
       });
@@ -399,6 +495,9 @@ export const interaction_hoverStyle_default_load = {
     // GET MARKS SELECTED AND NOT
     const selectedMark = page.doc.querySelector(testSelector);
     const notSelectedMark = page.doc.querySelector(negTestSelector);
+    flushTransitions(selectedMark);
+    flushTransitions(notSelectedMark);
+    await page.waitForChanges();
 
     // FIGURE OUT WHAT COLOR THEY ARE AND DETERMINE EXPECTED STROKE USING OUR UTIL
     const notSelectedMarkColor =
@@ -414,49 +513,69 @@ export const interaction_hoverStyle_default_load = {
             .getAttribute('fill')
         : selectedMark.getAttribute('fill');
     const expectedStrokeColor = getAccessibleStrokes(notSelectedMarkColor)[0];
+    const expectedScatterStrokeWidth = DEFAULTSYMBOLHOVERSTYLE.strokeWidth / component.dotRadius;
 
-    // GET THE FILTER OF THE SELECTED MARK AND STORE KEY ATTRIBUTES INTO AN OBJECT FOR EASE OF TESTING
-    const selectedMarkFilter = page.doc.querySelector(
-      selectedMark
-        .getAttribute('filter')
-        .replace('url(', '')
-        .replace(')', '')
-    );
-    const selectedMarkMorphs = selectedMarkFilter.querySelectorAll('feMorphology');
-    const selectedMarkHighlightContainer = page.doc.querySelector('.vcl-accessibility-focus-highlight');
-    const selectedMarkHighlightClip = selectedMarkHighlightContainer.childNodes[0];
-    const selectedMarkHighlightElement = selectedMarkHighlightContainer.childNodes[1];
-    const isRGB = checkRGB(selectedMarkHighlightElement);
-    const clipID = `url(#${selectedMarkHighlightClip['getAttribute']('id')})`;
+    // DETERMINE WHICH TYPE OF TEST WE ARE DOING (TEXTURE BASED FILTER OR NOT)
+    if (useFilter) {
+      // GET THE FILTER OF THE SELECTED MARK AND STORE KEY ATTRIBUTES INTO AN OBJECT FOR EASE OF TESTING
+      const selectedMarkFilter = page.doc.querySelector(
+        selectedMark
+          .getAttribute('filter')
+          .replace('url(', '')
+          .replace(')', '')
+      );
+      const selectedMarkMorphs = selectedMarkFilter.querySelectorAll('feMorphology');
+      const selectedMarkHighlightContainer = page.doc.querySelector('.vcl-accessibility-focus-highlight');
+      const selectedMarkHighlightClip = selectedMarkHighlightContainer.childNodes[0];
+      const selectedMarkHighlightElement = selectedMarkHighlightContainer.childNodes[1];
+      const isRGB = checkRGB(selectedMarkHighlightElement);
+      const clipID = `url(#${selectedMarkHighlightClip['getAttribute']('id')})`;
 
-    // SOURCE MARK TESTS
-    expect(selectedMark).toHaveClass('vcl-accessibility-focus-hoverSource');
-    expect(selectedMark.getAttribute('filter').indexOf('-hover-')).toBeGreaterThan(0);
+      // SOURCE MARK TESTS
+      expect(selectedMark).toHaveClass('vcl-accessibility-focus-hoverSource');
+      expect(selectedMark.getAttribute('filter').indexOf('-hover-')).toBeGreaterThan(0);
 
-    // TEST THAT FOCUS HIGHLIGHT ELEMENTS ARE CREATED
-    expect(selectedMarkHighlightContainer).toBeTruthy();
-    expect(selectedMarkHighlightClip).toBeTruthy();
-    expect(selectedMarkHighlightClip.nodeName).toEqual('clipPath');
-    expect(selectedMarkHighlightElement).toBeTruthy();
-    expect(selectedMarkHighlightElement.nodeName).not.toEqual('clipPath');
-    expect(selectedMarkHighlightElement).toEqualAttribute('clip-path', clipID);
+      // TEST THAT FOCUS HIGHLIGHT ELEMENTS ARE CREATED
+      expect(selectedMarkHighlightContainer).toBeTruthy();
+      expect(selectedMarkHighlightClip).toBeTruthy();
+      expect(selectedMarkHighlightClip.nodeName).toEqual('clipPath');
+      expect(selectedMarkHighlightElement).toBeTruthy();
+      expect(selectedMarkHighlightElement.nodeName).not.toEqual('clipPath');
+      expect(selectedMarkHighlightElement).toEqualAttribute('clip-path', clipID);
 
-    // STROKE WIDTH TESTS
-    selectedMarkMorphs.forEach((morph, i) => {
-      expect(morph).toEqualAttribute('radius', expectedMorphRadius[i]);
-    });
-    expect(selectedMarkHighlightElement['style'].getPropertyValue('stroke-width')).toEqual(
-      `${2 + DEFAULTHOVERSTYLE.strokeWidth * 2}px`
-    );
+      // STROKE WIDTH TESTS
+      selectedMarkMorphs.forEach((morph, i) => {
+        expect(morph).toEqualAttribute('radius', expectedMorphRadius[i]);
+      });
+      expect(selectedMarkHighlightElement['style'].getPropertyValue('stroke-width')).toEqual(
+        `${2 + DEFAULTHOVERSTYLE.strokeWidth * 2}px`
+      );
 
-    // STROKE COLOR TEST
-    expect(selectedMarkHighlightElement['style'].getPropertyValue('fill')).toEqual('none');
-    expect(selectedMarkHighlightElement['style'].getPropertyValue('stroke')).toEqual(
-      isRGB ? rgb(DEFAULTHOVERSTYLE.color || expectedStrokeColor) : DEFAULTHOVERSTYLE.color || expectedStrokeColor
-    );
+      // STROKE COLOR TEST
+      expect(selectedMarkHighlightElement['style'].getPropertyValue('fill')).toEqual('none');
+      expect(selectedMarkHighlightElement['style'].getPropertyValue('stroke')).toEqual(
+        isRGB ? rgb(DEFAULTHOVERSTYLE.color || expectedStrokeColor) : DEFAULTHOVERSTYLE.color || expectedStrokeColor
+      );
+    } else {
+      // STROKE WIDTH TESTS
+      expect(selectedMark).toEqualAttribute(
+        'stroke-width',
+        component.tagName.toLowerCase() === 'scatter-plot' ? expectedScatterStrokeWidth : DEFAULTCLICKSTYLE.strokeWidth
+      );
 
+      // STROKE COLOR TEST
+      expect(selectedMark).toEqualAttribute('stroke', expectedStrokeColor);
+
+      // FILL COLOR TEST // DEFAULT HOVER STYLE DOES NOT HAVE FILL PROPERTY
+      // expect(selectedMark).toEqualAttribute('fill', EXPECTEDCLICKSTYLE.color);
+    }
     // HOVER OPACITY TEST
-    expect(notSelectedMark).toEqualAttribute('opacity', DEFAULTHOVEROPACITY);
+    if (fillStrokeOpacity) {
+      expect(notSelectedMark).toEqualAttribute('fill-opacity', DEFAULTHOVEROPACITY);
+      expect(notSelectedMark).toEqualAttribute('stroke-opacity', DEFAULTHOVEROPACITY);
+    } else {
+      expect(notSelectedMark).toEqualAttribute('opacity', DEFAULTHOVEROPACITY);
+    }
   }
 };
 
@@ -480,9 +599,15 @@ export const interaction_hoverStyle_custom_load = {
     // ARRANGE
     const EXPECTEDHOVERSTYLE = testProps['hoverStyle'] ? testProps['hoverStyle'] : CUSTOMCLICKSTYLE;
     const EXPECTEDHOVEROPACITY = testProps['hoverOpacity'] ? testProps['hoverOpacity'] : CUSTOMHOVEROPACITY;
+    let useFilter = true;
+    let fillStrokeOpacity = false;
     if (Object.keys(testProps).length) {
       Object.keys(testProps).forEach(testProp => {
-        if (testProp !== 'hoverStyle' && testProp !== 'hoverOpacity') {
+        if (testProp === 'useFilter') {
+          useFilter = testProps[testProp];
+        } else if (testProp === 'fillStrokeOpacity') {
+          fillStrokeOpacity = testProps[testProp];
+        } else if (testProp !== 'hoverStyle' && testProp !== 'hoverOpacity') {
           component[testProp] = testProps[testProp];
         }
       });
@@ -490,7 +615,7 @@ export const interaction_hoverStyle_custom_load = {
     component.hoverHighlight = component.data[0];
     component.hoverStyle = EXPECTEDHOVERSTYLE;
     component.hoverOpacity = EXPECTEDHOVEROPACITY;
-    const expectedMorphRadius = [1, 0, 1, EXPECTEDHOVERSTYLE.strokeWidth + 1, EXPECTEDHOVERSTYLE.strokeWidth + 2];
+    const expectedMorphRadius = [1, 0, EXPECTEDHOVERSTYLE.strokeWidth, EXPECTEDHOVERSTYLE.strokeWidth + 1];
 
     // ACT
     page.root.appendChild(component);
@@ -500,52 +625,75 @@ export const interaction_hoverStyle_custom_load = {
     // GET MARKS SELECTED AND NOT
     const selectedMark = page.doc.querySelector(testSelector);
     const notSelectedMark = page.doc.querySelector(negTestSelector);
+    flushTransitions(selectedMark);
+    flushTransitions(notSelectedMark);
+    await page.waitForChanges();
 
     // FIGURE OUT WHAT COLOR THEY ARE AND DETERMINE EXPECTED STROKE USING OUR UTIL
     const expectedStrokeColor = getAccessibleStrokes(EXPECTEDHOVERSTYLE.color)[0];
+    const expectedScatterStrokeWidth = EXPECTEDHOVERSTYLE.strokeWidth / component.dotRadius;
 
-    // GET THE FILTER OF THE SELECTED MARK AND STORE KEY ATTRIBUTES INTO AN OBJECT FOR EASE OF TESTING
-    const selectedMarkFilter = page.doc.querySelector(
-      selectedMark
-        .getAttribute('filter')
-        .replace('url(', '')
-        .replace(')', '')
-    );
-    const selectedMarkMorphs = selectedMarkFilter.querySelectorAll('feMorphology');
-    const selectedMarkHighlightContainer = page.doc.querySelector('.vcl-accessibility-focus-highlight');
-    const selectedMarkHighlightClip = selectedMarkHighlightContainer.childNodes[0];
-    const selectedMarkHighlightElement = selectedMarkHighlightContainer.childNodes[1];
-    const isRGB = checkRGB(selectedMarkHighlightElement);
-    const clipID = `url(#${selectedMarkHighlightClip['getAttribute']('id')})`;
+    // DETERMINE WHICH TYPE OF TEST WE ARE DOING (TEXTURE BASED FILTER OR NOT)
+    if (useFilter) {
+      // GET THE FILTER OF THE SELECTED MARK AND STORE KEY ATTRIBUTES INTO AN OBJECT FOR EASE OF TESTING
+      const selectedMarkFilter = page.doc.querySelector(
+        selectedMark
+          .getAttribute('filter')
+          .replace('url(', '')
+          .replace(')', '')
+      );
+      const selectedMarkMorphs = selectedMarkFilter.querySelectorAll('feMorphology');
+      const selectedMarkHighlightContainer = page.doc.querySelector('.vcl-accessibility-focus-highlight');
+      const selectedMarkHighlightClip = selectedMarkHighlightContainer.childNodes[0];
+      const selectedMarkHighlightElement = selectedMarkHighlightContainer.childNodes[1];
+      const isRGB = checkRGB(selectedMarkHighlightElement);
+      const clipID = `url(#${selectedMarkHighlightClip['getAttribute']('id')})`;
 
-    // SOURCE MARK TESTS
-    expect(selectedMark).toHaveClass('vcl-accessibility-focus-hoverSource');
-    expect(selectedMark.getAttribute('filter').indexOf('-hover-')).toBeGreaterThan(0);
+      // SOURCE MARK TESTS
+      expect(selectedMark).toHaveClass('vcl-accessibility-focus-hoverSource');
+      expect(selectedMark.getAttribute('filter').indexOf('-hover-')).toBeGreaterThan(0);
 
-    // TEST THAT FOCUS HIGHLIGHT ELEMENTS ARE CREATED
-    expect(selectedMarkHighlightContainer).toBeTruthy();
-    expect(selectedMarkHighlightClip).toBeTruthy();
-    expect(selectedMarkHighlightClip.nodeName).toEqual('clipPath');
-    expect(selectedMarkHighlightElement).toBeTruthy();
-    expect(selectedMarkHighlightElement.nodeName).not.toEqual('clipPath');
-    expect(selectedMarkHighlightElement).toEqualAttribute('clip-path', clipID);
+      // TEST THAT FOCUS HIGHLIGHT ELEMENTS ARE CREATED
+      expect(selectedMarkHighlightContainer).toBeTruthy();
+      expect(selectedMarkHighlightClip).toBeTruthy();
+      expect(selectedMarkHighlightClip.nodeName).toEqual('clipPath');
+      expect(selectedMarkHighlightElement).toBeTruthy();
+      expect(selectedMarkHighlightElement.nodeName).not.toEqual('clipPath');
+      expect(selectedMarkHighlightElement).toEqualAttribute('clip-path', clipID);
 
-    // STROKE WIDTH TESTS
-    selectedMarkMorphs.forEach((morph, i) => {
-      expect(morph).toEqualAttribute('radius', expectedMorphRadius[i]);
-    });
-    expect(selectedMarkHighlightElement['style'].getPropertyValue('stroke-width')).toEqual(
-      `${2 + EXPECTEDHOVERSTYLE.strokeWidth * 2}px`
-    );
+      // STROKE WIDTH TESTS
+      selectedMarkMorphs.forEach((morph, i) => {
+        expect(morph).toEqualAttribute('radius', expectedMorphRadius[i]);
+      });
+      expect(selectedMarkHighlightElement['style'].getPropertyValue('stroke-width')).toEqual(
+        `${EXPECTEDHOVERSTYLE.strokeWidth * 2}px`
+      );
 
-    // STROKE COLOR TEST
-    expect(selectedMarkHighlightElement['style'].getPropertyValue('fill')).toEqual('none');
-    expect(selectedMarkHighlightElement['style'].getPropertyValue('stroke')).toEqual(
-      isRGB ? rgb(expectedStrokeColor) : expectedStrokeColor
-    );
+      // STROKE COLOR TEST
+      expect(selectedMarkHighlightElement['style'].getPropertyValue('fill')).toEqual('none');
+      expect(selectedMarkHighlightElement['style'].getPropertyValue('stroke')).toEqual(
+        isRGB ? rgb(expectedStrokeColor) : expectedStrokeColor
+      );
+    } else {
+      // STROKE WIDTH TESTS
+      expect(selectedMark).toEqualAttribute(
+        'stroke-width',
+        component.tagName.toLowerCase() === 'scatter-plot' ? expectedScatterStrokeWidth : EXPECTEDHOVERSTYLE.strokeWidth
+      );
 
+      // STROKE COLOR TEST
+      expect(selectedMark).toEqualAttribute('stroke', expectedStrokeColor);
+
+      // FILL COLOR TEST
+      expect(selectedMark).toEqualAttribute('fill', EXPECTEDHOVERSTYLE.color);
+    }
     // HOVER OPACITY TEST
-    expect(notSelectedMark).toEqualAttribute('opacity', EXPECTEDHOVEROPACITY);
+    if (fillStrokeOpacity) {
+      expect(notSelectedMark).toEqualAttribute('fill-opacity', EXPECTEDHOVEROPACITY);
+      expect(notSelectedMark).toEqualAttribute('stroke-opacity', EXPECTEDHOVEROPACITY);
+    } else {
+      expect(notSelectedMark).toEqualAttribute('opacity', EXPECTEDHOVEROPACITY);
+    }
   }
 };
 
@@ -569,16 +717,22 @@ export const interaction_hoverStyle_custom_update = {
     // ARRANGE
     const EXPECTEDHOVERSTYLE = testProps['hoverStyle'] ? testProps['hoverStyle'] : CUSTOMCLICKSTYLE;
     const EXPECTEDHOVEROPACITY = testProps['hoverOpacity'] ? testProps['hoverOpacity'] : CUSTOMHOVEROPACITY;
+    let useFilter = true;
+    let fillStrokeOpacity = false;
     if (Object.keys(testProps).length) {
       Object.keys(testProps).forEach(testProp => {
-        if (testProp !== 'hoverStyle' && testProp !== 'hoverOpacity') {
+        if (testProp === 'useFilter') {
+          useFilter = testProps[testProp];
+        } else if (testProp === 'fillStrokeOpacity') {
+          fillStrokeOpacity = testProps[testProp];
+        } else if (testProp !== 'hoverStyle' && testProp !== 'hoverOpacity') {
           component[testProp] = testProps[testProp];
         }
       });
     }
     component.hoverStyle = EXPECTEDHOVERSTYLE;
     component.hoverOpacity = EXPECTEDHOVEROPACITY;
-    const expectedMorphRadius = [1, 0, 1, EXPECTEDHOVERSTYLE.strokeWidth + 1, EXPECTEDHOVERSTYLE.strokeWidth + 2];
+    const expectedMorphRadius = [1, 0, EXPECTEDHOVERSTYLE.strokeWidth, EXPECTEDHOVERSTYLE.strokeWidth + 1];
 
     // ACT RENDER
     page.root.appendChild(component);
@@ -592,51 +746,74 @@ export const interaction_hoverStyle_custom_update = {
     // GET MARKS SELECTED AND NOT
     const selectedMark = page.doc.querySelector(testSelector);
     const notSelectedMark = page.doc.querySelector(negTestSelector);
+    flushTransitions(selectedMark);
+    flushTransitions(notSelectedMark);
+    await page.waitForChanges();
 
     // FIGURE OUT WHAT COLOR THEY ARE AND DETERMINE EXPECTED STROKE USING OUR UTIL
     const expectedStrokeColor = getAccessibleStrokes(EXPECTEDHOVERSTYLE.color)[0];
+    const expectedScatterStrokeWidth = EXPECTEDHOVERSTYLE.strokeWidth / component.dotRadius;
 
-    // GET THE FILTER OF THE SELECTED MARK AND STORE KEY ATTRIBUTES INTO AN OBJECT FOR EASE OF TESTING
-    const selectedMarkFilter = page.doc.querySelector(
-      selectedMark
-        .getAttribute('filter')
-        .replace('url(', '')
-        .replace(')', '')
-    );
-    const selectedMarkMorphs = selectedMarkFilter.querySelectorAll('feMorphology');
-    const selectedMarkHighlightContainer = page.doc.querySelector('.vcl-accessibility-focus-highlight');
-    const selectedMarkHighlightClip = selectedMarkHighlightContainer.childNodes[0];
-    const selectedMarkHighlightElement = selectedMarkHighlightContainer.childNodes[1];
-    const isRGB = checkRGB(selectedMarkHighlightElement);
-    const clipID = `url(#${selectedMarkHighlightClip['getAttribute']('id')})`;
+    // DETERMINE WHICH TYPE OF TEST WE ARE DOING (TEXTURE BASED FILTER OR NOT)
+    if (useFilter) {
+      // GET THE FILTER OF THE SELECTED MARK AND STORE KEY ATTRIBUTES INTO AN OBJECT FOR EASE OF TESTING
+      const selectedMarkFilter = page.doc.querySelector(
+        selectedMark
+          .getAttribute('filter')
+          .replace('url(', '')
+          .replace(')', '')
+      );
+      const selectedMarkMorphs = selectedMarkFilter.querySelectorAll('feMorphology');
+      const selectedMarkHighlightContainer = page.doc.querySelector('.vcl-accessibility-focus-highlight');
+      const selectedMarkHighlightClip = selectedMarkHighlightContainer.childNodes[0];
+      const selectedMarkHighlightElement = selectedMarkHighlightContainer.childNodes[1];
+      const isRGB = checkRGB(selectedMarkHighlightElement);
+      const clipID = `url(#${selectedMarkHighlightClip['getAttribute']('id')})`;
 
-    // SOURCE MARK TESTS
-    expect(selectedMark).toHaveClass('vcl-accessibility-focus-hoverSource');
-    expect(selectedMark.getAttribute('filter').indexOf('-hover-')).toBeGreaterThan(0);
+      // SOURCE MARK TESTS
+      expect(selectedMark).toHaveClass('vcl-accessibility-focus-hoverSource');
+      expect(selectedMark.getAttribute('filter').indexOf('-hover-')).toBeGreaterThan(0);
 
-    // TEST THAT FOCUS HIGHLIGHT ELEMENTS ARE CREATED
-    expect(selectedMarkHighlightContainer).toBeTruthy();
-    expect(selectedMarkHighlightClip).toBeTruthy();
-    expect(selectedMarkHighlightClip.nodeName).toEqual('clipPath');
-    expect(selectedMarkHighlightElement).toBeTruthy();
-    expect(selectedMarkHighlightElement.nodeName).not.toEqual('clipPath');
-    expect(selectedMarkHighlightElement).toEqualAttribute('clip-path', clipID);
+      // TEST THAT FOCUS HIGHLIGHT ELEMENTS ARE CREATED
+      expect(selectedMarkHighlightContainer).toBeTruthy();
+      expect(selectedMarkHighlightClip).toBeTruthy();
+      expect(selectedMarkHighlightClip.nodeName).toEqual('clipPath');
+      expect(selectedMarkHighlightElement).toBeTruthy();
+      expect(selectedMarkHighlightElement.nodeName).not.toEqual('clipPath');
+      expect(selectedMarkHighlightElement).toEqualAttribute('clip-path', clipID);
 
-    // STROKE WIDTH TESTS
-    selectedMarkMorphs.forEach((morph, i) => {
-      expect(morph).toEqualAttribute('radius', expectedMorphRadius[i]);
-    });
-    expect(selectedMarkHighlightElement['style'].getPropertyValue('stroke-width')).toEqual(
-      `${2 + EXPECTEDHOVERSTYLE.strokeWidth * 2}px`
-    );
+      // STROKE WIDTH TESTS
+      selectedMarkMorphs.forEach((morph, i) => {
+        expect(morph).toEqualAttribute('radius', expectedMorphRadius[i]);
+      });
+      expect(selectedMarkHighlightElement['style'].getPropertyValue('stroke-width')).toEqual(
+        `${EXPECTEDHOVERSTYLE.strokeWidth * 2}px`
+      );
 
-    // STROKE COLOR TEST
-    expect(selectedMarkHighlightElement['style'].getPropertyValue('fill')).toEqual('none');
-    expect(selectedMarkHighlightElement['style'].getPropertyValue('stroke')).toEqual(
-      isRGB ? rgb(expectedStrokeColor) : expectedStrokeColor
-    );
+      // STROKE COLOR TEST
+      expect(selectedMarkHighlightElement['style'].getPropertyValue('fill')).toEqual('none');
+      expect(selectedMarkHighlightElement['style'].getPropertyValue('stroke')).toEqual(
+        isRGB ? rgb(expectedStrokeColor) : expectedStrokeColor
+      );
+    } else {
+      // STROKE WIDTH TESTS
+      expect(selectedMark).toEqualAttribute(
+        'stroke-width',
+        component.tagName.toLowerCase() === 'scatter-plot' ? expectedScatterStrokeWidth : EXPECTEDHOVERSTYLE.strokeWidth
+      );
 
+      // STROKE COLOR TEST
+      expect(selectedMark).toEqualAttribute('stroke', expectedStrokeColor);
+
+      // FILL COLOR TEST
+      expect(selectedMark).toEqualAttribute('fill', EXPECTEDHOVERSTYLE.color);
+    }
     // HOVER OPACITY TEST
-    expect(notSelectedMark).toEqualAttribute('opacity', EXPECTEDHOVEROPACITY);
+    if (fillStrokeOpacity) {
+      expect(notSelectedMark).toEqualAttribute('fill-opacity', EXPECTEDHOVEROPACITY);
+      expect(notSelectedMark).toEqualAttribute('stroke-opacity', EXPECTEDHOVEROPACITY);
+    } else {
+      expect(notSelectedMark).toEqualAttribute('opacity', EXPECTEDHOVEROPACITY);
+    }
   }
 };

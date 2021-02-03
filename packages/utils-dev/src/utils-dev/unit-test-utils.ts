@@ -1,13 +1,14 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2021 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
  *
  **/
-export const flushTransitions = jsDomEle => {
+export const flushTransitions = (jsDomEle, i?) => {
   // bug fix mock transform if null
   jsDomEle.transform = jsDomEle.transform ? jsDomEle.transform : { baseVal: 0, animVal: 0 };
+  i = i ? i : 0; // since we are implementing this late, default to 0 if not provided
 
   // loop transitions and gather tweens and ends
   const transitionKeys = Object.keys(jsDomEle['__transition'] || {});
@@ -32,17 +33,17 @@ export const flushTransitions = jsDomEle => {
   // run each tween
   tweens.forEach(tween => {
     if (tween.name === 'text') {
-      tween.value.bind(jsDomEle)();
+      tween.value.bind(jsDomEle)(jsDomEle.__data__, i, jsDomEle);
     } else if (tween.name !== 'attr.transform') {
       if (tween.value.bind(jsDomEle)()) {
-        tween.value.bind(jsDomEle)()(1);
+        tween.value.bind(jsDomEle)(jsDomEle.__data__, i, jsDomEle)(1);
       }
     }
   });
 
   // run each dispatch / end
   ends.forEach(end => {
-    end.value.bind(jsDomEle)();
+    end.value.bind(jsDomEle)(jsDomEle.__data__, i, jsDomEle);
   });
 
   // reset timers when done

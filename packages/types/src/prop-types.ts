@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2021 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -117,13 +117,13 @@ export interface IMapMarkerStyleType {
   radiusRange?: string | number[];
   opacity?: number;
   color?: string;
-  strokeWidth?: string;
+  strokeWidth?: number;
 }
 export interface ICountryStyleType {
   fill: boolean;
   opacity?: number;
   color?: string;
-  strokeWidth?: string;
+  strokeWidth?: number;
 }
 export interface ISecondaryLinesType {
   keys: string[];

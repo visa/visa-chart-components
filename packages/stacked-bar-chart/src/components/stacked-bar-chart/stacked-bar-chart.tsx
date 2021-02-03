@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2021 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -69,6 +69,7 @@ const {
   drawAxis,
   drawGrid,
   drawLegend,
+  setLegendInteractionState,
   drawTooltip,
   formatStats,
   formatDate,
@@ -1955,6 +1956,18 @@ export class StackedBarChart {
     retainAccessFocus({
       parentGNode: this.rootG.node()
     });
+
+    setLegendInteractionState({
+      root: this.legendG,
+      uniqueID: this.chartID,
+      interactionKeys: this.innerInteractionKeys,
+      groupAccessor: this.ordinalAccessor,
+      hoverHighlight: this.hoverHighlight,
+      clickHighlight: this.clickHighlight,
+      hoverStyle: this.hoverStyle,
+      clickStyle: this.clickStyle,
+      hoverOpacity: this.hoverOpacity
+    });
   }
 
   setLabelOpacity() {
@@ -2446,6 +2459,7 @@ export class StackedBarChart {
       height: this.margin.top + 20,
       colorArr: this.colorArr,
       baseColorArr: this.preparedColors,
+      hideStrokes: this.accessibility.hideStrokes,
       margin: this.margin,
       padding: this.padding,
       duration: this.duration,
@@ -2454,7 +2468,14 @@ export class StackedBarChart {
       data: this.legendData,
       labelKey: this.ordinalAccessor,
       label: this.legend.labels,
-      hide: !this.legend.visible
+      hide: !this.legend.visible,
+      interactionKeys: this.innerInteractionKeys,
+      groupAccessor: this.ordinalAccessor,
+      hoverHighlight: this.hoverHighlight,
+      clickHighlight: this.clickHighlight,
+      hoverStyle: this.hoverStyle,
+      clickStyle: this.clickStyle,
+      hoverOpacity: this.hoverOpacity
     });
   }
 
@@ -2792,6 +2813,9 @@ export class StackedBarChart {
         exception: false
       },
       barIntervalRatio: {
+        exception: 0
+      },
+      hoverOpacity: {
         exception: 0
       }
     };

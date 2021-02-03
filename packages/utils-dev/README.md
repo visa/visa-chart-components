@@ -61,28 +61,28 @@ Each main development util file is outlined below. As mentioned above the unit t
 <hr>
 <br>
 
-### <a name="accessibility_tests" href="#accessibility_tests">#</a> unitTestAccessibility [<>](https://github.com/visa/visa-chart-components/packages/utils-dev/src/utils-dev/unit-test-accessibility.ts 'Source')
+### <a name="accessibility_tests" href="#accessibility_tests">#</a> unitTestAccessibility [<>](./src/utils-dev/unit-test-accessibility.ts 'Source')
 
-This collection of unit tests aims to validate the implementation of our `accessibility` properties/features on each chart. Currently the testing suite covers functionality including, but not limited too: headings/instructions, highestHeadingLevel, aria roles/labels on our geometries, groups and containers, keyboard navigation (enter, exit, sibling, cousin, selection, etc.), custom focus indicator and more. The unit testing functions in this file are coupled with the [accessibility prop](https://github.com/visa/visa-chart-components/packages/types/README.md#accessibility) that [each Visa Chart Component](https://github.com/visa/visa-chart-components/packages/bar-chart/README.md#accessibility-props) ships with.
-
-<hr>
-<br>
-
-### <a name="axis_tests" href="#axis_tests">#</a> unitTestAxis [<>](https://github.com/visa/visa-chart-components/packages/utils-dev/src/utils-dev/unit-test-axis.ts 'Source')
-
-This collection of unit tests aims to validate the implementation of our `axis` properties/features on each chart. Currently the testing suite covers functionality defined in our [chart component's documentation for how to use the x and y axis props](https://github.com/visa/visa-chart-components/packages/bar-chart/README.md#axis-props). Each of these features has an associated set of unit tests to test implementation of the feature set of each chart.
+This collection of unit tests aims to validate the implementation of our `accessibility` properties/features on each chart. Currently the testing suite covers functionality including, but not limited too: headings/instructions, highestHeadingLevel, aria roles/labels on our geometries, groups and containers, keyboard navigation (enter, exit, sibling, cousin, selection, etc.), custom focus indicator and more. The unit testing functions in this file are coupled with the [accessibility prop](../types/README.md#accessibility) that [each Visa Chart Component](../bar-chart/README.md#accessibility-props) ships with.
 
 <hr>
 <br>
 
-### <a name="event_tests" href="#event_tests">#</a> unitTestEvent [<>](https://github.com/visa/visa-chart-components/packages/utils-dev/src/utils-dev/unit-test-event.ts 'Source')
+### <a name="axis_tests" href="#axis_tests">#</a> unitTestAxis [<>](./src/utils-dev/unit-test-axis.ts 'Source')
 
-This collection of unit tests aims to validate the implementation of `events` which we emit from each chart, currently suppressEvents, click, hover and mouseOut. The tests use jest mock functions to validate that events can be listened for and callbacks fired with associated data objects as expected. You can find documentation about this part of the event and interaction pattern in our [chart component's documentation](https://github.com/visa/visa-chart-components/packages/bar-chart/README.md#event-props).
+This collection of unit tests aims to validate the implementation of our `axis` properties/features on each chart. Currently the testing suite covers functionality defined in our [chart component's documentation for how to use the x and y axis props](../bar-chart/README.md#axis-props). Each of these features has an associated set of unit tests to test implementation of the feature set of each chart.
 
 <hr>
 <br>
 
-### <a name="generic_tests" href="#generic_tests">#</a> unitTestGeneric [<>](https://github.com/visa/visa-chart-components/packages/utils-dev/src/utils-dev/unit-test-generic.ts 'Source')
+### <a name="event_tests" href="#event_tests">#</a> unitTestEvent [<>](./src/utils-dev/unit-test-event.ts 'Source')
+
+This collection of unit tests aims to validate the implementation of `events` which we emit from each chart, currently suppressEvents, click, hover and mouseOut. The tests use jest mock functions to validate that events can be listened for and callbacks fired with associated data objects as expected. You can find documentation about this part of the event and interaction pattern in our [chart component's documentation](../bar-chart/README.md#event-props).
+
+<hr>
+<br>
+
+### <a name="generic_tests" href="#generic_tests">#</a> unitTestGeneric [<>](./src/utils-dev/unit-test-generic.ts 'Source')
 
 This collection of unit tests aims to validate the implementation of some our basic props which are widely used across our chart components. For example, `height` and `margin` are two props which exist on every chart and can be tested using the same pattern via this development utility. Currently this testing suite reviews the following props:
 
@@ -96,33 +96,33 @@ This collection of unit tests aims to validate the implementation of some our ba
 - data
 - accessibility.disableValidation (will be moved to unitTestAccessibility)
 
-You can find documentation about these props in our [chart component's documentation](https://github.com/visa/visa-chart-components/packages/bar-chart/README.md#base-props).
+You can find documentation about these props in our [chart component's documentation](../bar-chart/README.md#base-props).
 
 <hr>
 <br>
 
-### <a name="interaction_tests" href="#interaction_tests">#</a> unitTestInteraction [<>](https://github.com/visa/visa-chart-components/packages/utils-dev/src/utils-dev/unit-test-interaction.ts 'Source')
+### <a name="interaction_tests" href="#interaction_tests">#</a> unitTestInteraction [<>](./src/utils-dev/unit-test-interaction.ts 'Source')
 
-This collection of unit tests aims to validate the consistent interaction pattern we implement on each chart. It validates props like `cursor`, `hoverStyle`, `clickHighlight` and `hoverOpacity` are implemented correctly across the repo. You can find documentation about this part of the event and interaction pattern in our [chart component's documentation](https://github.com/visa/visa-chart-components/packages/bar-chart/README.md#event-props).
+This collection of unit tests aims to validate the consistent interaction pattern we implement on each chart. It validates props like `cursor`, `hoverStyle`, `clickHighlight` and `hoverOpacity` are implemented correctly across the repo. You can find documentation about this part of the event and interaction pattern in our [chart component's documentation](../bar-chart/README.md#event-props).
 
 <hr>
 <br>
 
-### <a name="label_tests" href="#label_tests">#</a> unitTestLabels [<>](https://github.com/visa/visa-chart-components/packages/utils-dev/src/utils-dev/unit-test-labels.ts 'Source')
+### <a name="label_tests" href="#label_tests">#</a> unitTestLabel [<>](./src/utils-dev/unit-test-label.ts 'Source')
 
 This collection of unit tests is under development and yet to implemented as part of the wider unit testing suite.
 
 <hr>
 <br>
 
-### <a name="tooltip_tests" href="#tooltip_tests">#</a> unitTestTooltip [<>](https://github.com/visa/visa-chart-components/packages/utils-dev/src/utils-dev/unit-test-tooltip.ts 'Source')
+### <a name="tooltip_tests" href="#tooltip_tests">#</a> unitTestTooltip [<>](./src/utils-dev/unit-test-tooltip.ts 'Source')
 
-This collection of unit tests aims to validate the consistent tooltip pattern we implement on each chart. It validates props like `showTooltip` and `tooltipLabel` are implemented correctly across the repo. You can find documentation about our tooltip pattern in our [chart component's documentation](https://github.com/visa/visa-chart-components/packages/bar-chart/README.md#label-props).
+This collection of unit tests aims to validate the consistent tooltip pattern we implement on each chart. It validates props like `showTooltip` and `tooltipLabel` are implemented correctly across the repo. You can find documentation about our tooltip pattern in our [chart component's documentation](../bar-chart/README.md#label-props).
 
 <hr>
 <br>
 
-### <a name="utils_tests" href="#utils_tests">#</a> Testing Utilities [<>](https://github.com/visa/visa-chart-components/packages/utils-dev/src/utils-dev/unit-test-utils.ts 'Source')
+### <a name="utils_tests" href="#utils_tests">#</a> Testing Utilities [<>](./src/utils-dev/unit-test-utils.ts 'Source')
 
 A collection of helpful js utilities to facilitate unit testing of [d3](https://d3js.org) on [jsdom](https://github.com/jsdom/jsdom).
 

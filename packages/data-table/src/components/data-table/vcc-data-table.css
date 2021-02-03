@@ -1,10 +1,10 @@
 /**
-* Copyright (c) 2020 Visa, Inc.
-*
-* This source code is licensed under the MIT license
-* https://github.com/visa/visa-chart-components/blob/master/LICENSE
-*
-**/
+ * Copyright (c) 2020, 2021 Visa, Inc.
+ *
+ * This source code is licensed under the MIT license
+ * https://github.com/visa/visa-chart-components/blob/master/LICENSE
+ *
+ **/
 .vcc-thead .vcc-th {
   background-color: var(--theme-data-table-header-background, #fff);
   box-shadow: 0 -2px 0 var(--theme-data-table-header-underline, #333333) inset;

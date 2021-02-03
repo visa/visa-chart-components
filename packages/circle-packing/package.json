@@ -1,6 +1,6 @@
 {
   "name": "@visa/circle-packing",
-  "version": "5.0.2",
+  "version": "5.0.3",
   "description": "visa circle packing",
   "license": "SEE LICENCE IN LICENSE",
   "module": "dist/index.mjs",
@@ -21,6 +21,7 @@
     "watch": "chokidar -d=4  '**/*.{tsx,ts,scss}' 'node_modules/@visa/visa-charts-utils/src' -i '/^src/(.*)/*.(d|spec|test|e2e).ts$|dist/(.*)/' -c 'npm run build'",
     "tslint-check": "tslint-config-prettier-check ./tslint.json",
     "test": "stencil test --spec --no-cache --color --coverage",
+    "test:es5-check": "es-check es5 'dist/*.js'",
     "update-snapshot": "jest --updateSnapshot --color"
   },
   "repository": {
@@ -32,10 +33,10 @@
     "registry": "https://registry.npmjs.org/"
   },
   "dependencies": {
-    "@visa/charts-types": "^0.2.1",
-    "@visa/visa-charts-data-table": "^2.0.2",
-    "@visa/visa-charts-utils": "^4.1.1",
-    "d3-array": "^2.0.3",
+    "@visa/charts-types": "^0.2.2",
+    "@visa/visa-charts-data-table": "^2.0.3",
+    "@visa/visa-charts-utils": "^4.2.0",
+    "d3-array": "^1.2.4",
     "d3-hierarchy": "1.1.8",
     "d3-scale": "^2.2.2",
     "d3-selection": "^1.4.0",
@@ -43,7 +44,7 @@
     "uuid": "7.0.0"
   },
   "devDependencies": {
-    "@visa/visa-charts-utils-dev": "^3.3.2"
+    "@visa/visa-charts-utils-dev": "^3.3.3"
   },
   "jest": {
     "preset": "@stencil/core/testing",

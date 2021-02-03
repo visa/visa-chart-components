@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2021 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -66,6 +66,7 @@ const {
   checkClicked,
   convertVisaColor,
   drawLegend,
+  setLegendInteractionState,
   drawTooltip,
   formatDataLabel,
   getColors,
@@ -144,6 +145,10 @@ export class WorldMap {
   @Prop({ mutable: true }) interactionKeys: string[];
   @Prop() suppressEvents: boolean = WorldMapDefaultValues.suppressEvents;
 
+  // Testing (8/7)
+  @Prop() unitTest: boolean = false;
+  //  @Prop() debugMode: boolean = false;
+
   @Element()
   worldMapEl: HTMLElement;
   svg: any;
@@ -219,6 +224,7 @@ export class WorldMap {
   shouldUpdateGrid: boolean = false;
   shouldSetGlobalProjection: boolean = false;
   shouldSetGlobalSelections: boolean = false;
+  shouldSetTestingAttributes: boolean = false;
   shouldSetMapFeatureQuality: boolean = false;
   shouldEnterUpdateExit: boolean = false;
   shouldUpdatePaths: boolean = false;
@@ -276,6 +282,7 @@ export class WorldMap {
     this.shouldUpdateTableData = true;
     this.shouldUpdateScales = true;
     this.shouldSetGlobalSelections = true;
+    this.shouldSetTestingAttributes = true;
     this.shouldEnterUpdateExit = true;
     this.shouldUpdateMarkers = true;
     this.shouldOrderMarkers = true;
@@ -293,6 +300,7 @@ export class WorldMap {
     this.shouldUpdateData = true;
     this.shouldUpdateTableData = true;
     this.shouldSetGlobalSelections = true;
+    this.shouldSetTestingAttributes = true;
     this.shouldUpdateMarkers = true;
     this.shouldOrderMarkers = true;
   }
@@ -673,6 +681,11 @@ export class WorldMap {
     this.shouldUpdateCursor = true;
   }
 
+  @Watch('unitTest')
+  unitTestWatcher(_newVal, _oldVal) {
+    this.shouldSetTestingAttributes = true;
+  }
+
   componentWillLoad() {
     // contrary to componentWillUpdate, this method appears safe to use for
     // any calculations we need. Keeping them here reduces future refactor,
@@ -720,6 +733,7 @@ export class WorldMap {
       this.drawOutlineGrid();
       this.drawGraticuleGrid();
       this.setGlobalSelections();
+      this.setTestingAttributes();
       this.enterPaths();
       this.enterMarkers();
       this.enterLabels();
@@ -813,6 +827,10 @@ export class WorldMap {
         this.setGlobalSelections();
         this.shouldSetGlobalSelections = false;
       }
+      if (this.shouldSetTestingAttributes) {
+        this.setTestingAttributes();
+        this.shouldSetTestingAttributes = false;
+      }
       if (this.shouldUpdateLabelStyle) {
         this.updateLabelStyle();
         this.shouldUpdateLabelStyle = false;
@@ -837,6 +855,7 @@ export class WorldMap {
         this.updatePathStyle(0);
         this.updateMarkerStyle(0);
         this.updateLabelStyle();
+        this.updateLegendInteractionState();
         this.shouldDrawInteractionState = false;
         this.shouldUpdateColorFill = false;
         this.shouldUpdateMarkerStyle = false;
@@ -1041,6 +1060,59 @@ export class WorldMap {
   setTagLevels() {
     this.topLevel = findTagLevel(this.highestHeadingLevel);
     this.bottomLevel = findTagLevel(this.highestHeadingLevel, 3);
+  }
+
+  setTestingAttributes() {
+    if (this.unitTest) {
+      select(this.worldMapEl)
+        .select('.visa-viz-world-map-container')
+        .attr('data-testid', 'chart-container');
+      select(this.worldMapEl)
+        .select('.world-map-main-title')
+        .attr('data-testid', 'main-title');
+      select(this.worldMapEl)
+        .select('.world-map-sub-title')
+        .attr('data-testid', 'sub-title');
+      this.svg.attr('data-testid', 'root-svg');
+      this.root.attr('data-testid', 'margin-container');
+      this.rootG.attr('data-testid', 'padding-container');
+      this.gridG.attr('data-testid', 'grid-group');
+      this.legendG.attr('data-testid', 'legend-container');
+      this.tooltipG.attr('data-testid', 'tooltip-container');
+      this.countries.attr('data-testid', 'country-group');
+      this.markers.attr('data-testid', 'marker-group');
+      this.labels.attr('data-testid', 'dataLabel-group');
+      this.svg.select('defs').attr('data-testid', 'pattern-defs');
+
+      this.updatingLabels
+        .attr('data-testid', 'dataLabel')
+        .attr('data-id', d => `label-${d[this.markerStyle.visible ? this.innerMarkerAccessor : this.joinAccessor]}`);
+      this.update.attr('data-testid', 'country').attr('data-id', d => `country-path-${d.id}`);
+      this.updateMarker.attr('data-testid', 'marker').attr('data-id', d => `marker-${d[this.innerMarkerAccessor]}`);
+    } else {
+      select(this.worldMapEl)
+        .select('.visa-viz-world-map-container')
+        .attr('data-testid', null);
+      select(this.worldMapEl)
+        .select('.world-map-main-title')
+        .attr('data-testid', null);
+      select(this.worldMapEl)
+        .select('.world-map-sub-title')
+        .attr('data-testid', null);
+      this.svg.attr('data-testid', null);
+      this.root.attr('data-testid', null);
+      this.rootG.attr('data-testid', null);
+      this.legendG.attr('data-testid', null);
+      this.tooltipG.attr('data-testid', null);
+      this.countries.attr('data-testid', null);
+      this.markers.attr('data-testid', null);
+      this.labels.attr('data-testid', null);
+      this.svg.select('defs').attr('data-testid', null);
+
+      this.updatingLabels.attr('data-testid', null).attr('data-id', null);
+      this.update.attr('data-testid', null).attr('data-id', null);
+      this.updateMarker.attr('data-testid', null).attr('data-id', null);
+    }
   }
 
   // needs to be updated for map based selections
@@ -1265,6 +1337,20 @@ export class WorldMap {
     });
   }
 
+  updateLegendInteractionState() {
+    setLegendInteractionState({
+      root: this.legendG,
+      uniqueID: this.chartID,
+      interactionKeys: this.innerInteractionKeys,
+      groupAccessor: this.groupAccessor,
+      hoverHighlight: this.hoverHighlight,
+      clickHighlight: this.clickHighlight,
+      hoverStyle: this.innerHoverStyle,
+      clickStyle: this.innerClickStyle,
+      hoverOpacity: this.hoverOpacity
+    });
+  }
+
   validateClickStyle() {
     // interaction style default
     this.innerClickStyle = this.clickStyle
@@ -1328,42 +1414,23 @@ export class WorldMap {
       .append('svg')
       .attr('width', this.width)
       .attr('height', this.height)
-      .attr('data-testid', 'root-svg')
       .attr('viewBox', '0 0 ' + this.width + ' ' + this.height);
 
-    this.root = this.svg
-      .append('g')
-      .attr('id', 'visa-viz-margin-container-g-' + this.chartID)
-      .attr('data-testid', 'margin-container');
+    this.root = this.svg.append('g').attr('id', 'visa-viz-margin-container-g-' + this.chartID);
 
-    this.rootG = this.root
-      .append('g')
-      .attr('id', 'visa-viz-padding-container-g-' + this.chartID)
-      .attr('data-testid', 'padding-container');
+    this.rootG = this.root.append('g').attr('id', 'visa-viz-padding-container-g-' + this.chartID);
 
     // grid elements
-    this.gridG = this.rootG
-      .append('g')
-      .attr('class', 'grid-group')
-      .attr('data-testid', 'grid-group');
+    this.gridG = this.rootG.append('g').attr('class', 'grid-group');
 
     // path elements
-    this.countries = this.rootG
-      .append('g')
-      .attr('class', 'country-group')
-      .attr('data-testid', 'country-group');
+    this.countries = this.rootG.append('g').attr('class', 'country-group');
 
     // marker elements
-    this.markers = this.rootG
-      .append('g')
-      .attr('class', 'marker-group')
-      .attr('data-testid', 'marker-group');
+    this.markers = this.rootG.append('g').attr('class', 'marker-group');
 
     // label elements
-    this.labels = this.rootG
-      .append('g')
-      .attr('class', 'world-map-dataLabel-group')
-      .attr('data-testid', 'dataLabel-group');
+    this.labels = this.rootG.append('g').attr('class', 'world-map-dataLabel-group');
 
     // legend
     this.legendG = select(this.worldMapEl)
@@ -1582,8 +1649,6 @@ export class WorldMap {
 
     this.enter
       .attr('class', 'country')
-      .attr('data-testid', 'country')
-      .attr('data-id', d => `country-path-${d.id}`)
       .attr('cursor', interactiveToggle ? this.cursor : null)
       .on(
         'click',
@@ -1781,7 +1846,6 @@ export class WorldMap {
 
     this.enteringLabels
       .attr('class', 'world-map-dataLabel')
-      .attr('data-testid', 'dataLabel')
       .attr('text-anchor', 'middle')
       .attr('cursor', !this.suppressEvents ? this.cursor : null)
       .attr('opacity', d => {
@@ -1930,8 +1994,6 @@ export class WorldMap {
     this.enterMarker
       .attr('filter', this.strokeFilter)
       .attr('class', 'marker')
-      .attr('data-testid', 'marker')
-      .attr('data-id', d => `marker-${d[this.innerMarkerAccessor]}`)
       .attr('cursor', !this.suppressEvents && this.markerStyle.visible ? this.cursor : null)
       .style('mix-blend-mode', this.markerStyle.blend ? 'multiply' : 'normal')
       .attr('cx', d => {
@@ -2143,7 +2205,14 @@ export class WorldMap {
       labelKey: this.groupAccessor,
       label: this.legend.labels,
       format: this.legend.format,
-      hide: !this.legend.visible
+      hide: !this.legend.visible,
+      interactionKeys: this.innerInteractionKeys,
+      groupAccessor: this.groupAccessor,
+      hoverHighlight: this.hoverHighlight,
+      clickHighlight: this.clickHighlight,
+      hoverStyle: this.innerHoverStyle,
+      clickStyle: this.innerClickStyle,
+      hoverOpacity: this.hoverOpacity
     });
 
     // now that we have drawn our legend elements we need to udpate our selection
@@ -2323,11 +2392,11 @@ export class WorldMap {
       tooltipLabel: this.tooltipLabel,
       dataLabel: this.dataLabel,
       xAccessor:
-        isToShow && evt.target.getAttribute('data-testid') === 'country'
+        isToShow && select(evt.target).classed('country')
           ? this.joinNameAccessor
           : this.innerMarkerNameAccessor || this.joinNameAccessor,
       yAccessor:
-        isToShow && evt.target.getAttribute('data-testid') === 'country'
+        isToShow && select(evt.target).classed('country')
           ? this.joinAccessor
           : this.innerMarkerAccessor || this.joinAccessor,
       valueAccessor: this.valueAccessor,
@@ -2407,23 +2476,15 @@ export class WorldMap {
     // be moved into componentWillUpdate (if the stenicl bug is fixed)
 
     return (
-      <div class={`o-layout ${theme}`} data-testid="outer-layout">
-        <div class="o-layout--chart" data-testid="layout-chart">
-          <this.topLevel data-testid="main-title">{this.mainTitle}</this.topLevel>
-          <this.bottomLevel class="visa-ui-text--instructions" data-testid="sub-title">
+      <div class={`o-layout ${theme}`}>
+        <div class="o-layout--chart">
+          <this.topLevel class="world-map-main-title vcl-main-title">{this.mainTitle}</this.topLevel>
+          <this.bottomLevel class="visa-ui-text--instructions world-map-sub-title vcl-sub-title">
             {this.subTitle}
           </this.bottomLevel>
-          <div
-            class="world-map-legend vcl-legend"
-            data-testid="legend-container"
-            style={{ display: this.legend.visible ? 'block' : 'none' }}
-          />
-          <div class="visa-viz-world-map-container" data-testid="chart-container" />
-          <div
-            class="world-map-tooltip vcl-tooltip"
-            data-testid="tooltip-container"
-            style={{ display: this.showTooltip ? 'block' : 'none' }}
-          />
+          <div class="world-map-legend vcl-legend" style={{ display: this.legend.visible ? 'block' : 'none' }} />
+          <div class="visa-viz-world-map-container" />
+          <div class="world-map-tooltip vcl-tooltip" style={{ display: this.showTooltip ? 'block' : 'none' }} />
           <data-table
             uniqueID={this.chartID}
             isCompact
@@ -2432,6 +2493,7 @@ export class WorldMap {
             padding={this.padding}
             margin={this.margin}
             hideDataTable={this.accessibility.hideDataTableButton}
+            unitTest={this.unitTest}
           />
         </div>
       </div>

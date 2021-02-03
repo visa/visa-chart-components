@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2021 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -278,7 +278,7 @@ export class AppScatterPlot {
             showBaselineX={this.baselineX}
             showBaselineY={this.baselineY}
             groupAccessor={this.groupAccessor}
-            legend={{ visible: true }}
+            legend={{ visible: true, interactive: true }}
             dataLabel={{ visible: true, placement: 'right', labelAccessor: 'value', format: '0.0[a]' }}
             interactionKeys={this.interactionKeys}
             hoverHighlight={this.hoverElement}

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2021 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -61,16 +61,16 @@ export class WorldMapDefaultValues {
     fill: true,
     radius: 5,
     radiusRange: '',
-    opacity: 0.8,
+    opacity: 1,
     color: 'base_grey',
-    strokeWidth: '1px'
+    strokeWidth: 1
   };
 
   static readonly countryStyle = {
     fill: true,
     opacity: 0.8,
     color: 'base_grey',
-    strokeWidth: '.5px'
+    strokeWidth: 0.5
   };
 
   static readonly hoverStyle = propDefaultValues.hoverStyle;

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2021 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -1930,6 +1930,7 @@ export class HeatMap {
       baseColorArr: !(this.colorPalette && this.colorPalette.includes('diverging'))
         ? [this.preparedColors[this.preparedColors.length - 1]]
         : this.strokeColors.range(),
+      hideStrokes: this.accessibility.hideStrokes,
       scale: this.heat,
       steps: this.colorSteps,
       margin: this.margin,
@@ -2225,6 +2226,9 @@ export class HeatMap {
       },
       wrapLabel: {
         exception: false
+      },
+      hoverOpacity: {
+        exception: 0
       }
     };
     for (i = 0; i < keys.length; i++) {
