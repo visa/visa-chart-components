@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2021 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -589,48 +589,49 @@ export const accessibility_geometry_initialize = {
   }
 };
 
-export const accessibility_group_initialize_and_hide = {
-  prop: 'accessibility',
-  group: 'accessibility',
-  name: 'attributes should be added to groups on load, non-essential groups should be hidden',
-  testProps: {},
-  testSelector: '[data-testid=group]',
-  testFunc: async (
-    component: any,
-    page: SpecPage,
-    testProps: object,
-    testSelector: string,
-    nextTestSelector: string
-  ) => {
-    // ARRANGE
-    // if we have any testProps apply them
-    if (Object.keys(testProps).length) {
-      Object.keys(testProps).forEach(testProp => {
-        component[testProp] = testProps[testProp];
-      });
-    }
+// this test is no longer needed as a result of the controller implementation.
+// export const accessibility_group_initialize_and_hide = {
+//   prop: 'accessibility',
+//   group: 'accessibility',
+//   name: 'attributes should be added to groups on load, non-essential groups should be hidden',
+//   testProps: {},
+//   testSelector: '[data-testid=group]',
+//   testFunc: async (
+//     component: any,
+//     page: SpecPage,
+//     testProps: object,
+//     testSelector: string,
+//     nextTestSelector: string
+//   ) => {
+//     // ARRANGE
+//     // if we have any testProps apply them
+//     if (Object.keys(testProps).length) {
+//       Object.keys(testProps).forEach(testProp => {
+//         component[testProp] = testProps[testProp];
+//       });
+//     }
 
-    // ACT
-    page.root.appendChild(component);
-    await page.waitForChanges();
+//     // ACT
+//     page.root.appendChild(component);
+//     await page.waitForChanges();
 
-    // ASSERT
-    const paddingContainer = page.doc.querySelector('[data-testid=padding-container]');
-    paddingContainer.childNodes.forEach(group => {
-      if (group.nodeName === 'g') {
-        if (group['getAttribute']('data-testid') === testSelector.replace('[data-testid=', '').replace(']', '')) {
-          Object.keys(showAttributes).forEach(attr => {
-            expect(group).toEqualAttribute(attr, showAttributes[attr]);
-          });
-        } else {
-          Object.keys(hideAttributes).forEach(attr => {
-            expect(group).toEqualAttribute(attr, hideAttributes[attr]);
-          });
-        }
-      }
-    });
-  }
-};
+//     // ASSERT
+//     const paddingContainer = page.doc.querySelector('[data-testid=padding-container]');
+//     paddingContainer.childNodes.forEach(group => {
+//       if (group.nodeName === 'g') {
+//         if (group['getAttribute']('data-testid') === testSelector.replace('[data-testid=', '').replace(']', '')) {
+//           Object.keys(showAttributes).forEach(attr => {
+//             expect(group).toEqualAttribute(attr, showAttributes[attr]);
+//           });
+//         } else {
+//           Object.keys(hideAttributes).forEach(attr => {
+//             expect(group).toEqualAttribute(attr, hideAttributes[attr]);
+//           });
+//         }
+//       }
+//     });
+//   }
+// };
 
 export const accessibility_controller_initialize = {
   prop: 'accessibility',
@@ -638,6 +639,7 @@ export const accessibility_controller_initialize = {
   name: 'controller div should be created and attributes should be added on load',
   testProps: {},
   testSelector: '[data-testid=controller]',
+  nextTestSelector: '[data-testid=svg]',
   testFunc: async (
     component: any,
     page: SpecPage,
@@ -664,11 +666,26 @@ export const accessibility_controller_initialize = {
     const ariaLabel = titleText + descText;
 
     const controller = page.doc.querySelector(testSelector);
+    const rootSVG = page.doc.querySelector(nextTestSelector);
+    // flushTransitions(rootSVG);
+    // await page.waitForChanges();
+
+    // check that controller has correct setup
     expect(controller).toEqualAttribute('tabindex', 0);
     expect(controller).toEqualAttribute('role', 'application');
     expect(controller).toEqualAttribute('id', `chart-area-${component.uniqueID}`);
     expect(controller).toEqualText(`Interactive ${component.nodeName.toLowerCase()}.`);
     expect(controller).toEqualAttribute('aria-label', ariaLabel);
+
+    // check that the rootSVG has hidden attributes applied to it
+    expect(rootSVG).toEqualAttribute('role', 'presentation');
+    expect(rootSVG).toEqualAttribute('focusable', false);
+    expect(rootSVG).toEqualAttribute('tabindex', -1);
+    expect(rootSVG).toEqualAttribute('style', 'overflow: hidden;');
+    expect(rootSVG['__on']).toBeTruthy();
+    expect(rootSVG['__on'].length).toBeGreaterThanOrEqual(1);
+    const focusObject = rootSVG['__on'].find(o => o.type === 'focus');
+    expect(focusObject).toBeTruthy();
   }
 };
 
@@ -1437,7 +1454,11 @@ export const accessibility_keyboard_nav_generic_test = {
     expect(focusedFigure).toBeTruthy();
     expect(focusedFigure).toEqualText(selectorAriaLabel);
     expect(focusedFigure).toEqualAttribute('aria-label', selectorAriaLabel);
-    expect(markerToFocus).toHaveClass('vcl-accessibility-focus-source');
+
+    // IF THE MARKER RECEIVING FOCUS IS A GEOMETRY (E.G., NOT A G OR SVG) IT SHOULD BE CLASSED
+    if (markerToFocus.tagName !== 'g' && markerToFocus.tagName !== 'svg') {
+      expect(markerToFocus).toHaveClass('vcl-accessibility-focus-source');
+    }
 
     // FIRE THE KEYBOARD EVENT
     focusedFigure.dispatchEvent(innerMockKeyboardEvent);
@@ -1460,6 +1481,11 @@ export const accessibility_keyboard_nav_generic_test = {
     expect(newFocusedFigure).toEqualText(nextSelectorAriaLabel);
     expect(newFocusedFigure).toEqualAttribute('aria-label', nextSelectorAriaLabel);
     expect(markerReceiveFocus).toHaveClass('vcl-accessibility-focus-source');
+
+    // IF THE MARKER RECEIVING FOCUS IS A GEOMETRY (E.G., NOT A G OR SVG) IT SHOULD BE CLASSED
+    if (markerReceiveFocus.tagName !== 'g' && markerReceiveFocus.tagName !== 'svg') {
+      expect(markerReceiveFocus).toHaveClass('vcl-accessibility-focus-source');
+    }
 
     // THIRD CHECK THAT FOCUS INDICATOR HAS BEEN CREATED
     if (markerReceiveFocus.tagName !== 'g' && markerReceiveFocus.tagName !== 'svg') {

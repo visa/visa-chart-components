@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2021 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -12,7 +12,7 @@ import { scaleQuantize, scaleOrdinal, scalePow } from 'd3-scale';
 import Utils from '@visa/visa-charts-utils';
 import UtilsDev from '@visa/visa-charts-utils-dev';
 
-const { visaColors, getColors, outlineColor } = Utils;
+const { visaColors, getColors } = Utils;
 
 const { flushTransitions, unitTestGeneric, unitTestEvent, unitTestInteraction, unitTestTooltip } = UtilsDev;
 
@@ -47,21 +47,23 @@ describe('<world-map />', () => {
       fill: true,
       radius: 5,
       radiusScale: [5, 15],
-      opacity: 0.8,
+      opacity: 1,
       color: 'base_grey',
-      strokeWidth: '1px'
+      strokeWidth: 1
+    };
+    const INTERACTIONTESTMARKERSTYLEVISIBLE = {
+      visible: true,
+      blend: false,
+      fill: false,
+      radius: 5,
+      opacity: 1,
+      color: 'categorical_light_purple',
+      strokeWidth: 1
     };
     // END:minimal props need to be passed to component
 
     // disable accessibility validation to keep output stream(terminal) clean
     const EXPECTEDACCESSIBILITY = { disableValidation: true };
-    const DEFAULTPROPS = {
-      data: EXPECTEDDATA,
-      joinAccessor: EXPECTEDJOINACCESSOR,
-      joinNameAccessor: EXPECTEDJOINNAMEACCESSOR,
-      valueAccessor: EXPECTEDVALUEACCESSOR,
-      accessibility: EXPECTEDACCESSIBILITY
-    };
 
     beforeEach(async () => {
       page = await newSpecPage({
@@ -75,6 +77,7 @@ describe('<world-map />', () => {
       component.valueAccessor = EXPECTEDVALUEACCESSOR;
       component.accessibility = EXPECTEDACCESSIBILITY;
       component.uniqueID = 'snapshot-test-1';
+      component.unitTest = true;
     });
 
     it('should build', () => {
@@ -256,7 +259,7 @@ describe('<world-map />', () => {
             fill: false,
             opacity: 0.8,
             color: 'categorical_blue',
-            strokeWidth: '.5px'
+            strokeWidth: 0.5
           };
 
           // ACT
@@ -285,7 +288,7 @@ describe('<world-map />', () => {
             fill: true,
             opacity: EXPECTEDOPACITY,
             color: 'base_grey',
-            strokeWidth: '.5px'
+            strokeWidth: 0.5
           };
           component.countryStyle = EXPECTEDCOUNTRYSTYLE;
 
@@ -306,11 +309,11 @@ describe('<world-map />', () => {
 
           // ASSERT
           const worldMapSVG = page.doc.querySelector('[data-testid=country-group] path');
-          expect(worldMapSVG).toEqualAttribute('stroke-width', '.5px');
+          expect(worldMapSVG).toEqualAttribute('stroke-width', 0.5);
         });
-        it('stroke width should be 2px when setting the prop', async () => {
+        it('stroke width should be 2 when setting the prop', async () => {
           // ARRANGE // countryStyle.fill = true is the default this should match without setting prop
-          const EXPECTEDSTROKEWIDTH = '2px';
+          const EXPECTEDSTROKEWIDTH = 2;
           const EXPECTEDCOUNTRYSTYLE = {
             fill: true,
             opacity: 0.8,
@@ -351,7 +354,7 @@ describe('<world-map />', () => {
             radius: 5,
             opacity: 0.8,
             color: 'base_grey',
-            strokeWidth: '1px'
+            strokeWidth: 1
           };
           // ACT
           page.root.appendChild(component);
@@ -385,7 +388,7 @@ describe('<world-map />', () => {
             radius: 5,
             opacity: 0.8,
             color: 'categorical_blue',
-            strokeWidth: '1px'
+            strokeWidth: 1
           };
           // ACT
           page.root.appendChild(component);
@@ -403,7 +406,7 @@ describe('<world-map />', () => {
             radius: 5,
             opacity: 0.8,
             color: 'base_grey',
-            strokeWidth: '1px'
+            strokeWidth: 1
           };
           // ACT
           page.root.appendChild(component);
@@ -422,8 +425,8 @@ describe('<world-map />', () => {
 
           // ASSERT
           const marker = page.doc.querySelector('[data-testid=marker]');
-          expect(marker).toEqualAttribute('fill-opacity', 0.8);
-          expect(marker).toEqualAttribute('stroke-opacity', 0.8);
+          expect(marker).toEqualAttribute('fill-opacity', 1);
+          expect(marker).toEqualAttribute('stroke-opacity', 1);
         });
         it('opacity should be .5 when setting the prop', async () => {
           // ARRANGE
@@ -435,7 +438,7 @@ describe('<world-map />', () => {
             radius: 5,
             opacity: EXPECTEDOPACITY,
             color: 'base_grey',
-            strokeWidth: '1px'
+            strokeWidth: 1
           };
 
           // ACT
@@ -456,11 +459,11 @@ describe('<world-map />', () => {
 
           // ASSERT
           const marker = page.doc.querySelector('[data-testid=marker]');
-          expect(marker).toEqualAttribute('stroke-width', '1px');
+          expect(marker).toEqualAttribute('stroke-width', 1);
         });
         it('stroke width should be 2px when setting the prop', async () => {
           // ARRANGE
-          const EXPECTEDSTROKEWIDTH = '2px';
+          const EXPECTEDSTROKEWIDTH = 2;
           component.markerStyle = {
             visible: true,
             blend: true,
@@ -538,9 +541,12 @@ describe('<world-map />', () => {
       });
     });
 
-    describe.skip('interaction', () => {
+    describe('interaction', () => {
       describe('path based interaction tests', () => {
-        const innerTestProps = {};
+        const innerTestProps = {
+          colorPalette: 'single_categorical_light_purple',
+          useFilter: false
+        };
         const innerTestSelector = '[data-testid=country][data-id=country-path-840]';
         const innerNegTestSelector = '[data-testid=country][data-id=country-path-076]';
         Object.keys(unitTestInteraction).forEach(test => {
@@ -558,7 +564,9 @@ describe('<world-map />', () => {
       });
       describe('marker based interaction tests', () => {
         const innerTestProps = {
-          markerStyle: DEFAULTMARKERSTYLEVISIBLE
+          markerStyle: INTERACTIONTESTMARKERSTYLEVISIBLE,
+          useFilter: false,
+          fillStrokeOpacity: true
         };
         const innerTestSelector = '[data-testid=marker][data-id=marker-840]';
         const innerNegTestSelector = '[data-testid=marker][data-id=marker-076]';
@@ -577,22 +585,22 @@ describe('<world-map />', () => {
       });
     });
 
-    describe.skip('clickStyle', () => {
+    describe('clickStyle', () => {
       describe('custom with interaction keys', () => {
         const testLoad = 'interaction_clickStyle_custom_load';
         const testUpdate = 'interaction_clickStyle_custom_update';
         const innerTestSelector = '[data-testid=country][data-id=country-path-076]';
         const innerNegTestSelector = '[data-testid=country][data-id=country-path-024]';
         const CUSTOMCLICKSTYLE = {
-          color: visaColors.comp_green,
-          stroke: outlineColor(visaColors.comp_green),
-          strokeWidth: '1px'
+          color: visaColors.categorical_light_purple, // this has to be light enough to require a contrasting stroke
+          strokeWidth: 4
         };
         const EXPECTEDHOVEROPACITY = 0.25;
         const innerTestProps = {
           clickStyle: CUSTOMCLICKSTYLE,
           hoverOpacity: EXPECTEDHOVEROPACITY,
-          interactionKeys: ['Type']
+          interactionKeys: ['Type'],
+          useFilter: false
         };
 
         it(`[${unitTestInteraction[testLoad].group}] ${unitTestInteraction[testLoad].prop}: ${
@@ -620,7 +628,8 @@ describe('<world-map />', () => {
         const newInnerTestProps = {
           clickStyle: CUSTOMCLICKSTYLE,
           hoverOpacity: EXPECTEDHOVEROPACITY,
-          interactionKeys: ['Type', 'Country Code']
+          interactionKeys: ['Type', 'Country Code'],
+          useFilter: false
         };
         it(`[${unitTestInteraction[testLoad].group}] ${unitTestInteraction[testLoad].prop}: ${
           unitTestInteraction[testLoad].name
@@ -645,22 +654,22 @@ describe('<world-map />', () => {
           ));
       });
     });
-    describe.skip('hoverStyle', () => {
+    describe('hoverStyle', () => {
       describe('custom with interaction keys', () => {
         const testLoad = 'interaction_hoverStyle_custom_load';
         const testUpdate = 'interaction_hoverStyle_custom_update';
         const innerTestSelector = '[data-testid=country][data-id=country-path-076]';
         const innerNegTestSelector = '[data-testid=country][data-id=country-path-024]';
         const CUSTOMCLICKSTYLE = {
-          color: visaColors.comp_green,
-          stroke: outlineColor(visaColors.comp_green),
-          strokeWidth: '1px'
+          color: visaColors.categorical_light_purple, // this has to be light enough to require a contrasting stroke
+          strokeWidth: 3
         };
         const EXPECTEDHOVEROPACITY = 0.25;
         const innerTestProps = {
           clickStyle: CUSTOMCLICKSTYLE,
           hoverOpacity: EXPECTEDHOVEROPACITY,
-          interactionKeys: ['Type']
+          interactionKeys: ['Type'],
+          useFilter: false
         };
 
         it(`[${unitTestInteraction[testLoad].group}] ${unitTestInteraction[testLoad].prop}: ${
@@ -688,7 +697,8 @@ describe('<world-map />', () => {
         const newInnerTestProps = {
           clickStyle: CUSTOMCLICKSTYLE,
           hoverOpacity: EXPECTEDHOVEROPACITY,
-          interactionKeys: ['Type', 'Country Code']
+          interactionKeys: ['Type', 'Country Code'],
+          useFilter: false
         };
         it(`[${unitTestInteraction[testLoad].group}] ${unitTestInteraction[testLoad].prop}: ${
           unitTestInteraction[testLoad].name
@@ -742,7 +752,7 @@ describe('<world-map />', () => {
 
           // ASSERT
           const legendGs = page.doc
-            .querySelector('[data-testid=legend-container] svg')
+            .querySelector('[data-testid=legend-container]')
             .querySelector('g')
             .querySelectorAll('g');
           const legendGText = legendGs[0].childNodes[1]['__data__']; // tslint:disable-line: no-string-literal
@@ -768,7 +778,7 @@ describe('<world-map />', () => {
 
           // ASSERT
           const legendGs = page.doc
-            .querySelector('[data-testid=legend-container] svg')
+            .querySelector('[data-testid=legend-container]')
             .querySelector('g')
             .querySelectorAll('g');
           const legendGText = legendGs[3].childNodes[1]['__data__']; // tslint:disable-line: no-string-literal
@@ -794,7 +804,7 @@ describe('<world-map />', () => {
 
           // ASSERT
           const legendGs = page.doc
-            .querySelector('[data-testid=legend-container] svg')
+            .querySelector('[data-testid=legend-container]')
             .querySelector('g')
             .querySelectorAll('g');
           const legendMinText = legendGs[0].childNodes[1]['__data__']; // tslint:disable-line: no-string-literal
@@ -822,7 +832,7 @@ describe('<world-map />', () => {
 
           // ASSERT
           const legendGs = page.doc
-            .querySelector('[data-testid=legend-container] svg')
+            .querySelector('[data-testid=legend-container]')
             .querySelector('g')
             .querySelectorAll('g');
           legendGs.forEach((legendG, i) => {
@@ -1007,8 +1017,8 @@ describe('<world-map />', () => {
           await page.waitForChanges();
 
           // ASSERT
-          const legendContainer = page.doc.querySelector('[data-testid=legend-container]');
-          const legendSVG = legendContainer.querySelector('svg');
+          const legendSVG = page.doc.querySelector('[data-testid=legend-container]');
+          const legendContainer = legendSVG.parentElement;
           const legendG = legendSVG.querySelector('g').querySelector('g');
           expect(legendContainer.getAttribute('style')).toEqual('display: block;');
           expect(legendSVG).toEqualAttribute('opacity', 1);
@@ -1028,8 +1038,8 @@ describe('<world-map />', () => {
           await page.waitForChanges();
 
           // ASSERT
-          const legendContainer = page.doc.querySelector('[data-testid=legend-container]');
-          const legendSVG = legendContainer.querySelector('svg');
+          const legendSVG = page.doc.querySelector('[data-testid=legend-container]');
+          const legendContainer = legendSVG.parentElement;
           expect(legendContainer.getAttribute('style')).toEqual('display: none;');
           expect(legendSVG).toEqualAttribute('opacity', 0);
           expect(legendSVG.getAttribute('style')).toEqual('display: none;');
@@ -1051,7 +1061,7 @@ describe('<world-map />', () => {
 
           // ASSERT
           const legendG = page.doc
-            .querySelector('[data-testid=legend-container] svg')
+            .querySelector('[data-testid=legend-container]')
             .querySelector('g')
             .querySelector('g');
           expect(legendG).toHaveClass('default');
@@ -1071,7 +1081,7 @@ describe('<world-map />', () => {
 
           // ASSERT
           const legendG = page.doc
-            .querySelector('[data-testid=legend-container] svg')
+            .querySelector('[data-testid=legend-container]')
             .querySelector('g')
             .querySelector('g');
           expect(legendG).toHaveClass('gradient');
@@ -1085,7 +1095,7 @@ describe('<world-map />', () => {
 
           // ASSERT
           const legendG = page.doc
-            .querySelector('[data-testid=legend-container] svg')
+            .querySelector('[data-testid=legend-container]')
             .querySelector('g')
             .querySelector('g');
           expect(legendG['__on']).toBeUndefined(); // tslint:disable-line: no-string-literal
@@ -1105,7 +1115,7 @@ describe('<world-map />', () => {
 
           // ASSERT
           const legendG = page.doc
-            .querySelector('[data-testid=legend-container] svg')
+            .querySelector('[data-testid=legend-container]')
             .querySelector('g')
             .querySelector('g');
           expect(legendG['__on'].length).toEqual(3); // tslint:disable-line: no-string-literal
@@ -1127,7 +1137,7 @@ describe('<world-map />', () => {
 
           // ASSERT
           const legendG = page.doc
-            .querySelector('[data-testid=legend-container] svg')
+            .querySelector('[data-testid=legend-container]')
             .querySelector('g')
             .querySelector('g');
           const legendGText = legendG.childNodes[1]['__data__']; // tslint:disable-line: no-string-literal
@@ -1142,7 +1152,7 @@ describe('<world-map />', () => {
 
           // ASSERT
           const legendG = page.doc
-            .querySelector('[data-testid=legend-container] svg')
+            .querySelector('[data-testid=legend-container]')
             .querySelector('g')
             .querySelector('g');
           const legendGText = legendG.childNodes[1]['__data__']; // tslint:disable-line: no-string-literal
@@ -1164,7 +1174,7 @@ describe('<world-map />', () => {
 
           // ASSERT
           const legendG = page.doc
-            .querySelector('[data-testid=legend-container] svg')
+            .querySelector('[data-testid=legend-container]')
             .querySelector('g')
             .querySelectorAll('g');
           legendG.forEach((g, i) => {

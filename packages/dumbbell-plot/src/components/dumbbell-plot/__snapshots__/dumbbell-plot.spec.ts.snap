@@ -166,7 +166,7 @@ exports[`<dumbbell-plot> rendered-html render should render with minimal props[d
         This is the dumbbell plot's subtitle
       </p>
       <div aria-hidden="true" class="dumbbell-legend vcl-legend" role="presentation" style="display: none;">
-        <svg aria-hidden="true" class="vcl-svg" data-testid="legend-container" focusable="false" height="0" opacity="0" role="presentation" viewBox="0 0 637 2" width="635" style="display: none;">
+        <svg aria-hidden="true" class="vcl-svg" data-testid="legend-container" focusable="false" height="0" opacity="0" role="presentation" viewBox="0 0 635 0" width="635" style="display: none;">
           <g class="legend-padding-wrapper" transform="translate(1,1)">
             <g class="bar legend">
               <rect class="bar-rect" fill="#7c99b1" height="20" opacity="0" stroke="#35495a" stroke-width="1" width="20"></rect>
