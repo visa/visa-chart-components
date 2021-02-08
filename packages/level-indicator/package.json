@@ -19,7 +19,8 @@
     "build": "stencil build",
     "start-dev": "stencil build --dev --watch --serve",
     "watch": "chokidar -d=4  '**/*.{tsx,ts,scss}' 'node_modules/@visa/visa-charts-utils/src' -i '/^src/(.*)/*.(d|spec|test|e2e).ts$|dist/(.*)/' -c 'npm run build'",
-    "tslint-check": "tslint-config-prettier-check ./tslint.json"
+    "tslint-check": "tslint-config-prettier-check ./tslint.json",
+    "test:es5-check": "es-check es5 'dist/*.js'"
   },
   "repository": {
     "type": "git",

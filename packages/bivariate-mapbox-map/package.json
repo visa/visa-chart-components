@@ -36,9 +36,9 @@
     "@visa/charts-types": "^0.2.1",
     "@visa/scatter-plot": "^5.0.1",
     "@visa/visa-charts-utils": "^4.1.1",
-    "d3-array": "2.0.3",
-    "d3-color": "1.2.3",
-    "d3-scale": "3.0.0",
+    "d3-array": "^1.2.4",
+    "d3-color": "1.3.0",
+    "d3-scale": "^2.2.2",
     "d3-selection": "^1.4.0",
     "d3-transition": "1.1.3",
     "mapbox-gl": "^1.3.1"

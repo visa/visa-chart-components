@@ -12,6 +12,7 @@
     "bootup": "lerna bootstrap --concurrency 2",
     "build": "lerna run --stream --concurrency 8 build",
     "start-dev": "lerna run --stream start-dev",
+    "test": "lerna run --stream --concurrency 1 --no-bail --no-private test",
     "watch:charts": "lerna run watch --stream --no-sort --concurrency 10 --scope=@visa/charts",
     "watch": "lerna run watch --stream --no-sort --concurrency 999 --include-filtered-dependencies",
     "start:react-demo": "npm -C ./packages/charts-react-demo run start",
@@ -36,6 +37,7 @@
     "build-demo:prod": "npm run install:demo && npm run generate-api-docs-json && npm -C ./packages/visa-charts-demo run build:prod",
     "stats": "npm -C ./packages/visa-charts-demo run stats && npm run browse-stats",
     "browse-stats": "npm -C ./packages/visa-charts-demo run browse-stats",
+    "test:es5-check": "lerna run test:es5-check --stream --no-sort --concurrency 1",
     "publish": "npm login & lerna publish from-package",
     "pre-release": "lerna version --no-push --conventional-commits --conventional-prerelease --no-commit-hooks",
     "pre-release:no-git-tag": "lerna version --no-push --no-git-tag-version --conventional-commits --conventional-prerelease --no-commit-hooks",
@@ -76,7 +78,8 @@
     "@stencil/utils": "latest",
     "tslint": "^5.11.0",
     "tslint-config-prettier": "^1.14.0",
-    "workbox-build": "4.3.1"
+    "workbox-build": "4.3.1",
+    "es-check": "5.2.0"
   },
   "config": {
     "scripts": {

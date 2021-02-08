@@ -18,7 +18,8 @@
   "scripts": {
     "build": "stencil build",
     "watch": "chokidar -d=20000  \"**/*.tsx\"  \"node_modules/@visa/visa-charts-utils/src\" \"node_modules/@visa/bar-chart/src\" \"node_modules/@visa/line-chart/src\" \"node_modules/@visa/pie-chart/src\" \"node_modules/@visa/scatter-plot/src\" \"node_modules/@visa/circle-packing/src\" \"node_modules/@visa/heat-map/src\" \"node_modules/@visa/clustered-bar-chart/src\" \"node_modules/@visa/stacked-bar-chart/src\" -c \"rm -rf dist && npm run build\"",
-    "tslint-check": "tslint-config-prettier-check ./tslint.json"
+    "tslint-check": "tslint-config-prettier-check ./tslint.json",
+    "test:es5-check": "es-check es5 'dist/*.js'"
   },
   "repository": {
     "type": "git",

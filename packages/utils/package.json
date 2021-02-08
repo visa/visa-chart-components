@@ -11,7 +11,7 @@
     "prepare": "npm run build",
     "build": "rollup -c",
     "watch": "rollup -c -w",
-    "test": "jest --coverage"
+    "test:es5-check": "es-check es5 'dist/visa-charts-utils.cjs.js' 'dist/visa-charts-utils.umd.js'"
   },
   "repository": {
     "type": "git",

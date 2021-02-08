@@ -18,15 +18,15 @@
     "build.ng": "npm run build.es2015 && npm run build.es5",
     "build.es2015": "ngc -p tsconfig.json && rollup --config ./scripts/rollup.config.js",
     "build.es5": "ngc -p tsconfig.legacy.json && rollup --config ./scripts/rollup.config.legacy.js",
+    "test:es5-check": "es-check es5 'dist/fesm5.js'",
     "lint": "npm run lint.ts",
     "lint.ts": "tslint --project .",
     "lint.fix": "tslint --project . --fix",
     "prerelease": "npm run validate && np prerelease --yolo --any-branch --tag next",
-    "test": "echo 'angular no tests yet'",
     "tsc": "tsc -p .",
     "validate": "npm i && npm run lint && npm run test && npm run build"
   },
-  "module": "dist/fesm5.js",
+  "module": "dist/fesm2015.js",
   "main": "dist/fesm5.js",
   "types": "dist/core.d.ts",
   "files": [

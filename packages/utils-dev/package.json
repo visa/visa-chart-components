@@ -10,8 +10,7 @@
   "scripts": {
     "prepare": "npm run build",
     "build": "rollup -c",
-    "watch": "rollup -c -w",
-    "test": "jest --coverage"
+    "watch": "rollup -c -w"
   },
   "repository": {
     "type": "git",

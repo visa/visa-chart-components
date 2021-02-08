@@ -97,9 +97,9 @@
 
 ## <a name="accessibility-props" href="#accessibility-props">#</a> Accessibility Props [<>](./src/components/bar-chart/bar-chart.tsx 'Source')
 
-| Name            | Type                 | Default Value(s)                                                                                     | Description                                                                           |
-| --------------- | -------------------- | ---------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| `accessibility` | object (custom type) | [IAccessibilityType](https://github.com/visa/visa-chart-components/packages/types/src/prop-types.ts) | Manages messages and settings for chart accessibility, _see object definition below_. |
+| Name            | Type                 | Default Value(s)                                 | Description                                                                           |
+| --------------- | -------------------- | ------------------------------------------------ | ------------------------------------------------------------------------------------- |
+| `accessibility` | object (custom type) | [IAccessibilityType](../types/src/prop-types.ts) | Manages messages and settings for chart accessibility, _see object definition below_. |
 
 <br>
 
@@ -173,14 +173,14 @@ const changeHandler = d => {
 
 ## <a name="axis-props" href="#axis-props">#</a> Axis Props [<>](./src/components/bar-chart/bar-chart.tsx 'Source')
 
-| Name               | Type                 | Default Value(s)                                                                            | Description                                                             |
-| ------------------ | -------------------- | ------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
-| `xAxis`            | object (custom type) | [IAxisType](https://github.com/visa/visa-chart-components/packages/types/src/prop-types.ts) | Manages settings for the chart's x axis, _see object definition below_. |
-| `yAxis`            | object (custom type) | [IAxisType](https://github.com/visa/visa-chart-components/packages/types/src/prop-types.ts) | Manages settings for the chart's y axis, _see object definition below_. |
-| `minValueOverride` | number               | `undefined`                                                                                 | Overrides the calculated default min value.                             |
-| `maxValueOverride` | number               | `undefined`                                                                                 | Overrides the calculated default max value.                             |
-| `wrapLabel`        | boolean              | true                                                                                        | When selected, wraps axis labels.                                       |
-| `barIntervalRatio` | number               | 0.2                                                                                         | Percent of bar padding.                                                 |
+| Name               | Type                 | Default Value(s)                        | Description                                                             |
+| ------------------ | -------------------- | --------------------------------------- | ----------------------------------------------------------------------- |
+| `xAxis`            | object (custom type) | [IAxisType](../types/src/prop-types.ts) | Manages settings for the chart's x axis, _see object definition below_. |
+| `yAxis`            | object (custom type) | [IAxisType](../types/src/prop-types.ts) | Manages settings for the chart's y axis, _see object definition below_. |
+| `minValueOverride` | number               | `undefined`                             | Overrides the calculated default min value.                             |
+| `maxValueOverride` | number               | `undefined`                             | Overrides the calculated default max value.                             |
+| `wrapLabel`        | boolean              | true                                    | When selected, wraps axis labels.                                       |
+| `barIntervalRatio` | number               | 0.2                                     | Percent of bar padding.                                                 |
 
 <br>
 
@@ -205,19 +205,19 @@ const changeHandler = d => {
 
 [Events in stencil.js](https://stenciljs.com/docs/events) dispatch [Custom DOM events](https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Creating_and_triggering_events) for other components to handle, we use Stencil's @Event() decorator to emit events (click, hover, mouseOut) from end user activity on our charts.
 
-| Name              | Type                 | Default Value(s)                                                                                  | Description                                                                                                                                                                                                                                                                             |
-| ----------------- | -------------------- | ------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `suppressEvents`  | boolean              | false                                                                                             | Suppresses and disables all event emitters. Setting to true can increase performance for non-interactive charts.                                                                                                                                                                        |
-| `cursor`          | string               | 'default'                                                                                         | Changes pointer type during mouse over on bars. Valid values are 'default' or 'pointer'.                                                                                                                                                                                                |
-| `onClickFunc`     | function             | `undefined`                                                                                       | When clickFunc event occurs (e.g., mouse/keyboard click on chart geometry), this event handler will be called with the custom event object (e.g., e), containing data at e.detail. You will need to construct your own functionality of what actions to take within the callback.       |
-| `clickHighlight`  | object[]             | []                                                                                                | Data used to track chart selections, an array of objects which includes keys that map to above accessors.                                                                                                                                                                               |
-| `clickStyle`      | object (custom type) | [IClickStyleType](https://github.com/visa/visa-chart-components/packages/types/src/prop-types.ts) | Sets the styling of a bars when they are selected, _see object definition below_.                                                                                                                                                                                                       |
-| `onHoverFunc`     | function             | `undefined`                                                                                       | When hoverFunc event occurs (e.g., mouse hover/keyboard focus on chart geometry), this event handler will be called with the custom event object (e.g., e), containing data at e.detail. You will need to construct your own functionality of what actions to take within the callback. |
-| `onMouseOutFunc`  | function             | `undefined`                                                                                       | When mouseOutFunc event occurs (e.g., mouse/keyboard blur on chart geometry), this event handler will be called, and has no data object. You will need to construct your own functionality of what actions to take within the callback.                                                 |
-| `hoverHighlight`  | object               | {}                                                                                                | Datum object used to track active chart element, the object should include keys that map to above accessors.                                                                                                                                                                            |
-| `hoverStyle`      | object (custom type) | [IHoverStyleType](https://github.com/visa/visa-chart-components/packages/types/src/prop-types.ts) | Sets the styling of a bars when they are hovered/focused, _see object definition below_.                                                                                                                                                                                                |
-| `interactionKeys` | string[]             | []                                                                                                | Sets the column names of data to interact with.                                                                                                                                                                                                                                         |
-| `hoverOpacity`    | number               | 1                                                                                                 | Sets opacity of inactive elements when hovering/focused on a chart geometry.                                                                                                                                                                                                            |
+| Name              | Type                 | Default Value(s)                              | Description                                                                                                                                                                                                                                                                             |
+| ----------------- | -------------------- | --------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `suppressEvents`  | boolean              | false                                         | Suppresses and disables all event emitters. Setting to true can increase performance for non-interactive charts.                                                                                                                                                                        |
+| `cursor`          | string               | 'default'                                     | Changes pointer type during mouse over on bars. Valid values are 'default' or 'pointer'.                                                                                                                                                                                                |
+| `onClickFunc`     | function             | `undefined`                                   | When clickFunc event occurs (e.g., mouse/keyboard click on chart geometry), this event handler will be called with the custom event object (e.g., e), containing data at e.detail. You will need to construct your own functionality of what actions to take within the callback.       |
+| `clickHighlight`  | object[]             | []                                            | Data used to track chart selections, an array of objects which includes keys that map to above accessors.                                                                                                                                                                               |
+| `clickStyle`      | object (custom type) | [IClickStyleType](../types/src/prop-types.ts) | Sets the styling of a bars when they are selected, _see object definition below_.                                                                                                                                                                                                       |
+| `onHoverFunc`     | function             | `undefined`                                   | When hoverFunc event occurs (e.g., mouse hover/keyboard focus on chart geometry), this event handler will be called with the custom event object (e.g., e), containing data at e.detail. You will need to construct your own functionality of what actions to take within the callback. |
+| `onMouseOutFunc`  | function             | `undefined`                                   | When mouseOutFunc event occurs (e.g., mouse/keyboard blur on chart geometry), this event handler will be called, and has no data object. You will need to construct your own functionality of what actions to take within the callback.                                                 |
+| `hoverHighlight`  | object               | {}                                            | Datum object used to track active chart element, the object should include keys that map to above accessors.                                                                                                                                                                            |
+| `hoverStyle`      | object (custom type) | [IHoverStyleType](../types/src/prop-types.ts) | Sets the styling of a bars when they are hovered/focused, _see object definition below_.                                                                                                                                                                                                |
+| `interactionKeys` | string[]             | []                                            | Sets the column names of data to interact with.                                                                                                                                                                                                                                         |
+| `hoverOpacity`    | number               | 1                                             | Sets opacity of inactive elements when hovering/focused on a chart geometry.                                                                                                                                                                                                            |
 
 <br>
 
@@ -278,12 +278,12 @@ const mouseOutHandler = evt => {
 
 ## <a name="label-props" href="#label-props">#</a> Label Props [<>](./src/components/bar-chart/bar-chart.tsx 'Source')
 
-| Name           | Type                 | Default Value(s)                                                                                    | Description                                                                                  |
-| -------------- | -------------------- | --------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| `dataLabel`    | object (custom type) | [IDataLabelType](https://github.com/visa/visa-chart-components/packages/types/src/prop-types.ts)    | Controls visibility, styling and placement of data labels, _see object definition below_.    |
-| `legend`       | object (custom type) | [ILegendType](https://github.com/visa/visa-chart-components/packages/types/src/prop-types.ts)       | Controls visibility and label of the chart legend, _see object definition below_.            |
-| `showTooltip`  | boolean              | true                                                                                                | Toggles whether to display the tooltip on hover/focus on chart geometries.                   |
-| `tooltipLabel` | object (custom type) | [ITooltipLabelType](https://github.com/visa/visa-chart-components/packages/types/src/prop-types.ts) | Controls visibility, content and format of the chart tooltip, _see object definition below_. |
+| Name           | Type                 | Default Value(s)                                | Description                                                                                  |
+| -------------- | -------------------- | ----------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| `dataLabel`    | object (custom type) | [IDataLabelType](../types/src/prop-types.ts)    | Controls visibility, styling and placement of data labels, _see object definition below_.    |
+| `legend`       | object (custom type) | [ILegendType](../types/src/prop-types.ts)       | Controls visibility and label of the chart legend, _see object definition below_.            |
+| `showTooltip`  | boolean              | true                                            | Toggles whether to display the tooltip on hover/focus on chart geometries.                   |
+| `tooltipLabel` | object (custom type) | [ITooltipLabelType](../types/src/prop-types.ts) | Controls visibility, content and format of the chart tooltip, _see object definition below_. |
 
 <br>
 
@@ -323,10 +323,10 @@ const mouseOutHandler = evt => {
 
 ## <a name="margin-and-padding-props" href="#margin-and-padding-props">#</a> Margin & Padding Props [<>](./src/components/bar-chart/bar-chart.tsx 'Source')
 
-| Name      | Type                 | Default Value(s)                                                                                | Description                                                                                                                                     |
-| --------- | -------------------- | ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| `margin`  | object (custom type) | [IBoxModelType](https://github.com/visa/visa-chart-components/packages/types/src/prop-types.ts) | Margin between the subtitle and the chart area, or between the title and chart area if no subtitle is specified, _see object definition below_. |
-| `padding` | object (custom type) | [IBoxModelType](https://github.com/visa/visa-chart-components/packages/types/src/prop-types.ts) | Padding between plot area and axes lines, _see object definition below_.                                                                        |
+| Name      | Type                 | Default Value(s)                            | Description                                                                                                                                     |
+| --------- | -------------------- | ------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| `margin`  | object (custom type) | [IBoxModelType](../types/src/prop-types.ts) | Margin between the subtitle and the chart area, or between the title and chart area if no subtitle is specified, _see object definition below_. |
+| `padding` | object (custom type) | [IBoxModelType](../types/src/prop-types.ts) | Padding between plot area and axes lines, _see object definition below_.                                                                        |
 
 <br>
 
@@ -346,7 +346,7 @@ const mouseOutHandler = evt => {
 
 | Name            | Type     | Default Value(s) | Description                                                                                                                                    |
 | --------------- | -------- | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| `colorPalette`  | string   | 'single_blue'    | Included color palettes can be found in our [color utility](https://github.com/visa/visa-chart-components/packages/utils/src/colors.ts)        |
+| `colorPalette`  | string   | 'single_blue'    | Included color palettes can be found in our [color utility](../utils/src/colors.ts)                                                            |
 | `colors`        | string[] | `undefined`      | Accepts array of color strings or color values to customize colors beyond our palettes. Overridden by groupAccessor, colors assigned in order. |
 | `roundedCorner` | number   | 0                | Sets the border radius of the chart geometries.                                                                                                |
 
@@ -357,10 +357,10 @@ const mouseOutHandler = evt => {
 
 The referenceLines and Style props are currently deprecated and will ultimately be fully replaced with the annotation prop. For the time being, this prop will work, but will also not pass accessibility requirements.
 
-| Name             | Type                 | Default Value(s)                                                                                      | Description                                                                                                                  |
-| ---------------- | -------------------- | ----------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| `referenceLines` | object[]             | []                                                                                                    | Data that sets the location and labeling of the reference line                                                               |
-| `referenceStyle` | object (custom type) | [IReferenceStyleType](https://github.com/visa/visa-chart-components/packages/types/src/prop-types.ts) | Sets the styling of reference line(s) placed on the chart, _see object definition below_. ### IReferenceStyleType Definition |
+| Name             | Type                 | Default Value(s)                                  | Description                                                                                                                  |
+| ---------------- | -------------------- | ------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `referenceLines` | object[]             | []                                                | Data that sets the location and labeling of the reference line                                                               |
+| `referenceStyle` | object (custom type) | [IReferenceStyleType](../types/src/prop-types.ts) | Sets the styling of reference line(s) placed on the chart, _see object definition below_. ### IReferenceStyleType Definition |
 
 | Name          | Type   | Default Value(s) | Description                                                             |
 | ------------- | ------ | ---------------- | ----------------------------------------------------------------------- |

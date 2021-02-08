@@ -8,8 +8,7 @@
   "author": "Visa Data Visualization Team",
   "scripts": {
     "build": "rm -rf dist && tsc",
-    "watch": "tsc -w",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "watch": "tsc -w"
   },
   "repository": {
     "type": "git",
