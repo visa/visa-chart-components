@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2021 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -84,7 +84,7 @@ export class AppBarChart {
   };
   clickStyle: any = {
     color: '#8fdcc7',
-    strokeWidth: 2
+    strokeWidth: 8
   };
   // colors: any = ['#2e3047', '#43455c', '#3c3f58'];
   colors: any = ['#EDEEF3', '#A8AABB', '#6C6E86', '#3c3f58'];
@@ -445,8 +445,9 @@ export class AppBarChart {
 
   changeInteraction() {
     // this.valueAccessor !== 'value' ? (this.valueAccessor = 'value') : (this.valueAccessor = 'otherValue');
-    this.interactionState = this.interactionState[0] !== ['region'] ? ['region'] : ['country'];
-    console.log(this.interactionState);
+    this.interactionState = this.interactionState[0] !== 'region' ? ['region'] : ['country'];
+    const shouldBeInteractive = this.interactionState[0] === 'region';
+    this.legend = { ...this.legend, interactive: shouldBeInteractive };
   }
 
   changeValueAccessor() {
@@ -467,6 +468,12 @@ export class AppBarChart {
   toggleTextures() {
     const newAccess = { ...this.accessibility };
     newAccess.hideTextures = !newAccess.hideTextures;
+    this.accessibility = newAccess;
+  }
+
+  toggleStrokes() {
+    const newAccess = { ...this.accessibility };
+    newAccess.hideStrokes = !newAccess.hideStrokes;
     this.accessibility = newAccess;
   }
 
@@ -543,7 +550,7 @@ export class AppBarChart {
           legend={this.legend}
           cursor={'pointer'}
           barIntervalRatio={this.barIntervalRatio}
-          hoverOpacity={1}
+          hoverOpacity={0}
           interactionKeys={this.interactionState}
           // interactionKeys={['region']}
           hoverHighlight={this.hoverElement}
@@ -551,8 +558,8 @@ export class AppBarChart {
           onClickFunc={d => this.onClickFunc(d)}
           onHoverFunc={d => this.onHoverFunc(d)}
           onMouseOutFunc={() => this.onMouseOut()}
-          // hoverStyle={this.hoverStyle}
-          // clickStyle={this.clickStyle}
+          hoverStyle={this.hoverStyle}
+          clickStyle={this.clickStyle}
           accessibility={this.accessibility}
           uniqueID={this.uniqueID}
           // annotations={this.annotations}
@@ -599,6 +606,13 @@ export class AppBarChart {
           }}
         >
           toggle textures
+        </button>
+        <button
+          onClick={() => {
+            this.toggleStrokes();
+          }}
+        >
+          toggle strokes
         </button>
         <button
           onClick={() => {

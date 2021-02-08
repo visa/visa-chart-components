@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2021 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -64,6 +64,7 @@ const {
   drawAxis,
   drawGrid,
   drawLegend,
+  setLegendInteractionState,
   drawTooltip,
   formatDataLabel,
   getColors,
@@ -148,6 +149,10 @@ export class ScatterPlot {
   @Prop({ mutable: true }) clickHighlight: object[] = ScatterPlotDefaultValues.clickHighlight;
   @Prop({ mutable: true }) interactionKeys: string[];
 
+  // Testing (8/7)
+  @Prop() unitTest: boolean = false;
+  //  @Prop() debugMode: boolean = false;
+
   @Element()
   scatterChartEl: HTMLElement;
   shouldValidateAccessibility: boolean = true;
@@ -215,6 +220,7 @@ export class ScatterPlot {
   shouldUpdateLayout: boolean = false;
   shouldEnterUpdateExit: boolean = false;
   shouldSetGlobalSelections: boolean = false;
+  shouldSetTestingAttributes: boolean = false;
   shouldUpdateGeometries: boolean = false;
   shouldUpdateXAxis: boolean = false;
   shouldUpdateYAxis: boolean = false;
@@ -236,6 +242,8 @@ export class ScatterPlot {
   shouldDrawInteractionState: boolean = false;
   shouldSetDotRadius: boolean = false;
   shouldBindInteractivity: boolean = false;
+  shouldUpdateLegendInteractivity: boolean = false;
+  shouldSetLegendCursor: boolean = false;
   shouldSetLabelOpacity: boolean = false;
   shouldSetPointOpacity: boolean = false;
   // shouldUpdateStrokeWidth: boolean = false;
@@ -272,6 +280,7 @@ export class ScatterPlot {
     this.shouldUpdateData = true;
     this.shouldSetColors = true;
     this.shouldSetGlobalSelections = true;
+    this.shouldSetTestingAttributes = true;
     this.shouldUpdateScales = true;
     this.shouldDrawInteractionState = true;
     this.shouldSetPointOpacity = true;
@@ -519,6 +528,7 @@ export class ScatterPlot {
   @Watch('cursor')
   cursorWatcher(_newVal, _oldVal) {
     this.shouldUpdateCursor = true;
+    this.shouldSetLegendCursor = true;
   }
 
   @Watch('hoverOpacity')
@@ -556,6 +566,12 @@ export class ScatterPlot {
   @Watch('legend')
   legendWatcher(_newVal, _oldVal) {
     this.shouldUpdateLegend = true;
+    const newInteractiveVal = _newVal && _newVal.interactive;
+    const oldInteractiveVal = _oldVal && _oldVal.interactive;
+    if (newInteractiveVal !== oldInteractiveVal) {
+      this.shouldSetLegendCursor = true;
+      this.shouldUpdateLegendInteractivity = true;
+    }
   }
 
   @Watch('suppressEvents')
@@ -563,6 +579,8 @@ export class ScatterPlot {
     this.shouldBindInteractivity = true;
     this.shouldUpdateCursor = true;
     this.shouldUpdateLegend = true;
+    this.shouldSetLegendCursor = true;
+    this.shouldUpdateLegendInteractivity = true;
   }
 
   @Watch('annotations')
@@ -695,6 +713,11 @@ export class ScatterPlot {
     this.shouldSetGeometryAriaLabels = true;
   }
 
+  @Watch('unitTest')
+  unitTestWatcher(_newVal, _oldVal) {
+    this.shouldSetTestingAttributes = true;
+  }
+
   componentWillLoad() {
     // contrary to componentWillUpdate, this method appears safe to use for
     // any calculations we need. Keeping them here reduces future refactor,
@@ -748,6 +771,7 @@ export class ScatterPlot {
       this.drawXGrid();
       this.drawYGrid();
       this.setGlobalSelections();
+      this.setTestingAttributes();
       this.enterPointGroups();
       // this.updatePointGroups();
       this.exitPointGroups();
@@ -766,7 +790,9 @@ export class ScatterPlot {
       this.drawReferenceLines();
       this.setSelectedClass();
       this.updateCursor();
+      this.setLegendCursor();
       this.bindInteractivity();
+      this.bindLegendInteractivity();
       this.drawAnnotations();
       this.setAnnotationAccessibility();
       this.drawXAxis();
@@ -845,6 +871,10 @@ export class ScatterPlot {
         this.setGlobalSelections();
         this.shouldSetGlobalSelections = false;
       }
+      if (this.shouldSetTestingAttributes) {
+        this.setTestingAttributes();
+        this.shouldSetTestingAttributes = false;
+      }
       if (this.shouldUpdateXGrid) {
         this.drawXGrid();
         this.shouldUpdateXGrid = false;
@@ -921,6 +951,14 @@ export class ScatterPlot {
       if (this.shouldUpdateCursor) {
         this.updateCursor();
         this.shouldUpdateCursor = false;
+      }
+      if (this.shouldUpdateLegendInteractivity) {
+        this.bindLegendInteractivity();
+        this.shouldUpdateLegendInteractivity = false;
+      }
+      if (this.shouldSetLegendCursor) {
+        this.setLegendCursor();
+        this.shouldSetLegendCursor = false;
       }
       if (this.shouldBindInteractivity) {
         this.bindInteractivity();
@@ -1238,6 +1276,7 @@ export class ScatterPlot {
       .select('.scatter-legend')
       .append('svg');
     this.tooltipG = select(this.scatterChartEl).select('.scatter-tooltip');
+    this.references = this.rootG.append('g').attr('class', 'scatter-reference-line-group');
   }
 
   setGlobalSelections() {
@@ -1266,6 +1305,76 @@ export class ScatterPlot {
     this.enterLabels = dataBoundToLabels.enter().append('text');
     this.exitLabels = dataBoundToLabels.exit();
     this.updateLabels = dataBoundToLabels.merge(this.enterLabels);
+  }
+
+  setTestingAttributes() {
+    if (this.unitTest) {
+      select(this.scatterChartEl)
+        .select('.visa-viz-d3-scatter-container')
+        .attr('data-testid', 'chart-container');
+      select(this.scatterChartEl)
+        .select('.scatter-main-title')
+        .attr('data-testid', 'main-title');
+      select(this.scatterChartEl)
+        .select('.scatter-sub-title')
+        .attr('data-testid', 'sub-title');
+      this.svg.attr('data-testid', 'root-svg');
+      this.root.attr('data-testid', 'margin-container');
+      this.rootG.attr('data-testid', 'padding-container');
+      this.legendG.attr('data-testid', 'legend-container');
+      this.tooltipG.attr('data-testid', 'tooltip-container');
+      this.gridG.attr('data-testid', 'scatter-grid-group');
+
+      this.fitLine.attr('data-testid', 'scatter-fit-line-group');
+      this.references.attr('data-testid', 'scatter-reference-line-group');
+
+      this.dotG.attr('data-testid', 'marker-group-container');
+      this.updatePointWrappers
+        .attr('data-testid', 'marker-series-group')
+        .attr('data-id', d => `marker-series-${d.key}`);
+      this.updatePoints
+        .attr('data-testid', 'marker')
+        .attr('data-id', d => `marker-${d[this.groupAccessor]}-${d[this.xAccessor]}-${d[this.yAccessor]}`);
+
+      this.labelG.attr('data-testid', 'dataLabel-group-container');
+      this.updatingLabelGroups
+        .attr('data-testid', 'dataLabel-series-group')
+        .attr('data-id', d => `label-series-${d.key}`);
+      this.updateLabels
+        .attr('data-testid', 'dataLabel')
+        .attr('data-id', d => `label-${d[this.groupAccessor]}-${d[this.xAccessor]}-${d[this.yAccessor]}`);
+
+      this.svg.select('defs').attr('data-testid', 'pattern-defs');
+    } else {
+      select(this.scatterChartEl)
+        .select('.visa-viz-d3-scatter-container')
+        .attr('data-testid', null);
+      select(this.scatterChartEl)
+        .select('.scatter-main-title')
+        .attr('data-testid', null);
+      select(this.scatterChartEl)
+        .select('.scatter-sub-title')
+        .attr('data-testid', null);
+      this.svg.attr('data-testid', null);
+      this.root.attr('data-testid', null);
+      this.rootG.attr('data-testid', null);
+      this.legendG.attr('data-testid', null);
+      this.tooltipG.attr('data-testid', null);
+      this.gridG.attr('data-testid', null);
+
+      this.fitLine.attr('data-testid', null);
+      this.references.attr('data-testid', null);
+
+      this.dotG.attr('data-testid', null);
+      this.updatePointWrappers.attr('data-testid', null).attr('data-id', null);
+      this.updatePoints.attr('data-testid', null).attr('data-id', null);
+
+      this.labelG.attr('data-testid', null);
+      this.updatingLabelGroups.attr('data-testid', null).attr('data-id', null);
+      this.updateLabels.attr('data-testid', null).attr('data-id', null);
+
+      this.svg.select('defs').attr('data-testid', null);
+    }
   }
 
   enterPointGroups() {
@@ -1522,7 +1631,7 @@ export class ScatterPlot {
     });
   }
 
-  drawBaselineX() {
+  drawBaselineY() {
     drawAxis({
       root: this.gridG,
       height: this.innerPaddedHeight,
@@ -1531,11 +1640,11 @@ export class ScatterPlot {
       left: true,
       padding: this.padding,
       markOffset: this.x(0) || -1,
-      hide: !this.showBaselineX
+      hide: !this.showBaselineY
     });
   }
 
-  drawBaselineY() {
+  drawBaselineX() {
     drawAxis({
       root: this.gridG,
       height: this.innerPaddedHeight,
@@ -1544,7 +1653,7 @@ export class ScatterPlot {
       left: false,
       padding: this.padding,
       markOffset: this.y(0) || -1,
-      hide: !this.showBaselineY
+      hide: !this.showBaselineX
     });
   }
 
@@ -1570,6 +1679,28 @@ export class ScatterPlot {
       !this.yAxis.gridVisible,
       this.yAxis.tickInterval
     );
+  }
+
+  bindLegendInteractivity() {
+    select(this.scatterChartEl)
+      .selectAll('.legend')
+      .on(
+        'click',
+        this.legend.interactive && !this.suppressEvents ? d => this.onClickHandler(d.values ? d.values[0] : d) : null
+      )
+      .on(
+        'mouseover',
+        this.legend.interactive && !this.suppressEvents
+          ? d => this.onHoverHandler(d.values ? d.values[0] : d, true)
+          : null
+      )
+      .on('mouseout', this.legend.interactive && !this.suppressEvents ? () => this.onMouseOutHandler() : null);
+  }
+
+  setLegendCursor() {
+    select(this.scatterChartEl)
+      .selectAll('.legend')
+      .style('cursor', this.legend.interactive && !this.suppressEvents ? this.cursor : null);
   }
 
   bindInteractivity() {
@@ -1732,6 +1863,18 @@ export class ScatterPlot {
     retainAccessFocus({
       parentGNode: this.rootG.node()
     });
+
+    setLegendInteractionState({
+      root: this.legendG,
+      uniqueID: this.chartID,
+      interactionKeys: this.innerInteractionKeys,
+      groupAccessor: this.groupAccessor,
+      hoverHighlight: this.hoverHighlight,
+      clickHighlight: this.clickHighlight,
+      hoverStyle: this.innerHoverStyle,
+      clickStyle: this.innerClickStyle,
+      hoverOpacity: this.hoverOpacity
+    });
   }
 
   setPointOpacity() {
@@ -1815,10 +1958,6 @@ export class ScatterPlot {
   }
 
   drawReferenceLines() {
-    if (!this.references) {
-      this.references = this.rootG.append('g').attr('class', 'scatter-reference-line-group');
-    }
-
     const currentReferences = this.references.selectAll('g').data(this.referenceLines, d => d.label);
 
     const enterReferences = currentReferences
@@ -2052,6 +2191,7 @@ export class ScatterPlot {
       height: this.margin.top + 20,
       colorArr: this.rawColors,
       baseColorArr: this.colorArr,
+      hideStrokes: this.accessibility.hideStrokes,
       margin: this.margin,
       padding: this.padding,
       duration: this.duration,
@@ -2060,7 +2200,14 @@ export class ScatterPlot {
       data: this.nest,
       label: this.legend.labels,
       symbol: this.dotSymbols,
-      hide: !this.legend.visible || !this.groupAccessor
+      hide: !this.legend.visible || !this.groupAccessor,
+      interactionKeys: this.innerInteractionKeys,
+      groupAccessor: this.groupAccessor,
+      hoverHighlight: this.hoverHighlight,
+      clickHighlight: this.clickHighlight,
+      hoverStyle: this.innerHoverStyle,
+      clickStyle: this.innerClickStyle,
+      hoverOpacity: this.hoverOpacity
     });
   }
 
@@ -2082,10 +2229,10 @@ export class ScatterPlot {
     this.clickFunc.emit(d);
   }
 
-  onHoverHandler(d) {
+  onHoverHandler(d, isLegend?) {
     overrideTitleTooltip(this.chartID, true);
     this.hoverFunc.emit(d);
-    if (this.showTooltip) {
+    if (this.showTooltip && !isLegend) {
       this.eventsTooltip({ data: d, evt: event, isToShow: true });
     }
   }
@@ -2174,8 +2321,8 @@ export class ScatterPlot {
     return (
       <div class="o-layout">
         <div class="o-layout--chart">
-          <this.topLevel data-testid="main-title">{this.mainTitle}</this.topLevel>
-          <this.bottomLevel class="visa-ui-text--instructions" data-testid="sub-title">
+          <this.topLevel class="scatter-main-title vcl-main-title">{this.mainTitle}</this.topLevel>
+          <this.bottomLevel class="visa-ui-text--instructions scatter-sub-title vcl-sub-title">
             {this.subTitle}
           </this.bottomLevel>
           <div class="scatter-legend vcl-legend" style={{ display: this.legend.visible ? 'block' : 'none' }} />
@@ -2189,6 +2336,7 @@ export class ScatterPlot {
             padding={this.padding}
             margin={this.margin}
             hideDataTable={this.accessibility.hideDataTableButton}
+            unitTest={this.unitTest}
           />
         </div>
       </div>
@@ -2216,6 +2364,9 @@ export class ScatterPlot {
       },
       groupAccessor: {
         exception: ''
+      },
+      hoverOpacity: {
+        exception: 0
       }
     };
     for (i = 0; i < keys.length; i++) {

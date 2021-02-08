@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2021 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -163,6 +163,7 @@ export const setGeometryAccessLabel = ({
         if (idOfTarget) {
           const rootNode = document.getElementById('chart-area-' + uniqueID);
           const sameGroupCousinKey = select(rootNode).attr('data-sgck');
+          const groupAccessor = select(rootNode).attr('data-group');
           prepareControllerNodes({
             rootNode,
             nodeID: idOfTarget,
@@ -172,7 +173,7 @@ export const setGeometryAccessLabel = ({
             groupKeys,
             nested,
             groupName,
-            // groupAccessor:null,
+            groupAccessor,
             recursive,
             sameGroupCousinKey,
             deleteControllers: false
@@ -406,7 +407,6 @@ export const setRootSVGAccess = ({
       .attr('focusable', false)
       .attr('tabindex', -1)
       .style('overflow', 'hidden')
-      .attr('data-sgck', sameGroupCousinKey || null)
       .on('focus', () => {
         focusTarget(
           select(parent)
@@ -458,6 +458,8 @@ export const setRootSVGAccess = ({
 
     controller
       .attr('id', 'chart-area-' + uniqueID)
+      .attr('data-sgck', sameGroupCousinKey || null)
+      .attr('data-group', groupAccessor)
       .attr('aria-label', getRootAriaLabel())
       .text(`Interactive ${chartTag}.`)
       .on('keydown', () => {
@@ -927,6 +929,7 @@ const createControllerNode = ({
               groupData += !groupKey ? '' : d[groupKey] + '. ';
             });
           }
+
           const index = Array.prototype.indexOf.call(targetNode.parentNode.childNodes, targetNode) + 1;
           const childrenCount = targetNode.querySelectorAll('*:not(.vcl-accessibility-focus-highlight)').length;
           label =

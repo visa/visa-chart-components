@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2021 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -68,6 +68,7 @@ const {
   drawAxis,
   drawGrid,
   drawLegend,
+  setLegendInteractionState,
   drawTooltip,
   formatDataLabel,
   getColors,
@@ -2332,6 +2333,18 @@ export class ParallelPlot {
     retainAccessFocus({
       parentGNode: this.rootG.node()
     });
+
+    setLegendInteractionState({
+      root: this.legendG,
+      uniqueID: this.chartID,
+      interactionKeys: this.innerInteractionKeys,
+      groupAccessor: this.seriesAccessor,
+      hoverHighlight: this.hoverHighlight,
+      clickHighlight: this.clickHighlight,
+      hoverStyle: this.hoverStyle,
+      clickStyle: this.clickStyle,
+      hoverOpacity: this.hoverOpacity
+    });
   }
 
   setSeriesLabelOpacity() {
@@ -2976,7 +2989,14 @@ export class ParallelPlot {
       fontSize: 16,
       data: this.nest,
       label: this.legend.labels,
-      hide: !(this.legend.visible || !this.legend)
+      hide: !(this.legend.visible || !this.legend),
+      interactionKeys: this.innerInteractionKeys,
+      groupAccessor: this.seriesAccessor,
+      hoverHighlight: this.hoverHighlight,
+      clickHighlight: this.clickHighlight,
+      hoverStyle: this.hoverStyle,
+      clickStyle: this.clickStyle,
+      hoverOpacity: this.hoverOpacity
     });
   }
 

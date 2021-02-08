@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2021 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -9,7 +9,14 @@ import { getTextWidth } from './textHelpers';
 import { formatStats } from './formatStats';
 import { setLegendAccess } from './applyAccessibility';
 import { symbols } from './symbols';
-import { getContrastingStroke, calculateRelativeLuminance, calculateLuminance } from './colors';
+import {
+  getAccessibleStrokes,
+  getContrastingStroke,
+  calculateRelativeLuminance,
+  calculateLuminance,
+  visaColorToHex
+} from './colors';
+import { checkHovered, checkClicked, checkInteraction } from './interaction';
 import { select } from 'd3-selection';
 import { easeCircleIn } from 'd3-ease';
 import 'd3-transition';
@@ -21,6 +28,7 @@ export const drawLegend = ({
   height,
   colorArr,
   baseColorArr,
+  hideStrokes,
   dashPatterns,
   scale,
   steps,
@@ -35,7 +43,14 @@ export const drawLegend = ({
   label,
   symbol,
   format,
-  hide
+  hide,
+  hoverHighlight,
+  clickHighlight,
+  groupAccessor,
+  interactionKeys,
+  hoverStyle,
+  clickStyle,
+  hoverOpacity
 }: {
   root?: any;
   uniqueID?: string;
@@ -43,6 +58,7 @@ export const drawLegend = ({
   height?: any;
   colorArr?: any;
   baseColorArr?: any;
+  hideStrokes?: boolean;
   dashPatterns?: any;
   scale?: any;
   steps?: any;
@@ -58,12 +74,19 @@ export const drawLegend = ({
   symbol?: any;
   format?: any;
   hide?: any;
+  hoverHighlight?: any;
+  clickHighlight?: any;
+  groupAccessor?: string;
+  interactionKeys?: any;
+  hoverStyle?: any;
+  clickStyle?: any;
+  hoverOpacity?: number;
 }) => {
-  const totalWidth = width + padding.left + padding.right - 2;
+  const totalWidth = width + padding.left + padding.right + 5;
   const leftOffset = padding.left + margin.left;
   const legendWidth = steps ? width / steps : 0;
   const legendHeight = 15;
-  height = hide ? 0 : height - 2;
+  height = hide ? 0 : height + 5;
   const opacity = hide ? 0 : 1;
   if (type === 'parallel') {
     type = 'line';
@@ -74,7 +97,7 @@ export const drawLegend = ({
     paddingWrapper = root
       .append('g')
       .attr('class', 'legend-padding-wrapper')
-      .attr('transform', !symbol ? 'translate(1,1)' : 'translate(3,1)');
+      .attr('transform', !symbol ? 'translate(4,4)' : 'translate(7,4)');
   }
 
   switch (type) {
@@ -376,6 +399,12 @@ export const drawLegend = ({
               'stroke-dasharray',
               secondary.includes(d.key) ? '2,2' : dashPatterns && i < dashPatterns.length ? dashPatterns[i] : ''
             )
+            .attr('stroke-width', secondary.includes(d.key) ? strokeWidth - 1 : strokeWidth)
+            .attr('stroke', colorArr[i])
+            .attr(
+              'stroke-dasharray',
+              secondary.includes(d.key) ? '2,2' : dashPatterns && i < dashPatterns.length ? dashPatterns[i] : ''
+            )
             .style('opacity', opacity)
             .transition()
             .duration(duration)
@@ -624,7 +653,7 @@ export const drawLegend = ({
 
       break;
   }
-  if (baseColorArr) {
+  if (baseColorArr && !hideStrokes) {
     const isArray = Array.isArray(baseColorArr);
     root.selectAll('.legend').each((d, i, n) => {
       const baseColor =
@@ -635,16 +664,136 @@ export const drawLegend = ({
           : baseColorArr[i] || baseColorArr(d[labelKey]);
       if (baseColor) {
         const contrast = calculateRelativeLuminance(calculateLuminance(baseColor), 1);
-        select(n[i].firstElementChild).attr('stroke', contrast < 3 ? getContrastingStroke(baseColor) : baseColor);
-        select(n[i].firstElementChild).attr('stroke-width', !symbol ? 1 : 0.25);
+        const contrastFriendlyColor = contrast < 3 ? getContrastingStroke(baseColor) : baseColor;
+        select(n[i].firstElementChild).attr('data-base-color', baseColor);
+        select(n[i].firstElementChild).attr('stroke', contrastFriendlyColor);
+        select(n[i].firstElementChild).attr('stroke-width', 1);
       }
     });
-  } else {
+  } else if (type !== 'line') {
     root
       .selectAll('.legend')
       .selectAll('*')
-      .attr('stroke', null)
-      .attr('stroke-width', null);
+      .attr('stroke', 'none')
+      .attr('stroke-width', 0);
   }
+  root.attr('data-type', type || 'default');
+  root.selectAll('.legend *:first-child').each((_, i, n) => {
+    const me = select(n[i]);
+    if (me.attr('fill')) {
+      me.attr('data-fill', me.attr('fill'));
+    }
+    if (me.attr('stroke')) {
+      me.attr('data-stroke', me.attr('stroke'));
+    }
+    if (me.attr('stroke-width')) {
+      me.attr('data-stroke-width', me.attr('stroke-width'));
+    }
+  });
+  setLegendInteractionState({
+    root,
+    uniqueID,
+    interactionKeys,
+    groupAccessor,
+    hoverHighlight,
+    clickHighlight,
+    hoverStyle,
+    clickStyle,
+    hoverOpacity
+  });
   setLegendAccess(root.node(), uniqueID);
+};
+
+export const setLegendInteractionState = ({
+  root,
+  uniqueID,
+  interactionKeys,
+  groupAccessor,
+  hoverHighlight,
+  clickHighlight,
+  hoverStyle,
+  clickStyle,
+  hoverOpacity
+}: {
+  root?: any;
+  uniqueID?: string;
+  interactionKeys?: any;
+  groupAccessor?: string;
+  hoverHighlight?: any;
+  clickHighlight?: any;
+  hoverStyle?: any;
+  clickStyle?: any;
+  hoverOpacity?: number;
+}) => {
+  const type = root.attr('data-type');
+  if (type !== 'gradient') {
+    root.selectAll('.legend').each((d, i, n) => {
+      const child = select(n[i].firstElementChild);
+      const text = select(n[i]).select('text');
+      const datum = !d.values ? d : d.values[0];
+      const validLegendInteraction =
+        groupAccessor && interactionKeys.length === 1 && interactionKeys[0] === groupAccessor;
+      const hovered = checkHovered(datum, hoverHighlight, interactionKeys) && validLegendInteraction;
+      const clicked = checkClicked(datum, clickHighlight, interactionKeys) && validLegendInteraction;
+      const fill = child.attr('data-fill');
+      const stroke = child.attr('data-stroke');
+      let resultingStroke = '';
+      if (fill) {
+        const clickColor = clickStyle ? visaColorToHex(clickStyle.color) : '';
+        const hoverColor = hoverStyle ? visaColorToHex(hoverStyle.color) : '';
+        const resultingFill = clicked ? clickColor || fill : hovered && hoverColor ? hoverColor : fill;
+        child.attr('fill', resultingFill);
+        child.style('fill', resultingFill);
+        const hasStroke = child.attr('stroke');
+        const baseColor = child.attr('data-base-color');
+        const resultingClick =
+          type !== 'scatter'
+            ? [getContrastingStroke(clickColor || baseColor || fill)]
+            : getAccessibleStrokes(clickColor || baseColor || fill);
+        const resultingHover =
+          type !== 'scatter'
+            ? [getContrastingStroke(hoverColor || baseColor || fill)]
+            : getAccessibleStrokes(hoverColor || baseColor || fill);
+        resultingStroke = clicked
+          ? resultingClick[1] || resultingClick[0]
+          : hovered
+          ? resultingHover[1] || resultingHover[0]
+          : hasStroke
+          ? stroke
+          : getContrastingStroke(fill);
+      } else if (stroke) {
+        const clickColor =
+          clickStyle && clickStyle.color ? getAccessibleStrokes(visaColorToHex(clickStyle.color)) : [stroke];
+        const hoverColor =
+          hoverStyle && hoverStyle.color ? getAccessibleStrokes(visaColorToHex(hoverStyle.color)) : [stroke];
+        resultingStroke = clicked ? clickColor[1] || clickColor[0] : hovered ? hoverColor[1] || hoverColor[0] : stroke;
+      }
+      child.attr('stroke', resultingStroke);
+      child.style('stroke', resultingStroke);
+      const baseStrokeWidth = parseFloat(child.attr('data-stroke-width')) || (stroke === 'none' ? 0 : 1);
+      const strokeWidthDenominator = baseStrokeWidth < 1 ? baseStrokeWidth : 1;
+      const strokeWidthMultiplier = type !== 'line' ? 1 : 2;
+      const scale = type !== 'scatter' ? 1 : 4;
+      child.attr(
+        'stroke-width',
+        (clicked
+          ? clickStyle && clickStyle.strokeWidth && strokeWidthDenominator
+            ? (parseFloat(clickStyle.strokeWidth + '') * strokeWidthMultiplier) / strokeWidthDenominator
+            : baseStrokeWidth
+          : hovered && hoverStyle && hoverStyle.strokeWidth && strokeWidthDenominator
+          ? (parseFloat(hoverStyle.strokeWidth + '') * strokeWidthMultiplier) / strokeWidthDenominator
+          : baseStrokeWidth) / scale
+      );
+      child.style('stroke-width', child.attr('stroke-width'));
+      const disableDash = type === 'scatter' || type === 'line';
+      child.attr(
+        'stroke-dasharray',
+        hovered && !clicked && !disableDash ? '8 6' : type !== 'line' ? 'none' : child.attr('stroke-dasharray')
+      );
+      child.style('stroke-dasharray', child.attr('stroke-dasharray'));
+      const opacity = checkInteraction(d, 1, hoverOpacity, hoverHighlight, clickHighlight || [], interactionKeys);
+      child.attr('opacity', opacity);
+      text.attr('opacity', !opacity ? 0 : 1);
+    });
+  }
 };

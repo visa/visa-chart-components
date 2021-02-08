@@ -17,7 +17,7 @@ import { getBrowser, getOS } from './browser-util';
 
 import { drawGrid } from './grid';
 
-import { drawLegend } from './legend';
+import { drawLegend, setLegendInteractionState } from './legend';
 
 import { getLicenses } from './license';
 
@@ -174,6 +174,7 @@ export {
   wrap,
   drawGrid,
   drawLegend,
+  setLegendInteractionState,
   drawTooltip,
   darkerColor,
   equalizePath,

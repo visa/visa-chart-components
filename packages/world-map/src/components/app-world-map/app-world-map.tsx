@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2021 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -286,8 +286,8 @@ export class AppD3Map {
     opacity: 1,
     strokeWidth: 1
   };
-  @State() interactionKeys: any = ['ID'];
-  @State() colorPalette: any = 'sequential_secBlue';
+  @State() interactionKeys: any = ['Type'];
+  @State() colorPalette: any = 'categorical';
 
   @Element()
   appEl: HTMLElement;
@@ -602,7 +602,7 @@ export class AppD3Map {
             // maxValueOverride={this.propChange}
             colorPalette={this.colorPalette}
             valueAccessor={'Birth Rate'}
-            // groupAccessor={"Type"}
+            groupAccessor={'Type'}
             joinAccessor={'Country Code'}
             joinNameAccessor={'Name'}
             // markerAccessor={'ID'}

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2021 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -318,7 +318,7 @@ export class AppClusteredBarChart {
           hoverOpacity={0.2}
           legend={{ labels: this.legendLabels, visible: true, interactive: true }}
           clickStyle={{ strokeWidth: '2px' }}
-          interactionKeys={['item', 'year']}
+          interactionKeys={['item']}
           hoverHighlight={this.hoverElement}
           clickHighlight={this.clickElement}
           onClickFunc={d => this.onClickFunc(d)}

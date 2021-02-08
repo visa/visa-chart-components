@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2021 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -71,6 +71,7 @@ const {
   drawAxis,
   drawGrid,
   drawLegend,
+  setLegendInteractionState,
   formatDataLabel,
   getColors,
   getLicenses,
@@ -2601,6 +2602,18 @@ export class DumbbellPlot {
     retainAccessFocus({
       parentGNode: this.rootG.node()
     });
+
+    setLegendInteractionState({
+      root: this.legendG,
+      uniqueID: this.chartID,
+      interactionKeys: this.innerInteractionKeys,
+      groupAccessor: this.seriesAccessor,
+      hoverHighlight: this.hoverHighlight,
+      clickHighlight: this.clickHighlight,
+      hoverStyle: this.hoverStyle,
+      clickStyle: this.clickStyle,
+      hoverOpacity: this.hoverOpacity
+    });
   }
 
   enterSeriesLabels() {
@@ -3330,6 +3343,7 @@ export class DumbbellPlot {
       height: this.margin.top + 20,
       colorArr: this.colorArr,
       baseColorArr: !this.accessibility.hideStrokes ? this.rawColors : null,
+      hideStrokes: this.accessibility.hideStrokes,
       margin: this.margin,
       padding: this.padding,
       duration: this.duration,
@@ -3337,7 +3351,14 @@ export class DumbbellPlot {
       fontSize: 16,
       data: this.legendData,
       label: this.legend.labels || this.ordinalLabel,
-      hide: !this.legend.visible
+      hide: !this.legend.visible,
+      interactionKeys: this.innerInteractionKeys,
+      groupAccessor: this.seriesAccessor,
+      hoverHighlight: this.hoverHighlight,
+      clickHighlight: this.clickHighlight,
+      hoverStyle: this.hoverStyle,
+      clickStyle: this.clickStyle,
+      hoverOpacity: this.hoverOpacity
     });
   }
 

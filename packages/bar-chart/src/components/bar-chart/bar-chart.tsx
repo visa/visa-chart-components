@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2021 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -70,6 +70,7 @@ const {
   drawAxis,
   drawGrid,
   drawLegend,
+  setLegendInteractionState,
   drawTooltip,
   formatDataLabel,
   getColors,
@@ -1798,6 +1799,17 @@ export class BarChart {
     retainAccessFocus({
       parentGNode: this.rootG.node()
     });
+    setLegendInteractionState({
+      root: this.legendG,
+      uniqueID: this.chartID,
+      interactionKeys: this.innerInteractionKeys,
+      groupAccessor: this.groupAccessor,
+      hoverHighlight: this.hoverHighlight,
+      clickHighlight: this.clickHighlight,
+      hoverStyle: this.innerHoverStyle,
+      clickStyle: this.innerClickStyle,
+      hoverOpacity: this.hoverOpacity
+    });
   }
 
   setLabelOpacity() {
@@ -2143,6 +2155,7 @@ export class BarChart {
       height: this.margin.top + 20,
       colorArr: this.colorArr,
       baseColorArr: this.preparedColors,
+      hideStrokes: this.accessibility.hideStrokes,
       margin: this.margin,
       padding: this.padding,
       duration: this.duration,
@@ -2152,7 +2165,14 @@ export class BarChart {
       labelKey: this.groupAccessor,
       label: this.legend.labels,
       format: this.legend.format,
-      hide: !this.legend.visible || !this.groupAccessor // only allow legend when there is groupAccessor
+      hide: !this.legend.visible || !this.groupAccessor, // only allow legend when there is groupAccessor
+      interactionKeys: this.innerInteractionKeys,
+      groupAccessor: this.groupAccessor,
+      hoverHighlight: this.hoverHighlight,
+      clickHighlight: this.clickHighlight,
+      hoverStyle: this.innerHoverStyle,
+      clickStyle: this.innerClickStyle,
+      hoverOpacity: this.hoverOpacity
     });
   }
 
@@ -2475,6 +2495,9 @@ export class BarChart {
       },
       wrapLabel: {
         exception: false
+      },
+      hoverOpacity: {
+        exception: 0
       }
     };
     for (i = 0; i < keys.length; i++) {
