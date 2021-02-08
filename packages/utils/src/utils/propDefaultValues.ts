@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2021 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -78,12 +78,12 @@ export const clickStyle = {
 };
 
 export const symbolHoverStyle = {
-  color: '#8CD6C2',
+  color: '',
   strokeWidth: 2
 };
 
 export const symbolClickStyle = {
-  color: '#222222',
+  color: '',
   strokeWidth: 3
 };
 

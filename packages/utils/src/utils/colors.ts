@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2021 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -333,7 +333,7 @@ export function getColors(colorPalette, dataRange) {
  *
  * @param {string}   fillColor           Any valid HTML string may be passed for color: 'red', '#ffffff', 'rgb(12,200,15)', even 'hsl(0,60%,50%)'. Alpha values will be ignored (for accessibility purposes, web authors are strongly encouraged to avoid using opacity or alpha channels in styling).
  *
- * @return {string[]} Returns an array containing color hex values as strings. The first array position is always white (#ffffff) and for use as an outer stroke. The second array position is used as an inner stroke and may be empty if fillColor has enough contrast against white already.
+ * @return {string[]} Returns an array containing color hex values as strings. The first array position is always contrasted against the fill color. The second array position is sometimes empty but if it has a value it will always be the original color. The second value only populates if the original color has more than 3:1 contrast against white.
  */
 export function getAccessibleStrokes(fillColor: string) {
   const strokes = [];

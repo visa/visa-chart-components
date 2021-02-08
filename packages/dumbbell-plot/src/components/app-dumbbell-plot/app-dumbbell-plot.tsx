@@ -6,7 +6,7 @@
  *
  **/
 import { Component, State, Event, EventEmitter, Element, h } from '@stencil/core';
-// import '@visa/visa-charts-data-table'; // this throws a build warning/error
+import '@visa/visa-charts-data-table';
 
 @Component({
   tag: 'app-dumbbell-plot',

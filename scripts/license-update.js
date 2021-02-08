@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2021 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -8,7 +8,7 @@
 const path = require('path');
 const glob = require('glob');
 const fs = require('fs');
-const git = require('simple-git');
+const git = require('simple-git/promise');
 
 const ossFirstCommitDate = '2020-12-10'; // the week of initial release of OSS on GH
 const parentLicenseFile = glob.sync(path.join(__dirname, '..') + '/LICENSE', {});
