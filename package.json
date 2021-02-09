@@ -1,5 +1,6 @@
 {
   "name": "@visa/charts",
+  "description": "Visa Chart Components (VCC) is an accessibility focused, framework agnostic set of data experience design systems components for the web. VCC attempts to provide a toolset to enable developers to build equal data experiences for everyone, everywhere.",
   "author": "Visa Data Visualization Team",
   "license": "SEE LICENCE IN LICENSE",
   "scripts": {

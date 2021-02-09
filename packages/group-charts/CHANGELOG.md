@@ -5,4 +5,4 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [3.1.8](https://github.com/visa/visa-chart-components/tree/%40visa/group-charts%403.1.8) (2020-12-22)
 
-- initial commit ([669a512](https://github.com/visa/visa-chart-components/commit/669a512b10d8681ae1c9a2accb0a4943c609d231))
+- initial commit ([2383586](https://github.com/visa/visa-chart-components/commit/238358698bb59b8f20f424eeedc7235f51e02037))
