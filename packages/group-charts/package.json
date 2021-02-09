@@ -1,6 +1,6 @@
 {
   "name": "@visa/group-charts",
-  "version": "3.1.8",
+  "version": "3.1.9",
   "description": "group-charts component",
   "license": "SEE LICENCE IN LICENSE",
   "module": "dist/index.mjs",
@@ -31,19 +31,19 @@
     "registry": "https://registry.npmjs.org/"
   },
   "dependencies": {
-    "@visa/bar-chart": "^4.0.2",
-    "@visa/circle-packing": "^5.0.2",
-    "@visa/clustered-force-layout": "^4.0.2",
-    "@visa/pie-chart": "^4.0.2",
-    "@visa/scatter-plot": "^5.0.1",
-    "@visa/visa-charts-data-table": "^2.0.2",
-    "@visa/visa-charts-utils": "^4.1.1",
-    "@visa/world-map": "^4.0.2",
+    "@visa/bar-chart": "^4.1.0",
+    "@visa/circle-packing": "^5.0.3",
+    "@visa/clustered-force-layout": "^4.0.3",
+    "@visa/pie-chart": "^4.0.3",
+    "@visa/scatter-plot": "^5.1.0",
+    "@visa/visa-charts-data-table": "^2.0.3",
+    "@visa/visa-charts-utils": "^4.2.0",
+    "@visa/world-map": "^4.1.0",
     "d3-selection": "^1.4.0",
     "d3-transition": "1.1.3"
   },
   "devDependencies": {
-    "@visa/visa-charts-utils-dev": "^3.3.2"
+    "@visa/visa-charts-utils-dev": "^3.3.3"
   },
   "jest": {
     "transform": {
