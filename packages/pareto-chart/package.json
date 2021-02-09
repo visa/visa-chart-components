@@ -1,6 +1,6 @@
 {
   "name": "@visa/pareto-chart",
-  "version": "4.0.2",
+  "version": "4.0.3",
   "description": "pareto-chart component",
   "license": "SEE LICENCE IN LICENSE",
   "module": "dist/index.mjs",
@@ -31,8 +31,8 @@
     "registry": "https://registry.npmjs.org/"
   },
   "dependencies": {
-    "@visa/charts-types": "^0.2.1",
-    "@visa/visa-charts-utils": "^4.1.1",
+    "@visa/charts-types": "^0.2.2",
+    "@visa/visa-charts-utils": "^4.2.0",
     "d3-array": "^1.2.4",
     "d3-scale": "^2.2.2",
     "d3-selection": "^1.4.0",
@@ -41,7 +41,7 @@
     "uuid": "7.0.0"
   },
   "devDependencies": {
-    "@visa/visa-charts-utils-dev": "^3.3.2"
+    "@visa/visa-charts-utils-dev": "^3.3.3"
   },
   "jest": {
     "transform": {

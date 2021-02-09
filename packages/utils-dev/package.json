@@ -1,6 +1,6 @@
 {
   "name": "@visa/visa-charts-utils-dev",
-  "version": "3.3.2",
+  "version": "3.3.3",
   "description": "Utilities for development of the charts lib",
   "main": "dist/visa-charts-utils-dev.cjs.js",
   "module": "dist/visa-charts-utils-dev.esm.js",
@@ -21,8 +21,8 @@
     "registry": "https://registry.npmjs.org/"
   },
   "dependencies": {
-    "@visa/charts-types": "^0.2.1",
-    "@visa/visa-charts-utils": "^4.1.1",
+    "@visa/charts-types": "^0.2.2",
+    "@visa/visa-charts-utils": "^4.2.0",
     "ally.js": "^1.4.1",
     "d3": "^4.13.0",
     "d3-axis": "^1.0.12",
