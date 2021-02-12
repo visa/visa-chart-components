@@ -31,7 +31,8 @@
     "directory": "/packages/bar-chart"
   },
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
   },
   "dependencies": {
     "@visa/charts-types": "^0.2.2",
