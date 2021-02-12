@@ -6,7 +6,7 @@
     "version": {
       "message": "chore(release): publish",
       "ignoreChanges": ["*.md", "*.txt"],
-      "allowBranch": ["master", "development", "feature/accessibility-textures"]
+      "allowBranch": ["master", "development", "feature/accessibility-textures", "chore/public-publish-config"]
     },
     "publish": {
       "conventionalCommits": true
