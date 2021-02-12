@@ -9,9 +9,10 @@
     "directory": "/packages/charts-angular"
   },
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
   },
-  "author": "Visa Data Visualization Team",
+  "author": "Visa Data Experience Team",
   "scripts": {
     "build": "npm run build.ng",
     "build.fesm": "rollup --config ./scripts/rollup.config.js",

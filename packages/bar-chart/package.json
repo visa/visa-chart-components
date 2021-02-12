@@ -14,7 +14,7 @@
   "files": [
     "dist/"
   ],
-  "author": "Visa Data Visualization Team",
+  "author": "Visa Data Experience Team",
   "scripts": {
     "build": "stencil build",
     "start-dev": "stencil build --dev --watch --serve",

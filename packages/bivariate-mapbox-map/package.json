@@ -14,7 +14,7 @@
   "files": [
     "dist/"
   ],
-  "author": "Visa Data Visualization Team",
+  "author": "Visa Data Experience Team",
   "scripts": {
     "build": "stencil build",
     "start-dev": "stencil build --dev --watch --serve",
@@ -28,7 +28,8 @@
     "directory": "/packages/bivariate-mapbox-map"
   },
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
   },
   "dependencies": {
     "@mapbox/mapbox-gl-draw": "^1.1.2",
