@@ -5,7 +5,7 @@
   "license": "SEE LICENCE IN LICENSE",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "author": "Visa Data Visualization Team",
+  "author": "Visa Data Experience Team",
   "scripts": {
     "build": "rm -rf dist && tsc",
     "watch": "tsc -w"
@@ -16,7 +16,8 @@
     "directory": "/packages/types"
   },
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
   },
   "devDependencies": {
     "typescript": "^3.1.6"

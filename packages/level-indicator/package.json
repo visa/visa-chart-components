@@ -14,7 +14,7 @@
   "files": [
     "dist/"
   ],
-  "author": "Visa Data Visualization Team",
+  "author": "Visa Data Experience Team",
   "scripts": {
     "build": "stencil build",
     "start-dev": "stencil build --dev --watch --serve",
@@ -28,7 +28,8 @@
     "directory": "/packages/level-indicator"
   },
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
   },
   "dependencies": {
     "@visa/charts-types": "^0.2.2",
