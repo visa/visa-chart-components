@@ -6,7 +6,7 @@
   "module": "dist/visa-charts-utils-dev.esm.js",
   "browser": "dist/visa-charts-utils-dev.umd.js",
   "license": "SEE LICENCE IN LICENSE",
-  "author": "Visa Data Visualization Team",
+  "author": "Visa Data Experience Team",
   "scripts": {
     "prepare": "npm run build",
     "build": "rollup -c",
@@ -18,7 +18,8 @@
     "directory": "/packages/utils-dev"
   },
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
   },
   "dependencies": {
     "@visa/charts-types": "^0.2.2",

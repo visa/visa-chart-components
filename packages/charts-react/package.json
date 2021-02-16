@@ -20,9 +20,10 @@
     "directory": "/packages/charts-react"
   },
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
   },
-  "author": "Visa Data Visualization Team",
+  "author": "Visa Data Experience Team",
   "scripts": {
     "build": "npm run clean && npm run compile",
     "clean": "rm -rf dist",
