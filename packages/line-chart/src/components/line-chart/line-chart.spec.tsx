@@ -6,8 +6,8 @@
  *
  **/
 import { newSpecPage, SpecPage } from '@stencil/core/testing';
-import { ParallelPlot } from './parallel-plot';
-import { ParallelPlotDefaultValues } from './parallel-plot-default-values';
+import { LineChart } from './line-chart';
+import { LineChartDefaultValues } from './line-chart-default-values';
 import { scaleOrdinal, scaleLinear } from 'd3-scale';
 
 import Utils from '@visa/visa-charts-utils';
@@ -25,12 +25,12 @@ const {
   unitTestTooltip
 } = UtilsDev;
 
-describe('<parallel-plot>', () => {
+describe('<line-chart>', () => {
   // TECH DEBT: Need to revisit class-logic-testing post PURE function refactor.
   // Class-logic-testing is TDD and BDD friendly.
   describe('class-logic', () => {
     it('should build', () => {
-      expect(new ParallelPlot()).toBeTruthy();
+      expect(new LineChart()).toBeTruthy();
     });
   });
 
@@ -40,50 +40,92 @@ describe('<parallel-plot>', () => {
 
     // START:minimal props need to be passed to component
     const EXPECTEDDATA = [
-      { region: 'North-America', category: 'Card-A', value: 9628909842 },
-      { region: 'North-America', category: 'Card-B', value: 9709829820 },
-      { region: 'North-America', category: 'Card-C', value: 3778636197 },
-      { region: 'Asia', category: 'Card-A', value: 7670994739 },
-      { region: 'Asia', category: 'Card-B', value: 8872849978 },
-      { region: 'Asia', category: 'Card-C', value: 4484192554 },
-      { region: 'South-America', category: 'Card-A', value: 8358837379 },
-      { region: 'South-America', category: 'Card-B', value: 6570994739 },
-      { region: 'South-America', category: 'Card-C', value: 3811163096 },
-      { region: 'Europe', category: 'Card-A', value: 7334842966 },
-      { region: 'Europe', category: 'Card-B', value: 4628909842 },
-      { region: 'Europe', category: 'Card-C', value: 3462148898 },
-      { region: 'Africa', category: 'Card-A', value: 6588600035 },
-      { region: 'Africa', category: 'Card-B', value: 4358837379 },
-      { region: 'Africa', category: 'Card-C', value: 6051933407 }
+      { date: '2016-01', category: 'Card-A', value: 7670994739 },
+      { date: '2016-02', category: 'Card-A', value: 7628909842 },
+      { date: '2016-03', category: 'Card-A', value: 8358837379 },
+      { date: '2016-04', category: 'Card-A', value: 8334842966 },
+      { date: '2016-05', category: 'Card-A', value: 8588600035 },
+      { date: '2016-06', category: 'Card-A', value: 8484192554 },
+      { date: '2016-07', category: 'Card-A', value: 8778636197 },
+      { date: '2016-08', category: 'Card-A', value: 8811163096 },
+      { date: '2016-09', category: 'Card-A', value: 8462148898 },
+      { date: '2016-10', category: 'Card-A', value: 9051933407 },
+      { date: '2016-11', category: 'Card-A', value: 8872849978 },
+      { date: '2016-12', category: 'Card-A', value: 9709829820 },
+      { date: '2016-01', category: 'Card-B', value: 6570994739 },
+      { date: '2016-02', category: 'Card-B', value: 4628909842 },
+      { date: '2016-03', category: 'Card-B', value: 4358837379 },
+      { date: '2016-04', category: 'Card-B', value: 5534842966 },
+      { date: '2016-05', category: 'Card-B', value: 4388600035 },
+      { date: '2016-06', category: 'Card-B', value: 3484192554 },
+      { date: '2016-07', category: 'Card-B', value: 3578636197 },
+      { date: '2016-08', category: 'Card-B', value: 6411163096 },
+      { date: '2016-09', category: 'Card-B', value: 5262148898 },
+      { date: '2016-10', category: 'Card-B', value: 4651933407 },
+      { date: '2016-11', category: 'Card-B', value: 6772849978 },
+      { date: '2016-12', category: 'Card-B', value: 5609829820 }
     ];
 
-    const EXPECTEDSERIESACCESSOR = 'region';
-    const EXPECTEDORDINALACCESSOR = 'category';
+    const moreCategoryData = [
+      { date: '2016-01', category: 'Card-A', value: 7670994739 },
+      { date: '2016-02', category: 'Card-A', value: 7628909842 },
+      { date: '2016-03', category: 'Card-A', value: 8358837379 },
+      { date: '2016-04', category: 'Card-A', value: 8334842966 },
+      { date: '2016-05', category: 'Card-A', value: 8588600035 },
+      { date: '2016-06', category: 'Card-A', value: 8484192554 },
+      { date: '2016-01', category: 'Card-B', value: 8778636197 },
+      { date: '2016-02', category: 'Card-B', value: 8811163096 },
+      { date: '2016-03', category: 'Card-B', value: 8462148898 },
+      { date: '2016-04', category: 'Card-B', value: 9051933407 },
+      { date: '2016-05', category: 'Card-B', value: 8872849978 },
+      { date: '2016-06', category: 'Card-B', value: 9709829820 },
+      { date: '2016-01', category: 'Card-C', value: 6570994739 },
+      { date: '2016-02', category: 'Card-C', value: 4628909842 },
+      { date: '2016-03', category: 'Card-C', value: 4358837379 },
+      { date: '2016-04', category: 'Card-C', value: 5534842966 },
+      { date: '2016-05', category: 'Card-C', value: 4388600035 },
+      { date: '2016-06', category: 'Card-C', value: 3484192554 },
+      { date: '2016-01', category: 'Card-D', value: 3578636197 },
+      { date: '2016-02', category: 'Card-D', value: 6411163096 },
+      { date: '2016-03', category: 'Card-D', value: 5262148898 },
+      { date: '2016-04', category: 'Card-D', value: 4651933407 },
+      { date: '2016-05', category: 'Card-D', value: 6772849978 },
+      { date: '2016-06', category: 'Card-D', value: 5609829820 },
+      { date: '2016-01', category: 'Card-E', value: 4570994739 },
+      { date: '2016-02', category: 'Card-E', value: 5628909842 },
+      { date: '2016-03', category: 'Card-E', value: 3358837379 },
+      { date: '2016-04', category: 'Card-E', value: 2534842966 },
+      { date: '2016-05', category: 'Card-E', value: 6388600035 },
+      { date: '2016-06', category: 'Card-E', value: 5484192554 }
+    ];
+
+    const EXPECTEDSERIESACCESSOR = 'category';
+    const EXPECTEDORDINALACCESSOR = 'date';
     const EXPECTEDVALUEACCESSOR = 'value';
-    const MINVALUE = 3462148898;
+    const MINVALUE = 3484192554;
     const MAXVALUE = 9709829820;
     // END:minimal props need to be passed to component
 
     // disable accessibility validation to keep output stream(terminal) clean
-    const EXPECTEDACCESSIBILITY = { ...ParallelPlotDefaultValues.accessibility, disableValidation: true };
+    const EXPECTEDACCESSIBILITY = { ...LineChartDefaultValues.accessibility, disableValidation: true };
 
     beforeEach(async () => {
       page = await newSpecPage({
-        components: [ParallelPlot],
+        components: [LineChart],
         html: '<div></div>'
       });
-      component = page.doc.createElement('parallel-plot');
+      component = page.doc.createElement('line-chart');
       component.data = [...EXPECTEDDATA];
       component.seriesAccessor = EXPECTEDSERIESACCESSOR;
       component.ordinalAccessor = EXPECTEDORDINALACCESSOR;
       component.valueAccessor = EXPECTEDVALUEACCESSOR;
       component.accessibility = EXPECTEDACCESSIBILITY;
-      component.uniqueID = 'parallel-plot-unit-test';
+      component.uniqueID = 'line-chart-unit-test';
       component.unitTest = true;
     });
 
     it('should build', () => {
-      expect(new ParallelPlot()).toBeTruthy();
+      expect(new LineChart()).toBeTruthy();
     });
 
     describe('render', () => {
@@ -110,13 +152,13 @@ describe('<parallel-plot>', () => {
     describe('generic test suite', () => {
       Object.keys(unitTestGeneric).forEach(test => {
         const innerTestProps = unitTestGeneric[test].testDefault
-          ? { [unitTestGeneric[test].prop]: ParallelPlotDefaultValues[unitTestGeneric[test].prop] }
+          ? { [unitTestGeneric[test].prop]: LineChartDefaultValues[unitTestGeneric[test].prop] }
           : unitTestGeneric[test].prop === 'data'
           ? { data: EXPECTEDDATA }
           : unitTestGeneric[test].testProps;
         const innerTestSelector =
           unitTestGeneric[test].testSelector === 'component-name'
-            ? 'parallel-plot'
+            ? 'line-chart'
             : unitTestGeneric[test].testSelector === '[data-testid=mark]'
             ? '[data-testid=marker]'
             : unitTestGeneric[test].testSelector;
@@ -131,8 +173,7 @@ describe('<parallel-plot>', () => {
           it(`${unitTestGeneric[test].prop}: ${unitTestGeneric[test].name}`, () =>
             unitTestGeneric[test].testFunc(component, page, innerTestProps, innerTestSelector));
         } else if (unitTestGeneric[test].prop === 'data') {
-          // this is failing on update test and breaking other tests
-          it.skip(`${unitTestGeneric[test].prop}: ${unitTestGeneric[test].name}`, () =>
+          it(`${unitTestGeneric[test].prop}: ${unitTestGeneric[test].name}`, () =>
             unitTestGeneric[test].testFunc(component, page, innerTestProps, innerTestSelector));
         } else {
           it(`${unitTestGeneric[test].prop}: ${unitTestGeneric[test].name}`, () =>
@@ -146,84 +187,98 @@ describe('<parallel-plot>', () => {
         const accessibilityTestMarks = {
           accessibility_keyboard_nav_right_arrow: {
             name: 'keyboard nav: sibling - right arrow goes to next',
-            testSelector: '[data-testid=marker][data-id=marker-North-America-Card-A]',
-            nextTestSelector: '[data-testid=marker][data-id=marker-North-America-Card-B]',
+            testSelector: '[data-testid=marker][data-id=marker-Card-A-2016-01]',
+            nextTestSelector: '[data-testid=marker][data-id=marker-Card-A-2016-02]',
             keyDownObject: { key: 'ArrowRight', code: 'ArrowRight', keyCode: 39 },
             testProps: {
-              selectorAriaLabel: 'region North-America. category Card-A. value 9.6b. Point 1 of 3.',
-              nextSelectorAriaLabel: 'region North-America. category Card-B. value 9.7b. Point 2 of 3.',
+              selectorAriaLabel: 'category Card-A. date 2016-01. value 7.7b. Point 1 of 12.',
+              nextSelectorAriaLabel: 'category Card-A. date 2016-02. value 7.6b. Point 2 of 12.',
               accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true }
             }
           },
           accessibility_keyboard_nav_right_arrow_loop: {
             name: 'keyboard nav: sibling - right arrow goes to first from last',
-            testSelector: '[data-testid=marker][data-id=marker-North-America-Card-C]',
-            nextTestSelector: '[data-testid=marker][data-id=marker-North-America-Card-A]',
+            testSelector: '[data-testid=marker][data-id=marker-Card-A-2016-12]',
+            nextTestSelector: '[data-testid=marker][data-id=marker-Card-A-2016-01]',
             keyDownObject: { key: 'ArrowRight', code: 'ArrowRight', keyCode: 39 },
             testProps: {
-              selectorAriaLabel: 'North-America. Card-C. 3.8b. Point 3 of 3.',
-              nextSelectorAriaLabel: 'North-America. Card-A. 9.6b. Point 1 of 3.'
+              selectorAriaLabel: 'Card-A. 2016-12. 9.7b. Point 12 of 12.',
+              nextSelectorAriaLabel: 'Card-A. 2016-01. 7.7b. Point 1 of 12.'
             }
           },
           accessibility_keyboard_nav_left_arrow_sibling: {
             name: 'keyboard nav: sibling - left arrow goes to next',
-            testSelector: '[data-testid=marker][data-id=marker-North-America-Card-B]',
-            nextTestSelector: '[data-testid=marker][data-id=marker-North-America-Card-A]',
+            testSelector: '[data-testid=marker][data-id=marker-Card-A-2016-02]',
+            nextTestSelector: '[data-testid=marker][data-id=marker-Card-A-2016-01]',
             keyDownObject: { key: 'ArrowLeft', code: 'ArrowLeft', keyCode: 37 },
             testProps: {
-              selectorAriaLabel: 'region North-America. category Card-B. value 9.7b. Point 2 of 3.',
-              nextSelectorAriaLabel: 'region North-America. category Card-A. value 9.6b. Point 1 of 3.',
+              selectorAriaLabel: 'category Card-A. date 2016-02. value 7.6b. Point 2 of 12.',
+              nextSelectorAriaLabel: 'category Card-A. date 2016-01. value 7.7b. Point 1 of 12.',
               accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true }
             }
           },
           accessibility_keyboard_nav_left_arrow_loop: {
             name: 'keyboard nav: sibling - left arrow loops to last from first',
-            testSelector: '[data-testid=marker][data-id=marker-North-America-Card-A]',
-            nextTestSelector: '[data-testid=marker][data-id=marker-North-America-Card-C]',
+            testSelector: '[data-testid=marker][data-id=marker-Card-A-2016-01]',
+            nextTestSelector: '[data-testid=marker][data-id=marker-Card-A-2016-12]',
             keyDownObject: { key: 'ArrowLeft', code: 'ArrowLeft', keyCode: 37 },
             testProps: {
-              selectorAriaLabel: 'North-America. Card-A. 9.6b. Point 1 of 3.',
-              nextSelectorAriaLabel: 'North-America. Card-C. 3.8b. Point 3 of 3.'
+              selectorAriaLabel: 'Card-A. 2016-01. 7.7b. Point 1 of 12.',
+              nextSelectorAriaLabel: 'Card-A. 2016-12. 9.7b. Point 12 of 12.'
+            }
+          },
+          accessibility_keyboard_nav_up_arrow_cousin: {
+            name: 'keyboard nav: cousin - up arrow goes to next',
+            testSelector: '[data-testid=marker][data-id=marker-Card-B-2016-01]',
+            nextTestSelector: '[data-testid=marker][data-id=marker-Card-A-2016-01]',
+            keyDownObject: { key: 'ArrowUp', code: 'ArrowUp', keyCode: 38 },
+            testProps: {
+              selectorAriaLabel: 'Card-B. 2016-01. 8.8b. Point 1 of 6.',
+              nextSelectorAriaLabel: 'Card-A. 2016-01. 7.7b. Point 1 of 6.',
+              data: moreCategoryData
             }
           },
           accessibility_keyboard_nav_up_arrow_cousin_loop: {
             name: 'keyboard nav: cousin - up arrow loops to last',
-            testSelector: '[data-testid=marker][data-id=marker-North-America-Card-A]',
-            nextTestSelector: '[data-testid=marker][data-id=marker-Africa-Card-A]',
+            testSelector: '[data-testid=marker][data-id=marker-Card-A-2016-01]',
+            nextTestSelector: '[data-testid=marker][data-id=marker-Card-E-2016-01]',
             keyDownObject: { key: 'ArrowUp', code: 'ArrowUp', keyCode: 38 },
             testProps: {
-              selectorAriaLabel: 'North-America. Card-A. 9.6b. Point 1 of 3.',
-              nextSelectorAriaLabel: 'Africa. Card-A. 6.6b. Point 1 of 3.'
+              selectorAriaLabel: 'Card-A. 2016-01. 7.7b. Point 1 of 6.',
+              nextSelectorAriaLabel: 'Card-E. 2016-01. 4.6b. Point 1 of 6.',
+              data: moreCategoryData
             }
           },
           accessibility_keyboard_nav_down_arrow_cousin: {
             name: 'keyboard nav: cousin - down arrow goes to next',
-            testSelector: '[data-testid=marker][data-id=marker-North-America-Card-A]',
-            nextTestSelector: '[data-testid=marker][data-id=marker-Asia-Card-A]',
+            testSelector: '[data-testid=marker][data-id=marker-Card-A-2016-01]',
+            nextTestSelector: '[data-testid=marker][data-id=marker-Card-B-2016-01]',
             keyDownObject: { key: 'ArrowDown', code: 'ArrowDown', keyCode: 40 },
             testProps: {
-              selectorAriaLabel: 'North-America. Card-A. 9.6b. Point 1 of 3.',
-              nextSelectorAriaLabel: 'Asia. Card-A. 7.7b. Point 1 of 3.'
+              selectorAriaLabel: 'Card-A. 2016-01. 7.7b. Point 1 of 6.',
+              nextSelectorAriaLabel: 'Card-B. 2016-01. 8.8b. Point 1 of 6.',
+              data: moreCategoryData
             }
           },
           accessibility_keyboard_nav_down_arrow_cousin_loop: {
             name: 'keyboard nav: cousin - down arrow loops to first',
-            testSelector: '[data-testid=marker][data-id=marker-Africa-Card-A]',
-            nextTestSelector: '[data-testid=marker][data-id=marker-North-America-Card-A]',
+            testSelector: '[data-testid=marker][data-id=marker-Card-E-2016-01]',
+            nextTestSelector: '[data-testid=marker][data-id=marker-Card-A-2016-01]',
             keyDownObject: { key: 'ArrowDown', code: 'ArrowDown', keyCode: 40 },
             testProps: {
-              selectorAriaLabel: 'Africa. Card-A. 6.6b. Point 1 of 3.',
-              nextSelectorAriaLabel: 'North-America. Card-A. 9.6b. Point 1 of 3.'
+              selectorAriaLabel: 'Card-E. 2016-01. 4.6b. Point 1 of 6.',
+              nextSelectorAriaLabel: 'Card-A. 2016-01. 7.7b. Point 1 of 6.',
+              data: moreCategoryData
             }
           },
           accessibility_keyboard_nav_esc_to_group: {
             name: 'keyboard nav: group - escape will move up to group',
-            testSelector: '[data-testid=marker][data-id=marker-North-America-Card-A]',
-            nextTestSelector: '[data-testid=marker-series-group][data-id=marker-series-North-America]',
+            testSelector: '[data-testid=marker][data-id=marker-Card-A-2016-01]',
+            nextTestSelector: '[data-testid=marker-series-group][data-id=marker-series-Card-A]',
             keyDownObject: { key: 'Escape', code: 'Escape', keyCode: 27 },
             testProps: {
-              selectorAriaLabel: 'North-America. Card-A. 9.6b. Point 1 of 3.',
-              nextSelectorAriaLabel: 'North-America. Line 1 of 5 which contains 3 interactive points.'
+              selectorAriaLabel: 'Card-A. 2016-01. 7.7b. Point 1 of 12.',
+              nextSelectorAriaLabel: 'Card-A. Line 1 of 2 which contains 12 interactive points.'
             }
           }
           // the tests below here do not work because the selection of a group (g) kicks
@@ -285,7 +340,7 @@ describe('<parallel-plot>', () => {
         };
         Object.keys(unitTestAccessibility).forEach(test => {
           const tempTestProps = unitTestAccessibility[test].testDefault
-            ? { [unitTestAccessibility[test].prop]: ParallelPlotDefaultValues[unitTestAccessibility[test].prop] }
+            ? { [unitTestAccessibility[test].prop]: LineChartDefaultValues[unitTestAccessibility[test].prop] }
             : unitTestAccessibility[test].testProps;
           const innerTestProps = {
             ...tempTestProps,
@@ -301,19 +356,20 @@ describe('<parallel-plot>', () => {
                 ? [
                     {
                       note: {
-                        title: 'Analysis:',
-                        label: 'Poor performance on Card-A and Card-B, but excellent on Card-C',
+                        label: 'Low debit in June',
                         bgPadding: 0,
-                        align: 'center',
-                        wrap: 175
+                        align: 'right',
+                        wrap: 130
                       },
                       accessibilityDescription: 'This is a test description for accessibility.',
-                      data: { category: 'Card-C', value: 6051933407 },
-                      dy: [8500000000],
-                      dx: '5%',
-                      color: '#56bec3',
+                      data: { date: '2016-06', category: 'Card-B', value: 3484192554 },
+                      dx: '35%',
+                      dy: '2%',
+                      color: 'categorical_orange',
                       type: 'annotationCalloutCircle',
-                      subject: { radius: 34 }
+                      subject: {
+                        radius: 6
+                      }
                     }
                   ]
                 : []
@@ -334,13 +390,13 @@ describe('<parallel-plot>', () => {
               : unitTestAccessibility[test].testSelector === '[data-id=mark-id]'
               ? accessibilityTestMarks[test]
                 ? accessibilityTestMarks[test].testSelector
-                : '[data-testid=marker][data-id=marker-North-America-Card-A]'
+                : '[data-testid=marker][data-id=marker-Card-A-2016-01]'
               : unitTestAccessibility[test].testSelector;
           const innerNextTestSelector =
             unitTestAccessibility[test].nextTestSelector === '[data-id=mark-id]'
               ? accessibilityTestMarks[test]
                 ? accessibilityTestMarks[test].nextTestSelector
-                : '[data-testid=marker][data-id=marker-North-America-Card-B]'
+                : '[data-testid=marker][data-id=marker-Card-A-2016-02]'
               : unitTestAccessibility[test].nextTestSelector === '[data-testid=svg]'
               ? '[data-testid=root-svg]'
               : unitTestAccessibility[test].nextTestSelector;
@@ -471,8 +527,7 @@ describe('<parallel-plot>', () => {
     // });
 
     describe('axes', () => {
-      // known issues with min/max override pattern on parallel-plot skipping these tests for now
-      describe.skip('minValueOverride & maxValueOverride', () => {
+      describe('minValueOverride & maxValueOverride', () => {
         it('should set min and max value from data by default', async () => {
           // ARRANGE
           const yMin = MINVALUE - (MAXVALUE - MINVALUE) * 0.1;
@@ -611,7 +666,7 @@ describe('<parallel-plot>', () => {
       });
 
       describe('showBaselineX', () => {
-        it('baseline on xAxis should not be visible by default', async () => {
+        it('baseline on xAxis should be visible by default', async () => {
           // ACT
           page.root.appendChild(component);
           await page.waitForChanges();
@@ -619,12 +674,11 @@ describe('<parallel-plot>', () => {
           // ASSERT
           const xAxis = page.doc.querySelector('[data-testid=x-axis-mark]');
           flushTransitions(xAxis);
-          await page.waitForChanges();
-          expect(xAxis).toEqualAttribute('opacity', 0);
+          expect(xAxis).toEqualAttribute('opacity', 1);
         });
         it('should flip opacity of baseline on load', async () => {
           // ARRANGE
-          component.showBaselineX = true;
+          component.showBaselineX = false;
 
           page.root.appendChild(component);
           await page.waitForChanges();
@@ -632,8 +686,7 @@ describe('<parallel-plot>', () => {
           // ASSERT
           const xAxis = page.doc.querySelector('[data-testid=x-axis-mark]');
           flushTransitions(xAxis);
-          await page.waitForChanges();
-          expect(xAxis).toEqualAttribute('opacity', 1);
+          expect(xAxis).toEqualAttribute('opacity', 0);
         });
         it('should flip opacity of baseline on update', async () => {
           // ACT
@@ -641,14 +694,13 @@ describe('<parallel-plot>', () => {
           await page.waitForChanges();
 
           // ACT - UPDATE
-          component.showBaselineX = true;
+          component.showBaselineX = false;
           await page.waitForChanges();
 
           // ASSERT
           const xAxis = page.doc.querySelector('[data-testid=x-axis-mark]');
           flushTransitions(xAxis);
-          await page.waitForChanges();
-          expect(xAxis).toEqualAttribute('opacity', 1);
+          expect(xAxis).toEqualAttribute('opacity', 0);
         });
       });
 
@@ -728,7 +780,7 @@ describe('<parallel-plot>', () => {
       });
 
       describe('axis.gridVisible', () => {
-        it('should render x and y grids by default', async () => {
+        it('should render y but not x grids by default', async () => {
           // ACT
           page.root.appendChild(component);
           await page.waitForChanges();
@@ -738,14 +790,14 @@ describe('<parallel-plot>', () => {
           const gridLeft = page.doc.querySelector('[data-testid=grid-left]');
           flushTransitions(gridBottom);
           flushTransitions(gridLeft);
-          expect(gridBottom).toEqualAttribute('opacity', 1);
+          expect(gridBottom).toEqualAttribute('opacity', 0);
           expect(gridLeft).toEqualAttribute('opacity', 1);
         });
-        it('should flip render on y but not x grids when passed on load', async () => {
+        it('should flip render on both x and y grids when passed on load', async () => {
           // ARRANGE
           component.xAxis = {
             visible: true,
-            gridVisible: false,
+            gridVisible: true,
             label: 'X Axis',
             format: '0[.][0][0]a'
           };
@@ -769,7 +821,7 @@ describe('<parallel-plot>', () => {
           expect(gridBottom).toEqualAttribute('opacity', 1);
           expect(gridLeft).toEqualAttribute('opacity', 0);
         });
-        it('should flip render on both y but not x grids when passed on update', async () => {
+        it('should flip render on both x and y grids when passed on update', async () => {
           // ACT
           page.root.appendChild(component);
           await page.waitForChanges();
@@ -777,7 +829,7 @@ describe('<parallel-plot>', () => {
           // ACT UPDATE
           component.xAxis = {
             visible: true,
-            gridVisible: false,
+            gridVisible: true,
             label: 'X Axis',
             format: '0[.][0][0]a'
           };
@@ -835,28 +887,14 @@ describe('<parallel-plot>', () => {
         it('yAxis should have default format applied to numbers', async () => {
           // ARRANGE
           component.wrapLabel = false;
-          const EXPECTEDTICKS = [
-            '3.5b',
-            '4b',
-            '4.5b',
-            '5b',
-            '5.5b',
-            '6b',
-            '6.5b',
-            '7b',
-            '7.5b',
-            '8b',
-            '8.5b',
-            '9b',
-            '9.5b'
-          ];
+          const EXPECTEDTICKS = ['3b', '4b', '5b', '6b', '7b', '8b', '9b', '10b'];
 
           // ACT
           page.root.appendChild(component);
           await page.waitForChanges();
 
           // ASSERT
-          const yAxisTicks = page.doc.querySelector('[data-testid=y-axis]').querySelectorAll('[data-testid=axis-tick]');
+          const yAxisTicks = page.doc.querySelectorAll('[data-testid=y-axis] [data-testid=axis-tick]');
           yAxisTicks.forEach((tick, i) => {
             expect(tick).toEqualText(EXPECTEDTICKS[i]);
           });
@@ -872,28 +910,14 @@ describe('<parallel-plot>', () => {
             visible: true
           };
           component.yAxis = EXPECTEDYAXIS;
-          const EXPECTEDTICKS = [
-            '$3.5b',
-            '$4b',
-            '$4.5b',
-            '$5b',
-            '$5.5b',
-            '$6b',
-            '$6.5b',
-            '$7b',
-            '$7.5b',
-            '$8b',
-            '$8.5b',
-            '$9b',
-            '$9.5b'
-          ];
+          const EXPECTEDTICKS = ['$3b', '$4b', '$5b', '$6b', '$7b', '$8b', '$9b', '$10b'];
 
           // ACT
           page.root.appendChild(component);
           await page.waitForChanges();
 
           // ASSERT
-          const yAxisTicks = page.doc.querySelector('[data-testid=y-axis]').querySelectorAll('[data-testid=axis-tick]');
+          const yAxisTicks = page.doc.querySelectorAll('[data-testid=y-axis] [data-testid=axis-tick]');
           yAxisTicks.forEach((tick, i) => {
             expect(tick).toEqualText(EXPECTEDTICKS[i]);
           });
@@ -917,8 +941,21 @@ describe('<parallel-plot>', () => {
             tickInterval: 2,
             visible: true
           };
-          const EXPECTEDXTICKS = ['Card-A', '', 'Card-C'];
-          const EXPECTEDYTICKS = ['3.5b', '', '4.5b', '', '5.5b', '', '6.5b', '', '7.5b', '', '8.5b', '', '9.5b'];
+          const EXPECTEDXTICKS = [
+            '2016-01',
+            '',
+            '2016-03',
+            '',
+            '2016-05',
+            '',
+            '2016-07',
+            '',
+            '2016-09',
+            '',
+            '2016-11',
+            ''
+          ];
+          const EXPECTEDYTICKS = ['3b', '', '5b', '', '7b', '', '9b', ''];
           component.wrapLabel = false;
           component.xAxis = EXPECTEDXAXIS;
           component.yAxis = EXPECTEDYAXIS;
@@ -929,7 +966,7 @@ describe('<parallel-plot>', () => {
 
           // ASSERT
           const xAxisTicks = page.doc.querySelectorAll('[data-testid=x-axis] [data-testid=axis-tick]');
-          const yAxisTicks = page.doc.querySelector('[data-testid=y-axis]').querySelectorAll('[data-testid=axis-tick]');
+          const yAxisTicks = page.doc.querySelectorAll('[data-testid=y-axis] [data-testid=axis-tick]');
           xAxisTicks.forEach((tick, i) => {
             const expectedAxisText = i % 2 === 0 ? EXPECTEDXTICKS[i] : '';
             expect(tick).toEqualText(expectedAxisText);
@@ -945,35 +982,51 @@ describe('<parallel-plot>', () => {
     describe('interaction', () => {
       describe('marker based interaction tests', () => {
         const innerTestProps = { useFilter: false };
-        const innerTestSelector = '[data-testid=marker][data-id=marker-North-America-Card-A]';
-        const innerNegTestSelector = '[data-testid=marker][data-id=marker-Asia-Card-A]'; // parallel defaults to series highlight
+        const innerTestSelector = '[data-testid=marker][data-id=marker-Card-A-2016-01]';
+        const innerNegTestSelector = '[data-testid=marker][data-id=marker-Card-B-2016-01]'; // line defaults to series highlight
         Object.keys(unitTestInteraction).forEach(test => {
-          it(`[${unitTestInteraction[test].group}] ${unitTestInteraction[test].prop}: ${
-            unitTestInteraction[test].name
-          }`, () =>
-            unitTestInteraction[test].testFunc(
-              component,
-              page,
-              innerTestProps,
-              innerTestSelector,
-              innerNegTestSelector
-            ));
+          if (unitTestInteraction[test].prop === 'cursor') {
+            // in scatter-plot cursor is maintained at the series group level
+            it(`[${unitTestInteraction[test].group}] ${unitTestInteraction[test].prop}: ${
+              unitTestInteraction[test].name
+            }`, () =>
+              unitTestInteraction[test].testFunc(
+                component,
+                page,
+                innerTestProps,
+                '[data-testid=marker-series-group][data-id=marker-series-Card-A]',
+                '[data-testid=marker-series-group][data-id=marker-series-Card-B]'
+              ));
+          } else {
+            // otherwise we need to perform other prop tests on the markers
+            // these tests are written expecting filters, etc. need to be adjusted for scatter
+            it(`[${unitTestInteraction[test].group}] ${unitTestInteraction[test].prop}: ${
+              unitTestInteraction[test].name
+            }`, () =>
+              unitTestInteraction[test].testFunc(
+                component,
+                page,
+                innerTestProps,
+                innerTestSelector,
+                innerNegTestSelector
+              ));
+          }
         });
       });
       describe('clickStyle with interaction keys', () => {
         const testLoad = 'interaction_clickStyle_custom_load';
         const testUpdate = 'interaction_clickStyle_custom_update';
-        const innerTestSelector = '[data-testid=marker][data-id=marker-North-America-Card-A]';
-        const innerNegTestSelector = '[data-testid=marker][data-id=marker-Asia-Card-A]';
+        const innerTestSelector = '[data-testid=marker][data-id=marker-Card-A-2016-01]';
+        const innerNegTestSelector = '[data-testid=marker][data-id=marker-Card-B-2016-01]';
         const CUSTOMCLICKSTYLE = {
           color: visaColors.categorical_light_purple, // this has to be light enough to require a contrasting stroke
           strokeWidth: 1
         };
-        const EXPECTEDHOVEROPACITY = 0.5;
+        const EXPECTEDHOVEROPACITY = 0.25;
         const innerTestProps = {
           clickStyle: CUSTOMCLICKSTYLE,
           hoverOpacity: EXPECTEDHOVEROPACITY,
-          interactionKeys: ['region'],
+          interactionKeys: ['category'],
           useFilter: false
         };
 
@@ -1002,7 +1055,7 @@ describe('<parallel-plot>', () => {
         const newInnerTestProps = {
           clickStyle: CUSTOMCLICKSTYLE,
           hoverOpacity: EXPECTEDHOVEROPACITY,
-          interactionKeys: ['region', 'category'],
+          interactionKeys: ['category', 'date'],
           useFilter: false
         };
         it(`[${unitTestInteraction[testLoad].group}] ${unitTestInteraction[testLoad].prop}: ${
@@ -1012,8 +1065,8 @@ describe('<parallel-plot>', () => {
             component,
             page,
             newInnerTestProps,
-            '[data-testid=marker][data-id=marker-North-America-Card-A]',
-            '[data-testid=marker][data-id=marker-North-America-Card-B]'
+            '[data-testid=marker][data-id=marker-Card-A-2016-01]',
+            '[data-testid=marker][data-id=marker-Card-A-2016-02]'
           ));
 
         it(`[${unitTestInteraction[testUpdate].group}] ${unitTestInteraction[testUpdate].prop}: ${
@@ -1023,25 +1076,25 @@ describe('<parallel-plot>', () => {
             component,
             page,
             newInnerTestProps,
-            '[data-testid=marker][data-id=marker-North-America-Card-A]',
-            '[data-testid=marker][data-id=marker-North-America-Card-B]'
+            '[data-testid=marker][data-id=marker-Card-A-2016-01]',
+            '[data-testid=marker][data-id=marker-Card-A-2016-02]'
           ));
       });
 
       describe('hoverStyle custom with interaction keys', () => {
         const testLoad = 'interaction_hoverStyle_custom_load';
         const testUpdate = 'interaction_hoverStyle_custom_update';
-        const innerTestSelector = '[data-testid=marker][data-id=marker-North-America-Card-A]';
-        const innerNegTestSelector = '[data-testid=marker][data-id=marker-Asia-Card-A]';
+        const innerTestSelector = '[data-testid=marker][data-id=marker-Card-A-2016-01]';
+        const innerNegTestSelector = '[data-testid=marker][data-id=marker-Card-B-2016-01]';
         const CUSTOMCLICKSTYLE = {
           color: visaColors.categorical_light_purple, // this has to be light enough to require a contrasting stroke
           strokeWidth: 1
         };
-        const EXPECTEDHOVEROPACITY = 0.5;
+        const EXPECTEDHOVEROPACITY = 0.25;
         const innerTestProps = {
           clickStyle: CUSTOMCLICKSTYLE,
           hoverOpacity: EXPECTEDHOVEROPACITY,
-          interactionKeys: ['region'],
+          interactionKeys: ['category'],
           useFilter: false
         };
 
@@ -1070,7 +1123,7 @@ describe('<parallel-plot>', () => {
         const newInnerTestProps = {
           clickStyle: CUSTOMCLICKSTYLE,
           hoverOpacity: EXPECTEDHOVEROPACITY,
-          interactionKeys: ['region', 'category'],
+          interactionKeys: ['category', 'date'],
           useFilter: false
         };
         it(`[${unitTestInteraction[testLoad].group}] ${unitTestInteraction[testLoad].prop}: ${
@@ -1080,8 +1133,8 @@ describe('<parallel-plot>', () => {
             component,
             page,
             newInnerTestProps,
-            '[data-testid=marker][data-id=marker-North-America-Card-A]',
-            '[data-testid=marker][data-id=marker-North-America-Card-B]'
+            '[data-testid=marker][data-id=marker-Card-A-2016-01]',
+            '[data-testid=marker][data-id=marker-Card-A-2016-02]'
           ));
 
         it(`[${unitTestInteraction[testUpdate].group}] ${unitTestInteraction[testUpdate].prop}: ${
@@ -1091,14 +1144,14 @@ describe('<parallel-plot>', () => {
             component,
             page,
             newInnerTestProps,
-            '[data-testid=marker][data-id=marker-North-America-Card-A]',
-            '[data-testid=marker][data-id=marker-North-America-Card-B]'
+            '[data-testid=marker][data-id=marker-Card-A-2016-01]',
+            '[data-testid=marker][data-id=marker-Card-A-2016-02]'
           ));
       });
       describe('line based interaction tests', () => {
         const innerTestProps = { useFilter: false };
-        const innerTestSelector = '[data-testid=parallel-line][data-id=parallel-line-North-America]';
-        const innerNegTestSelector = '[data-testid=parallel-line][data-id=parallel-line-Asia]'; // line defaults to series highlight
+        const innerTestSelector = '[data-testid=line][data-id=line-Card-A]';
+        const innerNegTestSelector = '[data-testid=line][data-id=line-Card-B]'; // line defaults to series highlight
         Object.keys(unitTestInteraction).forEach(test => {
           it(`[${unitTestInteraction[test].group}] ${unitTestInteraction[test].prop}: ${
             unitTestInteraction[test].name
@@ -1166,7 +1219,7 @@ describe('<parallel-plot>', () => {
         };
         describe('generic tooltip tests', () => {
           Object.keys(unitTestTooltip).forEach(test => {
-            const innerTestSelector = '[data-testid=marker][data-id=marker-North-America-Card-A]';
+            const innerTestSelector = '[data-testid=marker][data-id=marker-Card-A-2016-01]';
             const innerTooltipProps = {
               tooltip_tooltipLabel_custom_load: tooltip1,
               tooltip_tooltipLabel_custom_update: tooltip1,
@@ -1175,13 +1228,13 @@ describe('<parallel-plot>', () => {
             };
             const innerTooltipContent = {
               tooltip_tooltipLabel_default:
-                '<p style="margin: 0;"><b>North-America<br></b>X Axis:<b>Card-A</b><br>Y Axis:<b>9.6b</b></p>',
+                '<p style="margin: 0;"><b>Card-A<br></b>X Axis:<b>2016-01</b><br>Y Axis:<b>7.7b</b></p>',
               tooltip_tooltipLabel_custom_load: '<p style="margin: 0;">Testing123:<b>Card-A</b><br></p>',
               tooltip_tooltipLabel_custom_update: '<p style="margin: 0;">Testing123:<b>Card-A</b><br></p>',
               tooltip_tooltipLabel_custom_format_load:
-                '<p style="margin: 0;">Testing123:<b>Card-A</b><br>Count:<b>$9.6b</b><br></p>',
+                '<p style="margin: 0;">Testing123:<b>Card-A</b><br>Count:<b>$7.7b</b><br></p>',
               tooltip_tooltipLabel_custom_format_update:
-                '<p style="margin: 0;">Testing123:<b>Card-A</b><br>Count:<b>$9.6b</b><br></p>'
+                '<p style="margin: 0;">Testing123:<b>Card-A</b><br>Count:<b>$7.7b</b><br></p>'
             };
             const innerTestProps = { ...unitTestTooltip[test].testProps, ...innerTooltipProps[test] };
             // we have to handle clickFunc separately due to zooming boolean in circle-packing load
@@ -1205,7 +1258,7 @@ describe('<parallel-plot>', () => {
             page.root.appendChild(component);
             await page.waitForChanges();
 
-            const dataLabel = page.doc.querySelector('[data-testid=parallel-series-label]');
+            const dataLabel = page.doc.querySelector('[data-testid=line-series-label]');
             flushTransitions(dataLabel);
             await page.waitForChanges();
             expect(dataLabel).toEqualAttribute('opacity', 1);
@@ -1222,7 +1275,7 @@ describe('<parallel-plot>', () => {
             page.root.appendChild(component);
             await page.waitForChanges();
 
-            const dataLabel = page.doc.querySelector('[data-testid=parallel-series-label]');
+            const dataLabel = page.doc.querySelector('[data-testid=line-series-label]');
             flushTransitions(dataLabel);
             expect(dataLabel).toEqualAttribute('opacity', 0);
           });
@@ -1231,12 +1284,7 @@ describe('<parallel-plot>', () => {
             page.root.appendChild(component);
             await page.waitForChanges();
 
-            // ACT UPDATE - Flush entry transitions
-            const dataLabel = page.doc.querySelector('[data-testid=parallel-series-label]');
-            flushTransitions(dataLabel);
-            await page.waitForChanges();
-
-            // ACT UPDATE - Change prop
+            // ACT UPDATE
             component.seriesLabel = {
               visible: false,
               placement: 'right',
@@ -1244,6 +1292,8 @@ describe('<parallel-plot>', () => {
             };
             await page.waitForChanges();
 
+            const dataLabel = page.doc.querySelector('[data-testid=line-series-label]');
+            flushTransitions(dataLabel);
             expect(dataLabel).toEqualAttribute('opacity', 0);
           });
         });
@@ -1255,8 +1305,8 @@ describe('<parallel-plot>', () => {
             await page.waitForChanges();
 
             // ASSERT
-            const label = page.doc.querySelector('[data-testid=parallel-series-label]');
-            const lastMarker = page.doc.querySelector('[data-testid=marker][data-id="marker-North-America-Card-C"]');
+            const label = page.doc.querySelector('[data-testid=line-series-label]');
+            const lastMarker = page.doc.querySelector('[data-testid=marker][data-id="marker-Card-A-2016-12"]');
             const innerPaddedWidth =
               component.width -
               component.margin.left -
@@ -1284,8 +1334,8 @@ describe('<parallel-plot>', () => {
             await page.waitForChanges();
 
             // ASSERT
-            const label = page.doc.querySelector('[data-testid=parallel-series-label]');
-            const firstMarker = page.doc.querySelector('[data-testid=marker][data-id="marker-North-America-Card-A"]');
+            const label = page.doc.querySelector('[data-testid=line-series-label]');
+            const firstMarker = page.doc.querySelector('[data-testid=marker][data-id="marker-Card-A-2016-01"]');
 
             flushTransitions(label);
             flushTransitions(firstMarker);
@@ -1309,8 +1359,8 @@ describe('<parallel-plot>', () => {
             await page.waitForChanges();
 
             // ASSERT
-            const label = page.doc.querySelector('[data-testid=parallel-series-label]');
-            const firstMarker = page.doc.querySelector('[data-testid=marker][data-id="marker-North-America-Card-A"]');
+            const label = page.doc.querySelector('[data-testid=line-series-label]');
+            const firstMarker = page.doc.querySelector('[data-testid=marker][data-id="marker-Card-A-2016-01"]');
 
             flushTransitions(label);
             flushTransitions(firstMarker);
@@ -1327,14 +1377,14 @@ describe('<parallel-plot>', () => {
             await page.waitForChanges();
 
             // ASSERT
-            const label = page.doc.querySelector('[data-testid=parallel-series-label]');
-            expect(label).toEqualText('North-America');
+            const label = page.doc.querySelector('[data-testid=line-series-label]');
+            expect(label).toEqualText('Card-A');
           });
           it('should use values of label prop when passed on load', async () => {
             component.seriesLabel = {
               visible: true,
               placement: 'right',
-              label: ['One', 'Two', 'Three', 'Four', 'Five']
+              label: ['One', 'Two']
             };
 
             // ACT
@@ -1342,7 +1392,7 @@ describe('<parallel-plot>', () => {
             await page.waitForChanges();
 
             // ASSERT
-            const label = page.doc.querySelector('[data-testid=parallel-series-label]');
+            const label = page.doc.querySelector('[data-testid=line-series-label]');
             expect(label).toEqualText('One');
           });
           it('should use values of label prop when passed on update', async () => {
@@ -1354,12 +1404,12 @@ describe('<parallel-plot>', () => {
             component.seriesLabel = {
               visible: true,
               placement: 'right',
-              label: ['One', 'Two', 'Three', 'Four', 'Five']
+              label: ['One', 'Two']
             };
             await page.waitForChanges();
 
             // ASSERT
-            const label = page.doc.querySelector('[data-testid=parallel-series-label]');
+            const label = page.doc.querySelector('[data-testid=line-series-label]');
             flushTransitions(label);
             await page.waitForChanges();
             expect(label).toEqualText('One');
@@ -1398,21 +1448,18 @@ describe('<parallel-plot>', () => {
         });
         describe('labelAccessor', () => {
           const EXPECTEDDATARANDOM = [
-            { region: 'North-America', category: 'Card-A', value: 9628909842, random: Math.random() },
-            { region: 'North-America', category: 'Card-B', value: 9709829820, random: Math.random() },
-            { region: 'North-America', category: 'Card-C', value: 3778636197, random: Math.random() },
-            { region: 'Asia', category: 'Card-A', value: 7670994739, random: Math.random() },
-            { region: 'Asia', category: 'Card-B', value: 8872849978, random: Math.random() },
-            { region: 'Asia', category: 'Card-C', value: 4484192554, random: Math.random() },
-            { region: 'South-America', category: 'Card-A', value: 8358837379, random: Math.random() },
-            { region: 'South-America', category: 'Card-B', value: 6570994739, random: Math.random() },
-            { region: 'South-America', category: 'Card-C', value: 3811163096, random: Math.random() },
-            { region: 'Europe', category: 'Card-A', value: 7334842966, random: Math.random() },
-            { region: 'Europe', category: 'Card-B', value: 4628909842, random: Math.random() },
-            { region: 'Europe', category: 'Card-C', value: 3462148898, random: Math.random() },
-            { region: 'Africa', category: 'Card-A', value: 6588600035, random: Math.random() },
-            { region: 'Africa', category: 'Card-B', value: 4358837379, random: Math.random() },
-            { region: 'Africa', category: 'Card-C', value: 6051933407, random: Math.random() }
+            { date: '2016-01', category: 'Card-A', value: 7670994739, random: Math.random() },
+            { date: '2016-02', category: 'Card-A', value: 7628909842, random: Math.random() },
+            { date: '2016-03', category: 'Card-A', value: 8358837379, random: Math.random() },
+            { date: '2016-04', category: 'Card-A', value: 8334842966, random: Math.random() },
+            { date: '2016-05', category: 'Card-A', value: 8588600035, random: Math.random() },
+            { date: '2016-06', category: 'Card-A', value: 8484192554, random: Math.random() },
+            { date: '2016-07', category: 'Card-A', value: 8778636197, random: Math.random() },
+            { date: '2016-08', category: 'Card-A', value: 8811163096, random: Math.random() },
+            { date: '2016-09', category: 'Card-A', value: 8462148898, random: Math.random() },
+            { date: '2016-10', category: 'Card-A', value: 9051933407, random: Math.random() },
+            { date: '2016-11', category: 'Card-A', value: 8872849978, random: Math.random() },
+            { date: '2016-12', category: 'Card-A', value: 9709829820, random: Math.random() }
           ];
           it('should default to the value accessor if default', async () => {
             // ACT
@@ -1494,13 +1541,7 @@ describe('<parallel-plot>', () => {
           });
         });
         describe('placement', () => {
-          const dPlacement = {
-            bottomLeft: { x: '-0.3em', y: '0.9em' },
-            bottomRight: { x: '0.3em', y: '0.9em' },
-            topLeft: { x: '-0.3em', y: '-0.1em' },
-            topRight: { x: '0.3em', y: '-0.1em' }
-          };
-          it('should place labels on bottom-right of markers by default', async () => {
+          it('should place labels on top of markers by default', async () => {
             // ACT
             page.root.appendChild(component);
             await page.waitForChanges();
@@ -1511,22 +1552,15 @@ describe('<parallel-plot>', () => {
             flushTransitions(label);
             flushTransitions(marker);
             await page.waitForChanges();
-
-            // check main values are equal
-            expect(label).toEqualAttribute('x', marker.getAttribute('cx'));
-            expect(label).toEqualAttribute('y', marker.getAttribute('cy'));
-
-            // check dx/y values are in the right direction
-            expect(label).toEqualAttribute('dx', dPlacement.bottomRight.x);
-            expect(label).toEqualAttribute('dy', dPlacement.bottomRight.y);
+            expect(parseFloat(label.getAttribute('y'))).toBeLessThanOrEqual(parseFloat(marker.getAttribute('cy')));
           });
-          it('should place labels on top-left of markers if passed on load', async () => {
+          it('should place labels on bottom of markers if passed on load', async () => {
             // ARRANGE
             component.dataLabel = {
               visible: true,
               labelAccessor: 'value',
               format: '$0[.][0]a',
-              placement: 'top-left'
+              placement: 'bottom'
             };
 
             // ACT
@@ -1538,14 +1572,7 @@ describe('<parallel-plot>', () => {
             const marker = page.doc.querySelector('[data-testid=marker]');
             flushTransitions(label);
             flushTransitions(marker);
-
-            // check main values are equal
-            expect(label).toEqualAttribute('x', marker.getAttribute('cx'));
-            expect(label).toEqualAttribute('y', marker.getAttribute('cy'));
-
-            // check dx/y values are in the right direction
-            expect(label).toEqualAttribute('dx', dPlacement.topLeft.x);
-            expect(label).toEqualAttribute('dy', dPlacement.topLeft.y);
+            expect(parseFloat(label.getAttribute('y'))).toBeGreaterThan(parseFloat(marker.getAttribute('cy')));
           });
           it('should place labels on bottom of markers if passed on update', async () => {
             // ACT - LOAD
@@ -1557,7 +1584,7 @@ describe('<parallel-plot>', () => {
               visible: true,
               labelAccessor: 'value',
               format: '$0[.][0]a',
-              placement: 'bottom-left'
+              placement: 'bottom'
             };
             await page.waitForChanges();
 
@@ -1566,21 +1593,38 @@ describe('<parallel-plot>', () => {
             const marker = page.doc.querySelector('[data-testid=marker]');
             flushTransitions(label);
             flushTransitions(marker);
-
-            // check main values are equal
-            expect(label).toEqualAttribute('x', marker.getAttribute('cx'));
-            expect(label).toEqualAttribute('y', marker.getAttribute('cy'));
-
-            // check dx/y values are in the right direction
-            expect(label).toEqualAttribute('dx', dPlacement.bottomLeft.x);
-            expect(label).toEqualAttribute('dy', dPlacement.bottomLeft.y);
+            expect(parseFloat(label.getAttribute('y'))).toBeGreaterThan(parseFloat(marker.getAttribute('cy')));
           });
         });
       });
 
       describe('legend', () => {
         describe('visible', () => {
-          it('by default the legend should not render', async () => {
+          it('by default the legend should render', async () => {
+            // ACT
+            page.root.appendChild(component);
+            await page.waitForChanges();
+
+            // ASSERT
+            const legendSVG = page.doc.querySelector('[data-testid=legend-container]');
+            const legendContainer = legendSVG.parentElement;
+            const legendPaddingG = legendSVG.querySelector('g');
+            const legendG = legendPaddingG.querySelectorAll('g');
+            expect(legendContainer.getAttribute('style')).toEqual('display: block;');
+            expect(legendContainer).toHaveClass('line-legend');
+            expect(legendSVG).toEqualAttribute('opacity', 1);
+            expect(legendPaddingG).toHaveClass('legend-padding-wrapper');
+            expect(legendG[0]).toHaveClass('legend');
+            expect(legendG.length).toEqual(2);
+          });
+          it('should render, but not be visible if false is passed', async () => {
+            component.legend = {
+              visible: false,
+              interactive: false,
+              format: '',
+              labels: ''
+            };
+
             // ACT
             page.root.appendChild(component);
             await page.waitForChanges();
@@ -1592,38 +1636,14 @@ describe('<parallel-plot>', () => {
             // expect(legendSVG).toEqualAttribute('opacity', 0);
             expect(legendSVG.getAttribute('style')).toEqual('display: none;');
           });
-          it('should render, and be visible if true is passed', async () => {
-            component.legend = {
-              visible: true,
-              interactive: false,
-              format: '',
-              labels: ''
-            };
-
-            // ACT
-            page.root.appendChild(component);
-            await page.waitForChanges();
-
-            // ASSERT
-            const legendSVG = page.doc.querySelector('[data-testid=legend-container]');
-            const legendContainer = legendSVG.parentElement;
-            const legendPaddingG = legendSVG.querySelector('g');
-            const legendG = legendPaddingG.querySelectorAll('g');
-            expect(legendContainer.getAttribute('style')).toEqual('display: block;');
-            expect(legendContainer).toHaveClass('parallel-legend');
-            expect(legendSVG).toEqualAttribute('opacity', 1);
-            expect(legendPaddingG).toHaveClass('legend-padding-wrapper');
-            expect(legendG[0]).toHaveClass('legend');
-            expect(legendG.length).toEqual(5);
-          });
-          it('should render, and be visible if true is passed on update', async () => {
+          it('should render, but not be visible if false is passed on update', async () => {
             // ACT
             page.root.appendChild(component);
             await page.waitForChanges();
 
             // ACT UPDATE
             component.legend = {
-              visible: true,
+              visible: false,
               interactive: false,
               format: '',
               labels: ''
@@ -1633,14 +1653,9 @@ describe('<parallel-plot>', () => {
             // ASSERT
             const legendSVG = page.doc.querySelector('[data-testid=legend-container]');
             const legendContainer = legendSVG.parentElement;
-            const legendPaddingG = legendSVG.querySelector('g');
-            const legendG = legendPaddingG.querySelectorAll('g');
-            expect(legendContainer.getAttribute('style')).toEqual('display: block;');
-            expect(legendContainer).toHaveClass('parallel-legend');
-            expect(legendSVG).toEqualAttribute('opacity', 1);
-            expect(legendPaddingG).toHaveClass('legend-padding-wrapper');
-            expect(legendG[0]).toHaveClass('legend');
-            expect(legendG.length).toEqual(5);
+            expect(legendContainer.getAttribute('style')).toEqual('display: none;');
+            // expect(legendSVG).toEqualAttribute('opacity', 0);
+            expect(legendSVG.getAttribute('style').includes('display: none')).toBeTruthy();
           });
         });
         describe('type', () => {
@@ -1734,7 +1749,7 @@ describe('<parallel-plot>', () => {
               visible: true,
               interactive: true,
               format: '$0[.][0]a',
-              labels: [15, 30, 45, 60, 75]
+              labels: [15, 30]
             };
 
             // ACT
@@ -1752,7 +1767,7 @@ describe('<parallel-plot>', () => {
         describe('labels', () => {
           it('should be equal to data values by default', async () => {
             // ARRANGE
-            const EXPECTEDLABELS = ['North-America', 'Asia', 'South-America', 'Europe', 'Africa'];
+            const EXPECTEDLABELS = ['Card-A', 'Card-B'];
 
             // ACT
             page.root.appendChild(component);
@@ -1770,7 +1785,7 @@ describe('<parallel-plot>', () => {
             });
           });
           it('should have custom labels when passed as prop', async () => {
-            const EXPECTEDLABELS = ['DOG', 'CAT', 'BIRD', 'FISH', 'PIG'];
+            const EXPECTEDLABELS = ['DOG', 'CAT'];
             component.legend = {
               visible: true,
               interactive: false,
@@ -1799,7 +1814,7 @@ describe('<parallel-plot>', () => {
 
     describe('secondary line', () => {
       const secondaryLines = {
-        keys: ['Africa'],
+        keys: ['Card-B'],
         showDataLabel: true,
         showSeriesLabel: true,
         opacity: 1
@@ -1813,7 +1828,7 @@ describe('<parallel-plot>', () => {
         await page.waitForChanges();
 
         // Run Transitions
-        const lines = page.doc.querySelectorAll('[data-testid=parallel-line]');
+        const lines = page.doc.querySelectorAll('[data-testid=line]');
         await asyncForEach(lines, async line => {
           flushTransitions(line); // flush transitions to trigger transitionEndAll
           await page.waitForChanges();
@@ -1827,25 +1842,24 @@ describe('<parallel-plot>', () => {
 
         // ASSERT
         // line should be dashed, 1 stroke width, opacity
-        const secondaryLine = page.doc.querySelector('[data-testid=parallel-line][data-id=parallel-line-Africa]');
+        const secondaryLine = page.doc.querySelector('[data-testid=line][data-id=line-Card-B]');
         expect(secondaryLine).toEqualAttribute('stroke-width', 1);
         expect(secondaryLine).toEqualAttribute('opacity', 1);
         expect(secondaryLine).toEqualAttribute('stroke-dasharray', '2,2');
 
         // dataLabels should be visible and have correct opacity
-        const secondaryLabels = page.doc.querySelector('[data-testid=dataLabel-group][data-id=dataLabel-group-Africa]');
+        const secondaryLabels = page.doc.querySelector('[data-testid=dataLabel-group][data-id=dataLabel-group-Card-B]');
         expect(secondaryLabels).toEqualAttribute('opacity', 1);
 
         // series labels should be visible and have correct opacity
         const secondarySeriesLabels = page.doc.querySelector(
-          '[data-testid=parallel-series-label][data-id=parallel-series-label-Africa]'
+          '[data-testid=line-series-label][data-id=line-series-label-Card-B]'
         );
         expect(secondarySeriesLabels).toEqualAttribute('opacity', 1);
       });
     });
-
     describe('reference line', () => {
-      const referenceLines = [{ label: 'Average', labelPlacementHorizontal: 'right', value: 8300000000 }];
+      const referenceLines = [{ label: 'Average', labelPlacementHorizontal: 'right', value: 6300000000 }];
       const referenceStyle = { color: 'categorical_blue', dashed: '', opacity: 0.65, strokeWidth: '2.5px' };
       it('should pass referenceLines prop', async () => {
         // ARRANGE
@@ -1857,11 +1871,7 @@ describe('<parallel-plot>', () => {
 
         // ASSERT
         const referenceLinesGroup = page.doc.querySelector('[data-testid=reference-line-group]');
-        const referenceLine = referenceLinesGroup.querySelector('.line-reference-line');
         expect(referenceLinesGroup).toMatchSnapshot();
-        expect(referenceLine).toBeTruthy();
-        expect(referenceLine).toEqualAttribute('opacity', 1);
-        expect(referenceLine).toEqualAttribute('style', 'stroke: rgb(92, 92, 92)');
       });
 
       it('should pass referenceStyle prop', async () => {
@@ -1874,11 +1884,8 @@ describe('<parallel-plot>', () => {
         await page.waitForChanges();
 
         // ASSERT
-        const referenceLinesGroup = page.doc.querySelector('[data-testid=reference-line-group]');
-        const referenceLine = referenceLinesGroup.querySelector('.line-reference-line');
-        expect(referenceLinesGroup).toMatchSnapshot();
-        expect(referenceLine).toEqualAttribute('opacity', 1);
-        expect(referenceLine).toEqualAttribute('style', 'stroke: rgb(34, 96, 146)');
+        const referenceLine = page.doc.querySelector('[data-testid=reference-line-group]');
+        expect(referenceLine).toMatchSnapshot();
       });
     });
 
@@ -1889,7 +1896,7 @@ describe('<parallel-plot>', () => {
           const EXPECTEDSCALE = getColors(
             EXPECTEDCOLORPALETTE,
             scaleOrdinal()
-              .domain(EXPECTEDDATA.map(d => d.region))
+              .domain(EXPECTEDDATA.map(d => d.category))
               .domain()
           );
 
@@ -1900,15 +1907,15 @@ describe('<parallel-plot>', () => {
           // ASSERT
           const markers = page.doc.querySelectorAll('[data-testid=marker]');
           markers.forEach((marker, i) => {
-            const EXPECTEDSTROKE = getAccessibleStrokes(EXPECTEDSCALE(EXPECTEDDATA[i].region))[0];
-            expect(marker).toEqualAttribute('fill', EXPECTEDSCALE(EXPECTEDDATA[i].region));
+            const EXPECTEDSTROKE = getAccessibleStrokes(EXPECTEDSCALE(EXPECTEDDATA[i].category))[0];
+            expect(marker).toEqualAttribute('fill', EXPECTEDSCALE(EXPECTEDDATA[i].category));
             expect(marker).toEqualAttribute('stroke', EXPECTEDSTROKE);
           });
 
-          const lines = page.doc.querySelectorAll('[data-testid=parallel-line]');
+          const lines = page.doc.querySelectorAll('[data-testid=line]');
           lines.forEach(line => {
-            const lineRegion = line.getAttribute('data-id').replace('parallel-line-', '');
-            const EXPECTEDSTROKE = getAccessibleStrokes(EXPECTEDSCALE(lineRegion))[0];
+            const lineCategory = line.getAttribute('data-id').replace('line-', '');
+            const EXPECTEDSTROKE = getAccessibleStrokes(EXPECTEDSCALE(lineCategory))[0];
             expect(line).toEqualAttribute('stroke', EXPECTEDSTROKE);
           });
         });
@@ -1930,7 +1937,7 @@ describe('<parallel-plot>', () => {
             expect(marker).toEqualAttribute('stroke', EXPECTEDSTROKE);
           });
 
-          const lines = page.doc.querySelectorAll('[data-testid=parallel-line]');
+          const lines = page.doc.querySelectorAll('[data-testid=line]');
           lines.forEach(line => {
             const EXPECTEDSTROKE = getAccessibleStrokes(EXPECTEDFILLCOLOR)[0];
             expect(line).toEqualAttribute('stroke', EXPECTEDSTROKE);
@@ -1957,7 +1964,7 @@ describe('<parallel-plot>', () => {
             expect(marker).toEqualAttribute('stroke', EXPECTEDSTROKE);
           });
 
-          const lines = page.doc.querySelectorAll('[data-testid=parallel-line]');
+          const lines = page.doc.querySelectorAll('[data-testid=line]');
           lines.forEach(line => {
             const EXPECTEDSTROKE = getAccessibleStrokes(EXPECTEDFILLCOLOR)[0];
             expect(line).toEqualAttribute('stroke', EXPECTEDSTROKE);
@@ -1970,7 +1977,7 @@ describe('<parallel-plot>', () => {
           const EXPECTEDSCALE = getColors(
             EXPECTEDCOLORPALETTE,
             scaleOrdinal()
-              .domain(EXPECTEDDATA.map(d => d.region))
+              .domain(EXPECTEDDATA.map(d => d.category))
               .domain()
           );
           component.colorPalette = EXPECTEDCOLORPALETTE;
@@ -1979,24 +1986,18 @@ describe('<parallel-plot>', () => {
           page.root.appendChild(component);
           await page.waitForChanges();
 
-          // ASSERT -- COLORS 3 AND 4 IN DIVERGING R TO B REQUIRE STROKE TREATMENT
+          // ASSERT
           const markers = page.doc.querySelectorAll('[data-testid=marker]');
           markers.forEach((marker, i) => {
-            const EXPECTEDSTROKE =
-              EXPECTEDDATA[i].region === 'South-America' || EXPECTEDDATA[i].region === 'Europe'
-                ? getAccessibleStrokes(EXPECTEDSCALE(EXPECTEDDATA[i].region))[0]
-                : EXPECTEDSCALE(EXPECTEDDATA[i].region);
-            expect(marker).toEqualAttribute('fill', EXPECTEDSCALE(EXPECTEDDATA[i].region));
+            const EXPECTEDSTROKE = EXPECTEDSCALE(EXPECTEDDATA[i].category);
+            expect(marker).toEqualAttribute('fill', EXPECTEDSCALE(EXPECTEDDATA[i].category));
             expect(marker).toEqualAttribute('stroke', EXPECTEDSTROKE);
           });
 
-          const lines = page.doc.querySelectorAll('[data-testid=parallel-line]');
-          lines.forEach((line, i) => {
-            const lineRegion = line.getAttribute('data-id').replace('parallel-line-', '');
-            const EXPECTEDSTROKE =
-              lineRegion === 'South-America' || lineRegion === 'Europe'
-                ? getAccessibleStrokes(EXPECTEDSCALE(lineRegion))[0]
-                : EXPECTEDSCALE(lineRegion);
+          const lines = page.doc.querySelectorAll('[data-testid=line]');
+          lines.forEach(line => {
+            const lineCategory = line.getAttribute('data-id').replace('line-', '');
+            const EXPECTEDSTROKE = EXPECTEDSCALE(lineCategory);
             expect(line).toEqualAttribute('stroke', EXPECTEDSTROKE);
           });
         });
@@ -2007,7 +2008,7 @@ describe('<parallel-plot>', () => {
           const EXPECTEDSCALE = getColors(
             EXPECTEDCOLORPALETTE,
             scaleOrdinal()
-              .domain(EXPECTEDDATA.map(d => d.region))
+              .domain(EXPECTEDDATA.map(d => d.category))
               .domain()
           );
           component.colorPalette = EXPECTEDCOLORPALETTE;
@@ -2016,35 +2017,29 @@ describe('<parallel-plot>', () => {
           page.root.appendChild(component);
           await page.waitForChanges();
 
-          // ASSERT -- COLORS 3 AND 4 IN DIVERGING R TO B REQUIRE STROKE TREATMENT
+          // ASSERT
           const markers = page.doc.querySelectorAll('[data-testid=marker]');
           markers.forEach((marker, i) => {
-            const EXPECTEDSTROKE =
-              EXPECTEDDATA[i].region === 'South-America' || EXPECTEDDATA[i].region === 'Europe'
-                ? getAccessibleStrokes(EXPECTEDSCALE(EXPECTEDDATA[i].region))[0]
-                : EXPECTEDSCALE(EXPECTEDDATA[i].region);
-            expect(marker).toEqualAttribute('fill', EXPECTEDSCALE(EXPECTEDDATA[i].region));
+            const EXPECTEDSTROKE = EXPECTEDSCALE(EXPECTEDDATA[i].category);
+            expect(marker).toEqualAttribute('fill', EXPECTEDSCALE(EXPECTEDDATA[i].category));
             expect(marker).toEqualAttribute('stroke', EXPECTEDSTROKE);
           });
 
-          const lines = page.doc.querySelectorAll('[data-testid=parallel-line]');
-          lines.forEach((line, i) => {
-            const lineRegion = line.getAttribute('data-id').replace('parallel-line-', '');
-            const EXPECTEDSTROKE =
-              lineRegion === 'South-America' || lineRegion === 'Europe'
-                ? getAccessibleStrokes(EXPECTEDSCALE(lineRegion))[0]
-                : EXPECTEDSCALE(lineRegion);
+          const lines = page.doc.querySelectorAll('[data-testid=line]');
+          lines.forEach(line => {
+            const lineCategory = line.getAttribute('data-id').replace('line-', '');
+            const EXPECTEDSTROKE = EXPECTEDSCALE(lineCategory);
             expect(line).toEqualAttribute('stroke', EXPECTEDSTROKE);
           });
         });
       });
       describe('colors', () => {
         it('should render colors instead of palette when passed', async () => {
-          const colors = ['#829e46', '#c18174', '#7a6763', '#796aaf', '#226092']; // USE DARK TO AVOID ADDTL STROKE TREATMENT
+          const colors = ['#829e46', '#c18174', '#7a6763', '#796aaf'];
           const EXPECTEDSCALE = getColors(
             colors,
             scaleOrdinal()
-              .domain(EXPECTEDDATA.map(d => d.region))
+              .domain(EXPECTEDDATA.map(d => d.category))
               .domain()
           );
           component.colors = colors;
@@ -2056,15 +2051,15 @@ describe('<parallel-plot>', () => {
           // ASSERT
           const markers = page.doc.querySelectorAll('[data-testid=marker]');
           markers.forEach((marker, i) => {
-            const EXPECTEDSTROKE = EXPECTEDSCALE(EXPECTEDDATA[i].region);
-            expect(marker).toEqualAttribute('fill', EXPECTEDSCALE(EXPECTEDDATA[i].region));
+            const EXPECTEDSTROKE = EXPECTEDSCALE(EXPECTEDDATA[i].category);
+            expect(marker).toEqualAttribute('fill', EXPECTEDSCALE(EXPECTEDDATA[i].category));
             expect(marker).toEqualAttribute('stroke', EXPECTEDSTROKE);
           });
 
-          const lines = page.doc.querySelectorAll('[data-testid=parallel-line]');
+          const lines = page.doc.querySelectorAll('[data-testid=line]');
           lines.forEach(line => {
-            const lineRegion = line.getAttribute('data-id').replace('parallel-line-', '');
-            const EXPECTEDSTROKE = EXPECTEDSCALE(lineRegion);
+            const lineCategory = line.getAttribute('data-id').replace('line-', '');
+            const EXPECTEDSTROKE = EXPECTEDSCALE(lineCategory);
             expect(line).toEqualAttribute('stroke', EXPECTEDSTROKE);
           });
         });
@@ -2137,7 +2132,7 @@ describe('<parallel-plot>', () => {
         const med: string = '4,2';
         const long: string = '8,2';
         const dashPatterns: any = ['', long, long + b + med, short + b + long + b + long, short + b + short + b + long];
-        const textureData: any = EXPECTEDDATA;
+        const textureData: any = moreCategoryData;
         it('should render line textures by default', async () => {
           // ARRANGE
           component.data = textureData;
@@ -2147,7 +2142,7 @@ describe('<parallel-plot>', () => {
           await page.waitForChanges();
 
           // ASSERT
-          const lines = page.doc.querySelectorAll('[data-testid=parallel-line]');
+          const lines = page.doc.querySelectorAll('[data-testid=line]');
           await asyncForEach(lines, async line => {
             flushTransitions(line); // flush transitions to trigger transitionEndAll
             await page.waitForChanges();
@@ -2167,7 +2162,7 @@ describe('<parallel-plot>', () => {
           await page.waitForChanges();
 
           // ASSERT
-          const lines = page.doc.querySelectorAll('[data-testid=parallel-line]');
+          const lines = page.doc.querySelectorAll('[data-testid=line]');
           await asyncForEach(lines, async line => {
             flushTransitions(line); // flush transitions to trigger transitionEndAll
             await page.waitForChanges();
@@ -2190,7 +2185,7 @@ describe('<parallel-plot>', () => {
           await page.waitForChanges();
 
           // ASSERT
-          const lines = page.doc.querySelectorAll('[data-testid=parallel-line]');
+          const lines = page.doc.querySelectorAll('[data-testid=line]');
           await asyncForEach(lines, async line => {
             flushTransitions(line); // flush transitions to trigger transitionEndAll
             await page.waitForChanges();
@@ -2262,7 +2257,7 @@ describe('<parallel-plot>', () => {
         });
       });
       describe('dotRadius', () => {
-        it('should have dot radius of 4 + 0.5 = 4.5 on markers by default', async () => {
+        it('should have dot radius of 4 + 1 = 5 on markers by default', async () => {
           // ACT
           page.root.appendChild(component);
           await page.waitForChanges();
@@ -2270,10 +2265,10 @@ describe('<parallel-plot>', () => {
           // ASSERT
           const markers = page.doc.querySelectorAll('[data-testid=marker]');
           markers.forEach(marker => {
-            expect(marker).toEqualAttribute('r', 4.5);
+            expect(marker).toEqualAttribute('r', 5);
           });
         });
-        it('should have dot radius of 7 + 0.5 = 7.5 on markers on load', async () => {
+        it('should have dot radius of 7 + 1 = 8 on markers on load', async () => {
           // ARRANGE
           component.dotRadius = 7;
 
@@ -2284,10 +2279,10 @@ describe('<parallel-plot>', () => {
           // ASSERT
           const markers = page.doc.querySelectorAll('[data-testid=marker]');
           markers.forEach(marker => {
-            expect(marker).toEqualAttribute('r', 7.5);
+            expect(marker).toEqualAttribute('r', 8);
           });
         });
-        it('should have dot radius of 3 + 0.5 = 3.5 on markers on update', async () => {
+        it('should have dot radius of 3 + 1 = 4 on markers on update', async () => {
           // ACT LOAD
           page.root.appendChild(component);
           await page.waitForChanges();
@@ -2299,25 +2294,25 @@ describe('<parallel-plot>', () => {
           // ASSERT
           const markers = page.doc.querySelectorAll('[data-testid=marker]');
           markers.forEach(marker => {
-            expect(marker).toEqualAttribute('r', 3.5);
+            expect(marker).toEqualAttribute('r', 4);
           });
         });
       });
       describe('strokeWidth', () => {
-        it('should have line strokeWidth of 1 by default', async () => {
+        it('should have line strokeWidth of 2 by default', async () => {
           // ACT
           page.root.appendChild(component);
           await page.waitForChanges();
 
           // ASSERT
-          const lines = page.doc.querySelectorAll('[data-testid=parallel-line]');
+          const lines = page.doc.querySelectorAll('[data-testid=line]');
           await asyncForEach(lines, async line => {
             flushTransitions(line); // flush transitions to trigger transitionEndAll
             await page.waitForChanges();
           });
 
           lines.forEach(line => {
-            expect(line).toEqualAttribute('stroke-width', 1);
+            expect(line).toEqualAttribute('stroke-width', 2);
           });
         });
         it('should have line strokeWidth of 5 when passed on load', async () => {
@@ -2329,7 +2324,7 @@ describe('<parallel-plot>', () => {
           await page.waitForChanges();
 
           // ASSERT
-          const lines = page.doc.querySelectorAll('[data-testid=parallel-line]');
+          const lines = page.doc.querySelectorAll('[data-testid=line]');
           await asyncForEach(lines, async line => {
             flushTransitions(line); // flush transitions to trigger transitionEndAll
             await page.waitForChanges();
@@ -2344,11 +2339,11 @@ describe('<parallel-plot>', () => {
           page.root.appendChild(component);
           await page.waitForChanges();
 
-          const lines = page.doc.querySelectorAll('[data-testid=parallel-line]');
+          const lines = page.doc.querySelectorAll('[data-testid=line]');
           await asyncForEach(lines, async line => {
             flushTransitions(line); // flush transitions to trigger transitionEndAll
             await page.waitForChanges();
-            expect(line).toEqualAttribute('stroke-width', 1);
+            expect(line).toEqualAttribute('stroke-width', 2);
           });
 
           // ACT UPDATE
