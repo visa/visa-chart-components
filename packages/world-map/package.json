@@ -20,7 +20,7 @@
     "start-dev": "stencil build --dev --watch --serve",
     "watch": "chokidar -d=4  '**/*.{tsx,ts,scss}' 'node_modules/@visa/visa-charts-utils/src' -i '/^src/(.*)/*.(d|spec|test|e2e).ts$|dist/(.*)/' -c 'npm run build'",
     "tslint-check": "tslint-config-prettier-check ./tslint.json",
-    "test": "stencil test --spec --no-cache --color --coverage",
+    "test": "stencil test --spec --no-cache --color --coverage --json --outputFile=./coverage/test-report.json",
     "test:es5-check": "es-check es5 'dist/*.js'",
     "update-snapshot": "jest --updateSnapshot --color"
   },
@@ -63,5 +63,12 @@
       "!**/**-projections.{ts}",
       "!**/topodata**.{ts}"
     ]
+  },
+  "jest-html-reporter": {
+    "pageTitle": "@visa/world-map",
+    "outputPath": "./coverage/test-report.html",
+    "executionMode": "reporter",
+    "sort": "status",
+    "statusIgnoreFilter": "pending,passed"
   }
 }

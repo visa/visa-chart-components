@@ -134,7 +134,7 @@ exports[`<circle-packing> rendered-html render should render with minimal props[
         This is the circle packing chart's subtitle
       </p>
       <div class="visa-viz-circle-packing-container" data-testid="chart-container">
-        <div aria-label="Circle Packing Title. This is the circle packing chart's subtitle.  Navigate into the chart area by pressing ENTER. ID: circle-packing-test" class="VCL-controller screen-reader-info" id="chart-area-circle-packing-test" role="application" tabindex="0">
+        <div aria-label="Circle Packing Title. This is the circle packing chart's subtitle.  Navigate into the chart area by pressing ENTER. ID: circle-packing-test" class="VCL-controller screen-reader-info" data-group="Country" id="chart-area-circle-packing-test" role="application" tabindex="0">
           Interactive circle-packing.
         </div>
         <svg class="vcl-svg" data-testid="root-svg" focusable="false" height="400" role="presentation" tabindex="-1" viewBox="0 0 400 400" width="400" style="overflow: hidden;">

@@ -167,12 +167,15 @@ export const interaction_clickStyle_default_load = {
   ) => {
     let useFilter = true;
     let fillStrokeOpacity = false;
+    let applyFlushTransitions = true;
     if (Object.keys(testProps).length) {
       Object.keys(testProps).forEach(testProp => {
         if (testProp === 'useFilter') {
           useFilter = testProps[testProp];
         } else if (testProp === 'fillStrokeOpacity') {
           fillStrokeOpacity = testProps[testProp];
+        } else if (testProp === 'applyFlushTransitions') {
+          applyFlushTransitions = testProps[testProp];
         } else if (testProp !== 'clickHighlight') {
           component[testProp] = testProps[testProp];
         }
@@ -189,9 +192,11 @@ export const interaction_clickStyle_default_load = {
     // GET MARKS SELECTED AND NOT
     const selectedMark = page.doc.querySelector(testSelector);
     const notSelectedMark = page.doc.querySelector(negTestSelector);
-    flushTransitions(selectedMark);
-    flushTransitions(notSelectedMark);
-    await page.waitForChanges();
+    if (applyFlushTransitions) {
+      flushTransitions(selectedMark);
+      flushTransitions(notSelectedMark);
+      await page.waitForChanges();
+    }
 
     // FIGURE OUT WHAT COLOR THEY ARE AND DETERMINE EXPECTED STROKE USING OUR UTIL
     const notSelectedMarkColor = checkURL(notSelectedMark)
@@ -204,8 +209,13 @@ export const interaction_clickStyle_default_load = {
           )
           .querySelector('rect')
           .getAttribute('fill')
+      : selectedMark.getAttribute('fill') === 'none'
+      ? selectedMark.getAttribute('stroke')
       : selectedMark.getAttribute('fill');
-    const expectedStrokeColor = getAccessibleStrokes(notSelectedMarkColor)[0];
+    const expectedStrokeColor =
+      selectedMark.getAttribute('fill') === 'none'
+        ? selectedMark.getAttribute('stroke')
+        : getAccessibleStrokes(notSelectedMarkColor)[0];
     const expectedScatterStrokeWidth = DEFAULTSYMBOLCLICKSTYLE.strokeWidth / component.dotRadius;
 
     // DETERMINE WHICH TYPE OF TEST WE ARE DOING (TEXTURE BASED FILTER OR NOT)
@@ -271,12 +281,15 @@ export const interaction_clickStyle_custom_load = {
     const EXPECTEDHOVEROPACITY = testProps['hoverOpacity'] ? testProps['hoverOpacity'] : CUSTOMHOVEROPACITY;
     let useFilter = true;
     let fillStrokeOpacity = false;
+    let applyFlushTransitions = true;
     if (Object.keys(testProps).length) {
       Object.keys(testProps).forEach(testProp => {
         if (testProp === 'useFilter') {
           useFilter = testProps[testProp];
         } else if (testProp === 'fillStrokeOpacity') {
           fillStrokeOpacity = testProps[testProp];
+        } else if (testProp === 'applyFlushTransitions') {
+          applyFlushTransitions = testProps[testProp];
         } else if (testProp !== 'clickStyle' && testProp !== 'hoverOpacity') {
           component[testProp] = testProps[testProp];
         }
@@ -295,9 +308,11 @@ export const interaction_clickStyle_custom_load = {
     // GET MARKS SELECTED AND NOT
     const selectedMark = page.doc.querySelector(testSelector);
     const notSelectedMark = page.doc.querySelector(negTestSelector);
-    flushTransitions(selectedMark);
-    flushTransitions(notSelectedMark);
-    await page.waitForChanges();
+    if (applyFlushTransitions) {
+      flushTransitions(selectedMark);
+      flushTransitions(notSelectedMark);
+      await page.waitForChanges();
+    }
 
     // FIGURE OUT WHAT COLOR THEY ARE AND DETERMINE EXPECTED STROKE USING OUR UTIL
     const expectedStrokeColor = getAccessibleStrokes(EXPECTEDCLICKSTYLE.color)[0];
@@ -337,7 +352,9 @@ export const interaction_clickStyle_custom_load = {
       expect(selectedMark).toEqualAttribute('stroke', expectedStrokeColor);
 
       // FILL COLOR TEST
-      expect(selectedMark).toEqualAttribute('fill', EXPECTEDCLICKSTYLE.color);
+      if (!(selectedMark.getAttribute('fill') === 'none')) {
+        expect(selectedMark).toEqualAttribute('fill', EXPECTEDCLICKSTYLE.color);
+      }
     }
 
     // HOVER OPACITY TEST
@@ -372,12 +389,15 @@ export const interaction_clickStyle_custom_update = {
     const EXPECTEDHOVEROPACITY = testProps['hoverOpacity'] ? testProps['hoverOpacity'] : CUSTOMHOVEROPACITY;
     let useFilter = true;
     let fillStrokeOpacity = false;
+    let applyFlushTransitions = true;
     if (Object.keys(testProps).length) {
       Object.keys(testProps).forEach(testProp => {
         if (testProp === 'useFilter') {
           useFilter = testProps[testProp];
         } else if (testProp === 'fillStrokeOpacity') {
           fillStrokeOpacity = testProps[testProp];
+        } else if (testProp === 'applyFlushTransitions') {
+          applyFlushTransitions = testProps[testProp];
         } else if (testProp !== 'clickStyle' && testProp !== 'hoverOpacity') {
           component[testProp] = testProps[testProp];
         }
@@ -391,17 +411,25 @@ export const interaction_clickStyle_custom_update = {
     page.root.appendChild(component);
     await page.waitForChanges();
 
+    const selectedMark = page.doc.querySelector(testSelector);
+    const notSelectedMark = page.doc.querySelector(negTestSelector);
+    if (applyFlushTransitions) {
+      flushTransitions(selectedMark);
+      flushTransitions(notSelectedMark);
+      await page.waitForChanges();
+    }
+
     // ACT UPDATE
     component.clickHighlight = [component.data[0]];
     await page.waitForChanges();
 
     // ASSERT
     // GET MARKS SELECTED AND NOT
-    const selectedMark = page.doc.querySelector(testSelector);
-    const notSelectedMark = page.doc.querySelector(negTestSelector);
-    flushTransitions(selectedMark);
-    flushTransitions(notSelectedMark);
-    await page.waitForChanges();
+    if (applyFlushTransitions) {
+      flushTransitions(selectedMark);
+      flushTransitions(notSelectedMark);
+      await page.waitForChanges();
+    }
 
     // FIGURE OUT WHAT COLOR THEY ARE AND DETERMINE EXPECTED STROKE USING OUR UTIL
     const expectedStrokeColor = getAccessibleStrokes(EXPECTEDCLICKSTYLE.color)[0];
@@ -441,7 +469,9 @@ export const interaction_clickStyle_custom_update = {
       expect(selectedMark).toEqualAttribute('stroke', expectedStrokeColor);
 
       // FILL COLOR TEST
-      expect(selectedMark).toEqualAttribute('fill', EXPECTEDCLICKSTYLE.color);
+      if (!(selectedMark.getAttribute('fill') === 'none')) {
+        expect(selectedMark).toEqualAttribute('fill', EXPECTEDCLICKSTYLE.color);
+      }
     }
 
     // HOVER OPACITY TEST
@@ -473,12 +503,15 @@ export const interaction_hoverStyle_default_load = {
   ) => {
     let useFilter = true;
     let fillStrokeOpacity = false;
+    let applyFlushTransitions = true;
     if (Object.keys(testProps).length) {
       Object.keys(testProps).forEach(testProp => {
         if (testProp === 'useFilter') {
           useFilter = testProps[testProp];
         } else if (testProp === 'fillStrokeOpacity') {
           fillStrokeOpacity = testProps[testProp];
+        } else if (testProp === 'applyFlushTransitions') {
+          applyFlushTransitions = testProps[testProp];
         } else if (testProp !== 'hoverHighlight') {
           component[testProp] = testProps[testProp];
         }
@@ -495,9 +528,11 @@ export const interaction_hoverStyle_default_load = {
     // GET MARKS SELECTED AND NOT
     const selectedMark = page.doc.querySelector(testSelector);
     const notSelectedMark = page.doc.querySelector(negTestSelector);
-    flushTransitions(selectedMark);
-    flushTransitions(notSelectedMark);
-    await page.waitForChanges();
+    if (applyFlushTransitions) {
+      flushTransitions(selectedMark);
+      flushTransitions(notSelectedMark);
+      await page.waitForChanges();
+    }
 
     // FIGURE OUT WHAT COLOR THEY ARE AND DETERMINE EXPECTED STROKE USING OUR UTIL
     const notSelectedMarkColor =
@@ -511,8 +546,13 @@ export const interaction_hoverStyle_default_load = {
             )
             .querySelector('rect')
             .getAttribute('fill')
+        : selectedMark.getAttribute('fill') === 'none'
+        ? selectedMark.getAttribute('stroke')
         : selectedMark.getAttribute('fill');
-    const expectedStrokeColor = getAccessibleStrokes(notSelectedMarkColor)[0];
+    const expectedStrokeColor =
+      selectedMark.getAttribute('fill') === 'none'
+        ? selectedMark.getAttribute('stroke')
+        : getAccessibleStrokes(notSelectedMarkColor)[0];
     const expectedScatterStrokeWidth = DEFAULTSYMBOLHOVERSTYLE.strokeWidth / component.dotRadius;
 
     // DETERMINE WHICH TYPE OF TEST WE ARE DOING (TEXTURE BASED FILTER OR NOT)
@@ -601,12 +641,15 @@ export const interaction_hoverStyle_custom_load = {
     const EXPECTEDHOVEROPACITY = testProps['hoverOpacity'] ? testProps['hoverOpacity'] : CUSTOMHOVEROPACITY;
     let useFilter = true;
     let fillStrokeOpacity = false;
+    let applyFlushTransitions = true;
     if (Object.keys(testProps).length) {
       Object.keys(testProps).forEach(testProp => {
         if (testProp === 'useFilter') {
           useFilter = testProps[testProp];
         } else if (testProp === 'fillStrokeOpacity') {
           fillStrokeOpacity = testProps[testProp];
+        } else if (testProp === 'applyFlushTransitions') {
+          applyFlushTransitions = testProps[testProp];
         } else if (testProp !== 'hoverStyle' && testProp !== 'hoverOpacity') {
           component[testProp] = testProps[testProp];
         }
@@ -625,9 +668,11 @@ export const interaction_hoverStyle_custom_load = {
     // GET MARKS SELECTED AND NOT
     const selectedMark = page.doc.querySelector(testSelector);
     const notSelectedMark = page.doc.querySelector(negTestSelector);
-    flushTransitions(selectedMark);
-    flushTransitions(notSelectedMark);
-    await page.waitForChanges();
+    if (applyFlushTransitions) {
+      flushTransitions(selectedMark);
+      flushTransitions(notSelectedMark);
+      await page.waitForChanges();
+    }
 
     // FIGURE OUT WHAT COLOR THEY ARE AND DETERMINE EXPECTED STROKE USING OUR UTIL
     const expectedStrokeColor = getAccessibleStrokes(EXPECTEDHOVERSTYLE.color)[0];
@@ -685,7 +730,9 @@ export const interaction_hoverStyle_custom_load = {
       expect(selectedMark).toEqualAttribute('stroke', expectedStrokeColor);
 
       // FILL COLOR TEST
-      expect(selectedMark).toEqualAttribute('fill', EXPECTEDHOVERSTYLE.color);
+      if (!(selectedMark.getAttribute('fill') === 'none')) {
+        expect(selectedMark).toEqualAttribute('fill', EXPECTEDHOVERSTYLE.color);
+      }
     }
     // HOVER OPACITY TEST
     if (fillStrokeOpacity) {
@@ -719,12 +766,15 @@ export const interaction_hoverStyle_custom_update = {
     const EXPECTEDHOVEROPACITY = testProps['hoverOpacity'] ? testProps['hoverOpacity'] : CUSTOMHOVEROPACITY;
     let useFilter = true;
     let fillStrokeOpacity = false;
+    let applyFlushTransitions = true;
     if (Object.keys(testProps).length) {
       Object.keys(testProps).forEach(testProp => {
         if (testProp === 'useFilter') {
           useFilter = testProps[testProp];
         } else if (testProp === 'fillStrokeOpacity') {
           fillStrokeOpacity = testProps[testProp];
+        } else if (testProp === 'applyFlushTransitions') {
+          applyFlushTransitions = testProps[testProp];
         } else if (testProp !== 'hoverStyle' && testProp !== 'hoverOpacity') {
           component[testProp] = testProps[testProp];
         }
@@ -738,17 +788,25 @@ export const interaction_hoverStyle_custom_update = {
     page.root.appendChild(component);
     await page.waitForChanges();
 
+    const selectedMark = page.doc.querySelector(testSelector);
+    const notSelectedMark = page.doc.querySelector(negTestSelector);
+    if (applyFlushTransitions) {
+      flushTransitions(selectedMark);
+      flushTransitions(notSelectedMark);
+      await page.waitForChanges();
+    }
+
     // ACT UPDATE
     component.hoverHighlight = component.data[0];
     await page.waitForChanges();
 
     // ASSERT
     // GET MARKS SELECTED AND NOT
-    const selectedMark = page.doc.querySelector(testSelector);
-    const notSelectedMark = page.doc.querySelector(negTestSelector);
-    flushTransitions(selectedMark);
-    flushTransitions(notSelectedMark);
-    await page.waitForChanges();
+    if (applyFlushTransitions) {
+      flushTransitions(selectedMark);
+      flushTransitions(notSelectedMark);
+      await page.waitForChanges();
+    }
 
     // FIGURE OUT WHAT COLOR THEY ARE AND DETERMINE EXPECTED STROKE USING OUR UTIL
     const expectedStrokeColor = getAccessibleStrokes(EXPECTEDHOVERSTYLE.color)[0];
@@ -806,7 +864,9 @@ export const interaction_hoverStyle_custom_update = {
       expect(selectedMark).toEqualAttribute('stroke', expectedStrokeColor);
 
       // FILL COLOR TEST
-      expect(selectedMark).toEqualAttribute('fill', EXPECTEDHOVERSTYLE.color);
+      if (!(selectedMark.getAttribute('fill') === 'none')) {
+        expect(selectedMark).toEqualAttribute('fill', EXPECTEDHOVERSTYLE.color);
+      }
     }
     // HOVER OPACITY TEST
     if (fillStrokeOpacity) {

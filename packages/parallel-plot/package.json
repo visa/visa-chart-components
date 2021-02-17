@@ -19,6 +19,9 @@
     "build": "stencil build",
     "start-dev": "stencil build --dev --watch --serve",
     "tslint-check": "tslint-config-prettier-check ./tslint.json",
+    "test": "stencil test --spec --no-cache --color --coverage --json --outputFile=./coverage/test-report.json",
+    "test:watch": "jest -watch",
+    "update-snapshot": "jest --updateSnapshot --color",
     "watch": "chokidar -d=4 '**/*.{tsx,ts,scss}' 'node_modules/@visa/visa-charts-utils/src' -i '/^src/(.*)/*.(d|spec|test|e2e).ts$|dist/(.*)/' -c 'npm run build'",
     "test:es5-check": "es-check es5 'dist/*.js'"
   },
@@ -48,16 +51,24 @@
     "@visa/visa-charts-utils-dev": "^3.3.3"
   },
   "jest": {
-    "transform": {
-      "^.+\\.(ts|tsx)$": "<rootDir>/node_modules/@stencil/core/testing/jest.preprocessor.js"
-    },
-    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(tsx?|jsx?)$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "json",
-      "jsx"
+    "preset": "@stencil/core/testing",
+    "transformIgnorePatterns": [
+      "/node_modules/(?!(@visa/charts-types)/)"
+    ],
+    "collectCoverageFrom": [
+      "**/*.{tsx,ts}",
+      "!**/node_modules/**",
+      "!**/*.d.ts",
+      "!**/*.{e2e.ts,spec.ts}",
+      "!**/(app-**).{tsx}",
+      "!**/**-values.{ts}"
     ]
+  },
+  "jest-html-reporter": {
+    "pageTitle": "@visa/parallel-plot",
+    "outputPath": "./coverage/test-report.html",
+    "executionMode": "reporter",
+    "sort": "status",
+    "statusIgnoreFilter": "pending,passed"
   }
 }

@@ -1480,7 +1480,6 @@ export const accessibility_keyboard_nav_generic_test = {
     expect(newFocusedFigure).toBeTruthy();
     expect(newFocusedFigure).toEqualText(nextSelectorAriaLabel);
     expect(newFocusedFigure).toEqualAttribute('aria-label', nextSelectorAriaLabel);
-    expect(markerReceiveFocus).toHaveClass('vcl-accessibility-focus-source');
 
     // IF THE MARKER RECEIVING FOCUS IS A GEOMETRY (E.G., NOT A G OR SVG) IT SHOULD BE CLASSED
     if (markerReceiveFocus.tagName !== 'g' && markerReceiveFocus.tagName !== 'svg') {
