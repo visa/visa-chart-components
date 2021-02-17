@@ -149,6 +149,10 @@ export class LineChart {
   @Prop({ mutable: true }) clickHighlight: object[] = LineChartDefaultValues.clickHighlight;
   @Prop({ mutable: true }) interactionKeys: string[];
 
+  // Testing (8/7)
+  @Prop() unitTest: boolean = false;
+  //  @Prop() debugMode: boolean = false;
+
   @Element()
   lineChartEl: HTMLElement;
   shouldValidateAccessibility: boolean = true;
@@ -246,6 +250,7 @@ export class LineChart {
   shouldValidateDataLabelAccessor: boolean = false;
   shouldEnterUpdateExit: boolean = false;
   shouldSetGlobalSelections: boolean = false;
+  shouldSetTestingAttributes: boolean = false;
   shouldSetLabelOpacity: boolean = false;
   shouldSetSeriesLabelOpacity: boolean = false;
   shouldSetLegendCursor: boolean = false;
@@ -299,6 +304,7 @@ export class LineChart {
     this.shouldUpdateInterpolationData = true;
     this.shouldSetColors = true;
     this.shouldSetGlobalSelections = true;
+    this.shouldSetTestingAttributes = true;
     this.shouldEnterUpdateExit = true;
     this.shouldUpdateTableData = true;
     this.shouldValidate = true;
@@ -817,6 +823,11 @@ export class LineChart {
     this.shouldUpdateLegendInteractivity = true;
   }
 
+  @Watch('unitTest')
+  unitTestWatcher(_newVal, _oldVal) {
+    this.shouldSetTestingAttributes = true;
+  }
+
   componentWillLoad() {
     // contrary to componentWillUpdate, this method appears safe to use for
     // any calculations we need. Keeping them here reduces future refactor,
@@ -868,6 +879,7 @@ export class LineChart {
       this.drawXGrid();
       this.drawYGrid();
       this.setGlobalSelections();
+      this.setTestingAttributes();
       this.enterLines();
       this.updateLines();
       this.exitLines();
@@ -965,6 +977,10 @@ export class LineChart {
       if (this.shouldSetGlobalSelections) {
         this.setGlobalSelections();
         this.shouldSetGlobalSelections = false;
+      }
+      if (this.shouldSetTestingAttributes) {
+        this.setTestingAttributes();
+        this.shouldSetTestingAttributes = false;
       }
       if (this.shouldUpdateXGrid) {
         this.drawXGrid();
@@ -1331,6 +1347,7 @@ export class LineChart {
       .append('svg');
 
     this.tooltipG = select(this.lineChartEl).select('.line-tooltip');
+    this.references = this.rootG.append('g').attr('class', 'line-reference-line-group');
   }
 
   reSetRoot() {
@@ -1414,6 +1431,88 @@ export class LineChart {
       this.enteringLabels = dataBoundToLabelChildren.enter().append('text');
       this.exitingLabels = dataBoundToLabelChildren.exit();
       this.updatingLabels = dataBoundToLabelChildren.merge(this.enteringLabels);
+    }
+  }
+
+  setTestingAttributes() {
+    if (this.unitTest) {
+      select(this.lineChartEl)
+        .select('.visa-viz-d3-line-container')
+        .attr('data-testid', 'chart-container');
+      select(this.lineChartEl)
+        .select('.line-main-title')
+        .attr('data-testid', 'main-title');
+      select(this.lineChartEl)
+        .select('.line-sub-title')
+        .attr('data-testid', 'sub-title');
+      this.svg.attr('data-testid', 'root-svg');
+      this.root.attr('data-testid', 'margin-container');
+      this.rootG.attr('data-testid', 'padding-container');
+      this.legendG.attr('data-testid', 'legend-container');
+      this.tooltipG.attr('data-testid', 'tooltip-container');
+      this.gridG.attr('data-testid', 'grid-group');
+
+      this.references.attr('data-testid', 'reference-line-group');
+
+      // add test attributes to lines and series labels
+      this.lineG.attr('data-testid', 'line-group');
+      this.update.attr('data-testid', 'line').attr('data-id', d => `line-${d.key}`);
+      this.seriesLabelG.attr('data-testid', 'line-series-label-container');
+      this.seriesLabelUpdate
+        .attr('data-testid', 'line-series-label')
+        .attr('data-id', d => `line-series-label-${d.key}`);
+
+      // add test atttributes to line colors
+      this.dotG.attr('data-testid', 'marker-group');
+      this.updateDotWrappers.attr('data-testid', 'marker-series-group').attr('data-id', d => `marker-series-${d.key}`);
+      this.updateDots
+        .attr('data-testid', 'marker')
+        .attr('data-id', d => `marker-${d[this.seriesAccessor]}-${d[this.ordinalAccessor]}`);
+
+      // add test attributes to labels
+      this.labels.attr('data-testid', 'dataLabel-group-container');
+      this.updatingLabelGroups.attr('data-testid', 'dataLabel-group').attr('data-id', d => `dataLabel-group-${d.key}`);
+      this.updatingLabels
+        .attr('data-testid', 'dataLabel')
+        .attr('data-id', d => `dataLabel-${d[this.seriesAccessor]}-${d[this.ordinalAccessor]}`);
+
+      this.svg.select('defs').attr('data-testid', 'pattern-defs');
+    } else {
+      select(this.lineChartEl)
+        .select('.visa-viz-d3-line-container')
+        .attr('data-testid', null);
+      select(this.lineChartEl)
+        .select('.line-main-title')
+        .attr('data-testid', null);
+      select(this.lineChartEl)
+        .select('.line-sub-title')
+        .attr('data-testid', null);
+      this.svg.attr('data-testid', null);
+      this.root.attr('data-testid', null);
+      this.rootG.attr('data-testid', null);
+      this.legendG.attr('data-testid', null);
+      this.tooltipG.attr('data-testid', null);
+      this.gridG.attr('data-testid', null);
+
+      this.references.attr('data-testid', null);
+
+      // add test attributes to lines and series labels
+      this.lineG.attr('data-testid', null);
+      this.update.attr('data-testid', null).attr('data-id', null);
+      this.seriesLabelG.attr('data-testid', null);
+      this.seriesLabelUpdate.attr('data-testid', null).attr('data-id', null);
+
+      // add test atttributes to line colors
+      this.dotG.attr('data-testid', null);
+      this.updateDotWrappers.attr('data-testid', null).attr('data-id', null);
+      this.updateDots.attr('data-testid', null).attr('data-id', null);
+
+      // add test attributes to labels
+      this.labels.attr('data-testid', null);
+      this.updatingLabelGroups.attr('data-testid', null).attr('data-id', null);
+      this.updatingLabels.attr('data-testid', null).attr('data-id', null);
+
+      this.svg.select('defs').attr('data-testid', null);
     }
   }
 
@@ -1724,7 +1823,7 @@ export class LineChart {
             this.hoverOpacity,
             this.hoverHighlight,
             this.clickHighlight,
-            this.interactionKeys
+            this.innerInteractionKeys
           );
         });
     } else {
@@ -2440,7 +2539,7 @@ export class LineChart {
             this.hoverOpacity,
             this.hoverHighlight,
             this.clickHighlight,
-            this.interactionKeys
+            this.innerInteractionKeys
           );
         });
       }
@@ -2471,10 +2570,6 @@ export class LineChart {
   }
 
   drawReferenceLines() {
-    if (!this.references) {
-      this.references = this.rootG.append('g').attr('class', 'line-reference-line-group');
-    }
-
     const currentReferences = this.references.selectAll('g').data(this.referenceLines, d => d.label);
 
     const enterReferences = currentReferences
@@ -2940,8 +3035,8 @@ export class LineChart {
     return (
       <div class="o-layout">
         <div class="o-layout--chart">
-          <this.topLevel data-testid="main-title">{this.mainTitle}</this.topLevel>
-          <this.bottomLevel class="visa-ui-text--instructions" data-testid="sub-title">
+          <this.topLevel class="line-main-title vcl-main-title">{this.mainTitle}</this.topLevel>
+          <this.bottomLevel class="visa-ui-text--instructions line-sub-title vcl-sub-title">
             {this.subTitle}
           </this.bottomLevel>
           <div class="line-legend vcl-legend" style={{ display: this.legend.visible ? 'block' : 'none' }} />
@@ -2955,6 +3050,7 @@ export class LineChart {
             padding={this.padding}
             margin={this.margin}
             hideDataTable={this.accessibility.hideDataTableButton}
+            unitTest={this.unitTest}
           />
         </div>
       </div>

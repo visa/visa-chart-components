@@ -166,15 +166,15 @@ exports[`<dumbbell-plot> rendered-html render should render with minimal props[d
         This is the dumbbell plot's subtitle
       </p>
       <div aria-hidden="true" class="dumbbell-legend vcl-legend" role="presentation" style="display: none;">
-        <svg aria-hidden="true" class="vcl-svg" data-testid="legend-container" focusable="false" height="0" opacity="0" role="presentation" viewBox="0 0 635 0" width="635" style="display: none;">
-          <g class="legend-padding-wrapper" transform="translate(1,1)">
+        <svg aria-hidden="true" class="vcl-svg" data-testid="legend-container" data-type="bar" focusable="false" height="0" opacity="0" role="presentation" viewBox="0 0 642 0" width="642" style="display: none;">
+          <g class="legend-padding-wrapper" transform="translate(4,4)">
             <g class="bar legend">
-              <rect class="bar-rect" fill="#7c99b1" height="20" opacity="0" stroke="#35495a" stroke-width="1" width="20"></rect>
-              <text class="bar-text" dx=".2em" dy="16" opacity="0"></text>
+              <rect class="bar-rect" data-base-color="#7c99b1" data-fill="#7c99b1" data-stroke="#35495a" data-stroke-width="1" fill="#7c99b1" height="20" opacity="1" stroke="#35495a" stroke-dasharray="none" stroke-width="1" width="20" style="fill: #7c99b1; stroke: #35495a; stroke-width: 1; stroke-dasharray: none;"></rect>
+              <text class="bar-text" dx=".2em" dy="16" opacity="1"></text>
             </g>
             <g class="bar legend">
-              <rect class="bar-rect" fill="#cacae7" height="20" opacity="0" stroke="#6868ba" stroke-width="1" width="20"></rect>
-              <text class="bar-text" dx=".2em" dy="16" opacity="0"></text>
+              <rect class="bar-rect" data-base-color="#cacae7" data-fill="#cacae7" data-stroke="#6868ba" data-stroke-width="1" fill="#cacae7" height="20" opacity="1" stroke="#6868ba" stroke-dasharray="none" stroke-width="1" width="20" style="fill: #cacae7; stroke: #6868ba; stroke-width: 1; stroke-dasharray: none;"></rect>
+              <text class="bar-text" dx=".2em" dy="16" opacity="1"></text>
             </g>
           </g>
         </svg>

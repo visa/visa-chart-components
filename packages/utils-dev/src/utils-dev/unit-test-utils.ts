@@ -48,6 +48,9 @@ export const flushTransitions = (jsDomEle, i?) => {
 
   // reset timers when done
   performance.now = now;
+
+  // remove transitions after running them
+  jsDomEle['__transition'] = undefined;
 };
 
 export const parseTransform = a => {

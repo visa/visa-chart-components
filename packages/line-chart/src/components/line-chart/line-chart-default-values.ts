@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2021 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -35,7 +35,7 @@ export class LineChartDefaultValues {
   static readonly yAxis = propDefaultValues.yAxis;
   static readonly showBaselineX = propDefaultValues.showBaselineTrue;
   static readonly wrapLabel = propDefaultValues.wrapLabel;
-  static readonly colorPalette = propDefaultValues.colorPaletteDiverging;
+  static readonly colorPalette = propDefaultValues.colorPaletteCategorical;
 
   static readonly hoverStyle = propDefaultValues.hoverStyle;
   static readonly clickStyle = propDefaultValues.clickStyle;
