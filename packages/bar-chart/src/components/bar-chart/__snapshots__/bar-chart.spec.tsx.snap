@@ -143,17 +143,17 @@ exports[`<bar-chart> rendered-html render should render with minimal props[data,
         This is the bar chart subtitle
       </p>
       <div aria-hidden="true" class="bar-legend vcl-legend" role="presentation" style="display: none;">
-        <svg aria-hidden="true" class="vcl-svg" data-testid="legend-container" focusable="false" height="0" opacity="0" role="presentation" viewBox="0 0 659.5 0" width="659.5" style="display: none;">
-          <g class="legend-padding-wrapper" transform="translate(1,1)">
+        <svg aria-hidden="true" class="vcl-svg" data-testid="legend-container" data-type="bar" focusable="false" height="0" opacity="0" role="presentation" viewBox="0 0 666.5 0" width="666.5" style="display: none;">
+          <g class="legend-padding-wrapper" transform="translate(4,4)">
             <g class="bar legend">
-              <rect class="bar-rect" height="20" opacity="0" width="20"></rect>
-              <text class="bar-text" dx=".2em" dy="16" opacity="0"></text>
+              <rect class="bar-rect" height="20" opacity="1" stroke="" stroke-dasharray="none" stroke-width="1" width="20" style="stroke-width: 1; stroke-dasharray: none;"></rect>
+              <text class="bar-text" dx=".2em" dy="16" opacity="1"></text>
             </g>
           </g>
         </svg>
       </div>
       <div class="visa-viz-d3-bar-container" data-testid="chart-container">
-        <div aria-label="This is bar chart title. This is the bar chart subtitle.  Navigate into the chart area by pressing ENTER. ID: bar-chart-unit-test" class="VCL-controller screen-reader-info" id="chart-area-bar-chart-unit-test" role="application" tabindex="0">
+        <div aria-label="This is bar chart title. This is the bar chart subtitle.  Navigate into the chart area by pressing ENTER. ID: bar-chart-unit-test" class="VCL-controller screen-reader-info" data-group id="chart-area-bar-chart-unit-test" role="application" tabindex="0">
           Interactive bar-chart.
         </div>
         <svg class="vcl-svg" data-testid="root-svg" focusable="false" height="325" role="presentation" tabindex="-1" viewBox="0 0 675 325" width="675" style="overflow: hidden;">

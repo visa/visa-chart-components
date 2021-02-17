@@ -137,12 +137,17 @@ describe('<bar-chart>', () => {
           //   nextTestSelector: '[data-testid=bar][data-id=bar-Apr-17]',
           //   keyDownObject: { key: 'Enter', code: 'Enter', keyCode: 13 }
           // },
-          // accessibility_keyboard_nav_group_esc_exit: {
-          //   name: 'keyboard nav: group - escape will exit group',
-          //   testSelector: '[data-testid=bar][data-id=bar-Apr-17]',
-          //   nextTestSelector: '[data-testid=bar-group]',
-          //   keyDownObject: { key: 'Escape', code: 'Escape', keyCode: 27 }
-          // },
+          accessibility_keyboard_nav_group_esc_exit: {
+            name: 'keyboard nav: group - escape will exit group',
+            testSelector: '[data-testid=bar][data-id=bar-Apr-17]',
+            nextTestSelector: '[data-testid=bar-group]',
+            keyDownObject: { key: 'Escape', code: 'Escape', keyCode: 27 },
+            testProps: {
+              selectorAriaLabel: 'month Apr-17. value 1.4m. Bar 1 of 12.',
+              nextSelectorAriaLabel: 'Bar group which contains 12 interactive bars.',
+              accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true }
+            }
+          },
           accessibility_keyboard_nav_right_arrow: {
             name: 'keyboard nav: sibling - right arrow goes to next',
             testSelector: '[data-testid=bar][data-id=bar-Apr-17]',
@@ -296,7 +301,9 @@ describe('<bar-chart>', () => {
                 : '[data-testid=bar][data-id=bar-Apr-17]'
               : unitTestAccessibility[test].testSelector;
           const innerNextTestSelector =
-            unitTestAccessibility[test].nextTestSelector === '[data-id=mark-id]'
+            unitTestAccessibility[test].nextTestSelector === '[data-testid=svg]'
+              ? '[data-testid=root-svg]'
+              : unitTestAccessibility[test].nextTestSelector === '[data-id=mark-id]'
               ? accessibilityTestMarks[test]
                 ? accessibilityTestMarks[test].nextTestSelector
                 : '[data-testid=bar][data-id=bar-May-17]'
@@ -305,7 +312,7 @@ describe('<bar-chart>', () => {
             // run keyboard nav test for each scenario above
             // skipping these by default as the target.focus() code in applyAccessibility breaks them
             Object.keys(accessibilityTestMarks).forEach(keyboardTest => {
-              it.skip(`${unitTestAccessibility[test].prop}: ${accessibilityTestMarks[keyboardTest].name}`, () =>
+              it(`${unitTestAccessibility[test].prop}: ${accessibilityTestMarks[keyboardTest].name}`, () =>
                 unitTestAccessibility[test].testFunc(
                   component,
                   page,
@@ -332,12 +339,19 @@ describe('<bar-chart>', () => {
                 innerNextTestSelector
               ));
             // skipping these by default as the target.focus() code in applyAccessibility breaks them
-          } else if (
-            test === 'accessibility_focus_marker_style' ||
-            test === 'accessibility_focus_group_style' ||
-            test === 'accessibility_keyboard_selection_test'
-          ) {
+          } else if (test === 'accessibility_focus_marker_style') {
             it.skip(`${unitTestAccessibility[test].prop}: ${unitTestAccessibility[test].name}`, () =>
+              unitTestAccessibility[test].testFunc(
+                component,
+                page,
+                innerTestProps,
+                innerTestSelector,
+                innerNextTestSelector
+              ));
+          } else if (
+            test === 'accessibility_focus_marker_style' // update this test to check out just one of them
+          ) {
+            it(`${unitTestAccessibility[test].prop}: ${unitTestAccessibility[test].name}`, () =>
               unitTestAccessibility[test].testFunc(
                 component,
                 page,
@@ -358,60 +372,6 @@ describe('<bar-chart>', () => {
           }
         });
       });
-
-      // focus - recevies focus indicator
-      // blur - focus indicator
-      // group/bar - left/right, but wait on the up/down
-      // keys could change
-      // spacebar for selection/click event
-      // describe.only('keyboard focus indicator', () => {
-      //   it('chart entry', async () => {
-      //     // ARRANGE
-      //     const mockFocusEvent = new Event('focus');
-      //     const mockKeyboardEvent = new KeyboardEvent('keydown', { key: "ArrowRight", code: "ArrowRight", keyCode: 39 });
-      //     const clonedAttibutes = ['x','y','height','width'];
-
-      //     // ACT
-      //     page.root.appendChild(component);
-      //     await page.waitForChanges();
-
-      //     // SELECT THE BAR GROUP AND MOCK THE OWNER SVG ELEMENT SINCE JSDOM DOESN'T HAVE THIS
-      //     const ownerSVG = page.root.querySelector('[data-testid=chart-container] svg');
-      //     const barGroup = page.root.querySelector('[data-testid=bar-group]');
-      //     Object.defineProperty(barGroup, 'ownerSVGElement', {
-      //       get: () => ownerSVG,
-      //       set: () => {} // tslint:disable-line: no-empty
-      //     });
-
-      //     // ACT FOCUS
-      //     const markerToFocus = page.root.querySelector('[data-id=bar-Apr-17]');
-      //     markerToFocus.dispatchEvent(mockFocusEvent);
-
-      //     // NOW THAT WE ARE FOCUSED MOCK .focus() on mark to receive focus
-      //     const markerReceiveFocus = page.root.querySelector('[data-id=bar-May-17]');
-      //     markerReceiveFocus['focus'] = () => markerReceiveFocus.dispatchEvent(mockFocusEvent); // tslint:disable-line: no-string-literal
-
-      //     // FIRE THE KEYBOARD EVENT
-      //     markerToFocus.dispatchEvent(mockKeyboardEvent);
-      //     await page.waitForChanges();
-
-      //     // NOW WE CAN DETERMINE WHETHER THE NEXT SIBLING IS FOCUSED
-      //     // FIND FOCUS MARKER CONTAINER
-      //     const focusMarkerG = page.root.querySelector('g.vcl-accessibility-focus-highlight');
-
-      //     // ASSERT
-      //     expect(markerToFocus).not.toHaveClass('vcl-accessibility-focus-source');
-      //     expect(markerReceiveFocus).toHaveClass('vcl-accessibility-focus-source');
-      //     expect(focusMarkerG).toBeTruthy();
-      //     expect(focusMarkerG.childNodes.length).toEqual(3);
-
-      //     // check clone is over the newly focused marker vs the original
-      //     const clonedMarker = focusMarkerG.childNodes[2];
-      //     clonedAttibutes.forEach(attr => {
-      //       expect(clonedMarker).toEqualAttribute(attr, markerReceiveFocus.getAttribute(attr));
-      //     });
-      //   });
-      // });
 
       describe('validation', () => {
         it('refer to generic results above for accessibility validation tests', () => {

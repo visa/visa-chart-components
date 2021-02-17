@@ -215,17 +215,17 @@ describe('<scatter-plot>', () => {
               selectorAriaLabel: 'D. 11. 8.8k. Point 1 of 4.',
               nextSelectorAriaLabel: 'A. 1. 2.7k. Point 1 of 3.'
             }
+          },
+          accessibility_keyboard_nav_esc_to_group: {
+            name: 'keyboard nav: group - escape will move up to group',
+            testSelector: '[data-testid=marker][data-id=marker-A-1-2700]',
+            nextTestSelector: '[data-testid=marker-series-group][data-id=marker-series-A]',
+            keyDownObject: { key: 'Escape', code: 'Escape', keyCode: 27 },
+            testProps: {
+              selectorAriaLabel: 'A. 1. 2.7k. Point 1 of 3.',
+              nextSelectorAriaLabel: 'A. Scatter group 1 of 4 which contains 3 interactive points.'
+            }
           }
-          // accessibility_keyboard_nav_esc_to_group: {
-          //   name: 'keyboard nav: group - escape will move up to group',
-          //   testSelector: '[data-testid=marker][data-id=marker-A-1-2700]',
-          //   nextTestSelector: '[data-testid=marker-series-group][data-id=marker-series-A]',
-          //   keyDownObject: { key: 'Escape', code: 'Escape', keyCode: 27 },
-          //   testProps: {
-          //     selectorAriaLabel: 'A. 1. 2.7k. Point 1 of 3.',
-          //     nextSelectorAriaLabel: 'A. Scatter group 1 of 4 which contains 3 interactive points.'
-          //   }
-          // },
           // accessibility_keyboard_nav_enter_group: {
           //   name: 'keyboard nav: group - enter will move into to group',
           //   testSelector: '[data-testid=marker-series-group][data-id=marker-series-A]',

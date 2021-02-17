@@ -158,29 +158,29 @@ exports[`<scatter-plot> rendered-html render should render with minimal props[da
         This is the scatter plot's subtitle
       </p>
       <div aria-hidden="true" class="scatter-legend vcl-legend" role="presentation" style="display: block;">
-        <svg aria-hidden="true" class="vcl-svg" data-testid="legend-container" focusable="false" height="21" opacity="1" role="presentation" viewBox="0 0 635 21" width="635" style="padding-left: 66.5px; padding-top: 20px;">
-          <g class="legend-padding-wrapper" transform="translate(3,1)">
+        <svg aria-hidden="true" class="vcl-svg" data-testid="legend-container" data-type="scatter" focusable="false" height="28" opacity="1" role="presentation" viewBox="0 0 642 28" width="642" style="padding-left: 66.5px; padding-top: 20px;">
+          <g class="legend-padding-wrapper" transform="translate(7,4)">
             <g class="legend">
-              <path fill="#7c99b1" opacity="0" stroke="#35495a" stroke-width="0.25"></path>
-              <text class="key-text" dx=".2em" dy="13" opacity="0"></text>
+              <path data-base-color="#35495a" data-fill="#7c99b1" data-stroke="#35495a" data-stroke-width="1" fill="#7c99b1" opacity="1" stroke="#35495a" stroke-dasharray="none" stroke-width="0.25" style="fill: #7c99b1; stroke: #35495a; stroke-width: 0.25; stroke-dasharray: none;"></path>
+              <text class="key-text" dx=".2em" dy="13" opacity="1"></text>
             </g>
             <g class="legend">
-              <path fill="#cacae7" opacity="0" stroke="#6868ba" stroke-width="0.25"></path>
-              <text class="key-text" dx=".2em" dy="13" opacity="0"></text>
+              <path data-base-color="#6868ba" data-fill="#cacae7" data-stroke="#6868ba" data-stroke-width="1" fill="#cacae7" opacity="1" stroke="#6868ba" stroke-dasharray="none" stroke-width="0.25" style="fill: #cacae7; stroke: #6868ba; stroke-width: 0.25; stroke-dasharray: none;"></path>
+              <text class="key-text" dx=".2em" dy="13" opacity="1"></text>
             </g>
             <g class="legend">
-              <path fill="#abb798" opacity="0" stroke="#576245" stroke-width="0.25"></path>
-              <text class="key-text" dx=".2em" dy="13" opacity="0"></text>
+              <path data-base-color="#576245" data-fill="#abb798" data-stroke="#576245" data-stroke-width="1" fill="#abb798" opacity="1" stroke="#576245" stroke-dasharray="none" stroke-width="0.25" style="fill: #abb798; stroke: #576245; stroke-width: 0.25; stroke-dasharray: none;"></path>
+              <text class="key-text" dx=".2em" dy="13" opacity="1"></text>
             </g>
             <g class="legend">
-              <path fill="#a19491" opacity="0" stroke="#504644" stroke-width="0.25"></path>
-              <text class="key-text" dx=".2em" dy="13" opacity="0"></text>
+              <path data-base-color="#504644" data-fill="#a19491" data-stroke="#504644" data-stroke-width="1" fill="#a19491" opacity="1" stroke="#504644" stroke-dasharray="none" stroke-width="0.25" style="fill: #a19491; stroke: #504644; stroke-width: 0.25; stroke-dasharray: none;"></path>
+              <text class="key-text" dx=".2em" dy="13" opacity="1"></text>
             </g>
           </g>
         </svg>
       </div>
       <div class="visa-viz-d3-scatter-container" data-testid="chart-container">
-        <div aria-label="Scatter Plot Title. This is the scatter plot's subtitle.  Navigate into the chart area by pressing ENTER. ID: scatter-plot-unit-test" class="VCL-controller screen-reader-info" id="chart-area-scatter-plot-unit-test" role="application" tabindex="0">
+        <div aria-label="Scatter Plot Title. This is the scatter plot's subtitle.  Navigate into the chart area by pressing ENTER. ID: scatter-plot-unit-test" class="VCL-controller screen-reader-info" data-group="group" id="chart-area-scatter-plot-unit-test" role="application" tabindex="0">
           Interactive scatter-plot.
         </div>
         <svg class="vcl-svg" data-testid="root-svg" focusable="false" height="300" role="presentation" tabindex="-1" viewBox="0 0 650 300" width="650" style="overflow: hidden;">
