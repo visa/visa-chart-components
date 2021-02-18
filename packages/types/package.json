@@ -1,6 +1,6 @@
 {
   "name": "@visa/charts-types",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Types for charts lib",
   "license": "SEE LICENCE IN LICENSE",
   "main": "dist/index.js",

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.1](https://github.com/visa/visa-chart-components/compare/@visa/bar-chart@4.1.0...@visa/bar-chart@4.1.1) (2021-02-18)
+
+
+### Bug Fixes
+
+* version bump bar-chart for npm deployment ([2adf7f3](https://github.com/visa/visa-chart-components/commit/2adf7f3a36920c7ca4c7a2dac325a5a67cf092d1))
+
+
+
+
+
 # [4.1.0](https://github.com/visa/visa-chart-components/compare/@visa/bar-chart@4.0.2...@visa/bar-chart@4.1.0) (2021-02-09)
 
 
