@@ -1,6 +1,6 @@
 {
   "name": "@visa/pareto-chart",
-  "version": "4.0.3",
+  "version": "4.0.4",
   "description": "pareto-chart component",
   "license": "SEE LICENCE IN LICENSE",
   "module": "dist/index.mjs",
@@ -42,7 +42,7 @@
     "uuid": "7.0.0"
   },
   "devDependencies": {
-    "@visa/visa-charts-utils-dev": "^3.3.3"
+    "@visa/visa-charts-utils-dev": "^3.3.4"
   },
   "jest": {
     "transform": {
