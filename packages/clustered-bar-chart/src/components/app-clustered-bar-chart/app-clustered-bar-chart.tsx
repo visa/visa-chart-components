@@ -23,6 +23,12 @@ export class AppClusteredBarChart {
   @State() legendLabels: any = [];
   @State() tooltipAccessor: any = 'item';
   @State() layout: string = 'vertical';
+  @State() accessibility: any = {
+    hideStrokes: false,
+    includeDataKeyNames: true,
+    keyboardNavConfig: { disabled: false }
+  };
+  @State() suppressEvents: boolean = false;
 
   @Element()
   appEl: HTMLElement;
@@ -215,6 +221,24 @@ export class AppClusteredBarChart {
   changeValueAccessor() {
     this.valueAccessor = this.valueAccessor !== 'value' ? 'value' : 'otherValue';
   }
+  changeAccessElements() {
+    this.accessibility = {
+      ...this.accessibility,
+      elementsAreInterface: !this.accessibility.elementsAreInterface
+    };
+  }
+  changeKeyNav() {
+    const keyboardNavConfig = {
+      disabled: !this.accessibility.keyboardNavConfig.disabled
+    };
+    this.accessibility = {
+      ...this.accessibility,
+      keyboardNavConfig
+    };
+  }
+  toggleSuppress() {
+    this.suppressEvents = !this.suppressEvents;
+  }
 
   changeGroupAccessor() {
     this.groupAccessor = this.groupAccessor !== 'year' ? 'year' : 'otherCategory';
@@ -235,6 +259,27 @@ export class AppClusteredBarChart {
     return (
       <div>
         <div>
+          <button
+            onClick={() => {
+              this.changeAccessElements();
+            }}
+          >
+            change elementsAreInterface
+          </button>
+          <button
+            onClick={() => {
+              this.toggleSuppress();
+            }}
+          >
+            toggle event suppression
+          </button>
+          <button
+            onClick={() => {
+              this.changeKeyNav();
+            }}
+          >
+            toggle keyboard nav
+          </button>
           <button
             onClick={() => {
               this.changeData();
@@ -325,22 +370,8 @@ export class AppClusteredBarChart {
           onHoverFunc={d => this.onHoverFunc(d)}
           onMouseOutFunc={() => this.onMouseOut()}
           showTooltip={true}
-          accessibility={{
-            includeDataKeyNames: true,
-            elementDescriptionAccessor: 'note', // see Indonesia above
-            longDescription:
-              'This is a chart template that was made to showcase some of the capabilities of Visa Chart Components',
-            contextExplanation: "This chart displays three arbitrary groups' values over 5 years",
-            executiveSummary: 'Groups A and B ended 2016 in a deficit but saw dramatic growth by 2020',
-            purpose:
-              'The purpose of this chart template is to provide an example of a clustered bar chart with negative values',
-            structureNotes:
-              'The bar clusters are sorted chronologically by year. The color of each bar communicates what group they belong to. ',
-            statisticalNotes: 'This chart is using dummy data',
-            onChangeFunc: d => {
-              this.onChangeFunc(d);
-            }
-          }}
+          accessibility={this.accessibility}
+          suppressEvents={this.suppressEvents}
         />
         {/* <clustered-bar-chart
           mainTitle={'Clustered Bar Chart Default'}

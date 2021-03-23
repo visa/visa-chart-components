@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2021 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -31,6 +31,19 @@ export class AppPieChart {
   @State() valueAccessor: any = 'value';
   @State() refData: any;
   @State() edgeline: any = true;
+  @State() access: any = {
+    includeDataKeyNames: true,
+    longDescription:
+      'This is a chart template that was made to showcase some of the capabilities of Visa Chart Components',
+    contextExplanation:
+      'This chart current data is determined by the Change Data button above while the props used are set in the props controls below.',
+    purpose:
+      'The purpose of this chart template is to provide an example of how to build a basic pie chart using the chart library',
+    statisticalNotes: 'This chart is using dummy data.',
+    disableValidation: false,
+    keyboardNavConfig: { disabled: false }
+  };
+  @State() suppressEvents: boolean = false;
 
   refDataStorage: any = [
     [{ label: 'Dining', value: '6931260' }],
@@ -69,17 +82,6 @@ export class AppPieChart {
     ]
   ];
   dataLabel: any = { visible: true, placement: 'middle', labelAccessor: 'value', format: 'normalized' };
-  access: any = {
-    includeDataKeyNames: true,
-    longDescription:
-      'This is a chart template that was made to showcase some of the capabilities of Visa Chart Components',
-    contextExplanation:
-      'This chart current data is determined by the Change Data button above while the props used are set in the props controls below.',
-    purpose:
-      'The purpose of this chart template is to provide an example of how to build a basic pie chart using the chart library',
-    statisticalNotes: 'This chart is using dummy data.',
-    disableValidation: false
-  };
   ref = [{ label: 'PY Share', value: '3396000' }];
   style = { color: 'supp_purple' };
 
@@ -131,6 +133,24 @@ export class AppPieChart {
   changeData() {
     this.stateTrigger = this.stateTrigger < this.dataStorage.length - 1 ? this.stateTrigger + 1 : 0;
     this.data = this.dataStorage[this.stateTrigger];
+  }
+  changeAccessElements() {
+    this.access = {
+      ...this.access,
+      elementsAreInterface: !this.access.elementsAreInterface
+    };
+  }
+  changeKeyNav() {
+    const keyboardNavConfig = {
+      disabled: !this.access.keyboardNavConfig.disabled
+    };
+    this.access = {
+      ...this.access,
+      keyboardNavConfig
+    };
+  }
+  toggleSuppress() {
+    this.suppressEvents = !this.suppressEvents;
   }
 
   changeDimension() {
@@ -189,6 +209,27 @@ export class AppPieChart {
       <div>
         <button
           onClick={() => {
+            this.changeAccessElements();
+          }}
+        >
+          change elementsAreInterface
+        </button>
+        <button
+          onClick={() => {
+            this.toggleSuppress();
+          }}
+        >
+          toggle event suppression
+        </button>
+        <button
+          onClick={() => {
+            this.changeKeyNav();
+          }}
+        >
+          toggle keyboard nav
+        </button>
+        <button
+          onClick={() => {
             this.changeData();
           }}
         >
@@ -245,6 +286,7 @@ export class AppPieChart {
             centerSubTitle={'chart chart chart'}
             centerTitle={'Pie'}
             accessibility={this.access}
+            suppressEvents={this.suppressEvents}
             height={this.height}
             width={this.width}
             padding={this.padding}

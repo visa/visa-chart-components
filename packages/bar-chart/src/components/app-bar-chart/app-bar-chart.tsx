@@ -43,6 +43,7 @@ export class AppBarChart {
   @State() ordinalAccessor: any = 'country';
   @State() hoverElementTest: any = '';
   @State() clickElementTest: any = [];
+  @State() suppressEvents: boolean = false;
   @State() accessibility: any = {
     elementDescriptionAccessor: 'note', // see Indonesia above
     longDescription:
@@ -58,9 +59,10 @@ export class AppBarChart {
     onChangeFunc: d => {
       this.onChangeFunc(d);
     },
-    hideDataTableButton: true,
+    hideDataTableButton: false,
     elementsAreInterface: true,
-    disableValidation: true
+    disableValidation: false,
+    keyboardNavConfig: { disabled: false }
   };
   @State() annotations: any = [
     {
@@ -404,11 +406,25 @@ export class AppBarChart {
           };
     this.width = this.width === 800 ? 700 : 800;
   }
-  changeAccessibility() {
+  changeAccessElements() {
     this.accessibility = {
       ...this.accessibility,
-      elementsAreInterface: !this.accessibility.elementsAreInterface,
+      elementsAreInterface: !this.accessibility.elementsAreInterface
+    };
+  }
+  changeExperimental() {
+    this.accessibility = {
+      ...this.accessibility,
       showExperimentalTextures: !this.accessibility.showExperimentalTextures
+    };
+  }
+  changeKeyNav() {
+    const keyboardNavConfig = {
+      disabled: !this.accessibility.keyboardNavConfig.disabled
+    };
+    this.accessibility = {
+      ...this.accessibility,
+      keyboardNavConfig
     };
   }
   contextExplanation() {
@@ -481,6 +497,10 @@ export class AppBarChart {
     this.barIntervalRatio = this.barIntervalRatio === 0.05 ? 0.5 : 0.05;
   }
 
+  toggleSuppress() {
+    this.suppressEvents = !this.suppressEvents;
+  }
+
   toggleSmallLabels() {
     const newAccess = { ...this.accessibility };
     newAccess.showSmallLabels = !newAccess.showSmallLabels;
@@ -535,7 +555,7 @@ export class AppBarChart {
           width={this.width}
           yAxis={this.yAxis}
           padding={this.padding}
-          // suppressEvents={true}
+          suppressEvents={this.suppressEvents}
           ordinalAccessor={this.ordinalAccessor}
           valueAccessor={this.valueAccessor}
           groupAccessor={this.groupAccessor}
@@ -550,7 +570,7 @@ export class AppBarChart {
           legend={this.legend}
           cursor={'pointer'}
           barIntervalRatio={this.barIntervalRatio}
-          hoverOpacity={0}
+          hoverOpacity={0.99999}
           interactionKeys={this.interactionState}
           // interactionKeys={['region']}
           hoverHighlight={this.hoverElement}
@@ -574,10 +594,31 @@ export class AppBarChart {
         </span>
         <button
           onClick={() => {
-            this.changeAccessibility();
+            this.changeAccessElements();
           }}
         >
           change elementsAreInterface
+        </button>
+        <button
+          onClick={() => {
+            this.toggleSuppress();
+          }}
+        >
+          toggle event suppression
+        </button>
+        <button
+          onClick={() => {
+            this.changeKeyNav();
+          }}
+        >
+          toggle keyboard nav
+        </button>
+        <button
+          onClick={() => {
+            this.changeExperimental();
+          }}
+        >
+          toggle experimental textures
         </button>
         <button
           onClick={() => {

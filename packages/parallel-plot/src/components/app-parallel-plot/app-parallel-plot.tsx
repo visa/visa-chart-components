@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2021 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -18,11 +18,7 @@ export class AppParallelPlot {
   @State() clickElement: any = [];
   @State() stateTrigger: any = 0;
   @State() seriesLabel: any = [];
-  clickStyle: any;
-  hoverStyle: any;
-  seriesLabelProp: any = { visible: false, placement: 'right', label: this.seriesLabel };
-  secondaryLines: any = { keys: ['group 1'], showDataLabel: false, showSeriesLabel: true, opacity: 0.8 };
-  accessibility: any = {
+  @State() accessibility: any = {
     longDescription: 'This is a chart template that was made to showcase the Visa Chart Components parallel plot',
     contextExplanation: 'This chart exists in a demo app created to let you quickly change props and see results',
     executiveSummary: 'Within the category them subset, we see the largest difference between group 2 and group 1',
@@ -32,8 +28,14 @@ export class AppParallelPlot {
     statisticalNotes: 'This chart is using dummy data',
     onChangeFunc: d => {
       this.onChange(d);
-    }
+    },
+    keyboardNavConfig: { disabled: false }
   };
+  @State() suppressEvents: boolean = false;
+  clickStyle: any;
+  hoverStyle: any;
+  seriesLabelProp: any = { visible: false, placement: 'right', label: this.seriesLabel };
+  secondaryLines: any = { keys: ['group 1'], showDataLabel: false, showSeriesLabel: true, opacity: 0.8 };
   dataStorage: any = [
     [
       {
@@ -1286,7 +1288,24 @@ export class AppParallelPlot {
   changeData() {
     this.stateTrigger = this.stateTrigger < this.dataStorage.length - 1 ? this.stateTrigger + 1 : 0;
   }
-
+  changeAccessElements() {
+    this.accessibility = {
+      ...this.accessibility,
+      elementsAreInterface: !this.accessibility.elementsAreInterface
+    };
+  }
+  changeKeyNav() {
+    const keyboardNavConfig = {
+      disabled: !this.accessibility.keyboardNavConfig.disabled
+    };
+    this.accessibility = {
+      ...this.accessibility,
+      keyboardNavConfig
+    };
+  }
+  toggleSuppress() {
+    this.suppressEvents = !this.suppressEvents;
+  }
   changeOrdinalAccessor() {
     this.ordinalAccessor = this.ordinalAccessor !== 'them' ? 'them' : 'otherOrd';
   }
@@ -1341,6 +1360,27 @@ export class AppParallelPlot {
     this.hoverStyle = { color: '#e4e4e4', strokeWidth: this.hoverStrokeWidth };
     return (
       <div>
+        <button
+          onClick={() => {
+            this.changeAccessElements();
+          }}
+        >
+          change elementsAreInterface
+        </button>
+        <button
+          onClick={() => {
+            this.toggleSuppress();
+          }}
+        >
+          toggle event suppression
+        </button>
+        <button
+          onClick={() => {
+            this.changeKeyNav();
+          }}
+        >
+          toggle keyboard nav
+        </button>
         <button
           onClick={() => {
             this.changeData();
@@ -1461,6 +1501,7 @@ export class AppParallelPlot {
           hoverHighlight={this.hoverElement}
           clickHighlight={this.clickElement}
           accessibility={this.accessibility}
+          suppressEvents={this.suppressEvents}
           onClickFunc={d => this.onClickFunc(d)}
           onHoverFunc={d => this.onHoverFunc(d)}
           onMouseOutFunc={() => this.onMouseOut()}

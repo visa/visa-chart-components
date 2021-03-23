@@ -652,6 +652,33 @@ export class WorldMap {
       this.shouldDrawInteractionState = true;
       this.shouldUpdateScales = true;
     }
+    const newKeyNav =
+      _newVal && _newVal.keyboardNavConfig && _newVal.keyboardNavConfig.disabled
+        ? _newVal.keyboardNavConfig.disabled
+        : false;
+    const oldKeyNav =
+      _oldVal && _oldVal.keyboardNavConfig && _oldVal.keyboardNavConfig.disabled
+        ? _oldVal.keyboardNavConfig.disabled
+        : false;
+    const newInterface = _newVal && _newVal.elementsAreInterface ? _newVal.elementsAreInterface : false;
+    const oldInterface = _oldVal && _oldVal.elementsAreInterface ? _oldVal.elementsAreInterface : false;
+    if (newKeyNav !== oldKeyNav || newInterface !== oldInterface) {
+      this.shouldSetGeometryAriaLabels = true;
+      this.shouldSetParentSVGAccessibility = true;
+      this.shouldUpdateDescriptionWrapper = true;
+      this.shouldRedrawWrapper = true;
+      this.shouldSetChartAccessibilityTitle = true;
+      this.shouldSetChartAccessibilitySubtitle = true;
+      this.shouldSetChartAccessibilityLongDescription = true;
+      this.shouldSetChartAccessibilityContext = true;
+      this.shouldSetChartAccessibilityExecutiveSummary = true;
+      this.shouldSetChartAccessibilityPurpose = true;
+      this.shouldSetChartAccessibilityStatisticalNotes = true;
+      this.shouldSetChartAccessibilityStructureNotes = true;
+    }
+    if (newInterface !== oldInterface) {
+      this.shouldSetMarkerSelectionClass = true;
+    }
   }
 
   @Watch('annotations')
@@ -679,6 +706,19 @@ export class WorldMap {
     this.shouldBindInteractivity = true;
     this.shouldBindLegendInteractivity = true;
     this.shouldUpdateCursor = true;
+    this.shouldSetGeometryAriaLabels = true;
+    this.shouldSetParentSVGAccessibility = true;
+    this.shouldUpdateDescriptionWrapper = true;
+    this.shouldRedrawWrapper = true;
+    this.shouldValidate = true;
+    this.shouldSetChartAccessibilityTitle = true;
+    this.shouldSetChartAccessibilitySubtitle = true;
+    this.shouldSetChartAccessibilityLongDescription = true;
+    this.shouldSetChartAccessibilityContext = true;
+    this.shouldSetChartAccessibilityExecutiveSummary = true;
+    this.shouldSetChartAccessibilityPurpose = true;
+    this.shouldSetChartAccessibilityStatisticalNotes = true;
+    this.shouldSetChartAccessibilityStructureNotes = true;
   }
 
   @Watch('unitTest')
@@ -2229,7 +2269,12 @@ export class WorldMap {
       chartTag: 'world-map',
       uniqueID: this.chartID,
       highestHeadingLevel: this.highestHeadingLevel,
-      redraw: this.shouldRedrawWrapper
+      redraw: this.shouldRedrawWrapper,
+      disableKeyNav:
+        this.suppressEvents &&
+        this.accessibility.elementsAreInterface === false &&
+        this.accessibility.keyboardNavConfig &&
+        this.accessibility.keyboardNavConfig.disabled
     });
     this.shouldRedrawWrapper = false;
   }
@@ -2245,7 +2290,12 @@ export class WorldMap {
       geomType: 'marker',
       includeKeyNames: this.accessibility.includeDataKeyNames,
       dataKeys: scopeDataKeys(this, chartAccessors, 'world-map'),
-      groupAccessor: this.groupAccessor
+      groupAccessor: this.groupAccessor,
+      disableKeyNav:
+        this.suppressEvents &&
+        this.accessibility.elementsAreInterface === false &&
+        this.accessibility.keyboardNavConfig &&
+        this.accessibility.keyboardNavConfig.disabled
     });
   }
 
@@ -2267,7 +2317,12 @@ export class WorldMap {
         geomType: 'marker',
         includeKeyNames: this.accessibility.includeDataKeyNames,
         dataKeys: keys,
-        uniqueID: this.chartID
+        uniqueID: this.chartID,
+        disableKeyNav:
+          this.suppressEvents &&
+          this.accessibility.elementsAreInterface === false &&
+          this.accessibility.keyboardNavConfig &&
+          this.accessibility.keyboardNavConfig.disabled
       });
     });
   }

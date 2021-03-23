@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2021 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -68,13 +68,7 @@ export class AppLineChart {
     '#434343',
     '#2e2e2e'
   ];
-  hoverStyle: any = { color: '#d7d7d7', strokeWidth: 3 };
-  clickStyle: any = { color: '#222222', strokeWidth: 4 };
-  simpleColors: any = ['#FFC4C4', '#C4DAFF'];
-  colorsBase: any = ['#f2f2f2', '#d7d7d7', '#bdbdbd', '#a3a3a3', '#898989', '#717171', '#595959', '#434343', '#2e2e2e'];
-  selectedColor: string = '#00CF81';
-  hoveredColor: string = '#0068FF';
-  accessibility: any = {
+  @State() accessibility: any = {
     longDescription: 'This is a chart template that was made to showcase the Visa Chart Components line plot',
     contextExplanation: 'This chart exists in a demo app created to let you quickly change props and see results',
     executiveSummary:
@@ -87,8 +81,16 @@ export class AppLineChart {
       this.onChangeFunc(d);
     },
     elementsAreInterface: false,
-    disableValidation: true
+    disableValidation: true,
+    keyboardNavConfig: { disabled: false }
   };
+  @State() suppressEvents: boolean = false;
+  hoverStyle: any = { color: '#d7d7d7', strokeWidth: 3 };
+  clickStyle: any = { color: '#222222', strokeWidth: 4 };
+  simpleColors: any = ['#FFC4C4', '#C4DAFF'];
+  colorsBase: any = ['#f2f2f2', '#d7d7d7', '#bdbdbd', '#a3a3a3', '#898989', '#717171', '#595959', '#434343', '#2e2e2e'];
+  selectedColor: string = '#00CF81';
+  hoveredColor: string = '#0068FF';
   colorIndexes: any = {};
   dashTestData: any = [
     {
@@ -1353,6 +1355,24 @@ export class AppLineChart {
   changeData() {
     this.stateTrigger = this.stateTrigger < this.dataStorage.length - 1 ? this.stateTrigger + 1 : 0;
   }
+  changeAccessElements() {
+    this.accessibility = {
+      ...this.accessibility,
+      elementsAreInterface: !this.accessibility.elementsAreInterface
+    };
+  }
+  changeKeyNav() {
+    const keyboardNavConfig = {
+      disabled: !this.accessibility.keyboardNavConfig.disabled
+    };
+    this.accessibility = {
+      ...this.accessibility,
+      keyboardNavConfig
+    };
+  }
+  toggleSuppress() {
+    this.suppressEvents = !this.suppressEvents;
+  }
   changeOrdinalAccessor() {
     this.ordinalAccessor = this.ordinalAccessor !== 'date' ? 'date' : 'otherOrd';
   }
@@ -1431,6 +1451,27 @@ export class AppLineChart {
           yAxis={{ visible: false, gridVisible: false }}
           xAxis={{ visible: false, gridVisible: false }}
         />
+        <button
+          onClick={() => {
+            this.changeAccessElements();
+          }}
+        >
+          change elementsAreInterface
+        </button>
+        <button
+          onClick={() => {
+            this.toggleSuppress();
+          }}
+        >
+          toggle event suppression
+        </button>
+        <button
+          onClick={() => {
+            this.changeKeyNav();
+          }}
+        >
+          toggle keyboard nav
+        </button>
         <button
           onClick={() => {
             this.changeData();
@@ -1575,6 +1616,7 @@ export class AppLineChart {
           //   }
           // ]}
           accessibility={this.accessibility}
+          suppressEvents={this.suppressEvents}
           dotRadius={4}
         />
       </div>

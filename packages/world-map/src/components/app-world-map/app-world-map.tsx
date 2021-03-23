@@ -317,7 +317,8 @@ export class AppD3Map {
     },
     elementsAreInterface: false,
     includeDataKeyNames: true,
-    hideTextures: false
+    hideTextures: false,
+    keyboardNavConfig: { disabled: false }
   };
 
   // componentWillLoad() {}
@@ -415,6 +416,24 @@ export class AppD3Map {
           format: '0.00'
         };
   }
+  changeAccessElements() {
+    this.accessibility = {
+      ...this.accessibility,
+      elementsAreInterface: !this.accessibility.elementsAreInterface
+    };
+  }
+  changeKeyNav() {
+    const keyboardNavConfig = {
+      disabled: !this.accessibility.keyboardNavConfig.disabled
+    };
+    this.accessibility = {
+      ...this.accessibility,
+      keyboardNavConfig
+    };
+  }
+  toggleSuppress() {
+    this.suppressEvents = !this.suppressEvents;
+  }
 
   toggleMarkerStyle() {
     this.innerMarkerStyle = this.innerMarkerStyle.visible
@@ -474,6 +493,27 @@ export class AppD3Map {
     console.log('!!!!app re-render');
     return (
       <div class="world-map-app">
+        <button
+          onClick={() => {
+            this.changeAccessElements();
+          }}
+        >
+          change elementsAreInterface
+        </button>
+        <button
+          onClick={() => {
+            this.toggleSuppress();
+          }}
+        >
+          toggle event suppression
+        </button>
+        <button
+          onClick={() => {
+            this.changeKeyNav();
+          }}
+        >
+          toggle keyboard nav
+        </button>
         <button
           style={{
             cursor: 'pointer'
