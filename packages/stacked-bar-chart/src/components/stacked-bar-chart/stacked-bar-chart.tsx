@@ -734,6 +734,33 @@ export class StackedBarChart {
       this.shouldUpdateLegend = true;
       this.shouldDrawInteractionState = true;
     }
+    const newKeyNav =
+      _newVal && _newVal.keyboardNavConfig && _newVal.keyboardNavConfig.disabled
+        ? _newVal.keyboardNavConfig.disabled
+        : false;
+    const oldKeyNav =
+      _oldVal && _oldVal.keyboardNavConfig && _oldVal.keyboardNavConfig.disabled
+        ? _oldVal.keyboardNavConfig.disabled
+        : false;
+    const newInterface = _newVal && _newVal.elementsAreInterface ? _newVal.elementsAreInterface : false;
+    const oldInterface = _oldVal && _oldVal.elementsAreInterface ? _oldVal.elementsAreInterface : false;
+    if (newKeyNav !== oldKeyNav || newInterface !== oldInterface) {
+      this.shouldSetGeometryAriaLabels = true;
+      this.shouldSetParentSVGAccessibility = true;
+      this.shouldUpdateDescriptionWrapper = true;
+      this.shouldRedrawWrapper = true;
+      this.shouldSetChartAccessibilityTitle = true;
+      this.shouldSetChartAccessibilitySubtitle = true;
+      this.shouldSetChartAccessibilityLongDescription = true;
+      this.shouldSetChartAccessibilityContext = true;
+      this.shouldSetChartAccessibilityExecutiveSummary = true;
+      this.shouldSetChartAccessibilityPurpose = true;
+      this.shouldSetChartAccessibilityStatisticalNotes = true;
+      this.shouldSetChartAccessibilityStructureNotes = true;
+    }
+    if (newInterface !== oldInterface) {
+      this.shouldSetSelectionClass = true;
+    }
   }
 
   @Watch('showZeroLabels')
@@ -802,6 +829,19 @@ export class StackedBarChart {
     this.shouldBindInteractivity = true;
     this.shouldUpdateCursor = true;
     this.shouldUpdateLegendInteractivity = true;
+    this.shouldSetGeometryAriaLabels = true;
+    this.shouldSetParentSVGAccessibility = true;
+    this.shouldUpdateDescriptionWrapper = true;
+    this.shouldRedrawWrapper = true;
+    this.shouldValidate = true;
+    this.shouldSetChartAccessibilityTitle = true;
+    this.shouldSetChartAccessibilitySubtitle = true;
+    this.shouldSetChartAccessibilityLongDescription = true;
+    this.shouldSetChartAccessibilityContext = true;
+    this.shouldSetChartAccessibilityExecutiveSummary = true;
+    this.shouldSetChartAccessibilityPurpose = true;
+    this.shouldSetChartAccessibilityStatisticalNotes = true;
+    this.shouldSetChartAccessibilityStructureNotes = true;
   }
 
   componentWillLoad() {
@@ -2513,7 +2553,12 @@ export class StackedBarChart {
       uniqueID: this.chartID,
       groupName: 'stack',
       highestHeadingLevel: this.highestHeadingLevel,
-      redraw: this.shouldRedrawWrapper
+      redraw: this.shouldRedrawWrapper,
+      disableKeyNav:
+        this.suppressEvents &&
+        this.accessibility.elementsAreInterface === false &&
+        this.accessibility.keyboardNavConfig &&
+        this.accessibility.keyboardNavConfig.disabled
     });
     this.shouldRedrawWrapper = false;
   }
@@ -2531,7 +2576,12 @@ export class StackedBarChart {
       dataKeys: scopeDataKeys(this, chartAccessors, 'stacked-bar-chart'),
       groupAccessor: this.groupAccessor,
       groupName: 'stack',
-      groupKeys: this.showTotalValue ? ['sumMessage'] : false // for special group-level keys (typically not needed)
+      groupKeys: this.showTotalValue ? ['sumMessage'] : false, // for special group-level keys (typically not needed)
+      disableKeyNav:
+        this.suppressEvents &&
+        this.accessibility.elementsAreInterface === false &&
+        this.accessibility.keyboardNavConfig &&
+        this.accessibility.keyboardNavConfig.disabled
       // nested: '', // dumbbell only right now
       // recursive: true // circle-pack only right now
     });
@@ -2557,7 +2607,12 @@ export class StackedBarChart {
         dataKeys: keys,
         groupKeys: this.showTotalValue ? ['sumMessage'] : false,
         groupName: 'stack',
-        uniqueID: this.chartID
+        uniqueID: this.chartID,
+        disableKeyNav:
+          this.suppressEvents &&
+          this.accessibility.elementsAreInterface === false &&
+          this.accessibility.keyboardNavConfig &&
+          this.accessibility.keyboardNavConfig.disabled
       });
     });
   }

@@ -29,6 +29,11 @@ export class AppScatterPlot {
   @State() hoverStrokeWidth: number = 1;
   @State() hoverColor: string = '#8CD6C2';
   @State() interactionKeys: any = ['group'];
+  @State() accessibility: any = {
+    elementsAreInterface: false,
+    keyboardNavConfig: { disabled: false }
+  };
+  @State() suppressEvents: boolean = false;
 
   @State() clickElement: any = [];
   startData: any = [
@@ -131,6 +136,24 @@ export class AppScatterPlot {
   changeData() {
     this.stateTrigger = this.stateTrigger < this.dataStorage.length - 1 ? this.stateTrigger + 1 : 0;
   }
+  changeAccessElements() {
+    this.accessibility = {
+      ...this.accessibility,
+      elementsAreInterface: !this.accessibility.elementsAreInterface
+    };
+  }
+  changeKeyNav() {
+    const keyboardNavConfig = {
+      disabled: !this.accessibility.keyboardNavConfig.disabled
+    };
+    this.accessibility = {
+      ...this.accessibility,
+      keyboardNavConfig
+    };
+  }
+  toggleSuppress() {
+    this.suppressEvents = !this.suppressEvents;
+  }
 
   changeXAccessor() {
     this.xAccessor = this.xAccessor !== 'item' ? 'item' : 'otherItem';
@@ -172,6 +195,27 @@ export class AppScatterPlot {
     return (
       <div>
         <div>
+          <button
+            onClick={() => {
+              this.changeAccessElements();
+            }}
+          >
+            change elementsAreInterface
+          </button>
+          <button
+            onClick={() => {
+              this.toggleSuppress();
+            }}
+          >
+            toggle event suppression
+          </button>
+          <button
+            onClick={() => {
+              this.changeKeyNav();
+            }}
+          >
+            toggle keyboard nav
+          </button>
           <button
             onClick={() => {
               this.changeData();
@@ -294,19 +338,8 @@ export class AppScatterPlot {
               strokeWidth: this.hoverStrokeWidth,
               color: this.hoverColor
             }}
-            accessibility={{
-              longDescription:
-                'This is a chart template that was made to showcase the Visa Chart Components scatter plot',
-              contextExplanation:
-                'This chart exists in a demo app created to let you quickly change props and see results',
-              executiveSummary: 'We see high monthly spending between 35 to 45 age group',
-              purpose: 'The purpose of this chart template is to provide an example of a scatter plot',
-              structureNotes: 'Monthly spending of different age groups',
-              statisticalNotes: 'This chart is using dummy data',
-              onChangeFunc: d => {
-                this.onChangeFunc(d);
-              }
-            }}
+            accessibility={this.accessibility}
+            suppressEvents={this.suppressEvents}
           />
         </div>
       </div>

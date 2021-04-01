@@ -48,6 +48,10 @@ export interface IClickStyleType {
   strokeWidth?: string | number;
 }
 
+export interface IKeyConfig {
+  disabled?: boolean;
+}
+
 export interface IAccessibilityType {
   longDescription?: string;
   executiveSummary?: string;
@@ -66,6 +70,7 @@ export interface IAccessibilityType {
   hideStrokes?: boolean;
   showSmallLabels?: boolean;
   showExperimentalTextures?: boolean;
+  keyboardNavConfig?: IKeyConfig;
 }
 
 export interface IReferenceStyleType {

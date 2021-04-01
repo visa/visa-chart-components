@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2021 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -45,7 +45,12 @@ export class AppDumbbellPlot {
   @State() markerVisible: boolean = true;
   @State() focusSize: number = 2;
   @State() interactionKeys: any = ['date'];
-  @State() accessibility: any = { hideStrokes: false, includeDataKeyNames: true };
+  @State() accessibility: any = {
+    hideStrokes: false,
+    includeDataKeyNames: true,
+    keyboardNavConfig: { disabled: false }
+  };
+  @State() suppressEvents: boolean = false;
   dataStorage: any = [
     [
       {
@@ -188,6 +193,24 @@ export class AppDumbbellPlot {
   changeData() {
     this.stateTrigger = this.stateTrigger < this.dataStorage.length - 1 ? this.stateTrigger + 1 : 0;
   }
+  changeAccessElements() {
+    this.accessibility = {
+      ...this.accessibility,
+      elementsAreInterface: !this.accessibility.elementsAreInterface
+    };
+  }
+  changeKeyNav() {
+    const keyboardNavConfig = {
+      disabled: !this.accessibility.keyboardNavConfig.disabled
+    };
+    this.accessibility = {
+      ...this.accessibility,
+      keyboardNavConfig
+    };
+  }
+  toggleSuppress() {
+    this.suppressEvents = !this.suppressEvents;
+  }
   changeLayout() {
     this.layout = this.layout !== 'vertical' ? 'vertical' : 'horizontal';
   }
@@ -278,6 +301,27 @@ export class AppDumbbellPlot {
     this.data = this.dataStorage[this.stateTrigger];
     return (
       <div>
+        <button
+          onClick={() => {
+            this.changeAccessElements();
+          }}
+        >
+          change elementsAreInterface
+        </button>
+        <button
+          onClick={() => {
+            this.toggleSuppress();
+          }}
+        >
+          toggle event suppression
+        </button>
+        <button
+          onClick={() => {
+            this.changeKeyNav();
+          }}
+        >
+          toggle keyboard nav
+        </button>
         <button
           onClick={() => {
             this.changeData();
@@ -659,6 +703,7 @@ export class AppDumbbellPlot {
             colorRule: 'default'
           }}
           accessibility={this.accessibility}
+          suppressEvents={this.suppressEvents}
           colorPalette={this.colorPalette}
           // clickStyle={{ color: 'darkred', strokeWidth: 20 }}
           // hoverStyle={{ color: 'red', strokeWidth: 17 }}

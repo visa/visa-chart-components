@@ -137,7 +137,8 @@ export const setGeometryAccessLabel = ({
   nested,
   recursive,
   groupName,
-  uniqueID
+  uniqueID,
+  disableKeyNav
 }: {
   node: any;
   geomType: string;
@@ -148,6 +149,7 @@ export const setGeometryAccessLabel = ({
   recursive?: boolean;
   groupName?: string;
   uniqueID?: string;
+  disableKeyNav?: boolean;
 }) => {
   if (useHTMLController) {
     select(node)
@@ -158,29 +160,34 @@ export const setGeometryAccessLabel = ({
         }
         return node.id;
       })
-      .on('focus', (_, i, n) => {
-        const idOfTarget = n[i].id;
-        if (idOfTarget) {
-          const rootNode = document.getElementById('chart-area-' + uniqueID);
-          const sameGroupCousinKey = select(rootNode).attr('data-sgck');
-          const groupAccessor = select(rootNode).attr('data-group');
-          prepareControllerNodes({
-            rootNode,
-            nodeID: idOfTarget,
-            geomType,
-            includeKeyNames,
-            dataKeys,
-            groupKeys,
-            nested,
-            groupName,
-            groupAccessor,
-            recursive,
-            sameGroupCousinKey,
-            deleteControllers: false
-          });
-          hideKeyboardHighlight(n[i]);
-        }
-      });
+      .on(
+        'focus',
+        !disableKeyNav
+          ? (_, i, n) => {
+              const idOfTarget = n[i].id;
+              if (idOfTarget) {
+                const rootNode = document.getElementById('chart-area-' + uniqueID);
+                const sameGroupCousinKey = select(rootNode).attr('data-sgck');
+                const groupAccessor = select(rootNode).attr('data-group');
+                prepareControllerNodes({
+                  rootNode,
+                  nodeID: idOfTarget,
+                  geomType,
+                  includeKeyNames,
+                  dataKeys,
+                  groupKeys,
+                  nested,
+                  groupName,
+                  groupAccessor,
+                  recursive,
+                  sameGroupCousinKey,
+                  deleteControllers: false
+                });
+                hideKeyboardHighlight(n[i]);
+              }
+            }
+          : null
+      );
   } else {
     const capitalizedGeomType = geomType[0].toUpperCase() + geomType.substring(1);
     const capitalizedGroupName = groupName ? groupName[0].toUpperCase() + groupName.substring(1) : '';
@@ -382,7 +389,8 @@ export const setRootSVGAccess = ({
   nested,
   groupName,
   groupAccessor,
-  recursive
+  recursive,
+  disableKeyNav
 }: {
   node: any;
   chartTag: string;
@@ -397,6 +405,7 @@ export const setRootSVGAccess = ({
   groupName?: string;
   groupAccessor?: string;
   recursive?: boolean;
+  disableKeyNav?: boolean;
 }) => {
   const svg = select(node);
   if (useHTMLController) {
@@ -407,14 +416,19 @@ export const setRootSVGAccess = ({
       .attr('focusable', false)
       .attr('tabindex', -1)
       .style('overflow', 'hidden')
-      .on('focus', () => {
-        focusTarget(
-          select(parent)
-            .select('.VCL-controller')
-            .node()
-        );
-        // removeKeyboardHighlight(n[i].firstElementChild, true)
-      });
+      .on(
+        'focus',
+        !disableKeyNav
+          ? () => {
+              focusTarget(
+                select(parent)
+                  .select('.VCL-controller')
+                  .node()
+              );
+              // removeKeyboardHighlight(n[i].firstElementChild, true)
+            }
+          : null
+      );
     const parent = node.parentNode;
     let controller = select(parent).select('.VCL-controller');
 
@@ -427,75 +441,103 @@ export const setRootSVGAccess = ({
     if (!controller.size()) {
       controller = select(parent).insert('div', ':first-child');
 
-      controller
-        .attr('role', rootSVGRole)
-        .attr('tabindex', '0')
-        .attr('class', 'VCL-controller screen-reader-info')
-        .attr('id', 'controller-root-' + uniqueID)
-        .on('keyup', () => {
-          const e = event;
-          const keyCode = e.keyCode || e.which;
-          keyUpHandler(keyCode);
-        })
-        .on('focus', (_, i, n) => {
-          select(n[i])
-            .selectAll('[tabindex]')
-            .attr('tabindex', -1);
-
-          drawKeyboardFocusClone(n[i], recursive);
-          controller.attr('aria-label', getRootAriaLabel());
-        })
-        .on('blur', (_, i, n) => {
-          removeKeyboardHighlight(
-            select(n[i].parentNode)
-              .select('svg :first-child')
-              .node(),
-            true
-          );
-          controller.attr('aria-label', `Interactive ${chartTag}. ID: ${uniqueID}`);
-        });
+      controller.attr('class', 'VCL-controller screen-reader-info');
     }
 
     controller
       .attr('id', 'chart-area-' + uniqueID)
       .attr('data-sgck', sameGroupCousinKey || null)
       .attr('data-group', groupAccessor)
-      .attr('aria-label', getRootAriaLabel())
-      .text(`Interactive ${chartTag}.`)
-      .on('keydown', () => {
-        const e = event;
-        const keyCode = event.keyCode || event.which;
-        const eventType = validKeyCode(keyCode);
-        if (eventType && !fired) {
-          fired = true;
-          e.stopPropagation();
-          const targetChild = enterChartArea(e, recursive);
-          if (targetChild) {
-            prepareControllerNodes({
-              rootNode: controller.node(),
-              nodeID: targetChild.id,
-              geomType,
-              includeKeyNames,
-              dataKeys,
-              groupKeys,
-              nested,
-              groupName,
-              groupAccessor,
-              recursive,
-              sameGroupCousinKey
-            });
-          }
-        }
-      });
+      .attr('aria-label', !disableKeyNav ? getRootAriaLabel() : null)
+      .text(!disableKeyNav ? `Interactive ${chartTag}.` : '')
+      .attr('role', !disableKeyNav ? rootSVGRole : 'presentation')
+      .attr('tabindex', !disableKeyNav ? '0' : '-1')
+      .on(
+        'keyup',
+        !disableKeyNav
+          ? () => {
+              const e = event;
+              const keyCode = e.keyCode || e.which;
+              keyUpHandler(keyCode);
+            }
+          : null
+      )
+      .on(
+        'focus',
+        !disableKeyNav
+          ? (_, i, n) => {
+              select(n[i])
+                .selectAll('[tabindex]')
+                .attr('tabindex', -1);
+
+              drawKeyboardFocusClone(n[i], recursive);
+              controller.attr('aria-label', getRootAriaLabel());
+            }
+          : null
+      )
+      .on(
+        'blur',
+        !disableKeyNav
+          ? (_, i, n) => {
+              removeKeyboardHighlight(
+                select(n[i].parentNode)
+                  .select('svg :first-child')
+                  .node(),
+                true
+              );
+              controller.attr('aria-label', `Interactive ${chartTag}. ID: ${uniqueID}`);
+            }
+          : null
+      )
+      .on(
+        'keydown',
+        !disableKeyNav
+          ? () => {
+              const e = event;
+              const keyCode = event.keyCode || event.which;
+              const eventType = validKeyCode(keyCode);
+              if (eventType && !fired) {
+                fired = true;
+                e.stopPropagation();
+                const targetChild = enterChartArea(e, recursive);
+                if (targetChild) {
+                  prepareControllerNodes({
+                    rootNode: controller.node(),
+                    nodeID: targetChild.id,
+                    geomType,
+                    includeKeyNames,
+                    dataKeys,
+                    groupKeys,
+                    nested,
+                    groupName,
+                    groupAccessor,
+                    recursive,
+                    sameGroupCousinKey
+                  });
+                }
+              }
+            }
+          : null
+      );
 
     const controllerChildID = controller.attr('aria-activedescendant');
-    if (controllerChildID) {
+    if (controllerChildID && !disableKeyNav) {
       const child = document.getElementById(controllerChildID.substring(5));
       if (child) {
         setActiveChild(child);
+      } else {
+        controller.attr('aria-activedescendant', null);
       }
     } else {
       controller.attr('aria-activedescendant', null);
+    }
+    const rootNode = controller.node();
+    if (disableKeyNav && rootNode.children && rootNode.children.length) {
+      let childrenToRemove = rootNode.children.length;
+      while (childrenToRemove) {
+        rootNode.removeChild(rootNode.children[0]);
+        childrenToRemove--;
+      }
     }
   } else {
     const titleText = `${title}. `;
@@ -1077,7 +1119,8 @@ export const initializeDescriptionRoot = ({
   isSubgroup,
   highestHeadingLevel,
   redraw,
-  recursive
+  recursive,
+  disableKeyNav
 }: {
   rootEle: any;
   geomType: string;
@@ -1089,6 +1132,7 @@ export const initializeDescriptionRoot = ({
   highestHeadingLevel?: any;
   redraw?: boolean;
   recursive?: boolean;
+  disableKeyNav?: boolean;
 }) => {
   let level1 = findTagLevel(highestHeadingLevel, 0);
   level1 = level1 === 'h1' ? 'h2' : level1;
@@ -1199,126 +1243,120 @@ export const initializeDescriptionRoot = ({
       .append(level2)
       .attr('class', 'screen-reader-info vcl-access-annotations-heading')
       .text(emptyDescriptions['headings']);
-    instructionsWrapper
-      .append(level2)
-      .attr('class', 'screen-reader-info vcl-interaction-instructions')
-      .text('Interaction Instructions');
-    instructionsWrapper
-      .append(level4)
-      .attr('class', 'screen-reader-info')
-      .text(
-        `Use Regions/Landmarks or TAB to skip ahead to the chart area or the data table. The following subsections explain how to use this chart's interactivity.`
-      );
-    if (userOS === 'Mac OS') {
+    if (!disableKeyNav) {
       instructionsWrapper
-        .append(level3)
-        .attr('class', 'screen-reader-info')
-        .text(`Note for Mac users`);
+        .append(level2)
+        .attr('class', 'screen-reader-info vcl-interaction-instructions')
+        .text('Interaction Instructions');
       instructionsWrapper
         .append(level4)
         .attr('class', 'screen-reader-info')
         .text(
-          `If you are using Voice Over for Mac, you will need to press CONTROL plus SHIFT before using any arrow keys, ENTER, SPACEBAR, or ESCAPE, to ensure that Voice Over does not interfere with the chart's controls.`
+          `Use Regions/Landmarks or TAB to skip ahead to the chart area or the data table. The following subsections explain how to use this chart's interactivity.`
+        );
+      if (userOS === 'Mac OS') {
+        instructionsWrapper
+          .append(level3)
+          .attr('class', 'screen-reader-info')
+          .text(`Note for Mac users`);
+        instructionsWrapper
+          .append(level4)
+          .attr('class', 'screen-reader-info')
+          .text(
+            `If you are using Voice Over for Mac, you will need to press CONTROL plus SHIFT before using any arrow keys, ENTER, SPACEBAR, or ESCAPE, to ensure that Voice Over does not interfere with the chart's controls.`
+          );
+      }
+      instructionsWrapper
+        .append(level3)
+        .attr('class', 'screen-reader-info')
+        .text(`Enabling this chart's interactivity`);
+      instructionsWrapper
+        .append(level4)
+        .attr('class', 'screen-reader-info')
+        .text(
+          `Screen readers that are able to switch between Browse and Forms mode will need to turn on Forms mode once the chart area is reached.`
+        );
+      instructionsWrapper
+        .append(level3)
+        .attr('class', 'screen-reader-info')
+        .text('Using the TAB key outside the Chart area and Exposing new Layers with the ENTER key');
+      instructionsWrapper
+        .append(level4)
+        .attr('class', 'screen-reader-info')
+        .text(
+          `Each chart has three main TAB areas at first: the information and instructions (which is this), the chart area, and the data table. You may TAB out of this section to the chart area at any time. Once on the chart area, you may focus the chart's first ${group} by pressing ENTER. Doing this will navigate you into the chart area, which enables you to use the ARROW keys focus new elements.`
+        );
+      instructionsWrapper
+        .append(level3)
+        .attr('class', 'screen-reader-info')
+        .text('Using the ESCAPE key');
+      instructionsWrapper
+        .append(level4)
+        .attr('class', 'screen-reader-info')
+        .text(
+          `When in the chart area, pressing the ESCAPE key will always move your keyboard focus to the parent of the ${geomType} or ${group} you are currently on, until you reach the root of the chart.` //  Pressing SHIFT plus TAB will move your focus backwards, which will be the previous sibling to the ${geomType} or ${group} you are on or (if no previous sibling exists), then the parent of the ${geomType} or ${group} you are currently on.
+        );
+      // instructionsWrapper
+      //   .append(level3)
+      //   .attr('class', 'screen-reader-info')
+      //   .text('Using TAB while inside the Chart area');
+      // instructionsWrapper
+      //   .append(level4)
+      //   .attr('class', 'screen-reader-info')
+      //   .text(
+      //     `When in the chart area, pressing TAB will move your focus to the next available ${geomType} or ${group} at the same level, within the same group. If there is not another ${geomType} or ${group} at the same level within your group, focus will move up one level and to the next group. If there are no more groups available, you have reached the end of the chart area and your focus will move out of the chart area to the data table button for the chart.`
+      //   );
+      instructionsWrapper
+        .append(level3)
+        .attr('class', 'screen-reader-info')
+        .text('Exploring Sibling Groups and Elements with LEFT and RIGHT');
+      instructionsWrapper
+        .append(level4)
+        .attr('class', 'screen-reader-info')
+        .text(
+          `When in the chart area, pressing RIGHT ARROW will move your focus to the next available ${geomType} or ${group} at the same level, within the same group. If there is not another ${geomType} or ${group} at the same level within your group, focus will move back to the first ${geomType} or ${group} among the siblings to your ${geomType} or ${group}. Pressing LEFT ARROW works in the same circular manner, but in reverse. This functionality is intended to allow easier comparison and navigation among siblings at the beginning and end of a group without leaving the group. This can be helpful when elements are sorted or ordered, because you can jump from the first to last elements easily.`
+        );
+      if (isSubgroup) {
+        instructionsWrapper
+          .append(level3)
+          .attr('class', 'screen-reader-info')
+          .text('Exploring Cousin Elements with UP and DOWN ARROW keys');
+        instructionsWrapper
+          .append(level4)
+          .attr('class', 'screen-reader-info')
+          .text(
+            `When in the chart area on a ${geomType}, pressing UP or DOWN ARROW will move your focus to another ${geomType} at the same level, but in the previous or next ${group}. Navigation in this way is also circular, so pressing DOWN when on the last ${group} will navigate your focus to the corresponding cousin ${geomType} in the chart's first ${group} at that level. Navigating to cousin ${geomType}s in this way can improve the ease of comparison of similar elements across ${group}s, like using up and down arrows in a table.`
+          );
+      } else if (recursive) {
+        instructionsWrapper
+          .append(level3)
+          .attr('class', 'screen-reader-info')
+          .text('A note about navigating Hierarchical Charts');
+        instructionsWrapper
+          .append(level4)
+          .attr('class', 'screen-reader-info')
+          .text(
+            `This chart contains a nested hierarchy, which means that there could be children contained inside any chart element that you navigate to and this nested structure could be multiple levels deep depending on the chart's data. Your current element will always explain if it contains children or not within it but these elements may be hidden until your current element is activated using SPACEBAR. If the children elements are not hidden, they can be navigated to using ENTER or DOWN ARROW keys and you can always exit your current level by using the ESCAPE or UP ARROW keys.`
+          );
+      }
+      instructionsWrapper
+        .append(level3)
+        .attr('class', 'screen-reader-info')
+        .text('Selecting Elements with SPACEBAR');
+      instructionsWrapper
+        .append(level4)
+        .attr('class', 'screen-reader-info')
+        .text(
+          `If a ${geomType} is selectable and that selection causes something to happen, it will be marked up as a BUTTON and you may select it using SPACEBAR. Note that if you use SPACEBAR while on a ${group}, it will have no effect. Only using SPACEBAR on a ${geomType} may have effects.)`
         );
     }
-    instructionsWrapper
-      .append(level3)
-      .attr('class', 'screen-reader-info')
-      .text(`Enabling this chart's interactivity`);
-    instructionsWrapper
-      .append(level4)
-      .attr('class', 'screen-reader-info')
-      .text(
-        `Screen readers that are able to switch between Browse and Forms mode will need to turn on Forms mode once the chart area is reached.`
-      );
-    instructionsWrapper
-      .append(level3)
-      .attr('class', 'screen-reader-info')
-      .text('Using the TAB key outside the Chart area and Exposing new Layers with the ENTER key');
-    instructionsWrapper
-      .append(level4)
-      .attr('class', 'screen-reader-info')
-      .text(
-        `Each chart has three main TAB areas at first: the information and instructions (which is this), the chart area, and the data table. You may TAB out of this section to the chart area at any time. Once on the chart area, you may focus the chart's first ${group} by pressing ENTER. Doing this will navigate you into the chart area, which enables you to use the ARROW keys focus new elements.`
-      );
-    instructionsWrapper
-      .append(level3)
-      .attr('class', 'screen-reader-info')
-      .text('Using the ESCAPE key');
-    instructionsWrapper
-      .append(level4)
-      .attr('class', 'screen-reader-info')
-      .text(
-        `When in the chart area, pressing the ESCAPE key will always move your keyboard focus to the parent of the ${geomType} or ${group} you are currently on, until you reach the root of the chart.` //  Pressing SHIFT plus TAB will move your focus backwards, which will be the previous sibling to the ${geomType} or ${group} you are on or (if no previous sibling exists), then the parent of the ${geomType} or ${group} you are currently on.
-      );
-    // instructionsWrapper
-    //   .append(level3)
-    //   .attr('class', 'screen-reader-info')
-    //   .text('Using TAB while inside the Chart area');
-    // instructionsWrapper
-    //   .append(level4)
-    //   .attr('class', 'screen-reader-info')
-    //   .text(
-    //     `When in the chart area, pressing TAB will move your focus to the next available ${geomType} or ${group} at the same level, within the same group. If there is not another ${geomType} or ${group} at the same level within your group, focus will move up one level and to the next group. If there are no more groups available, you have reached the end of the chart area and your focus will move out of the chart area to the data table button for the chart.`
-    //   );
-    instructionsWrapper
-      .append(level3)
-      .attr('class', 'screen-reader-info')
-      .text('Exploring Sibling Groups and Elements with LEFT and RIGHT');
-    instructionsWrapper
-      .append(level4)
-      .attr('class', 'screen-reader-info')
-      .text(
-        `When in the chart area, pressing RIGHT ARROW will move your focus to the next available ${geomType} or ${group} at the same level, within the same group. If there is not another ${geomType} or ${group} at the same level within your group, focus will move back to the first ${geomType} or ${group} among the siblings to your ${geomType} or ${group}. Pressing LEFT ARROW works in the same circular manner, but in reverse. This functionality is intended to allow easier comparison and navigation among siblings at the beginning and end of a group without leaving the group. This can be helpful when elements are sorted or ordered, because you can jump from the first to last elements easily.`
-      );
-    if (isSubgroup) {
-      instructionsWrapper
-        .append(level3)
-        .attr('class', 'screen-reader-info')
-        .on('focus', focusInstructions)
-        .on('blur', blurInstructions)
-        .text('Exploring Cousin Elements with UP and DOWN ARROW keys');
-      instructionsWrapper
-        .append(level4)
-        .attr('class', 'screen-reader-info')
-        .on('focus', focusInstructions)
-        .on('blur', blurInstructions)
-        .text(
-          `When in the chart area on a ${geomType}, pressing UP or DOWN ARROW will move your focus to another ${geomType} at the same level, but in the previous or next ${group}. Navigation in this way is also circular, so pressing DOWN when on the last ${group} will navigate your focus to the corresponding cousin ${geomType} in the chart's first ${group} at that level. Navigating to cousin ${geomType}s in this way can improve the ease of comparison of similar elements across ${group}s, like using up and down arrows in a table.`
-        );
-    } else if (recursive) {
-      instructionsWrapper
-        .append(level3)
-        .attr('class', 'screen-reader-info')
-        .on('focus', focusInstructions)
-        .on('blur', blurInstructions)
-        .text('A note about navigating Hierarchical Charts');
-      instructionsWrapper
-        .append(level4)
-        .attr('class', 'screen-reader-info')
-        .on('focus', focusInstructions)
-        .on('blur', blurInstructions)
-        .text(
-          `This chart contains a nested hierarchy, which means that there could be children contained inside any chart element that you navigate to and this nested structure could be multiple levels deep depending on the chart's data. Your current element will always explain if it contains children or not within it but these elements may be hidden until your current element is activated using SPACEBAR. If the children elements are not hidden, they can be navigated to using ENTER or DOWN ARROW keys and you can always exit your current level by using the ESCAPE or UP ARROW keys.`
-        );
-    }
-    instructionsWrapper
-      .append(level3)
-      .attr('class', 'screen-reader-info')
-      .text('Selecting Elements with SPACEBAR');
-    instructionsWrapper
-      .append(level4)
-      .attr('class', 'screen-reader-info')
-      .text(
-        `If a ${geomType} is selectable and that selection causes something to happen, it will be marked up as a BUTTON and you may select it using SPACEBAR. Note that if you use SPACEBAR while on a ${group}, it will have no effect. Only using SPACEBAR on a ${geomType} may have effects.)`
-      );
   }
   instructionsWrapper.attr('id', 'chart-instructions-' + uniqueID);
 
   const chartTitle = title ? ', Titled: ' + title : ', with no title provided.';
-  instructionsWrapper.select('.vcl-region-label').text(
-    `Keyboard interactive ${chartTag}${chartTitle}. The next TAB will focus the chart area. Pressing ENTER once on the chart will enter it and focus the chart's first ${group}. If there are multiple ${group}s, they can be navigated among using ARROW keys. You may access the group's child ${geomType}s by pressing ENTER again. You may then use the arrow keys to navigate among ${geomType}s and SPACEBAR to select them. Use ESCAPE to drill up one level of the chart or TAB to leave it entirely. If you are using a screen reader, this section contains additional information and instructions.` //  Chart Unique ID: ${uniqueID}.
-  );
+  const full = `Keyboard interactive ${chartTag}${chartTitle}. The next TAB will focus the chart area. Pressing ENTER once on the chart will enter it and focus the chart's first ${group}. If there are multiple ${group}s, they can be navigated among using ARROW keys. You may access the group's child ${geomType}s by pressing ENTER again. You may then use the arrow keys to navigate among ${geomType}s and SPACEBAR to select them. Use ESCAPE to drill up one level of the chart or TAB to leave it entirely. If you are using a screen reader, this section contains additional information and instructions.`; //  Chart Unique ID: ${uniqueID}.
+  const nonInteractive = `Static ${chartTag} image${chartTitle}. The next TAB will focus the data table button. If you are using a screen reader, this section contains additional information.`;
+  instructionsWrapper.select('.vcl-region-label').text(!disableKeyNav ? full : nonInteractive);
 };
 
 export const setAccessTitle = (rootEle: any, title: string) => {

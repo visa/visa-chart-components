@@ -548,6 +548,49 @@ export const accessibility_headings_update_p = {
   }
 };
 
+export const accessibility_static_geometry_initialize = {
+  prop: 'accessibility',
+  group: 'accessibility',
+  name: 'attributes should be added to static geometries on load',
+  testProps: {},
+  testSelector: '[data-testid=mark]',
+  testFunc: async (
+    component: any,
+    page: SpecPage,
+    testProps: object,
+    testSelector: string,
+    nextTestSelector: string
+  ) => {
+    // ARRANGE
+    // if we have any testProps apply them
+    if (Object.keys(testProps).length) {
+      Object.keys(testProps).forEach(testProp => {
+        component[testProp] = testProps[testProp];
+      });
+    }
+    component.suppressEvents = true;
+    component.accessibility = {
+      ...component.accessibility,
+      ...{ elementsAreInterface: false, keyboardNavConfig: { disabled: true } }
+    };
+
+    // ACT
+    page.root.appendChild(component);
+    await page.waitForChanges();
+
+    // ASSERT - ELEMENTS
+    const elements = page.doc.querySelectorAll(testSelector);
+    elements.forEach(element => {
+      expect(element).toEqualAttribute('tabindex', -1);
+      expect(element).toEqualAttribute('role', 'presentation');
+      expect(element).toEqualAttribute('focusable', false);
+      expect(element).toEqualAttribute('data-role', 'img');
+      expect(element.getAttribute('id')).toBeTruthy();
+      expect(element['__on']).toBeFalsy(); // listeners should not be added as we have applied suppress events and disable keyboard nav
+    });
+  }
+};
+
 export const accessibility_geometry_initialize = {
   prop: 'accessibility',
   group: 'accessibility',
@@ -686,6 +729,53 @@ export const accessibility_controller_initialize = {
     expect(rootSVG['__on'].length).toBeGreaterThanOrEqual(1);
     const focusObject = rootSVG['__on'].find(o => o.type === 'focus');
     expect(focusObject).toBeTruthy();
+  }
+};
+
+export const accessibility_static_controller_initialize = {
+  prop: 'accessibility',
+  group: 'accessibility',
+  name: 'controller div should be created and static image attributes should be added on load',
+  testProps: {},
+  testSelector: '[data-testid=controller]',
+  testFunc: async (
+    component: any,
+    page: SpecPage,
+    testProps: object,
+    testSelector: string,
+    nextTestSelector: string
+  ) => {
+    // ARRANGE
+    // if we have any testProps apply them
+    if (Object.keys(testProps).length) {
+      Object.keys(testProps).forEach(testProp => {
+        component[testProp] = testProps[testProp];
+      });
+    }
+    // these props are required for this behavior to take place
+    component.suppressEvents = true;
+    component.accessibility = {
+      ...component.accessibility,
+      ...{ elementsAreInterface: false, keyboardNavConfig: { disabled: true } }
+    };
+
+    // ACT
+    page.root.appendChild(component);
+    await page.waitForChanges();
+
+    // ASSERT
+    const titleText = `${component.mainTitle}. `;
+    const regionText = `Static ${component.tagName.toLowerCase()} image, Titled: ${titleText}The next TAB will focus the data table button. If you are using a screen reader, this section contains additional information.`;
+
+    const controller = page.doc.querySelector(testSelector);
+    const regionLabel = page.doc.querySelector('.vcl-region-label');
+    expect(controller).toEqualAttribute('tabindex', -1);
+    expect(controller).toEqualAttribute('role', 'presentation');
+    expect(controller).toEqualAttribute('id', `chart-area-${component.uniqueID}`);
+    expect(controller).toEqualText('');
+
+    // during the simple chart implementation, the explanation text is attached to the region label.
+    expect(regionLabel).toEqualText(regionText);
   }
 };
 

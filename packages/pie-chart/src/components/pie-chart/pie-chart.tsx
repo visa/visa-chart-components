@@ -566,6 +566,33 @@ export class PieChart {
       this.shouldSetStrokes = true;
       this.shouldDrawInteractionState = true;
     }
+    const newKeyNav =
+      _newVal && _newVal.keyboardNavConfig && _newVal.keyboardNavConfig.disabled
+        ? _newVal.keyboardNavConfig.disabled
+        : false;
+    const oldKeyNav =
+      _oldVal && _oldVal.keyboardNavConfig && _oldVal.keyboardNavConfig.disabled
+        ? _oldVal.keyboardNavConfig.disabled
+        : false;
+    const newInterface = _newVal && _newVal.elementsAreInterface ? _newVal.elementsAreInterface : false;
+    const oldInterface = _oldVal && _oldVal.elementsAreInterface ? _oldVal.elementsAreInterface : false;
+    if (newKeyNav !== oldKeyNav || newInterface !== oldInterface) {
+      this.shouldSetGeometryAriaLabels = true;
+      this.shouldSetParentSVGAccessibility = true;
+      this.shouldUpdateDescriptionWrapper = true;
+      this.shouldRedrawWrapper = true;
+      this.shouldSetChartAccessibilityTitle = true;
+      this.shouldSetChartAccessibilitySubtitle = true;
+      this.shouldSetChartAccessibilityLongDescription = true;
+      this.shouldSetChartAccessibilityContext = true;
+      this.shouldSetChartAccessibilityExecutiveSummary = true;
+      this.shouldSetChartAccessibilityPurpose = true;
+      this.shouldSetChartAccessibilityStatisticalNotes = true;
+      this.shouldSetChartAccessibilityStructureNotes = true;
+    }
+    if (newInterface !== oldInterface) {
+      this.shouldSetSelectionClass = true;
+    }
   }
 
   @Watch('annotations')
@@ -585,6 +612,20 @@ export class PieChart {
   @Watch('suppressEvents')
   suppressWatcher(_newVal, _oldVal) {
     this.shouldBindInteractivity = true;
+    this.shouldUpdateCursor = true;
+    this.shouldSetGeometryAriaLabels = true;
+    this.shouldSetParentSVGAccessibility = true;
+    this.shouldUpdateDescriptionWrapper = true;
+    this.shouldRedrawWrapper = true;
+    this.shouldValidate = true;
+    this.shouldSetChartAccessibilityTitle = true;
+    this.shouldSetChartAccessibilitySubtitle = true;
+    this.shouldSetChartAccessibilityLongDescription = true;
+    this.shouldSetChartAccessibilityContext = true;
+    this.shouldSetChartAccessibilityExecutiveSummary = true;
+    this.shouldSetChartAccessibilityPurpose = true;
+    this.shouldSetChartAccessibilityStatisticalNotes = true;
+    this.shouldSetChartAccessibilityStructureNotes = true;
   }
 
   @Watch('clickStyle')
@@ -1945,7 +1986,12 @@ export class PieChart {
       chartTag: 'pie-chart',
       uniqueID: this.chartID,
       groupName: 'pie',
-      redraw: this.shouldRedrawWrapper
+      redraw: this.shouldRedrawWrapper,
+      disableKeyNav:
+        this.suppressEvents &&
+        this.accessibility.elementsAreInterface === false &&
+        this.accessibility.keyboardNavConfig &&
+        this.accessibility.keyboardNavConfig.disabled
     });
     this.shouldRedrawWrapper = false;
   }
@@ -1961,7 +2007,12 @@ export class PieChart {
       includeKeyNames: this.accessibility.includeDataKeyNames,
       dataKeys: scopeDataKeys(this, chartAccessors, 'pie-chart'),
       // groupAccessor: this.groupAccessor // pie chart does not include these
-      groupName: 'pie'
+      groupName: 'pie',
+      disableKeyNav:
+        this.suppressEvents &&
+        this.accessibility.elementsAreInterface === false &&
+        this.accessibility.keyboardNavConfig &&
+        this.accessibility.keyboardNavConfig.disabled
       // groupKeys: [], // pie chart does not include these
       // nested: '', // pie chart does not include these
       // recursive: true // pie chart does not include these
@@ -1992,7 +2043,12 @@ export class PieChart {
         includeKeyNames: this.accessibility.includeDataKeyNames,
         dataKeys: keys,
         groupName: 'pie',
-        uniqueID: this.chartID
+        uniqueID: this.chartID,
+        disableKeyNav:
+          this.suppressEvents &&
+          this.accessibility.elementsAreInterface === false &&
+          this.accessibility.keyboardNavConfig &&
+          this.accessibility.keyboardNavConfig.disabled
       });
     });
     this.updateRefPie.each((_d, i, n) => {
@@ -2000,9 +2056,14 @@ export class PieChart {
         node: n[i],
         geomType: 'slice',
         includeKeyNames: this.accessibility.includeDataKeyNames,
-        dataKeys: scopeDataKeys(this, chartAccessors, 'pie-chart'),
+        dataKeys: keys,
         groupName: 'pie',
-        uniqueID: this.chartID
+        uniqueID: this.chartID,
+        disableKeyNav:
+          this.suppressEvents &&
+          this.accessibility.elementsAreInterface === false &&
+          this.accessibility.keyboardNavConfig &&
+          this.accessibility.keyboardNavConfig.disabled
       });
     });
   }
