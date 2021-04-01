@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0](https://github.com/visa/visa-chart-components/compare/@visa/charts-angular@2.0.3...@visa/charts-angular@2.1.0) (2021-04-01)
+
+
+### Features
+
+* bump angular from v9 to v11 in charts-angular ([ecd7cea](https://github.com/visa/visa-chart-components/commit/ecd7cea3356aac17372592643eafb0c66c9addd5))
+
+
+
+
+
 ## [2.0.4](https://github.com/visa/visa-chart-components/compare/@visa/charts-angular@2.0.3...@visa/charts-angular@2.0.4) (2021-02-18)
 
 **Note:** Version bump only for package @visa/charts-angular
