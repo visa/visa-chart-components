@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/visa/visa-chart-components/compare/@visa/charts-types@0.2.2...@visa/charts-types@0.3.0) (2021-04-01)
+
+
+### Features
+
+* add keyboardNavConfig to accessibility util and component  apis ([7f6e8ef](https://github.com/visa/visa-chart-components/commit/7f6e8efee3f3c5a865c44862a72bef498eee0289))
+
+
+
+
+
 ## [0.2.2](https://github.com/visa/visa-chart-components/compare/@visa/charts-types@0.2.1...@visa/charts-types@0.2.2) (2021-02-09)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "@visa/parallel-plot",
-  "version": "4.1.1",
+  "version": "4.2.0",
   "description": "parallel-plot component",
   "license": "SEE LICENCE IN LICENSE",
   "module": "dist/index.mjs",
@@ -35,9 +35,9 @@
     "access": "public"
   },
   "dependencies": {
-    "@visa/charts-types": "^0.2.2",
-    "@visa/visa-charts-data-table": "^2.0.4",
-    "@visa/visa-charts-utils": "^4.2.0",
+    "@visa/charts-types": "^0.3.0",
+    "@visa/visa-charts-data-table": "^2.0.5",
+    "@visa/visa-charts-utils": "^4.3.0",
     "d3-array": "^1.2.4",
     "d3-collection": "^1.0.7",
     "d3-scale": "^2.2.2",
@@ -48,7 +48,7 @@
     "uuid": "7.0.0"
   },
   "devDependencies": {
-    "@visa/visa-charts-utils-dev": "^3.3.4"
+    "@visa/visa-charts-utils-dev": "^3.3.5"
   },
   "jest": {
     "preset": "@stencil/core/testing",

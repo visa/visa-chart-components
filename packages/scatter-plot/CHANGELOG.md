@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.2.0](https://github.com/visa/visa-chart-components/compare/@visa/scatter-plot@5.1.0...@visa/scatter-plot@5.2.0) (2021-04-01)
+
+
+### Features
+
+* add keyboardNavConfig to accessibility util and component  apis ([7f6e8ef](https://github.com/visa/visa-chart-components/commit/7f6e8efee3f3c5a865c44862a72bef498eee0289))
+
+
+
+
+
 ## [5.1.1](https://github.com/visa/visa-chart-components/compare/@visa/scatter-plot@5.1.0...@visa/scatter-plot@5.1.1) (2021-02-18)
 
 **Note:** Version bump only for package @visa/scatter-plot

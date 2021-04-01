@@ -1,6 +1,6 @@
 {
   "name": "@visa/level-indicator",
-  "version": "4.0.3",
+  "version": "4.0.4",
   "description": "level-indicator component",
   "license": "SEE LICENCE IN LICENSE",
   "module": "dist/index.mjs",
@@ -32,8 +32,8 @@
     "access": "public"
   },
   "dependencies": {
-    "@visa/charts-types": "^0.2.2",
-    "@visa/visa-charts-utils": "^4.2.0",
+    "@visa/charts-types": "^0.3.0",
+    "@visa/visa-charts-utils": "^4.3.0",
     "d3-axis": "^1.0.12",
     "d3-scale": "^2.2.2",
     "d3-selection": "^1.4.0",
