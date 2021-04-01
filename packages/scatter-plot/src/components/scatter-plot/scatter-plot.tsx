@@ -581,6 +581,19 @@ export class ScatterPlot {
     this.shouldUpdateLegend = true;
     this.shouldSetLegendCursor = true;
     this.shouldUpdateLegendInteractivity = true;
+    this.shouldSetGeometryAriaLabels = true;
+    this.shouldSetParentSVGAccessibility = true;
+    this.shouldUpdateDescriptionWrapper = true;
+    this.shouldRedrawWrapper = true;
+    this.shouldValidate = true;
+    this.shouldSetChartAccessibilityTitle = true;
+    this.shouldSetChartAccessibilitySubtitle = true;
+    this.shouldSetChartAccessibilityLongDescription = true;
+    this.shouldSetChartAccessibilityContext = true;
+    this.shouldSetChartAccessibilityExecutiveSummary = true;
+    this.shouldSetChartAccessibilityPurpose = true;
+    this.shouldSetChartAccessibilityStatisticalNotes = true;
+    this.shouldSetChartAccessibilityStructureNotes = true;
   }
 
   @Watch('annotations')
@@ -653,6 +666,33 @@ export class ScatterPlot {
     if (newStrokes !== oldStrokes) {
       this.shouldSetColors = true;
       this.shouldDrawInteractionState = true;
+    }
+    const newKeyNav =
+      _newVal && _newVal.keyboardNavConfig && _newVal.keyboardNavConfig.disabled
+        ? _newVal.keyboardNavConfig.disabled
+        : false;
+    const oldKeyNav =
+      _oldVal && _oldVal.keyboardNavConfig && _oldVal.keyboardNavConfig.disabled
+        ? _oldVal.keyboardNavConfig.disabled
+        : false;
+    const newInterface = _newVal && _newVal.elementsAreInterface ? _newVal.elementsAreInterface : false;
+    const oldInterface = _oldVal && _oldVal.elementsAreInterface ? _oldVal.elementsAreInterface : false;
+    if (newKeyNav !== oldKeyNav || newInterface !== oldInterface) {
+      this.shouldSetGeometryAriaLabels = true;
+      this.shouldSetParentSVGAccessibility = true;
+      this.shouldUpdateDescriptionWrapper = true;
+      this.shouldRedrawWrapper = true;
+      this.shouldSetChartAccessibilityTitle = true;
+      this.shouldSetChartAccessibilitySubtitle = true;
+      this.shouldSetChartAccessibilityLongDescription = true;
+      this.shouldSetChartAccessibilityContext = true;
+      this.shouldSetChartAccessibilityExecutiveSummary = true;
+      this.shouldSetChartAccessibilityPurpose = true;
+      this.shouldSetChartAccessibilityStatisticalNotes = true;
+      this.shouldSetChartAccessibilityStructureNotes = true;
+    }
+    if (newInterface !== oldInterface) {
+      this.shouldSetSelectionClass = true;
     }
   }
 
@@ -2079,7 +2119,12 @@ export class ScatterPlot {
       uniqueID: this.chartID,
       groupName: 'scatter group',
       highestHeadingLevel: this.highestHeadingLevel,
-      redraw: this.shouldRedrawWrapper
+      redraw: this.shouldRedrawWrapper,
+      disableKeyNav:
+        this.suppressEvents &&
+        this.accessibility.elementsAreInterface === false &&
+        this.accessibility.keyboardNavConfig &&
+        this.accessibility.keyboardNavConfig.disabled
     });
     this.shouldRedrawWrapper = false;
   }
@@ -2095,7 +2140,12 @@ export class ScatterPlot {
       includeKeyNames: this.accessibility.includeDataKeyNames,
       dataKeys: scopeDataKeys(this, chartAccessors, 'scatter-plot'),
       groupAccessor: this.groupAccessor,
-      groupName: 'scatter group'
+      groupName: 'scatter group',
+      disableKeyNav:
+        this.suppressEvents &&
+        this.accessibility.elementsAreInterface === false &&
+        this.accessibility.keyboardNavConfig &&
+        this.accessibility.keyboardNavConfig.disabled
       // groupKeys: [],
       // nested: '',
       // recursive: true
@@ -2120,7 +2170,12 @@ export class ScatterPlot {
         includeKeyNames: this.accessibility.includeDataKeyNames,
         dataKeys: keys,
         groupName: 'scatter group',
-        uniqueID: this.chartID
+        uniqueID: this.chartID,
+        disableKeyNav:
+          this.suppressEvents &&
+          this.accessibility.elementsAreInterface === false &&
+          this.accessibility.keyboardNavConfig &&
+          this.accessibility.keyboardNavConfig.disabled
       });
     });
   }

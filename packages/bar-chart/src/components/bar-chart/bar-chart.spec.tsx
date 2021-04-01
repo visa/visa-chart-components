@@ -338,9 +338,9 @@ describe('<bar-chart>', () => {
                 innerTestSelector,
                 innerNextTestSelector
               ));
-            // skipping these by default as the target.focus() code in applyAccessibility breaks them
+            // update this test to check out just one of them
           } else if (test === 'accessibility_focus_marker_style') {
-            it.skip(`${unitTestAccessibility[test].prop}: ${unitTestAccessibility[test].name}`, () =>
+            it(`${unitTestAccessibility[test].prop}: ${unitTestAccessibility[test].name}`, () =>
               unitTestAccessibility[test].testFunc(
                 component,
                 page,
@@ -348,10 +348,9 @@ describe('<bar-chart>', () => {
                 innerTestSelector,
                 innerNextTestSelector
               ));
-          } else if (
-            test === 'accessibility_focus_marker_style' // update this test to check out just one of them
-          ) {
-            it(`${unitTestAccessibility[test].prop}: ${unitTestAccessibility[test].name}`, () =>
+            // skipping these by default as the target.focus() code in applyAccessibility breaks them
+          } else if (test === 'accessibility_focus_marker_style') {
+            it.skip(`${unitTestAccessibility[test].prop}: ${unitTestAccessibility[test].name}`, () =>
               unitTestAccessibility[test].testFunc(
                 component,
                 page,

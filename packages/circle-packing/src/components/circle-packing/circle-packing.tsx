@@ -454,6 +454,33 @@ export class CirclePacking {
       this.shouldSetStrokes = true;
       this.shouldDrawInteractionState = true;
     }
+    const newKeyNav =
+      _newVal && _newVal.keyboardNavConfig && _newVal.keyboardNavConfig.disabled
+        ? _newVal.keyboardNavConfig.disabled
+        : false;
+    const oldKeyNav =
+      _oldVal && _oldVal.keyboardNavConfig && _oldVal.keyboardNavConfig.disabled
+        ? _oldVal.keyboardNavConfig.disabled
+        : false;
+    const newInterface = _newVal && _newVal.elementsAreInterface ? _newVal.elementsAreInterface : false;
+    const oldInterface = _oldVal && _oldVal.elementsAreInterface ? _oldVal.elementsAreInterface : false;
+    if (newKeyNav !== oldKeyNav || newInterface !== oldInterface) {
+      this.shouldSetGeometryAriaLabels = true;
+      this.shouldSetParentSVGAccessibility = true;
+      this.shouldUpdateDescriptionWrapper = true;
+      this.shouldRedrawWrapper = true;
+      this.shouldSetChartAccessibilityTitle = true;
+      this.shouldSetChartAccessibilitySubtitle = true;
+      this.shouldSetChartAccessibilityLongDescription = true;
+      this.shouldSetChartAccessibilityContext = true;
+      this.shouldSetChartAccessibilityExecutiveSummary = true;
+      this.shouldSetChartAccessibilityPurpose = true;
+      this.shouldSetChartAccessibilityStatisticalNotes = true;
+      this.shouldSetChartAccessibilityStructureNotes = true;
+    }
+    if (newInterface !== oldInterface) {
+      this.shouldDrawInteractionState = true;
+    }
   }
 
   @Watch('annotations')
@@ -480,6 +507,19 @@ export class CirclePacking {
   suppressWatcher(_newVal, _oldVal) {
     this.shouldBindInteractivity = true;
     this.shouldUpdateCursor = true;
+    this.shouldSetGeometryAriaLabels = true;
+    this.shouldSetParentSVGAccessibility = true;
+    this.shouldUpdateDescriptionWrapper = true;
+    this.shouldRedrawWrapper = true;
+    this.shouldValidate = true;
+    this.shouldSetChartAccessibilityTitle = true;
+    this.shouldSetChartAccessibilitySubtitle = true;
+    this.shouldSetChartAccessibilityLongDescription = true;
+    this.shouldSetChartAccessibilityContext = true;
+    this.shouldSetChartAccessibilityExecutiveSummary = true;
+    this.shouldSetChartAccessibilityPurpose = true;
+    this.shouldSetChartAccessibilityStatisticalNotes = true;
+    this.shouldSetChartAccessibilityStructureNotes = true;
   }
 
   componentWillLoad() {
@@ -1389,7 +1429,12 @@ export class CirclePacking {
       uniqueID: this.chartID,
       groupName: 'node',
       recursive: true,
-      redraw: this.shouldRedrawWrapper
+      redraw: this.shouldRedrawWrapper,
+      disableKeyNav:
+        this.suppressEvents &&
+        this.accessibility.elementsAreInterface === false &&
+        this.accessibility.keyboardNavConfig &&
+        this.accessibility.keyboardNavConfig.disabled
     });
     this.shouldRedrawWrapper = false;
   }
@@ -1406,7 +1451,12 @@ export class CirclePacking {
       dataKeys: scopeDataKeys(this, chartAccessors, 'circle-packing'),
       groupAccessor: this.parentAccessor,
       groupName: 'node',
-      recursive: true
+      recursive: true,
+      disableKeyNav:
+        this.suppressEvents &&
+        this.accessibility.elementsAreInterface === false &&
+        this.accessibility.keyboardNavConfig &&
+        this.accessibility.keyboardNavConfig.disabled
     });
   }
 
@@ -1429,7 +1479,12 @@ export class CirclePacking {
         dataKeys: keys,
         recursive: true,
         groupName: 'node',
-        uniqueID: this.chartID
+        uniqueID: this.chartID,
+        disableKeyNav:
+          this.suppressEvents &&
+          this.accessibility.elementsAreInterface === false &&
+          this.accessibility.keyboardNavConfig &&
+          this.accessibility.keyboardNavConfig.disabled
         // groupKeys: ["sum"], // circle-packing doesn't use this, so it can be omitted
         // nested: true, // circle-packing doesn't use this, so it can be omitted
       });

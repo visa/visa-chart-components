@@ -23,7 +23,10 @@ export const accessibility = {
   hideTextures: false,
   hideStrokes: false,
   showSmallLabels: false,
-  showExperimentalTextures: false
+  showExperimentalTextures: false,
+  keyboardNavConfig: {
+    disabled: false
+  }
 };
 
 export const highestHeadingLevel = 'h2';

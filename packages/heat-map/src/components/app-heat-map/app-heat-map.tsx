@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2021 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -27,6 +27,7 @@ export class AppHeatMap {
   @State() interactionKeys: any = ['date'];
   @State() xAxisPlacement: any = 'bottom';
   @State() xAxisFormat: any = '%m/%d';
+  @State() suppressEvents: boolean = false;
   @State() label: any = {
     labelAccessor: ['category', 'value'],
     labelTitle: ['Category ', 'Value'],
@@ -1159,6 +1160,8 @@ export class AppHeatMap {
     structureNotes:
       'A square is shown for each of the four categories and seven dates displayed, and the color of these squares represents a high, mid or low value',
     statisticalNotes: 'This chart is using dummy data',
+    elementsAreInterface: false,
+    keyboardNavConfig: { disabled: false },
     onChangeFunc: d => {
       this.onChangeFunc(d);
     },
@@ -1289,6 +1292,24 @@ export class AppHeatMap {
     const a = { ...this.accessibility, hideStrokes: !this.accessibility.hideStrokes };
     this.accessibility = a;
   }
+  changeAccessElements() {
+    this.accessibility = {
+      ...this.accessibility,
+      elementsAreInterface: !this.accessibility.elementsAreInterface
+    };
+  }
+  changeKeyNav() {
+    const keyboardNavConfig = {
+      disabled: !this.accessibility.keyboardNavConfig.disabled
+    };
+    this.accessibility = {
+      ...this.accessibility,
+      keyboardNavConfig
+    };
+  }
+  toggleSuppress() {
+    this.suppressEvents = !this.suppressEvents;
+  }
 
   render() {
     this.data = this.dataStorage[this.stateTrigger];
@@ -1301,6 +1322,27 @@ export class AppHeatMap {
           }}
         >
           change data
+        </button>
+        <button
+          onClick={() => {
+            this.changeAccessElements();
+          }}
+        >
+          change elementsAreInterface
+        </button>
+        <button
+          onClick={() => {
+            this.toggleSuppress();
+          }}
+        >
+          toggle event suppression
+        </button>
+        <button
+          onClick={() => {
+            this.changeKeyNav();
+          }}
+        >
+          toggle keyboard nav
         </button>
         <button
           onClick={() => {
@@ -1421,6 +1463,7 @@ export class AppHeatMap {
           xAxis={this.xAxis}
           yAxis={this.yAxis}
           accessibility={this.accessibility}
+          suppressEvents={this.suppressEvents}
           hoverHighlight={this.hoverElement}
           clickHighlight={this.clickElement}
           onClickFunc={d => this.onClickFunc(d)}
