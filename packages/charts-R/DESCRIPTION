@@ -1,6 +1,6 @@
 Package: visachartR
-Version: 1.0.0
-Date: 2021-03-19
+Version: 1.0.1
+Date: 2021-04-02
 Title: R wrapper for Visa Chart Components
 Description: This package provides a set of wrapper functions in R for Visa Chart Components.
   'Visa Chart Components' <https://github.com/visa/visa-chart-components> is an accessibility focused,
