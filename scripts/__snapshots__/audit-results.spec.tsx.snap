@@ -319,10 +319,10 @@ This is exploitable if attackers have control over the arguments being passed to
     },
     Object {
       "data": Object {
-        "dependencies": 1532,
+        "dependencies": 1545,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 1532,
+        "totalDependencies": 1545,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -453,10 +453,10 @@ This is exploitable if attackers have control over the arguments being passed to
     },
     Object {
       "data": Object {
-        "dependencies": 398,
+        "dependencies": 399,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 398,
+        "totalDependencies": 399,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -741,10 +741,10 @@ This is exploitable if attackers have control over the arguments being passed to
   "utils": Array [
     Object {
       "data": Object {
-        "dependencies": 189,
+        "dependencies": 191,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 189,
+        "totalDependencies": 191,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -759,10 +759,10 @@ This is exploitable if attackers have control over the arguments being passed to
   "utils-dev": Array [
     Object {
       "data": Object {
-        "dependencies": 202,
+        "dependencies": 203,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 202,
+        "totalDependencies": 203,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -774,13 +774,13 @@ This is exploitable if attackers have control over the arguments being passed to
       "type": "auditSummary",
     },
   ],
-  "visa-charts-lib": Array [
+  "visa-chart-components": Array [
     Object {
       "data": Object {
-        "dependencies": 1544,
+        "dependencies": 1579,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 1544,
+        "totalDependencies": 1579,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
