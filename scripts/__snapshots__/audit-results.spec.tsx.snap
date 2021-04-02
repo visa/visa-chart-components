@@ -1,0 +1,814 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<yarn-audit-results> audit results should match what we had before, and be clean 1`] = `
+Object {
+  "alluvial-diagram": Array [
+    Object {
+      "data": Object {
+        "dependencies": 114,
+        "devDependencies": 0,
+        "optionalDependencies": 0,
+        "totalDependencies": 114,
+        "vulnerabilities": Object {
+          "critical": 0,
+          "high": 0,
+          "info": 0,
+          "low": 0,
+          "moderate": 0,
+        },
+      },
+      "type": "auditSummary",
+    },
+  ],
+  "bar-chart": Array [
+    Object {
+      "data": Object {
+        "dependencies": 111,
+        "devDependencies": 0,
+        "optionalDependencies": 0,
+        "totalDependencies": 111,
+        "vulnerabilities": Object {
+          "critical": 0,
+          "high": 0,
+          "info": 0,
+          "low": 0,
+          "moderate": 0,
+        },
+      },
+      "type": "auditSummary",
+    },
+  ],
+  "bivariate-mapbox-map": Array [
+    Object {
+      "data": Object {
+        "advisory": Object {
+          "access": "public",
+          "created": "2019-09-23T15:01:43.049Z",
+          "cves": Array [],
+          "cwe": "CWE-471",
+          "deleted": null,
+          "findings": Array [
+            Object {
+              "paths": Array [
+                "@mapbox/mapbox-gl-draw>@mapbox/geojson-extent>@mapbox/geojson-coords>geojson-flatten>minimist",
+                "@mapbox/mapbox-gl-draw>@mapbox/geojsonhint>minimist",
+              ],
+              "version": "1.2.0",
+            },
+          ],
+          "found_by": Object {
+            "email": "",
+            "link": "https://www.checkmarx.com/resources/blog/",
+            "name": "Checkmarx Research Team",
+          },
+          "id": 1179,
+          "metadata": Object {
+            "affected_components": "",
+            "exploitability": 1,
+            "module_type": "",
+          },
+          "module_name": "minimist",
+          "overview": "Affected versions of \`minimist\` are vulnerable to prototype pollution. Arguments are not properly sanitized, allowing an attacker to modify the prototype of \`Object\`, causing the addition or modification of an existing property that will exist on all objects.  
+Parsing the argument \`--__proto__.y=Polluted\` adds a \`y\` property with value \`Polluted\` to all objects. The argument \`--__proto__=Polluted\` raises and uncaught error and crashes the application.  
+This is exploitable if attackers have control over the arguments being passed to \`minimist\`.
+",
+          "patched_versions": ">=0.2.1 <1.0.0 || >=1.2.3",
+          "recommendation": "Upgrade to versions 0.2.1, 1.2.3 or later.",
+          "references": "- [GitHub commit 1](https://github.com/substack/minimist/commit/4cf1354839cb972e38496d35e12f806eea92c11f#diff-a1e0ee62c91705696ddb71aa30ad4f95)
+- [GitHub commit 2](https://github.com/substack/minimist/commit/63e7ed05aa4b1889ec2f3b196426db4500cbda94)",
+          "reported_by": Object {
+            "email": "",
+            "link": "https://www.checkmarx.com/resources/blog/",
+            "name": "Checkmarx Research Team",
+          },
+          "severity": "low",
+          "title": "Prototype Pollution",
+          "updated": "2020-03-18T19:41:45.921Z",
+          "url": "https://npmjs.com/advisories/1179",
+          "vulnerable_versions": "<0.2.1 || >=1.0.0 <1.2.3",
+        },
+        "resolution": Object {
+          "bundled": false,
+          "dev": false,
+          "id": 1179,
+          "optional": false,
+          "path": "@mapbox/mapbox-gl-draw>@mapbox/geojson-extent>@mapbox/geojson-coords>geojson-flatten>minimist",
+        },
+      },
+      "type": "auditAdvisory",
+    },
+    Object {
+      "data": Object {
+        "advisory": Object {
+          "access": "public",
+          "created": "2019-09-23T15:01:43.049Z",
+          "cves": Array [],
+          "cwe": "CWE-471",
+          "deleted": null,
+          "findings": Array [
+            Object {
+              "paths": Array [
+                "@mapbox/mapbox-gl-draw>@mapbox/geojson-extent>@mapbox/geojson-coords>geojson-flatten>minimist",
+                "@mapbox/mapbox-gl-draw>@mapbox/geojsonhint>minimist",
+              ],
+              "version": "1.2.0",
+            },
+          ],
+          "found_by": Object {
+            "email": "",
+            "link": "https://www.checkmarx.com/resources/blog/",
+            "name": "Checkmarx Research Team",
+          },
+          "id": 1179,
+          "metadata": Object {
+            "affected_components": "",
+            "exploitability": 1,
+            "module_type": "",
+          },
+          "module_name": "minimist",
+          "overview": "Affected versions of \`minimist\` are vulnerable to prototype pollution. Arguments are not properly sanitized, allowing an attacker to modify the prototype of \`Object\`, causing the addition or modification of an existing property that will exist on all objects.  
+Parsing the argument \`--__proto__.y=Polluted\` adds a \`y\` property with value \`Polluted\` to all objects. The argument \`--__proto__=Polluted\` raises and uncaught error and crashes the application.  
+This is exploitable if attackers have control over the arguments being passed to \`minimist\`.
+",
+          "patched_versions": ">=0.2.1 <1.0.0 || >=1.2.3",
+          "recommendation": "Upgrade to versions 0.2.1, 1.2.3 or later.",
+          "references": "- [GitHub commit 1](https://github.com/substack/minimist/commit/4cf1354839cb972e38496d35e12f806eea92c11f#diff-a1e0ee62c91705696ddb71aa30ad4f95)
+- [GitHub commit 2](https://github.com/substack/minimist/commit/63e7ed05aa4b1889ec2f3b196426db4500cbda94)",
+          "reported_by": Object {
+            "email": "",
+            "link": "https://www.checkmarx.com/resources/blog/",
+            "name": "Checkmarx Research Team",
+          },
+          "severity": "low",
+          "title": "Prototype Pollution",
+          "updated": "2020-03-18T19:41:45.921Z",
+          "url": "https://npmjs.com/advisories/1179",
+          "vulnerable_versions": "<0.2.1 || >=1.0.0 <1.2.3",
+        },
+        "resolution": Object {
+          "bundled": false,
+          "dev": false,
+          "id": 1179,
+          "optional": false,
+          "path": "@mapbox/mapbox-gl-draw>@mapbox/geojsonhint>minimist",
+        },
+      },
+      "type": "auditAdvisory",
+    },
+    Object {
+      "data": Object {
+        "dependencies": 356,
+        "devDependencies": 0,
+        "optionalDependencies": 0,
+        "totalDependencies": 356,
+        "vulnerabilities": Object {
+          "critical": 0,
+          "high": 0,
+          "info": 0,
+          "low": 2,
+          "moderate": 0,
+        },
+      },
+      "type": "auditSummary",
+    },
+  ],
+  "charts": Array [
+    Object {
+      "data": Object {
+        "dependencies": 145,
+        "devDependencies": 0,
+        "optionalDependencies": 0,
+        "totalDependencies": 145,
+        "vulnerabilities": Object {
+          "critical": 0,
+          "high": 0,
+          "info": 0,
+          "low": 0,
+          "moderate": 0,
+        },
+      },
+      "type": "auditSummary",
+    },
+  ],
+  "charts-angular": Array [
+    Object {
+      "data": Object {
+        "advisory": Object {
+          "access": "public",
+          "created": "2019-09-23T15:01:43.049Z",
+          "cves": Array [],
+          "cwe": "CWE-471",
+          "deleted": null,
+          "findings": Array [
+            Object {
+              "paths": Array [
+                "@visa/bivariate-mapbox-map>@mapbox/mapbox-gl-draw>@mapbox/geojson-extent>@mapbox/geojson-coords>geojson-flatten>minimist",
+              ],
+              "version": "1.2.0",
+            },
+            Object {
+              "paths": Array [
+                "@visa/bivariate-mapbox-map>@mapbox/mapbox-gl-draw>@mapbox/geojsonhint>minimist",
+              ],
+              "version": "1.2.0",
+            },
+          ],
+          "found_by": Object {
+            "email": "",
+            "link": "https://www.checkmarx.com/resources/blog/",
+            "name": "Checkmarx Research Team",
+          },
+          "id": 1179,
+          "metadata": Object {
+            "affected_components": "",
+            "exploitability": 1,
+            "module_type": "",
+          },
+          "module_name": "minimist",
+          "overview": "Affected versions of \`minimist\` are vulnerable to prototype pollution. Arguments are not properly sanitized, allowing an attacker to modify the prototype of \`Object\`, causing the addition or modification of an existing property that will exist on all objects.  
+Parsing the argument \`--__proto__.y=Polluted\` adds a \`y\` property with value \`Polluted\` to all objects. The argument \`--__proto__=Polluted\` raises and uncaught error and crashes the application.  
+This is exploitable if attackers have control over the arguments being passed to \`minimist\`.
+",
+          "patched_versions": ">=0.2.1 <1.0.0 || >=1.2.3",
+          "recommendation": "Upgrade to versions 0.2.1, 1.2.3 or later.",
+          "references": "- [GitHub commit 1](https://github.com/substack/minimist/commit/4cf1354839cb972e38496d35e12f806eea92c11f#diff-a1e0ee62c91705696ddb71aa30ad4f95)
+- [GitHub commit 2](https://github.com/substack/minimist/commit/63e7ed05aa4b1889ec2f3b196426db4500cbda94)",
+          "reported_by": Object {
+            "email": "",
+            "link": "https://www.checkmarx.com/resources/blog/",
+            "name": "Checkmarx Research Team",
+          },
+          "severity": "low",
+          "title": "Prototype Pollution",
+          "updated": "2020-03-18T19:41:45.921Z",
+          "url": "https://npmjs.com/advisories/1179",
+          "vulnerable_versions": "<0.2.1 || >=1.0.0 <1.2.3",
+        },
+        "resolution": Object {
+          "bundled": false,
+          "dev": false,
+          "id": 1179,
+          "optional": false,
+          "path": "@visa/bivariate-mapbox-map>@mapbox/mapbox-gl-draw>@mapbox/geojson-extent>@mapbox/geojson-coords>geojson-flatten>minimist",
+        },
+      },
+      "type": "auditAdvisory",
+    },
+    Object {
+      "data": Object {
+        "advisory": Object {
+          "access": "public",
+          "created": "2019-09-23T15:01:43.049Z",
+          "cves": Array [],
+          "cwe": "CWE-471",
+          "deleted": null,
+          "findings": Array [
+            Object {
+              "paths": Array [
+                "@visa/bivariate-mapbox-map>@mapbox/mapbox-gl-draw>@mapbox/geojson-extent>@mapbox/geojson-coords>geojson-flatten>minimist",
+              ],
+              "version": "1.2.0",
+            },
+            Object {
+              "paths": Array [
+                "@visa/bivariate-mapbox-map>@mapbox/mapbox-gl-draw>@mapbox/geojsonhint>minimist",
+              ],
+              "version": "1.2.0",
+            },
+          ],
+          "found_by": Object {
+            "email": "",
+            "link": "https://www.checkmarx.com/resources/blog/",
+            "name": "Checkmarx Research Team",
+          },
+          "id": 1179,
+          "metadata": Object {
+            "affected_components": "",
+            "exploitability": 1,
+            "module_type": "",
+          },
+          "module_name": "minimist",
+          "overview": "Affected versions of \`minimist\` are vulnerable to prototype pollution. Arguments are not properly sanitized, allowing an attacker to modify the prototype of \`Object\`, causing the addition or modification of an existing property that will exist on all objects.  
+Parsing the argument \`--__proto__.y=Polluted\` adds a \`y\` property with value \`Polluted\` to all objects. The argument \`--__proto__=Polluted\` raises and uncaught error and crashes the application.  
+This is exploitable if attackers have control over the arguments being passed to \`minimist\`.
+",
+          "patched_versions": ">=0.2.1 <1.0.0 || >=1.2.3",
+          "recommendation": "Upgrade to versions 0.2.1, 1.2.3 or later.",
+          "references": "- [GitHub commit 1](https://github.com/substack/minimist/commit/4cf1354839cb972e38496d35e12f806eea92c11f#diff-a1e0ee62c91705696ddb71aa30ad4f95)
+- [GitHub commit 2](https://github.com/substack/minimist/commit/63e7ed05aa4b1889ec2f3b196426db4500cbda94)",
+          "reported_by": Object {
+            "email": "",
+            "link": "https://www.checkmarx.com/resources/blog/",
+            "name": "Checkmarx Research Team",
+          },
+          "severity": "low",
+          "title": "Prototype Pollution",
+          "updated": "2020-03-18T19:41:45.921Z",
+          "url": "https://npmjs.com/advisories/1179",
+          "vulnerable_versions": "<0.2.1 || >=1.0.0 <1.2.3",
+        },
+        "resolution": Object {
+          "bundled": false,
+          "dev": false,
+          "id": 1179,
+          "optional": false,
+          "path": "@visa/bivariate-mapbox-map>@mapbox/mapbox-gl-draw>@mapbox/geojsonhint>minimist",
+        },
+      },
+      "type": "auditAdvisory",
+    },
+    Object {
+      "data": Object {
+        "dependencies": 1532,
+        "devDependencies": 0,
+        "optionalDependencies": 0,
+        "totalDependencies": 1532,
+        "vulnerabilities": Object {
+          "critical": 0,
+          "high": 0,
+          "info": 0,
+          "low": 2,
+          "moderate": 0,
+        },
+      },
+      "type": "auditSummary",
+    },
+  ],
+  "charts-react": Array [
+    Object {
+      "data": Object {
+        "advisory": Object {
+          "access": "public",
+          "created": "2019-09-23T15:01:43.049Z",
+          "cves": Array [],
+          "cwe": "CWE-471",
+          "deleted": null,
+          "findings": Array [
+            Object {
+              "paths": Array [
+                "@visa/bivariate-mapbox-map>@mapbox/mapbox-gl-draw>@mapbox/geojson-extent>@mapbox/geojson-coords>geojson-flatten>minimist",
+                "@visa/bivariate-mapbox-map>@mapbox/mapbox-gl-draw>@mapbox/geojsonhint>minimist",
+              ],
+              "version": "1.2.0",
+            },
+          ],
+          "found_by": Object {
+            "email": "",
+            "link": "https://www.checkmarx.com/resources/blog/",
+            "name": "Checkmarx Research Team",
+          },
+          "id": 1179,
+          "metadata": Object {
+            "affected_components": "",
+            "exploitability": 1,
+            "module_type": "",
+          },
+          "module_name": "minimist",
+          "overview": "Affected versions of \`minimist\` are vulnerable to prototype pollution. Arguments are not properly sanitized, allowing an attacker to modify the prototype of \`Object\`, causing the addition or modification of an existing property that will exist on all objects.  
+Parsing the argument \`--__proto__.y=Polluted\` adds a \`y\` property with value \`Polluted\` to all objects. The argument \`--__proto__=Polluted\` raises and uncaught error and crashes the application.  
+This is exploitable if attackers have control over the arguments being passed to \`minimist\`.
+",
+          "patched_versions": ">=0.2.1 <1.0.0 || >=1.2.3",
+          "recommendation": "Upgrade to versions 0.2.1, 1.2.3 or later.",
+          "references": "- [GitHub commit 1](https://github.com/substack/minimist/commit/4cf1354839cb972e38496d35e12f806eea92c11f#diff-a1e0ee62c91705696ddb71aa30ad4f95)
+- [GitHub commit 2](https://github.com/substack/minimist/commit/63e7ed05aa4b1889ec2f3b196426db4500cbda94)",
+          "reported_by": Object {
+            "email": "",
+            "link": "https://www.checkmarx.com/resources/blog/",
+            "name": "Checkmarx Research Team",
+          },
+          "severity": "low",
+          "title": "Prototype Pollution",
+          "updated": "2020-03-18T19:41:45.921Z",
+          "url": "https://npmjs.com/advisories/1179",
+          "vulnerable_versions": "<0.2.1 || >=1.0.0 <1.2.3",
+        },
+        "resolution": Object {
+          "bundled": false,
+          "dev": false,
+          "id": 1179,
+          "optional": false,
+          "path": "@visa/bivariate-mapbox-map>@mapbox/mapbox-gl-draw>@mapbox/geojson-extent>@mapbox/geojson-coords>geojson-flatten>minimist",
+        },
+      },
+      "type": "auditAdvisory",
+    },
+    Object {
+      "data": Object {
+        "advisory": Object {
+          "access": "public",
+          "created": "2019-09-23T15:01:43.049Z",
+          "cves": Array [],
+          "cwe": "CWE-471",
+          "deleted": null,
+          "findings": Array [
+            Object {
+              "paths": Array [
+                "@visa/bivariate-mapbox-map>@mapbox/mapbox-gl-draw>@mapbox/geojson-extent>@mapbox/geojson-coords>geojson-flatten>minimist",
+                "@visa/bivariate-mapbox-map>@mapbox/mapbox-gl-draw>@mapbox/geojsonhint>minimist",
+              ],
+              "version": "1.2.0",
+            },
+          ],
+          "found_by": Object {
+            "email": "",
+            "link": "https://www.checkmarx.com/resources/blog/",
+            "name": "Checkmarx Research Team",
+          },
+          "id": 1179,
+          "metadata": Object {
+            "affected_components": "",
+            "exploitability": 1,
+            "module_type": "",
+          },
+          "module_name": "minimist",
+          "overview": "Affected versions of \`minimist\` are vulnerable to prototype pollution. Arguments are not properly sanitized, allowing an attacker to modify the prototype of \`Object\`, causing the addition or modification of an existing property that will exist on all objects.  
+Parsing the argument \`--__proto__.y=Polluted\` adds a \`y\` property with value \`Polluted\` to all objects. The argument \`--__proto__=Polluted\` raises and uncaught error and crashes the application.  
+This is exploitable if attackers have control over the arguments being passed to \`minimist\`.
+",
+          "patched_versions": ">=0.2.1 <1.0.0 || >=1.2.3",
+          "recommendation": "Upgrade to versions 0.2.1, 1.2.3 or later.",
+          "references": "- [GitHub commit 1](https://github.com/substack/minimist/commit/4cf1354839cb972e38496d35e12f806eea92c11f#diff-a1e0ee62c91705696ddb71aa30ad4f95)
+- [GitHub commit 2](https://github.com/substack/minimist/commit/63e7ed05aa4b1889ec2f3b196426db4500cbda94)",
+          "reported_by": Object {
+            "email": "",
+            "link": "https://www.checkmarx.com/resources/blog/",
+            "name": "Checkmarx Research Team",
+          },
+          "severity": "low",
+          "title": "Prototype Pollution",
+          "updated": "2020-03-18T19:41:45.921Z",
+          "url": "https://npmjs.com/advisories/1179",
+          "vulnerable_versions": "<0.2.1 || >=1.0.0 <1.2.3",
+        },
+        "resolution": Object {
+          "bundled": false,
+          "dev": false,
+          "id": 1179,
+          "optional": false,
+          "path": "@visa/bivariate-mapbox-map>@mapbox/mapbox-gl-draw>@mapbox/geojsonhint>minimist",
+        },
+      },
+      "type": "auditAdvisory",
+    },
+    Object {
+      "data": Object {
+        "dependencies": 398,
+        "devDependencies": 0,
+        "optionalDependencies": 0,
+        "totalDependencies": 398,
+        "vulnerabilities": Object {
+          "critical": 0,
+          "high": 0,
+          "info": 0,
+          "low": 2,
+          "moderate": 0,
+        },
+      },
+      "type": "auditSummary",
+    },
+  ],
+  "circle-packing": Array [
+    Object {
+      "data": Object {
+        "dependencies": 112,
+        "devDependencies": 0,
+        "optionalDependencies": 0,
+        "totalDependencies": 112,
+        "vulnerabilities": Object {
+          "critical": 0,
+          "high": 0,
+          "info": 0,
+          "low": 0,
+          "moderate": 0,
+        },
+      },
+      "type": "auditSummary",
+    },
+  ],
+  "clustered-bar-chart": Array [
+    Object {
+      "data": Object {
+        "dependencies": 112,
+        "devDependencies": 0,
+        "optionalDependencies": 0,
+        "totalDependencies": 112,
+        "vulnerabilities": Object {
+          "critical": 0,
+          "high": 0,
+          "info": 0,
+          "low": 0,
+          "moderate": 0,
+        },
+      },
+      "type": "auditSummary",
+    },
+  ],
+  "clustered-force-layout": Array [
+    Object {
+      "data": Object {
+        "dependencies": 120,
+        "devDependencies": 0,
+        "optionalDependencies": 0,
+        "totalDependencies": 120,
+        "vulnerabilities": Object {
+          "critical": 0,
+          "high": 0,
+          "info": 0,
+          "low": 0,
+          "moderate": 0,
+        },
+      },
+      "type": "auditSummary",
+    },
+  ],
+  "data-table": Array [
+    Object {
+      "data": Object {
+        "dependencies": 106,
+        "devDependencies": 0,
+        "optionalDependencies": 0,
+        "totalDependencies": 106,
+        "vulnerabilities": Object {
+          "critical": 0,
+          "high": 0,
+          "info": 0,
+          "low": 0,
+          "moderate": 0,
+        },
+      },
+      "type": "auditSummary",
+    },
+  ],
+  "dumbbell-plot": Array [
+    Object {
+      "data": Object {
+        "dependencies": 111,
+        "devDependencies": 0,
+        "optionalDependencies": 0,
+        "totalDependencies": 111,
+        "vulnerabilities": Object {
+          "critical": 0,
+          "high": 0,
+          "info": 0,
+          "low": 0,
+          "moderate": 0,
+        },
+      },
+      "type": "auditSummary",
+    },
+  ],
+  "group-charts": Array [
+    Object {
+      "data": Object {
+        "dependencies": 137,
+        "devDependencies": 0,
+        "optionalDependencies": 0,
+        "totalDependencies": 137,
+        "vulnerabilities": Object {
+          "critical": 0,
+          "high": 0,
+          "info": 0,
+          "low": 0,
+          "moderate": 0,
+        },
+      },
+      "type": "auditSummary",
+    },
+  ],
+  "heat-map": Array [
+    Object {
+      "data": Object {
+        "dependencies": 111,
+        "devDependencies": 0,
+        "optionalDependencies": 0,
+        "totalDependencies": 111,
+        "vulnerabilities": Object {
+          "critical": 0,
+          "high": 0,
+          "info": 0,
+          "low": 0,
+          "moderate": 0,
+        },
+      },
+      "type": "auditSummary",
+    },
+  ],
+  "level-indicator": Array [
+    Object {
+      "data": Object {
+        "dependencies": 105,
+        "devDependencies": 0,
+        "optionalDependencies": 0,
+        "totalDependencies": 105,
+        "vulnerabilities": Object {
+          "critical": 0,
+          "high": 0,
+          "info": 0,
+          "low": 0,
+          "moderate": 0,
+        },
+      },
+      "type": "auditSummary",
+    },
+  ],
+  "line-chart": Array [
+    Object {
+      "data": Object {
+        "dependencies": 115,
+        "devDependencies": 0,
+        "optionalDependencies": 0,
+        "totalDependencies": 115,
+        "vulnerabilities": Object {
+          "critical": 0,
+          "high": 0,
+          "info": 0,
+          "low": 0,
+          "moderate": 0,
+        },
+      },
+      "type": "auditSummary",
+    },
+  ],
+  "parallel-plot": Array [
+    Object {
+      "data": Object {
+        "dependencies": 114,
+        "devDependencies": 0,
+        "optionalDependencies": 0,
+        "totalDependencies": 114,
+        "vulnerabilities": Object {
+          "critical": 0,
+          "high": 0,
+          "info": 0,
+          "low": 0,
+          "moderate": 0,
+        },
+      },
+      "type": "auditSummary",
+    },
+  ],
+  "pareto-chart": Array [
+    Object {
+      "data": Object {
+        "dependencies": 111,
+        "devDependencies": 0,
+        "optionalDependencies": 0,
+        "totalDependencies": 111,
+        "vulnerabilities": Object {
+          "critical": 0,
+          "high": 0,
+          "info": 0,
+          "low": 0,
+          "moderate": 0,
+        },
+      },
+      "type": "auditSummary",
+    },
+  ],
+  "pie-chart": Array [
+    Object {
+      "data": Object {
+        "dependencies": 111,
+        "devDependencies": 0,
+        "optionalDependencies": 0,
+        "totalDependencies": 111,
+        "vulnerabilities": Object {
+          "critical": 0,
+          "high": 0,
+          "info": 0,
+          "low": 0,
+          "moderate": 0,
+        },
+      },
+      "type": "auditSummary",
+    },
+  ],
+  "scatter-plot": Array [
+    Object {
+      "data": Object {
+        "dependencies": 112,
+        "devDependencies": 0,
+        "optionalDependencies": 0,
+        "totalDependencies": 112,
+        "vulnerabilities": Object {
+          "critical": 0,
+          "high": 0,
+          "info": 0,
+          "low": 0,
+          "moderate": 0,
+        },
+      },
+      "type": "auditSummary",
+    },
+  ],
+  "stacked-bar-chart": Array [
+    Object {
+      "data": Object {
+        "dependencies": 112,
+        "devDependencies": 0,
+        "optionalDependencies": 0,
+        "totalDependencies": 112,
+        "vulnerabilities": Object {
+          "critical": 0,
+          "high": 0,
+          "info": 0,
+          "low": 0,
+          "moderate": 0,
+        },
+      },
+      "type": "auditSummary",
+    },
+  ],
+  "types": Array [
+    Object {
+      "data": Object {
+        "dependencies": 1,
+        "devDependencies": 0,
+        "optionalDependencies": 0,
+        "totalDependencies": 1,
+        "vulnerabilities": Object {
+          "critical": 0,
+          "high": 0,
+          "info": 0,
+          "low": 0,
+          "moderate": 0,
+        },
+      },
+      "type": "auditSummary",
+    },
+  ],
+  "utils": Array [
+    Object {
+      "data": Object {
+        "dependencies": 189,
+        "devDependencies": 0,
+        "optionalDependencies": 0,
+        "totalDependencies": 189,
+        "vulnerabilities": Object {
+          "critical": 0,
+          "high": 0,
+          "info": 0,
+          "low": 0,
+          "moderate": 0,
+        },
+      },
+      "type": "auditSummary",
+    },
+  ],
+  "utils-dev": Array [
+    Object {
+      "data": Object {
+        "dependencies": 202,
+        "devDependencies": 0,
+        "optionalDependencies": 0,
+        "totalDependencies": 202,
+        "vulnerabilities": Object {
+          "critical": 0,
+          "high": 0,
+          "info": 0,
+          "low": 0,
+          "moderate": 0,
+        },
+      },
+      "type": "auditSummary",
+    },
+  ],
+  "visa-charts-lib": Array [
+    Object {
+      "data": Object {
+        "dependencies": 1544,
+        "devDependencies": 0,
+        "optionalDependencies": 0,
+        "totalDependencies": 1544,
+        "vulnerabilities": Object {
+          "critical": 0,
+          "high": 0,
+          "info": 0,
+          "low": 0,
+          "moderate": 0,
+        },
+      },
+      "type": "auditSummary",
+    },
+  ],
+  "world-map": Array [
+    Object {
+      "data": Object {
+        "dependencies": 129,
+        "devDependencies": 0,
+        "optionalDependencies": 0,
+        "totalDependencies": 129,
+        "vulnerabilities": Object {
+          "critical": 0,
+          "high": 0,
+          "info": 0,
+          "low": 0,
+          "moderate": 0,
+        },
+      },
+      "type": "auditSummary",
+    },
+  ],
+}
+`;

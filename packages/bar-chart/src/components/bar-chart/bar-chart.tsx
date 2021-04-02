@@ -37,12 +37,11 @@ const {
   removeHoverStrokes,
   buildStrokes,
   convertColorsToTextures,
-  initializeGeometryAccess,
+  initializeElementAccess,
   initializeDescriptionRoot,
-  initializeGroupAccess,
-  setGeometryAccessLabel,
-  setGroupAccessLabel,
-  setRootSVGAccess,
+  setElementFocusHandler,
+  setElementAccessID,
+  setAccessibilityController,
   hideNonessentialGroups,
   setAccessTitle,
   setAccessSubtitle,
@@ -881,7 +880,7 @@ export class BarChart {
       // we want to pass the PARENT of all the <g>s that contain bars
       hideNonessentialGroups(this.root.node(), this.bars.node());
       this.setGroupAccessibilityAttributes();
-      this.setGroupAccessibilityLabel();
+      this.setGroupAccessibilityID();
       this.duration = 750;
       this.defaults = false;
       resolve('component did load');
@@ -990,7 +989,7 @@ export class BarChart {
       //   this.shouldSetGroupAccessibilityAttributes = false
       // }
       if (this.shouldSetGroupAccessibilityLabel) {
-        this.setGroupAccessibilityLabel();
+        this.setGroupAccessibilityID();
         this.shouldSetGroupAccessibilityLabel = false;
       }
       if (this.shouldUpdateCorners) {
@@ -1465,10 +1464,7 @@ export class BarChart {
         )
       )
       .each((_d, i, n) => {
-        initializeGeometryAccess({
-          node: n[i]
-          // recursive: false // bar doesn't use this, so it can be omitted
-        });
+        initializeElementAccess(n[i]);
       });
     if (this.defaults) {
       this.enter
@@ -1541,7 +1537,7 @@ export class BarChart {
         // then our util can count geometries
         this.setChartCountAccessibility();
         // our group's label should update with new counts too
-        this.setGroupAccessibilityLabel();
+        this.setGroupAccessibilityID();
         // since items exited, labels must receive updated values
         this.setGeometryAriaLabels();
         // and also make sure the user's focus isn't lost
@@ -2252,7 +2248,7 @@ export class BarChart {
   }
 
   setParentSVGAccessibility() {
-    setRootSVGAccess({
+    setAccessibilityController({
       node: this.svg.node(),
       chartTag: 'bar-chart',
       title: this.accessibility.title || this.mainTitle,
@@ -2276,18 +2272,14 @@ export class BarChart {
 
   setGeometryAccessibilityAttributes() {
     this.update.each((_d, i, n) => {
-      initializeGeometryAccess({
-        node: n[i],
-        sameGroupCousinKey: this.groupAccessor || '' // this is only used on world map and bar
-        // recursive: false // bar doesn't use this, so it can be omitted
-      });
+      initializeElementAccess(n[i]);
     });
   }
 
   setGeometryAriaLabels() {
     const keys = scopeDataKeys(this, chartAccessors, 'bar-chart');
     this.update.each((_d, i, n) => {
-      setGeometryAccessLabel({
+      setElementFocusHandler({
         node: n[i],
         geomType: 'bar',
         includeKeyNames: this.accessibility.includeDataKeyNames,
@@ -2299,22 +2291,23 @@ export class BarChart {
           this.accessibility.keyboardNavConfig &&
           this.accessibility.keyboardNavConfig.disabled
       });
+      setElementAccessID({
+        node: n[i],
+        uniqueID: this.chartID
+      });
     });
   }
 
   setGroupAccessibilityAttributes() {
     // if a component's <g> elements can enter/exit, this will need to be called in the
     // lifecycle more than just initially, like how setGeometryAccessibilityAttributes works
-    initializeGroupAccess(this.bars.node());
+    initializeElementAccess(this.bars.node());
   }
 
-  setGroupAccessibilityLabel() {
+  setGroupAccessibilityID() {
     this.bars.each((_, i, n) => {
-      setGroupAccessLabel({
+      setElementAccessID({
         node: n[i],
-        geomType: 'bar',
-        includeKeyNames: this.accessibility.includeDataKeyNames,
-        groupAccessor: this.groupAccessor,
         uniqueID: this.chartID
       });
     });

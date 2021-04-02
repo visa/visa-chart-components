@@ -169,8 +169,8 @@ export class AppCirclePacking {
     },
     {
       p: 'import',
-      c: '@visa/visa-charts-utils{initializeGeometryAccess}',
-      cLabel: '@visa/visa-charts-utils{initializeGeometryAccess}',
+      c: '@visa/visa-charts-utils{initializeElementAccess}',
+      cLabel: '@visa/visa-charts-utils{initializeElementAccess}',
       v: 1
     },
     {
@@ -181,14 +181,14 @@ export class AppCirclePacking {
     },
     {
       p: 'import',
-      c: '@visa/visa-charts-utils{setGeometryAccessLabel}',
-      cLabel: '@visa/visa-charts-utils{setGeometryAccessLabel}',
+      c: '@visa/visa-charts-utils{setElementFocusHandler}',
+      cLabel: '@visa/visa-charts-utils{setElementFocusHandler}',
       v: 1
     },
     {
       p: 'import',
-      c: '@visa/visa-charts-utils{setRootSVGAccess}',
-      cLabel: '@visa/visa-charts-utils{setRootSVGAccess}',
+      c: '@visa/visa-charts-utils{setAccessibilityController}',
+      cLabel: '@visa/visa-charts-utils{setAccessibilityController}',
       v: 1
     },
     {

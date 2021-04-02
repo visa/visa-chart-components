@@ -7,6 +7,7 @@
   "types": "dist/index.d.ts",
   "author": "Visa Data Experience Team",
   "scripts": {
+    "audit": "yarn audit --json --level low > yarn-audit.json",
     "build": "rm -rf dist && tsc",
     "watch": "tsc -w"
   },

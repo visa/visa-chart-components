@@ -11,6 +11,7 @@ const fs = require('fs');
 const libCoverage = require('istanbul-lib-coverage');
 const libReport = require('istanbul-lib-report');
 const reports = require('istanbul-reports');
+const prettier = require('prettier');
 
 // get existing code coverage results and combine them together
 const coverageMap = libCoverage.createCoverageMap();
@@ -60,7 +61,8 @@ try {
 }
 
 // now we will combine jest-html-reporter outputs
-const combinedTestResultsFile = './coverage/jest-test-report.html';
+const coverageDir = './coverage';
+const combinedTestResultsFile = path.join(coverageDir, '/jest-test-report.html');
 let combinedFileContent = undefined;
 // let combinedFileConsoleSummary = undefined; // we can use this later to output to command line as well.
 const htmlFiles = glob.sync(path.join(__dirname, '..', 'packages/*/coverage') + '/**/test-report.html', {});
@@ -111,14 +113,67 @@ htmlFiles.forEach(function(file, i) {
 });
 // now that we have created combined file content we can write it to the file
 if (combinedFileContent) {
-  // if file doesn't exist we have to create it first
+  // if dir/file doesn't exist we have to create it first
   if (!fs.existsSync(combinedTestResultsFile)) {
+    if (!fs.existsSync(coverageDir)) {
+      fs.mkdirSync(coverageDir);
+    }
     console.log('path check', path.resolve('./'), path.resolve(combinedTestResultsFile));
     fs.closeSync(fs.openSync(combinedTestResultsFile, 'w'));
   }
   fs.writeFileSync(combinedTestResultsFile, combinedFileContent.join('\n'));
   console.log(`Success:: file:${combinedTestResultsFile} created, open in chrome to view results`); //${beginLineNumber}- ${deleteCount} ${linesLength}`);
 }
+
+const combinedTestResultsJSONFile = path.join(coverageDir, '/jest-test-report.json');
+const jsonFiles = glob.sync(path.join(__dirname, '..', 'packages/*/coverage') + '/**/test-report.json', {});
+let combinedJSONResults = {};
+jsonFiles.forEach(function(file, i) {
+  try {
+    const fileContent = JSON.parse(fs.readFileSync(file)).testResults[0].assertionResults;
+    // get package name of file for generating machine/user independent snapshot object
+    const packageName = path.dirname(file).slice(
+      path
+        .dirname(file)
+        .slice(0, path.dirname(file).lastIndexOf('/'))
+        .lastIndexOf('/') + 1,
+      path.dirname(file).lastIndexOf('/')
+    );
+
+    // user specific bugfix - loop through and make full paths relative
+    const userSpecificPath = new RegExp(path.dirname(file).slice(0, path.dirname(file).indexOf('/packages')), 'g');
+    fileContent.forEach(result => {
+      // console.log(result);
+      if (result && result.failureMessages && result.failureMessages.length > 0) {
+        const failures = [...result.failureMessages];
+        failures.forEach((fail, i) => {
+          result.failureMessages[i] = fail.replace(userSpecificPath, '.');
+        });
+      }
+    });
+    combinedJSONResults[packageName] = fileContent;
+    // console.log(file, i, combinedJSONResults);
+  } catch (ex) {
+    console.log(`Error:: while processing ts file:${file}, exception:${ex}`);
+  }
+});
+// now that we have created combined file content we can write it to the file
+if (combinedJSONResults) {
+  const formattedResults = prettier.format(JSON.stringify(combinedJSONResults), { parser: 'json' });
+
+  // if dir/file doesn't exist we have to create it first
+  if (!fs.existsSync(combinedTestResultsJSONFile)) {
+    if (!fs.existsSync(coverageDir)) {
+      fs.mkdirSync(coverageDir);
+    }
+    console.log('path check', path.resolve('./'), path.resolve(combinedTestResultsJSONFile));
+    fs.closeSync(fs.openSync(combinedTestResultsJSONFile, 'w'));
+  }
+  fs.writeFileSync(combinedTestResultsJSONFile, formattedResults);
+  console.log(`Success:: file:${combinedTestResultsJSONFile} created, open in chrome to view results`); //${beginLineNumber}- ${deleteCount} ${linesLength}`);
+}
+
 console.log('reports are now available, open these in your browser');
 console.log(`view testing coverage results here => ${path.resolve('./coverage/index.html')}`);
 console.log(`view testing success/failure results here => ${path.resolve(combinedTestResultsFile)}`);
+console.log(`json testing success/failure results here => ${path.resolve(combinedTestResultsJSONFile)}`);
