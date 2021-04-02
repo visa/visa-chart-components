@@ -25,6 +25,7 @@
   },
   "author": "Visa Data Experience Team",
   "scripts": {
+    "audit": "yarn audit --json --level low > yarn-audit.json",
     "build": "npm run clean && npm run compile",
     "clean": "rm -rf dist",
     "compile": "npm run tsc",
@@ -36,6 +37,7 @@
     "react-dom": "^16.7.0"
   },
   "dependencies": {
+    "@visa/alluvial-diagram": "^1.0.0",
     "@visa/bar-chart": "^4.2.0",
     "@visa/bivariate-mapbox-map": "^5.0.5",
     "@visa/circle-packing": "^5.1.0",

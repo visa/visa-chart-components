@@ -36,12 +36,11 @@ const {
   ensureTextContrast,
   createTextStrokeFilter,
   findTagLevel,
-  initializeGeometryAccess,
   initializeDescriptionRoot,
-  initializeGroupAccess,
-  setGeometryAccessLabel,
-  setGroupAccessLabel,
-  setRootSVGAccess,
+  initializeElementAccess,
+  setElementFocusHandler,
+  setElementAccessID,
+  setAccessibilityController,
   hideNonessentialGroups,
   setAccessTitle,
   setAccessSubtitle,
@@ -964,7 +963,7 @@ export class ParallelPlot {
       this.drawAnnotations();
       this.setAnnotationAccessibility();
       hideNonessentialGroups(this.root.node(), this.dotG.node());
-      this.setGroupAccessibilityLabel();
+      this.setGroupAccessibilityID();
       this.onChangeHandler();
       this.duration = 750;
       this.defaults = false;
@@ -1055,10 +1054,6 @@ export class ParallelPlot {
         this.exitDataLabels();
         this.shouldEnterUpdateExit = false;
       }
-      if (this.shouldSetYAxisAccessibility) {
-        this.setXAxisAccessibility();
-        this.shouldSetYAxisAccessibility = false;
-      }
       if (this.shouldUpdateXAxis) {
         this.drawXAxis();
         this.shouldUpdateXAxis = false;
@@ -1066,6 +1061,10 @@ export class ParallelPlot {
       if (this.shouldUpdateYAxis) {
         this.drawYAxis();
         this.shouldUpdateYAxis = false;
+      }
+      if (this.shouldSetXAxisAccessibility) {
+        this.setXAxisAccessibility();
+        this.shouldSetXAxisAccessibility = false;
       }
       if (this.shouldSetYAxisAccessibility) {
         this.setYAxisAccessibility();
@@ -1088,7 +1087,7 @@ export class ParallelPlot {
         this.shouldSetGeometryAriaLabels = false;
       }
       if (this.shouldSetGroupAccessibilityLabel) {
-        this.setGroupAccessibilityLabel();
+        this.setGroupAccessibilityID();
         this.shouldSetGroupAccessibilityLabel = false;
       }
       if (this.shouldUpdateSeriesLabels) {
@@ -1873,14 +1872,12 @@ export class ParallelPlot {
       .attr('fill', (_, i) => this.rawColors[i] || this.rawColors[0])
       .each((_, i, n) => {
         // we bind accessible interactivity and semantics here (role, tabindex, etc)
-        initializeGroupAccess(n[i]);
+        initializeElementAccess(n[i]);
       });
 
     this.enterDots
       .each((_d, i, n) => {
-        initializeGeometryAccess({
-          node: n[i]
-        });
+        initializeElementAccess(n[i]);
       })
       .attr('stroke', this.handleDotStroke)
       .attr('cursor', !this.suppressEvents ? this.cursor : null)
@@ -2034,7 +2031,7 @@ export class ParallelPlot {
         // then our util can count geometries
         this.setChartCountAccessibility();
         // our group's label should update with new counts too
-        this.setGroupAccessibilityLabel();
+        this.setGroupAccessibilityID();
         // since items exited, labels must receive updated values
         this.setGeometryAriaLabels();
         // and also make sure the user's focus isn't lost
@@ -2925,7 +2922,7 @@ export class ParallelPlot {
 
   setParentSVGAccessibility() {
     // this sets the accessibility features of the root SVG element
-    setRootSVGAccess({
+    setAccessibilityController({
       node: this.svg.node(),
       chartTag: 'parallel-plot',
       title: this.accessibility.title || this.mainTitle,
@@ -2947,9 +2944,7 @@ export class ParallelPlot {
   setGeometryAccessibilityAttributes() {
     // this makes sure every geom element has correct event handlers + semantics (role, tabindex, etc)
     this.updateDots.each((_d, i, n) => {
-      initializeGeometryAccess({
-        node: n[i]
-      });
+      initializeElementAccess(n[i]);
     });
   }
 
@@ -2957,7 +2952,7 @@ export class ParallelPlot {
     // this adds an ARIA label to each geom (a description read by screen readers)
     const keys = scopeDataKeys(this, chartAccessors, 'parallel-plot');
     this.updateDots.each((_d, i, n) => {
-      setGeometryAccessLabel({
+      setElementFocusHandler({
         node: n[i],
         geomType: 'point',
         includeKeyNames: this.accessibility.includeDataKeyNames,
@@ -2970,19 +2965,18 @@ export class ParallelPlot {
           this.accessibility.keyboardNavConfig &&
           this.accessibility.keyboardNavConfig.disabled
       });
+      setElementAccessID({
+        node: n[i],
+        uniqueID: this.chartID
+      });
     });
   }
 
-  setGroupAccessibilityLabel() {
+  setGroupAccessibilityID() {
     // this sets an ARIA label on all the g elements in the chart
     this.updateDotWrappers.each((_, i, n) => {
-      setGroupAccessLabel({
+      setElementAccessID({
         node: n[i],
-        geomType: 'point',
-        includeKeyNames: this.accessibility.includeDataKeyNames,
-        groupName: 'line',
-        isSubgroup: true,
-        groupAccessor: this.seriesAccessor,
         uniqueID: this.chartID
       });
     });

@@ -98,8 +98,12 @@ exports[`<line-chart> rendered-html render should render with minimal props[data
       <p class="screen-reader-info vcl-access-layout">
         This is a line-chart with 2 lines containing a total 24 points.
       </p>
-      <p class="screen-reader-info vcl-access-xAxis"></p>
-      <p class="screen-reader-info vcl-access-yAxis"></p>
+      <p class="screen-reader-info vcl-access-xAxis">
+        The chart has a horizontal X Axis, titled X Axis with a range that starts with 2016-01 and ends with 2016-12.
+      </p>
+      <p class="screen-reader-info vcl-access-yAxis">
+        The chart has a vertical Y axis, titled Y Axis with a range that starts with 3b and ends with 10b.
+      </p>
       <p class="screen-reader-info vcl-access-notes" data-annotationlevel="h3" data-level="h4"></p>
       <h3 class="screen-reader-info vcl-interaction-instructions">
         Interaction Instructions

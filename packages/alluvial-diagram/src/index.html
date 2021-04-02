@@ -1,0 +1,37 @@
+<!--/**
+ * Copyright (c) 2020, 2021 Visa, Inc.
+ *
+ * This source code is licensed under the MIT license
+ * https://github.com/visa/visa-chart-components/blob/master/LICENSE
+ *
+ **/-->
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>alluvial-diagram component</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+    <meta name="theme-color" content="#16161d" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+
+    <script type="module" src="/build/alluvial-diagram.esm.js"></script>
+    <script nomodule src="/build/alluvial-diagram.js"></script>
+    <style id="antiClickjack">
+      body {
+        display: none !important;
+      }
+    </style>
+    <script type="text/javascript">
+      if (self === top) {
+        var antiClickjack = document.getElementById('antiClickjack');
+        antiClickjack.parentNode.removeChild(antiClickjack);
+      } else {
+        top.location = self.location;
+      }
+    </script>
+  </head>
+  <body>
+    <h1>alluvial diagram</h1>
+    <app-alluvial-diagram></app-alluvial-diagram>
+  </body>
+</html>

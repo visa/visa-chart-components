@@ -16,6 +16,7 @@
   ],
   "author": "Visa Data Experience Team",
   "scripts": {
+    "audit": "yarn audit --json --level low > yarn-audit.json",
     "build": "stencil build",
     "start-dev": "stencil build --dev --watch --serve",
     "start-dev-es5": "stencil build --dev --es5 --watch --serve",
@@ -32,7 +33,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@mapbox/mapbox-gl-draw": "^1.1.2",
+    "@mapbox/mapbox-gl-draw": "^1.2.2",
     "@turf/turf": "^5.1.6",
     "@visa/charts-types": "^0.3.0",
     "@visa/scatter-plot": "^5.2.0",
@@ -48,8 +49,7 @@
     "@types/mapbox-gl": "^0.51.6",
     "@visa/visa-charts-utils-dev": "^3.3.5",
     "core-js": "^3.6.4",
-    "rollup-plugin-node-builtins": "^2.1.2",
-    "rollup-plugin-node-globals": "^1.4.0"
+    "rollup-plugin-node-polyfills": "0.2.1"
   },
   "jest": {
     "transform": {

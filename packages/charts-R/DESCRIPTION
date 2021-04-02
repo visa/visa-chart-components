@@ -1,0 +1,41 @@
+Package: visachartR
+Version: 1.0.0
+Date: 2021-03-19
+Title: R wrapper for Visa Chart Components
+Description: This package provides a set of wrapper functions in R for Visa Chart Components.
+  'Visa Chart Components' <https://github.com/visa/visa-chart-components> is an accessibility focused,
+  framework agnostic set of data experience design systems components for the web.
+Authors@R: c(
+    person(family = "Visa Data Experience Team", role = c("aut", "cph", "fnd")),
+    person(given = "Christopher",
+           family = "DeMartini",
+           role = c("aut", "cre"),
+           email = "chris.demartini.npm@gmail.com"),
+    person(given = "Jaime",
+           family = "Tanner",
+           role = c("aut"),
+           email = "jaimeatanner@gmail.com"),
+    person(given = "Frank",
+           family = "Elavsky",
+           role = c("aut"),
+           email = "frankelavsky@gmail.com"),
+    person(given = "Wojtek",
+           family = "Kostelecki",
+           role = c("ctb")))
+BugReports: https://github.com/visa/visa-chart-components/issues
+License: MIT + file LICENSE
+URL: https://github.com/visa/visa-chart-components/packages/charts-R
+Language: en-US
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Imports:
+    htmlwidgets
+Suggests: 
+    dplyr,
+    knitr,
+    rmarkdown,
+    tibble,
+    tidyverse
+VignetteBuilder: knitr

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2021 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -21,3 +21,4 @@ export { ScatterPlot } from './components/scatter-plot';
 export { StackedBarChart } from './components/stacked-bar-chart';
 export { DataTable as VisaChartsDataTable } from './components/visa-charts-data-table';
 export { WorldMap } from './components/world-map';
+export { AlluvialDiagram } from './components/alluvial-diagram';

@@ -240,6 +240,20 @@ function run() {
       order: 7
     }),
 
+    a: createTask({
+      name: `audit ${chalk.gray('(yarn audit ALL components, or a specific component)')}`,
+      defaultValue: false,
+      option: '--a <component_name>',
+      command: (component_name = 'ALL') => {
+        if (component_name !== 'ALL') {
+          spawn(`lerna run --scope ${component_name} --stream audit`);
+        } else {
+          spawn(`npm run audit`);
+        }
+      },
+      order: 41
+    }),
+
     glj: createTask({
       name: `Generate lerna json ${chalk.gray('(Generate lerna json)')}`,
       defaultValue: false,
@@ -268,6 +282,16 @@ function run() {
         spawn(`npm run build`);
       },
       order: 10
+    }),
+
+    bR: createTask({
+      name: `build ${chalk.gray('(build all components) and copy bundle to charts-R')}`,
+      defaultValue: false,
+      option: '--bR',
+      command: () => {
+        spawn(`npm run build-R`);
+      },
+      order: 42
     }),
 
     sd: createTask({

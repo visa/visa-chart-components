@@ -310,7 +310,7 @@ describe('<bar-chart>', () => {
               : unitTestAccessibility[test].nextTestSelector;
           if (test === 'accessibility_keyboard_nav_generic_test') {
             // run keyboard nav test for each scenario above
-            // skipping these by default as the target.focus() code in applyAccessibility breaks them
+            // skipping these by default as the target.focus() code in accessibilityController breaks them
             Object.keys(accessibilityTestMarks).forEach(keyboardTest => {
               it(`${unitTestAccessibility[test].prop}: ${accessibilityTestMarks[keyboardTest].name}`, () =>
                 unitTestAccessibility[test].testFunc(
@@ -348,7 +348,7 @@ describe('<bar-chart>', () => {
                 innerTestSelector,
                 innerNextTestSelector
               ));
-            // skipping these by default as the target.focus() code in applyAccessibility breaks them
+            // skipping these by default as the target.focus() code in accessibilityController breaks them
           } else if (test === 'accessibility_focus_marker_style') {
             it.skip(`${unitTestAccessibility[test].prop}: ${unitTestAccessibility[test].name}`, () =>
               unitTestAccessibility[test].testFunc(

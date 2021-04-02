@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2021 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -41,33 +41,43 @@ import {
 } from './textures';
 
 import {
-  initializeGeometryAccess,
+  setAccessibilityController,
+  setElementFocusHandler,
+  setElementInteractionAccessState,
+  setElementAccessID,
+  checkAccessFocus,
+  retainAccessFocus
+} from './accessibilityController';
+
+import {
   initializeDescriptionRoot,
-  initializeGroupAccess,
-  setGeometryAccessLabel,
-  setGroupAccessLabel,
-  setRootSVGAccess,
-  hideNonessentialGroups,
-  hideNode,
   setAccessTitle,
   setAccessSubtitle,
   setAccessLongDescription,
+  setAccessContext,
   setAccessExecutiveSummary,
   setAccessPurpose,
-  setAccessContext,
   setAccessStatistics,
   setAccessChartCounts,
   setAccessXAxis,
   setAccessYAxis,
   setAccessStructure,
   setAccessAnnotation,
-  retainAccessFocus,
-  checkAccessFocus,
-  setElementInteractionAccessState,
   setAccessibilityDescriptionWidth,
-  findTagLevel,
-  createUrl
-} from './applyAccessibility';
+  findTagLevel
+} from './accessibilityDescriptions';
+
+import {
+  initializeElementAccess,
+  hideNonessentialGroups,
+  setTooltipAccess,
+  setLegendAccess,
+  hideNode,
+  createUrl,
+  setHighContrastListener
+} from './accessibilityUtils';
+
+import { createLabel, createGroupLabel } from './ariaLabelGenerator';
 
 import {
   getColors,
@@ -115,6 +125,8 @@ import { validateAccessibilityProps } from './validate-accessibility-props';
 
 import * as propDefaultValues from './propDefaultValues';
 
+import { Sankey, sankeyLeft, sankeyRight, sankeyJustify, sankeyCenter, sankeyLinkHorizontal } from './sankey';
+
 export {
   autoTextColor,
   buildStrokes,
@@ -129,12 +141,16 @@ export {
   drawHoverStrokes,
   removeHoverStrokes,
   mirrorStrokeTransition,
-  initializeGeometryAccess,
+  initializeElementAccess,
   initializeDescriptionRoot,
-  initializeGroupAccess,
-  setGeometryAccessLabel,
-  setGroupAccessLabel,
-  setRootSVGAccess,
+  setElementFocusHandler,
+  setElementAccessID,
+  setTooltipAccess,
+  setLegendAccess,
+  setHighContrastListener,
+  createLabel,
+  createGroupLabel,
+  setAccessibilityController,
   hideNonessentialGroups,
   hideNode,
   setAccessTitle,
@@ -203,6 +219,12 @@ export {
   resolveLines,
   roundTo,
   symbols,
+  Sankey as sankey,
+  sankeyCenter,
+  sankeyJustify,
+  sankeyLeft,
+  sankeyLinkHorizontal,
+  sankeyRight,
   transitionEndAll,
   transformData,
   scopeDataKeys,

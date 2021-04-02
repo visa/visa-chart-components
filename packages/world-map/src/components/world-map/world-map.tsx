@@ -38,12 +38,11 @@ const {
   createTextStrokeFilter,
   convertColorsToTextures,
   findTagLevel,
-  initializeGeometryAccess,
   initializeDescriptionRoot,
-  initializeGroupAccess,
-  setGeometryAccessLabel,
-  setGroupAccessLabel,
-  setRootSVGAccess,
+  initializeElementAccess,
+  setElementFocusHandler,
+  setElementAccessID,
+  setAccessibilityController,
   hideNonessentialGroups,
   setAccessTitle,
   setAccessSubtitle,
@@ -792,7 +791,7 @@ export class WorldMap {
       // we want to pass the PARENT of all the <g>s that contain bars
       hideNonessentialGroups(this.root.node(), this.markers.node());
       this.setGroupAccessibilityAttributes();
-      this.setGroupAccessibilityLabel();
+      this.setGroupAccessibilityID();
       this.onChangeHandler();
       this.duration = 750;
       this.defaults = false;
@@ -952,7 +951,7 @@ export class WorldMap {
         this.shouldSetGeometryAriaLabels = false;
       }
       if (this.shouldSetGroupAccessibilityLabel) {
-        this.setGroupAccessibilityLabel();
+        this.setGroupAccessibilityID();
         this.shouldSetGroupAccessibilityLabel = false;
       }
       if (this.shouldSetMarkerSelectionClass) {
@@ -2099,9 +2098,7 @@ export class WorldMap {
         }
       })
       .each((_d, i, n) => {
-        initializeGeometryAccess({
-          node: n[i]
-        });
+        initializeElementAccess(n[i]);
       })
       .on('click', !this.suppressEvents && this.markerStyle.visible ? d => this.onClickHandler(d) : null)
       .on('mouseover', !this.suppressEvents && this.markerStyle.visible ? d => this.onHoverHandler(d) : null)
@@ -2129,7 +2126,7 @@ export class WorldMap {
         // then our util can count geometries
         this.setChartCountAccessibility();
         // our group's label should update with new counts too
-        this.setGroupAccessibilityLabel();
+        this.setGroupAccessibilityID();
         // since items exited, labels must receive updated values
         this.setGeometryAriaLabels();
         // and also make sure the user's focus isn't lost
@@ -2281,7 +2278,7 @@ export class WorldMap {
 
   setParentSVGAccessibility() {
     // this sets the accessibility features of the root SVG element
-    setRootSVGAccess({
+    setAccessibilityController({
       node: this.svg.node(),
       chartTag: 'world-map',
       title: this.accessibility.title || this.mainTitle,
@@ -2302,9 +2299,7 @@ export class WorldMap {
   setGeometryAccessibilityAttributes() {
     // this makes sure every geom element has correct event handlers + semantics (role, tabindex, etc)
     this.updateMarker.each((_d, i, n) => {
-      initializeGeometryAccess({
-        node: n[i]
-      });
+      initializeElementAccess(n[i]);
     });
   }
 
@@ -2312,7 +2307,7 @@ export class WorldMap {
     // this adds an ARIA label to each geom (a description read by screen readers)
     const keys = scopeDataKeys(this, chartAccessors, 'world-map');
     this.updateMarker.each((_d, i, n) => {
-      setGeometryAccessLabel({
+      setElementFocusHandler({
         node: n[i],
         geomType: 'marker',
         includeKeyNames: this.accessibility.includeDataKeyNames,
@@ -2324,23 +2319,24 @@ export class WorldMap {
           this.accessibility.keyboardNavConfig &&
           this.accessibility.keyboardNavConfig.disabled
       });
+      setElementAccessID({
+        node: n[i],
+        uniqueID: this.chartID
+      });
     });
   }
 
   setGroupAccessibilityAttributes() {
     // if a component's <g> elements can enter/exit, this will need to be called in the
     // lifecycle more than just initially, like how setGeometryAccessibilityAttributes works
-    initializeGroupAccess(this.markers.node());
+    initializeElementAccess(this.markers.node());
   }
 
-  setGroupAccessibilityLabel() {
+  setGroupAccessibilityID() {
     // this sets an ARIA label on all the g elements in the chart
     this.markers.each((_, i, n) => {
-      setGroupAccessLabel({
+      setElementAccessID({
         node: n[i],
-        geomType: 'marker',
-        includeKeyNames: this.accessibility.includeDataKeyNames,
-        groupAccessor: this.groupAccessor,
         uniqueID: this.chartID
       });
     });

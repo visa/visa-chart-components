@@ -136,3 +136,17 @@ export interface ISecondaryLinesType {
   showSeriesLabel: boolean;
   opacity: number;
 }
+
+export interface INodeConfigType {
+  fill: boolean;
+  width: number;
+  padding: number;
+  alignment: string;
+  compare: boolean;
+}
+
+export interface ILinkConfigType {
+  visible: boolean;
+  fillMode: string;
+  opacity: number;
+}

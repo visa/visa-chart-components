@@ -1,0 +1,15 @@
+# /**
+# * Copyright (c) 2021 Visa, Inc.
+# *
+# * This source code is licensed under the MIT license
+# * https://github.com/visa/visa-chart-components/blob/master/LICENSE
+# *
+# **/
+# (uncomment to add a dependency)
+dependencies:
+  - name: visacharts
+    version: 5.0.5
+    src: 'htmlwidgets/lib/visa-chart-components'
+    script:
+      - charts.js
+#    stylesheet:

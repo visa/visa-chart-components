@@ -1,11 +1,12 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2021 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
  *
  **/
 import { Component, h } from '@stencil/core';
+import '@visa/alluvial-diagram';
 import '@visa/bar-chart';
 import '@visa/line-chart';
 import '@visa/scatter-plot';
@@ -32,6 +33,7 @@ export class VisaCharts {
   render() {
     return (
       <div>
+        <alluvial-diagram />
         <bar-chart />
         <line-chart />
         <scatter-plot />

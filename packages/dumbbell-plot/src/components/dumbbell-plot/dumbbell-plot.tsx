@@ -38,12 +38,11 @@ const {
   ensureTextContrast,
   createTextStrokeFilter,
   createUrl,
-  initializeGeometryAccess,
   initializeDescriptionRoot,
-  initializeGroupAccess,
-  setGeometryAccessLabel,
-  setGroupAccessLabel,
-  setRootSVGAccess,
+  initializeElementAccess,
+  setElementFocusHandler,
+  setElementAccessID,
+  setAccessibilityController,
   hideNonessentialGroups,
   setAccessTitle,
   setAccessSubtitle,
@@ -1134,7 +1133,7 @@ export class DumbbellPlot {
       // we want to pass the PARENT of all the <g>s that contain bars
       hideNonessentialGroups(this.root.node(), this.dumbbellG.node());
       this.setGroupAccessibilityAttributes();
-      this.setGroupAccessibilityLabel();
+      this.setGroupAccessibilityID();
       this.duration = 750;
       this.defaults = false;
       resolve('component did load');
@@ -1274,7 +1273,7 @@ export class DumbbellPlot {
         this.shouldSetGeometryAriaLabels = false;
       }
       if (this.shouldSetGroupAccessibilityLabel) {
-        this.setGroupAccessibilityLabel();
+        this.setGroupAccessibilityID();
         this.shouldSetGroupAccessibilityLabel = false;
       }
       if (this.shouldUpdateLegend) {
@@ -2158,10 +2157,7 @@ export class DumbbellPlot {
       .attr('cursor', !this.suppressEvents ? this.cursor : null)
       .attr('opacity', 0)
       .each((_d, i, n) => {
-        initializeGeometryAccess({
-          node: n[i]
-          // recursive: false // bar doesn't use this, so it can be omitted
-        });
+        initializeElementAccess(n[i]);
       })
       .on(
         'click',
@@ -2470,7 +2466,7 @@ export class DumbbellPlot {
         // then our util can count geometries
         this.setChartCountAccessibility();
         // our group's label should update with new counts too
-        this.setGroupAccessibilityLabel();
+        this.setGroupAccessibilityID();
         // since items exited, labels must receive updated values
         this.setGeometryAriaLabels();
         // and also make sure the user's focus isn't lost
@@ -3209,7 +3205,7 @@ export class DumbbellPlot {
   setParentSVGAccessibility() {
     const keys = scopeDataKeys(this, chartAccessors, 'dumbbell-plot');
     delete keys[this.ordinalAccessor];
-    setRootSVGAccess({
+    setAccessibilityController({
       node: this.svg.node(),
       chartTag: 'dumbbell-plot',
       title: this.accessibility.title || this.mainTitle,
@@ -3233,10 +3229,7 @@ export class DumbbellPlot {
 
   setGeometryAccessibilityAttributes() {
     this.update.each((_d, i, n) => {
-      initializeGeometryAccess({
-        node: n[i]
-        // recursive: false // dumbbell doesn't use this, so it can be omitted
-      });
+      initializeElementAccess(n[i]);
     });
   }
 
@@ -3244,7 +3237,7 @@ export class DumbbellPlot {
     const keys = scopeDataKeys(this, chartAccessors, 'dumbbell-plot');
     delete keys[this.ordinalAccessor];
     this.update.each((_d, i, n) => {
-      setGeometryAccessLabel({
+      setElementFocusHandler({
         node: n[i],
         geomType: 'dumbbell',
         includeKeyNames: this.accessibility.includeDataKeyNames,
@@ -3258,22 +3251,23 @@ export class DumbbellPlot {
           this.accessibility.keyboardNavConfig &&
           this.accessibility.keyboardNavConfig.disabled
       });
+      setElementAccessID({
+        node: n[i],
+        uniqueID: this.chartID
+      });
     });
   }
 
   setGroupAccessibilityAttributes() {
     // if a component's <g> elements can enter/exit, this will need to be called in the
     // lifecycle more than just initially, like how setGeometryAccessibilityAttributes works
-    initializeGroupAccess(this.dumbbellG.node());
+    initializeElementAccess(this.dumbbellG.node());
   }
 
-  setGroupAccessibilityLabel() {
+  setGroupAccessibilityID() {
     this.dumbbellG.each((_, i, n) => {
-      setGroupAccessLabel({
+      setElementAccessID({
         node: n[i],
-        geomType: 'dumbbell',
-        includeKeyNames: this.accessibility.includeDataKeyNames,
-        groupKeys: ['message'],
         uniqueID: this.chartID
       });
     });

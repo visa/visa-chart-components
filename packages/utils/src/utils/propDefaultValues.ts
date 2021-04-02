@@ -142,6 +142,13 @@ export const dataLabel = {
   format: '0[.][0][0]a'
 };
 
+export const dataLabelOutside = {
+  visible: true,
+  placement: 'outside',
+  labelAccessor: '',
+  format: '0[.][0][0]a'
+};
+
 export const dataLabelMiddle = {
   visible: true,
   placement: 'middle',
