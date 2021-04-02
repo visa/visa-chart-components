@@ -8,7 +8,7 @@
 # (uncomment to add a dependency)
 dependencies:
   - name: visacharts
-    version: 5.1.0
+    version: 5.1.1
     src: 'htmlwidgets/lib/visa-chart-components'
     script:
       - charts.js

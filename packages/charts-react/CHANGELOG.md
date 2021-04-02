@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.1](https://github.com/visa/visa-chart-components/compare/@visa/charts-react@2.1.0...@visa/charts-react@2.1.1) (2021-04-02)
+
+
+### Bug Fixes
+
+* add resoultion to fix mapbox-map dependency audit results ([a655f60](https://github.com/visa/visa-chart-components/commit/a655f60c5b4d87f02d8ff85d524853268325eb7b))
+
+
+
+
+
 # [2.1.0](https://github.com/visa/visa-chart-components/compare/@visa/charts-react@2.0.6...@visa/charts-react@2.1.0) (2021-04-02)
 
 

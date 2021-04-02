@@ -1,6 +1,6 @@
 {
   "name": "@visa/stacked-bar-chart",
-  "version": "4.2.1",
+  "version": "4.2.2",
   "description": "visa's stacked-bar-chart component",
   "license": "SEE LICENCE IN LICENSE",
   "module": "dist/index.mjs",
@@ -33,8 +33,8 @@
     "access": "public"
   },
   "dependencies": {
-    "@visa/charts-types": "^0.3.1",
-    "@visa/visa-charts-data-table": "^2.0.6",
+    "@visa/charts-types": "^0.3.2",
+    "@visa/visa-charts-data-table": "^2.0.7",
     "@visa/visa-charts-utils": "^4.4.0",
     "d3-array": "^1.2.4",
     "d3-collection": "^1.0.7",
@@ -44,7 +44,7 @@
     "uuid": "7.0.0"
   },
   "devDependencies": {
-    "@visa/visa-charts-utils-dev": "^3.3.6"
+    "@visa/visa-charts-utils-dev": "^3.3.7"
   },
   "jest": {
     "transform": {

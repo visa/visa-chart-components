@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.1.1](https://github.com/visa/visa-chart-components/compare/@visa/charts@5.1.0...@visa/charts@5.1.1) (2021-04-02)
+
+**Note:** Version bump only for package @visa/charts
+
+
+
+
+
 # [5.1.0](https://github.com/visa/visa-chart-components/compare/@visa/charts@5.0.5...@visa/charts@5.1.0) (2021-04-02)
 
 

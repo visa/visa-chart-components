@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.6](https://github.com/visa/visa-chart-components/compare/@visa/clustered-force-layout@4.0.5...@visa/clustered-force-layout@4.0.6) (2021-04-02)
+
+**Note:** Version bump only for package @visa/clustered-force-layout
+
+
+
+
+
 ## [4.0.5](https://github.com/visa/visa-chart-components/compare/@visa/clustered-force-layout@4.0.4...@visa/clustered-force-layout@4.0.5) (2021-04-02)
 
 **Note:** Version bump only for package @visa/clustered-force-layout
