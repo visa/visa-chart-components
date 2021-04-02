@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2021 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -9,8 +9,7 @@ import { Config } from '@stencil/core';
 import { sass } from '@stencil/sass';
 import { reactOutputTarget } from '@stencil/react-output-target';
 import { angularOutputTarget } from '@stencil/angular-output-target';
-const builtins = require('rollup-plugin-node-builtins');
-const globals = require('rollup-plugin-node-globals');
+const nodePolyfills = require('rollup-plugin-node-polyfills');
 
 let copy = [];
 let excludeSrc = ['**/app-*/*', '**/*.spec*', '**/*.test*', '**/*.e2e*'];
@@ -39,8 +38,7 @@ export const config: Config | any = {
     { type: 'www' }
   ],
   plugins: [
-    builtins(),
-    globals(),
+    nodePolyfills(),
     sass({
       injectGlobalPaths: ['src/scss/objects.scss']
     })
