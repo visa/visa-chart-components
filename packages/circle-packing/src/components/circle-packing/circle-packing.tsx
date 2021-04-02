@@ -26,10 +26,11 @@ const {
   getContrastingStroke,
   createTextStrokeFilter,
   convertColorsToTextures,
-  initializeGeometryAccess,
+  initializeElementAccess,
   initializeDescriptionRoot,
-  setGeometryAccessLabel,
-  setRootSVGAccess,
+  setElementFocusHandler,
+  setElementAccessID,
+  setAccessibilityController,
   hideNonessentialGroups,
   setAccessTitle,
   setAccessSubtitle,
@@ -582,7 +583,6 @@ export class CirclePacking {
       // we want to pass the PARENT of all the <g>s that contain bars
       hideNonessentialGroups(this.root.node(), this.circleG.node(), true);
       // this.setGroupAccessibilityAttributes();
-      // this.setGroupAccessibilityLabel();
       this.duration = 750;
       resolve('component did load');
     });
@@ -941,11 +941,8 @@ export class CirclePacking {
         );
       })
       .each((_d, i, n) => {
-        initializeGeometryAccess({
-          node: n[i],
-          recursive: true
-        });
-        setGeometryAccessLabel({
+        initializeElementAccess(n[i]);
+        setElementFocusHandler({
           node: n[i],
           geomType: 'node',
           includeKeyNames: this.accessibility.includeDataKeyNames,
@@ -955,6 +952,10 @@ export class CirclePacking {
           uniqueID: this.chartID
           // groupKeys: ["sum"], // circle-packing doesn't use this, so it can be omitted
           // nested: true, // circle-packing doesn't use this, so it can be omitted
+        });
+        setElementAccessID({
+          node: n[i],
+          uniqueID: this.chartID
         });
         const d = select(n[i].parentNode).datum();
         let selected = checkInteraction(d, true, false, '', this.clickHighlight, this.innerInteractionKeys);
@@ -994,8 +995,6 @@ export class CirclePacking {
       group.remove();
       // then our util can count geometries
       this.setChartCountAccessibility();
-      // our group's label should update with new counts too
-      // this.setGroupAccessibilityLabel();
       // since items exited, labels must receive updated values
       this.setGeometryAriaLabels();
       // and also make sure the user's focus isn't lost
@@ -1440,7 +1439,7 @@ export class CirclePacking {
   }
 
   setParentSVGAccessibility() {
-    setRootSVGAccess({
+    setAccessibilityController({
       node: this.svg.node(),
       chartTag: 'circle-packing',
       title: this.accessibility.title || this.mainTitle,
@@ -1462,17 +1461,14 @@ export class CirclePacking {
 
   setGeometryAccessibilityAttributes() {
     this.rootG.selectAll('.node').each((_d, i, n) => {
-      initializeGeometryAccess({
-        node: n[i],
-        recursive: true
-      });
+      initializeElementAccess(n[i]);
     });
   }
 
   setGeometryAriaLabels() {
     const keys = scopeDataKeys(this, chartAccessors, 'circle-packing');
     this.rootG.selectAll('.node').each((_d, i, n) => {
-      setGeometryAccessLabel({
+      setElementFocusHandler({
         node: n[i],
         geomType: 'node',
         includeKeyNames: this.accessibility.includeDataKeyNames,
@@ -1488,28 +1484,12 @@ export class CirclePacking {
         // groupKeys: ["sum"], // circle-packing doesn't use this, so it can be omitted
         // nested: true, // circle-packing doesn't use this, so it can be omitted
       });
+      setElementAccessID({
+        node: n[i],
+        uniqueID: this.chartID
+      });
     });
   }
-
-  // setGroupAccessibilityAttributes() {
-  //   // if a component's <g> elements can enter/exit, this will need to be called in the
-  //   // lifecycle more than just initially, like how setGeometryAccessibilityAttributes works
-  //   initializeGroupAccess(this.bars.node());
-  // }
-
-  // setGroupAccessibilityLabel() {
-  //   this.bars.each((_, i, n) => {
-  //     setGroupAccessLabel({
-  //       node: n[i],
-  //       geomType: 'node',
-  //       includeKeyNames: this.accessibility.includeDataKeyNames,
-  //       groupName: 'node',
-  //       groupAccessor: this.parentAccessor
-  //       // isSubgroup: true, // circle-packing doesn't use this, so it can be omitted
-  //       // groupKeys?: any // circle-packing doesn't use this, so it can be omitted
-  //     });
-  //   });
-  // }
 
   setChartAccessibilityTitle() {
     setAccessTitle(this.circlePackingEl, this.accessibility.title || this.mainTitle);

@@ -5,6 +5,7 @@
   "license": "SEE LICENCE IN LICENSE",
   "scripts": {
     "dev": "node ./scripts/bootstrap.js",
+    "audit": "lerna run --stream --concurrency 1 --no-bail audit && yarn audit --json --level low > yarn-audit.json",
     "bootstrap": "npm-run-all -s  generate-lerna-json bootup build",
     "serve": "npm-run-all -p watch:charts start",
     "start": "npm-run-all -p generate-api-docs-json start:demo",
@@ -12,9 +13,16 @@
     "start:angular-demo": "npm -C ./packages/charts-angular-demo run start",
     "bootup": "lerna bootstrap --concurrency 2",
     "build": "lerna run --stream --concurrency 8 build",
+    "build-R": "lerna run --stream --concurrency 8 build && npm run update-R",
+    "update-R": "node ./scripts/update-charts-R.js",
     "start-dev": "lerna run --stream start-dev",
     "test": "lerna run --stream --concurrency 1 --no-bail --no-private test && npm run combine-test-results",
     "combine-test-results": "node scripts/monorepo-test-coverage.js",
+    "compare-test-results": "stencil test --spec --no-cache --color --max-workers=1 scripts/test-results.spec.tsx",
+    "update-test-results": "jest --updateSnapshot --color scripts/test-results.spec.tsx",
+    "combine-audit-results": "node scripts/monorepo-audit-results.js",
+    "compare-audit-results": "stencil test --spec --no-cache --color --max-workers=1 scripts/audit-results.spec.tsx",
+    "update-audit-results": "jest --updateSnapshot --color scripts/audit-results.spec.tsx",
     "watch:charts": "lerna run watch --stream --no-sort --concurrency 10 --scope=@visa/charts",
     "watch": "lerna run watch --stream --no-sort --concurrency 999 --include-filtered-dependencies",
     "start:react-demo": "npm -C ./packages/charts-react-demo run start",
@@ -45,6 +53,7 @@
     "pre-release:no-git-tag": "lerna version --no-push --no-git-tag-version --conventional-commits --conventional-prerelease --no-commit-hooks",
     "ls-scripts": "./node_modules/.bin/ls-scripts",
     "ls-commit-types": "./node_modules/.bin/conventional-commit-types",
+    "oss-delete-changelog": "node ./scripts/delete-changelogs-for-oss.js",
     "oss-file-copy": "node scripts/oss-move-files.js"
   },
   "dependencies": {
@@ -83,7 +92,6 @@
     "source-map-support": "0.4.3",
     "tslint": "^5.11.0",
     "tslint-config-prettier": "^1.14.0",
-    "typedoc": "0.19.2",
     "workbox-build": "4.3.1",
     "es-check": "5.2.0"
   },
@@ -114,6 +122,19 @@
     "*": [
       "prettier --config ./.prettierrc --write",
       "git add"
+    ]
+  },
+  "jest": {
+    "preset": "@stencil/core/testing",
+    "collectCoverageFrom": [
+      "**/*.{tsx}",
+      "!**/node_modules/**",
+      "!**/*.d.ts",
+      "!**/*.{e2e.ts,spec.ts}",
+      "!**/(app-**).{tsx}",
+      "!**/**-values.{ts}",
+      "!**/**-projections.{ts}",
+      "!**/topodata**.{ts}"
     ]
   }
 }

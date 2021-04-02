@@ -34,12 +34,11 @@ const {
   removeHoverStrokes,
   buildStrokes,
   convertColorsToTextures,
-  initializeGeometryAccess,
   initializeDescriptionRoot,
-  initializeGroupAccess,
-  setGeometryAccessLabel,
-  setGroupAccessLabel,
-  setRootSVGAccess,
+  initializeElementAccess,
+  setElementFocusHandler,
+  setElementAccessID,
+  setAccessibilityController,
   hideNonessentialGroups,
   setAccessTitle,
   setAccessSubtitle,
@@ -148,6 +147,10 @@ export class ClusteredBarChart {
   @Prop({ mutable: true }) clickHighlight: object[] = ClusteredBarChartDefaultValues.clickHighlight;
   @Prop({ mutable: true }) interactionKeys: string[];
 
+  // Testing & Debug (8/8)
+  @Prop() unitTest: boolean = false;
+  // @Prop() debugMode: boolean = false;
+
   // Element
   @Element()
   clusteredBarChartEl: HTMLElement;
@@ -253,6 +256,7 @@ export class ClusteredBarChart {
   shouldSetGroupAccessibilityLabel: boolean = false;
   shouldSetChartAccessibilityPurpose: boolean = false;
   shouldSetChartAccessibilityContext: boolean = false;
+  shouldSetTestingAttributes: boolean = false;
   shouldRedrawWrapper: boolean = false;
   shouldSetTagLevels: boolean = false;
   shouldSetChartAccessibilityCount: boolean = false;
@@ -275,6 +279,7 @@ export class ClusteredBarChart {
     this.shouldCheckLabelColor = true;
     this.shouldUpdateTableData = true;
     this.shouldSetGlobalSelections = true;
+    this.shouldSetTestingAttributes = true;
     this.shouldEnterUpdateExit = true;
     this.shouldSetGeometryAccessibilityAttributes = true;
     this.shouldSetGeometryAriaLabels = true;
@@ -380,6 +385,7 @@ export class ClusteredBarChart {
     this.shouldUpdateBaseline = true;
     this.shouldUpdateAnnotations = true;
     this.shouldSetGeometryAccessibilityAttributes = true;
+    this.shouldSetTestingAttributes = true;
     this.shouldSetLabelOpacity = true;
   }
 
@@ -460,6 +466,15 @@ export class ClusteredBarChart {
     this.shouldUpdateAnnotations = true;
     this.shouldSetGeometryAccessibilityAttributes = true;
     this.shouldSetGeometryAriaLabels = true;
+    if (this.layout === 'vertical') {
+      this.shouldValidateAxes = true;
+      this.shouldUpdateXAxis = true;
+      this.shouldSetXAxisAccessibility = true;
+    } else if (this.layout === 'horizontal') {
+      this.shouldValidateAxes = true;
+      this.shouldUpdateYAxis = true;
+      this.shouldSetYAxisAccessibility = true;
+    }
   }
 
   @Watch('xAxis')
@@ -785,6 +800,11 @@ export class ClusteredBarChart {
     this.shouldSetChartAccessibilityStructureNotes = true;
   }
 
+  @Watch('unitTest')
+  unitTestWatcher(_newVal, _oldVal) {
+    this.shouldSetTestingAttributes = true;
+  }
+
   componentWillLoad() {
     // contrary to componentWillUpdate, this method appears safe to use for
     // any calculations we need. Keeping them here reduces future refactor,
@@ -840,6 +860,7 @@ export class ClusteredBarChart {
       this.drawXGrid();
       this.drawYGrid();
       this.setGlobalSelections();
+      this.setTestingAttributes();
       this.enterGeometries();
       this.updateGeometries();
       this.exitGeometries();
@@ -872,7 +893,7 @@ export class ClusteredBarChart {
       // parent<g> that contains our geometries! In a subGroup chart (like stacked bars),
       // we want to pass the PARENT of all the <g>s that contain bars
       hideNonessentialGroups(this.root.node(), this.barG.node());
-      this.setGroupAccessibilityLabel();
+      this.setGroupAccessibilityID();
       this.duration = 750;
       this.defaults = false;
       resolve('component did load');
@@ -941,6 +962,10 @@ export class ClusteredBarChart {
         this.setGlobalSelections();
         this.shouldSetGlobalSelections = false;
       }
+      if (this.shouldSetTestingAttributes) {
+        this.setTestingAttributes();
+        this.shouldSetTestingAttributes = false;
+      }
       if (this.shouldUpdateXGrid) {
         this.drawXGrid();
         this.shouldUpdateXGrid = false;
@@ -971,7 +996,7 @@ export class ClusteredBarChart {
         this.shouldSetGeometryAriaLabels = false;
       }
       if (this.shouldSetGroupAccessibilityLabel) {
-        this.setGroupAccessibilityLabel();
+        this.setGroupAccessibilityID();
         this.shouldSetGroupAccessibilityLabel = false;
       }
       if (this.shouldUpdateCorners) {
@@ -1233,7 +1258,85 @@ export class ClusteredBarChart {
       .append('svg');
 
     this.tooltipG = select(this.clusteredBarChartEl).select('.clustered-bar-tooltip');
+
+    this.references = this.rootG.append('g').attr('class', 'clustered-bar-reference-line-group');
   }
+
+  setTestingAttributes() {
+    if (this.unitTest) {
+      select(this.clusteredBarChartEl)
+        .select('.visa-viz-d3-clustered-bar-container')
+        .attr('data-testid', 'chart-container');
+      select(this.clusteredBarChartEl)
+        .select('.clustered-bar-main-title')
+        .attr('data-testid', 'main-title');
+      select(this.clusteredBarChartEl)
+        .select('.clustered-bar-sub-title')
+        .attr('data-testid', 'sub-title');
+
+      this.svg.attr('data-testid', 'root-svg');
+      this.root.attr('data-testid', 'margin-container');
+      this.rootG.attr('data-testid', 'padding-container');
+      this.legendG.attr('data-testid', 'legend-container');
+      this.tooltipG.attr('data-testid', 'tooltip-container');
+
+      this.barG.attr('data-testid', 'clustered-bar-group');
+      this.updateBarWrappers
+        .attr('data-testid', 'clustered-bar-wrapper')
+        .attr('data-id', d => `clustered-bar-wrapper-${d.key}`);
+      this.update
+        .attr('data-testid', 'bar')
+        .attr('data-id', d => `bar-${d[this.groupAccessor]}-${d[this.ordinalAccessor]}`);
+
+      this.labelG.attr('data-testid', 'clustered-bar-dataLabel-group');
+      this.updateLabelWrappers
+        .attr('data-testid', 'clustered-bar-dataLabel-wrapper')
+        .attr('data-id', d => `clustered-bar-dataLabel-wrapper-${d.key}`);
+      this.updateLabels
+        .attr('data-testid', 'dataLabel')
+        .attr('data-id', d => `dataLabel-${d[this.groupAccessor]}-${d[this.ordinalAccessor]}`);
+
+      this.references.attr('data-testid', 'reference-line-group');
+      this.svg.select('defs').attr('data-testid', 'pattern-defs');
+
+      // reference lines do not have global selections
+      this.references.selectAll('.clustered-bar-reference-line').attr('data-testid', 'reference-line');
+
+      this.references.selectAll('.clustered-bar-reference-line-label').attr('data-testid', 'reference-line-label');
+    } else {
+      select(this.clusteredBarChartEl)
+        .select('.visa-viz-d3-clustered-bar-container')
+        .attr('data-testid', null);
+      select(this.clusteredBarChartEl)
+        .select('.clustered-bar-main-title')
+        .attr('data-testid', null);
+      select(this.clusteredBarChartEl)
+        .select('.clustered-bar-sub-title')
+        .attr('data-testid', null);
+      this.svg.attr('data-testid', null);
+      this.root.attr('data-testid', null);
+      this.rootG.attr('data-testid', null);
+      this.legendG.attr('data-testid', null);
+      this.tooltipG.attr('data-testid', null);
+
+      this.barG.attr('data-testid', null);
+      this.updateBarWrappers.attr('data-testid', null).attr('data-id', null);
+      this.update.attr('data-testid', null).attr('data-id', null);
+
+      this.labelG.attr('data-testid', null);
+      this.updateLabelWrappers.attr('data-testid', null).attr('data-id', null);
+      this.updateLabels.attr('data-testid', null).attr('data-id', null);
+
+      this.references.attr('data-testid', null);
+      this.svg.select('defs').attr('data-testid', null);
+
+      // reference lines do not have global selections
+      this.references.selectAll('.clustered-bar-reference-line').attr('data-testid', null);
+
+      this.references.selectAll('.clustered-bar-reference-line-label').attr('data-testid', null);
+    }
+  }
+
   // reset graph size based on window size
   reSetRoot() {
     this.svg
@@ -1406,7 +1509,7 @@ export class ClusteredBarChart {
         this.layout === 'vertical' ? 'translate(' + this.x0(d.key) + ',0)' : 'translate(0,' + this.y0(d.key) + ')'
       )
       .each((_, i, n) => {
-        initializeGroupAccess(n[i]);
+        initializeElementAccess(n[i]);
       });
 
     this.enter
@@ -1415,9 +1518,7 @@ export class ClusteredBarChart {
       .attr('rx', this.roundedCorner)
       .attr('ry', this.roundedCorner)
       .each((_d, i, n) => {
-        initializeGeometryAccess({
-          node: n[i]
-        });
+        initializeElementAccess(n[i]);
       })
       .on('click', !this.suppressEvents ? d => this.onClickHandler(d) : null)
       .on('mouseover', !this.suppressEvents ? d => this.onHoverHandler(d) : null)
@@ -1531,7 +1632,7 @@ export class ClusteredBarChart {
         // then our util can count geometries
         this.setChartCountAccessibility();
         // our group's label should update with new counts too
-        this.setGroupAccessibilityLabel();
+        this.setGroupAccessibilityID();
         // since items exited, labels must receive updated values
         this.setGeometryAriaLabels();
         // and also make sure the user's focus isn't lost
@@ -1938,16 +2039,12 @@ export class ClusteredBarChart {
   }
 
   drawReferenceLines() {
-    if (!this.references) {
-      this.references = this.rootG.append('g').attr('class', 'clustered-bar-reference-line-group');
-    }
-
     const currentReferences = this.references.selectAll('g').data(this.referenceLines, d => d.label);
 
     const enterReferences = currentReferences
       .enter()
       .append('g')
-      .attr('class', '.clustered-bar-reference')
+      .attr('class', 'clustered-bar-reference')
       .attr('opacity', 1);
 
     const enterLines = enterReferences.append('line');
@@ -2179,7 +2276,7 @@ export class ClusteredBarChart {
   }
 
   setParentSVGAccessibility() {
-    setRootSVGAccess({
+    setAccessibilityController({
       node: this.svg.node(),
       chartTag: 'clustered-bar-chart',
       title: this.accessibility.title || this.mainTitle,
@@ -2203,17 +2300,14 @@ export class ClusteredBarChart {
 
   setGeometryAccessibilityAttributes() {
     this.update.each((_d, i, n) => {
-      initializeGeometryAccess({
-        node: n[i]
-        // recursive: false
-      });
+      initializeElementAccess(n[i]);
     });
   }
 
   setGeometryAriaLabels() {
     const keys = scopeDataKeys(this, chartAccessors, 'clustered-bar-chart');
     this.update.each((_d, i, n) => {
-      setGeometryAccessLabel({
+      setElementFocusHandler({
         node: n[i],
         geomType: 'bar',
         includeKeyNames: this.accessibility.includeDataKeyNames,
@@ -2226,20 +2320,18 @@ export class ClusteredBarChart {
           this.accessibility.keyboardNavConfig &&
           this.accessibility.keyboardNavConfig.disabled
       });
+      setElementAccessID({
+        node: n[i],
+        uniqueID: this.chartID
+      });
     });
   }
 
-  setGroupAccessibilityLabel() {
+  setGroupAccessibilityID() {
     this.updateBarWrappers.each((_, i, n) => {
-      setGroupAccessLabel({
+      setElementAccessID({
         node: n[i],
-        geomType: 'bar',
-        includeKeyNames: this.accessibility.includeDataKeyNames,
-        groupName: 'cluster',
-        isSubgroup: true,
-        groupAccessor: this.groupAccessor,
         uniqueID: this.chartID
-        // groupKeys?: any
       });
     });
   }

@@ -28,6 +28,10 @@ This packages bundles [visa chart components](../../) web components into a sing
 - [@visa/world-map](../world-map)
 - [@visa/visa-charts-data-table](../data-table)
 
+#### Components with `Development` status
+
+- [@visa/alluvial-diagram](../alluvial-diagram)
+
 <hr>
 
 ### <a name="how_to" href="#how_to">#</a> How to use the @visa/charts web component bundle in different environments

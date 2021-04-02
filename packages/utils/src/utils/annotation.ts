@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2021 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -18,7 +18,7 @@ import {
   annotationXYThreshold
 } from '../../node_modules/d3-svg-annotation/indexRollupNext.js';
 import { visaColorToHex } from './colors';
-import { hideNode } from './applyAccessibility';
+import { hideNode } from './accessibilityUtils';
 
 interface DatumObject {
   [key: string]: any;
@@ -39,14 +39,16 @@ export function annotate({
   xScale,
   xAccessor,
   yScale,
-  yAccessor
+  yAccessor,
+  ignoreScales
 }: {
   source?: any;
   data?: any;
   xScale?: any;
-  xAccessor: any;
+  xAccessor?: any;
   yScale?: any;
-  yAccessor: any;
+  yAccessor?: any;
+  ignoreScales?: boolean;
 }) {
   d3.select(source)
     .selectAll('.vcl-annotation-group')
@@ -88,8 +90,7 @@ export function annotate({
 
     const annotationData = [];
     const annotationEditableData = [];
-
-    data.forEach(datum => {
+    data.forEach((datum, i) => {
       const d: DatumObject = {};
       const dKeys = Object.keys(datum);
       dKeys.forEach(key => {
@@ -225,28 +226,35 @@ export function annotate({
         d.color = visaColorToHex(d.color) || d.color;
       }
     });
-    const makeAnnotations = annotation()
-      .accessors({
-        x: function(d) {
-          return xScale(d[xAccessor]);
-        },
-        y: function(d) {
-          return yScale(d[yAccessor]);
-        }
-      })
-      .annotations(annotationData);
-
-    const makeEditableAnnotations = annotation()
+    let makeAnnotations = annotation().annotations(annotationData);
+    let makeEditableAnnotations = annotation()
       .editMode(true)
-      .accessors({
-        x: function(d) {
-          return xScale(d[xAccessor]);
-        },
-        y: function(d) {
-          return yScale(d[yAccessor]);
-        }
-      })
       .annotations(annotationEditableData);
+
+    if (!ignoreScales) {
+      makeAnnotations = annotation()
+        .accessors({
+          x: function(d) {
+            return xScale(d[xAccessor]);
+          },
+          y: function(d) {
+            return yScale(d[yAccessor]);
+          }
+        })
+        .annotations(annotationData);
+
+      makeEditableAnnotations = annotation()
+        .editMode(true)
+        .accessors({
+          x: function(d) {
+            return xScale(d[xAccessor]);
+          },
+          y: function(d) {
+            return yScale(d[yAccessor]);
+          }
+        })
+        .annotations(annotationEditableData);
+    }
 
     annotations.call(makeAnnotations);
     editable.call(makeEditableAnnotations);

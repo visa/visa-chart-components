@@ -35,6 +35,10 @@ While we do deliver React (`@visa/charts-react`) and Angular (`@visa/charts-angu
 - [@visa/world-map](packages/world-map)
 - [@visa/visa-charts-data-table](packages/data-table)
 
+#### Components with `Development` status
+
+- [@visa/alluvial-diagram](packages/alluvial-diagram)
+
 #### Our utilities can also be leveraged directly
 
 - [@visa/visa-charts-utils](packages/utils)
@@ -51,8 +55,10 @@ VCC is built as a monorepo containing a set of packages. These packages include 
 _note: the initial install and build process can take some time._
 
 - Clone the repo
+- run `yarn install`
 - run `yarn dev --i` to install the monorepo
 - run `yarn dev --b` to build the packages across the monorepo
+- You can also run `yarn dev --bR` to build & copy the @visa/charts bundle to our R wrapper.
 
 <br>
 
@@ -76,17 +82,39 @@ This can helpful if you are making changes to dependencies of the chart componen
 
 <br>
 
-##### Running unit tests on a component
+##### Running unit tests
 
 We have built extensive unit testing out for some of our components and are working towards propagating this across the rest. To run unit tests the command is:
 
-`yarn dev --test=@visa/<component-name>`
+- test all components at once: `yarn dev --t`
+- test a specific component: `yarn dev --test=@visa/<component-name>`
 
 Also, in some cases, component snapshots may need to be updated after changes have been implemented on components themselves (take caution when updating testing snapshots). In this situation, run the update snapshot command as follows:
 
 `yarn dev --updateSnapshot=@visa/<component-name>`
 
+Once you have finished running your tests you can leverage the below scripts to evaluate them:
+
+- `yarn combine-test-results` - This script will combine all tests results across the monorepo, both coverage and test summary/failures.
+- `yarn compare-test-results` - This script will do a snapshot test of your test results to the current snapshot.
+- `yarn update-test-results` - This script will update the combined test snapshot, useful in situations when you have added more tests, cleaned up tests or enabled new components.
+
 We use [vscode](https://code.visualstudio.com/) as our development environment, you can also leverage the built in debugging capability in this tool to evaluate the unit tests themselves.
+
+<br>
+
+##### Running components through yarn audit / dependency check
+
+We enable a repo wide scan using [yarn audit](https://classic.yarnpkg.com/en/docs/cli/audit/) to check for known dependency vulnerabilities. To run the audit command(s):
+
+- all components: `yarn dev --a=ALL`
+- OR, component specific: `yarn dev --a=@visa/<component-name>`
+
+Once you have finished running your audit you can leverage the below scripts to evaluate the results:
+
+- `yarn combine-audit-results` - This script will combine all audit results across the monorepo.
+- `yarn compare-audit-results` - This script will do a snapshot test of your audit results to the current snapshot.
+- `yarn update-audit-results` - This script will update the combined audit snapshot, useful in situations when you have added more dependencies, cleaned up dependencies or enabled new components.
 
 <br>
 
@@ -125,7 +153,6 @@ You can find license information for all dependencies included in our build [her
 - [d3-svg-annotation](https://d3-annotation.susielu.com/)
 - [numeral.js](http://numeraljs.com/)
 - [node-uuid](https://github.com/uuidjs/uuid)
-- [ally.js](https://allyjs.io/)
 
 This project was/is built with tireless efforts from:
 

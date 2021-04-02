@@ -1,12 +1,13 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2021 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
  *
  **/
 // DIRECTIVES
-export * from './directives/bar-chart';
+export { AlluvialDiagram } from './directives/alluvial-diagram';
+export { BarChart } from './directives/bar-chart';
 export { BivariateMapboxMap } from './directives/bivariate-mapbox-map';
 export { CirclePacking } from './directives/circle-packing';
 export { ClusteredBarChart } from './directives/clustered-bar-chart';

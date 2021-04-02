@@ -36,12 +36,11 @@ const {
   ensureTextContrast,
   createTextStrokeFilter,
   findTagLevel,
-  initializeGeometryAccess,
   initializeDescriptionRoot,
-  initializeGroupAccess,
-  setGeometryAccessLabel,
-  setGroupAccessLabel,
-  setRootSVGAccess,
+  initializeElementAccess,
+  setElementFocusHandler,
+  setElementAccessID,
+  setAccessibilityController,
   hideNonessentialGroups,
   setAccessTitle,
   setAccessSubtitle,
@@ -173,8 +172,6 @@ export class LineChart {
   innerWidth: number;
   innerPaddedHeight: number;
   innerPaddedWidth: number;
-  innerXAxis: any;
-  innerYAxis: any;
   references: any;
   defaults: boolean;
   duration: number;
@@ -956,7 +953,7 @@ export class LineChart {
       this.drawAnnotations();
       this.setAnnotationAccessibility();
       hideNonessentialGroups(this.root.node(), this.dotG.node());
-      this.setGroupAccessibilityLabel();
+      this.setGroupAccessibilityID();
       this.onChangeHandler();
       this.duration = 750;
       this.defaults = false;
@@ -1062,7 +1059,7 @@ export class LineChart {
         this.shouldSetGeometryAriaLabels = false;
       }
       if (this.shouldSetGroupAccessibilityLabel) {
-        this.setGroupAccessibilityLabel();
+        this.setGroupAccessibilityID();
         this.shouldSetGroupAccessibilityLabel = false;
       }
       if (this.shouldUpdateSeriesLabels) {
@@ -1593,7 +1590,7 @@ export class LineChart {
   setXAxisAccessibility() {
     setAccessXAxis({
       rootEle: this.lineChartEl,
-      hasXAxis: this.innerXAxis ? this.innerXAxis.visible : false,
+      hasXAxis: this.xAxis ? this.xAxis.visible : false,
       xAxis: this.x,
       xAxisLabel: this.xAxis.label ? this.xAxis.label : ''
     });
@@ -1602,7 +1599,7 @@ export class LineChart {
   setYAxisAccessibility() {
     setAccessYAxis({
       rootEle: this.lineChartEl,
-      hasYAxis: this.innerYAxis ? this.innerYAxis.visible : false,
+      hasYAxis: this.yAxis ? this.yAxis.visible : false,
       yAxis: this.y,
       yAxisLabel: this.yAxis.label ? this.yAxis.label : ''
     });
@@ -1773,14 +1770,12 @@ export class LineChart {
       .attr('fill', (_, i) => this.rawColors[i] || this.rawColors[0])
       .each((_, i, n) => {
         // we bind accessible interactivity and semantics here (role, tabindex, etc)
-        initializeGroupAccess(n[i]);
+        initializeElementAccess(n[i]);
       });
 
     this.enterDots
       .each((_d, i, n) => {
-        initializeGeometryAccess({
-          node: n[i]
-        });
+        initializeElementAccess(n[i]);
       })
       .attr('stroke', this.handleDotStroke)
       .attr('cursor', !this.suppressEvents ? this.cursor : null)
@@ -1930,7 +1925,7 @@ export class LineChart {
         // then our util can count geometries
         this.setChartCountAccessibility();
         // our group's label should update with new counts too
-        this.setGroupAccessibilityLabel();
+        this.setGroupAccessibilityID();
         // since items exited, labels must receive updated values
         this.setGeometryAriaLabels();
         // and also make sure the user's focus isn't lost
@@ -2869,7 +2864,7 @@ export class LineChart {
 
   setParentSVGAccessibility() {
     // this sets the accessibility features of the root SVG element
-    setRootSVGAccess({
+    setAccessibilityController({
       node: this.svg.node(),
       chartTag: 'line-chart',
       title: this.accessibility.title || this.mainTitle,
@@ -2891,9 +2886,7 @@ export class LineChart {
   setGeometryAccessibilityAttributes() {
     // this makes sure every geom element has correct event handlers + semantics (role, tabindex, etc)
     this.updateDots.each((_d, i, n) => {
-      initializeGeometryAccess({
-        node: n[i]
-      });
+      initializeElementAccess(n[i]);
     });
   }
 
@@ -2901,7 +2894,7 @@ export class LineChart {
     // this adds an ARIA label to each geom (a description read by screen readers)
     const keys = scopeDataKeys(this, chartAccessors, 'line-chart');
     this.updateDots.each((_d, i, n) => {
-      setGeometryAccessLabel({
+      setElementFocusHandler({
         node: n[i],
         geomType: 'point',
         includeKeyNames: this.accessibility.includeDataKeyNames,
@@ -2914,19 +2907,18 @@ export class LineChart {
           this.accessibility.keyboardNavConfig &&
           this.accessibility.keyboardNavConfig.disabled
       });
+      setElementAccessID({
+        node: n[i],
+        uniqueID: this.chartID
+      });
     });
   }
 
-  setGroupAccessibilityLabel() {
+  setGroupAccessibilityID() {
     // this sets an ARIA label on all the g elements in the chart
     this.updateDotWrappers.each((_, i, n) => {
-      setGroupAccessLabel({
+      setElementAccessID({
         node: n[i],
-        geomType: 'point',
-        includeKeyNames: this.accessibility.includeDataKeyNames,
-        groupName: 'line',
-        isSubgroup: true,
-        groupAccessor: this.seriesAccessor,
         uniqueID: this.chartID
       });
     });

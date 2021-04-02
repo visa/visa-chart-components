@@ -32,12 +32,11 @@ const {
   removeHoverStrokes,
   buildStrokes,
   convertColorsToTextures,
-  initializeGeometryAccess,
   initializeDescriptionRoot,
-  initializeGroupAccess,
-  setGeometryAccessLabel,
-  setGroupAccessLabel,
-  setRootSVGAccess,
+  initializeElementAccess,
+  setElementFocusHandler,
+  setElementAccessID,
+  setAccessibilityController,
   hideNonessentialGroups,
   setAccessTitle,
   setAccessSubtitle,
@@ -753,7 +752,7 @@ export class PieChart {
       this.onChangeHandler();
       hideNonessentialGroups(this.root.node(), this.pieG.node());
       this.setGroupAccessibilityAttributes();
-      this.setGroupAccessibilityLabel();
+      this.setGroupAccessibilityID();
       this.duration = 750;
       this.defaults = false;
       resolve('component did load');
@@ -868,7 +867,7 @@ export class PieChart {
         this.shouldSetGeometryAriaLabels = false;
       }
       if (this.shouldSetGroupAccessibilityLabel) {
-        this.setGroupAccessibilityLabel();
+        this.setGroupAccessibilityID();
         this.shouldSetGroupAccessibilityLabel = false;
       }
       if (this.shouldDrawInteractionState) {
@@ -1363,10 +1362,7 @@ export class PieChart {
       .on('mouseout', !this.suppressEvents ? () => this.onMouseOutHandler() : null)
       .attr('cursor', !this.suppressEvents ? this.cursor : null)
       .each((_d, i, n) => {
-        initializeGeometryAccess({
-          node: n[i]
-          // recursive: false // pie doesn't use this, so it can be omitted
-        });
+        initializeElementAccess(n[i]);
       });
     this.update.order();
   }
@@ -1431,7 +1427,7 @@ export class PieChart {
         // then our util can count geometries
         this.setChartCountAccessibility();
         // our group's label should update with new counts too
-        this.setGroupAccessibilityLabel();
+        this.setGroupAccessibilityID();
         // since items exited, labels must receive updated values
         this.setGeometryAriaLabels();
         // and also make sure the user's focus isn't lost
@@ -1524,10 +1520,7 @@ export class PieChart {
       .attr('stroke-width', 0)
       .classed('entering', true)
       .each((_d, i, n) => {
-        initializeGeometryAccess({
-          node: n[i]
-          // recursive: false // pie doesn't use this, so it can be omitted
-        });
+        initializeElementAccess(n[i]);
       });
 
     const exitRefPie = currentRefPie.exit();
@@ -1997,7 +1990,7 @@ export class PieChart {
   }
 
   setParentSVGAccessibility() {
-    setRootSVGAccess({
+    setAccessibilityController({
       node: this.svg.node(),
       chartTag: 'pie-chart',
       title: this.accessibility.title || this.mainTitle,
@@ -2021,23 +2014,17 @@ export class PieChart {
 
   setGeometryAccessibilityAttributes() {
     this.update.each((_d, i, n) => {
-      initializeGeometryAccess({
-        node: n[i]
-        // recursive: false // pie doesn't use this, so it can be omitted
-      });
+      initializeElementAccess(n[i]);
     });
     this.updateRefPie.each((_d, i, n) => {
-      initializeGeometryAccess({
-        node: n[i]
-        // recursive: false // pie doesn't use this, so it can be omitted
-      });
+      initializeElementAccess(n[i]);
     });
   }
 
   setGeometryAriaLabels() {
     const keys = scopeDataKeys(this, chartAccessors, 'pie-chart');
     this.update.each((_d, i, n) => {
-      setGeometryAccessLabel({
+      setElementFocusHandler({
         node: n[i],
         geomType: 'slice',
         includeKeyNames: this.accessibility.includeDataKeyNames,
@@ -2050,9 +2037,13 @@ export class PieChart {
           this.accessibility.keyboardNavConfig &&
           this.accessibility.keyboardNavConfig.disabled
       });
+      setElementAccessID({
+        node: n[i],
+        uniqueID: this.chartID
+      });
     });
     this.updateRefPie.each((_d, i, n) => {
-      setGeometryAccessLabel({
+      setElementFocusHandler({
         node: n[i],
         geomType: 'slice',
         includeKeyNames: this.accessibility.includeDataKeyNames,
@@ -2064,6 +2055,10 @@ export class PieChart {
           this.accessibility.elementsAreInterface === false &&
           this.accessibility.keyboardNavConfig &&
           this.accessibility.keyboardNavConfig.disabled
+      });
+      setElementAccessID({
+        node: n[i],
+        uniqueID: this.chartID
       });
     });
   }
@@ -2071,16 +2066,13 @@ export class PieChart {
   setGroupAccessibilityAttributes() {
     // if a component's <g> elements can enter/exit, this will need to be called in the
     // lifecycle more than just initially, like how setGeometryAccessibilityAttributes works
-    initializeGroupAccess(this.pieG.node());
+    initializeElementAccess(this.pieG.node());
   }
 
-  setGroupAccessibilityLabel() {
+  setGroupAccessibilityID() {
     this.pieG.each((_, i, n) => {
-      setGroupAccessLabel({
+      setElementAccessID({
         node: n[i],
-        geomType: 'slice',
-        includeKeyNames: this.accessibility.includeDataKeyNames,
-        groupName: 'pie',
         uniqueID: this.chartID
       });
     });

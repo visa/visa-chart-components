@@ -7,7 +7,7 @@
  **/
 import { getTextWidth } from './textHelpers';
 import { formatStats } from './formatStats';
-import { setLegendAccess } from './applyAccessibility';
+import { setLegendAccess } from './accessibilityUtils';
 import { symbols } from './symbols';
 import {
   getAccessibleStrokes,

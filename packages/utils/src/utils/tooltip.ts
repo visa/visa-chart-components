@@ -1,12 +1,12 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2021 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
  *
  **/
 import { select } from 'd3-selection';
-import { setTooltipAccess } from './applyAccessibility';
+import { setTooltipAccess } from './accessibilityUtils';
 import { formatStats } from './formatStats';
 import { capitalized } from './calculation';
 import { formatDataLabel } from './dataLabel';
@@ -241,6 +241,15 @@ const buildTooltipContent = ({
           `<b>${dataLabel.format ? formatStats(data[valueAccessor], dataLabel.format) : data[valueAccessor]}</b>
         `;
       }
+    }
+    // alluvial-diagram
+    else if (chartType === 'alluvial-diagram') {
+      defaultLabel = `
+      <b>${capitalized(data['source'][ordinalAccessor])}</b> to <b>${capitalized(
+        data['target'][ordinalAccessor]
+      )} </b><br/>
+      ${capitalized(valueAccessor) + ':'}
+      <b>${dataLabel && dataLabel.format ? formatStats(data['value'], dataLabel.format) : data['value']}</b>`;
     }
 
     return defaultLabel;

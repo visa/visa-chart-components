@@ -1,0 +1,58 @@
+/**
+ * Copyright (c) 2021 Visa, Inc.
+ *
+ * This source code is licensed under the MIT license
+ * https://github.com/visa/visa-chart-components/blob/master/LICENSE
+ *
+ **/
+alluvial-diagram {
+  .annotations {
+    pointer-events: none;
+    .handle {
+      pointer-events: all;
+    }
+  }
+
+  .screen-reader-info {
+    position: absolute;
+    left: -9999px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .data-table-link {
+    color: #767676;
+    text-decoration: none;
+    font-size: 12px;
+    margin-left: 5%;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  cursor: default;
+
+  .node rect {
+    cursor: move;
+    // fill-opacity: 0.9;
+    // shape-rendering: crispEdges;
+  }
+
+  .node text {
+    pointer-events: none;
+    text-shadow: 0 1px 0 #fff;
+  }
+
+  .link {
+    fill: none;
+    stroke: #000;
+    stroke-opacity: 0.2;
+  }
+
+  .link:hover {
+    stroke-opacity: 0.5;
+  }
+}

@@ -36,12 +36,11 @@ const {
   buildStrokes,
   convertColorsToTextures,
   findTagLevel,
-  initializeGeometryAccess,
   initializeDescriptionRoot,
-  initializeGroupAccess,
-  setGeometryAccessLabel,
-  setGroupAccessLabel,
-  setRootSVGAccess,
+  initializeElementAccess,
+  setElementFocusHandler,
+  setElementAccessID,
+  setAccessibilityController,
   hideNonessentialGroups,
   setAccessTitle,
   setAccessSubtitle,
@@ -935,7 +934,7 @@ export class StackedBarChart {
       // parent<g> that contains our geometries! In a subGroup chart (like stacked bars),
       // we want to pass the PARENT of all the <g>s that contain bars
       hideNonessentialGroups(this.root.node(), this.barG.node());
-      this.setGroupAccessibilityLabel();
+      this.setGroupAccessibilityID();
       this.onChangeHandler();
       this.duration = 750;
       this.defaults = false;
@@ -1038,7 +1037,7 @@ export class StackedBarChart {
         this.shouldSetGeometryAriaLabels = false;
       }
       if (this.shouldSetGroupAccessibilityLabel) {
-        this.setGroupAccessibilityLabel();
+        this.setGroupAccessibilityID();
         this.shouldSetGroupAccessibilityLabel = false;
       }
       if (this.shouldUpdateCorners) {
@@ -1674,9 +1673,7 @@ export class StackedBarChart {
       .attr('class', 'stacked-bar')
       .attr('cursor', !this.suppressEvents ? this.cursor : null)
       .each((_d, i, n) => {
-        initializeGeometryAccess({
-          node: n[i]
-        });
+        initializeElementAccess(n[i]);
       })
       .on('click', !this.suppressEvents ? d => this.onClickHandler(d) : null)
       .on('mouseover', !this.suppressEvents ? d => this.onHoverHandler(d) : null)
@@ -1716,7 +1713,7 @@ export class StackedBarChart {
       .attr('class', 'stacked-bar-series entering')
       .each((_, i, n) => {
         // we bind accessible interactivity and semantics here (role, tabindex, etc)
-        initializeGroupAccess(n[i]);
+        initializeElementAccess(n[i]);
       })
       .selectAll('.stacked-bar')
       .attr(valueDimension, d => {
@@ -1829,7 +1826,7 @@ export class StackedBarChart {
         // then our util can count geometries
         this.setChartCountAccessibility();
         // our group's label should update with new counts too
-        this.setGroupAccessibilityLabel();
+        this.setGroupAccessibilityID();
         // since items exited, labels must receive updated values
         this.setGeometryAriaLabels();
         // and also make sure the user's focus isn't lost
@@ -2565,7 +2562,7 @@ export class StackedBarChart {
 
   setParentSVGAccessibility() {
     // this sets the accessibility features of the root SVG element
-    setRootSVGAccess({
+    setAccessibilityController({
       node: this.svg.node(),
       chartTag: 'stacked-bar-chart',
       title: this.accessibility.title || this.mainTitle,
@@ -2590,9 +2587,7 @@ export class StackedBarChart {
   setGeometryAccessibilityAttributes() {
     // this makes sure every geom element has correct event handlers + semantics (role, tabindex, etc)
     this.update.each((_d, i, n) => {
-      initializeGeometryAccess({
-        node: n[i]
-      });
+      initializeElementAccess(n[i]);
     });
   }
 
@@ -2600,7 +2595,7 @@ export class StackedBarChart {
     // this adds an ARIA label to each geom (a description read by screen readers)
     const keys = scopeDataKeys(this, chartAccessors, 'stacked-bar-chart');
     this.update.each((_d, i, n) => {
-      setGeometryAccessLabel({
+      setElementFocusHandler({
         node: n[i],
         geomType: 'bar',
         includeKeyNames: this.accessibility.includeDataKeyNames,
@@ -2614,20 +2609,18 @@ export class StackedBarChart {
           this.accessibility.keyboardNavConfig &&
           this.accessibility.keyboardNavConfig.disabled
       });
+      setElementAccessID({
+        node: n[i],
+        uniqueID: this.chartID
+      });
     });
   }
 
-  setGroupAccessibilityLabel() {
+  setGroupAccessibilityID() {
     // this sets an ARIA label on all the g elements in the chart
     this.updateBarWrappers.each((_, i, n) => {
-      setGroupAccessLabel({
+      setElementAccessID({
         node: n[i],
-        geomType: 'bar',
-        includeKeyNames: this.accessibility.includeDataKeyNames,
-        groupName: 'stack',
-        isSubgroup: true,
-        groupAccessor: this.groupAccessor,
-        groupKeys: this.showTotalValue ? ['sumMessage'] : false,
         uniqueID: this.chartID
       });
     });
