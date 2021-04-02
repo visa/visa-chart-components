@@ -30,6 +30,9 @@ yarn-error.log*
 *-debug.log
 *yarn.lock
 .yo-rc.json
+yarn-audit.json
+yarn-audit-clean.json
+report.*.json
 
 dist/
 www/
@@ -37,3 +40,4 @@ build/
 .stencil/
 coverage/
 
+.Rproj.user

@@ -21,6 +21,11 @@ const tsFileExclusions = [
   '/**/charts-react/src/components/**' // auto-generated react components and utilities
 ];
 
+const licenseFileExclusions = [
+  '/**/charts-R/LICENSE', // R licensing files which has different syntax
+  '/**/charts-R/LICENSE.md' // R licensing files which has different syntax
+];
+
 // GET THE MASTER FILE CONTENT SO WE CAN COPY IT THROUGHOUT THE LIB'S PACKAGES
 const parentFileContent = fs
   .readFileSync(parentLicenseFile[0])
@@ -39,6 +44,14 @@ const parentHeaderFileHTMLContent = fs
   .replace('**/', '**/-->')
   .split('\n');
 
+const parentHeaderFileRContent = fs
+  .readFileSync(parentLicenseHeaderFile[0])
+  .toString()
+  .replace('/**', '# /**')
+  // .replace('**/', '# **/-->')
+  .replace(/ \*/g, '# *')
+  .split('\n');
+
 async function getFilesGitHistory(file) {
   let statusSummary;
   try {
@@ -51,7 +64,9 @@ async function getFilesGitHistory(file) {
 }
 
 // THIS CODE WILL OVERWRITE THE PACKAGES/LICENSE FILES WITH WHATEVER IS IN THE ROOT /LICENSE FILE
-const licenseFiles = glob.sync(path.join(__dirname, '..', 'packages') + '/*/LICENSE', {});
+const licenseFiles = glob.sync(path.join(__dirname, '..', 'packages') + '/*/LICENSE', {
+  ignore: licenseFileExclusions
+});
 licenseFiles.forEach(function(file) {
   try {
     fs.writeFileSync(file, parentFileContent.join('\n'));
@@ -66,6 +81,7 @@ const tsFiles = [
   ...glob.sync(path.join(__dirname, '..', 'packages/*/src') + '/**/*.js*', { ignore: tsFileExclusions }), // all js and jsx files in package/src directories
   ...glob.sync(path.join(__dirname, '..', 'packages/*') + '/stencil.config.ts', {}), // all stencil config files in pakages
   ...glob.sync(path.join(__dirname, '..', 'packages/*/src') + '/**/*.*ss', {}), // all scss files in package/src directories
+  ...glob.sync(path.join(__dirname, '..', 'packages/charts-R/inst/htmlwidgets') + '/**/*.js', {}), // @visa/charts compiled code in charts-R
   ...glob.sync(path.join(__dirname, '..', 'scripts') + '/*.js', {}), // all node scripts in the root
   ...glob.sync(path.join(__dirname, '..') + '/*.js', {}) // all js config files in the root
 ];
@@ -203,6 +219,76 @@ htmlFiles.forEach(function(file) {
         console.error(err);
         const yearString = String(new Date().getFullYear());
         const yearHeader = parentHeaderFileHTMLContent.map(line => {
+          return line.replace('[YEARTOREPLACE]', yearString);
+        });
+        fs.writeFileSync(file, [...yearHeader, ...fileContent.slice(lastHeaderLine)].join('\n'));
+        console.log(
+          `Success:: file:${file} written with new license, but error was triggered, double check results before committing`
+        );
+      });
+  } catch (ex) {
+    console.log(`Error:: while processing ts file:${file}, exception:${ex}`);
+  }
+});
+
+// now we update R files as they have different comment syntax
+const rFiles = [
+  ...glob.sync(path.join(__dirname, '..', 'packages/charts-R') + '/**/*.R', {}),
+  ...glob.sync(path.join(__dirname, '..', 'packages/charts-R') + '/**/*.yaml', {})
+];
+
+rFiles.forEach(function(file) {
+  try {
+    let lastHeaderLine = 0;
+    let headerExists = false;
+
+    const fileContent = fs
+      .readFileSync(file)
+      .toString()
+      .split('\n');
+
+    // check if we have written license before (starts with /**)
+    headerExists =
+      fileContent[0].trim().substr(0, 5) === '# /**' && fileContent[1].trim().substr(0, 13) === '# * Copyright';
+
+    if (headerExists) {
+      // remove existing header
+      for (i = 0; i <= fileContent.length; i++) {
+        if (fileContent[i].trim() === '# **/') {
+          lastHeaderLine = i + 1;
+          break;
+        }
+      }
+    }
+    getFilesGitHistory(file)
+      .then(status => {
+        const yearArray = [];
+        if (status && status.all && status.all.length > 0) {
+          status.all.forEach(logRecord => {
+            const logRecordYear = new Date(logRecord.date).getFullYear();
+            if (yearArray.findIndex(yr => yr === logRecordYear) === -1) {
+              yearArray.push(logRecordYear);
+            }
+          });
+        } else {
+          yearArray.push(new Date(ossFirstCommitDate).getFullYear());
+        }
+
+        // sort years in order from first to last and make it a csv string
+        const yearString = yearArray.sort((a, b) => a - b).join(', ');
+
+        // replace the parentHeaderContent
+        const yearHeader = parentHeaderFileRContent.map(line => {
+          return line.replace('[YEARTOREPLACE]', yearString);
+        });
+        fs.writeFileSync(file, [...yearHeader, ...fileContent.slice(lastHeaderLine)].join('\n'));
+        console.log(`Success:: file:${file} written with new license, for years: `, yearString);
+      })
+      .catch(err => {
+        // console an error and return the current year if there are issues
+        console.error(err);
+        const yearString = String(new Date().getFullYear());
+        const yearHeader = parentHeaderFileRContent.map(line => {
           return line.replace('[YEARTOREPLACE]', yearString);
         });
         fs.writeFileSync(file, [...yearHeader, ...fileContent.slice(lastHeaderLine)].join('\n'));

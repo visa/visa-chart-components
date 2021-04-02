@@ -1,0 +1,70 @@
+# /**
+# * Copyright (c) 2021 Visa, Inc.
+# *
+# * This source code is licensed under the MIT license
+# * https://github.com/visa/visa-chart-components/blob/master/LICENSE
+# *
+# **/
+#' circle_packing
+#' @name circle_packing
+#' @description R wrapper for \href{https://github.com/visa/visa-chart-components/tree/master/packages/circle-packing}{@visa/circle-packing} via \href{https://www.htmlwidgets.org/}{htmlwidgets}.
+#'
+#' Here is an example of circle-packing in action:
+#' \if{html}{\figure{circle-packing-1.png}{options: width=400 alt="example circle pack"}}
+#'
+#' @param data required to be a valid, R data frame. Data used to create chart, an array of objects which includes keys that map to chart accessors. See \href{https://github.com/d3/d3-hierarchy#stratify}{d3-hierarchy.stratify()} for additional detail on data requirements.
+#' @param nodeAccessor String. Key used to determine circle's child, must be a unique child.
+#' @param parentAccessor String. Key used to determine circle's parent.
+#' @param sizeAccessor String. Key used to determine circle size.
+#' @param mainTitle String. The dynamic tag of title for the map (or you can create your own separately). See \code{highestHeadingLevel} prop for how tags get assigned.
+#' @param subTitle String. The dynamic tag for a sub title for the map (or you can create your own separately). See \code{highestHeadingLevel} prop for how tags get assigned.
+#' @param accessibility List(). Manages messages and settings for chart accessibility, see \href{https://github.com/visa/visa-chart-components/tree/master/packages/circle-packing#accessibility-props}{object definition}
+#' @param props List(). A valid R list with additional property configurations, see all props for \href{https://github.com/visa/visa-chart-components/tree/master/packages/circle-packing}{@visa/circle-packing}
+#' @param ... All other props passed into the function will be passed through to the chart, see all props for \href{https://github.com/visa/visa-chart-components/tree/master/packages/circle-packing}{@visa/circle-packing}.
+#' @details To see all available options for the chart properties/API see \href{https://github.com/visa/visa-chart-components/tree/master/packages/circle-packing}{@visa/circle-packing}.
+#' @export
+#' @examples
+#' library(dplyr)
+#' data.frame(parent = c(NA, "A", "A", "C", "C"),
+#'            node = c("A", "B", "C", "D", "E"),
+#'            size = c(NA, 8L, 7L, 6L, 5L)) %>%
+#'   circle_packing("node", "parent", "size",
+#'                  accessibility = list(hideTextures = TRUE,
+#'                                       hideDataTableButton = TRUE))
+#' library(tidyverse)
+#' data.frame(Orange) %>%
+#'   mutate(age = as.character(age)) %>%
+#'   bind_rows(data.frame(Tree = c(rep("Trees", 5), NA),
+#'                        age = c(1:5, "Trees"))) %>%
+#'   circle_packing("age", "Tree", "circumference",
+#'                  accessibility=list(hideTextures = TRUE,
+#'                                     includeDataKeyNames = TRUE,
+#'                                     hideDataTableButton = TRUE))
+circle_packing = function(data,
+                          nodeAccessor,
+                          parentAccessor,
+                          sizeAccessor,
+                          mainTitle = "",
+                          subTitle = "",
+                          accessibility = list(),
+                          props = list(),
+                          ...) {
+
+  # now we are going to append all of these inputted props into the
+  # expected prop list and also the "..." operator
+  propList = c(
+    nodeAccessor = nodeAccessor,
+    parentAccessor = parentAccessor,
+    sizeAccessor = sizeAccessor,
+    mainTitle = mainTitle,
+    subTitle = subTitle,
+    list(accessibility = accessibility),
+    props
+  )
+
+  # now we just pass this through to visaChart for render
+  visaChart("circle-packing",
+            data = data,
+            propList = propList,
+            ...)
+}

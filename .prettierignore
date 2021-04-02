@@ -23,3 +23,10 @@
 **/build/
 **/*.snap
 **/*.env
+**/*.Rproj
+**/*.R
+**/*.Rd
+**/NAMESPACE
+**/DESCRIPTION
+**/*.Rbuildignore
+**/htmlwidgets/lib
