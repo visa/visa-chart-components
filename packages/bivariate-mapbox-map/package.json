@@ -51,6 +51,9 @@
     "core-js": "^3.6.4",
     "rollup-plugin-node-polyfills": "0.2.1"
   },
+  "resolutions": {
+    "minimist": "^1.2.5"
+  },
   "jest": {
     "transform": {
       "^.+\\.(ts|tsx)$": "<rootDir>/node_modules/@stencil/core/testing/jest.preprocessor.js"

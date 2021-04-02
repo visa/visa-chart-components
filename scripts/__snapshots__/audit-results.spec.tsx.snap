@@ -5,24 +5,6 @@ Object {
   "alluvial-diagram": Array [
     Object {
       "data": Object {
-        "dependencies": 114,
-        "devDependencies": 0,
-        "optionalDependencies": 0,
-        "totalDependencies": 114,
-        "vulnerabilities": Object {
-          "critical": 0,
-          "high": 0,
-          "info": 0,
-          "low": 0,
-          "moderate": 0,
-        },
-      },
-      "type": "auditSummary",
-    },
-  ],
-  "bar-chart": Array [
-    Object {
-      "data": Object {
         "dependencies": 111,
         "devDependencies": 0,
         "optionalDependencies": 0,
@@ -38,134 +20,36 @@ Object {
       "type": "auditSummary",
     },
   ],
-  "bivariate-mapbox-map": Array [
+  "bar-chart": Array [
     Object {
       "data": Object {
-        "advisory": Object {
-          "access": "public",
-          "created": "2019-09-23T15:01:43.049Z",
-          "cves": Array [],
-          "cwe": "CWE-471",
-          "deleted": null,
-          "findings": Array [
-            Object {
-              "paths": Array [
-                "@mapbox/mapbox-gl-draw>@mapbox/geojson-extent>@mapbox/geojson-coords>geojson-flatten>minimist",
-                "@mapbox/mapbox-gl-draw>@mapbox/geojsonhint>minimist",
-              ],
-              "version": "1.2.0",
-            },
-          ],
-          "found_by": Object {
-            "email": "",
-            "link": "https://www.checkmarx.com/resources/blog/",
-            "name": "Checkmarx Research Team",
-          },
-          "id": 1179,
-          "metadata": Object {
-            "affected_components": "",
-            "exploitability": 1,
-            "module_type": "",
-          },
-          "module_name": "minimist",
-          "overview": "Affected versions of \`minimist\` are vulnerable to prototype pollution. Arguments are not properly sanitized, allowing an attacker to modify the prototype of \`Object\`, causing the addition or modification of an existing property that will exist on all objects.  
-Parsing the argument \`--__proto__.y=Polluted\` adds a \`y\` property with value \`Polluted\` to all objects. The argument \`--__proto__=Polluted\` raises and uncaught error and crashes the application.  
-This is exploitable if attackers have control over the arguments being passed to \`minimist\`.
-",
-          "patched_versions": ">=0.2.1 <1.0.0 || >=1.2.3",
-          "recommendation": "Upgrade to versions 0.2.1, 1.2.3 or later.",
-          "references": "- [GitHub commit 1](https://github.com/substack/minimist/commit/4cf1354839cb972e38496d35e12f806eea92c11f#diff-a1e0ee62c91705696ddb71aa30ad4f95)
-- [GitHub commit 2](https://github.com/substack/minimist/commit/63e7ed05aa4b1889ec2f3b196426db4500cbda94)",
-          "reported_by": Object {
-            "email": "",
-            "link": "https://www.checkmarx.com/resources/blog/",
-            "name": "Checkmarx Research Team",
-          },
-          "severity": "low",
-          "title": "Prototype Pollution",
-          "updated": "2020-03-18T19:41:45.921Z",
-          "url": "https://npmjs.com/advisories/1179",
-          "vulnerable_versions": "<0.2.1 || >=1.0.0 <1.2.3",
-        },
-        "resolution": Object {
-          "bundled": false,
-          "dev": false,
-          "id": 1179,
-          "optional": false,
-          "path": "@mapbox/mapbox-gl-draw>@mapbox/geojson-extent>@mapbox/geojson-coords>geojson-flatten>minimist",
-        },
-      },
-      "type": "auditAdvisory",
-    },
-    Object {
-      "data": Object {
-        "advisory": Object {
-          "access": "public",
-          "created": "2019-09-23T15:01:43.049Z",
-          "cves": Array [],
-          "cwe": "CWE-471",
-          "deleted": null,
-          "findings": Array [
-            Object {
-              "paths": Array [
-                "@mapbox/mapbox-gl-draw>@mapbox/geojson-extent>@mapbox/geojson-coords>geojson-flatten>minimist",
-                "@mapbox/mapbox-gl-draw>@mapbox/geojsonhint>minimist",
-              ],
-              "version": "1.2.0",
-            },
-          ],
-          "found_by": Object {
-            "email": "",
-            "link": "https://www.checkmarx.com/resources/blog/",
-            "name": "Checkmarx Research Team",
-          },
-          "id": 1179,
-          "metadata": Object {
-            "affected_components": "",
-            "exploitability": 1,
-            "module_type": "",
-          },
-          "module_name": "minimist",
-          "overview": "Affected versions of \`minimist\` are vulnerable to prototype pollution. Arguments are not properly sanitized, allowing an attacker to modify the prototype of \`Object\`, causing the addition or modification of an existing property that will exist on all objects.  
-Parsing the argument \`--__proto__.y=Polluted\` adds a \`y\` property with value \`Polluted\` to all objects. The argument \`--__proto__=Polluted\` raises and uncaught error and crashes the application.  
-This is exploitable if attackers have control over the arguments being passed to \`minimist\`.
-",
-          "patched_versions": ">=0.2.1 <1.0.0 || >=1.2.3",
-          "recommendation": "Upgrade to versions 0.2.1, 1.2.3 or later.",
-          "references": "- [GitHub commit 1](https://github.com/substack/minimist/commit/4cf1354839cb972e38496d35e12f806eea92c11f#diff-a1e0ee62c91705696ddb71aa30ad4f95)
-- [GitHub commit 2](https://github.com/substack/minimist/commit/63e7ed05aa4b1889ec2f3b196426db4500cbda94)",
-          "reported_by": Object {
-            "email": "",
-            "link": "https://www.checkmarx.com/resources/blog/",
-            "name": "Checkmarx Research Team",
-          },
-          "severity": "low",
-          "title": "Prototype Pollution",
-          "updated": "2020-03-18T19:41:45.921Z",
-          "url": "https://npmjs.com/advisories/1179",
-          "vulnerable_versions": "<0.2.1 || >=1.0.0 <1.2.3",
-        },
-        "resolution": Object {
-          "bundled": false,
-          "dev": false,
-          "id": 1179,
-          "optional": false,
-          "path": "@mapbox/mapbox-gl-draw>@mapbox/geojsonhint>minimist",
-        },
-      },
-      "type": "auditAdvisory",
-    },
-    Object {
-      "data": Object {
-        "dependencies": 356,
+        "dependencies": 108,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 356,
+        "totalDependencies": 108,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
           "info": 0,
-          "low": 2,
+          "low": 0,
+          "moderate": 0,
+        },
+      },
+      "type": "auditSummary",
+    },
+  ],
+  "bivariate-mapbox-map": Array [
+    Object {
+      "data": Object {
+        "dependencies": 351,
+        "devDependencies": 0,
+        "optionalDependencies": 0,
+        "totalDependencies": 351,
+        "vulnerabilities": Object {
+          "critical": 0,
+          "high": 0,
+          "info": 0,
+          "low": 0,
           "moderate": 0,
         },
       },
@@ -173,6 +57,10 @@ This is exploitable if attackers have control over the arguments being passed to
     },
   ],
   "charts": Array [
+    Object {
+      "data": "No lockfile found.",
+      "type": "info",
+    },
     Object {
       "data": Object {
         "dependencies": 145,
@@ -193,141 +81,15 @@ This is exploitable if attackers have control over the arguments being passed to
   "charts-angular": Array [
     Object {
       "data": Object {
-        "advisory": Object {
-          "access": "public",
-          "created": "2019-09-23T15:01:43.049Z",
-          "cves": Array [],
-          "cwe": "CWE-471",
-          "deleted": null,
-          "findings": Array [
-            Object {
-              "paths": Array [
-                "@visa/bivariate-mapbox-map>@mapbox/mapbox-gl-draw>@mapbox/geojson-extent>@mapbox/geojson-coords>geojson-flatten>minimist",
-              ],
-              "version": "1.2.0",
-            },
-            Object {
-              "paths": Array [
-                "@visa/bivariate-mapbox-map>@mapbox/mapbox-gl-draw>@mapbox/geojsonhint>minimist",
-              ],
-              "version": "1.2.0",
-            },
-          ],
-          "found_by": Object {
-            "email": "",
-            "link": "https://www.checkmarx.com/resources/blog/",
-            "name": "Checkmarx Research Team",
-          },
-          "id": 1179,
-          "metadata": Object {
-            "affected_components": "",
-            "exploitability": 1,
-            "module_type": "",
-          },
-          "module_name": "minimist",
-          "overview": "Affected versions of \`minimist\` are vulnerable to prototype pollution. Arguments are not properly sanitized, allowing an attacker to modify the prototype of \`Object\`, causing the addition or modification of an existing property that will exist on all objects.  
-Parsing the argument \`--__proto__.y=Polluted\` adds a \`y\` property with value \`Polluted\` to all objects. The argument \`--__proto__=Polluted\` raises and uncaught error and crashes the application.  
-This is exploitable if attackers have control over the arguments being passed to \`minimist\`.
-",
-          "patched_versions": ">=0.2.1 <1.0.0 || >=1.2.3",
-          "recommendation": "Upgrade to versions 0.2.1, 1.2.3 or later.",
-          "references": "- [GitHub commit 1](https://github.com/substack/minimist/commit/4cf1354839cb972e38496d35e12f806eea92c11f#diff-a1e0ee62c91705696ddb71aa30ad4f95)
-- [GitHub commit 2](https://github.com/substack/minimist/commit/63e7ed05aa4b1889ec2f3b196426db4500cbda94)",
-          "reported_by": Object {
-            "email": "",
-            "link": "https://www.checkmarx.com/resources/blog/",
-            "name": "Checkmarx Research Team",
-          },
-          "severity": "low",
-          "title": "Prototype Pollution",
-          "updated": "2020-03-18T19:41:45.921Z",
-          "url": "https://npmjs.com/advisories/1179",
-          "vulnerable_versions": "<0.2.1 || >=1.0.0 <1.2.3",
-        },
-        "resolution": Object {
-          "bundled": false,
-          "dev": false,
-          "id": 1179,
-          "optional": false,
-          "path": "@visa/bivariate-mapbox-map>@mapbox/mapbox-gl-draw>@mapbox/geojson-extent>@mapbox/geojson-coords>geojson-flatten>minimist",
-        },
-      },
-      "type": "auditAdvisory",
-    },
-    Object {
-      "data": Object {
-        "advisory": Object {
-          "access": "public",
-          "created": "2019-09-23T15:01:43.049Z",
-          "cves": Array [],
-          "cwe": "CWE-471",
-          "deleted": null,
-          "findings": Array [
-            Object {
-              "paths": Array [
-                "@visa/bivariate-mapbox-map>@mapbox/mapbox-gl-draw>@mapbox/geojson-extent>@mapbox/geojson-coords>geojson-flatten>minimist",
-              ],
-              "version": "1.2.0",
-            },
-            Object {
-              "paths": Array [
-                "@visa/bivariate-mapbox-map>@mapbox/mapbox-gl-draw>@mapbox/geojsonhint>minimist",
-              ],
-              "version": "1.2.0",
-            },
-          ],
-          "found_by": Object {
-            "email": "",
-            "link": "https://www.checkmarx.com/resources/blog/",
-            "name": "Checkmarx Research Team",
-          },
-          "id": 1179,
-          "metadata": Object {
-            "affected_components": "",
-            "exploitability": 1,
-            "module_type": "",
-          },
-          "module_name": "minimist",
-          "overview": "Affected versions of \`minimist\` are vulnerable to prototype pollution. Arguments are not properly sanitized, allowing an attacker to modify the prototype of \`Object\`, causing the addition or modification of an existing property that will exist on all objects.  
-Parsing the argument \`--__proto__.y=Polluted\` adds a \`y\` property with value \`Polluted\` to all objects. The argument \`--__proto__=Polluted\` raises and uncaught error and crashes the application.  
-This is exploitable if attackers have control over the arguments being passed to \`minimist\`.
-",
-          "patched_versions": ">=0.2.1 <1.0.0 || >=1.2.3",
-          "recommendation": "Upgrade to versions 0.2.1, 1.2.3 or later.",
-          "references": "- [GitHub commit 1](https://github.com/substack/minimist/commit/4cf1354839cb972e38496d35e12f806eea92c11f#diff-a1e0ee62c91705696ddb71aa30ad4f95)
-- [GitHub commit 2](https://github.com/substack/minimist/commit/63e7ed05aa4b1889ec2f3b196426db4500cbda94)",
-          "reported_by": Object {
-            "email": "",
-            "link": "https://www.checkmarx.com/resources/blog/",
-            "name": "Checkmarx Research Team",
-          },
-          "severity": "low",
-          "title": "Prototype Pollution",
-          "updated": "2020-03-18T19:41:45.921Z",
-          "url": "https://npmjs.com/advisories/1179",
-          "vulnerable_versions": "<0.2.1 || >=1.0.0 <1.2.3",
-        },
-        "resolution": Object {
-          "bundled": false,
-          "dev": false,
-          "id": 1179,
-          "optional": false,
-          "path": "@visa/bivariate-mapbox-map>@mapbox/mapbox-gl-draw>@mapbox/geojsonhint>minimist",
-        },
-      },
-      "type": "auditAdvisory",
-    },
-    Object {
-      "data": Object {
-        "dependencies": 1545,
+        "dependencies": 1530,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 1545,
+        "totalDependencies": 1530,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
           "info": 0,
-          "low": 2,
+          "low": 0,
           "moderate": 0,
         },
       },
@@ -337,131 +99,15 @@ This is exploitable if attackers have control over the arguments being passed to
   "charts-react": Array [
     Object {
       "data": Object {
-        "advisory": Object {
-          "access": "public",
-          "created": "2019-09-23T15:01:43.049Z",
-          "cves": Array [],
-          "cwe": "CWE-471",
-          "deleted": null,
-          "findings": Array [
-            Object {
-              "paths": Array [
-                "@visa/bivariate-mapbox-map>@mapbox/mapbox-gl-draw>@mapbox/geojson-extent>@mapbox/geojson-coords>geojson-flatten>minimist",
-                "@visa/bivariate-mapbox-map>@mapbox/mapbox-gl-draw>@mapbox/geojsonhint>minimist",
-              ],
-              "version": "1.2.0",
-            },
-          ],
-          "found_by": Object {
-            "email": "",
-            "link": "https://www.checkmarx.com/resources/blog/",
-            "name": "Checkmarx Research Team",
-          },
-          "id": 1179,
-          "metadata": Object {
-            "affected_components": "",
-            "exploitability": 1,
-            "module_type": "",
-          },
-          "module_name": "minimist",
-          "overview": "Affected versions of \`minimist\` are vulnerable to prototype pollution. Arguments are not properly sanitized, allowing an attacker to modify the prototype of \`Object\`, causing the addition or modification of an existing property that will exist on all objects.  
-Parsing the argument \`--__proto__.y=Polluted\` adds a \`y\` property with value \`Polluted\` to all objects. The argument \`--__proto__=Polluted\` raises and uncaught error and crashes the application.  
-This is exploitable if attackers have control over the arguments being passed to \`minimist\`.
-",
-          "patched_versions": ">=0.2.1 <1.0.0 || >=1.2.3",
-          "recommendation": "Upgrade to versions 0.2.1, 1.2.3 or later.",
-          "references": "- [GitHub commit 1](https://github.com/substack/minimist/commit/4cf1354839cb972e38496d35e12f806eea92c11f#diff-a1e0ee62c91705696ddb71aa30ad4f95)
-- [GitHub commit 2](https://github.com/substack/minimist/commit/63e7ed05aa4b1889ec2f3b196426db4500cbda94)",
-          "reported_by": Object {
-            "email": "",
-            "link": "https://www.checkmarx.com/resources/blog/",
-            "name": "Checkmarx Research Team",
-          },
-          "severity": "low",
-          "title": "Prototype Pollution",
-          "updated": "2020-03-18T19:41:45.921Z",
-          "url": "https://npmjs.com/advisories/1179",
-          "vulnerable_versions": "<0.2.1 || >=1.0.0 <1.2.3",
-        },
-        "resolution": Object {
-          "bundled": false,
-          "dev": false,
-          "id": 1179,
-          "optional": false,
-          "path": "@visa/bivariate-mapbox-map>@mapbox/mapbox-gl-draw>@mapbox/geojson-extent>@mapbox/geojson-coords>geojson-flatten>minimist",
-        },
-      },
-      "type": "auditAdvisory",
-    },
-    Object {
-      "data": Object {
-        "advisory": Object {
-          "access": "public",
-          "created": "2019-09-23T15:01:43.049Z",
-          "cves": Array [],
-          "cwe": "CWE-471",
-          "deleted": null,
-          "findings": Array [
-            Object {
-              "paths": Array [
-                "@visa/bivariate-mapbox-map>@mapbox/mapbox-gl-draw>@mapbox/geojson-extent>@mapbox/geojson-coords>geojson-flatten>minimist",
-                "@visa/bivariate-mapbox-map>@mapbox/mapbox-gl-draw>@mapbox/geojsonhint>minimist",
-              ],
-              "version": "1.2.0",
-            },
-          ],
-          "found_by": Object {
-            "email": "",
-            "link": "https://www.checkmarx.com/resources/blog/",
-            "name": "Checkmarx Research Team",
-          },
-          "id": 1179,
-          "metadata": Object {
-            "affected_components": "",
-            "exploitability": 1,
-            "module_type": "",
-          },
-          "module_name": "minimist",
-          "overview": "Affected versions of \`minimist\` are vulnerable to prototype pollution. Arguments are not properly sanitized, allowing an attacker to modify the prototype of \`Object\`, causing the addition or modification of an existing property that will exist on all objects.  
-Parsing the argument \`--__proto__.y=Polluted\` adds a \`y\` property with value \`Polluted\` to all objects. The argument \`--__proto__=Polluted\` raises and uncaught error and crashes the application.  
-This is exploitable if attackers have control over the arguments being passed to \`minimist\`.
-",
-          "patched_versions": ">=0.2.1 <1.0.0 || >=1.2.3",
-          "recommendation": "Upgrade to versions 0.2.1, 1.2.3 or later.",
-          "references": "- [GitHub commit 1](https://github.com/substack/minimist/commit/4cf1354839cb972e38496d35e12f806eea92c11f#diff-a1e0ee62c91705696ddb71aa30ad4f95)
-- [GitHub commit 2](https://github.com/substack/minimist/commit/63e7ed05aa4b1889ec2f3b196426db4500cbda94)",
-          "reported_by": Object {
-            "email": "",
-            "link": "https://www.checkmarx.com/resources/blog/",
-            "name": "Checkmarx Research Team",
-          },
-          "severity": "low",
-          "title": "Prototype Pollution",
-          "updated": "2020-03-18T19:41:45.921Z",
-          "url": "https://npmjs.com/advisories/1179",
-          "vulnerable_versions": "<0.2.1 || >=1.0.0 <1.2.3",
-        },
-        "resolution": Object {
-          "bundled": false,
-          "dev": false,
-          "id": 1179,
-          "optional": false,
-          "path": "@visa/bivariate-mapbox-map>@mapbox/mapbox-gl-draw>@mapbox/geojsonhint>minimist",
-        },
-      },
-      "type": "auditAdvisory",
-    },
-    Object {
-      "data": Object {
-        "dependencies": 399,
+        "dependencies": 397,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 399,
+        "totalDependencies": 397,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
           "info": 0,
-          "low": 2,
+          "low": 0,
           "moderate": 0,
         },
       },
@@ -471,10 +117,10 @@ This is exploitable if attackers have control over the arguments being passed to
   "circle-packing": Array [
     Object {
       "data": Object {
-        "dependencies": 112,
+        "dependencies": 109,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 112,
+        "totalDependencies": 109,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -489,10 +135,10 @@ This is exploitable if attackers have control over the arguments being passed to
   "clustered-bar-chart": Array [
     Object {
       "data": Object {
-        "dependencies": 112,
+        "dependencies": 109,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 112,
+        "totalDependencies": 109,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -507,10 +153,10 @@ This is exploitable if attackers have control over the arguments being passed to
   "clustered-force-layout": Array [
     Object {
       "data": Object {
-        "dependencies": 120,
+        "dependencies": 117,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 120,
+        "totalDependencies": 117,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -525,10 +171,10 @@ This is exploitable if attackers have control over the arguments being passed to
   "data-table": Array [
     Object {
       "data": Object {
-        "dependencies": 106,
+        "dependencies": 103,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 106,
+        "totalDependencies": 103,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -543,10 +189,10 @@ This is exploitable if attackers have control over the arguments being passed to
   "dumbbell-plot": Array [
     Object {
       "data": Object {
-        "dependencies": 111,
+        "dependencies": 108,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 111,
+        "totalDependencies": 108,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -561,10 +207,10 @@ This is exploitable if attackers have control over the arguments being passed to
   "group-charts": Array [
     Object {
       "data": Object {
-        "dependencies": 137,
+        "dependencies": 134,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 137,
+        "totalDependencies": 134,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -579,10 +225,10 @@ This is exploitable if attackers have control over the arguments being passed to
   "heat-map": Array [
     Object {
       "data": Object {
-        "dependencies": 111,
+        "dependencies": 108,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 111,
+        "totalDependencies": 108,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -597,10 +243,10 @@ This is exploitable if attackers have control over the arguments being passed to
   "level-indicator": Array [
     Object {
       "data": Object {
-        "dependencies": 105,
+        "dependencies": 102,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 105,
+        "totalDependencies": 102,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -615,10 +261,10 @@ This is exploitable if attackers have control over the arguments being passed to
   "line-chart": Array [
     Object {
       "data": Object {
-        "dependencies": 115,
+        "dependencies": 112,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 115,
+        "totalDependencies": 112,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -633,10 +279,10 @@ This is exploitable if attackers have control over the arguments being passed to
   "parallel-plot": Array [
     Object {
       "data": Object {
-        "dependencies": 114,
+        "dependencies": 111,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 114,
+        "totalDependencies": 111,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -651,10 +297,10 @@ This is exploitable if attackers have control over the arguments being passed to
   "pareto-chart": Array [
     Object {
       "data": Object {
-        "dependencies": 111,
+        "dependencies": 108,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 111,
+        "totalDependencies": 108,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -669,10 +315,10 @@ This is exploitable if attackers have control over the arguments being passed to
   "pie-chart": Array [
     Object {
       "data": Object {
-        "dependencies": 111,
+        "dependencies": 108,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 111,
+        "totalDependencies": 108,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -687,10 +333,10 @@ This is exploitable if attackers have control over the arguments being passed to
   "scatter-plot": Array [
     Object {
       "data": Object {
-        "dependencies": 112,
+        "dependencies": 109,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 112,
+        "totalDependencies": 109,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -705,10 +351,10 @@ This is exploitable if attackers have control over the arguments being passed to
   "stacked-bar-chart": Array [
     Object {
       "data": Object {
-        "dependencies": 112,
+        "dependencies": 109,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 112,
+        "totalDependencies": 109,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -741,10 +387,10 @@ This is exploitable if attackers have control over the arguments being passed to
   "utils": Array [
     Object {
       "data": Object {
-        "dependencies": 191,
+        "dependencies": 189,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 191,
+        "totalDependencies": 189,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -759,10 +405,10 @@ This is exploitable if attackers have control over the arguments being passed to
   "utils-dev": Array [
     Object {
       "data": Object {
-        "dependencies": 203,
+        "dependencies": 199,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 203,
+        "totalDependencies": 199,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -777,10 +423,10 @@ This is exploitable if attackers have control over the arguments being passed to
   "visa-chart-components": Array [
     Object {
       "data": Object {
-        "dependencies": 1579,
+        "dependencies": 1507,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 1579,
+        "totalDependencies": 1507,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -795,10 +441,10 @@ This is exploitable if attackers have control over the arguments being passed to
   "world-map": Array [
     Object {
       "data": Object {
-        "dependencies": 129,
+        "dependencies": 126,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 129,
+        "totalDependencies": 126,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
