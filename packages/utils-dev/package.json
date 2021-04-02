@@ -1,6 +1,6 @@
 {
   "name": "@visa/visa-charts-utils-dev",
-  "version": "3.3.6",
+  "version": "3.3.7",
   "description": "Utilities for development of the charts lib",
   "main": "dist/visa-charts-utils-dev.cjs.js",
   "module": "dist/visa-charts-utils-dev.esm.js",
@@ -23,7 +23,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@visa/charts-types": "^0.3.1",
+    "@visa/charts-types": "^0.3.2",
     "@visa/visa-charts-utils": "^4.4.0",
     "d3": "^4.13.0",
     "d3-axis": "^1.0.12",
