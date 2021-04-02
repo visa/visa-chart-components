@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1](https://github.com/visa/visa-chart-components/compare/@visa/charts-types@0.3.0...@visa/charts-types@0.3.1) (2021-04-02)
+
+
+### Bug Fixes
+
+* refactor accessibility util, update utils & types for alluvial, clean dependencies ([a7305ef](https://github.com/visa/visa-chart-components/commit/a7305ef85f8e6b17d47bfb5bfcfc307626ea8bba))
+
+
+
+
+
 # [0.3.0](https://github.com/visa/visa-chart-components/compare/@visa/charts-types@0.2.2...@visa/charts-types@0.3.0) (2021-04-01)
 
 

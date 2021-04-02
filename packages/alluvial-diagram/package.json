@@ -1,6 +1,6 @@
 {
   "name": "@visa/alluvial-diagram",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "VCC&#39;s alluvial diagram component",
   "license": "SEE LICENCE IN LICENSE",
   "module": "dist/index.mjs",
@@ -36,9 +36,9 @@
     "access": "public"
   },
   "dependencies": {
-    "@visa/charts-types": "^0.3.0",
-    "@visa/visa-charts-data-table": "^2.0.2",
-    "@visa/visa-charts-utils": "^4.1.1",
+    "@visa/charts-types": "^0.3.1",
+    "@visa/visa-charts-data-table": "^2.0.6",
+    "@visa/visa-charts-utils": "^4.4.0",
     "d3-array": "^2.0.3",
     "d3-scale": "^2.2.2",
     "d3-selection": "^1.4.0",
@@ -46,7 +46,7 @@
     "uuid": "7.0.0"
   },
   "devDependencies": {
-    "@visa/visa-charts-utils-dev": "^3.3.2"
+    "@visa/visa-charts-utils-dev": "^3.3.6"
   },
   "jest": {
     "preset": "@stencil/core/testing",

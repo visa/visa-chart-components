@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0](https://github.com/visa/visa-chart-components/compare/@visa/charts-angular@2.1.0...@visa/charts-angular@2.2.0) (2021-04-02)
+
+
+### Features
+
+* add alluvial diagram to chart bundles ([9fd5cef](https://github.com/visa/visa-chart-components/commit/9fd5cef90db9a968c5a283ff065b1e5050842bfe))
+
+
+
+
+
 # [2.1.0](https://github.com/visa/visa-chart-components/compare/@visa/charts-angular@2.0.3...@visa/charts-angular@2.1.0) (2021-04-01)
 
 

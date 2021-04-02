@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.3.6](https://github.com/visa/visa-chart-components/compare/@visa/visa-charts-utils-dev@3.3.5...@visa/visa-charts-utils-dev@3.3.6) (2021-04-02)
+
+
+### Bug Fixes
+
+* refactor accessibility util, update utils & types for alluvial, clean dependencies ([a7305ef](https://github.com/visa/visa-chart-components/commit/a7305ef85f8e6b17d47bfb5bfcfc307626ea8bba))
+
+
+
+
+
 ## [3.3.5](https://github.com/visa/visa-chart-components/compare/@visa/visa-charts-utils-dev@3.3.3...@visa/visa-charts-utils-dev@3.3.5) (2021-04-01)
 
 **Note:** Version bump only for package @visa/visa-charts-utils-dev

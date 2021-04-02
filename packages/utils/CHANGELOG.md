@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.4.0](https://github.com/visa/visa-chart-components/compare/@visa/visa-charts-utils@4.3.0...@visa/visa-charts-utils@4.4.0) (2021-04-02)
+
+
+### Bug Fixes
+
+* refactor accessibility util, update utils & types for alluvial, clean dependencies ([a7305ef](https://github.com/visa/visa-chart-components/commit/a7305ef85f8e6b17d47bfb5bfcfc307626ea8bba))
+
+
+### Features
+
+* add alluvial diagram package ([b6391da](https://github.com/visa/visa-chart-components/commit/b6391da16a7f2aabd0a0596b3d38994ff456876f))
+
+
+
+
+
 # [4.3.0](https://github.com/visa/visa-chart-components/compare/@visa/visa-charts-utils@4.2.0...@visa/visa-charts-utils@4.3.0) (2021-04-01)
 
 

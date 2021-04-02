@@ -1,6 +1,6 @@
 {
   "name": "@visa/line-chart",
-  "version": "4.2.0",
+  "version": "4.2.1",
   "description": "visa line-chart.",
   "license": "SEE LICENCE IN LICENSE",
   "module": "dist/index.mjs",
@@ -36,9 +36,9 @@
     "access": "public"
   },
   "dependencies": {
-    "@visa/charts-types": "^0.3.0",
-    "@visa/visa-charts-data-table": "^2.0.5",
-    "@visa/visa-charts-utils": "^4.3.0",
+    "@visa/charts-types": "^0.3.1",
+    "@visa/visa-charts-data-table": "^2.0.6",
+    "@visa/visa-charts-utils": "^4.4.0",
     "d3-array": "^1.2.4",
     "d3-collection": "^1.0.7",
     "d3-scale": "^2.2.2",
@@ -50,7 +50,7 @@
     "uuid": "7.0.0"
   },
   "devDependencies": {
-    "@visa/visa-charts-utils-dev": "^3.3.5"
+    "@visa/visa-charts-utils-dev": "^3.3.6"
   },
   "jest": {
     "preset": "@stencil/core/testing",
