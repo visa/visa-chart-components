@@ -3,9 +3,13 @@
   "version": "0.3.1",
   "description": "Types for charts lib",
   "license": "SEE LICENCE IN LICENSE",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "author": "Visa Data Experience Team",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/"
+  ],
   "scripts": {
     "audit": "yarn audit --json --level low > yarn-audit.json",
     "build": "rm -rf dist && tsc",
