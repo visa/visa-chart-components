@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.6](https://github.com/visa/visa-chart-components/compare/@visa/bivariate-mapbox-map@5.0.5...@visa/bivariate-mapbox-map@5.0.6) (2021-04-02)
+
+
+### Bug Fixes
+
+* resolve dependency issues for bivarate map component ([0404ace](https://github.com/visa/visa-chart-components/commit/0404ace440fa7b1b607ff99cf2fd33568ffaea07))
+
+
+
+
+
 ## [5.0.5](https://github.com/visa/visa-chart-components/compare/@visa/bivariate-mapbox-map@5.0.3...@visa/bivariate-mapbox-map@5.0.5) (2021-04-01)
 
 **Note:** Version bump only for package @visa/bivariate-mapbox-map

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.5](https://github.com/visa/visa-chart-components/compare/@visa/level-indicator@4.0.4...@visa/level-indicator@4.0.5) (2021-04-02)
+
+**Note:** Version bump only for package @visa/level-indicator
+
+
+
+
+
 ## [4.0.4](https://github.com/visa/visa-chart-components/compare/@visa/level-indicator@4.0.3...@visa/level-indicator@4.0.4) (2021-04-01)
 
 **Note:** Version bump only for package @visa/level-indicator
