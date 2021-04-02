@@ -67,6 +67,9 @@
     "rollup-plugin-node-resolve": "^5.2.0",
     "typescript": "^3.3.4000"
   },
+  "resolutions": {
+    "minimist": "^1.2.5"
+  },
   "jest": {
     "preset": "ts-jest",
     "setupTestFrameworkScriptFile": "<rootDir>/jest.setup.js",
