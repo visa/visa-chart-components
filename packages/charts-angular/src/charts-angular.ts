@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2021 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -23,7 +23,9 @@ import { defineCustomElements as defineScatterPlot } from '@visa/scatter-plot/di
 import { defineCustomElements as defineStackedBarChart } from '@visa/stacked-bar-chart/dist/loader';
 import { defineCustomElements as defineVisaChartsDataTable } from '@visa/visa-charts-data-table/dist/loader';
 import { defineCustomElements as defineWorldMap } from '@visa/world-map/dist/loader';
+import { defineCustomElements as defineAlluvialDiagram } from '@visa/alluvial-diagram/dist/loader';
 
+import { AlluvialDiagram } from './directives/alluvial-diagram';
 import { BarChart } from './directives/bar-chart';
 import { BivariateMapboxMap } from './directives/bivariate-mapbox-map';
 import { CirclePacking } from './directives/circle-packing';
@@ -42,6 +44,7 @@ import { WorldMap } from './directives/world-map';
 
 const DECLARATIONS = [
   // proxies
+  AlluvialDiagram,
   BarChart,
   BivariateMapboxMap,
   CirclePacking,
@@ -60,6 +63,7 @@ const DECLARATIONS = [
 ];
 
 applyPolyfills().then(() => {
+  defineAlluvialDiagram();
   defineBarChart();
   defineBivariateMapboxMap();
   defineCirclePacking();
