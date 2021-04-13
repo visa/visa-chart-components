@@ -8,9 +8,111 @@
   <summary>Jump To:</summary>
   <ol>
     <li>
-      <a href="#accessibility">Accessibility</a>
+      <a href="#accessibility">Accessibility Controller</a>
+      <ul>
+        <li><a href="#setAccessibilityController">setAccessibilityController()</a></li>
+      </ul>
+      <ul>
+        <li><a href="#setElementFocusHandler">setElementFocusHandler()</a></li>
+      </ul>
+      <ul>
+        <li><a href="#setElementInteractionAccessState">setElementInteractionAccessState()</a></li>
+      </ul>
+      <ul>
+        <li><a href="#setElementAccessID">setElementAccessID()</a></li>
+      </ul>
+      <ul>
+        <li><a href="#checkAccessFocus">checkAccessFocus()</a></li>
+      </ul>
+      <ul>
+        <li><a href="#retainAccessFocus">retainAccessFocus()</a></li>
+      </ul>
+      <ul>
+        <li><a href="#getInteractionResult">getInteractionResult()</a></li>
+      </ul>
+      <ul>
+        <li><a href="#drawKeyboardFocusClone">drawKeyboardFocusClone()</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#accessibilityDescriptions">Accessibility Descriptions</a>
+      <ul>
+        <li><a href="#initializeDescriptionRoot">initializeDescriptionRoot()</a></li>
+      </ul>
+      <ul>
+        <li><a href="#setAccessTitle">setAccessTitle()</a></li>
+      </ul>
+      <ul>
+        <li><a href="#setAccessSubtitle">setAccessSubtitle()</a></li>
+      </ul>
+      <ul>
+        <li><a href="#setAccessLongDescription">setAccessLongDescription()</a></li>
+      </ul>
+      <ul>
+        <li><a href="#setAccessContext">setAccessContext()</a></li>
+      </ul>
+      <ul>
+        <li><a href="#setAccessExecutiveSummary">setAccessExecutiveSummary()</a></li>
+      </ul>
+      <ul>
+        <li><a href="#setAccessPurpose">setAccessPurpose()</a></li>
+      </ul>
+      <ul>
+        <li><a href="#setAccessStatistics">setAccessStatistics()</a></li>
+      </ul>
+      <ul>
+        <li><a href="#setAccessChartCounts">setAccessChartCounts()</a></li>
+      </ul>
+      <ul>
+        <li><a href="#setAccessXAxis">setAccessXAxis()</a></li>
+      </ul>
+      <ul>
+        <li><a href="#setAccessYAxis">setAccessYAxis()</a></li>
+      </ul>
+      <ul>
+        <li><a href="#setAccessStructure">setAccessStructure()</a></li>
+      </ul>
+      <ul>
+        <li><a href="#setAccessAnnotation">setAccessAnnotation()</a></li>
+      </ul>
+      <ul>
+        <li><a href="#setAccessibilityDescriptionWidth">setAccessibilityDescriptionWidth()</a></li>
+      </ul>
+      <ul>
+        <li><a href="#findTagLevel">findTagLevel()</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#accessibilityUtils">Accessibility Utilities</a>
+      <ul>
+        <li><a href="#initializeElementAccess">initializeElementAccess()</a></li>
+      </ul>
+      <ul>
+        <li><a href="#hideNonessentialGroups">hideNonessentialGroups()</a></li>
+      </ul>
+      <ul>
+        <li><a href="#setTooltipAccess">setTooltipAccess()</a></li>
+      </ul>
+      <ul>
+        <li><a href="#setLegendAccess">setLegendAccess()</a></li>
+      </ul>
+      <ul>
+        <li><a href="#hideNode">hideNode()</a></li>
+      </ul>
       <ul>
         <li><a href="#create-url">createUrl()</a></li>
+      </ul>
+      <ul>
+        <li><a href="#setHighContrastListener">setHighContrastListener()</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#altTextGenerator">Alt Text Generator</a>
+      <ul>
+        <li><a href="#createLabel">createLabel()</a></li>
+      </ul>
+      <ul>
+        <li><a href="#createGroupLabel">createGroupLabel()</a></li>
       </ul>
     </li>
     <li>
@@ -130,15 +232,12 @@
 To use utils in your projects run `yarn add @visa/visa-charts-utils`. The utils export contains nearly 100 different functions across more than 2 dozen files. You can import only the utils you need into a specific file using a destructuring pattern, like so:
 
 ```js
-import Utils from '@visa/visa-charts-utils
-const {
-  calculateLuminance,
-  calculateRelativeLuminance
-} = Utils;
+import Utils from '@visa/visa-charts-utils';
+const { calculateLuminance, calculateRelativeLuminance } = Utils;
 
-const greyLuminance = calculateLuminance('#767676')
-const whiteLuminance = calculateLuminance('white')
-const wcagContrastRatio = calculateRelativeLuminance(greyLuminance,whiteLuminance)
+const greyLuminance = calculateLuminance('#767676');
+const whiteLuminance = calculateLuminance('white');
+const wcagContrastRatio = calculateRelativeLuminance(greyLuminance, whiteLuminance);
 ```
 
 ## Overview of the utils
@@ -148,13 +247,163 @@ Each main util file is outlined below. Some of these utils are designed with env
 <hr>
 <br>
 
-## <a name="accessibility" href="#accessibility">#</a> Accessibility [<>](./src/utils/applyAccessibility.ts 'Source')
+## <a name="accessibility" href="#accessibility">#</a> **Accessibility Controller** [<>](./src/utils/accessibilityController.ts 'Source for Accessibility Controller')
 
-This is a large collection of functionality meant to integrate accessibility into the VCC lifecycle, encompassing nearly 30 exports. Every function is expected to exist within the ecosystem of VCC, with one exception that is generalized. Many of the functions in this file interact closely with the [accessibility prop](../types/README.md#accessibility) that [each Visa Chart Component](../bar-chart/README.md#accessibility-props) ships with.
+The accessibility controller is an invisible, minimal HTML interface that sits on top of each chart area that greatly increases the accessibility of each chart. The controller sends keyboard input into the chart space to produce focus indication as well as simulate the chart's interactive features. Using HTML elements inside the controller interface allows for more robust semantic options for screen reader users, such as describing chart elements as images or buttons (when appropriate), which is currently not available to SVG elements. The controller is also in charge of how keyboard navigation patterns are handled, generally designed to mimic the information structure produced by the chart space.
+
+The controller is a unique and powerful utility that comes with every Visa Chart Component.
+
+Many of the functions in this file interact closely with the [accessibility prop](../types/README.md#accessibility) that [each Visa Chart Component](../bar-chart/README.md#accessibility-props) ships with.
 
 ![An image depicting a chart and a series of symbols that resemble controls, such as left, right, select, undo, etc.](./docs/accessibility.jpg 'Accessibility controls shown over a chart')
 
 ### **Notable Exports:**
+
+#### <a name='setAccessibilityController' href='#setAccessibilityController'>#</a> `setAccessibilityController({...})`:
+
+This function initializes and maintains the root-level controller node and is designed to hook into the VCC lifecycle (so that it stays up to date as a chart changes).
+
+#### <a name='setElementFocusHandler' href='#setElementFocusHandler'>#</a> `setElementFocusHandler({...})`:
+
+This function adds a focus listener to each chart element (excluding group-level elements) that will move the user's keyboard focus into the chart's accessibility controller if activated. Normally, chart elements cannot be focused by keyboard interaction, so this generally will only move focus state if a user clicks a chart element (since clicking triggers a focus event as well). This allows users to click a chart element and then begin keyboard navigating from that point. Note that the initial focus indicator is only shown once keyboard navigation input is supplied after clicking.
+
+#### <a name='setElementInteractionAccessState' href='#setElementInteractionAccessState'>#</a> `setElementInteractionAccessState(node: any, selected: boolean, selectable: boolean)`:
+
+This function ensures that if a chart is interactive and the developer has specified `accessibility.elementsAreInterface: true` that the element's corresponding controller node is rendered as a button, instead of a div with `role=img`.
+
+#### <a name='setElementAccessID' href='#setElementAccessID'>#</a> `setElementAccessID({ node: any; uniqueID?: string })`:
+
+This function manages the unique ids of each chart element, which is how the controller interacts with the focus indicator and keyboard navigation within the chart space.
+
+#### <a name='checkAccessFocus' href='#checkAccessFocus'>#</a> `checkAccessFocus(parentGNode: any)`:
+
+This function checks whether a focus indicator source exists. This is useful when used with <a href='#retainAccessFocus'>retainAccessFocus</a> during a chart's lifecycle (as focused elements may become deleted if the data changes).
+
+#### <a name='retainAccessFocus' href='#retainAccessFocus'>#</a> `retainAccessFocus({parentGNode: any; focusDidExist?: boolean; recursive?: boolean;})`:
+
+This function ensures that keyboard focus which previously existed before a chart's state change is maintained. This also maintains the visual state of the focus indicator, if it exists.
+
+### **Notable Internal Functions:**
+
+#### <a name='getInteractionResult' href='#getInteractionResult'>#</a> `getInteractionResult({...})`:
+
+This is the main engine that handles keyboard interaction and navigation on both child and group elements. It is used exclusively by the controller nodes. This function handles the different navigation styles of offset (EG <a href="../alluvial-diagram">alluvial-diagram</a>), recursive (EG <a href="../circle-packing">circle-packing</a>), grouped (EG <a href="../line-chart">line-chart</a>, <a href="../stacked-bar-chart">stacked-bar-chart</a>, etc), and non-grouped chart types (EG <a href="../bar-chart">bar-chart</a>, <a href="../pie-chart">pie-chart</a>, etc). It also handles the special cases where a user can navigate among cousin chart elements within the same semantic grouping (such as <a href="../bar-chart">bar-chart</a> when `groupAccessor` is passed or in <a href="../world-map">world-map</a>).
+
+This function resolves with either:
+
+- A selection (if `SPACEBAR` is pressed) specifying the id of the selected element.
+- A new focus target, based on the given key pressed by the user.
+- No result, if the key pressed does not resolve in either a selection or a new focus target.
+
+#### <a name='drawKeyboardFocusClone' href='#drawKeyboardFocusClone'>#</a> `drawKeyboardFocusClone({...})`:
+
+This important function handles the cloning, placement, and display of the keyboard focus indicator. All of these features may change slightly depending on the chart and element type that is being focused.
+
+<hr>
+<br>
+
+## <a name="accessibilityDescriptions" href="#accessibilityDescriptions">#</a> **Accessibility Descriptions** [<a>](./src/utils/accessibilityDescriptions.ts 'Source for Accessibility Descriptions')
+
+This util handles the descriptive area that precedes a Visa Chart Component, which helps to explain the various features of the chart to a screen reader user. Most of the functions in this utility are a direct plug into a chart's lifecycle and based on developer declarations when using the [accessibility prop](../types/README.md#accessibility) that each Visa Chart Component ships with. For more in-depth descriptions of each of these description sections, see their corresponding props in [any component README](../bar-chart/README.md#accessibility-props) file under the Accessibility Props section.
+
+Aside from these prop-driven functions, this utility also handles providing instructions for screen reader users on how to use and navigate the chart, if it is interactive, as well as managing some programmatically generated description sections.
+
+![Bar chart example with a description area shown above the chart once it has been navigated to by a keybaord user.](./docs/accessibility-description.jpg 'Accessibility description shown over a chart')
+
+### **Notable Exports:**
+
+#### <a name='initializeDescriptionRoot' href='#initializeDescriptionRoot'>#</a> `initializeDescriptionRoot({...})`:
+
+This function initializes and maintains the description root as well as keyboard interaction instruction sections of the description area. This function will redraw its contents if a Visa Chart Component receives a new `highestHeadingLevel` prop.
+
+#### <a name='setAccessTitle' href='#setAccessTitle'>#</a> `setAccessTitle(rootEle: any, title: string)`:
+
+This function runs to initialize any value passed to a Visa Chart Component's `accessibility.title` or `mainTitle` props as well as any updates made to either of those values. This information is added as a heading element within the description root. The lifecycle of this is managed internally by each individual Visa Chart Component. See the [accessibility prop](../types/README.md#accessibility), the [accessibility prop used within a component](../bar-chart/README.md#accessibility-props), or the [mainTitle prop used within a component](../bar-chart/README.md#base-props) for more details.
+
+#### <a name='setAccessSubtitle' href='#setAccessSubtitle'>#</a> `setAccessSubtitle(rootEle: any, subtitle: string)`:
+
+This function runs to initialize any value passed to a Visa Chart Component's `subtitle` prop as well as any updates made to that value. This information is added as a heading element within the description root. The lifecycle of this is managed internally by each individual Visa Chart Component. See the [accessibility prop](../types/README.md#accessibility) or the [accessibility prop used within a component](../bar-chart/README.md#accessibility-props) for more details.
+
+#### <a name='setAccessLongDescription' href='#setAccessLongDescription'>#</a> `setAccessLongDescription(rootEle: any, description: string)`:
+
+This function runs to initialize any value passed to a Visa Chart Component's `accessibility.longDescription` prop as well as any updates made to that value. This information is added as a text element within the description root. The lifecycle of this is managed internally by each individual Visa Chart Component. See the [accessibility prop](../types/README.md#accessibility) or the [accessibility prop used within a component](../bar-chart/README.md#accessibility-props) for more details.
+
+#### <a name='setAccessContext' href='#setAccessContext'>#</a> `setAccessContext(rootEle: any, context: string)`:
+
+This function runs to initialize any value passed to a Visa Chart Component's `accessibility.contextExplanation` prop as well as any updates made to that value. This information is added as a text element within the description root. The lifecycle of this is managed internally by each individual Visa Chart Component. See the [accessibility prop](../types/README.md#accessibility) or the [accessibility prop used within a component](../bar-chart/README.md#accessibility-props) for more details.
+
+#### <a name='setAccessExecutiveSummary' href='#setAccessExecutiveSummary'>#</a> `setAccessExecutiveSummary(rootEle: any, summary: string)`:
+
+This function runs to initialize any value passed to a Visa Chart Component's `accessibility.executiveSummary` prop as well as any updates made to that value. This information is added as a text element within the description root. The lifecycle of this is managed internally by each individual Visa Chart Component. See the [accessibility prop](../types/README.md#accessibility) or the [accessibility prop used within a component](../bar-chart/README.md#accessibility-props) for more details.
+
+#### <a name='setAccessPurpose' href='#setAccessPurpose'>#</a> `setAccessPurpose(rootEle: any, purpose: string)`:
+
+This function runs to initialize any value passed to a Visa Chart Component's `accessibility.purpose` prop as well as any updates made to that value. This information is added as a text element within the description root. The lifecycle of this is managed internally by each individual Visa Chart Component. See the [accessibility prop](../types/README.md#accessibility) or the [accessibility prop used within a component](../bar-chart/README.md#accessibility-props) for more details.
+
+#### <a name='setAccessStatistics' href='#setAccessStatistics'>#</a> `setAccessStatistics(rootEle: any, statistics: string)`:
+
+This function runs to initialize any value passed to a Visa Chart Component's `accessibility.statisticalNotes` prop as well as any updates made to that value. This information is added as a text element within the description root. The lifecycle of this is managed internally by each individual Visa Chart Component. See the [accessibility prop](../types/README.md#accessibility) or the [accessibility prop used within a component](../bar-chart/README.md#accessibility-props) for more details.
+
+#### <a name='setAccessChartCounts' href='#setAccessChartCounts'>#</a> `setAccessChartCounts({...})`:
+
+This function will programmatically produce a summary count of the elements rendered on a Visa Chart Component, such as `This is a bar-chart with 12 bars.` This information is added as a text element within the description root. This function automatically handles the difference between recursive and non-recursive rendering styles (when deep layers may be hidden from rendering intentionally, thus reducing chart counts).
+
+#### <a name='setAccessXAxis' href='#setAccessXAxis'>#</a> `setAccessXAxis({...})`:
+
+This function will programmatically produce summary information about what is displayed on a Visa Chart Component's x axis. This information is added as a text element within the description root. This function relies heavily on values supplied to the [xAxis prop](../types/README.md#IAxisType), for example hiding the axis using `xAxis.visible` will remove this summary information. See also: an example of the [xAxis prop used on a chart](../bar-chart/README.md#axis-props).
+
+#### <a name='setAccessYAxis' href='#setAccessYAxis'>#</a> `setAccessYAxis({...})`:
+
+This function will programmatically produce summary information about what is displayed on a Visa Chart Component's y axis. This information is added as a text element within the description root. This function relies heavily on values supplied to the [yAxis prop](../types/README.md#IAxisType), for example hiding the axis using `yAxis.visible` will remove this summary information. See also: an example of the [yAxis prop used on a chart](../bar-chart/README.md#axis-props).
+
+#### <a name='setAccessStructure' href='#setAccessStructure'>#</a> `setAccessStructure(rootEle: any, structure: string)`:
+
+This function runs to initialize any value passed to a Visa Chart Component's `accessibility.structureNotes` prop as well as any updates made to that value. This information is added as a text element within the description root. The lifecycle of this is managed internally by each individual Visa Chart Component. See the [accessibility prop](../types/README.md#accessibility) or the [accessibility prop used within a component](../bar-chart/README.md#accessibility-props) for more details.
+
+#### <a name='setAccessAnnotation' href='#setAccessAnnotation'>#</a> `setAccessAnnotation(rootEle: any, annotations: any)`:
+
+This function runs to initialize any value passed to a Visa Chart Component's `annotations` prop as well as any updates made to that array. The lifecycle of this is managed internally by each individual Visa Chart Component. See an example of the [annotations prop's `accessibilityDescription` used within a component](../bar-chart/README.md#annotation-props) for more details. You can also find more information in the <a href="#annotate">documentation for the annotation util</a> in this README file.
+
+#### <a name='setAccessibilityDescriptionWidth' href='#setAccessibilityDescriptionWidth'>#</a> `setAccessibilityDescriptionWidth(uniqueID, width)`:
+
+This function ensures that the width of the description root either matches the width of the chart, or has a minimum width of 200px. It is important to maintain a minimum width because the description root's primary node is visible when a keyboard only user navigates to it (it must be easy to read).
+
+This function initializes when the `width` prop passed to a Visa Chart Component and will update if its value changes. This is handled within the lifecycle of each chart component.
+
+#### <a name='findTagLevel' href='#findTagLevel'>#</a> `findTagLevel(startLevel: any, depthFromStart?: number)`:
+
+This function will produce a hierarchy of HTML elements based on the `highestHeadingLevel` prop sent in to any Visa Chart Component. This is used to calculate the component's own (visible) title and subtitle as well as the contents of the description root used by screen readers and keyboard only users. This is used by each Visa Chart Component as well as internally by the <a href="#initializeDescriptionRoot">`initializeDescriptionRoot`</a> function.
+
+<hr>
+<br>
+
+## <a name="accessibilityUtils" href="#accessibilityUtils">#</a> **Accessibility Utilities** [<>](./src/utils/accessibilityUtils.ts 'Source for Accessibility Utilities')
+
+Many of the functions in this file interact closely with the [accessibility prop](../types/README.md#accessibility) that [each Visa Chart Component](../bar-chart/README.md#accessibility-props) ships with.
+
+![A bar chart example that has detected Window's High Contrast dark mode and inverted the contrast values of all of its elements.](./docs/high-contrast.png 'High contrast mode on a chart')
+
+### **Notable Exports:**
+
+#### <a name='initializeElementAccess' href='#initializeElementAccess'>#</a> `initializeElementAccess(node: any)`:
+
+This initialization adds attributes to a Visa Chart Component chart element to ensure that it can be recognized by the accessibility controller and description utilities but will not be accessible via screen reader or keyboard navigation. Chart elements (SVG or otherwise) are not intended to be directly accessible by these technologies, as they lack the semantic expressiveness of the HTML-based controller.
+
+#### <a name='hideNonessentialGroups' href='#hideNonessentialGroups'>#</a> `hideNonessentialGroups(rootNode: any, exception: any)`:
+
+This function hides group elements and their children from a screen reader, keyboard navigation, and the accessibility controller and description utilities (using the <a href='#hideNode'>hideNode utility function</a>). An exception group may be passed, which is intended for the root group element that contains the main chart geometries. This node is typically ignored so that its contents may be initialized using <a href='#initializeElementAccess'>initializeElementAccess</a>.
+
+#### <a name='setTooltipAccess' href='#setTooltipAccess'>#</a> `setTooltipAccess(el: any)`:
+
+This function hides the tooltip from screen reader access.
+
+#### <a name='setLegendAccess' href='#setLegendAccess'>#</a> `setLegendAccess(root: any, id: string)`:
+
+This function hides the legend from screen reader and keyboard navigation access (using the <a href='#hideNode'>hideNode utility function</a>) and adds a high contrast listener (similar to the <a href='#setHighContrastListener'>setHighContrastListener utility function</a>).
+
+#### <a name='hideNode' href='#hideNode'>#</a> `hideNode(node: any, excludeFocusable?: boolean)`:
+
+This is a commonly used function which simply ensures that a given element will not be accessible via screen reader or keyboard navigation, will not be counted by any programmatic accessibility description utilities (such as <a href='#setAccessChartCounts'>setAccessChartCounts</a>), and will not be recognized by <a href="#accessibility">the accessibility controller</a>.
 
 #### <a name='create-url' href='#create-url'>#</a> `createUrl(id: string) [ functional ]`:
 
@@ -167,6 +416,69 @@ const textureID = 'custom-texture-fill';
 const textureUrl = createUrl(textureID);
 // simplest form returned is "url(#custom-texture-fill)"
 select(element).attr('fill', textureUrl);
+```
+
+#### <a name='setHighContrastListener' href='#setHighContrastListener'>#</a> `setHighContrastListener(root: any, id: string)`:
+
+This function builds a luminance-only inversion filter and then applies that filter if the chart is rendered in IE11 or Microsoft Edge and a High Contrast dark scheme is applied at the system level.
+
+To accomplish a luminance-only inversion, the filter will first invert contrast (for example, turning a dark red into a light green) and then the filter will rotate the hue of the space 180 degrees (so that the light green is now a light red). This retains the original hue (red) but changes it from dark to light. By applying this filter to the root of an entire SVG chart space or legend, it can approximate matching Microsoft's High Contrast dark schemes (except that the color palette is not limited).
+
+This function will also add a JavaScript-driven media query listener which detects Microsoft's <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/-ms-high-contrast">-ms-high-contrast</a> setting. Since this is a listener, it can detect changes made live (without reload). But note that this listener is experimental and -ms-high-contrast is considered Non-Standard. Real high contrast accessibility should include a limited color palette as well, which developers are expected to apply directly to charts in tandem with this automatic feature.
+
+<hr>
+<br>
+
+## <a name="altTextGenerator" href="#altTextGenerator">#</a> **Alt Text Generator** [<>](./src/utils/altTextGenerator.ts 'Source for Alt Text Generator')
+
+This utility handles creating textual descriptions of a Visa Chart Component's elements and groups, based on their data values and contents. This utility is leveraged by the accessibility controller and some of the features can be controlled via props sent to a chart's accessibility prop, such as `accessibility.includeDataKeyNames` and `accessibility.elementDescriptionAccessor`. See the [accessibility prop type](../types/README.md#accessibility) for more details.
+
+![Example showing a mac's voiceover screen reader announcing the alt text on a bar chart element as a user navigates.](./docs/alt-text.jpg 'Example chart with alt text on each element')
+
+### **Notable Exports:**
+
+#### <a name='createLabel' href='#createLabel'>#</a> `createLabel({...})`:
+
+This function produces an automatic textual description of a Visa Chart Component geometry element based on input data used to create that element. This function handles producing labels for all chart geometries in VCC library, such as bars, line points, pie slices, etc as well as handling special data structures that produce grouped, nested, and recursive elements.
+
+An example circle in a circle-packing chart:
+
+```js
+'D. 16. Canada. Node 1 of 2. This Node contains 0 child elements';
+```
+
+By default, Visa Chart Components have terse labels, but these can be expanded using `accessibility.includeDataKeyNames`. An example of the previous label with this prop set:
+
+```js
+'Type D. Value 16. Country Canada. Node 1 of 2. This Node contains 0 child elements';
+```
+
+In addition, labels can be customized to include almost any additional information if a data object has a property specified by `accessibility.elementDescriptionAccessor`. An example of the previous label with this prop set:
+
+```js
+'Type D. Value 16. Country Canada. Note This product Type is also in the United States, data is redundant. Node 1 of 2. This Node contains 0 child elements';
+```
+
+#### <a name='createGroupLabel' href='#createGroupLabel'>#</a> `createGroupLabel({...})`:
+
+Like <a href='#createLabel'>createLabel</a>, this function creates an automatic textual description of a Visa Chart Component element, except for group-level data instead of child-level geometry elements. Typically group labels just contain summary information about what groupAccessor or seriesAccessor was used to create the group, what number in a series the group is, and how many children the group contains.
+
+An example line in a line chart:
+
+```js
+'Product X. Line 1 of 2 which contains 12 interactive points.';
+```
+
+This utility can also be used to contain summary information about a group like in a stacked bar chart:
+
+```js
+'2017. 83. Stack 2 of 5 which contains 3 interactive bars.';
+```
+
+By default, Visa Chart Components have terse labels, but these can be expanded using `accessibility.includeDataKeyNames`. An example of the previous label with this prop set:
+
+```js
+'year 2017. Sum 83. Stack 2 of 5 which contains 3 interactive bars.';
 ```
 
 <hr>

@@ -11,6 +11,7 @@ const fs = require('fs');
 const git = require('simple-git/promise');
 
 const ossFirstCommitDate = '2020-12-10'; // the week of initial release of OSS on GH
+const defaultYearDate = '2021-12-10'; // each year this needs to be set to the new year
 const parentLicenseFile = glob.sync(path.join(__dirname, '..') + '/LICENSE', {});
 const parentLicenseHeaderFile = glob.sync(path.join(__dirname, '..') + '/LICENSE HEADER', {});
 const tsFileExclusions = [
@@ -128,7 +129,7 @@ tsFiles.forEach(function(file) {
             }
           });
         } else {
-          yearArray.push(new Date(ossFirstCommitDate).getFullYear());
+          yearArray.push(new Date(defaultYearDate).getFullYear());
         }
         // sort years in order from first to last and make it a csv string
         const yearString = yearArray.sort((a, b) => a - b).join(', ');
@@ -201,7 +202,7 @@ htmlFiles.forEach(function(file) {
             }
           });
         } else {
-          yearArray.push(new Date(ossFirstCommitDate).getFullYear());
+          yearArray.push(new Date(defaultYearDate).getFullYear());
         }
 
         // sort years in order from first to last and make it a csv string
@@ -271,7 +272,7 @@ rFiles.forEach(function(file) {
             }
           });
         } else {
-          yearArray.push(new Date(ossFirstCommitDate).getFullYear());
+          yearArray.push(new Date(defaultYearDate).getFullYear());
         }
 
         // sort years in order from first to last and make it a csv string

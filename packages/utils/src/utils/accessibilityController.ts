@@ -9,7 +9,7 @@ import { select, event } from 'd3-selection';
 import { getBrowser } from './browser-util';
 import { polyfillMouseEvents } from './customPolyfills';
 import { setHighContrastListener } from './accessibilityUtils';
-import { createLabel, createGroupLabel } from './ariaLabelGenerator';
+import { createLabel, createGroupLabel } from './altTextGenerator';
 const keyCodes = {
   parent: 27, // ESCAPE
   child: 13, // ENTER

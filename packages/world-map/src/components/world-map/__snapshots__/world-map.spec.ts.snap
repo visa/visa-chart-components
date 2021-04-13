@@ -137,8 +137,8 @@ exports[`<world-map /> rendered-html render should render with minimal props giv
         This is the Map subtitle
       </p>
       <div aria-hidden="true" class="vcl-legend world-map-legend" role="presentation" style="display: block;">
-        <svg aria-hidden="true" class="vcl-svg" data-testid="legend-container" data-type="key" focusable="false" height="33" opacity="1" role="presentation" transform="translate(0, 0)" viewBox="0 0 485 33" width="485" style="padding-left: 15px; padding-top: 20px;">
-          <g class="legend-padding-wrapper" transform="translate(4,4)">
+        <svg aria-hidden="true" class="vcl-svg" data-testid="legend-container" data-type="key" focusable="false" height="53" opacity="1" role="presentation" viewBox="0 0 485 53" width="485">
+          <g class="legend-padding-wrapper" transform="translate(19,24)">
             <g class="key legend">
               <rect data-base-color="#554f87" data-fill="#f7fcfd" data-stroke="#554f87" data-stroke-width="1" fill="#f7fcfd" height="15" opacity="1" stroke="#554f87" stroke-dasharray="none" stroke-width="1" width="15" style="fill: #f7fcfd; stroke: #554f87; stroke-width: 1; stroke-dasharray: none;"></rect>
               <text class="key-text" dx=".2em" dy="13" opacity="1"></text>
