@@ -84,9 +84,10 @@ export const drawLegend = ({
 }) => {
   const totalWidth = width + padding.left + padding.right + 5;
   const leftOffset = padding.left + margin.left;
+  const offsetLegend = type === 'scatter' || type === 'key' || type === 'line' || type === 'bar';
   const legendWidth = steps ? width / steps : 0;
   const legendHeight = 15;
-  height = hide ? 0 : height + 5;
+  height = hide ? 0 : height + (offsetLegend ? 25 : 5);
   const opacity = hide ? 0 : 1;
   if (type === 'parallel') {
     type = 'line';
@@ -94,11 +95,13 @@ export const drawLegend = ({
   root.attr('viewBox', '0 0 ' + totalWidth + ' ' + height);
   let paddingWrapper = root.select('.legend-padding-wrapper');
   if (!root.select('.legend-padding-wrapper').size()) {
-    paddingWrapper = root
-      .append('g')
-      .attr('class', 'legend-padding-wrapper')
-      .attr('transform', !symbol ? 'translate(4,4)' : 'translate(7,4)');
+    paddingWrapper = root.append('g').attr('class', 'legend-padding-wrapper');
   }
+  const symbolMod = !symbol ? 4 : 7;
+  paddingWrapper.attr(
+    'transform',
+    `translate(${(offsetLegend ? leftOffset : 0) + symbolMod},${offsetLegend ? 24 : 4})`
+  );
 
   switch (type) {
     default:
@@ -106,7 +109,7 @@ export const drawLegend = ({
         .attr('opacity', opacity)
         .attr('width', totalWidth)
         .attr('height', height)
-        .attr('style', hide ? 'display: none;' : 'padding-left: 0px; padding-top: 0px;')
+        .attr('style', hide ? 'display: none;' : null)
         .attr('transform', `translate(0, 0)`);
 
       const defaultLegend = paddingWrapper.selectAll('.legend.default').data([0].concat(colorArr));
@@ -190,7 +193,7 @@ export const drawLegend = ({
       root
         .attr('width', totalWidth)
         .attr('height', height)
-        .attr('style', hide ? 'display: none;' : 'padding-left: 0px; padding-top: 0px;')
+        .attr('style', hide ? 'display: none;' : null)
         .attr('transform', `translate(0, 20)`)
         .attr('opacity', opacity);
 
@@ -264,8 +267,7 @@ export const drawLegend = ({
         .attr('width', totalWidth)
         .attr('height', height)
         .attr('opacity', opacity)
-        .attr('style', hide ? 'display: none;' : 'padding-left: ' + leftOffset + 'px; padding-top: 20px;')
-        .attr('transform', `translate(0, 0)`);
+        .attr('style', hide ? 'display: none;' : null);
 
       const currentKeyLegend = paddingWrapper.selectAll('.legend.key').data(colorArr);
 
@@ -367,7 +369,7 @@ export const drawLegend = ({
         .attr('width', totalWidth)
         .attr('height', height)
         .attr('opacity', 1)
-        .attr('style', hide ? 'display: none;' : 'padding-left: ' + leftOffset + 'px; padding-top: 20px;');
+        .attr('style', hide ? 'display: none;' : null);
 
       const currentLineLegend = paddingWrapper.selectAll('.legend').data(data);
 
@@ -472,7 +474,7 @@ export const drawLegend = ({
         .attr('width', totalWidth)
         .attr('height', height)
         .attr('opacity', opacity)
-        .attr('style', hide ? 'display: none;' : 'padding-left: ' + leftOffset + 'px; padding-top: 20px;');
+        .attr('style', hide ? 'display: none;' : null);
 
       const currentBarLegend = paddingWrapper.selectAll('.legend.bar').data(data);
 
@@ -576,7 +578,7 @@ export const drawLegend = ({
         .attr('width', totalWidth)
         .attr('height', height)
         .attr('opacity', opacity)
-        .attr('style', hide ? 'display: none;' : 'padding-left: ' + leftOffset + 'px; padding-top: 20px;');
+        .attr('style', hide ? 'display: none;' : null);
 
       const currentScatterLegend = paddingWrapper.selectAll('.legend').data(data);
 
