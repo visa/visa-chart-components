@@ -1,6 +1,6 @@
 {
   "name": "@visa/clustered-force-layout",
-  "version": "4.0.6",
+  "version": "4.0.7",
   "description": "clustered-force-layout component",
   "license": "SEE LICENCE IN LICENSE",
   "module": "dist/index.mjs",
@@ -34,7 +34,7 @@
   },
   "dependencies": {
     "@visa/charts-types": "^0.3.2",
-    "@visa/visa-charts-utils": "^4.4.0",
+    "@visa/visa-charts-utils": "^4.4.1",
     "d3-array": "^1.2.4",
     "d3-drag": "^1.2.3",
     "d3-force": "^2.0.1",
