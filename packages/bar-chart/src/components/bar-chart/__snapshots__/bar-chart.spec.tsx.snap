@@ -144,7 +144,7 @@ exports[`<bar-chart> rendered-html render should render with minimal props[data,
       </p>
       <div aria-hidden="true" class="bar-legend vcl-legend" role="presentation" style="display: none;">
         <svg aria-hidden="true" class="vcl-svg" data-testid="legend-container" data-type="bar" focusable="false" height="0" opacity="0" role="presentation" viewBox="0 0 666.5 0" width="666.5" style="display: none;">
-          <g class="legend-padding-wrapper" transform="translate(4,4)">
+          <g class="legend-padding-wrapper" transform="translate(70.75,24)">
             <g class="bar legend">
               <rect class="bar-rect" height="20" opacity="1" stroke="" stroke-dasharray="none" stroke-width="1" width="20" style="stroke-width: 1; stroke-dasharray: none;"></rect>
               <text class="bar-text" dx=".2em" dy="16" opacity="1"></text>

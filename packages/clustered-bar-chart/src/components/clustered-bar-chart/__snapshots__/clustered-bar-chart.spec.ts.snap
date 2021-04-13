@@ -167,8 +167,8 @@ exports[`<clustered-bar-chart> rendered-html render should render with minimal p
         This is the clustered bar chart's subtitle
       </p>
       <div aria-hidden="true" class="clustered-bar-legend vcl-legend" role="presentation" style="display: block;">
-        <svg aria-hidden="true" class="vcl-svg" data-testid="legend-container" data-type="bar" focusable="false" height="29" opacity="1" role="presentation" viewBox="0 0 672 29" width="672" style="padding-left: 54px; padding-top: 20px;">
-          <g class="legend-padding-wrapper" transform="translate(4,4)">
+        <svg aria-hidden="true" class="vcl-svg" data-testid="legend-container" data-type="bar" focusable="false" height="49" opacity="1" role="presentation" viewBox="0 0 672 49" width="672">
+          <g class="legend-padding-wrapper" transform="translate(58,24)">
             <g class="bar legend">
               <rect class="bar-rect" data-base-color="#7c99b1" data-fill="url(#clustered-bar-test_texture_0)" data-stroke="#35495a" data-stroke-width="1" fill="url(#clustered-bar-test_texture_0)" height="20" opacity="1" stroke="#35495a" stroke-dasharray="none" stroke-width="1" width="20" style="fill: url(#clustered-bar-test_texture_0); stroke: #35495a; stroke-width: 1; stroke-dasharray: none;"></rect>
               <text class="bar-text" dx=".2em" dy="16" opacity="1"></text>
