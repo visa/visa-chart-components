@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.4.1](https://github.com/visa/visa-chart-components/compare/@visa/visa-charts-utils@4.4.0...@visa/visa-charts-utils@4.4.1) (2021-04-13)
+
+
+### Bug Fixes
+
+* ensure legend padding does not conflict with * border-box css ([b3e7a9b](https://github.com/visa/visa-chart-components/commit/b3e7a9b3f5504819e6f10a712cf9bba920b11b41))
+
+
+
+
+
 # [4.4.0](https://github.com/visa/visa-chart-components/compare/@visa/visa-charts-utils@4.3.0...@visa/visa-charts-utils@4.4.0) (2021-04-02)
 
 
