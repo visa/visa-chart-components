@@ -77,7 +77,7 @@ import {
   setHighContrastListener
 } from './accessibilityUtils';
 
-import { createLabel, createGroupLabel } from './ariaLabelGenerator';
+import { createLabel, createGroupLabel } from './altTextGenerator';
 
 import {
   getColors,

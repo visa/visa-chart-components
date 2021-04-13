@@ -1,7 +1,7 @@
 {
   "name": "@visa/alluvial-diagram",
   "version": "1.1.1",
-  "description": "VCC&#39;s alluvial diagram component",
+  "description": "VCC alluvial diagram component",
   "license": "SEE LICENCE IN LICENSE",
   "module": "dist/index.mjs",
   "main": "dist/index.js",
@@ -14,7 +14,6 @@
   "files": [
     "dist/"
   ],
-  "author": "Visa Data Experience Team",
   "scripts": {
     "audit": "yarn audit --json --level low > yarn-audit.json",
     "build": "stencil build",
@@ -48,6 +47,7 @@
   "devDependencies": {
     "@visa/visa-charts-utils-dev": "^3.3.7"
   },
+  "author": "Visa Data Experience Team",
   "jest": {
     "preset": "@stencil/core/testing",
     "transformIgnorePatterns": [

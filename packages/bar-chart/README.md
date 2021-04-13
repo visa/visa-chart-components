@@ -30,7 +30,7 @@
         <li><a href="#base-props">Base Props </a></li>
         <li><a href="#data-props">Data Props</a></li>
         <li><a href="#accessibility-props">Accessibility Props</a></li>
-        <li><a href="#annotation-props">Axis Props</a></li>
+        <li><a href="#annotation-props">Annotation Props</a></li>
         <li><a href="#axis-props">Axis Props</a></li>
         <li><a href="#event-props">Event Props</a></li>
         <li><a href="#label-props">Label Props</a></li>
