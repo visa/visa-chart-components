@@ -44,6 +44,9 @@ alluvial_diagram(
 
 \item{...}{All other props passed into the function will be passed through to the chart, see all props for \href{https://github.com/visa/visa-chart-components/tree/master/packages/alluvial-diagram}{@visa/alluvial-diagram}.}
 }
+\value{
+a visaNodeLinkChart htmlwidget object for plotting an alluvial diagram
+}
 \description{
 R wrapper for \href{https://github.com/visa/visa-chart-components/tree/master/packages/alluvial-diagram}{@visa/alluvial-diagram} via \href{https://www.htmlwidgets.org/}{htmlwidgets}.
 

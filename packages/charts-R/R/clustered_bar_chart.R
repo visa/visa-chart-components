@@ -22,6 +22,7 @@
 #' @param props List(). A valid R list with additional property configurations, see all props for \href{https://github.com/visa/visa-chart-components/tree/master/packages/clustered-bar-chart}{@visa/clustered-bar-chart}
 #' @param ... All other props passed into the function will be passed through to the chart, see all props for \href{https://github.com/visa/visa-chart-components/tree/master/packages/clustered-bar-chart}{@visa/clustered-bar-chart}.
 #' @details To see all available options for the chart properties/API see \href{https://github.com/visa/visa-chart-components/tree/master/packages/clustered-bar-chart}{@visa/clustered-bar-chart}.
+#' @return a visaChart htmlwidget object for plotting a clustered bar chart
 #' @export
 #' @examples
 #' library(tidyverse)

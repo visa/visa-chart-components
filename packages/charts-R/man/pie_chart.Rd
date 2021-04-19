@@ -32,6 +32,9 @@ pie_chart(
 
 \item{...}{All other props passed into the function will be passed through to the chart, see all props for \href{https://github.com/visa/visa-chart-components/tree/master/packages/pie-chart}{@visa/pie-chart}.}
 }
+\value{
+a visaChart htmlwidget object for plotting a pie chart
+}
 \description{
 R wrapper for \href{https://github.com/visa/visa-chart-components/tree/master/packages/pie-chart}{@visa/pie-chart} via \href{https://www.htmlwidgets.org/}{htmlwidgets}.
 
@@ -44,11 +47,11 @@ To see all available options for the chart properties/API see \href{https://gith
 }
 \examples{
 library(tidyverse)
-data.frame (HairEyeColor) \%>\% 
- filter(Hair=="Blond", Sex=="Male") \%>\% 
- mutate(blueEyes = if_else(Eye=="Blue", "Blue","Other")) \%>\% 
- group_by(blueEyes, Hair, Sex) \%>\% 
- summarise(FreqSum=sum(Freq), n=n()) \%>\% 
+data.frame (HairEyeColor) \%>\%
+ filter(Hair=="Blond", Sex=="Male") \%>\%
+ mutate(blueEyes = if_else(Eye=="Blue", "Blue","Other")) \%>\%
+ group_by(blueEyes, Hair, Sex) \%>\%
+ summarise(FreqSum=sum(Freq), n=n()) \%>\%
  pie_chart(
   "blueEyes",
   "FreqSum",

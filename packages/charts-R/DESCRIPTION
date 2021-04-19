@@ -1,28 +1,31 @@
 Package: visachartR
 Version: 1.0.2
 Date: 2021-04-13
-Title: R Wrapper for Visa Chart Components
-Description: Provides a set of wrapper functions in R for Visa Chart Components.
+Title: Wrapper for 'Visa Chart Components'
+Description: Provides a set of wrapper functions for 'Visa Chart Components'.
   'Visa Chart Components' <https://github.com/visa/visa-chart-components> is an accessibility focused,
   framework agnostic set of data experience design systems components for the web.
-Authors@R: c(
-    person(family = "Visa Data Experience Team", role = c("aut", "cph", "fnd")),
-    person(given = "Christopher",
-           family = "DeMartini",
-           role = c("aut", "cre"),
-           email = "chris.demartini.npm@gmail.com"),
-    person(given = "Jaime",
-           family = "Tanner",
-           role = c("aut"),
-           email = "jaimeatanner@gmail.com"),
-    person(given = "Frank",
-           family = "Elavsky",
-           role = c("aut"),
-           email = "frankelavsky@gmail.com"),
-    person(given = "Wojtek",
-           family = "Kostelecki",
-           role = c("ctb"),
-           email = "wojtek.kostelecki@gmail.com"))
+Authors@R: 
+    c(person(given = "Christopher",
+             family = "DeMartini",
+             role = c("aut", "cre"),
+             email = "chris.demartini.npm@gmail.com"),
+      person(given = "Jaime",
+             family = "Tanner",
+             role = c("aut"),
+             email = "jaimeatanner@gmail.com"),
+      person(given = "Frank",
+             family = "Elavsky",
+             role = c("aut"),
+             email = "frankelavsky@gmail.com"),
+      person(given = "Wojtek",
+             family = "Kostelecki",
+             role = c("ctb"),
+             email = "wojtek.kostelecki@gmail.com"),
+      person(given = "Visa Data Experience Team",
+             role = c("aut", "fnd")),
+      person(given = "Visa, Inc.",
+               role = c("cph")))
 BugReports: https://github.com/visa/visa-chart-components/issues
 License: MIT + file LICENSE
 URL: https://github.com/visa/visa-chart-components/tree/master/packages/charts-R
