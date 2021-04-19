@@ -35,6 +35,9 @@ heat_map(
 
 \item{...}{All other props passed into the function will be passed through to the chart, see all props for \href{https://github.com/visa/visa-chart-components/tree/master/packages/heat-map}{@visa/heat-map}.}
 }
+\value{
+a visaChart htmlwidget object for plotting a heat map
+}
 \description{
 R wrapper for \href{https://github.com/visa/visa-chart-components/tree/master/packages/heat-map}{@visa/heat-map} via \href{https://www.htmlwidgets.org/}{htmlwidgets}.
 

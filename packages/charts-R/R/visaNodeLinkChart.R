@@ -9,13 +9,14 @@
 #'
 #' Visa Chart Components wrapped in r htmlwidgets package
 #'
-#' @param tagName String. The custom web component HTML tag for the Visa Chart Component. Set by respective chart functions. 
+#' @param tagName String. The custom web component HTML tag for the Visa Chart Component. Set by respective chart functions.
 #' @param linkData a valid R data frame. See more details in respective component functions.
 #' @param nodeData a valid R data frame. See more details in respective component functions.
 #' @param propList a list of props, created by each component function, see \href{https://github.com/visa/visa-chart-components}{Visa Chart Components}.
-#' @param height Number. Height of chart container. 
+#' @param height Number. Height of chart container.
 #' @param width Number. Width of chart container.
 #' @param ... All other props passed into the function will be passed through to the chart.
+#' @return a visaNodeLinkChart htmlwidget object for creating a variety of plot types
 #' @import htmlwidgets
 #'
 #' @export
@@ -54,6 +55,7 @@ visaNodeLinkChart <- function(tagName, linkData, nodeData, propList, width = NUL
 #' @param env The environment in which to evaluate \code{expr}.
 #' @param quoted Is \code{expr} a quoted expression (with \code{quote()})? This
 #'   is useful if you want to save an expression in a variable.
+#' @return a Shiny output or render function for visaNodeLinkChart htmlwidgets
 #'
 #' @name visaNodeLinkChart-shiny
 #'

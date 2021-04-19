@@ -29,6 +29,9 @@ visaNodeLinkChart(
 
 \item{...}{All other props passed into the function will be passed through to the chart.}
 }
+\value{
+a visaNodeLinkChart htmlwidget object for creating a variety of plot types
+}
 \description{
 Visa Chart Components wrapped in r htmlwidgets package
 }

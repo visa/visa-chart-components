@@ -35,6 +35,9 @@ line_chart(
 
 \item{...}{All other props passed into the function will be passed through to the chart, see all props for \href{https://github.com/visa/visa-chart-components/tree/master/packages/line-chart}{@visa/line-chart}.}
 }
+\value{
+a visaChart htmlwidget object for plotting a line chart
+}
 \description{
 R wrapper for \href{https://github.com/visa/visa-chart-components/tree/master/packages/line-chart}{@visa/line-chart} via \href{https://www.htmlwidgets.org/}{htmlwidgets}.
 

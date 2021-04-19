@@ -35,6 +35,9 @@ stacked_bar_chart(
 
 \item{...}{All other props passed into the function will be passed through to the chart, see all props for \href{https://github.com/visa/visa-chart-components/tree/master/packages/stacked-bar-chart}{@visa/stacked-bar-chart}.}
 }
+\value{
+a visaChart htmlwidget object for plotting a stacked bar chart
+}
 \description{
 R wrapper for \href{https://github.com/visa/visa-chart-components/tree/master/packages/stacked-bar-chart}{@visa/stacked-bar-chart} via \href{https://www.htmlwidgets.org/}{htmlwidgets}.
 

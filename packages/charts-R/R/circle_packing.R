@@ -22,6 +22,7 @@
 #' @param props List(). A valid R list with additional property configurations, see all props for \href{https://github.com/visa/visa-chart-components/tree/master/packages/circle-packing}{@visa/circle-packing}
 #' @param ... All other props passed into the function will be passed through to the chart, see all props for \href{https://github.com/visa/visa-chart-components/tree/master/packages/circle-packing}{@visa/circle-packing}.
 #' @details To see all available options for the chart properties/API see \href{https://github.com/visa/visa-chart-components/tree/master/packages/circle-packing}{@visa/circle-packing}.
+#' @return a visaChart htmlwidget object for plotting a circle packing plot
 #' @export
 #' @examples
 #' library(dplyr)
