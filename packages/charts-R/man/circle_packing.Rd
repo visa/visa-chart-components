@@ -35,6 +35,9 @@ circle_packing(
 
 \item{...}{All other props passed into the function will be passed through to the chart, see all props for \href{https://github.com/visa/visa-chart-components/tree/master/packages/circle-packing}{@visa/circle-packing}.}
 }
+\value{
+a visaChart htmlwidget object for plotting a circle packing plot
+}
 \description{
 R wrapper for \href{https://github.com/visa/visa-chart-components/tree/master/packages/circle-packing}{@visa/circle-packing} via \href{https://www.htmlwidgets.org/}{htmlwidgets}.
 

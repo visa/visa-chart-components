@@ -50,6 +50,9 @@ world_map(
 
 \item{...}{All other props passed into the function will be passed through to the chart, see all props for \href{https://github.com/visa/visa-chart-components/tree/master/packages/world-map}{@visa/world-map}.}
 }
+\value{
+a visaChart htmlwidget object for plotting a world map
+}
 \description{
 R wrapper for \href{https://github.com/visa/visa-chart-components/tree/master/packages/world-map}{@visa/world-map} via \href{https://www.htmlwidgets.org/}{htmlwidgets}.
 
@@ -61,9 +64,9 @@ To see all available options for the chart properties/API see \href{https://gith
 }
 \examples{
 library(tidyverse)
-quakes \%>\% 
- sample_n(100) \%>\% 
- tibble::rowid_to_column() \%>\% 
+quakes \%>\%
+ sample_n(100) \%>\%
+ tibble::rowid_to_column() \%>\%
  world_map(
    markerAccessor = "rowid",
    latitudeAccessor = "long",

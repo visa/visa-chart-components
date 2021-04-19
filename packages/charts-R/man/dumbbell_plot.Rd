@@ -35,6 +35,9 @@ dumbbell_plot(
 
 \item{...}{All other props passed into the function will be passed through to the chart, see all props for \href{https://github.com/visa/visa-chart-components/tree/master/packages/dumbbell-plot}{@visa/dumbbell-plot}.}
 }
+\value{
+a visaChart htmlwidget object for plotting a dumbbell plot
+}
 \description{
 R wrapper for \href{https://github.com/visa/visa-chart-components/tree/master/packages/dumbbell-plot}{@visa/dumbbell-plot} via \href{https://www.htmlwidgets.org/}{htmlwidgets}.
 

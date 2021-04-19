@@ -22,14 +22,15 @@
 #' @param props List(). A valid R list with additional property configurations, see all props for \href{https://github.com/visa/visa-chart-components/tree/master/packages/pie-chart}{@visa/pie-chart}
 #' @param ... All other props passed into the function will be passed through to the chart, see all props for \href{https://github.com/visa/visa-chart-components/tree/master/packages/pie-chart}{@visa/pie-chart}.
 #' @details To see all available options for the chart properties/API see \href{https://github.com/visa/visa-chart-components/tree/master/packages/pie-chart}{@visa/pie-chart}.
+#' @return a visaChart htmlwidget object for plotting a pie chart
 #' @export
 #' @examples
 #' library(tidyverse)
-#' data.frame (HairEyeColor) %>% 
-#'  filter(Hair=="Blond", Sex=="Male") %>% 
-#'  mutate(blueEyes = if_else(Eye=="Blue", "Blue","Other")) %>% 
-#'  group_by(blueEyes, Hair, Sex) %>% 
-#'  summarise(FreqSum=sum(Freq), n=n()) %>% 
+#' data.frame (HairEyeColor) %>%
+#'  filter(Hair=="Blond", Sex=="Male") %>%
+#'  mutate(blueEyes = if_else(Eye=="Blue", "Blue","Other")) %>%
+#'  group_by(blueEyes, Hair, Sex) %>%
+#'  summarise(FreqSum=sum(Freq), n=n()) %>%
 #'  pie_chart(
 #'   "blueEyes",
 #'   "FreqSum",
