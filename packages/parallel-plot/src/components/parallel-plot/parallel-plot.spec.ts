@@ -9,6 +9,9 @@ import { newSpecPage, SpecPage } from '@stencil/core/testing';
 import { ParallelPlot } from './parallel-plot';
 import { ParallelPlotDefaultValues } from './parallel-plot-default-values';
 import { scaleOrdinal, scaleLinear } from 'd3-scale';
+// we need to bring in our nested components as well, was required to bring in the source vs dist folder to get it to mount
+import { KeyboardInstructions } from '../../../node_modules/@visa/keyboard-instructions/src/components/keyboard-instructions/keyboard-instructions';
+import { DataTable } from '../../../node_modules/@visa/visa-charts-data-table/src/components/data-table/data-table';
 
 import Utils from '@visa/visa-charts-utils';
 import UtilsDev from '@visa/visa-charts-utils-dev';
@@ -69,7 +72,7 @@ describe('<parallel-plot>', () => {
 
     beforeEach(async () => {
       page = await newSpecPage({
-        components: [ParallelPlot],
+        components: [ParallelPlot, KeyboardInstructions, DataTable],
         html: '<div></div>'
       });
       component = page.doc.createElement('parallel-plot');
@@ -120,11 +123,7 @@ describe('<parallel-plot>', () => {
             : unitTestGeneric[test].testSelector === '[data-testid=mark]'
             ? '[data-testid=marker]'
             : unitTestGeneric[test].testSelector;
-        if (unitTestGeneric[test].prop === 'margin' || unitTestGeneric[test].prop === 'padding') {
-          // skip margin and padding until we can solve issues with parseSVG() and jsdom mocked SVG elements
-          it.skip(`${unitTestGeneric[test].prop}: ${unitTestGeneric[test].name}`, () =>
-            unitTestGeneric[test].testFunc(component, page, innerTestProps, innerTestSelector));
-        } else if (test === 'generic_data_custom_update_enter') {
+        if (test === 'generic_data_custom_update_enter') {
           innerTestProps.data = EXPECTEDDATA.map(rec => {
             return { ...rec, enter: true };
           });
@@ -1269,7 +1268,7 @@ describe('<parallel-plot>', () => {
             await page.waitForChanges();
 
             expect(label).toEqualAttribute('y', lastMarker.getAttribute('cy'));
-            expect(label).toEqualAttribute('x', innerPaddedWidth);
+            expect(label).toEqualAttribute('x', innerPaddedWidth + 10);
           });
           it('should place series labels on left of chart on load', async () => {
             // ARRANGE
@@ -1495,10 +1494,10 @@ describe('<parallel-plot>', () => {
         });
         describe('placement', () => {
           const dPlacement = {
-            bottomLeft: { x: '-0.3em', y: '0.9em' },
-            bottomRight: { x: '0.3em', y: '0.9em' },
-            topLeft: { x: '-0.3em', y: '-0.1em' },
-            topRight: { x: '0.3em', y: '-0.1em' }
+            bottomLeft: { x: '-0.45em', y: '1.1em' },
+            bottomRight: { x: '0.45em', y: '1.1em' },
+            topLeft: { x: '-0.45em', y: '-0.3em' },
+            topRight: { x: '0.45em', y: '-0.3em' }
           };
           it('should place labels on bottom-right of markers by default', async () => {
             // ACT

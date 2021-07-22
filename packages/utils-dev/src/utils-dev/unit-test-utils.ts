@@ -68,3 +68,16 @@ export async function asyncForEach(array, callback) {
     await callback(array[index], index, array);
   }
 }
+
+export const getTransitionDurations = jsDomEle => {
+  const elementTransitions = {};
+
+  // loop transitions and gather durations
+  const transitionKeys = Object.keys(jsDomEle['__transition'] || {});
+  transitionKeys.forEach(tk => {
+    elementTransitions[jsDomEle['__transition'][tk].name] = jsDomEle['__transition'][tk].duration;
+  });
+
+  // return the compiled elementTransitions object
+  return elementTransitions;
+};

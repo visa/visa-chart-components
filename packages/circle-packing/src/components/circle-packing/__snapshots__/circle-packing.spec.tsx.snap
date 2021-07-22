@@ -57,8 +57,8 @@ exports[`<circle-packing> rendered-html render should render with minimal props[
 <circle-packing id="circle-packing-test">
   <div class="o-layout" data-testid="outer-layout">
     <div class="vcl-accessibility-instructions" id="chart-instructions-circle-packing-test" style="position: absolute; width: 400px;">
-      <p class="screen-reader-info vcl-region-label" tabindex="0">
-        Keyboard interactive circle-packing, Titled: Circle Packing Title. The next TAB will focus the chart area. Pressing ENTER once on the chart will enter it and focus the chart's first node. If there are multiple nodes, they can be navigated among using ARROW keys. You may access the group's child nodes by pressing ENTER again. You may then use the arrow keys to navigate among nodes and SPACEBAR to select them. Use ESCAPE to drill up one level of the chart or TAB to leave it entirely. If you are using a screen reader, this section contains additional information and instructions.
+      <p class="screen-reader-info vcl-region-label">
+        Keyboard interactive circle-packing, Titled: Circle Packing Title. This section contains additional information about this chart. Pressing TAB will focus the keyboard instructions menu. Tabbing again takes you to the chart area.
       </p>
       <p class="screen-reader-info vcl-access-title">
         Chart title: Circle Packing Title
@@ -83,48 +83,6 @@ exports[`<circle-packing> rendered-html render should render with minimal props[
       <p class="screen-reader-info vcl-access-xAxis"></p>
       <p class="screen-reader-info vcl-access-yAxis"></p>
       <p class="screen-reader-info vcl-access-notes" data-annotationlevel="p" data-level="p"></p>
-      <p class="screen-reader-info vcl-interaction-instructions">
-        Interaction Instructions
-      </p>
-      <p class="screen-reader-info">
-        Use Regions/Landmarks or TAB to skip ahead to the chart area or the data table. The following subsections explain how to use this chart's interactivity.
-      </p>
-      <p class="screen-reader-info">
-        Enabling this chart's interactivity
-      </p>
-      <p class="screen-reader-info">
-        Screen readers that are able to switch between Browse and Forms mode will need to turn on Forms mode once the chart area is reached.
-      </p>
-      <p class="screen-reader-info">
-        Using the TAB key outside the Chart area and Exposing new Layers with the ENTER key
-      </p>
-      <p class="screen-reader-info">
-        Each chart has three main TAB areas at first: the information and instructions (which is this), the chart area, and the data table. You may TAB out of this section to the chart area at any time. Once on the chart area, you may focus the chart's first node by pressing ENTER. Doing this will navigate you into the chart area, which enables you to use the ARROW keys focus new elements.
-      </p>
-      <p class="screen-reader-info">
-        Using the ESCAPE key
-      </p>
-      <p class="screen-reader-info">
-        When in the chart area, pressing the ESCAPE key will always move your keyboard focus to the parent of the node or node you are currently on, until you reach the root of the chart.
-      </p>
-      <p class="screen-reader-info">
-        Exploring Sibling Groups and Elements with LEFT and RIGHT
-      </p>
-      <p class="screen-reader-info">
-        When in the chart area, pressing RIGHT ARROW will move your focus to the next available node or node at the same level, within the same group. If there is not another node or node at the same level within your group, focus will move back to the first node or node among the siblings to your node or node. Pressing LEFT ARROW works in the same circular manner, but in reverse. This functionality is intended to allow easier comparison and navigation among siblings at the beginning and end of a group without leaving the group. This can be helpful when elements are sorted or ordered, because you can jump from the first to last elements easily.
-      </p>
-      <p class="screen-reader-info">
-        A note about navigating Hierarchical Charts
-      </p>
-      <p class="screen-reader-info">
-        This chart contains a nested hierarchy, which means that there could be children contained inside any chart element that you navigate to and this nested structure could be multiple levels deep depending on the chart's data. Your current element will always explain if it contains children or not within it but these elements may be hidden until your current element is activated using SPACEBAR. If the children elements are not hidden, they can be navigated to using ENTER or DOWN ARROW keys and you can always exit your current level by using the ESCAPE or UP ARROW keys.
-      </p>
-      <p class="screen-reader-info">
-        Selecting Elements with SPACEBAR
-      </p>
-      <p class="screen-reader-info">
-        If a node is selectable and that selection causes something to happen, it will be marked up as a BUTTON and you may select it using SPACEBAR. Note that if you use SPACEBAR while on a node, it will have no effect. Only using SPACEBAR on a node may have effects.)
-      </p>
     </div>
     <div class="o-layout--chart" data-testid="layout-chart">
       <h2 data-testid="main-title">
@@ -133,62 +91,86 @@ exports[`<circle-packing> rendered-html render should render with minimal props[
       <p class="visa-ui-text--instructions" data-testid="sub-title">
         This is the circle packing chart's subtitle
       </p>
-      <div class="visa-viz-circle-packing-container" data-testid="chart-container">
-        <div aria-label="Circle Packing Title. This is the circle packing chart's subtitle.  Navigate into the chart area by pressing ENTER. ID: circle-packing-test" class="VCL-controller screen-reader-info" data-group="Country" id="chart-area-circle-packing-test" role="application" tabindex="0">
+      <keyboard-instructions>
+        <div class="vcc-ki-keyboard-instructions-root" style="position: relative; width: 396px;">
+          <div class="visa-viz-keyboard-instructions-outer-container" style="width: 362px;">
+            <div class="vcc-ki-keyboard-instructions-header vcc-ki-minimize">
+              <p class="vcc-ki-keyboard-heading">
+                Select to View Keyboard Instructions
+              </p>
+            </div>
+            <div class="visa-viz-keyboard-instructions-button-wrapper">
+              <button aria-expanded="false" aria-label="display keyboard instructions" class="vcc-ki-btn-icon vcc-ki-btn-icon--light-tiny visa-viz-keyboard-instructions-button" id="visa-viz-keyboard-instructions-button-circle-packing-test" role="button" tabindex="0" type="button">
+                <svg class="vcc-ki-icon--tiny" focusable="false" tabindex="-1">
+                  <use href="#visa-viz-keyboard-instructions-info--tiny-circle-packing-test"></use>
+                </svg>
+              </button>
+              <svg class="vcc-ki-icons">
+                <symbol id="visa-viz-keyboard-instructions-info--tiny-circle-packing-test" viewbox="0 0 16 16">
+                  <path d="M8.7,3.8a.68.68,0,0,1,.7.7.79.79,0,0,1-.8.8H8.5c-.4,0-.6-.3-.6-.7A.79.79,0,0,1,8.7,3.8ZM6.6,12.1l1.2-6H9l-1.2,6ZM14,8a6,6,0,1,0-6,6A6,6,0,0,0,14,8Zm2,0A8,8,0,1,1,8,0,8,8,0,0,1,16,8Z"></path>
+                </symbol>
+              </svg>
+            </div>
+            <div class="visa-viz-keyboard-instructions-container" id="visa-viz-keyboard-instructions-container-circle-packing-test"></div>
+          </div>
+        </div>
+      </keyboard-instructions>
+      <div class="visa-viz-circle-packing-container" data-testid="chart-container" style="position: relative;">
+        <div aria-label="Circle Packing Title. This is the circle packing chart's subtitle.  Navigate into the chart area by pressing ENTER. ID: circle-packing-test" class="VCL-controller" data-group="Country" id="chart-area-circle-packing-test" role="application" tabindex="0" style="position: absolute; top: 0; left: 0; opacity: 0; pointer-events: none; width: 0px; height: 0px;">
           Interactive circle-packing.
         </div>
         <svg class="vcl-svg" data-testid="root-svg" focusable="false" height="400" role="presentation" tabindex="-1" viewBox="0 0 400 400" width="400" style="overflow: hidden;">
-          <g data-testid="margin-container" id="visa-viz-margin-container-g-circle-packing-test">
-            <g data-testid="padding-container" id="visa-viz-padding-container-g-circle-packing-test">
+          <g data-testid="margin-container" id="visa-viz-margin-container-g-circle-packing-test" transform="translate(196, 196)">
+            <g data-testid="padding-container" id="visa-viz-padding-container-g-circle-packing-test" transform="translate(4, 4)">
               <g class="circle-pack-group" data-testid="circle-group">
                 <g class="g-level-0" id="circle-in-pack-World-circle-packing-test">
-                  <circle class="moving node node--root node-level-0" cursor="default" data-id="circle--World" data-role="img" data-testid="circle" data-x="0" data-y="0" fill="url(#circle-packing-test_texture_0)" focusable="false" id="circle-packing-test-123457-123457-123457" opacity="1" r="0" role="presentation" stroke="#8c8c8c" stroke-dasharray="" stroke-width="1" tabindex="-1" transform="translate(0,0)"></circle>
+                  <circle class="node node--root node-level-0" cursor="default" data-cx="0" data-cy="0" data-id="circle--World" data-r="192" data-role="img" data-testid="circle" data-translate-x="196" data-translate-y="196" fill="url(#circle-packing-test_texture_0)" focusable="false" id="circle-packing-test-123457-123457-123457" opacity="1" r="0" role="presentation" stroke="#8c8c8c" stroke-dasharray="" stroke-width="1" tabindex="-1" transform="translate(0,0)"></circle>
                   <g class="g-level-1" id="circle-in-pack-Mexico-circle-packing-test">
-                    <circle class="moving node node-level-1" cursor="default" data-id="circle-World-Mexico" data-role="img" data-testid="circle" data-x="-84.1188" data-y="-26.8081" fill="url(#circle-packing-test_texture_1)" focusable="false" id="circle-packing-test-123457-123457-123457" opacity="1" r="0" role="presentation" stroke="#666666" stroke-dasharray="" stroke-width="1" tabindex="-1" transform="translate(-84.1188,-26.8081)"></circle>
+                    <circle class="node node-level-1" cursor="default" data-cx="-84.1188" data-cy="-26.8081" data-id="circle-World-Mexico" data-r="99.35968555800707" data-role="img" data-testid="circle" data-translate-x="196" data-translate-y="196" fill="url(#circle-packing-test_texture_1)" focusable="false" id="circle-packing-test-123457-123457-123457" opacity="1" r="0" role="presentation" stroke="#666666" stroke-dasharray="" stroke-width="1" tabindex="-1" transform="translate(-84.1188,-26.8081)"></circle>
                     <g class="g-level-2" id="circle-in-pack-A-circle-packing-test">
-                      <circle class="moving node node-level-2" cursor="default" data-id="circle-Mexico-A" data-role="img" data-testid="circle" data-x="-125.3304" data-y="-35.2901" fill="url(#circle-packing-test_texture_2)" focusable="false" id="circle-packing-test-123457-123457-123457" opacity="1" r="0" role="presentation" stroke="#efefef" stroke-dasharray="" stroke-width="1" tabindex="-1" transform="translate(-125.3304,-35.2901)"></circle>
+                      <circle class="node node-level-2" cursor="default" data-cx="-125.3304" data-cy="-35.2901" data-id="circle-Mexico-A" data-r="52.93123594217263" data-role="img" data-testid="circle" data-translate-x="196" data-translate-y="196" fill="url(#circle-packing-test_texture_2)" focusable="false" id="circle-packing-test-123457-123457-123457" opacity="1" r="0" role="presentation" stroke="#efefef" stroke-dasharray="" stroke-width="1" tabindex="-1" transform="translate(-125.3304,-35.2901)"></circle>
                     </g>
                     <g class="g-level-2" id="circle-in-pack-B-circle-packing-test">
-                      <circle class="moving node node-level-2" cursor="default" data-id="circle-Mexico-B" data-role="img" data-testid="circle" data-x="-28.903" data-y="-35.2901" fill="url(#circle-packing-test_texture_2)" focusable="false" id="circle-packing-test-123457-123457-123457" opacity="1" r="0" role="presentation" stroke="#efefef" stroke-dasharray="" stroke-width="1" tabindex="-1" transform="translate(-28.903,-35.2901)"></circle>
+                      <circle class="node node-level-2" cursor="default" data-cx="-28.903" data-cy="-35.2901" data-id="circle-Mexico-B" data-r="39.14317685649541" data-role="img" data-testid="circle" data-translate-x="196" data-translate-y="196" fill="url(#circle-packing-test_texture_2)" focusable="false" id="circle-packing-test-123457-123457-123457" opacity="1" r="0" role="presentation" stroke="#efefef" stroke-dasharray="" stroke-width="1" tabindex="-1" transform="translate(-28.903,-35.2901)"></circle>
                     </g>
                     <g class="g-level-2" id="circle-in-pack-E-circle-packing-test">
-                      <circle class="moving node node-level-2" cursor="default" data-id="circle-Mexico-E" data-role="img" data-testid="circle" data-x="-65.1811" data-y="32.1497" fill="url(#circle-packing-test_texture_2)" focusable="false" id="circle-packing-test-123457-123457-123457" opacity="1" r="0" role="presentation" stroke="#efefef" stroke-dasharray="" stroke-width="1" tabindex="-1" transform="translate(-65.1811,32.1497)"></circle>
+                      <circle class="node node-level-2" cursor="default" data-cx="-65.1811" data-cy="32.1497" data-id="circle-Mexico-E" data-r="33.082022463857896" data-role="img" data-testid="circle" data-translate-x="196" data-translate-y="196" fill="url(#circle-packing-test_texture_2)" focusable="false" id="circle-packing-test-123457-123457-123457" opacity="1" r="0" role="presentation" stroke="#efefef" stroke-dasharray="" stroke-width="1" tabindex="-1" transform="translate(-65.1811,32.1497)"></circle>
                     </g>
                   </g>
                   <g class="g-level-1" id="circle-in-pack-United-States-circle-packing-test">
-                    <circle class="moving node node-level-1" cursor="default" data-id="circle-World-United States" data-role="img" data-testid="circle" data-x="101.8865" data-y="-26.8081" fill="url(#circle-packing-test_texture_1)" focusable="false" id="circle-packing-test-123457-123457-123457" opacity="1" r="0" role="presentation" stroke="#666666" stroke-dasharray="" stroke-width="1" tabindex="-1" transform="translate(101.8865,-26.8081)"></circle>
+                    <circle class="node node-level-1" cursor="default" data-cx="101.8865" data-cy="-26.8081" data-id="circle-World-United States" data-r="82.29262119097446" data-role="img" data-testid="circle" data-translate-x="196" data-translate-y="196" fill="url(#circle-packing-test_texture_1)" focusable="false" id="circle-packing-test-123457-123457-123457" opacity="1" r="0" role="presentation" stroke="#666666" stroke-dasharray="" stroke-width="1" tabindex="-1" transform="translate(101.8865,-26.8081)"></circle>
                     <g class="g-level-2" id="circle-in-pack-C-circle-packing-test">
-                      <circle class="moving node node-level-2" cursor="default" data-id="circle-United States-C" data-role="img" data-testid="circle" data-x="67.9789" data-y="-4.8826" fill="url(#circle-packing-test_texture_2)" focusable="false" id="circle-packing-test-123457-123457-123457" opacity="1" r="0" role="presentation" stroke="#efefef" stroke-dasharray="" stroke-width="1" tabindex="-1" transform="translate(67.9789,-4.8826)"></circle>
+                      <circle class="node node-level-2" cursor="default" data-cx="67.9789" data-cy="-4.8826" data-id="circle-United States-C" data-r="31.73116123742184" data-role="img" data-testid="circle" data-translate-x="196" data-translate-y="196" fill="url(#circle-packing-test_texture_2)" focusable="false" id="circle-packing-test-123457-123457-123457" opacity="1" r="0" role="presentation" stroke="#efefef" stroke-dasharray="" stroke-width="1" tabindex="-1" transform="translate(67.9789,-4.8826)"></circle>
                     </g>
                     <g class="g-level-2" id="circle-in-pack-F-circle-packing-test">
-                      <circle class="moving node node-level-2" cursor="default" data-id="circle-United States-F" data-role="img" data-testid="circle" data-x="135.7942" data-y="-4.8826" fill="url(#circle-packing-test_texture_2)" focusable="false" id="circle-packing-test-123457-123457-123457" opacity="1" r="0" role="presentation" stroke="#efefef" stroke-dasharray="" stroke-width="1" tabindex="-1" transform="translate(135.7942,-4.8826)"></circle>
+                      <circle class="node node-level-2" cursor="default" data-cx="135.7942" data-cy="-4.8826" data-id="circle-United States-F" data-r="31.73116123742184" data-role="img" data-testid="circle" data-translate-x="196" data-translate-y="196" fill="url(#circle-packing-test_texture_2)" focusable="false" id="circle-packing-test-123457-123457-123457" opacity="1" r="0" role="presentation" stroke="#efefef" stroke-dasharray="" stroke-width="1" tabindex="-1" transform="translate(135.7942,-4.8826)"></circle>
                     </g>
                     <g class="g-level-2" id="circle-in-pack-G-circle-packing-test">
-                      <circle class="moving node node-level-2" cursor="default" data-id="circle-United States-G" data-role="img" data-testid="circle" data-x="101.8865" data-y="34.9247" fill="url(#circle-packing-test_texture_2)" focusable="false" id="circle-packing-test-123457-123457-123457" opacity="1" r="0" role="presentation" stroke="#efefef" stroke-dasharray="" stroke-width="1" tabindex="-1" transform="translate(101.8865,34.9247)"></circle>
+                      <circle class="node node-level-2" cursor="default" data-cx="101.8865" data-cy="34.9247" data-id="circle-United States-G" data-r="16.20681493914852" data-role="img" data-testid="circle" data-translate-x="196" data-translate-y="196" fill="url(#circle-packing-test_texture_2)" focusable="false" id="circle-packing-test-123457-123457-123457" opacity="1" r="0" role="presentation" stroke="#efefef" stroke-dasharray="" stroke-width="1" tabindex="-1" transform="translate(101.8865,34.9247)"></circle>
                     </g>
                     <g class="g-level-2" id="circle-in-pack-I-circle-packing-test">
-                      <circle class="moving node node-level-2" cursor="default" data-id="circle-United States-I" data-role="img" data-testid="circle" data-x="101.8865" data-y="-68.6287" fill="url(#circle-packing-test_texture_2)" focusable="false" id="circle-packing-test-123457-123457-123457" opacity="1" r="0" role="presentation" stroke="#efefef" stroke-dasharray="" stroke-width="1" tabindex="-1" transform="translate(101.8865,-68.6287)"></circle>
+                      <circle class="node node-level-2" cursor="default" data-cx="101.8865" data-cy="-68.6287" data-id="circle-United States-I" data-r="36.118993628335105" data-role="img" data-testid="circle" data-translate-x="196" data-translate-y="196" fill="url(#circle-packing-test_texture_2)" focusable="false" id="circle-packing-test-123457-123457-123457" opacity="1" r="0" role="presentation" stroke="#efefef" stroke-dasharray="" stroke-width="1" tabindex="-1" transform="translate(101.8865,-68.6287)"></circle>
                     </g>
                   </g>
                   <g class="g-level-1" id="circle-in-pack-Canada-circle-packing-test">
-                    <circle class="moving node node-level-1" cursor="default" data-id="circle-World-Canada" data-role="img" data-testid="circle" data-x="24.2872" data-y="112.3584" fill="url(#circle-packing-test_texture_1)" focusable="false" id="circle-packing-test-123457-123457-123457" opacity="1" r="0" role="presentation" stroke="#666666" stroke-dasharray="" stroke-width="1" tabindex="-1" transform="translate(24.2872,112.3584)"></circle>
+                    <circle class="node node-level-1" cursor="default" data-cx="24.2872" data-cy="112.3584" data-id="circle-World-Canada" data-r="72.69357813110636" data-role="img" data-testid="circle" data-translate-x="196" data-translate-y="196" fill="url(#circle-packing-test_texture_1)" focusable="false" id="circle-packing-test-123457-123457-123457" opacity="1" r="0" role="presentation" stroke="#666666" stroke-dasharray="" stroke-width="1" tabindex="-1" transform="translate(24.2872,112.3584)"></circle>
                     <g class="g-level-2" id="circle-in-pack-D-circle-packing-test">
-                      <circle class="moving node node-level-2" cursor="default" data-id="circle-Canada-D" data-role="img" data-testid="circle" data-x="-17.5878" data-y="112.3584" fill="url(#circle-packing-test_texture_2)" focusable="false" id="circle-packing-test-123457-123457-123457" opacity="1" r="0" role="presentation" stroke="#efefef" stroke-dasharray="" stroke-width="1" tabindex="-1" transform="translate(-17.5878,112.3584)"></circle>
+                      <circle class="node node-level-2" cursor="default" data-cx="-17.5878" data-cy="112.3584" data-id="circle-Canada-D" data-r="26.465617971086314" data-role="img" data-testid="circle" data-translate-x="196" data-translate-y="196" fill="url(#circle-packing-test_texture_2)" focusable="false" id="circle-packing-test-123457-123457-123457" opacity="1" r="0" role="presentation" stroke="#efefef" stroke-dasharray="" stroke-width="1" tabindex="-1" transform="translate(-17.5878,112.3584)"></circle>
                     </g>
                     <g class="g-level-2" id="circle-in-pack-H-circle-packing-test">
-                      <circle class="moving node node-level-2" cursor="default" data-id="circle-Canada-H" data-role="img" data-testid="circle" data-x="52.9293" data-y="112.3584" fill="url(#circle-packing-test_texture_2)" focusable="false" id="circle-packing-test-123457-123457-123457" opacity="1" r="0" role="presentation" stroke="#efefef" stroke-dasharray="" stroke-width="1" tabindex="-1" transform="translate(52.9293,112.3584)"></circle>
+                      <circle class="node node-level-2" cursor="default" data-cx="52.9293" data-cy="112.3584" data-id="circle-Canada-H" data-r="39.698426956629476" data-role="img" data-testid="circle" data-translate-x="196" data-translate-y="196" fill="url(#circle-packing-test_texture_2)" focusable="false" id="circle-packing-test-123457-123457-123457" opacity="1" r="0" role="presentation" stroke="#efefef" stroke-dasharray="" stroke-width="1" tabindex="-1" transform="translate(52.9293,112.3584)"></circle>
                     </g>
                   </g>
                 </g>
               </g>
               <g aria-hidden="true" class="circle-pack-text-group" data-testid="dataLabel-group" focusable="false" role="presentation">
-                <text class="circle-packing-dataLabel label" cursor="default" data-testid="dataLabel" data-x="-84.1188" data-y="-26.8081" filter="url(#VCL-t-s-f-ffffffcircle-packing-test)" opacity="1" text-anchor="middle" transform="translate(-84.1188,-26.8081)">
+                <text class="circle-packing-dataLabel label" cursor="default" data-testid="dataLabel" data-translate-x="196" data-translate-y="196" data-x="-84.1188" data-y="-26.8081" opacity="1" text-anchor="middle" x="-84.1188" y="-26.8081">
                   Mexico
                 </text>
-                <text class="circle-packing-dataLabel label" cursor="default" data-testid="dataLabel" data-x="101.8865" data-y="-26.8081" filter="url(#VCL-t-s-f-ffffffcircle-packing-test)" opacity="1" text-anchor="middle" transform="translate(101.8865,-26.8081)">
+                <text class="circle-packing-dataLabel label" cursor="default" data-testid="dataLabel" data-translate-x="196" data-translate-y="196" data-x="101.8865" data-y="-26.8081" opacity="1" text-anchor="middle" x="101.8865" y="-26.8081">
                   United States
                 </text>
-                <text class="circle-packing-dataLabel label" cursor="default" data-testid="dataLabel" data-x="24.2872" data-y="112.3584" filter="url(#VCL-t-s-f-ffffffcircle-packing-test)" opacity="1" text-anchor="middle" transform="translate(24.2872,112.3584)">
+                <text class="circle-packing-dataLabel label" cursor="default" data-testid="dataLabel" data-translate-x="196" data-translate-y="196" data-x="24.2872" data-y="112.3584" opacity="1" text-anchor="middle" x="24.2872" y="112.3584">
                   Canada
                 </text>
               </g>
@@ -251,7 +233,30 @@ exports[`<circle-packing> rendered-html render should render with minimal props[
       <div class="circle-packing-tooltip vcl-tooltip" data-testid="tooltip-container" style="display: block; position: absolute; padding: 0.5rem; opacity: 0; background-color: #ffffff; font-size: 14px; font-weight: 400; color: #222222; border: 1px solid #565656; border-radius: 3px; pointer-events: none; min-width: 80px; max-width: 300px;">
         <p style="margin: 0;"></p>
       </div>
-      <data-table iscompact="" uniqueid="circle-packing-test"></data-table>
+      <data-table>
+        <div class="visa-viz-data-table-outer-container">
+          <div class="visa-viz-button-wrapper" style="padding-bottom: 32px;">
+            <button aria-expanded="false" aria-label="display data table" class="vcc-btn-icon vcc-btn-icon--light-tiny visa-viz-data-table-button" id="visa-viz-data-table-button-circle-packing-test" role="button" tabindex="0" type="button" style="transform: translate(8px,
+                0px);">
+              <svg class="vcc-icon--tiny" focusable="false" tabindex="-1">
+                <use href="#visa-viz-view-grid--tiny-circle-packing-test"></use>
+              </svg>
+            </button>
+            <svg class="vcc-icons">
+              <symbol id="visa-viz-view-grid--tiny-circle-packing-test" viewbox="0 0 16 16">
+                <path d="M5,5 L5,2 L2,2 L2,5 L5,5 Z M5,7 L2,7 C0.894905844,7 0,6.1044757 0,5 L0,2 C0,0.8955243 0.894905844,3.55271368e-15 2,3.55271368e-15 L5,3.55271368e-15 C6.10509416,3.55271368e-15 7,0.8955243 7,2 L7,5 C7,6.1044757 6.10509416,7 5,7 Z M14,5 L14,2 L11,2 L11,5 L14,5 Z M14,7 L11,7 C9.89490584,7 9,6.1044757 9,5 L9,2 C9,0.8955243 9.89490584,3.55271368e-15 11,3.55271368e-15 L14,3.55271368e-15 C15.1050942,3.55271368e-15 16,0.8955243 16,2 L16,5 C16,6.1044757 15.1050942,7 14,7 Z M5,14 L5,11 L2,11 L2,14 L5,14 Z M5,16 L2,16 C0.894905844,16 0,15.1044757 0,14 L0,11 C0,9.8955243 0.894905844,9 2,9 L5,9 C6.10509416,9 7,9.8955243 7,11 L7,14 C7,15.1044757 6.10509416,16 5,16 Z M14,14 L14,11 L11,11 L11,14 L14,14 Z M14,16 L11,16 C9.89490584,16 9,15.1044757 9,14 L9,11 C9,9.8955243 9.89490584,9 11,9 L14,9 C15.1050942,9 16,9.8955243 16,11 L16,14 C16,15.1044757 15.1050942,16 14,16 Z"></path>
+                <g fill="none" fill-rule="evenodd" stroke="none" stroke-width="1">
+                  <mask fill="#fff">
+                    <use xlink:href="#path-1"></use>
+                  </mask>
+                  <use fill="#000" fill-rule="nonzero" xlink:href="#path-1"></use>
+                </g>
+              </symbol>
+            </svg>
+          </div>
+          <div class="visa-viz-data-table-container" id="visa-viz-data-table-container-circle-packing-test"></div>
+        </div>
+      </data-table>
     </div>
   </div>
 </circle-packing>

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2021 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -8,11 +8,14 @@
 import { newSpecPage, SpecPage } from '@stencil/core/testing';
 import { CirclePacking } from './circle-packing';
 import { CirclePackingDefaultValues } from './circle-packing-default-values';
+
+// we need to bring in our nested components as well, was required to bring in the source vs dist folder to get it to mount
+import { KeyboardInstructions } from '../../../node_modules/@visa/keyboard-instructions/src/components/keyboard-instructions/keyboard-instructions';
+import { DataTable } from '../../../node_modules/@visa/visa-charts-data-table/src/components/data-table/data-table';
+
 import Utils from '@visa/visa-charts-utils';
 import UtilsDev from '@visa/visa-charts-utils-dev';
-
 const { getColors, outlineColor, visaColors, getContrastingStroke } = Utils;
-
 const { flushTransitions, unitTestGeneric, unitTestEvent, unitTestInteraction, unitTestTooltip } = UtilsDev;
 
 // shows how to use asyncForEach if needed
@@ -67,7 +70,7 @@ describe('<circle-packing>', () => {
 
     beforeEach(async () => {
       page = await newSpecPage({
-        components: [CirclePacking],
+        components: [CirclePacking, KeyboardInstructions, DataTable],
         html: '<div></div>'
       });
       component = page.doc.createElement('circle-packing');
@@ -122,14 +125,8 @@ describe('<circle-packing>', () => {
               : unitTestGeneric[test].testSelector === '[data-testid=mark]'
               ? '[data-testid=circle]'
               : unitTestGeneric[test].testSelector;
-          if (unitTestGeneric[test].prop === 'margin' || unitTestGeneric[test].prop === 'padding') {
-            // skip margin and padding until we can solve issues with parseSVG() and jsdom mocked SVG elements
-            it.skip(`${unitTestGeneric[test].prop}: ${unitTestGeneric[test].name}`, () =>
-              unitTestGeneric[test].testFunc(component, page, innerTestProps, innerTestSelector));
-          } else {
-            it(`${unitTestGeneric[test].prop}: ${unitTestGeneric[test].name}`, () =>
-              unitTestGeneric[test].testFunc(component, page, innerTestProps, innerTestSelector));
-          }
+          it(`${unitTestGeneric[test].prop}: ${unitTestGeneric[test].name}`, () =>
+            unitTestGeneric[test].testFunc(component, page, innerTestProps, innerTestSelector));
         }
       });
     });
