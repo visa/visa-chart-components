@@ -24,7 +24,7 @@ export default [
 						]
 					}),  // so Rollup can convert `ms` to an ES module			
 			// typescript2(),
-			typescript(), // so Rollup can convert TypeScript to JavaScript
+			typescript({ include: '**/*.{ts,js}' }), // so Rollup can convert TypeScript to JavaScript
 		]
 	},
 

@@ -1,12 +1,14 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2021 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
  *
  **/
 import { formatStats } from './formatStats';
+import { select } from 'd3-selection';
 import { symbolCircle, symbolCross, symbolSquare, symbolStar, symbolTriangle, symbolDiamond } from 'd3-shape';
+import { resolveLabelCollision } from './collisionDetection';
 
 export function formatDataLabel(d, labelAccessor, format, normalized?) {
   const modifier = normalized ? d.getSum() : 1;
@@ -26,7 +28,8 @@ export const placeDataLabels = ({
   labelOffset,
   radius,
   chartType,
-  normalized
+  normalized,
+  avoidCollision
 }: {
   root?: any;
   xScale?: any;
@@ -39,6 +42,17 @@ export const placeDataLabels = ({
   radius?: any;
   chartType?: any;
   normalized?: any;
+  avoidCollision?: {
+    runOccupancyBitmap: boolean;
+    labelSelection: any;
+    avoidMarks: any;
+    validPositions: string[];
+    offsets: number[];
+    accessors: string[];
+    size: [number, number];
+    boundsScope?: string;
+    hideOnly?: boolean;
+  };
 }) => {
   let xPlacement;
   let yPlacement;
@@ -46,8 +60,23 @@ export const placeDataLabels = ({
   let offset2;
   let textAnchor;
 
+  // console.log('placing data labels', root.size(), avoidCollision, placement);
+
   if (chartType === 'bar') {
     switch (placement) {
+      case 'auto':
+        if (layout === 'vertical') {
+          xPlacement = d => xScale(d[ordinalAccessor]) + xScale.bandwidth() / 2;
+          yPlacement = d => yScale(Math.max(0, d[valueAccessor]));
+          offset2 = '0.25em';
+          textAnchor = 'middle';
+        } else if (layout === 'horizontal') {
+          yPlacement = d => yScale(d[ordinalAccessor]) + yScale.bandwidth() / 2;
+          xPlacement = d => xScale(Math.max(0, d[valueAccessor]));
+          offset2 = '0.25em';
+          textAnchor = 'middle';
+        }
+        break;
       case 'top':
         xPlacement = d => xScale(d[ordinalAccessor]) + xScale.bandwidth() / 2;
         yPlacement = d => yScale(Math.max(0, d[valueAccessor]));
@@ -56,20 +85,22 @@ export const placeDataLabels = ({
         break;
       case 'bottom':
         xPlacement = d => xScale(d[ordinalAccessor]) + xScale.bandwidth() / 2;
-        yPlacement = d => yScale(Math.min(0, d[valueAccessor])) - 2;
-        offset = '-.2em';
+        yPlacement = d => yScale(Math.min(0, d[valueAccessor]));
+        offset = '-.3em';
         textAnchor = 'middle';
         break;
       case 'left':
-        yPlacement = d => yScale(d[ordinalAccessor]) + yScale.bandwidth() / 2 + 4;
+        yPlacement = d => yScale(d[ordinalAccessor]) + yScale.bandwidth() / 2;
         xPlacement = d => xScale(Math.min(0, d[valueAccessor]));
         offset = '.2em';
+        offset2 = '.3em';
         textAnchor = 'start';
         break;
       case 'right':
-        yPlacement = d => yScale(d[ordinalAccessor]) + yScale.bandwidth() / 2 + 4;
-        xPlacement = d => xScale(Math.max(0, d[valueAccessor])) + 2;
-        offset = '.2em';
+        yPlacement = d => yScale(d[ordinalAccessor]) + yScale.bandwidth() / 2;
+        xPlacement = d => xScale(Math.max(0, d[valueAccessor]));
+        offset = '.3em';
+        offset2 = '.3em';
         textAnchor = 'start';
         break;
       case 'top-left':
@@ -105,6 +136,12 @@ export const placeDataLabels = ({
     const getMod = d => (normalized ? d.getSum() : 1);
     if (layout === 'vertical') {
       switch (placement) {
+        case 'auto':
+          xPlacement = d => xScale(d[ordinalAccessor]) + xScale.bandwidth() / 2;
+          yPlacement = d => (yScale(d.stackStart / getMod(d)) + yScale(d.stackEnd / getMod(d))) / 2;
+          offset2 = '0.25em';
+          textAnchor = 'middle';
+          break;
         case 'bottom':
           xPlacement = d => xScale(d[ordinalAccessor]) + xScale.bandwidth() / 2;
           yPlacement = d => yScale(d.stackEnd / getMod(d));
@@ -128,6 +165,12 @@ export const placeDataLabels = ({
       }
     } else {
       switch (placement) {
+        case 'auto':
+          yPlacement = d => yScale(d[ordinalAccessor]) + yScale.bandwidth() / 2 + 4;
+          xPlacement = d => (xScale(d.stackStart) + xScale(d.stackEnd)) / 2;
+          offset = '0em';
+          textAnchor = 'middle';
+          break;
         case 'base':
           yPlacement = d => yScale(d[ordinalAccessor]) + yScale.bandwidth() / 2 + 4;
           xPlacement = d => (d.stackEnd < 0 ? xScale(d.stackStart / getMod(d)) : xScale(d.stackEnd / getMod(d)));
@@ -152,6 +195,12 @@ export const placeDataLabels = ({
     }
   } else if (chartType === 'line') {
     switch (placement) {
+      case 'auto':
+        xPlacement = d => xScale(d[ordinalAccessor]);
+        yPlacement = d => yScale(d[valueAccessor]);
+        offset2 = '-0.6em';
+        textAnchor = 'middle';
+        break;
       case 'top':
         xPlacement = d => xScale(d[ordinalAccessor]);
         yPlacement = d => yScale(d[valueAccessor]);
@@ -178,38 +227,62 @@ export const placeDataLabels = ({
     }
   } else if (chartType === 'parallel') {
     switch (placement) {
+      case 'auto':
+        xPlacement = d => xScale(d[ordinalAccessor]);
+        yPlacement = d => yScale(d);
+        offset = '0em';
+        offset2 = '0em';
+        textAnchor = 'middle';
+        break;
       case 'bottom-right':
         xPlacement = d => xScale(d[ordinalAccessor]);
         yPlacement = d => yScale(d);
-        offset = '0.3em';
-        offset2 = '0.9em';
+        offset = '0.45em';
+        offset2 = '1.1em';
         textAnchor = 'start';
         break;
       case 'top-right':
         xPlacement = d => xScale(d[ordinalAccessor]);
         yPlacement = d => yScale(d);
-        offset = '0.3em';
-        offset2 = '-0.1em';
+        offset = '0.45em';
+        offset2 = '-0.3em';
         textAnchor = 'start';
         break;
       case 'bottom-left':
         xPlacement = d => xScale(d[ordinalAccessor]);
         yPlacement = d => yScale(d);
-        offset = '-0.3em';
-        offset2 = '0.9em';
+        offset = '-0.45em';
+        offset2 = '1.1em';
         textAnchor = 'end';
         break;
       case 'top-left':
         xPlacement = d => xScale(d[ordinalAccessor]);
         yPlacement = d => yScale(d);
-        offset = '-0.3em';
-        offset2 = '-0.1em';
+        offset = '-0.45em';
+        offset2 = '-0.3em';
         textAnchor = 'end';
         break;
     }
   } else if (chartType === 'dumbbell') {
     switch (placement) {
       case 'ends':
+        xPlacement = d => (layout === 'vertical' ? xScale(d[ordinalAccessor]) : xScale(d[valueAccessor]) - d.offset);
+        yPlacement = d => (layout === 'vertical' ? yScale(d[valueAccessor]) + d.offset : yScale(d[ordinalAccessor]));
+        offset = d => {
+          return layout === 'vertical' && d.offset >= 0
+            ? '0.9em'
+            : layout === 'vertical'
+            ? '-0.3em'
+            : d.offset >= 0
+            ? '-0.3em'
+            : '0.3em';
+        };
+        offset2 = layout === 'vertical' ? '0.0em' : '0.3em';
+        textAnchor = d => {
+          return layout === 'vertical' ? 'middle' : d.offset >= 0 ? 'end' : 'start';
+        };
+        break;
+      case 'auto': // copy of ends for auto collision
         xPlacement = d => (layout === 'vertical' ? xScale(d[ordinalAccessor]) : xScale(d[valueAccessor]) - d.offset);
         yPlacement = d => (layout === 'vertical' ? yScale(d[valueAccessor]) + d.offset : yScale(d[ordinalAccessor]));
         offset = d => {
@@ -292,6 +365,18 @@ export const placeDataLabels = ({
     }
   } else if (chartType === 'scatter') {
     switch (placement) {
+      case 'auto':
+        xPlacement = d => xScale(d[ordinalAccessor]);
+        yPlacement = d => yScale(d[valueAccessor]);
+        offset2 = '0.25em';
+        textAnchor = 'middle';
+        break;
+      case 'middle':
+        xPlacement = d => xScale(d[ordinalAccessor]);
+        yPlacement = d => yScale(d[valueAccessor]);
+        offset2 = '0.25em';
+        textAnchor = 'middle';
+        break;
       case 'top':
         xPlacement = d => xScale(d[ordinalAccessor]);
         yPlacement = d => yScale(d[valueAccessor]) - labelOffset;
@@ -301,7 +386,7 @@ export const placeDataLabels = ({
       case 'bottom':
         xPlacement = d => xScale(d[ordinalAccessor]);
         yPlacement = d => yScale(d[valueAccessor]) + labelOffset;
-        offset2 = '0.9em';
+        offset2 = '1.1em';
         textAnchor = 'middle';
         break;
       case 'left':
@@ -329,12 +414,89 @@ export const placeDataLabels = ({
     yPlacement = d => xScale([+d[ordinalAccessor], +d[valueAccessor]])[1];
   }
 
-  root
-    .attr('x', xPlacement)
-    .attr('y', yPlacement)
-    .attr(layout === 'vertical' ? 'dy' : 'dx', offset)
-    .attr(layout === 'vertical' ? 'dx' : 'dy', offset2)
-    .attr('text-anchor', textAnchor);
+  // we run bitmap if passed, not heat-map and whether we pass "auto" OR hideOnly with reg placement
+  const autoPlacementIndicator = avoidCollision && avoidCollision.runOccupancyBitmap && placement === 'auto';
+  const hideNoPlaceIndicator = avoidCollision && avoidCollision.hideOnly && !autoPlacementIndicator;
+  if (chartType !== 'heat-map' && autoPlacementIndicator && !hideNoPlaceIndicator) {
+    const bitmaps = resolveLabelCollision({
+      labelSelection: avoidCollision.labelSelection, // this should be root everytime basically...
+      avoidMarks: avoidCollision.avoidMarks,
+      validPositions: avoidCollision.validPositions,
+      offsets: avoidCollision.offsets,
+      accessors: avoidCollision.accessors,
+      size: avoidCollision.size,
+      boundsScope: avoidCollision.boundsScope,
+      hideOnly: hideNoPlaceIndicator // should be false always
+    });
+
+    // now that the collision check is done we apply original placement to anything hidden (not placed) by it
+    // checking for data-label-hidden !== false will capture anything that didn't go through collision and/or
+    // was hidden by it
+    root
+      .filter((_, i, n) => n[i].getAttribute('data-label-hidden') !== 'false')
+      .attr('x', xPlacement)
+      .attr('y', yPlacement)
+      .attr(layout === 'vertical' ? 'dy' : 'dx', offset)
+      .attr(layout === 'vertical' ? 'dx' : 'dy', offset2)
+      .attr('text-anchor', textAnchor);
+
+    return bitmaps;
+  } else if (chartType !== 'heat-map' && hideNoPlaceIndicator) {
+    root.each((_, i, n) => {
+      // doing an each.select will make sure we jump the transition passed in
+      // in our mark item bounds we need to pass the result of original dataLabel util
+      select(n[i])
+        .attr('data-x', xPlacement)
+        .attr('data-use-dx', true)
+        .attr('dx', layout === 'vertical' ? offset2 : offset)
+        .attr('data-y', yPlacement)
+        .attr('data-use-dy', true)
+        .attr('dy', layout === 'vertical' ? offset : offset2)
+        .attr('text-anchor', textAnchor);
+    });
+
+    // next we draw the bitmap with only the marks
+    let bitmaps = resolveLabelCollision({
+      labelSelection: select('.empty-stuff-vcc-do-not-use'), // this should be root everytime basically...
+      avoidMarks: avoidCollision.avoidMarks,
+      validPositions: ['middle'],
+      offsets: [1],
+      accessors: avoidCollision.accessors,
+      size: avoidCollision.size
+    });
+
+    // next we try to place labels based on the util placed positions
+    bitmaps = resolveLabelCollision({
+      bitmaps: bitmaps,
+      labelSelection: root,
+      avoidMarks: [],
+      validPositions: ['middle'],
+      offsets: [1],
+      accessors: avoidCollision.accessors,
+      size: avoidCollision.size,
+      hideOnly: hideNoPlaceIndicator // should be true always
+    });
+
+    // hideOnly is passed, we need to place everything as we usually would
+    root
+      .attr('x', xPlacement)
+      .attr('y', yPlacement)
+      .attr(layout === 'vertical' ? 'dy' : 'dx', offset)
+      .attr(layout === 'vertical' ? 'dx' : 'dy', offset2)
+      .attr('text-anchor', textAnchor);
+
+    return bitmaps;
+  } else {
+    // NOTE: heatmap has shortcut collision detection already for labels
+    // (the accessibility.showSmallLabels prop handles this automatically and more efficiently due to the algorithmic concerns)
+    root
+      .attr('x', xPlacement)
+      .attr('y', yPlacement)
+      .attr(layout === 'vertical' ? 'dy' : 'dx', offset)
+      .attr(layout === 'vertical' ? 'dx' : 'dy', offset2)
+      .attr('text-anchor', textAnchor);
+    return null;
+  }
 };
 
 export function getDataSymbol(symbolFunc, symbolType) {
