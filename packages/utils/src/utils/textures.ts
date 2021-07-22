@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2021 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -7,6 +7,7 @@
  **/
 import { getContrastingStroke, getAccessibleStrokes } from './colors';
 import { getBrowser } from './browser-util';
+import { transitionEndAll } from './transitionEndAll';
 import { select } from 'd3-selection';
 const isSafari = getBrowser() === 'Safari';
 
@@ -1282,16 +1283,20 @@ function runTextureLifecycle(source, data, transitionDisabled?) {
     defs = parent.append('defs');
   }
   const patterns = defs.selectAll('.VCL-texture-pattern').data(data, d => d.scheme + d.index);
-  // remove old patterns
-  patterns
-    .exit()
-    .transition()
-    .duration(!transitionDisabled ? 750 : 0)
-    .remove();
   // append new patterns
   const enter = patterns.enter().append('pattern');
   // update all existing patterns
   const update = patterns.merge(enter);
+
+  update
+    .transition('exit')
+    .duration(!transitionDisabled ? 750 : 0)
+    .call(transitionEndAll, () => {
+      // removing here instead of earlier compensates for failing a race condition
+      // caused by Stencil where multiple lifecycles are trying to exit
+      patterns.exit().remove();
+    });
+
   update
     .each((d, i, n) => {
       const patternAttributes = Object.keys(d.attributes);

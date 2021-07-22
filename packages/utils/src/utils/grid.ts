@@ -15,9 +15,10 @@ export const drawGrid = (
   axis: any,
   left: any,
   hide?: any,
-  tickInterval?: number
+  tickInterval?: number,
+  duration?: number
 ) => {
-  let duration = 750;
+  let transitionDuration = duration || duration === 0 ? duration : 750;
   let opacity = 1;
   if (hide) {
     opacity = 0;
@@ -25,46 +26,52 @@ export const drawGrid = (
   if (left) {
     let grid = root.selectAll('.grid').filter('.left');
     if (!grid.node()) {
-      duration = 0;
+      transitionDuration = 0;
       grid = root
         .append('g')
         .attr('class', 'grid left')
         .attr('data-testid', 'grid-left');
     }
-    grid
-      .transition('grid-left-update')
-      .duration(duration)
-      .ease(easeCircleIn)
-      .attr('opacity', opacity)
-      .call(
-        axisLeft(axis)
-          .tickSize(-width)
-          .tickFormat('')
-          .tickValues(
-            (axis.ticks ? axis.ticks() : axis.domain()).filter((_, i) => !(tickInterval && i % tickInterval !== 0))
-          )
-      );
+    let context = grid;
+
+    if (transitionDuration) {
+      context = grid
+        .transition('grid-left-update')
+        .duration(transitionDuration)
+        .ease(easeCircleIn);
+    }
+    context.attr('opacity', opacity).call(
+      axisLeft(axis)
+        .tickSize(-width)
+        .tickFormat('')
+        .tickValues(
+          (axis.ticks ? axis.ticks() : axis.domain()).filter((_, i) => !(tickInterval && i % tickInterval !== 0))
+        )
+    );
   } else {
     let grid = root.selectAll('.grid').filter('.bottom');
     if (!grid.node()) {
-      duration = 0;
+      transitionDuration = 0;
       grid = root
         .append('g')
         .attr('class', 'grid bottom')
         .attr('data-testid', 'grid-bottom');
     }
-    grid
-      .transition('grid-bottom-update')
-      .duration(duration)
-      .ease(easeCircleIn)
-      .attr('opacity', opacity)
-      .call(
-        axisBottom(axis)
-          .tickSize(height)
-          .tickFormat('')
-          .tickValues(
-            (axis.ticks ? axis.ticks() : axis.domain()).filter((_, i) => !(tickInterval && i % tickInterval !== 0))
-          )
-      );
+    let context = grid;
+
+    if (transitionDuration) {
+      context = grid
+        .transition('grid-bottom-update')
+        .duration(transitionDuration)
+        .ease(easeCircleIn);
+    }
+    context.attr('opacity', opacity).call(
+      axisBottom(axis)
+        .tickSize(height)
+        .tickFormat('')
+        .tickValues(
+          (axis.ticks ? axis.ticks() : axis.domain()).filter((_, i) => !(tickInterval && i % tickInterval !== 0))
+        )
+    );
   }
 };

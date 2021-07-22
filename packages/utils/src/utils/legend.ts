@@ -135,7 +135,8 @@ export const drawLegend = ({
           const colorGrid = select(n[i])
             .selectAll('rect')
             .data([d]);
-          colorGrid
+
+          let context = colorGrid
             .enter()
             .append('rect')
             .attr('opacity', 0)
@@ -144,44 +145,54 @@ export const drawLegend = ({
             .attr('height', legendHeight)
             .attr('x', 0)
             .attr('y', 0)
-            .attr('fill', d)
-            .transition()
-            .duration(duration)
-            .ease(easeCircleIn)
-            .attr('opacity', opacity);
+            .attr('fill', d);
 
-          colorGrid
-            .exit()
-            .transition()
-            .duration(duration)
-            .ease(easeCircleIn)
-            .attr('opacity', 0)
-            .remove();
+          let exitContext = colorGrid.exit();
 
           const gridText = select(n[i])
             .selectAll('text')
             .data([d]);
 
-          gridText
+          let textContext = gridText
             .enter()
             .append('text')
             .attr('opacity', 0)
             .merge(gridText)
             .attr('dx', labelPosition)
             .attr('dy', '2.5em')
-            .transition('update')
-            .duration(duration)
-            .ease(easeCircleIn)
-            .text(gridLabel)
-            .attr('opacity', opacity);
+            .text(gridLabel);
 
-          gridText
-            .exit()
-            .transition()
-            .duration(duration)
-            .ease(easeCircleIn)
-            .attr('opacity', 0)
-            .remove();
+          let textExit = gridText.exit();
+
+          if (duration) {
+            context = context
+              .transition()
+              .duration(duration)
+              .ease(easeCircleIn);
+
+            exitContext = exitContext
+              .transition()
+              .duration(duration)
+              .ease(easeCircleIn);
+
+            textContext = textContext
+              .transition()
+              .duration(duration)
+              .ease(easeCircleIn);
+
+            textExit = textExit
+              .transition()
+              .duration(duration)
+              .ease(easeCircleIn);
+          }
+
+          context.attr('opacity', opacity);
+
+          exitContext.attr('opacity', 0).remove();
+
+          textContext.attr('opacity', opacity);
+
+          textExit.attr('opacity', 0).remove();
         });
 
       defaultLegend.exit().remove();
@@ -202,7 +213,7 @@ export const drawLegend = ({
 
       const textDiv = paddingWrapper.selectAll('text.gradient').data([0].concat(colorArr));
 
-      textDiv
+      let textContext = textDiv
         .enter()
         .append('text')
         .attr('class', 'legend-text gradient')
@@ -213,23 +224,29 @@ export const drawLegend = ({
         .attr('opacity', 0)
         .attr('dx', (_, i) => (i === 0 ? 0 : legendWidth))
         .attr('dy', '2.5em')
-        .transition('update')
-        .duration(duration)
-        .ease(easeCircleIn)
         .text((d, i) =>
           i === 0
             ? formatStats(scale.invertExtent(colorArr[0])[0], format)
             : formatStats(scale.invertExtent(d)[1], format)
-        )
-        .attr('opacity', (_, i) => (i === 0 || i === colorArr.length ? opacity : 0));
+        );
 
-      textDiv
-        .exit()
-        .transition()
-        .duration(duration)
-        .ease(easeCircleIn)
-        .attr('opacity', 0)
-        .remove();
+      let textExit = textDiv.exit();
+
+      if (duration) {
+        textContext = textContext
+          .transition()
+          .duration(duration)
+          .ease(easeCircleIn);
+
+        textExit = textExit
+          .transition()
+          .duration(duration)
+          .ease(easeCircleIn);
+      }
+
+      textContext.attr('opacity', (_, i) => (i === 0 || i === colorArr.length ? opacity : 0));
+
+      textExit.attr('opacity', 0).remove();
 
       if (!paddingWrapper.selectAll('.legend').empty()) {
         paddingWrapper.selectAll('.legend').remove();
@@ -303,34 +320,22 @@ export const drawLegend = ({
             .selectAll('rect')
             .data([d]);
 
-          keyDot
+          let context = keyDot
             .enter()
             .append('rect')
             .attr('opacity', 0)
             .merge(keyDot)
             .attr('fill', d)
             .attr('width', 15)
-            .attr('height', 15)
-            .transition()
-            .duration(duration)
-            .ease(easeCircleIn)
-            .attr('x', accumWidth)
-            .attr('y', yPos)
-            .attr('opacity', opacity);
+            .attr('height', 15);
 
-          keyDot
-            .exit()
-            .transition()
-            .duration(duration)
-            .ease(easeCircleIn)
-            .attr('opacity', 0)
-            .remove();
+          let exitContext = keyDot.exit();
 
           const keyText = select(n[i])
             .selectAll('text')
             .data([keyLabel]);
 
-          keyText
+          let textContext = keyText
             .enter()
             .append('text')
             .attr('class', 'key-text')
@@ -338,21 +343,45 @@ export const drawLegend = ({
             .merge(keyText)
             .attr('dx', '.2em')
             .attr('dy', 13)
-            .transition('update')
-            .duration(duration)
-            .ease(easeCircleIn)
-            .text(keyLabel)
+            .text(keyLabel);
+
+          let textExit = keyText.exit();
+
+          if (duration) {
+            context = context
+              .transition()
+              .duration(duration)
+              .ease(easeCircleIn);
+
+            exitContext = exitContext
+              .transition()
+              .duration(duration)
+              .ease(easeCircleIn);
+
+            textContext = textContext
+              .transition()
+              .duration(duration)
+              .ease(easeCircleIn);
+
+            textExit = textExit
+              .transition()
+              .duration(duration)
+              .ease(easeCircleIn);
+          }
+
+          context
+            .attr('x', accumWidth)
+            .attr('y', yPos)
+            .attr('opacity', opacity);
+
+          exitContext.attr('opacity', 0).remove();
+
+          textContext
             .attr('x', accumWidth + 20)
             .attr('y', yPos)
             .attr('opacity', opacity);
 
-          keyText
-            .exit()
-            .transition()
-            .duration(duration)
-            .ease(easeCircleIn)
-            .attr('opacity', 0)
-            .remove();
+          textExit.attr('opacity', 0).remove();
         });
 
       currentKeyLegend.exit().remove();
@@ -391,7 +420,8 @@ export const drawLegend = ({
           const keyDot = select(n[i])
             .selectAll('line')
             .data([d.key]);
-          keyDot
+
+          let context = keyDot
             .enter()
             .append('line')
             .merge(keyDot)
@@ -407,10 +437,49 @@ export const drawLegend = ({
               'stroke-dasharray',
               secondary.includes(d.key) ? '2,2' : dashPatterns && i < dashPatterns.length ? dashPatterns[i] : ''
             )
-            .style('opacity', opacity)
-            .transition()
-            .duration(duration)
-            .ease(easeCircleIn)
+            .style('opacity', opacity);
+
+          let exitContext = keyDot.exit();
+
+          const keyText = select(n[i])
+            .selectAll('text')
+            .data([d.key]);
+
+          let textContext = keyText
+            .enter()
+            .append('text')
+            .attr('class', 'key-text')
+            .attr('opacity', 0)
+            .merge(keyText)
+            .attr('dx', '.2em')
+            .attr('dy', 13)
+            .text(keyLabel);
+
+          let textExit = keyText.exit();
+
+          if (duration) {
+            context = context
+              .transition()
+              .duration(duration)
+              .ease(easeCircleIn);
+
+            exitContext = exitContext
+              .transition()
+              .duration(duration)
+              .ease(easeCircleIn);
+
+            textContext = textContext
+              .transition()
+              .duration(duration)
+              .ease(easeCircleIn);
+
+            textExit = textExit
+              .transition()
+              .duration(duration)
+              .ease(easeCircleIn);
+          }
+
+          context
             .attr('x1', accumWidthLine)
             .attr(
               'x2',
@@ -420,30 +489,9 @@ export const drawLegend = ({
             .attr('y1', yPosLine + 8)
             .attr('y2', yPosLine + 8);
 
-          keyDot
-            .exit()
-            .transition()
-            .duration(duration)
-            .ease(easeCircleIn)
-            .attr('opacity', 0)
-            .remove();
+          exitContext.attr('opacity', 0).remove();
 
-          const keyText = select(n[i])
-            .selectAll('text')
-            .data([d.key]);
-
-          keyText
-            .enter()
-            .append('text')
-            .attr('class', 'key-text')
-            .attr('opacity', 0)
-            .merge(keyText)
-            .attr('dx', '.2em')
-            .attr('dy', 13)
-            .transition('update')
-            .duration(duration)
-            .ease(easeCircleIn)
-            .text(keyLabel)
+          textContext
             .attr(
               'x',
               accumWidthLine +
@@ -453,13 +501,7 @@ export const drawLegend = ({
             .attr('y', yPosLine)
             .attr('opacity', opacity);
 
-          keyText
-            .exit()
-            .transition()
-            .duration(duration)
-            .ease(easeCircleIn)
-            .attr('opacity', 0)
-            .remove();
+          textExit.attr('opacity', 0).remove();
         });
 
       currentLineLegend.exit().remove();
@@ -513,7 +555,7 @@ export const drawLegend = ({
           const keyDot = select(n[i])
             .selectAll('rect')
             .data([d[labelKey]]);
-          keyDot
+          let context = keyDot
             .enter()
             .append('rect')
             .attr('class', 'bar-rect')
@@ -521,27 +563,15 @@ export const drawLegend = ({
             .merge(keyDot)
             .attr('fill', scale ? scale(d[labelKey]) : colorArr[i] || colorArr(d[labelKey]))
             .attr('width', 20)
-            .attr('height', 20)
-            .transition()
-            .duration(duration)
-            .ease(easeCircleIn)
-            .attr('x', accumWidthBar)
-            .attr('y', yPosBar)
-            .attr('opacity', opacity);
+            .attr('height', 20);
 
-          keyDot
-            .exit()
-            .transition()
-            .duration(duration)
-            .ease(easeCircleIn)
-            .attr('opacity', 0)
-            .remove();
+          let exitContext = keyDot.exit();
 
           const keyText = select(n[i])
             .selectAll('text')
             .data([d[labelKey]]);
 
-          keyText
+          let textContext = keyText
             .enter()
             .append('text')
             .attr('class', 'bar-text')
@@ -549,21 +579,45 @@ export const drawLegend = ({
             .merge(keyText)
             .attr('dx', '.2em')
             .attr('dy', 16)
-            .transition('update')
-            .duration(duration)
-            .ease(easeCircleIn)
-            .text(keyLabel)
+            .text(keyLabel);
+
+          let textExit = keyText.exit();
+
+          if (duration) {
+            context = context
+              .transition()
+              .duration(duration)
+              .ease(easeCircleIn);
+
+            exitContext = exitContext
+              .transition()
+              .duration(duration)
+              .ease(easeCircleIn);
+
+            textContext = textContext
+              .transition()
+              .duration(duration)
+              .ease(easeCircleIn);
+
+            textExit = textExit
+              .transition()
+              .duration(duration)
+              .ease(easeCircleIn);
+          }
+
+          context
+            .attr('x', accumWidthBar)
+            .attr('y', yPosBar)
+            .attr('opacity', opacity);
+
+          exitContext.attr('opacity', 0).remove();
+
+          textContext
             .attr('x', accumWidthBar + 25)
             .attr('y', yPosBar)
             .attr('opacity', opacity);
 
-          keyText
-            .exit()
-            .transition()
-            .duration(duration)
-            .ease(easeCircleIn)
-            .attr('opacity', 0)
-            .remove();
+          textExit.attr('opacity', 0).remove();
         });
 
       currentBarLegend.exit().remove();
@@ -601,32 +655,20 @@ export const drawLegend = ({
             .selectAll('path')
             .data([d]);
 
-          keyDot
+          let context = keyDot
             .enter()
             .append('path')
             .attr('opacity', 0)
             .merge(keyDot)
-            .attr('fill', colorArr[i])
-            .transition()
-            .duration(duration)
-            .ease(easeCircleIn)
-            .attr('transform', `translate(` + (+accumWidthScatter + 4) + `,` + (+yPosScatter + 8) + `)  scale(4)`)
-            .attr('d', symbols[symbol[i] || symbol[0]].general)
-            .attr('opacity', opacity);
+            .attr('fill', colorArr[i]);
 
-          keyDot
-            .exit()
-            .transition()
-            .duration(duration)
-            .ease(easeCircleIn)
-            .attr('opacity', 0)
-            .remove();
+          let exitContext = keyDot.exit();
 
           const keyText = select(n[i])
             .selectAll('text')
             .data([d]);
 
-          keyText
+          let textContext = keyText
             .enter()
             .append('text')
             .attr('class', 'key-text')
@@ -634,21 +676,45 @@ export const drawLegend = ({
             .merge(keyText)
             .attr('dx', '.2em')
             .attr('dy', 13)
-            .transition('update')
-            .duration(duration)
-            .ease(easeCircleIn)
-            .text(keyLabel)
+            .text(keyLabel);
+
+          let textExit = keyText.exit();
+
+          if (duration) {
+            context = context
+              .transition()
+              .duration(duration)
+              .ease(easeCircleIn);
+
+            exitContext = exitContext
+              .transition()
+              .duration(duration)
+              .ease(easeCircleIn);
+
+            textContext = textContext
+              .transition()
+              .duration(duration)
+              .ease(easeCircleIn);
+
+            textExit = textExit
+              .transition()
+              .duration(duration)
+              .ease(easeCircleIn);
+          }
+
+          context
+            .attr('transform', `translate(` + (+accumWidthScatter + 4) + `,` + (+yPosScatter + 8) + `)  scale(4)`)
+            .attr('d', symbols[symbol[i] || symbol[0]].general)
+            .attr('opacity', opacity);
+
+          exitContext.attr('opacity', 0).remove();
+
+          textContext
             .attr('x', accumWidthScatter + 15)
             .attr('y', yPosScatter)
             .attr('opacity', opacity);
 
-          keyText
-            .exit()
-            .transition()
-            .duration(duration)
-            .ease(easeCircleIn)
-            .attr('opacity', 0)
-            .remove();
+          textExit.attr('opacity', 0).remove();
         });
 
       currentScatterLegend.exit().remove();

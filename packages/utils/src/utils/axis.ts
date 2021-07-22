@@ -13,7 +13,7 @@ import { timeFormat } from 'd3-time-format';
 
 const tickArguments = [];
 let tickValues = null;
-let duration = 750;
+let transitionDuration = 750;
 let orient = 1;
 let tickFormat = null;
 let tickSizeInner = 6;
@@ -50,7 +50,8 @@ export const drawAxis = ({
   hide,
   markOffset,
   hidePath,
-  ticks
+  ticks,
+  duration
 }: {
   root?: any;
   height?: any;
@@ -70,7 +71,9 @@ export const drawAxis = ({
   markOffset?: any;
   hidePath?: any;
   ticks?: any;
+  duration?: number;
 }) => {
+  transitionDuration = duration || duration === 0 ? duration : transitionDuration;
   scale = axisScale;
   hideAxisPath = hidePath;
   tickValues = ticks ? ticks : null;
@@ -85,19 +88,23 @@ export const drawAxis = ({
     if (left) {
       let axisBase = root.selectAll('.axis-mark-y');
       if (axisBase.empty()) {
-        duration = 0;
+        transitionDuration = 0;
         axisBase = root.append('g').attr('class', 'axis-mark-y axis-mark');
       }
       tickFormat = () => null;
       orient = orientLeft;
       setOrientation();
 
-      axisBase
-        .attr('data-testid', 'y-axis-mark')
-        .transition('axis_base')
-        .attr('transform', markOffset > 0 ? `translate(${markOffset}, 0)` : '')
-        .ease(easeCircleIn)
-        .duration(duration)
+      let context = axisBase.attr('data-testid', 'y-axis-mark');
+      // .attr('transform', markOffset > 0 ? `translate(${markOffset}, 0)` : '')
+
+      if (transitionDuration) {
+        context = context
+          .transition('axis_base')
+          .ease(easeCircleIn)
+          .duration(transitionDuration);
+      }
+      context
         .attr('transform', markOffset > 0 ? `translate(${markOffset}, 0)` : '')
         .attr('opacity', opacity)
         .call(axis);
@@ -105,7 +112,7 @@ export const drawAxis = ({
       // mark line at y=0
       let axisBase = root.selectAll('.axis-mark-x');
       if (axisBase.empty()) {
-        duration = 0;
+        transitionDuration = 0;
         axisBase = root.append('g');
       }
       tickFormat = () => null;
@@ -113,12 +120,15 @@ export const drawAxis = ({
       orient = orientBottom;
       setOrientation();
 
-      axisBase
-        .attr('class', 'axis-mark-x axis-mark')
-        .attr('data-testid', 'x-axis-mark')
-        .transition('axis_base')
-        .ease(easeCircleIn)
-        .duration(duration)
+      let context = axisBase.attr('class', 'axis-mark-x axis-mark').attr('data-testid', 'x-axis-mark');
+
+      if (transitionDuration) {
+        context = context
+          .transition('axis_base')
+          .ease(easeCircleIn)
+          .duration(transitionDuration);
+      }
+      context
         .attr('transform', markOffset > 0 ? `translate(0, ${markOffset})` : '')
         .attr('opacity', opacity)
         .call(axis);
@@ -135,7 +145,7 @@ export const drawAxis = ({
       .filter('.left');
 
     if (axisNode.empty()) {
-      duration = 0;
+      transitionDuration = 0;
       axisNode = root.append('g');
       axisLabel = root.append('text');
     }
@@ -165,23 +175,29 @@ export const drawAxis = ({
     orient = orientLeft;
     setOrientation();
 
-    axisNode
-      .attr('class', 'y axis left')
-      .attr('data-testid', 'y-axis')
-      .transition('axis_node')
-      .ease(easeCircleIn)
-      .duration(duration)
-      .attr('opacity', opacity)
-      .call(axis);
+    let context = axisNode.attr('class', 'y axis left').attr('data-testid', 'y-axis');
 
-    axisLabel
+    if (transitionDuration) {
+      context = context
+        .transition('axis_node')
+        .ease(easeCircleIn)
+        .duration(transitionDuration);
+    }
+    context.attr('opacity', opacity).call(axis);
+
+    let labelContext = axisLabel
       .attr('class', 'y axis-label left')
       .attr('data-testid', 'y-axis-label')
       .attr('transform', `rotate(-90)`)
-      .text(label)
-      .transition('axis_label')
-      .duration(duration)
-      .ease(easeCircleIn)
+      .text(label);
+
+    if (transitionDuration) {
+      labelContext = labelContext
+        .transition('axis_label')
+        .ease(easeCircleIn)
+        .duration(transitionDuration);
+    }
+    labelContext
       .attr('y', padding ? 0 - padding.left : -50)
       .attr('x', 0 - height / 2)
       .attr('dy', '1em');
@@ -197,7 +213,7 @@ export const drawAxis = ({
       .filter('.y')
       .filter('.right');
     if (axisNode.empty()) {
-      duration = 0;
+      transitionDuration = 0;
       axisNode = root.append('g');
       axisLabel = root.append('text');
     }
@@ -224,24 +240,32 @@ export const drawAxis = ({
     }
     orient = orientRight;
     setOrientation();
-    axisNode
-      .attr('class', 'y axis right')
-      .attr('data-testid', 'sec-y-axis')
-      .transition('axis_node')
-      .ease(easeCircleIn)
-      .duration(duration)
+    let context = axisNode.attr('class', 'y axis right').attr('data-testid', 'sec-y-axis');
+
+    if (transitionDuration) {
+      context = context
+        .transition('axis_node')
+        .ease(easeCircleIn)
+        .duration(transitionDuration);
+    }
+    context
       .attr('transform', `translate(${width},0)`)
       .attr('opacity', opacity)
       .call(axis);
 
-    axisLabel
+    let labelContext = axisLabel
       .attr('class', 'y axis-label right')
       .attr('data-testid', 'sec-y-axis-label')
       .attr('transform', `rotate(-90)`)
-      .text(label || 'Cumulative Percentage')
-      .transition('axis_label')
-      .duration(duration)
-      .ease(easeCircleIn)
+      .text(label || 'Cumulative Percentage');
+
+    if (transitionDuration) {
+      labelContext = labelContext
+        .transition('axis_label')
+        .ease(easeCircleIn)
+        .duration(transitionDuration);
+    }
+    labelContext
       .attr('y', padding ? width + padding.left + padding.right - 50 : width - 50)
       .attr('x', 0 - height / 2)
       .attr('dy', '1em');
@@ -257,7 +281,7 @@ export const drawAxis = ({
       .filter('.x')
       .filter('.top');
     if (axisNode.empty()) {
-      duration = 0;
+      transitionDuration = 0;
       axisNode = root.append('g');
       axisLabel = root.append('text');
     }
@@ -286,24 +310,32 @@ export const drawAxis = ({
     orient = orientTop;
     setOrientation();
 
-    axisNode
-      .attr('class', 'x axis top')
-      .attr('data-testid', 'sec-x-axis')
-      .transition('axis_node')
-      .ease(easeCircleIn)
-      .duration(duration)
+    let context = axisNode.attr('class', 'x axis top').attr('data-testid', 'sec-x-axis');
+
+    if (transitionDuration) {
+      context = context
+        .transition('axis_node')
+        .ease(easeCircleIn)
+        .duration(transitionDuration);
+    }
+    context
       .attr('transform', `translate(0, 0)`)
       .attr('opacity', opacity)
       .call(axis);
 
-    axisLabel
+    let labelContext = axisLabel
       .attr('class', 'x axis-label top')
       .attr('data-testid', 'sec-x-axis-label')
       .attr('transform', `translate(0, 0)`)
-      .text(format && typeof label === 'number' ? formatStats(label, format) : label)
-      .transition('axis_label')
-      .duration(duration)
-      .ease(easeCircleIn)
+      .text(format && typeof label === 'number' ? formatStats(label, format) : label);
+
+    if (transitionDuration) {
+      labelContext = labelContext
+        .transition('axis_label')
+        .ease(easeCircleIn)
+        .duration(transitionDuration);
+    }
+    labelContext
       .attr('x', width / 2)
       .attr('y', padding ? -padding.top : -50)
       .attr('dy', '1em');
@@ -319,7 +351,7 @@ export const drawAxis = ({
       .filter('.x')
       .filter('.bottom');
     if (axisNode.empty()) {
-      duration = 0;
+      transitionDuration = 0;
       axisNode = root.append('g');
       axisLabel = root.append('text');
     }
@@ -348,29 +380,35 @@ export const drawAxis = ({
     orient = orientBottom;
     setOrientation();
 
-    axisNode
-      .attr('class', 'x axis bottom')
-      .attr('data-testid', 'x-axis')
-      .transition('axis_node')
-      .ease(easeCircleIn)
-      .duration(duration)
+    let context = axisNode.attr('class', 'x axis bottom').attr('data-testid', 'x-axis');
+
+    if (transitionDuration) {
+      context = context
+        .transition('axis_node')
+        .ease(easeCircleIn)
+        .duration(transitionDuration);
+    }
+    context
       .attr('transform', `translate(0, ${height})`)
       .attr('opacity', opacity)
       .call(axis);
 
-    axisLabel
+    let labelContext = axisLabel
       .attr('class', 'x axis-label bottom')
       .attr('data-testid', 'x-axis-label')
       .attr('transform', `translate(0, 0)`)
-      .text(format && typeof label === 'number' ? formatStats(label, format) : label)
-      .transition('axis_label')
-      .duration(duration)
-      .ease(easeCircleIn)
-      .attr('x', width / 2)
-      .attr('y', padding ? height + padding.bottom : height);
+      .text(format && typeof label === 'number' ? formatStats(label, format) : label);
+
+    if (transitionDuration) {
+      labelContext = labelContext
+        .transition('axis_node')
+        .ease(easeCircleIn)
+        .duration(transitionDuration);
+    }
+    labelContext.attr('x', width / 2).attr('y', padding ? height + padding.bottom : height);
     // .attr("opacity",opacity);
   }
-  duration = 750;
+  // transitionDuration = 750;
 };
 
 function axis(context: any) {
@@ -441,22 +479,22 @@ function axis(context: any) {
     text.call(wrap);
   }
 
-  if (context !== selection) {
+  if (context !== selection && transitionDuration) {
     path = path
       .transition(context)
-      .duration(duration)
+      .duration(transitionDuration)
       .ease(easeCircleIn);
     tick = tick
       .transition(context)
-      .duration(duration)
+      .duration(transitionDuration)
       .ease(easeCircleIn);
     line = line
       .transition(context)
-      .duration(duration)
+      .duration(transitionDuration)
       .ease(easeCircleIn);
     text = text
       .transition(context)
-      .duration(duration)
+      .duration(transitionDuration)
       .ease(easeCircleIn);
 
     tickExit = tickExit
