@@ -302,22 +302,25 @@ const mouseOutHandler = evt => {
 
 #### IDataLabelType Definition
 
-| Name            | Type    | Default Value(s) | Description                                                                                                                                              |
-| --------------- | ------- | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `labelAccessor` | string  | ''               | Key used to determine label's property.                                                                                                                  |
-| `visible`       | boolean | true             | Toggles the visibility (opacity) of the data labels.                                                                                                     |
-| `placement`     | string  | 'bottom-right'   | Sets the placement of the data label, accepts 'top-right', 'bottom-right', 'top-left' or 'bottom-left'                                                   |
-| `format`        | string  | '0[.][0][0]a'    | Sets the formatting for the data labels, EG %b, refer to [d3-time-format](https://github.com/d3/d3-time-format) and [numeral.js](http://numeraljs.com/). |
+| Name                 | Type    | Default Value(s) | Description                                                                                                                                                                                                                                                                                   |
+| -------------------- | ------- | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `labelAccessor`      | string  | ''               | Key used to determine label's property.                                                                                                                                                                                                                                                       |
+| `visible`            | boolean | true             | Toggles the visibility (opacity) of the data labels.                                                                                                                                                                                                                                          |
+| `placement`          | string  | 'bottom-right'   | Sets the placement of the data label, accepts 'top-right', 'bottom-right', 'top-left' or 'bottom-left'. Placement option 'auto' leverages the [resolveLabelCollision](../utils/src/utils/collisionDetection.ts) algorithm and places labels without overlaps in available space on the chart. |
+| `format`             | string  | '0[.][0][0]a'    | Sets the formatting for the data labels, EG %b, refer to [d3-time-format](https://github.com/d3/d3-time-format) and [numeral.js](http://numeraljs.com/).                                                                                                                                      |
+| `collisionHideOnly`  | boolean | false            | Toggles whether to run [resolveLabelCollision](../utils/src/utils/collisionDetection.ts) algorithm and hide labels if collision is detected (vs hide and then place). This is overridden by placement being set to `auto`.                                                                    |
+| `collisionPlacement` | string  | 'all'            | Sets the placement of the data label when [resolveLabelCollision](../utils/src/utils/collisionDetection.ts) algorithm is run (dataLabel.placement must be 'auto'). Examples of values are 'all', 'top', 'middle', 'bottom', 'left' and 'right'.                                               |
 
 <br>
 
 #### ISeriesLabel Definition
 
-| Name        | Type     | Default Value(s) | Description                                                                        |
-| ----------- | -------- | ---------------- | ---------------------------------------------------------------------------------- |
-| `label`     | string[] | []               | An array which determines the labels for each line, in order.                      |
-| `visible`   | boolean  | true             | Toggles the visibility (opacity) of the series labels.                             |
-| `placement` | string   | 'right'          | Sets the placement of the series label, accepts 'top', 'left', 'bottom' or 'right' |
+| Name                | Type     | Default Value(s) | Description                                                                                                                                                                                                                                                                      |
+| ------------------- | -------- | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `label`             | string[] | []               | An array which determines the labels for each line, in order.                                                                                                                                                                                                                    |
+| `visible`           | boolean  | true             | Toggles the visibility (opacity) of the series labels.                                                                                                                                                                                                                           |
+| `placement`         | string   | 'right'          | Sets the placement of the series label, accepts 'top', 'left', 'bottom' or 'right'. Placement option 'auto' leverages the [resolveLabelCollision](../utils/src/utils/collisionDetection.ts) algorithm and places series labels without overlaps in available space on the chart. |
+| `collisionHideOnly` | boolean  | false            | Toggles whether to run [resolveLabelCollision](../utils/src/utils/collisionDetection.ts) algorithm and hide series labels if collision is detected (vs hide and then place). This is overridden by placement being set to `auto`.                                                |
 
 <br>
 

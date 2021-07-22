@@ -19,6 +19,7 @@ While we do deliver React (`@visa/charts-react`) and Angular (`@visa/charts-angu
 - [@visa/charts](packages/charts) (web components)
 - [@visa/charts-react](packages/charts-react) (react)
 - [@visa/charts-angular](packages/charts-angular) (angular)
+- [@visa/charts-R](packages/charts-R) (R), `visachartR` function in R
 
 #### Components with `Ready` status
 
@@ -34,6 +35,7 @@ While we do deliver React (`@visa/charts-react`) and Angular (`@visa/charts-angu
 - [@visa/dumbbell-plot](packages/dumbbell-plot)
 - [@visa/world-map](packages/world-map)
 - [@visa/visa-charts-data-table](packages/data-table)
+- [@visa/keyboard-instructions](packages/keyboard-instructions)
 
 #### Components with `Development` status
 
@@ -118,12 +120,6 @@ Once you have finished running your audit you can leverage the below scripts to 
 
 <br>
 
-##### Component change history
-
-As VCC is a monorepo, changes for each component package will be maintained in their own changelog files. Refer to `packages/<component-name>/CHANGELOG.MD` for the history of changes made to any particular component.
-
-<br>
-
 ##### Cleaning the repo
 
 _caution: this will require you to re-install the entire monorepo, which can take some time_
@@ -153,13 +149,14 @@ You can find license information for all dependencies included in our build [her
 - [d3-svg-annotation](https://d3-annotation.susielu.com/)
 - [numeral.js](http://numeraljs.com/)
 - [node-uuid](https://github.com/uuidjs/uuid)
+- [vega-label](https://github.com/vega/vega-label)
 
 This project was/is built with tireless efforts from:
 
 - Chris DeMartini ([@visa](https://github.com/chris-demartini) / [personal](https://github.com/demartsc))
-- Frank Elavsky ([@visa](https://github.com/frank-elavsky) / [personal](https://github.com/frankelavsky))
 - Jaime Tanner ([@visa](https://github.com/jaime-tanner) / [personal](https://github.com/tannerjaime))
 - Basavaraj Kabbure ([@visa](https://github.com/basav-kabbure) / [personal](https://github.com/basavarajk))
 - Lilach Manheim ([personal](https://github.com/lmanheim))
+- Frank Elavsky ([personal](https://github.com/frankelavsky))
 - Tica Lin ([personal](https://github.com/ticahere))
 - Akhil Gupta ([personal](https://github.com/akhil9tiet))

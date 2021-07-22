@@ -1,6 +1,6 @@
 # visachartR
 
-This package wraps [@visa/charts](../charts) web components for use in [R](https://www.r-project.org/), leveraging the [htmlwidgets](https://www.htmlwidgets.org/) R package.
+This package wraps [@visa/charts](../charts) web components for use in [R](https://www.r-project.org/), leveraging the [htmlwidgets](https://www.htmlwidgets.org/) R package. You can find visachartR on [CRAN](https://CRAN.R-project.org/package=visachartR), installation steps provided below.
 
 ### Installation Steps
 
@@ -42,7 +42,7 @@ Step 2: Use component as any other R function
 ```R
 library(visachartR)
 
-bar_chart(BOD, oridnalAccessor="Time", valueAccessor="demand")
+bar_chart(BOD, ordinalAccessor="Time", valueAccessor="demand")
 
 scatter_plot(mtcars[order(mtcars$cyl),], "wt", "mpg", "cyl")
 ```
