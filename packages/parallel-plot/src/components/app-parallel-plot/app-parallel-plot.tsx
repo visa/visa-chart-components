@@ -7,6 +7,7 @@
  **/
 import { Component, State, Element, h } from '@stencil/core';
 import '@visa/visa-charts-data-table';
+import '@visa/keyboard-instructions';
 
 @Component({
   tag: 'app-parallel-plot',
@@ -18,6 +19,7 @@ export class AppParallelPlot {
   @State() clickElement: any = [];
   @State() stateTrigger: any = 0;
   @State() seriesLabel: any = [];
+  @State() animations: any = { disabled: false };
   @State() accessibility: any = {
     longDescription: 'This is a chart template that was made to showcase the Visa Chart Components parallel plot',
     contextExplanation: 'This chart exists in a demo app created to let you quickly change props and see results',
@@ -32,10 +34,44 @@ export class AppParallelPlot {
     keyboardNavConfig: { disabled: false }
   };
   @State() suppressEvents: boolean = false;
+  @State() annotations: any = [
+    {
+      note: {
+        label: '2018',
+        bgPadding: 0,
+        align: 'middle',
+        wrap: 210
+      },
+      accessibilityDescription: '2018 High Spend band total is 5,596',
+      x: '8%',
+      y: '40%',
+      disable: ['connector', 'subject'],
+      // dy: '-1%',
+      color: '#000000',
+      className: 'testing1 testing2 testing3',
+      collisionHideOnly: true
+    },
+    {
+      note: {
+        label: 'oasijfoiajsf',
+        bgPadding: 0,
+        align: 'middle',
+        wrap: 210
+      },
+      accessibilityDescription: '2018 High Spend band total is 5,596',
+      x: '8%',
+      y: '40%',
+      disable: ['connector', 'subject'],
+      // dy: '-1%',
+      color: '#000000',
+      className: 'testing1 testing2 testing3',
+      collisionHideOnly: false
+    }
+  ];
   clickStyle: any;
   hoverStyle: any;
-  seriesLabelProp: any = { visible: false, placement: 'right', label: this.seriesLabel };
-  secondaryLines: any = { keys: ['group 1'], showDataLabel: false, showSeriesLabel: true, opacity: 0.8 };
+  seriesLabelProp: any = { visible: true, placement: 'left', label: this.seriesLabel };
+  secondaryLines: any = { keys: [], showDataLabel: true, showSeriesLabel: true, opacity: 0.8 };
   dataStorage: any = [
     [
       {
@@ -565,672 +601,6 @@ export class AppParallelPlot {
         filter: 'group 1',
         spend: 0.31
       }
-    ],
-    [
-      {
-        otherOrd: 'Q1',
-        date: new Date('2012-01-01T00:00:00.000Z'),
-        otherVal: 0.55,
-        otherCat: 'CA',
-        them: 'them',
-        filter: 'all',
-        spend: 0.169
-      },
-      {
-        otherOrd: 'Q2',
-        date: new Date('2013-01-01T00:00:00.000Z'),
-        otherVal: 0.45,
-        otherCat: 'CA',
-        them: 'them subset',
-        filter: 'all',
-        spend: 0.58
-      },
-      {
-        otherOrd: 'Q3',
-        date: new Date('2014-01-01T00:00:00.000Z'),
-        otherVal: 0.1,
-        otherCat: 'CA',
-        them: 'you',
-        filter: 'all',
-        spend: 0.41
-      },
-      {
-        otherOrd: 'Q4',
-        date: new Date('2015-01-01T00:00:00.000Z'),
-        otherVal: 0.24,
-        otherCat: 'CA',
-        them: 'your subbrand',
-        filter: 'all',
-        spend: 0.91
-      },
-      {
-        otherOrd: 'Q1',
-        date: new Date('2012-01-01T00:00:00.000Z'),
-        otherVal: 0.1,
-        otherCat: 'NY',
-        them: 'them',
-        filter: 'group 1',
-        spend: 1
-      },
-      {
-        otherOrd: 'Q2',
-        date: new Date('2013-01-01T00:00:00.000Z'),
-        otherVal: 0.9,
-        otherCat: 'NY',
-        them: 'them subset',
-        filter: 'group 1',
-        spend: 0.48
-      },
-      {
-        otherOrd: 'Q3',
-        date: new Date('2014-01-01T00:00:00.000Z'),
-        otherVal: 0.22,
-        otherCat: 'NY',
-        them: 'you',
-        filter: 'group 1',
-        spend: 0.21
-      },
-      {
-        otherOrd: 'Q4',
-        date: new Date('2015-01-01T00:00:00.000Z'),
-        otherVal: 0.13,
-        otherCat: 'NY',
-        them: 'your subbrand',
-        filter: 'group 1',
-        spend: 0.51
-      }
-    ],
-    [
-      {
-        otherOrd: 'Q1',
-        date: new Date('2012-01-01T00:00:00.000Z'),
-        otherVal: 0.55,
-        otherCat: 'CA',
-        them: 'them',
-        filter: 'all',
-        spend: 0.69
-      },
-      {
-        otherOrd: 'Q2',
-        date: new Date('2013-01-01T00:00:00.000Z'),
-        otherVal: 0.45,
-        otherCat: 'CA',
-        them: 'them subset',
-        filter: 'all',
-        spend: 0.28
-      },
-      {
-        otherOrd: 'Q3',
-        date: new Date('2014-01-01T00:00:00.000Z'),
-        otherVal: 0.1,
-        otherCat: 'CA',
-        them: 'you',
-        filter: 'all',
-        spend: 0.31
-      },
-      {
-        otherOrd: 'Q4',
-        date: new Date('2015-01-01T00:00:00.000Z'),
-        otherVal: 0.24,
-        otherCat: 'CA',
-        them: 'your subbrand',
-        filter: 'all',
-        spend: 0.51
-      },
-      {
-        otherOrd: 'Q1',
-        date: new Date('2012-01-01T00:00:00.000Z'),
-        otherVal: 0.1,
-        otherCat: 'NY',
-        them: 'them',
-        filter: 'group 1',
-        spend: 0.29
-      },
-      {
-        otherOrd: 'Q2',
-        date: new Date('2013-01-01T00:00:00.000Z'),
-        otherVal: 0.9,
-        otherCat: 'NY',
-        them: 'them subset',
-        filter: 'group 1',
-        spend: 0.18
-      },
-      {
-        otherOrd: 'Q3',
-        date: new Date('2014-01-01T00:00:00.000Z'),
-        otherVal: 0.22,
-        otherCat: 'NY',
-        them: 'you',
-        filter: 'group 1',
-        spend: 0.71
-      },
-      {
-        otherOrd: 'Q4',
-        date: new Date('2015-01-01T00:00:00.000Z'),
-        otherVal: 0.13,
-        otherCat: 'NY',
-        them: 'your subbrand',
-        filter: 'group 1',
-        spend: 0.31
-      }
-    ],
-    [
-      {
-        otherOrd: 'Q1',
-        date: new Date('2012-01-01T00:00:00.000Z'),
-        otherVal: 0.55,
-        otherCat: 'CA',
-        them: 'them',
-        filter: 'all',
-        spend: 0.169
-      },
-      {
-        otherOrd: 'Q2',
-        date: new Date('2013-01-01T00:00:00.000Z'),
-        otherVal: 0.45,
-        otherCat: 'CA',
-        them: 'them subset',
-        filter: 'all',
-        spend: 0.58
-      },
-      {
-        otherOrd: 'Q3',
-        date: new Date('2014-01-01T00:00:00.000Z'),
-        otherVal: 0.1,
-        otherCat: 'CA',
-        them: 'you',
-        filter: 'all',
-        spend: 0.41
-      },
-      {
-        otherOrd: 'Q4',
-        date: new Date('2015-01-01T00:00:00.000Z'),
-        otherVal: 0.24,
-        otherCat: 'CA',
-        them: 'your subbrand',
-        filter: 'all',
-        spend: 0.91
-      },
-      {
-        otherOrd: 'Q1',
-        date: new Date('2012-01-01T00:00:00.000Z'),
-        otherVal: 0.1,
-        otherCat: 'NY',
-        them: 'them',
-        filter: 'group 1',
-        spend: 1
-      },
-      {
-        otherOrd: 'Q2',
-        date: new Date('2013-01-01T00:00:00.000Z'),
-        otherVal: 0.9,
-        otherCat: 'NY',
-        them: 'them subset',
-        filter: 'group 1',
-        spend: 0.48
-      },
-      {
-        otherOrd: 'Q3',
-        date: new Date('2014-01-01T00:00:00.000Z'),
-        otherVal: 0.22,
-        otherCat: 'NY',
-        them: 'you',
-        filter: 'group 1',
-        spend: 0.21
-      },
-      {
-        otherOrd: 'Q4',
-        date: new Date('2015-01-01T00:00:00.000Z'),
-        otherVal: 0.13,
-        otherCat: 'NY',
-        them: 'your subbrand',
-        filter: 'group 1',
-        spend: 0.51
-      }
-    ],
-    [
-      {
-        otherOrd: 'Q1',
-        date: new Date('2012-01-01T00:00:00.000Z'),
-        otherVal: 0.55,
-        otherCat: 'CA',
-        them: 'them',
-        filter: 'all',
-        spend: 0.69
-      },
-      {
-        otherOrd: 'Q2',
-        date: new Date('2013-01-01T00:00:00.000Z'),
-        otherVal: 0.45,
-        otherCat: 'CA',
-        them: 'them subset',
-        filter: 'all',
-        spend: 0.28
-      },
-      {
-        otherOrd: 'Q3',
-        date: new Date('2014-01-01T00:00:00.000Z'),
-        otherVal: 0.1,
-        otherCat: 'CA',
-        them: 'you',
-        filter: 'all',
-        spend: 0.31
-      },
-      {
-        otherOrd: 'Q4',
-        date: new Date('2015-01-01T00:00:00.000Z'),
-        otherVal: 0.24,
-        otherCat: 'CA',
-        them: 'your subbrand',
-        filter: 'all',
-        spend: 0.51
-      },
-      {
-        otherOrd: 'Q1',
-        date: new Date('2012-01-01T00:00:00.000Z'),
-        otherVal: 0.1,
-        otherCat: 'NY',
-        them: 'them',
-        filter: 'group 1',
-        spend: 0.29
-      },
-      {
-        otherOrd: 'Q2',
-        date: new Date('2013-01-01T00:00:00.000Z'),
-        otherVal: 0.9,
-        otherCat: 'NY',
-        them: 'them subset',
-        filter: 'group 1',
-        spend: 0.18
-      },
-      {
-        otherOrd: 'Q3',
-        date: new Date('2014-01-01T00:00:00.000Z'),
-        otherVal: 0.22,
-        otherCat: 'NY',
-        them: 'you',
-        filter: 'group 1',
-        spend: 0.71
-      },
-      {
-        otherOrd: 'Q4',
-        date: new Date('2015-01-01T00:00:00.000Z'),
-        otherVal: 0.13,
-        otherCat: 'NY',
-        them: 'your subbrand',
-        filter: 'group 1',
-        spend: 0.31
-      }
-    ],
-    [
-      {
-        otherOrd: 'Q1',
-        date: new Date('2012-01-01T00:00:00.000Z'),
-        otherVal: 0.55,
-        otherCat: 'CA',
-        them: 'them',
-        filter: 'all',
-        spend: 0.169
-      },
-      {
-        otherOrd: 'Q2',
-        date: new Date('2013-01-01T00:00:00.000Z'),
-        otherVal: 0.45,
-        otherCat: 'CA',
-        them: 'them subset',
-        filter: 'all',
-        spend: 0.58
-      },
-      {
-        otherOrd: 'Q3',
-        date: new Date('2014-01-01T00:00:00.000Z'),
-        otherVal: 0.1,
-        otherCat: 'CA',
-        them: 'you',
-        filter: 'all',
-        spend: 0.41
-      },
-      {
-        otherOrd: 'Q4',
-        date: new Date('2015-01-01T00:00:00.000Z'),
-        otherVal: 0.24,
-        otherCat: 'CA',
-        them: 'your subbrand',
-        filter: 'all',
-        spend: 0.91
-      },
-      {
-        otherOrd: 'Q1',
-        date: new Date('2012-01-01T00:00:00.000Z'),
-        otherVal: 0.1,
-        otherCat: 'NY',
-        them: 'them',
-        filter: 'group 1',
-        spend: 1
-      },
-      {
-        otherOrd: 'Q2',
-        date: new Date('2013-01-01T00:00:00.000Z'),
-        otherVal: 0.9,
-        otherCat: 'NY',
-        them: 'them subset',
-        filter: 'group 1',
-        spend: 0.48
-      },
-      {
-        otherOrd: 'Q3',
-        date: new Date('2014-01-01T00:00:00.000Z'),
-        otherVal: 0.22,
-        otherCat: 'NY',
-        them: 'you',
-        filter: 'group 1',
-        spend: 0.21
-      },
-      {
-        otherOrd: 'Q4',
-        date: new Date('2015-01-01T00:00:00.000Z'),
-        otherVal: 0.13,
-        otherCat: 'NY',
-        them: 'your subbrand',
-        filter: 'group 1',
-        spend: 0.51
-      }
-    ],
-    [
-      {
-        otherOrd: 'Q1',
-        date: new Date('2012-01-01T00:00:00.000Z'),
-        otherVal: 0.55,
-        otherCat: 'CA',
-        them: 'them',
-        filter: 'all',
-        spend: 0.69
-      },
-      {
-        otherOrd: 'Q2',
-        date: new Date('2013-01-01T00:00:00.000Z'),
-        otherVal: 0.45,
-        otherCat: 'CA',
-        them: 'them subset',
-        filter: 'all',
-        spend: 0.28
-      },
-      {
-        otherOrd: 'Q3',
-        date: new Date('2014-01-01T00:00:00.000Z'),
-        otherVal: 0.1,
-        otherCat: 'CA',
-        them: 'you',
-        filter: 'all',
-        spend: 0.31
-      },
-      {
-        otherOrd: 'Q4',
-        date: new Date('2015-01-01T00:00:00.000Z'),
-        otherVal: 0.24,
-        otherCat: 'CA',
-        them: 'your subbrand',
-        filter: 'all',
-        spend: 0.51
-      },
-      {
-        otherOrd: 'Q1',
-        date: new Date('2012-01-01T00:00:00.000Z'),
-        otherVal: 0.1,
-        otherCat: 'NY',
-        them: 'them',
-        filter: 'group 1',
-        spend: 0.29
-      },
-      {
-        otherOrd: 'Q2',
-        date: new Date('2013-01-01T00:00:00.000Z'),
-        otherVal: 0.9,
-        otherCat: 'NY',
-        them: 'them subset',
-        filter: 'group 1',
-        spend: 0.18
-      },
-      {
-        otherOrd: 'Q3',
-        date: new Date('2014-01-01T00:00:00.000Z'),
-        otherVal: 0.22,
-        otherCat: 'NY',
-        them: 'you',
-        filter: 'group 1',
-        spend: 0.71
-      },
-      {
-        otherOrd: 'Q4',
-        date: new Date('2015-01-01T00:00:00.000Z'),
-        otherVal: 0.13,
-        otherCat: 'NY',
-        them: 'your subbrand',
-        filter: 'group 1',
-        spend: 0.31
-      }
-    ],
-    [
-      {
-        otherOrd: 'Q1',
-        date: new Date('2012-01-01T00:00:00.000Z'),
-        otherVal: 0.55,
-        otherCat: 'CA',
-        them: 'them',
-        filter: 'all',
-        spend: 0.169
-      },
-      {
-        otherOrd: 'Q2',
-        date: new Date('2013-01-01T00:00:00.000Z'),
-        otherVal: 0.45,
-        otherCat: 'CA',
-        them: 'them subset',
-        filter: 'all',
-        spend: 0.58
-      },
-      {
-        otherOrd: 'Q3',
-        date: new Date('2014-01-01T00:00:00.000Z'),
-        otherVal: 0.1,
-        otherCat: 'CA',
-        them: 'you',
-        filter: 'all',
-        spend: 0.41
-      },
-      {
-        otherOrd: 'Q4',
-        date: new Date('2015-01-01T00:00:00.000Z'),
-        otherVal: 0.24,
-        otherCat: 'CA',
-        them: 'your subbrand',
-        filter: 'all',
-        spend: 0.91
-      },
-      {
-        otherOrd: 'Q1',
-        date: new Date('2012-01-01T00:00:00.000Z'),
-        otherVal: 0.1,
-        otherCat: 'NY',
-        them: 'them',
-        filter: 'group 1',
-        spend: 1
-      },
-      {
-        otherOrd: 'Q2',
-        date: new Date('2013-01-01T00:00:00.000Z'),
-        otherVal: 0.9,
-        otherCat: 'NY',
-        them: 'them subset',
-        filter: 'group 1',
-        spend: 0.48
-      },
-      {
-        otherOrd: 'Q3',
-        date: new Date('2014-01-01T00:00:00.000Z'),
-        otherVal: 0.22,
-        otherCat: 'NY',
-        them: 'you',
-        filter: 'group 1',
-        spend: 0.21
-      },
-      {
-        otherOrd: 'Q4',
-        date: new Date('2015-01-01T00:00:00.000Z'),
-        otherVal: 0.13,
-        otherCat: 'NY',
-        them: 'your subbrand',
-        filter: 'group 1',
-        spend: 0.51
-      }
-    ],
-    [
-      {
-        otherOrd: 'Q1',
-        date: new Date('2012-01-01T00:00:00.000Z'),
-        otherVal: 0.55,
-        otherCat: 'CA',
-        them: 'them',
-        filter: 'all',
-        spend: 0.69
-      },
-      {
-        otherOrd: 'Q2',
-        date: new Date('2013-01-01T00:00:00.000Z'),
-        otherVal: 0.45,
-        otherCat: 'CA',
-        them: 'them subset',
-        filter: 'all',
-        spend: 0.28
-      },
-      {
-        otherOrd: 'Q3',
-        date: new Date('2014-01-01T00:00:00.000Z'),
-        otherVal: 0.1,
-        otherCat: 'CA',
-        them: 'you',
-        filter: 'all',
-        spend: 0.31
-      },
-      {
-        otherOrd: 'Q4',
-        date: new Date('2015-01-01T00:00:00.000Z'),
-        otherVal: 0.24,
-        otherCat: 'CA',
-        them: 'your subbrand',
-        filter: 'all',
-        spend: 0.51
-      },
-      {
-        otherOrd: 'Q1',
-        date: new Date('2012-01-01T00:00:00.000Z'),
-        otherVal: 0.1,
-        otherCat: 'NY',
-        them: 'them',
-        filter: 'group 1',
-        spend: 0.29
-      },
-      {
-        otherOrd: 'Q2',
-        date: new Date('2013-01-01T00:00:00.000Z'),
-        otherVal: 0.9,
-        otherCat: 'NY',
-        them: 'them subset',
-        filter: 'group 1',
-        spend: 0.18
-      },
-      {
-        otherOrd: 'Q3',
-        date: new Date('2014-01-01T00:00:00.000Z'),
-        otherVal: 0.22,
-        otherCat: 'NY',
-        them: 'you',
-        filter: 'group 1',
-        spend: 0.71
-      },
-      {
-        otherOrd: 'Q4',
-        date: new Date('2015-01-01T00:00:00.000Z'),
-        otherVal: 0.13,
-        otherCat: 'NY',
-        them: 'your subbrand',
-        filter: 'group 1',
-        spend: 0.31
-      }
-    ],
-    [
-      {
-        otherOrd: 'Q1',
-        date: new Date('2012-01-01T00:00:00.000Z'),
-        otherVal: 0.55,
-        otherCat: 'CA',
-        them: 'them',
-        filter: 'all',
-        spend: 0.169
-      },
-      {
-        otherOrd: 'Q2',
-        date: new Date('2013-01-01T00:00:00.000Z'),
-        otherVal: 0.45,
-        otherCat: 'CA',
-        them: 'them subset',
-        filter: 'all',
-        spend: 0.58
-      },
-      {
-        otherOrd: 'Q3',
-        date: new Date('2014-01-01T00:00:00.000Z'),
-        otherVal: 0.1,
-        otherCat: 'CA',
-        them: 'you',
-        filter: 'all',
-        spend: 0.41
-      },
-      {
-        otherOrd: 'Q4',
-        date: new Date('2015-01-01T00:00:00.000Z'),
-        otherVal: 0.24,
-        otherCat: 'CA',
-        them: 'your subbrand',
-        filter: 'all',
-        spend: 0.91
-      },
-      {
-        otherOrd: 'Q1',
-        date: new Date('2012-01-01T00:00:00.000Z'),
-        otherVal: 0.1,
-        otherCat: 'NY',
-        them: 'them',
-        filter: 'group 1',
-        spend: 1
-      },
-      {
-        otherOrd: 'Q2',
-        date: new Date('2013-01-01T00:00:00.000Z'),
-        otherVal: 0.9,
-        otherCat: 'NY',
-        them: 'them subset',
-        filter: 'group 1',
-        spend: 0.48
-      },
-      {
-        otherOrd: 'Q3',
-        date: new Date('2014-01-01T00:00:00.000Z'),
-        otherVal: 0.22,
-        otherCat: 'NY',
-        them: 'you',
-        filter: 'group 1',
-        spend: 0.21
-      },
-      {
-        otherOrd: 'Q4',
-        date: new Date('2015-01-01T00:00:00.000Z'),
-        otherVal: 0.13,
-        otherCat: 'NY',
-        them: 'your subbrand',
-        filter: 'group 1',
-        spend: 0.51
-      }
     ]
   ];
   @State() ordinalAccessor: any = 'them';
@@ -1352,10 +722,12 @@ export class AppParallelPlot {
   changeDotOpacity() {
     this.dotOpacity = this.dotOpacity !== true ? true : false;
   }
+  toggleAnimations() {
+    this.animations = { disabled: !this.animations.disabled };
+  }
 
   render() {
     this.data = this.dataStorage[this.stateTrigger];
-    this.seriesLabelProp = { visible: false, placement: 'right', label: this.seriesLabel };
     this.clickStyle = { color: '#222222', strokeWidth: this.clickStrokeWidth };
     this.hoverStyle = { color: '#e4e4e4', strokeWidth: this.hoverStrokeWidth };
     return (
@@ -1479,8 +851,17 @@ export class AppParallelPlot {
         >
           show/hide dots
         </button>
+
+        <button
+          onClick={() => {
+            this.toggleAnimations();
+          }}
+        >
+          toggle animations
+        </button>
         <parallel-plot
           mainTitle="Parallel Plot Default"
+          animationConfig={this.animations}
           subTitle="Interaction Style"
           width={500}
           height={this.height}
@@ -1489,6 +870,21 @@ export class AppParallelPlot {
           valueAccessor={this.valueAccessor}
           seriesAccessor={this.seriesAccessor}
           seriesLabel={this.seriesLabelProp}
+          dataLabel={{
+            visible: true,
+            // placement: 'top-right',
+            placement: 'auto',
+            labelAccessor: this.valueAccessor,
+            format: '0.0[a]'
+          }}
+          yAxis={{
+            visible: true,
+            gridVisible: false,
+            label: 'y axis',
+            tickInterval: 2,
+            format: '%',
+            scales: 'preNormalized'
+          }}
           dotRadius={5}
           strokeWidth={2}
           showDots={this.dotOpacity}
@@ -1496,6 +892,7 @@ export class AppParallelPlot {
           hoverOpacity={1}
           secondaryLines={this.secondaryLines}
           cursor={this.cursor}
+          // annotations={this.annotations}
           clickStyle={this.clickStyle}
           hoverStyle={this.hoverStyle}
           hoverHighlight={this.hoverElement}

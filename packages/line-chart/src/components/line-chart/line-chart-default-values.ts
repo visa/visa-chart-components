@@ -31,6 +31,7 @@ export class LineChartDefaultValues {
   static readonly seriesAccessor = 'series';
 
   static readonly accessibility = propDefaultValues.accessibility;
+  static readonly animationConfig = propDefaultValues.animationConfig;
   static readonly xAxis = propDefaultValues.xAxisDate;
   static readonly yAxis = propDefaultValues.yAxis;
   static readonly showBaselineX = propDefaultValues.showBaselineTrue;
@@ -48,7 +49,7 @@ export class LineChartDefaultValues {
   static readonly hoverOpacity = propDefaultValues.hoverOpacity;
   static readonly cursor = propDefaultValues.cursor;
 
-  static readonly dataLabel = propDefaultValues.dataLabel;
+  static readonly dataLabel = propDefaultValues.dataLabelLine;
   static readonly seriesLabel = propDefaultValues.seriesLabel;
   static readonly legend = propDefaultValues.categoryLegend;
   static readonly tooltipLabel = propDefaultValues.tooltipLabel;

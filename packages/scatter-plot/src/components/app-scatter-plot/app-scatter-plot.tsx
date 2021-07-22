@@ -7,6 +7,7 @@
  **/
 import { Component, State, Element, h } from '@stencil/core';
 import '@visa/visa-charts-data-table';
+import '@visa/keyboard-instructions';
 @Component({
   tag: 'app-scatter-plot',
   styleUrl: 'app-scatter-plot.scss'
@@ -29,6 +30,8 @@ export class AppScatterPlot {
   @State() hoverStrokeWidth: number = 1;
   @State() hoverColor: string = '#8CD6C2';
   @State() interactionKeys: any = ['group'];
+  @State() animations: any = { disabled: false };
+  @State() dataLabel: any = { visible: true, placement: 'auto', labelAccessor: 'value', format: '0.0[a]' };
   @State() accessibility: any = {
     elementsAreInterface: false,
     keyboardNavConfig: { disabled: false }
@@ -97,6 +100,75 @@ export class AppScatterPlot {
       { item: 30, otherItem: 7, group: 'E', value: 12276, otherValue: 535, test: 'C' }
     ]
   ];
+  annotations: any = [
+    {
+      note: {
+        label: '2018',
+        bgPadding: 0,
+        align: 'middle',
+        wrap: 210
+      },
+      accessibilityDescription: '2018 High Spend band total is 5,596',
+      x: '8%',
+      y: '40%',
+      disable: ['connector', 'subject'],
+      // dy: '-1%',
+      color: '#000000',
+      className: 'testing1 testing2 testing3',
+      collisionHideOnly: true
+    },
+    {
+      note: {
+        label: 'oasijfoiajsf',
+        bgPadding: 0,
+        align: 'middle',
+        wrap: 210
+      },
+      accessibilityDescription: '2018 High Spend band total is 5,596',
+      x: '8%',
+      y: '40%',
+      disable: ['connector', 'subject'],
+      // dy: '-1%',
+      color: '#000000',
+      className: 'testing1 testing2 testing3',
+      collisionHideOnly: false
+    }
+    // {
+    //   note: {
+    //     label: '24 items',
+    //     bgPadding: 0,
+    //     title: 'Dense Cluster',
+    //     align: 'right',
+    //     wrap: 130
+    //   },
+    //   data: { item: 3, otherItem: 8, group: 'A', value: 2000, otherValue: 435, test: 'B' },
+    //   dx: '-10%',
+    //   // "dy": "-50%",
+    //   className: 'scatter-annotation',
+    //   type: 'annotationCalloutCircle',
+    //   subject: {
+    //     radius: 15
+    //   }
+    // }
+    // // , {
+    // //   "note": {
+    // //     "label": "24 items",
+    // //     "bgPadding": 0,
+    // //     "title": "Dense Cluster",
+    // //     "align":"right",
+    // //     "wrap": 130
+    // //   },
+    // //   "data": { item: 1, otherItem: 234, group: 'A', value: -2700, otherValue: 235, test: 'A' },
+    // //   "dx": "5%",
+    // //   // "dy": "-50%",
+    // //   "className": "scatter-annotation",
+    // //   "type":"annotationCalloutCircle",
+    // //   "subject":{
+    // //       "radius":15
+    // //   }
+    // // }
+  ];
+
   @Element()
   appEl: HTMLElement;
   componentWillUpdate() {
@@ -188,6 +260,9 @@ export class AppScatterPlot {
   changeKeys() {
     this.interactionKeys =
       this.interactionKeys[0] === this.groupAccessor ? [this, this.yAccessor] : [this.groupAccessor];
+  }
+  toggleAnimations() {
+    this.animations = { disabled: !this.animations.disabled };
   }
   render() {
     console.log('!!!!app re-render');
@@ -293,9 +368,19 @@ export class AppScatterPlot {
           >
             change interaction keys
           </button>
+
+          <button
+            onClick={() => {
+              this.toggleAnimations();
+            }}
+          >
+            toggle animations
+          </button>
           <scatter-plot
             // Chart Attributes (1/7)
             mainTitle={'Scatter Plot Default '}
+            animationConfig={this.animations}
+            // annotations={this.annotations}
             subTitle={'Interaction Style'}
             height={400}
             width={800}
@@ -313,7 +398,7 @@ export class AppScatterPlot {
             hoverOpacity={1}
             colors={this.colors}
             colorPalette={this.colorPalette}
-            dotSymbols={['star', 'square', 'cross', 'circle', 'star']}
+            dotSymbols={['cross', 'square', 'diamond', 'circle', 'star']}
             data={this.data}
             xAccessor={this.xAccessor}
             yAccessor={this.yAccessor}
@@ -323,21 +408,21 @@ export class AppScatterPlot {
             showBaselineY={this.baselineY}
             groupAccessor={this.groupAccessor}
             legend={{ visible: true, interactive: true }}
-            dataLabel={{ visible: true, placement: 'right', labelAccessor: 'value', format: '0.0[a]' }}
+            dataLabel={this.dataLabel}
             interactionKeys={this.interactionKeys}
             hoverHighlight={this.hoverElement}
             clickHighlight={this.clickElement}
             onClickFunc={d => this.onClickFunc(d)}
             onHoverFunc={d => this.onHoverFunc(d)}
             onMouseOutFunc={() => this.onMouseOut()}
-            clickStyle={{
-              strokeWidth: this.clickStrokeWidth,
-              color: this.clickColor
-            }}
-            hoverStyle={{
-              strokeWidth: this.hoverStrokeWidth,
-              color: this.hoverColor
-            }}
+            // clickStyle={{
+            //   strokeWidth: this.clickStrokeWidth,
+            //   color: this.clickColor
+            // }}
+            // hoverStyle={{
+            //   strokeWidth: this.hoverStrokeWidth,
+            //   color: this.hoverColor
+            // }}
             accessibility={this.accessibility}
             suppressEvents={this.suppressEvents}
           />

@@ -22,6 +22,7 @@ import {
   IDataLabelType,
   ITooltipLabelType,
   IAccessibilityType,
+  IAnimationConfig,
   ILegendType,
   ISeriesLabelType,
   ISecondaryLinesType
@@ -36,6 +37,7 @@ const {
   ensureTextContrast,
   createTextStrokeFilter,
   findTagLevel,
+  prepareRenderChange,
   initializeDescriptionRoot,
   initializeElementAccess,
   setElementFocusHandler,
@@ -81,7 +83,9 @@ const {
   scopeDataKeys,
   transitionEndAll,
   visaColors,
-  validateAccessibilityProps
+  validateAccessibilityProps,
+  roundTo,
+  resolveLabelCollision
 } = Utils;
 
 @Component({
@@ -123,6 +127,7 @@ export class LineChart {
   @Prop({ mutable: true }) referenceStyle: IReferenceStyleType = LineChartDefaultValues.referenceStyle;
   @Prop({ mutable: true }) cursor: string = LineChartDefaultValues.cursor;
   @Prop({ mutable: true }) hoverOpacity: number = LineChartDefaultValues.hoverOpacity;
+  @Prop({ mutable: true }) animationConfig: IAnimationConfig = LineChartDefaultValues.animationConfig;
   @Prop({ mutable: true }) strokeWidth: number = LineChartDefaultValues.strokeWidth;
   @Prop({ mutable: true }) showDots: boolean = LineChartDefaultValues.showDots;
   @Prop({ mutable: true }) dotRadius: number = LineChartDefaultValues.dotRadius;
@@ -165,7 +170,9 @@ export class LineChart {
   line: any;
   x: any;
   y: any;
+  xIndex: any;
   nest: any;
+  dotNest: any;
   map: any;
   interpolating: any;
   innerHeight: number;
@@ -292,6 +299,8 @@ export class LineChart {
     this.short + this.b + this.long + this.b + this.long,
     this.short + this.b + this.short + this.b + this.long
   ];
+  bitmaps: any;
+  hiddenHash: object = {};
 
   @Watch('data')
   dataWatcher(_newData, _oldData) {
@@ -923,6 +932,8 @@ export class LineChart {
       this.enterPoints();
       this.updatePoints();
       this.exitPoints();
+      this.drawLines();
+      this.drawPoints();
       this.enterSeriesLabels();
       this.updateSeriesLabels();
       this.exitSeriesLabels();
@@ -930,14 +941,12 @@ export class LineChart {
       this.updateDataLabels();
       this.exitDataLabels();
       this.setSeriesLabelOpacity();
-      this.drawLines();
-      this.drawPoints();
       this.setChartCountAccessibility();
       this.setGeometryAccessibilityAttributes();
       this.setGeometryAriaLabels();
-      this.drawSeriesLabels();
       this.drawLegendElements();
       this.drawDataLabels();
+      this.drawSeriesLabels();
       this.addStrokeUnder();
       this.drawReferenceLines();
       this.setSelectedClass();
@@ -955,7 +964,6 @@ export class LineChart {
       hideNonessentialGroups(this.root.node(), this.dotG.node());
       this.setGroupAccessibilityID();
       this.onChangeHandler();
-      this.duration = 750;
       this.defaults = false;
       resolve('component did load');
     });
@@ -963,6 +971,7 @@ export class LineChart {
 
   componentDidUpdate() {
     return new Promise(resolve => {
+      this.duration = !this.animationConfig || !this.animationConfig.disabled ? 750 : 0;
       if (this.shouldUpdateDescriptionWrapper) {
         this.setChartDescriptionWrapper();
         this.shouldUpdateDescriptionWrapper = false;
@@ -1062,10 +1071,6 @@ export class LineChart {
         this.setGroupAccessibilityID();
         this.shouldSetGroupAccessibilityLabel = false;
       }
-      if (this.shouldUpdateSeriesLabels) {
-        this.drawSeriesLabels();
-        this.shouldUpdateSeriesLabels = false;
-      }
       if (this.shouldUpdateColors) {
         this.updateColors();
         this.shouldUpdateColors = false;
@@ -1077,6 +1082,10 @@ export class LineChart {
       if (this.shouldUpdateLabels) {
         this.drawDataLabels();
         this.shouldUpdateLabels = false;
+      }
+      if (this.shouldUpdateSeriesLabels) {
+        this.drawSeriesLabels();
+        this.shouldUpdateSeriesLabels = false;
       }
       if (this.addStrokeUnder) {
         this.addStrokeUnder();
@@ -1235,6 +1244,7 @@ export class LineChart {
       .range([this.innerPaddedHeight, 0]);
 
     // set xAxis scale : date
+    let xDomainUnique = [];
     if (this.data[0][this.ordinalAccessor] instanceof Date) {
       const maxDate = max(this.data, d => d[this.ordinalAccessor]);
       const minDate = min(this.data, d => d[this.ordinalAccessor]);
@@ -1244,6 +1254,12 @@ export class LineChart {
       this.x = scaleTime()
         .domain([minDate, maxDate])
         .range([0, this.innerPaddedWidth]);
+
+      // need a unique listing of all times provided for data-index attribute
+      xDomainUnique = this.data
+        .map(d => d[this.ordinalAccessor].getTime())
+        .filter((x, i, a) => a.indexOf(x) === i)
+        .sort((a, b) => a - b);
 
       if (this.xAxis.unit) {
         const timeTool = this.time['time' + this.xAxis.unit];
@@ -1260,24 +1276,77 @@ export class LineChart {
         .domain(this.data.map(d => d[this.ordinalAccessor]))
         .padding(0.5)
         .range([0, this.innerPaddedWidth]);
+
+      // need a unique listing of all ordinal values for data-index attribute
+      xDomainUnique = this.data.map(d => d[this.ordinalAccessor]).filter((x, i, a) => a.indexOf(x) === i);
     }
+
+    // this scale is used to derive the data-index based on scale result
+    this.xIndex = scalePoint()
+      .domain(xDomainUnique)
+      .range([0, xDomainUnique.length - 1]);
+
     this.line = line()
+      .defined(d => !isNaN(d[this.valueAccessor]) && d[this.valueAccessor] !== null)
       .x(d => this.x(d[this.ordinalAccessor]))
       .y(d => this.y(d[this.valueAccessor]));
   }
 
   prepareData() {
+    const filteredData = this.data.filter(d => {
+      const hashObject = this.hiddenHash[`${d[this.ordinalAccessor]}-${d[this.seriesAccessor] || 'b'}`];
+      if (
+        hashObject &&
+        (this.dataLabel.placement === 'auto' || this.dataLabel.collisionHideOnly) &&
+        !d['enter'] &&
+        !d['exit']
+      ) {
+        d['hidden'] = hashObject['data-label-hidden'];
+        d['auto-x'] = hashObject.x;
+        d['auto-y'] = hashObject.y;
+        d['auto-text-anchor'] = hashObject['text-anchor'];
+      }
+      return !isNaN(d[this.valueAccessor]) && d[this.valueAccessor] !== null;
+    });
+
     this.nest = nest()
       .key(d => d[this.seriesAccessor])
       .entries(this.data);
 
+    this.dotNest = nest()
+      .key(d => d[this.seriesAccessor])
+      .entries(filteredData);
+
     this.map = nest()
       .key(d => d[this.seriesAccessor])
-      .map(this.data);
+      .map(filteredData);
   }
 
   updateInterpolationData() {
     if (this.interpolating) {
+      // for interpolating, we have to do this twice now, for dotNest and Nest
+      this.dotNest.forEach(parent => {
+        parent.interpolate = {};
+
+        const left = this.interpolating.map.get(parent.key);
+        const right = parent.values;
+
+        if (!left) {
+          parent.interpolate.start = right;
+          parent.interpolate.end = right;
+        } else {
+          const resolved = resolveLines(left, right, this.ordinalAccessor);
+          if (!resolved.length) {
+            parent.interpolate.start = left;
+            parent.interpolate.end = right;
+          } else {
+            parent.interpolate.start = resolved[0];
+            parent.interpolate.end = resolved[1];
+          }
+        }
+      });
+
+      // original nest interpolation before the creation of dotNest
       let change = this.nest.length;
       this.nest.forEach(parent => {
         parent.interpolate = {};
@@ -1388,25 +1457,35 @@ export class LineChart {
   }
 
   reSetRoot() {
-    this.svg
-      .transition('root_reset')
-      .duration(this.duration)
-      .ease(easeCircleIn)
+    const changeSvg = prepareRenderChange({
+      selection: this.svg,
+      duration: this.duration,
+      namespace: 'root_reset',
+      easing: easeCircleIn
+    });
+
+    changeSvg
       .attr('width', this.width)
       .attr('height', this.height)
       .attr('viewBox', '0 0 ' + this.width + ' ' + this.height);
 
-    this.root
-      .transition('root_reset')
-      .duration(this.duration)
-      .ease(easeCircleIn)
-      .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`);
+    const changeRoot = prepareRenderChange({
+      selection: this.root,
+      duration: this.duration,
+      namespace: 'root_reset',
+      easing: easeCircleIn
+    });
 
-    this.rootG
-      .transition('root_reset')
-      .duration(this.duration)
-      .ease(easeCircleIn)
-      .attr('transform', `translate(${this.padding.left}, ${this.padding.top})`);
+    changeRoot.attr('transform', `translate(${this.margin.left}, ${this.margin.top})`);
+
+    const changeRootG = prepareRenderChange({
+      selection: this.rootG,
+      duration: this.duration,
+      namespace: 'root_reset',
+      easing: easeCircleIn
+    });
+
+    changeRootG.attr('transform', `translate(${this.padding.left}, ${this.padding.top})`);
 
     setAccessibilityDescriptionWidth(this.chartID, this.width);
   }
@@ -1418,17 +1497,17 @@ export class LineChart {
     this.update = dataBoundToLines.merge(this.enter);
     this.enterSize = this.enter.size();
 
-    const dataBoundToDotWrappers = this.dotG.selectAll('.line-dot-wrapper').data(this.nest, d => d.key);
+    const dataBoundToDotWrappers = this.dotG.selectAll('.line-dot-wrapper').data(this.dotNest, d => d.key);
     this.enterDotWrappers = dataBoundToDotWrappers.enter().append('g');
     this.exitDotWrappers = dataBoundToDotWrappers.exit();
     this.updateDotWrappers = dataBoundToDotWrappers.merge(this.enterDotWrappers);
 
-    const dataBountToSeriesLabels = this.seriesLabelG.selectAll('.line-series-label').data(this.nest, d => d.key);
+    const dataBountToSeriesLabels = this.seriesLabelG.selectAll('.line-series-label').data(this.dotNest, d => d.key);
     this.seriesLabelEnter = dataBountToSeriesLabels.enter().append('text');
     this.seriesLabelExit = dataBountToSeriesLabels.exit();
     this.seriesLabelUpdate = dataBountToSeriesLabels.merge(this.seriesLabelEnter);
 
-    const dataBoundToLabels = this.labels.selectAll('g').data(this.nest, d => d.key);
+    const dataBoundToLabels = this.labels.selectAll('g').data(this.dotNest, d => d.key);
     this.enteringLabelGroups = dataBoundToLabels.enter().append('g');
     this.exitingLabelGroups = dataBoundToLabels.exit();
     this.updatingLabelGroups = dataBoundToLabels.merge(this.enteringLabelGroups);
@@ -1449,10 +1528,11 @@ export class LineChart {
       this.enteringLabels = dataBoundToLabelChildren.enter().append('text');
       this.exitingLabels = dataBoundToLabelChildren.exit();
       this.updatingLabels = dataBoundToLabelChildren.merge(this.enteringLabels);
-
       // this.updatingLabels = this.updatingLabelGroups.selectAll('.line-dataLabel').data(d => d.interpolate.end);
     } else {
-      const dataBoundToDots = this.updateDotWrappers.selectAll('circle').data(d => d.values);
+      const dataBoundToDots = this.updateDotWrappers
+        .selectAll('circle')
+        .data(d => d.values, d => d[this.ordinalAccessor]);
 
       this.enterDots = dataBoundToDots.enter().append('circle');
       this.exitDots = dataBoundToDots.exit();
@@ -1567,7 +1647,8 @@ export class LineChart {
       tickInterval: this.xAxis.tickInterval,
       label: this.xAxis.label,
       padding: this.padding,
-      hide: !this.xAxis.visible
+      hide: !this.xAxis.visible,
+      duration: this.duration
     });
   }
 
@@ -1583,7 +1664,8 @@ export class LineChart {
       tickInterval: this.yAxis.tickInterval,
       label: this.yAxis.label,
       padding: this.padding,
-      hide: !this.yAxis.visible
+      hide: !this.yAxis.visible,
+      duration: this.duration
     });
   }
 
@@ -1614,7 +1696,8 @@ export class LineChart {
       left: false,
       padding: this.padding,
       markOffset: this.y(0) || -1,
-      hide: !this.showBaselineX
+      hide: !this.showBaselineX,
+      duration: this.duration
     });
   }
 
@@ -1627,7 +1710,8 @@ export class LineChart {
       this.x,
       false,
       !this.xAxis.gridVisible,
-      this.xAxis.tickInterval
+      this.xAxis.tickInterval,
+      this.duration
     );
   }
 
@@ -1639,14 +1723,19 @@ export class LineChart {
       this.y,
       true,
       !this.yAxis.gridVisible,
-      this.yAxis.tickInterval
+      this.yAxis.tickInterval,
+      this.duration
     );
   }
 
   enterLines() {
     this.enter.interrupt();
 
-    this.enter.attr('class', 'line-plot entering').attr('d', d => this.line(d.values));
+    this.enter
+      .attr('class', 'line-plot entering')
+      .attr('d', d => this.line(d.values))
+      .attr('data-d', d => this.line(d.values))
+      .attr('data-translate-x', this.margin.left + this.padding.left);
 
     this.enter
       .attr('cursor', !this.suppressEvents && this.seriesInteraction ? this.cursor : null)
@@ -1749,6 +1838,8 @@ export class LineChart {
     this.update
       .attr('stroke', this.handleLineStroke)
       .attr('fill', 'none')
+      .attr('data-d', d => (this.interpolating ? this.line(d.interpolate.end) : this.line(d.values)))
+      .attr('data-translate-x', this.margin.left + this.padding.left)
       .transition('update')
       .ease(easeCircleIn)
       .duration(this.duration)
@@ -1779,6 +1870,8 @@ export class LineChart {
       })
       .attr('stroke', this.handleDotStroke)
       .attr('cursor', !this.suppressEvents ? this.cursor : null)
+      .attr('data-fill', true)
+      .attr('data-translate-x', this.margin.left + this.padding.left)
       .on('click', !this.suppressEvents ? d => this.onClickHandler(d) : null)
       .on('mouseover', !this.suppressEvents ? d => this.onHoverHandler(d, true) : null)
       .on('mouseout', !this.suppressEvents ? () => this.onMouseOutHandler() : null);
@@ -1860,6 +1953,11 @@ export class LineChart {
             this.clickHighlight,
             this.innerInteractionKeys
           );
+        })
+        .attr('data-index', d => {
+          return this.xIndex(
+            d[this.ordinalAccessor] instanceof Date ? d[this.ordinalAccessor].getTime() : d[this.ordinalAccessor]
+          );
         });
     } else {
       this.updateDots
@@ -1874,6 +1972,11 @@ export class LineChart {
             this.hoverHighlight,
             this.clickHighlight,
             this.innerInteractionKeys
+          );
+        })
+        .attr('data-index', d => {
+          return this.xIndex(
+            d[this.ordinalAccessor] instanceof Date ? d[this.ordinalAccessor].getTime() : d[this.ordinalAccessor]
           );
         });
     }
@@ -1947,6 +2050,22 @@ export class LineChart {
     let updateTransition;
     if (this.interpolating) {
       updateTransition = this.updateDots
+        .attr('data-cx', d => this.x(d[this.ordinalAccessor]))
+        .attr('data-cy', d => this.y(d[this.valueAccessor]))
+        .attr('data-translate-x', this.padding.left + this.margin.left)
+        .attr('data-r', d =>
+          d.exit
+            ? 0
+            : checkClicked(d, this.clickHighlight, this.innerInteractionKeys)
+            ? this.dotRadius +
+              (this.clickStyle && this.clickStyle.strokeWidth ? parseFloat('' + this.clickStyle.strokeWidth) / 2 : 1)
+            : checkHovered(d, this.hoverHighlight, this.innerInteractionKeys)
+            ? this.dotRadius +
+              (this.hoverStyle && this.hoverStyle.strokeWidth ? parseFloat('' + this.hoverStyle.strokeWidth) / 2 : 1)
+            : this.secondaryLines.keys.includes(d[this.seriesAccessor])
+            ? this.dotRadius + 0.5
+            : this.dotRadius + parseFloat('' + this.strokeWidth) / 2
+        )
         .transition('update')
         .ease(easeCircleIn)
         .duration((_, i, n) => {
@@ -1977,6 +2096,20 @@ export class LineChart {
     } else {
       updateTransition = this.updateDots
         .attr('r', d =>
+          checkClicked(d, this.clickHighlight, this.innerInteractionKeys)
+            ? this.dotRadius +
+              (this.clickStyle && this.clickStyle.strokeWidth ? parseFloat('' + this.clickStyle.strokeWidth) / 2 : 1)
+            : checkHovered(d, this.hoverHighlight, this.innerInteractionKeys)
+            ? this.dotRadius +
+              (this.hoverStyle && this.hoverStyle.strokeWidth ? parseFloat('' + this.hoverStyle.strokeWidth) / 2 : 1)
+            : this.secondaryLines.keys.includes(d[this.seriesAccessor])
+            ? this.dotRadius + 0.5
+            : this.dotRadius + parseFloat('' + this.strokeWidth) / 2
+        )
+        .attr('data-cx', d => this.x(d[this.ordinalAccessor]))
+        .attr('data-cy', d => this.y(d[this.valueAccessor]))
+        .attr('data-translate-x', this.padding.left + this.margin.left)
+        .attr('data-r', d =>
           checkClicked(d, this.clickHighlight, this.innerInteractionKeys)
             ? this.dotRadius +
               (this.clickStyle && this.clickStyle.strokeWidth ? parseFloat('' + this.clickStyle.strokeWidth) / 2 : 1)
@@ -2059,7 +2192,7 @@ export class LineChart {
       this.labelDetails.label = '';
     }
 
-    this.isRight = this.labelDetails.placement.includes('right');
+    this.isRight = this.labelDetails.placement !== 'left';
   }
 
   enterSeriesLabels() {
@@ -2091,12 +2224,13 @@ export class LineChart {
       )
       .on('mouseout', !this.suppressEvents && this.seriesInteraction ? () => this.onMouseOutHandler() : null)
       .attr('fill', this.handleSeriesTextFill)
-      .attr('x', this.isRight ? this.innerPaddedWidth : 0)
+      .attr('x', this.isRight ? this.innerPaddedWidth + 10 : 0)
       .attr('y', d =>
         this.isRight
           ? this.y(d.values[d.values.length - 1][this.valueAccessor])
           : this.y(d.values[0][this.valueAccessor])
       )
+      .attr('text-anchor', this.isRight ? 'start' : 'end')
       .attr('dx', this.isRight ? '0.1em' : '-0.1em')
       .attr('dy', '0.3em');
   }
@@ -2143,6 +2277,8 @@ export class LineChart {
   }
 
   drawSeriesLabels() {
+    const hideOnly = this.labelDetails.placement !== 'auto' && this.labelDetails.collisionHideOnly;
+
     this.seriesLabelUpdate.text((d, i) =>
       this.secondaryLines.keys.includes(d.key) && !this.secondaryLines.showSeriesLabel
         ? ''
@@ -2151,19 +2287,74 @@ export class LineChart {
         : d.key
     );
 
-    this.seriesLabelUpdate
+    const seriesUpdate = this.seriesLabelUpdate
+      .style('visibility', (_, i, n) =>
+        this.labelDetails.placement === 'auto' || this.labelDetails.collisionHideOnly
+          ? select(n[i]).style('visibility')
+          : null
+      )
+      .attr('data-x', this.isRight ? this.innerPaddedWidth + 10 : 0)
+      .attr('data-y', (d, i, n) => {
+        const textElement = n[i];
+        const style = getComputedStyle(textElement);
+        const fontSize = parseFloat(style.fontSize);
+        const textHeight = Math.max(fontSize - 1, 1); // clone.getBBox().height;
+
+        return this.isRight
+          ? this.y(d.values[d.values.length - 1][this.valueAccessor]) + 0.3 * textHeight
+          : this.y(d.values[0][this.valueAccessor]) + 0.3 * textHeight;
+      })
+      .attr('data-translate-x', this.padding.left + this.margin.left)
+      .attr('dx', this.isRight ? '0.1em' : '-0.1em')
+      .attr('dy', '0.3em')
+      // if we are re-running collision we need text-anchor for bounds calc, but don't want to actually adjust
+      // text via text-anchor attribute
+      .attr('data-text-anchor', this.isRight ? 'start' : 'end')
+      .attr('data-use-dx', hideOnly)
+      .attr('data-use-dy', hideOnly)
       .transition('update')
       .ease(easeCircleIn)
-      .duration(this.duration)
-      .attr('text-anchor', this.isRight ? 'start' : 'end')
-      .attr('x', this.isRight ? this.innerPaddedWidth : 0)
-      .attr('y', d =>
-        this.isRight
-          ? this.y(d.values[d.values.length - 1][this.valueAccessor])
-          : this.y(d.values[0][this.valueAccessor])
-      )
-      .attr('dx', this.isRight ? '0.1em' : '-0.1em')
-      .attr('dy', '0.3em');
+      .duration(this.duration);
+
+    // if we keep this in here, we are assuming the last point will always be on the right of the chart
+    // it also adds about 8-9 ms per run to redraw this.update to canvas => bitmap
+    if (this.labelDetails.visible && (this.labelDetails.placement === 'auto' || this.labelDetails.collisionHideOnly)) {
+      this.bitmaps = resolveLabelCollision({
+        bitmaps: this.bitmaps,
+        labelSelection: seriesUpdate,
+        avoidMarks: [], // [this.updateDots], // this will link the series label to the last point in the line
+        validPositions: hideOnly ? ['middle'] : ['middle', 'top', 'bottom'],
+        offsets: hideOnly ? [1] : [1, 1, 1],
+        accessors: ['key'],
+        size: [roundTo(this.width, 0), roundTo(this.innerPaddedHeight, 0)],
+        hideOnly: this.labelDetails.visible && hideOnly
+      });
+
+      // if we are in hide only we need to add attributes back
+      if (hideOnly) {
+        seriesUpdate
+          .attr('text-anchor', this.isRight ? 'start' : 'end')
+          .attr('x', this.isRight ? this.innerPaddedWidth + 10 : 0)
+          .attr('y', d =>
+            this.isRight
+              ? this.y(d.values[d.values.length - 1][this.valueAccessor])
+              : this.y(d.values[0][this.valueAccessor])
+          )
+          .attr('dx', this.isRight ? '0.1em' : '-0.1em')
+          .attr('dy', '0.3em');
+      }
+    } else {
+      seriesUpdate
+        .attr('text-anchor', this.isRight ? 'start' : 'end')
+        .attr('x', this.isRight ? this.innerPaddedWidth + 10 : 0)
+        .attr('y', d =>
+          this.isRight
+            ? this.y(d.values[d.values.length - 1][this.valueAccessor])
+            : this.y(d.values[0][this.valueAccessor])
+        )
+        .attr('dx', this.isRight ? '0.1em' : '-0.1em')
+        .attr('dy', '0.3em');
+    }
   }
 
   enterDataLabels() {
@@ -2177,7 +2368,7 @@ export class LineChart {
     this.enteringLabels.attr('fill', this.handleTextFill);
 
     if (this.interpolating) {
-      const childrenEnter = this.enteringLabels.attr('class', 'line-dataLabel');
+      const childrenEnter = this.enteringLabels.attr('class', 'line-dataLabel').attr('opacity', 0);
 
       placeDataLabels({
         root: childrenEnter,
@@ -2231,6 +2422,25 @@ export class LineChart {
         chartType: 'line'
       });
     }
+
+    // now we check whether we have auto collision to consider
+    if (this.dataLabel.placement === 'auto') {
+      this.updatingLabels.each((d, i, n) => {
+        // we check hash for each updated label, don't touch enter/exit/hidden stuff at all
+        if (
+          !d.enter &&
+          !d.exit &&
+          !d.hidden &&
+          (d['auto-x'] || d['auto-x'] === 0) &&
+          (d['auto-y'] || d['auto-y'] === 0)
+        ) {
+          select(n[i])
+            .attr('x', +select(n[i]).attr('x') + (+d['auto-x'] || 0))
+            .attr('y', +select(n[i]).attr('y') + (+d['auto-y'] || 0))
+            .attr('text-anchor', d['auto-text-anchor']);
+        }
+      });
+    }
   }
 
   updateDataLabels() {
@@ -2267,8 +2477,8 @@ export class LineChart {
           }
           return 0;
         })
-        .attr('opacity', d =>
-          d.exit
+        .attr('opacity', (d, i, n) => {
+          const targetOpacity = d.exit
             ? 0
             : checkInteraction(
                 d,
@@ -2279,15 +2489,28 @@ export class LineChart {
                 this.innerInteractionKeys
               ) < 1
             ? 0
-            : 1
-        );
+            : 1;
+          const parentOpacity = +select(n[i].parentNode).attr('opacity');
+          select(n[i]).attr('data-hidden', parentOpacity === 0 || targetOpacity === 0 ? 'true' : null);
+          return targetOpacity;
+        });
     } else {
-      this.updatingLabels.attr('opacity', d =>
-        checkInteraction(d, 1, this.hoverOpacity, this.hoverHighlight, this.clickHighlight, this.innerInteractionKeys) <
-        1
-          ? 0
-          : 1
-      );
+      this.updatingLabels.attr('opacity', (d, i, n) => {
+        const targetOpacity =
+          checkInteraction(
+            d,
+            1,
+            this.hoverOpacity,
+            this.hoverHighlight,
+            this.clickHighlight,
+            this.innerInteractionKeys
+          ) < 1
+            ? 0
+            : 1;
+        const parentOpacity = +select(n[i].parentNode).attr('opacity');
+        select(n[i]).attr('data-hidden', parentOpacity === 0 || targetOpacity === 0 ? 'true' : null);
+        return targetOpacity;
+      });
     }
   }
 
@@ -2295,6 +2518,7 @@ export class LineChart {
     this.exitingLabels.interrupt();
 
     this.exitingLabels
+      .attr('data-hidden', 'true')
       .transition('exit')
       .ease(easeCircleIn)
       .duration(this.duration)
@@ -2302,6 +2526,7 @@ export class LineChart {
       .remove();
 
     this.exitingLabelGroups
+      .attr('data-hidden', 'true')
       .selectAll('.line-dataLabel')
       .transition('exit')
       .ease(easeCircleIn)
@@ -2316,11 +2541,23 @@ export class LineChart {
   }
 
   drawDataLabels() {
+    const hideOnly = this.dataLabel.placement !== 'auto' && this.dataLabel.collisionHideOnly;
+
     let updateChildren = this.updatingLabels.text(d => {
       return formatDataLabel(d, this.innerLabelAccessor, this.dataLabel.format);
     });
     if (this.interpolating) {
       updateChildren = this.updatingLabels
+        .style('visibility', (d, i, n) =>
+          this.dataLabel.placement === 'auto' || this.dataLabel.collisionHideOnly
+            ? d.hidden
+              ? 'hidden'
+              : select(n[i]).style('visibility')
+            : null
+        )
+        .attr('data-x', d => this.x(d[this.ordinalAccessor]))
+        .attr('data-y', d => this.y(d[this.valueAccessor]))
+        .attr('data-translate-x', this.margin.left + this.padding.left)
         .transition('update')
         .ease(easeCircleIn)
         .duration((_, i, n) => {
@@ -2337,19 +2574,91 @@ export class LineChart {
         });
     } else {
       updateChildren = this.updatingLabels
+        .style('visibility', (d, i, n) =>
+          this.dataLabel.placement === 'auto' || this.dataLabel.collisionHideOnly
+            ? d.hidden
+              ? 'hidden'
+              : select(n[i]).style('visibility')
+            : null
+        )
+        .attr('data-x', d => this.x(d[this.ordinalAccessor]))
+        .attr('data-y', d => this.y(d[this.valueAccessor]))
+        .attr('data-translate-x', this.margin.left + this.padding.left)
         .transition('update')
         .ease(easeCircleIn)
         .duration(this.duration);
     }
 
-    placeDataLabels({
-      root: updateChildren,
+    const collisionSettings = {
+      all: {
+        validPositions: ['top', 'bottom', 'left', 'right', 'bottom-right', 'bottom-left', 'top-left', 'top-right'],
+        offsets: [3, 2, 4, 4, 1, 1, 1, 1]
+      },
+      top: {
+        validPositions: ['top', 'top-left', 'top-right'],
+        offsets: [3, 1, 1]
+      },
+      middle: {
+        validPositions: ['left', 'right'],
+        offsets: [4, 4]
+      },
+      bottom: {
+        validPositions: ['bottom', 'bottom-left', 'bottom-right'],
+        offsets: [2, 1, 1]
+      },
+      right: {
+        validPositions: ['right', 'top-right', 'bottom-right'],
+        offsets: [4, 1, 1]
+      },
+      left: {
+        validPositions: ['left', 'top-left', 'bottom-left'],
+        offsets: [4, 1, 1]
+      }
+    };
+    const collisionPlacement = this.dataLabel && this.dataLabel.collisionPlacement;
+    const validPositions = hideOnly
+      ? ['middle']
+      : collisionPlacement && collisionSettings[collisionPlacement] // check whether placement provided maps correctly
+      ? collisionSettings[collisionPlacement].validPositions
+      : collisionSettings['all'].validPositions;
+    const offsets = hideOnly
+      ? [1]
+      : collisionPlacement && collisionSettings[collisionPlacement] // check whether placement provided maps correctly
+      ? collisionSettings[collisionPlacement].offsets
+      : collisionSettings['all'].offsets;
+
+    this.bitmaps = placeDataLabels({
+      root: updateChildren, // this must have a transition cause we copy it
       xScale: this.x,
       yScale: this.y,
       ordinalAccessor: this.ordinalAccessor,
       valueAccessor: this.valueAccessor,
       placement: this.dataLabel.placement,
-      chartType: 'line'
+      chartType: 'line',
+      avoidCollision: {
+        runOccupancyBitmap: this.dataLabel.visible && this.dataLabel.placement === 'auto',
+        labelSelection: updateChildren,
+        avoidMarks: [this.updateDots, this.update],
+        validPositions,
+        offsets,
+        accessors: [this.ordinalAccessor, this.seriesAccessor, 'key'], // key is created for lines by nesting done in line,
+        size: [roundTo(this.width, 0), roundTo(this.innerPaddedHeight, 0)],
+        hideOnly: this.dataLabel.visible && this.dataLabel.collisionHideOnly
+      }
+    });
+
+    // we need to maintain some values since line has customized lifecycle setup
+    updateChildren.call(transitionEndAll, () => {
+      this.hiddenHash = {}; // empty out hash each time to be safe
+      this.updatingLabels.each((d, i, n) => {
+        // store results to hash so we can use them in lifecycle (specific to line/parallel lifecycle only)
+        this.hiddenHash[`${d[this.ordinalAccessor]}-${d[this.seriesAccessor] || 'b'}`] = {
+          'data-label-hidden': select(n[i]).attr('data-label-hidden') === 'true',
+          x: +select(n[i]).attr('x') - +select(n[i]).attr('data-x'),
+          y: +select(n[i]).attr('y') - +select(n[i]).attr('data-y'),
+          'text-anchor': select(n[i]).attr('text-anchor')
+        };
+      });
     });
   }
 
@@ -2472,34 +2781,48 @@ export class LineChart {
       this.updatingLabels.each((d, i, n) => {
         const me = select(n[i]);
         if (!d.enter && !me.classed('entering') && !d.exit) {
-          me.attr('opacity', () =>
-            checkInteraction(
-              d,
-              1,
-              this.hoverOpacity,
-              this.hoverHighlight,
-              this.clickHighlight,
-              this.innerInteractionKeys
-            ) < 1
-              ? 0
-              : 1
-          );
+          me.attr('opacity', () => {
+            const targetOpacity =
+              checkInteraction(
+                d,
+                1,
+                this.hoverOpacity,
+                this.hoverHighlight,
+                this.clickHighlight,
+                this.innerInteractionKeys
+              ) < 1
+                ? 0
+                : 1;
+            const parentOpacity = +select(n[i].parentNode).attr('opacity');
+            me.attr('data-hidden', parentOpacity === 0 || targetOpacity === 0 ? 'true' : null);
+            return targetOpacity;
+          });
         }
       });
     } else {
-      this.updatingLabels.attr('opacity', d =>
-        checkInteraction(d, 1, this.hoverOpacity, this.hoverHighlight, this.clickHighlight, this.innerInteractionKeys) <
-        1
-          ? 0
-          : 1
-      );
+      this.updatingLabels.attr('opacity', (d, i, n) => {
+        const targetOpacity =
+          checkInteraction(
+            d,
+            1,
+            this.hoverOpacity,
+            this.hoverHighlight,
+            this.clickHighlight,
+            this.innerInteractionKeys
+          ) < 1
+            ? 0
+            : 1;
+        const parentOpacity = +select(n[i].parentNode).attr('opacity');
+        select(n[i]).attr('data-hidden', parentOpacity === 0 || targetOpacity === 0 ? 'true' : null);
+        return targetOpacity;
+      });
     }
   }
 
   setSeriesLabelOpacity() {
     this.seriesLabelUpdate.interrupt('opacity');
 
-    this.seriesLabelUpdate.attr('opacity', d => {
+    this.seriesLabelUpdate.attr('opacity', (d, i, n) => {
       const seriesLabelOpacity = !this.seriesLabel.visible
         ? 0
         : this.secondaryLines.keys.includes(d.key) &&
@@ -2508,18 +2831,22 @@ export class LineChart {
         : 1;
       // check if interactionKeys includes seriesAccessor, if not then don't check seriesLabel for interaction
       if (!this.seriesInteraction) {
+        select(n[i]).attr('data-hidden', seriesLabelOpacity === 0 ? 'true' : null);
         return seriesLabelOpacity;
       } else {
-        return checkInteraction(
-          d.values[0],
-          seriesLabelOpacity,
-          this.hoverOpacity,
-          this.hoverHighlight,
-          this.clickHighlight,
-          this.innerInteractionKeys
-        ) < 1
-          ? 0
-          : 1;
+        const targetOpacity =
+          checkInteraction(
+            d.values[0],
+            seriesLabelOpacity,
+            this.hoverOpacity,
+            this.hoverHighlight,
+            this.clickHighlight,
+            this.innerInteractionKeys
+          ) < 1
+            ? 0
+            : 1;
+        select(n[i]).attr('data-hidden', targetOpacity === 0 ? 'true' : null);
+        return targetOpacity;
       }
     });
   }
@@ -2707,7 +3034,12 @@ export class LineChart {
       xScale: this.x,
       xAccessor: this.ordinalAccessor,
       yScale: this.y,
-      yAccessor: this.valueAccessor
+      yAccessor: this.valueAccessor,
+      width: this.width,
+      height: this.height,
+      padding: this.padding,
+      margin: this.margin,
+      bitmaps: this.bitmaps
     });
   }
 
@@ -2846,11 +3178,9 @@ export class LineChart {
     // this initializes the accessibility description section of the chart
     initializeDescriptionRoot({
       rootEle: this.lineChartEl,
-      geomType: 'point',
       title: this.accessibility.title || this.mainTitle,
       chartTag: 'line-chart',
       uniqueID: this.chartID,
-      groupName: 'line',
       highestHeadingLevel: this.highestHeadingLevel,
       redraw: this.shouldRedrawWrapper,
       disableKeyNav:
@@ -3087,6 +3417,21 @@ export class LineChart {
             {this.subTitle}
           </this.bottomLevel>
           <div class="line-legend vcl-legend" style={{ display: this.legend.visible ? 'block' : 'none' }} />
+          <keyboard-instructions
+            uniqueID={this.chartID}
+            geomType={'point'}
+            groupName={'line'} // taken from initializeDescriptionRoot, on bar this should be "bar group", stacked bar is "stack", and clustered is "cluster"
+            chartTag={'line-chart'}
+            width={this.width - (this.margin ? this.margin.right || 0 : 0)}
+            isInteractive={this.accessibility.elementsAreInterface}
+            hasCousinNavigation={true} // on bar this requires checking for groupAccessor
+            disabled={
+              this.suppressEvents &&
+              this.accessibility.elementsAreInterface === false &&
+              this.accessibility.keyboardNavConfig &&
+              this.accessibility.keyboardNavConfig.disabled
+            } // the chart is "simple"
+          />
           <div class="visa-viz-d3-line-container" />
           <div class="line-tooltip vcl-tooltip" style={{ display: this.showTooltip ? 'block' : 'none' }} />
           <data-table
@@ -3100,6 +3445,7 @@ export class LineChart {
             unitTest={this.unitTest}
           />
         </div>
+        {/* <canvas id="bitmap-render" /> */}
       </div>
     );
   }

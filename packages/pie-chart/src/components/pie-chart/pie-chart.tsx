@@ -15,6 +15,7 @@ import {
   IReferenceStyleType,
   IDataLabelType,
   ITooltipLabelType,
+  IAnimationConfig,
   IAccessibilityType
 } from '@visa/charts-types';
 import { PieChartDefaultValues } from './pie-chart-default-values';
@@ -71,7 +72,11 @@ const {
   scopeDataKeys,
   visaColors,
   validateAccessibilityProps,
-  findTagLevel
+  findTagLevel,
+  prepareRenderChange,
+  roundTo,
+  getTextWidth,
+  resolveLabelCollision
 } = Utils;
 @Component({
   tag: 'pie-chart',
@@ -111,6 +116,7 @@ export class PieChart {
   @Prop({ mutable: true }) referenceStyle: IReferenceStyleType = PieChartDefaultValues.referenceStyle;
   @Prop({ mutable: true }) cursor: string = PieChartDefaultValues.cursor;
   @Prop({ mutable: true }) hoverOpacity: number = PieChartDefaultValues.hoverOpacity;
+  @Prop({ mutable: true }) animationConfig: IAnimationConfig = PieChartDefaultValues.animationConfig;
 
   // Data label (5/7)
   @Prop({ mutable: true }) showPercentage: boolean = PieChartDefaultValues.showPercentage;
@@ -246,6 +252,7 @@ export class PieChart {
   strokes: any = {};
   topLevel: string = 'h2';
   bottomLevel: string = 'p';
+  bitmaps: any;
 
   @Watch('mainTitle')
   titleWatcher(_newVal, _oldVal) {
@@ -322,6 +329,7 @@ export class PieChart {
     this.shouldSetTextures = true;
     this.shouldSetStrokes = true;
     this.shouldSetColors = true;
+    this.shouldCheckLabelColor = true;
   }
 
   @Watch('uniqueID')
@@ -732,15 +740,15 @@ export class PieChart {
       this.enterLabels('RefLabels');
       this.updateLabels('RefLabels');
       this.exitLabels('RefLabels');
-      this.drawDataLabels('Labels');
-      this.drawDataLabels('RefLabels');
       this.drawGeometries();
       this.drawEdgeLine();
       this.drawReferenceLines();
+      this.drawCenterTitle();
+      this.drawDataLabels('Labels');
+      this.drawDataLabels('RefLabels');
       this.setChartCountAccessibility();
       this.setGeometryAccessibilityAttributes();
       this.setGeometryAriaLabels();
-      this.drawCenterTitle();
       this.setSelectedClass();
       this.updateInteractionState();
       this.setLabelOpacity();
@@ -753,7 +761,6 @@ export class PieChart {
       hideNonessentialGroups(this.root.node(), this.pieG.node());
       this.setGroupAccessibilityAttributes();
       this.setGroupAccessibilityID();
-      this.duration = 750;
       this.defaults = false;
       resolve('component did load');
     });
@@ -761,6 +768,7 @@ export class PieChart {
 
   componentDidUpdate() {
     return new Promise(resolve => {
+      this.duration = !this.animationConfig || !this.animationConfig.disabled ? 750 : 0;
       if (this.shouldUpdateDescriptionWrapper) {
         this.setChartDescriptionWrapper();
         this.shouldUpdateDescriptionWrapper = false;
@@ -836,20 +844,6 @@ export class PieChart {
         this.exitLabels('RefLabels');
         this.shouldEnterUpdateExit = false;
       }
-      if (this.shouldUpdateCenterTitle) {
-        this.drawCenterTitle();
-        this.shouldUpdateCenterTitle = false;
-      }
-      if (this.shouldUpdateEdgeLines) {
-        this.updateEdgeLine('Edges');
-        this.drawEdgeLine();
-        this.shouldUpdateEdgeLines = false;
-      }
-      if (this.shouldUpdateLabels) {
-        this.drawDataLabels('Labels');
-        this.drawDataLabels('RefLabels');
-        this.shouldUpdateLabels = false;
-      }
       if (this.shouldUpdateReferenceLines) {
         this.drawReferenceLines();
         this.shouldUpdateReferenceLines = false;
@@ -857,6 +851,20 @@ export class PieChart {
       if (this.shouldUpdateGeometries) {
         this.drawGeometries();
         this.shouldUpdateGeometries = false;
+      }
+      if (this.shouldUpdateEdgeLines) {
+        this.updateEdgeLine('Edges');
+        this.drawEdgeLine();
+        this.shouldUpdateEdgeLines = false;
+      }
+      if (this.shouldUpdateCenterTitle) {
+        this.drawCenterTitle();
+        this.shouldUpdateCenterTitle = false;
+      }
+      if (this.shouldUpdateLabels) {
+        this.drawDataLabels('Labels');
+        this.drawDataLabels('RefLabels');
+        this.shouldUpdateLabels = false;
       }
       if (this.shouldSetGeometryAccessibilityAttributes) {
         this.setGeometryAccessibilityAttributes();
@@ -1032,7 +1040,8 @@ export class PieChart {
         colors: colorsArray,
         rootSVG: this.svg.node(),
         id: this.chartID,
-        scheme: 'categorical'
+        scheme: 'categorical',
+        disableTransitions: !this.duration
       });
       this.colorArr = this.preparedColors.range ? this.preparedColors.copy().range(textures) : textures;
     }
@@ -1078,25 +1087,35 @@ export class PieChart {
   }
 
   reSetRoot() {
-    this.svg
-      .transition('root_reset')
-      .duration(this.duration)
-      .ease(easeCircleIn)
+    const changeSvg = prepareRenderChange({
+      selection: this.svg,
+      duration: this.duration,
+      namespace: 'root_reset',
+      easing: easeCircleIn
+    });
+
+    changeSvg
       .attr('width', this.width)
       .attr('height', this.height)
       .attr('viewBox', '0 0 ' + this.width + ' ' + this.height);
 
-    this.root
-      .transition('root_reset')
-      .duration(this.duration)
-      .ease(easeCircleIn)
-      .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`);
+    const changeRoot = prepareRenderChange({
+      selection: this.root,
+      duration: this.duration,
+      namespace: 'root_reset',
+      easing: easeCircleIn
+    });
 
-    this.rootG
-      .transition('root_reset')
-      .duration(this.duration)
-      .ease(easeCircleIn)
-      .attr('transform', `translate(${this.padding.left + this.radius}, ${this.padding.top + this.radius})`);
+    changeRoot.attr('transform', `translate(${this.margin.left}, ${this.margin.top})`);
+
+    const changeRootG = prepareRenderChange({
+      selection: this.rootG,
+      duration: this.duration,
+      namespace: 'root_reset',
+      easing: easeCircleIn
+    });
+
+    changeRootG.attr('transform', `translate(${this.padding.left + this.radius}, ${this.padding.top + this.radius})`);
 
     setAccessibilityDescriptionWidth(this.chartID, this.width);
   }
@@ -1394,21 +1413,24 @@ export class PieChart {
       .transition('exit')
       .duration(this.duration)
       .ease(easeCircleIn)
-      .attrTween('d', (_d, i, n) => {
+      .attr('opacity', 0)
+      [this.duration ? 'attrTween' : 'attr']('d', (_d, i, n) => {
         const end = {
           startAngle: 0,
           endAngle: 0,
           innerRadius: this.innerRadius,
           outerRadius: this.outerRadius
         };
+        if (!this.duration) {
+          return this.arc(end);
+        }
         const me = n[i];
         const interpolator = interpolate(me._current, end);
         return t => {
           me._current = interpolator(t);
           return this.arc(me._current);
         };
-      })
-      .attr('opacity', 0);
+      });
 
     // We use this.update instead of this.exit to ensure the functions at the end
     // of our lifecycle run, even though we are removing the exiting elements from
@@ -1455,11 +1477,45 @@ export class PieChart {
         ]);
         return geometryIsUpdating;
       })
+      .attr('data-translate-x', this.radius + this.padding.left + this.margin.left)
+      .attr('data-translate-y', this.radius + this.padding.top + this.margin.top)
+      // .attr('data-fill', this.dataLabel.placement !== 'inside') // we don't need fill anymore
+      // if we bring back placement we may need it again
+      .attr('data-d', (d, i, n) => {
+        const me = n[i];
+        let inner = 'inner';
+        let arcPadding = 0;
+        if (this.dataLabel.placement !== 'inside') {
+          inner = 'outer';
+          arcPadding = this.labelOffset;
+        }
+        const end = {
+          startAngle: d.startAngle,
+          endAngle: d.endAngle,
+          innerRadius: this.innerRadius,
+          outerRadius: this.outerRadius
+        };
+        const labelEnd = {
+          startAngle: d.startAngle,
+          endAngle: d.endAngle,
+          innerRadius: this[inner + 'Radius'] + arcPadding,
+          outerRadius: this.outerRadius + arcPadding
+        };
+        // data-fake-x/y is used to pass the outer label placement
+        // without that effecting how the bitmap understands
+        // the pie geometetry itself
+        select(me)
+          .attr('data-fake-x', this.arc.centroid(labelEnd)[0])
+          .attr('data-fake-y', this.arc.centroid(labelEnd)[1])
+          .attr('data-r', 1);
+        return this.arc(end);
+      })
       .transition('update')
       .duration(this.duration)
       .ease(easeCircleIn)
-      .attrTween('d', (d, i, n) => {
-        let start = n[i]._current;
+      [this.duration ? 'attrTween' : 'attr']('d', (d, i, n) => {
+        const me = n[i];
+        let start = me._current;
         const end = {
           startAngle: d.startAngle,
           endAngle: d.endAngle,
@@ -1475,8 +1531,11 @@ export class PieChart {
           };
           select(n[i]).classed('entering', false);
         }
-        const me = n[i];
         const interpolator = interpolate(start, end);
+        if (!this.duration) {
+          me._current = interpolator(1);
+          return this.arc(end);
+        }
         return t => {
           me._current = interpolator(t);
           return this.arc(me._current);
@@ -1529,10 +1588,9 @@ export class PieChart {
       .duration(this.duration)
       .ease(easeCircleIn)
       .attr('opacity', 0)
-      .attrTween('d', (_, i, n) => {
+      [this.duration ? 'attrTween' : 'attr']('d', (_, i, n) => {
         const me = n[i];
         const start = me._current;
-
         const end = {
           startAngle: 0,
           endAngle: 0,
@@ -1540,7 +1598,9 @@ export class PieChart {
           outerRadius: this.outerRadius + 5
         };
         const interpolator = interpolate(start, end);
-
+        if (!this.duration) {
+          return this.arc(end);
+        }
         return t => {
           me._current = interpolator(t);
           return this.arc(me._current);
@@ -1563,7 +1623,13 @@ export class PieChart {
           visaColors[this.referenceStyle.color] || this.referenceStyle.color || this.preparedColors[i]
         ); /* refIsLarger ? this.colorArr[i] :*/
       })
-      .attrTween('d', (d, i, n) => {
+      [this.duration ? 'attrTween' : 'attr']('d', (d, i, n) => {
+        const end = {
+          startAngle: d.endAngle,
+          endAngle: d.endAngle,
+          innerRadius: Math.max(0, this.innerRadius - 5),
+          outerRadius: this.outerRadius + 5
+        };
         const me = n[i];
         let start = me._current;
         if (select(me).classed('entering')) {
@@ -1575,13 +1641,11 @@ export class PieChart {
           };
           select(me).classed('entering', false);
         }
-        const end = {
-          startAngle: d.endAngle,
-          endAngle: d.endAngle,
-          innerRadius: Math.max(0, this.innerRadius - 5),
-          outerRadius: this.outerRadius + 5
-        };
         const interpolator = interpolate(start, end);
+        if (!this.duration) {
+          me._current = interpolator(1);
+          return this.arc(end);
+        }
         return t => {
           me._current = interpolator(t);
           return this.arc(me._current);
@@ -1660,7 +1724,7 @@ export class PieChart {
       .duration(this.duration)
       .ease(easeCircleIn)
       .attr('opacity', 0)
-      .attrTween('x', (_d, i, n) => {
+      [this.duration ? 'attrTween' : 'attr']('x', (d, i, n) => {
         const me = n[i];
         let inner = 'inner';
         let arcPadding = 0;
@@ -1675,6 +1739,19 @@ export class PieChart {
           innerRadius: this[inner + 'Radius'] + arcPadding,
           outerRadius: this.outerRadius + arcPadding
         };
+        if (!this.duration) {
+          select(me).attr('y', this.arc.centroid(end)[1]);
+          select(me).text(
+            placement === 'edge' && i === this.preppedData.length - 1 && group !== 'RefLabels'
+              ? ''
+              : this.showPercentage
+              ? formatStats((d.endAngle - d.startAngle) / (2 * Math.PI), '0.0%')
+              : this.dataLabel.format
+              ? formatStats(d.data[this.valueAccessor], this.dataLabel.format)
+              : d.data[this.valueAccessor]
+          );
+          return this.arc.centroid(end)[0];
+        }
         const interpolator = interpolate(me._current, end);
         return t => {
           me._current = interpolator(t);
@@ -1698,7 +1775,7 @@ export class PieChart {
       .duration(this.duration)
       .ease(easeCircleIn)
       .attr('opacity', 0)
-      .attrTween('x', (_d, i, n) => {
+      [this.duration ? 'attrTween' : 'attr']('x', (_d, i, n) => {
         const me = n[i];
         let inner = 'inner';
         let arcPadding = 0;
@@ -1713,6 +1790,10 @@ export class PieChart {
           innerRadius: this[inner + 'Radius'] + arcPadding,
           outerRadius: this.outerRadius + arcPadding
         };
+        if (!this.duration) {
+          select(me).attr('y', this.arc.centroid(end)[1]);
+          return this.arc.centroid(end)[0];
+        }
         const interpolator = interpolate(me._current, end);
         return t => {
           me._current = interpolator(t);
@@ -1726,16 +1807,29 @@ export class PieChart {
   drawDataLabels(group) {
     const placement = group === 'RefLabels' ? 'edge' : this.dataLabel.placement;
 
+    // for the first call only to this do we create the base bitmap, all other stuff just adds to it
+    if (group === 'Labels' && this.dataLabel.visible && this.dataLabel.collisionHideOnly) {
+      let titleRoot = this.rootG.select('.pie-center-title-group').selectAll('text');
+      this.bitmaps = resolveLabelCollision({
+        labelSelection: select('.empty-stuff-vcc-do-not-use'),
+        avoidMarks: [titleRoot, this.updatingEdges, this.update],
+        validPositions: ['middle'],
+        offsets: [1],
+        accessors: [this.ordinalAccessor],
+        size: [roundTo(this.width, 0), roundTo(this.height, 0)] // we need the whole width and height for pie
+      });
+    }
+
     this['updating' + group]
+      .style('visibility', (_, i, n) =>
+        this.dataLabel.placement === 'auto' || this.dataLabel.collisionHideOnly
+          ? select(n[i]).style('visibility')
+          : null
+      )
       .transition('update')
       .duration(this.duration)
       .ease(easeCircleIn)
-      .attr('dx', 0) // can i move this into a seperate this.update? testing now
-      .attr('dy', placement === 'inside' ? '0.1em' : 0)
-      .attr('text-anchor', (d, i) =>
-        placement === 'inside' ? 'middle' : d.endAngle < Math.PI || i === 0 ? 'start' : 'end'
-      )
-      .attrTween('x', (d, i, n) => {
+      [this.duration ? 'attrTween' : 'attr']('x', (d, i, n) => {
         const me = n[i];
         let start = me._current;
         let innerRadius = 'innerRadius';
@@ -1748,17 +1842,7 @@ export class PieChart {
         if (placement === 'edge') {
           startAngle = 'endAngle';
         }
-        if (select(n[i]).classed('entering')) {
-          start = {
-            value: d.data[this.valueAccessor],
-            start: d.startAngle,
-            startAngle: 0,
-            endAngle: 0,
-            innerRadius: this[innerRadius] + arcPadding,
-            outerRadius: this.outerRadius + arcPadding
-          };
-          select(n[i]).classed('entering', false);
-        }
+
         const end = {
           value: d.data[this.valueAccessor],
           start: d.startAngle,
@@ -1767,7 +1851,68 @@ export class PieChart {
           innerRadius: this[innerRadius] + arcPadding,
           outerRadius: this.outerRadius + arcPadding
         };
+        select(me)
+          .attr('data-use-dx', true)
+          .attr('data-use-dy', true)
+          .attr('data-translate-x', this.radius + this.padding.left + this.margin.left)
+          .attr('data-translate-y', this.radius + this.padding.top + this.margin.top)
+          .attr('data-x', this.arc.centroid(end)[0])
+          .attr('data-y', this.arc.centroid(end)[1])
+          .attr('data-r', 1)
+          .attr('dx', 0)
+          .attr('dy', placement === 'inside' ? '0.1em' : 0)
+          .attr('text-anchor', placement === 'inside' ? 'middle' : d.endAngle < Math.PI || i === 0 ? 'start' : 'end')
+          .text(
+            // we need text end point to determine if we can fit label (gets reset by interpolation below)
+            placement === 'edge' && i === this.preppedData.length - 1 && group !== 'RefLabels'
+              ? ''
+              : this.showPercentage
+              ? formatStats((d.endAngle - d.startAngle) / (2 * Math.PI), '0.0%')
+              : this.dataLabel.format
+              ? formatStats(d.data[this.valueAccessor], this.dataLabel.format)
+              : d.data[this.valueAccessor]
+          );
+
+        if (select(me).classed('entering')) {
+          start = {
+            value: d.data[this.valueAccessor],
+            start: d.startAngle,
+            startAngle: 0,
+            endAngle: 0,
+            innerRadius: this[innerRadius] + arcPadding,
+            outerRadius: this.outerRadius + arcPadding
+          };
+          select(me).classed('entering', false);
+        }
         const interpolator = interpolate(start, end);
+        if (this.dataLabel.visible && this.dataLabel.collisionHideOnly) {
+          const validPositions = ['middle']; // , 'left', 'right'];
+          const offsets = [1]; //,1,1];
+          this.bitmaps = resolveLabelCollision({
+            bitmaps: this.bitmaps,
+            labelSelection: select(me), // highlightLabels,
+            avoidMarks: [],
+            validPositions,
+            offsets,
+            accessors: [this.ordinalAccessor],
+            size: [roundTo(this.width, 0), roundTo(this.height, 0)], // we need the whole width and height for pie
+            hideOnly: this.dataLabel.visible && this.dataLabel.collisionHideOnly
+          });
+        }
+        if (!this.duration) {
+          me._current = interpolator(1);
+          select(me).attr('y', this.arc.centroid(end)[1]);
+          select(me).text(
+            placement === 'edge' && i === this.preppedData.length - 1 && group !== 'RefLabels'
+              ? ''
+              : this.showPercentage
+              ? formatStats((d.endAngle - d.startAngle) / (2 * Math.PI), '0.0%')
+              : this.dataLabel.format
+              ? formatStats(d.data[this.valueAccessor], this.dataLabel.format)
+              : d.data[this.valueAccessor]
+          );
+          return this.arc.centroid(end)[0];
+        }
         return t => {
           me._current = interpolator(t);
           select(me).attr('y', this.arc.centroid(me._current)[1]);
@@ -1789,18 +1934,15 @@ export class PieChart {
       });
 
     this['updating' + group + 'Notes']
+      .style('visibility', (_, i, n) =>
+        this.dataLabel.placement === 'auto' || this.dataLabel.collisionHideOnly
+          ? select(n[i]).style('visibility')
+          : null
+      )
       .transition('update')
       .duration(this.duration)
       .ease(easeCircleIn)
-      .attr('dx', 0) // can I move this here? was in a seperate update
-      .text((d, i) =>
-        placement === 'edge' && i === this.preppedData.length - 1 && group !== 'RefLabels'
-          ? ''
-          : d.data[this.ordinalAccessor]
-      ) // can I move this here? was in a seperate update
-      .attr('dy', placement === 'inside' ? 0 : '1.2em')
-      .attr('text-anchor', (d, i) => (d.endAngle < Math.PI || i === 0 ? 'start' : 'end'))
-      .attrTween('x', (d, i, n) => {
+      [this.duration ? 'attrTween' : 'attr']('x', (d, i, n) => {
         const me = n[i];
         let start = me._current;
         const startAngle = placement === 'edge' ? 'endAngle' : 'startAngle';
@@ -1819,7 +1961,41 @@ export class PieChart {
           innerRadius: this.outerRadius + this.labelOffset,
           outerRadius: this.outerRadius + this.labelOffset
         };
+        select(me)
+          .attr('data-use-dx', true)
+          .attr('data-use-dy', true)
+          .attr('data-translate-x', this.radius + this.padding.left + this.margin.left)
+          .attr('data-translate-y', this.radius + this.padding.top + this.margin.top + 5) // 10 is spacer to get algo to work for note
+          .attr('data-x', this.arc.centroid(end)[0])
+          .attr('data-y', this.arc.centroid(end)[1])
+          .attr('dx', 0) // can I move this here? was in a seperate update
+          .text(
+            placement === 'edge' && i === this.preppedData.length - 1 && group !== 'RefLabels'
+              ? ''
+              : d.data[this.ordinalAccessor]
+          ) // can I move this here? was in a seperate update
+          .attr('dy', placement === 'inside' ? 0 : '1.4em')
+          .attr('text-anchor', d.endAngle < Math.PI || i === 0 ? 'start' : 'end');
         const interpolator = interpolate(start, end);
+        if (this.showLabelNote && this.dataLabel.visible && this.dataLabel.collisionHideOnly) {
+          const validPositions = ['middle']; // , 'left', 'right'];
+          const offsets = [1]; //,1,1];
+          this.bitmaps = resolveLabelCollision({
+            bitmaps: this.bitmaps,
+            labelSelection: select(me), // highlightLabels,
+            avoidMarks: [],
+            validPositions,
+            offsets,
+            accessors: [this.ordinalAccessor],
+            size: [roundTo(this.width, 0), roundTo(this.height, 0)], // we need the whole width and height for pie
+            hideOnly: this.showLabelNote && this.dataLabel.visible && this.dataLabel.collisionHideOnly
+          });
+        }
+        if (!this.duration) {
+          me._current = interpolator(1);
+          select(me).attr('y', this.arc.centroid(end)[1]);
+          return this.arc.centroid(end)[0];
+        }
         return t => {
           me._current = interpolator(t);
           select(me).attr('y', this.arc.centroid(me._current)[1]);
@@ -1856,11 +2032,49 @@ export class PieChart {
         .attr('x', 0)
         .attr('fill', visaColors.dark_text);
     }
-    titleRoot.select('.visa-viz-title').text(this.centerTitle);
+    titleRoot
+      .select('.visa-viz-title')
+      .text(this.centerTitle)
+      .attr('data-fill', true)
+      .attr('data-width', (_, i, n) => {
+        if (this.dataLabel.visible && this.dataLabel.collisionHideOnly) {
+          const textElement = n[i];
+          const style = getComputedStyle(textElement);
+          const fontSize = parseFloat(style.fontSize);
+          const textWidth = getTextWidth(textElement.textContent, fontSize, true, style.fontFamily);
+          const textHeight = Math.max(fontSize - 1, 1); // clone.getBBox().height;
+          select(textElement)
+            .attr('data-x', 0)
+            .attr('data-y', -textHeight / 2)
+            .attr('data-height', textHeight)
+            .attr('data-translate-x', this.radius + this.padding.left + this.margin.left)
+            .attr('data-translate-y', this.radius + this.padding.top + this.margin.top);
+          return textWidth;
+        }
+      });
     titleRoot
       .select('.visa-viz-subtitle')
+      .attr('data-x', 0)
+      .attr('data-y', this.centerTitle ? 20 : 10)
       .attr('y', this.centerTitle ? 20 : 10)
-      .text(this.centerSubTitle);
+      .text(this.centerSubTitle)
+      .attr('data-fill', true)
+      .attr('data-width', (_, i, n) => {
+        if (this.dataLabel.visible && this.dataLabel.collisionHideOnly) {
+          const textElement = n[i];
+          const style = getComputedStyle(textElement);
+          const fontSize = parseFloat(style.fontSize);
+          const textWidth = getTextWidth(textElement.textContent, fontSize, true, style.fontFamily);
+          const textHeight = Math.max(fontSize - 1, 1); // clone.getBBox().height;
+          select(textElement)
+            .attr('data-x', 0)
+            .attr('data-y', (this.centerTitle ? 20 : 10) - textHeight / 2)
+            .attr('data-height', textHeight)
+            .attr('data-translate-x', this.radius + this.padding.left + this.margin.left)
+            .attr('data-translate-y', this.radius + this.padding.top + this.margin.top);
+          return textWidth;
+        }
+      });
 
     const filter = createTextStrokeFilter({
       root: this.svg.node(),
@@ -1902,7 +2116,7 @@ export class PieChart {
       .duration(this.duration)
       .ease(easeCircleIn)
       .attr('opacity', 0)
-      .attrTween('d', (_, i, n) => {
+      [this.duration ? 'attrTween' : 'attr']('d', (_, i, n) => {
         const me = n[i];
         const end = {
           startAngle: 0,
@@ -1910,6 +2124,9 @@ export class PieChart {
           innerRadius: (this.radius + this.radius * this.innerRatio) / 2,
           outerRadius: (this.radius + this.radius * this.innerRatio) / 2
         };
+        if (!this.duration) {
+          return this.arc(end);
+        }
         const interpolator = interpolate(me._current, end);
         return t => {
           me._current = interpolator(t);
@@ -1921,10 +2138,25 @@ export class PieChart {
 
   drawEdgeLine() {
     this.updatingEdges
+      .attr('data-translate-x', this.radius + this.padding.left + this.margin.left)
+      .attr('data-translate-y', this.radius + this.padding.top + this.margin.top)
+      .attr('data-d', (d, i, n) => {
+        const me = n[i];
+        const end = {
+          startAngle: d.endAngle,
+          endAngle: d.endAngle,
+          innerRadius: Math.max(0, this.innerRadius - 5),
+          outerRadius: this.outerRadius + 5
+        };
+        select(me)
+          .attr('data-fake-x', this.arc.centroid(end)[0])
+          .attr('data-fake-y', this.arc.centroid(end)[1]);
+        return this.arc(end);
+      })
       .transition('update')
       .duration(this.duration)
       .ease(easeCircleIn)
-      .attrTween('d', (d, i, n) => {
+      [this.duration ? 'attrTween' : 'attr']('d', (d, i, n) => {
         const me = n[i];
         let start = me._current;
         if (select(me).classed('entering')) {
@@ -1943,6 +2175,10 @@ export class PieChart {
           outerRadius: this.outerRadius + 5
         };
         const interpolator = interpolate(start, end);
+        if (!this.duration) {
+          me._current = interpolator(1);
+          return this.arc(end);
+        }
         return t => {
           me._current = interpolator(t);
           return this.arc(me._current);
@@ -1953,11 +2189,16 @@ export class PieChart {
   drawAnnotations() {
     annotate({
       source: this.rootG.node(),
-      data: this.annotations // ,
+      data: this.annotations,
       // xScale: this.x,
       // xAccessor: this.ordinalAccessor,
       // yScale: this.y,
       // yAccessor: this.valueAccessor
+      width: this.width,
+      height: this.height,
+      padding: this.padding,
+      margin: this.margin,
+      bitmaps: this.bitmaps
     });
   }
 
@@ -1974,11 +2215,9 @@ export class PieChart {
   setChartDescriptionWrapper() {
     initializeDescriptionRoot({
       rootEle: this.pieChartEl,
-      geomType: 'slice',
       title: this.accessibility.title || this.mainTitle,
       chartTag: 'pie-chart',
       uniqueID: this.chartID,
-      groupName: 'pie',
       redraw: this.shouldRedrawWrapper,
       disableKeyNav:
         this.suppressEvents &&
@@ -2251,6 +2490,21 @@ export class PieChart {
           <this.bottomLevel class="visa-ui-text--instructions" data-testid="sub-title">
             {this.subTitle}
           </this.bottomLevel>
+          <keyboard-instructions
+            uniqueID={this.chartID}
+            geomType={'slice'}
+            groupName={'pie'} // taken from initializeDescriptionRoot, on bar this should be "bar group", stacked bar is "stack", and clustered is "cluster"
+            chartTag={'pie-chart'}
+            width={this.width - (this.margin ? this.margin.right || 0 : 0)}
+            isInteractive={this.accessibility.elementsAreInterface}
+            hasCousinNavigation={false} // pie-chart doesn't have a group accessor
+            disabled={
+              this.suppressEvents &&
+              this.accessibility.elementsAreInterface === false &&
+              this.accessibility.keyboardNavConfig &&
+              this.accessibility.keyboardNavConfig.disabled
+            } // the chart is "simple"
+          />
           <div class="visa-viz-d3-pie-container" />
           <div class="pie-tooltip vcl-tooltip" style={{ display: this.showTooltip ? 'block' : 'none' }} />
           <data-table
@@ -2263,6 +2517,7 @@ export class PieChart {
             hideDataTable={this.accessibility.hideDataTableButton}
           />
         </div>
+        {/* <canvas id="bitmap-render" /> */}
       </div>
     );
   }

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2021 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -48,6 +48,12 @@ export interface ILineChartProps {
    * @controlName TextArea
    * @groupName Accessibility */
   accessibility: IAccessibilityType;
+
+  /**
+   * @shortDescription Manages settings for chart animation, property 'disabled' defaults to false or undefined
+   * @controlName TextArea
+   * @groupName Accessibility */
+  animationConfig: IAnimationConfig;
 
   /**
    * @shortDescription Padding between plot area and axes lines
@@ -197,7 +203,7 @@ export interface ILineChartProps {
    * @shortDescription Controls visibility, styling and placement of series labels
    * @controlName TextArea
    * @groupName Labels */
-  seriesLabel: ISeriesLabel;
+  seriesLabel: ISeriesLabelType;
 
   /**
    * @shortDescription When selected, allows tooltips to be displayed
@@ -271,11 +277,13 @@ export interface ILineChartProps {
    * @groupName Style */
   clickHighlight: object[];
 }
-interface IDataLabelType {
+export interface IDataLabelType {
   visible: boolean;
-  placement: string;
-  labelAccessor: string;
-  format: any;
+  placement?: string;
+  labelAccessor?: string;
+  format?: any;
+  collisionHideOnly?: boolean;
+  collisionPlacement?: string;
 }
 interface IAxisType {
   visible: boolean;
@@ -284,10 +292,13 @@ interface IAxisType {
   format: any;
   tickInterval: number;
 }
-interface ISeriesLabel {
+interface ISeriesLabelType {
   visible: boolean;
-  placement: string;
-  label: string[];
+  placement?: string;
+  label?: string | string[];
+  format?: string;
+  collisionHideOnly?: boolean;
+  collisionPlacement?: string;
 }
 interface ISecondaryType {
   keys: any;
@@ -326,18 +337,29 @@ interface ITooltipLabel {
   format: any;
 }
 
-interface IAccessibilityType {
-  longDescription: string;
-  executiveSummary: string;
-  purpose: string;
-  contextExplanation: string;
-  title: string;
-  elementDescriptionAccessor: string;
-  statisticalNotes: string;
-  structureNotes: string;
-  includeDataKeyNames: boolean;
-  hideDataTableButton: boolean;
-  disableValidation: boolean;
-  elementsAreInterface: any;
-  onChangeFunc: any;
+export interface IAccessibilityType {
+  longDescription?: string;
+  executiveSummary?: string;
+  purpose?: string;
+  contextExplanation?: string;
+  title?: string;
+  elementDescriptionAccessor?: string;
+  statisticalNotes?: string;
+  structureNotes?: string;
+  includeDataKeyNames?: boolean;
+  hideDataTableButton?: boolean;
+  disableValidation?: boolean;
+  elementsAreInterface?: any;
+  onChangeFunc?: any;
+  hideTextures?: boolean;
+  hideStrokes?: boolean;
+  showSmallLabels?: boolean;
+  showExperimentalTextures?: boolean;
+  keyboardNavConfig?: IKeyConfig;
+}
+export interface IAnimationConfig {
+  disabled?: boolean;
+}
+export interface IKeyConfig {
+  disabled?: boolean;
 }

@@ -36,6 +36,7 @@
   },
   "dependencies": {
     "@visa/charts-types": "^0.3.2",
+    "@visa/keyboard-instructions": "^1.0.0",
     "@visa/visa-charts-data-table": "^2.0.8",
     "@visa/visa-charts-utils": "^4.4.1",
     "d3-array": "^1.2.4",

@@ -7,6 +7,10 @@
  **/
 #dash-test {
   .line-series-label {
-    transform: translate(-180px, -1px);
+    transform: translate(-140px, -1px);
   }
+}
+.line-dataLabel {
+  font-family: 'OpenSans';
+  font-size: 14px;
 }

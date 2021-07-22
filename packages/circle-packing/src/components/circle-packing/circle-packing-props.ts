@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2021 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -163,6 +163,12 @@ export interface ICirclePackingProps {
   accessibility: IAccessibilityType;
 
   /**
+   * @shortDescription Manages settings for chart animation, property 'disabled' defaults to false or undefined
+   * @controlName TextArea
+   * @groupName Accessibility */
+  animationConfig: IAnimationConfig;
+
+  /**
    * @shortDescription Suppresses and disables all event emitters. Setting to true can increase performance for non-interactive charts.
    * @controlName Toggle
    * @groupName Events */
@@ -204,14 +210,14 @@ export interface ICirclePackingProps {
    * @groupName Style */
   zoomToNode: any;
 }
-
 export interface IDataLabelType {
   visible: boolean;
   placement?: string;
   labelAccessor?: string;
-  format?: any;
+  format?: string;
+  collisionHideOnly?: boolean;
+  collisionPlacement?: string;
 }
-
 export interface IBoxModelType {
   top: number;
   bottom: number;
@@ -253,4 +259,15 @@ export interface IAccessibilityType {
   disableValidation?: boolean;
   elementsAreInterface?: any;
   onChangeFunc?: any;
+  hideTextures?: boolean;
+  hideStrokes?: boolean;
+  showSmallLabels?: boolean;
+  showExperimentalTextures?: boolean;
+  keyboardNavConfig?: IKeyConfig;
+}
+export interface IAnimationConfig {
+  disabled?: boolean;
+}
+export interface IKeyConfig {
+  disabled?: boolean;
 }

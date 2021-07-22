@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2021 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -42,6 +42,12 @@ export interface IScatterPlotProps {
    * @controlName TextArea
    * @groupName Accessibility */
   accessibility: IAccessibilityType;
+
+  /**
+   * @shortDescription Manages settings for chart animation, property 'disabled' defaults to false or undefined
+   * @controlName TextArea
+   * @groupName Accessibility */
+  animationConfig: IAnimationConfig;
 
   /**
    * @shortDescription Margin between the subtitle and the chart area, or between the title and chart area if no subtitle is specified
@@ -313,14 +319,14 @@ export interface IReferenceStyleType {
   opacity: number;
   dashed: string;
 }
-
 export interface IDataLabelType {
   visible: boolean;
   placement?: string;
   labelAccessor?: string;
   format?: string;
+  collisionHideOnly?: boolean;
+  collisionPlacement?: string;
 }
-
 export interface ITooltipLabelType {
   labelAccessor: string[];
   labelTitle: string[];
@@ -351,4 +357,15 @@ export interface IAccessibilityType {
   disableValidation?: boolean;
   elementsAreInterface?: any;
   onChangeFunc?: any;
+  hideTextures?: boolean;
+  hideStrokes?: boolean;
+  showSmallLabels?: boolean;
+  showExperimentalTextures?: boolean;
+  keyboardNavConfig?: IKeyConfig;
+}
+export interface IAnimationConfig {
+  disabled?: boolean;
+}
+export interface IKeyConfig {
+  disabled?: boolean;
 }

@@ -20,6 +20,7 @@ import {
   IDataLabelType,
   ITooltipLabelType,
   IAccessibilityType,
+  IAnimationConfig,
   ILegendType
 } from '@visa/charts-types';
 import { BarChartDefaultValues } from './bar-chart-default-values';
@@ -83,7 +84,9 @@ const {
   scopeDataKeys,
   visaColors,
   validateAccessibilityProps,
-  findTagLevel
+  findTagLevel,
+  prepareRenderChange,
+  roundTo
 } = Utils;
 
 @Component({
@@ -129,6 +132,7 @@ export class BarChart {
   @Prop({ mutable: true }) roundedCorner: number = BarChartDefaultValues.roundedCorner;
   @Prop({ mutable: true }) barIntervalRatio: number = BarChartDefaultValues.barIntervalRatio;
   @Prop({ mutable: true }) hoverOpacity: number = BarChartDefaultValues.hoverOpacity;
+  @Prop({ mutable: true }) animationConfig: IAnimationConfig = BarChartDefaultValues.animationConfig;
 
   // Data label (5/7)
   @Prop({ mutable: true }) dataLabel: IDataLabelType = BarChartDefaultValues.dataLabel;
@@ -264,6 +268,7 @@ export class BarChart {
   bottomLevel: string = 'p';
   shouldSetTextures: boolean = false;
   strokes: any = {};
+  bitmaps: any;
 
   @Watch('data')
   dataWatcher(_newVal, _oldVal) {
@@ -881,7 +886,6 @@ export class BarChart {
       hideNonessentialGroups(this.root.node(), this.bars.node());
       this.setGroupAccessibilityAttributes();
       this.setGroupAccessibilityID();
-      this.duration = 750;
       this.defaults = false;
       resolve('component did load');
     });
@@ -889,6 +893,7 @@ export class BarChart {
 
   componentDidUpdate() {
     return new Promise(resolve => {
+      this.duration = !this.animationConfig || !this.animationConfig.disabled ? 750 : 0;
       if (this.shouldUpdateDescriptionWrapper) {
         this.setChartDescriptionWrapper();
         this.shouldUpdateDescriptionWrapper = false;
@@ -1228,7 +1233,8 @@ export class BarChart {
         colors: colorsArray,
         rootSVG: this.svg.node(),
         id: this.chartID,
-        scheme
+        scheme,
+        disableTransitions: !this.duration
       });
       this.colorArr = this.preparedColors.copy().range(textures);
     }
@@ -1269,7 +1275,7 @@ export class BarChart {
     // check data label placement assignment based on layout
     this.placement = this.dataLabel.placement;
     if (this.layout === 'vertical') {
-      if (this.placement !== 'top' && this.placement !== 'bottom') {
+      if (this.placement !== 'top' && this.placement !== 'bottom' && this.placement !== 'auto') {
         this.placement = 'top';
       }
     } else {
@@ -1307,25 +1313,35 @@ export class BarChart {
 
   // reset graph size based on window size
   reSetRoot() {
-    this.svg
-      .transition('root_reset')
-      .duration(this.duration)
-      .ease(easeCircleIn)
+    const changeSvg = prepareRenderChange({
+      selection: this.svg,
+      duration: this.duration,
+      namespace: 'root_reset',
+      easing: easeCircleIn
+    });
+
+    changeSvg
       .attr('width', this.width)
       .attr('height', this.height)
       .attr('viewBox', '0 0 ' + this.width + ' ' + this.height);
 
-    this.root
-      .transition('root_reset')
-      .duration(this.duration)
-      .ease(easeCircleIn)
-      .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`);
+    const changeRoot = prepareRenderChange({
+      selection: this.root,
+      duration: this.duration,
+      namespace: 'root_reset',
+      easing: easeCircleIn
+    });
 
-    this.rootG
-      .transition('root_reset')
-      .duration(this.duration)
-      .ease(easeCircleIn)
-      .attr('transform', `translate(${this.padding.left}, ${this.padding.top})`);
+    changeRoot.attr('transform', `translate(${this.margin.left}, ${this.margin.top})`);
+
+    const changeRootG = prepareRenderChange({
+      selection: this.rootG,
+      duration: this.duration,
+      namespace: 'root_reset',
+      easing: easeCircleIn
+    });
+
+    changeRootG.attr('transform', `translate(${this.padding.left}, ${this.padding.top})`);
 
     setAccessibilityDescriptionWidth(this.chartID, this.width);
   }
@@ -1344,7 +1360,8 @@ export class BarChart {
       tickInterval: this.xAxis.tickInterval,
       label: this.xAxis.label,
       padding: this.padding,
-      hide: !this.xAxis.visible
+      hide: !this.xAxis.visible,
+      duration: this.duration
     });
   }
 
@@ -1361,7 +1378,8 @@ export class BarChart {
       tickInterval: this.yAxis.tickInterval,
       label: this.yAxis.label,
       padding: this.padding,
-      hide: !this.yAxis.visible
+      hide: !this.yAxis.visible,
+      duration: this.duration
     });
   }
 
@@ -1375,7 +1393,8 @@ export class BarChart {
         axisScale: this.x,
         left: false,
         padding: this.padding,
-        markOffset: this.y(0) || -1
+        markOffset: this.y(0) || -1,
+        duration: this.duration
       });
     }
     if (this.layout === 'horizontal') {
@@ -1386,7 +1405,8 @@ export class BarChart {
         axisScale: this.y,
         left: true,
         padding: this.padding,
-        markOffset: this.x(0) || -1
+        markOffset: this.x(0) || -1,
+        duration: this.duration
       });
     }
   }
@@ -1421,7 +1441,8 @@ export class BarChart {
       this.x,
       false,
       !(!(this.layout === 'vertical') && this.xAxis.gridVisible),
-      this.xAxis.tickInterval
+      this.xAxis.tickInterval,
+      this.duration
     );
   }
 
@@ -1433,7 +1454,8 @@ export class BarChart {
       this.y,
       true,
       !(this.layout === 'vertical' && this.yAxis.gridVisible),
-      this.yAxis.tickInterval
+      this.yAxis.tickInterval,
+      this.duration
     );
   }
 
@@ -1585,22 +1607,21 @@ export class BarChart {
         ]);
         return geometryIsUpdating;
       })
+      .attr('data-translate-x', this.padding.left + this.margin.left)
+      .attr('data-translate-y', this.padding.top + this.margin.top)
+      .attr(`data-${ordinalAxis}`, d => this[ordinalAxis](d[this.ordinalAccessor]))
+      .attr(`data-${ordinalDimension}`, this[ordinalAxis].bandwidth())
+      .attr(`data-${valueAxis}`, d => this[valueAxis](Math[choice](0, d[this.valueAccessor]))) // this.y(d[this.valueAccessor]))
+      .attr(`data-${valueDimension}`, d =>
+        Math.abs(
+          this.layout === 'vertical'
+            ? this[valueAxis](0) - this[valueAxis](d[this.valueAccessor])
+            : this[valueAxis](d[this.valueAccessor]) - this[valueAxis](0)
+        )
+      )
       .transition('update')
       .duration(this.duration)
       .ease(easeCircleIn)
-      // the following example is for strokes that can transition:
-      // .attr(ordinalAxis, d => {
-      //   const newValue = this[ordinalAxis](d[this.ordinalAccessor])
-      //   mirrorStrokeTransition({
-      //     id: this.chartID,
-      //     key: d[this.ordinalAccessor],
-      //     attribute: ordinalAxis,
-      //     newValue,
-      //     easing: easeCircleIn,
-      //     duration: this.duration
-      //   })
-      //   return newValue
-      // })
       .attr(ordinalAxis, d => this[ordinalAxis](d[this.ordinalAccessor]))
       .attr(ordinalDimension, this[ordinalAxis].bandwidth())
       .attr(valueAxis, d => this[valueAxis](Math[choice](0, d[this.valueAccessor]))) // this.y(d[this.valueAccessor]))
@@ -1874,6 +1895,8 @@ export class BarChart {
         );
       }
       const hasRoom =
+        this.placement === 'auto' ||
+        this.dataLabel.collisionHideOnly ||
         this.accessibility.showSmallLabels ||
         verifyTextHasSpace({
           text: formatDataLabel(d, this.innerLabelAccessor, this.dataLabel.format),
@@ -2010,8 +2033,6 @@ export class BarChart {
   }
 
   updateLabels() {
-    // this.enteringLabels.interrupt('opacity');
-
     const enterTransition = this.updatingLabels
       .transition('opacity')
       .ease(easeCircleIn)
@@ -2030,16 +2051,71 @@ export class BarChart {
   }
 
   drawDataLabels() {
-    this.updatingLabels.text(d => {
-      return formatDataLabel(d, this.innerLabelAccessor, this.dataLabel.format);
-    });
+    let textHeight = 15; // default label is usually 15
+    const hideOnly = this.placement !== 'auto' && this.dataLabel.collisionHideOnly;
+
+    this.updatingLabels
+      .text((d, i, n) => {
+        if (i === 0) {
+          // we just need to check this on one element
+          const textElement = n[i];
+          const style = getComputedStyle(textElement);
+          const fontSize = parseFloat(style.fontSize);
+          textHeight = Math.max(fontSize - 1, 1); // clone.getBBox().height;
+        }
+        return formatDataLabel(d, this.innerLabelAccessor, this.dataLabel.format);
+      })
+      .style('visibility', (_, i, n) =>
+        this.placement === 'auto' || this.dataLabel.collisionHideOnly ? select(n[i]).style('visibility') : null
+      );
+
+    const collisionSettings = {
+      vertical: {
+        top: {
+          validPositions: ['top', 'bottom'],
+          offsets: [2, 1]
+        },
+        middle: {
+          validPositions: ['middle', 'top'],
+          offsets: [1, textHeight / 2]
+        },
+        bottom: {
+          validPositions: ['middle', 'top'],
+          offsets: [1, textHeight / 2]
+        }
+      },
+      horizontal: {
+        right: {
+          validPositions: ['right', 'left'],
+          offsets: [4, 8]
+        },
+        middle: {
+          validPositions: ['middle', 'right'],
+          offsets: [1, 15]
+        },
+        left: {
+          validPositions: ['left', 'right'],
+          offsets: [1, 20]
+        }
+      }
+    };
+
+    const collisionPlacement = this.dataLabel && this.dataLabel.collisionPlacement;
+    const boundsScope =
+      collisionPlacement && collisionSettings[this.layout][collisionPlacement] // check whether placement provided maps correctly
+        ? this.dataLabel.collisionPlacement
+        : this.layout === 'vertical'
+        ? 'top' // if we don't have collisionPlacement
+        : 'right';
 
     const labelUpdate = this.updatingLabels
+      .attr('data-translate-x', this.padding.left + this.margin.left)
+      .attr('data-translate-y', this.padding.top + this.margin.top)
       .transition('update')
       .ease(easeCircleIn)
       .duration(this.duration);
 
-    placeDataLabels({
+    this.bitmaps = placeDataLabels({
       root: labelUpdate,
       xScale: this.x,
       yScale: this.y,
@@ -2047,7 +2123,18 @@ export class BarChart {
       valueAccessor: this.valueAccessor,
       placement: this.placement,
       layout: this.layout,
-      chartType: 'bar'
+      chartType: 'bar',
+      avoidCollision: {
+        runOccupancyBitmap: this.dataLabel.visible && this.placement === 'auto',
+        labelSelection: labelUpdate,
+        avoidMarks: [this.update],
+        validPositions: hideOnly ? ['middle'] : collisionSettings[this.layout][boundsScope].validPositions,
+        offsets: hideOnly ? [1] : collisionSettings[this.layout][boundsScope].offsets,
+        accessors: [this.ordinalAccessor, this.groupAccessor], // key is created for lines by nesting done in line,
+        size: [roundTo(this.width, 0), roundTo(this.height, 0)], // for some reason the bitmap needs width instead of inner padded width here
+        boundsScope: hideOnly ? undefined : boundsScope,
+        hideOnly: this.dataLabel.visible && this.dataLabel.collisionHideOnly
+      }
     });
   }
 
@@ -2219,7 +2306,12 @@ export class BarChart {
       xScale: this.x,
       xAccessor: this.layout !== 'horizontal' ? this.ordinalAccessor : this.valueAccessor,
       yScale: this.y,
-      yAccessor: this.layout !== 'horizontal' ? this.valueAccessor : this.ordinalAccessor
+      yAccessor: this.layout !== 'horizontal' ? this.valueAccessor : this.ordinalAccessor,
+      width: this.width,
+      height: this.height,
+      padding: this.padding,
+      margin: this.margin,
+      bitmaps: this.bitmaps
     });
   }
 
@@ -2231,7 +2323,6 @@ export class BarChart {
   setChartDescriptionWrapper() {
     initializeDescriptionRoot({
       rootEle: this.barChartEl,
-      geomType: 'bar',
       title: this.accessibility.title || this.mainTitle,
       chartTag: 'bar-chart',
       uniqueID: this.chartID,
@@ -2242,7 +2333,6 @@ export class BarChart {
         this.accessibility.elementsAreInterface === false &&
         this.accessibility.keyboardNavConfig &&
         this.accessibility.keyboardNavConfig.disabled
-      // groupName: 'line', // bar chart doesn't use this
     });
     this.shouldRedrawWrapper = false;
   }
@@ -2508,6 +2598,21 @@ export class BarChart {
             class="bar-legend vcl-legend"
             style={{ display: this.legend.visible && this.groupAccessor ? 'block' : 'none' }}
           />
+          <keyboard-instructions
+            uniqueID={this.chartID}
+            geomType={'bar'}
+            groupName={'bar group'} // taken from initializeDescriptionRoot, on bar this should be "bar group", stacked bar is "stack", and clustered is "cluster"
+            chartTag={'bar-chart'}
+            width={this.width - (this.margin ? this.margin.right || 0 : 0)}
+            isInteractive={this.accessibility.elementsAreInterface}
+            hasCousinNavigation={this.groupAccessor ? true : false} // on bar this requires checking for groupAccessor
+            disabled={
+              this.suppressEvents &&
+              this.accessibility.elementsAreInterface === false &&
+              this.accessibility.keyboardNavConfig &&
+              this.accessibility.keyboardNavConfig.disabled
+            } // the chart is "simple"
+          />
           <div class="visa-viz-d3-bar-container" />
           <div class="bar-tooltip vcl-tooltip" style={{ display: this.showTooltip ? 'block' : 'none' }} />
           <data-table
@@ -2521,6 +2626,7 @@ export class BarChart {
             unitTest={this.unitTest}
           />
         </div>
+        {/* <canvas id="bitmap-render" /> */}
       </div>
     );
   }

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2021 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -48,6 +48,12 @@ export interface IDumbbellPlotProps {
    * @controlName TextArea
    * @groupName Accessibility */
   accessibility: IAccessibilityType;
+
+  /**
+   * @shortDescription Manages settings for chart animation, property 'disabled' defaults to false or undefined
+   * @controlName TextArea
+   * @groupName Accessibility */
+  animationConfig: IAnimationConfig;
 
   /**
    * @shortDescription Padding between plot area and axes lines
@@ -293,8 +299,11 @@ export interface IDataLabelType {
   visible: boolean;
   placement?: string;
   labelAccessor?: string;
-  format?: string;
+  format?: any;
+  collisionHideOnly?: boolean;
+  collisionPlacement?: string;
 }
+
 export interface IFocusStyleType {
   key: string;
   sizeFromBar: number;
@@ -319,15 +328,20 @@ export interface IAxisType {
 }
 export interface ISeriesLabelType {
   visible: boolean;
-  placement: string;
-  label: string | string[];
+  placement?: string;
+  label?: string | string[];
   format?: string;
+  collisionHideOnly?: boolean;
+  collisionPlacement?: string;
 }
+
 export interface IDifferenceLabelType {
   visible: boolean;
-  placement: string;
-  calculation: string;
-  format: any;
+  placement?: string;
+  calculation?: string;
+  format?: any;
+  collisionHideOnly?: boolean;
+  collisionPlacement?: string;
 }
 export interface ILegendType {
   visible: boolean;
@@ -375,6 +389,17 @@ export interface IAccessibilityType {
   includeDataKeyNames?: boolean;
   hideDataTableButton?: boolean;
   disableValidation?: boolean;
-  elementsAreInterface?: boolean;
+  elementsAreInterface?: any;
   onChangeFunc?: any;
+  hideTextures?: boolean;
+  hideStrokes?: boolean;
+  showSmallLabels?: boolean;
+  showExperimentalTextures?: boolean;
+  keyboardNavConfig?: IKeyConfig;
+}
+export interface IAnimationConfig {
+  disabled?: boolean;
+}
+export interface IKeyConfig {
+  disabled?: boolean;
 }

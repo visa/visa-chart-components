@@ -5,6 +5,7 @@
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
  *
  **/
+
 import { Component, h } from '@stencil/core';
 import '@visa/alluvial-diagram';
 import '@visa/bar-chart';
@@ -24,6 +25,7 @@ import '@visa/clustered-force-layout';
 import '@visa/level-indicator';
 import '@visa/group-charts';
 import '@visa/visa-charts-data-table';
+import '@visa/keyboard-instructions';
 // import '@visa/bivariate-mapbox-map';
 /* ENDS :comment this code for faster demo build */
 @Component({

@@ -23,6 +23,7 @@ import {
   IDataLabelType,
   ITooltipLabelType,
   IAccessibilityType,
+  IAnimationConfig,
   ILegendType
 } from '@visa/charts-types';
 import { StackedBarChartDefaultValues } from './stacked-bar-chart-default-values';
@@ -36,6 +37,7 @@ const {
   buildStrokes,
   convertColorsToTextures,
   findTagLevel,
+  prepareRenderChange,
   initializeDescriptionRoot,
   initializeElementAccess,
   setElementFocusHandler,
@@ -83,7 +85,9 @@ const {
   transitionEndAll,
   scopeDataKeys,
   visaColors,
-  validateAccessibilityProps
+  validateAccessibilityProps,
+  roundTo,
+  resolveLabelCollision
 } = Utils;
 @Component({
   tag: 'stacked-bar-chart',
@@ -127,6 +131,7 @@ export class StackedBarChart {
   @Prop({ mutable: true }) roundedCorner: number = StackedBarChartDefaultValues.roundedCorner;
   @Prop({ mutable: true }) barIntervalRatio: number = StackedBarChartDefaultValues.barIntervalRatio;
   @Prop({ mutable: true }) hoverOpacity: number = StackedBarChartDefaultValues.hoverOpacity;
+  @Prop({ mutable: true }) animationConfig: IAnimationConfig = StackedBarChartDefaultValues.animationConfig;
 
   // Data label (5/7)
   @Prop({ mutable: true }) dataLabel: IDataLabelType = StackedBarChartDefaultValues.dataLabel;
@@ -148,6 +153,10 @@ export class StackedBarChart {
   @Prop({ mutable: true }) hoverHighlight: object;
   @Prop({ mutable: true }) clickHighlight: object[] = StackedBarChartDefaultValues.clickHighlight;
   @Prop({ mutable: true }) interactionKeys: string[];
+
+  // Testing (8/7)
+  @Prop() unitTest: boolean = false;
+  //  @Prop() debugMode: boolean = false;
 
   // Element
   @Element()
@@ -220,6 +229,7 @@ export class StackedBarChart {
   shouldResetRoot: boolean = false;
   shouldEnterUpdateExit: boolean = false;
   shouldSetGlobalSelections: boolean = false;
+  shouldSetTestingAttributes: boolean = false;
   shouldUpdateGeometries: boolean = false;
   shouldCheckValueAxis: boolean = false;
   shouldCheckLabelAxis: boolean = false;
@@ -269,6 +279,7 @@ export class StackedBarChart {
   textStrokes: any = {};
   topLevel: string = 'h2';
   bottomLevel: string = 'p';
+  bitmaps: any;
 
   @Watch('data')
   dataWatcher(_newData, _oldData) {
@@ -281,6 +292,7 @@ export class StackedBarChart {
     this.shouldUpdateScales = true;
     this.shouldUpdateTableData = true;
     this.shouldSetGlobalSelections = true;
+    this.shouldSetTestingAttributes = true;
     this.shouldEnterUpdateExit = true;
     this.shouldSetGeometryAccessibilityAttributes = true;
     this.shouldSetGeometryAriaLabels = true;
@@ -479,6 +491,7 @@ export class StackedBarChart {
     this.updated = true;
     this.shouldUpdateData = true;
     this.shouldSetGlobalSelections = true;
+    this.shouldSetTestingAttributes = true;
     this.shouldEnterUpdateExit = true;
     this.shouldUpdateTableData = true;
     this.shouldUpdateScales = true;
@@ -617,6 +630,8 @@ export class StackedBarChart {
   @Watch('dataLabel')
   labelWatcher(_newVal, _oldVal) {
     this.shouldUpdateLabels = true;
+    this.shouldUpdateTotalLabels = true;
+    this.shouldUpdateGeometries = true; // draw geometries has the transition end all callback in it which we need for labels
     this.shouldUpdateTableData = true;
     const newPlacementVal = _newVal && _newVal.placement ? _newVal.placement : false;
     const oldPlacementVal = _oldVal && _oldVal.placement ? _oldVal.placement : false;
@@ -843,6 +858,11 @@ export class StackedBarChart {
     this.shouldSetChartAccessibilityStructureNotes = true;
   }
 
+  @Watch('unitTest')
+  unitTestWatcher(_newVal, _oldVal) {
+    this.shouldSetTestingAttributes = true;
+  }
+
   componentWillLoad() {
     // contrary to componentWillUpdate, this method appears safe to use for
     // any calculations we need. Keeping them here reduces future refactor,
@@ -897,6 +917,7 @@ export class StackedBarChart {
       this.drawXGrid();
       this.drawYGrid();
       this.setGlobalSelections();
+      this.setTestingAttributes();
       this.enterGeometries();
       this.updateGeometries();
       this.exitGeometries();
@@ -936,7 +957,6 @@ export class StackedBarChart {
       hideNonessentialGroups(this.root.node(), this.barG.node());
       this.setGroupAccessibilityID();
       this.onChangeHandler();
-      this.duration = 750;
       this.defaults = false;
       resolve('component did load');
     });
@@ -944,6 +964,7 @@ export class StackedBarChart {
 
   componentDidUpdate() {
     return new Promise(resolve => {
+      this.duration = !this.animationConfig || !this.animationConfig.disabled ? 750 : 0;
       if (this.shouldUpdateDescriptionWrapper) {
         this.setChartDescriptionWrapper();
         this.shouldUpdateDescriptionWrapper = false;
@@ -1003,6 +1024,10 @@ export class StackedBarChart {
       if (this.shouldSetGlobalSelections) {
         this.setGlobalSelections();
         this.shouldSetGlobalSelections = false;
+      }
+      if (this.shouldSetTestingAttributes) {
+        this.setTestingAttributes();
+        this.shouldSetTestingAttributes = false;
       }
       if (this.shouldUpdateXGrid) {
         this.drawXGrid();
@@ -1149,7 +1174,8 @@ export class StackedBarChart {
         !(
           this.dataLabel.placement === 'top' ||
           this.dataLabel.placement === 'middle' ||
-          this.dataLabel.placement === 'bottom'
+          this.dataLabel.placement === 'bottom' ||
+          this.dataLabel.placement === 'auto'
         )
       ) {
         this.dataLabel.placement = 'middle';
@@ -1159,7 +1185,8 @@ export class StackedBarChart {
         !(
           this.dataLabel.placement === 'end' ||
           this.dataLabel.placement === 'middle' ||
-          this.dataLabel.placement === 'base'
+          this.dataLabel.placement === 'base' ||
+          this.dataLabel.placement === 'auto'
         )
       ) {
         this.dataLabel.placement = 'middle';
@@ -1374,7 +1401,8 @@ export class StackedBarChart {
         colors: colorsToConvert,
         rootSVG: this.svg.node(),
         id: this.chartID,
-        scheme: 'categorical'
+        scheme: 'categorical',
+        disableTransitions: !this.duration
       });
       this.colorArr = this.preparedColors.range ? this.preparedColors.copy().range(textures) : textures;
     }
@@ -1489,29 +1517,121 @@ export class StackedBarChart {
       .append('svg');
 
     this.tooltipG = select(this.stackedBarChartEl).select('.stacked-bar-tooltip');
+    this.references = this.rootG.append('g').attr('class', 'stacked-bar-reference-line-group');
+  }
+
+  setTestingAttributes() {
+    if (this.unitTest) {
+      select(this.stackedBarChartEl)
+        .select('.visa-viz-d3-stacked-bar-container')
+        .attr('data-testid', 'chart-container');
+      select(this.stackedBarChartEl)
+        .select('.stacked-bar-main-title')
+        .attr('data-testid', 'main-title');
+      select(this.stackedBarChartEl)
+        .select('.stacked-bar-sub-title')
+        .attr('data-testid', 'sub-title');
+
+      this.svg.attr('data-testid', 'root-svg');
+      this.root.attr('data-testid', 'margin-container');
+      this.rootG.attr('data-testid', 'padding-container');
+      this.legendG.attr('data-testid', 'legend-container');
+      this.tooltipG.attr('data-testid', 'tooltip-container');
+
+      this.barG.attr('data-testid', 'stacked-bar-group');
+      this.updateBarWrappers
+        .attr('data-testid', 'stacked-bar-wrapper')
+        .attr('data-id', d => `stacked-bar-wrapper-${d.key}`);
+      this.update
+        .attr('data-testid', 'bar')
+        .attr('data-id', d => `bar-${d[this.groupAccessor]}-${d[this.ordinalAccessor]}`);
+
+      this.labelG.attr('data-testid', 'stacked-bar-dataLabel-group');
+      this.updateLabelWrappers
+        .attr('data-testid', 'stacked-bar-dataLabel-wrapper')
+        .attr('data-id', d => `stacked-bar-dataLabel-wrapper-${d.key}`);
+      this.updateLabels
+        .attr('data-testid', 'dataLabel')
+        .attr('data-id', d => `dataLabel-${d[this.groupAccessor]}-${d[this.ordinalAccessor]}`);
+
+      this.totalLabels.attr('data-testid', 'stacked-bar-totalLabel-group');
+      this.updateTotalLabels.attr('data-testid', 'totalLabel').attr('data-id', d => `totalLabel-${d.key}`);
+
+      this.references.attr('data-testid', 'reference-line-group');
+      this.svg.select('defs').attr('data-testid', 'pattern-defs');
+
+      // reference lines do not have global selections
+      this.references.selectAll('.stacked-bar-reference-line').attr('data-testid', 'reference-line');
+
+      this.references.selectAll('.stacked-bar-reference-line-label').attr('data-testid', 'reference-line-label');
+    } else {
+      select(this.stackedBarChartEl)
+        .select('.visa-viz-d3-stacked-bar-container')
+        .attr('data-testid', null);
+      select(this.stackedBarChartEl)
+        .select('.stacked-bar-main-title')
+        .attr('data-testid', null);
+      select(this.stackedBarChartEl)
+        .select('.stacked-bar-sub-title')
+        .attr('data-testid', null);
+      this.svg.attr('data-testid', null);
+      this.root.attr('data-testid', null);
+      this.rootG.attr('data-testid', null);
+      this.legendG.attr('data-testid', null);
+      this.tooltipG.attr('data-testid', null);
+
+      this.barG.attr('data-testid', null);
+      this.updateBarWrappers.attr('data-testid', null).attr('data-id', null);
+      this.update.attr('data-testid', null).attr('data-id', null);
+
+      this.labelG.attr('data-testid', null);
+      this.updateLabelWrappers.attr('data-testid', null).attr('data-id', null);
+      this.updateLabels.attr('data-testid', null).attr('data-id', null);
+
+      this.totalLabels.attr('data-testid', null);
+      this.updateTotalLabels.attr('data-testid', null).attr('data-id', null);
+
+      this.references.attr('data-testid', null);
+      this.svg.select('defs').attr('data-testid', null);
+
+      // reference lines do not have global selections
+      this.references.selectAll('.stacked-bar-reference-line').attr('data-testid', null);
+
+      this.references.selectAll('.stacked-bar-reference-line-label').attr('data-testid', null);
+    }
   }
 
   // reset graph size based on window size
   reSetRoot() {
-    this.svg
-      .transition('root_reset')
-      .duration(this.duration)
-      .ease(easeCircleIn)
+    const changeSvg = prepareRenderChange({
+      selection: this.svg,
+      duration: this.duration,
+      namespace: 'root_reset',
+      easing: easeCircleIn
+    });
+
+    changeSvg
       .attr('width', this.width)
       .attr('height', this.height)
       .attr('viewBox', '0 0 ' + this.width + ' ' + this.height);
 
-    this.root
-      .transition('root_reset')
-      .duration(this.duration)
-      .ease(easeCircleIn)
-      .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`);
+    const changeRoot = prepareRenderChange({
+      selection: this.root,
+      duration: this.duration,
+      namespace: 'root_reset',
+      easing: easeCircleIn
+    });
 
-    this.rootG
-      .transition('root_reset')
-      .duration(this.duration)
-      .ease(easeCircleIn)
-      .attr('transform', `translate(${this.padding.left}, ${this.padding.top})`);
+    changeRoot.attr('transform', `translate(${this.margin.left}, ${this.margin.top})`);
+
+    const changeRootG = prepareRenderChange({
+      selection: this.rootG,
+      duration: this.duration,
+      namespace: 'root_reset',
+      easing: easeCircleIn
+    });
+
+    changeRootG.attr('transform', `translate(${this.padding.left}, ${this.padding.top})`);
 
     setAccessibilityDescriptionWidth(this.chartID, this.width);
   }
@@ -1529,7 +1649,8 @@ export class StackedBarChart {
       tickInterval: this.xAxis.tickInterval,
       label: this.xAxis.label,
       padding: this.padding,
-      hide: !this.innerXAxis.visible
+      hide: !this.innerXAxis.visible,
+      duration: this.duration
     });
   }
 
@@ -1546,7 +1667,8 @@ export class StackedBarChart {
       tickInterval: this.yAxis.tickInterval,
       label: this.yAxis.label,
       padding: this.padding,
-      hide: !this.innerYAxis.visible
+      hide: !this.innerYAxis.visible,
+      duration: this.duration
     });
   }
 
@@ -1580,7 +1702,8 @@ export class StackedBarChart {
         axisScale: this.x,
         left: false,
         padding: this.padding,
-        markOffset: this.y(0) || -1
+        markOffset: this.y(0) || -1,
+        duration: this.duration
       });
     }
     if (this.layout === 'horizontal') {
@@ -1591,7 +1714,8 @@ export class StackedBarChart {
         axisScale: this.y,
         left: true,
         padding: this.padding,
-        markOffset: this.x(0) || -1
+        markOffset: this.x(0) || -1,
+        duration: this.duration
       });
     }
   }
@@ -1605,7 +1729,8 @@ export class StackedBarChart {
       this.x,
       false,
       !this.innerXAxis.gridVisible,
-      this.xAxis.tickInterval
+      this.xAxis.tickInterval,
+      this.duration
     );
   }
 
@@ -1617,7 +1742,8 @@ export class StackedBarChart {
       this.y,
       true,
       !this.innerYAxis.gridVisible,
-      this.yAxis.tickInterval
+      this.yAxis.tickInterval,
+      this.duration
     );
   }
 
@@ -1883,6 +2009,20 @@ export class StackedBarChart {
         ]);
         return geometryIsUpdating;
       })
+      .attr(`data-${ordinalAxis}`, d => this[ordinalAxis](d[this.groupAccessor]))
+      .attr(`data-${ordinalDimension}`, this[ordinalAxis].bandwidth())
+      .attr(`data-${valueAxis}`, d => {
+        const modifier = !this.normalized ? 1 : d.getSum();
+        return this.layout === 'vertical' ? this.y(d.stackStart / modifier) : this.x(d.stackEnd / modifier);
+      })
+      .attr(`data-${valueDimension}`, d => {
+        const modifier = !this.normalized ? 1 : d.getSum();
+        return this.layout === 'vertical'
+          ? this.y(d.stackEnd / modifier) - this.y(d.stackStart / modifier)
+          : this.x(d.stackStart / modifier) - this.x(d.stackEnd / modifier);
+      })
+      .attr('data-translate-x', this.padding.left + this.margin.left)
+      .attr('data-translate-y', this.padding.top + this.margin.top)
       .transition('update')
       .duration(this.duration)
       .ease(easeCircleIn)
@@ -2027,6 +2167,8 @@ export class StackedBarChart {
           ? this.y(d.stackEnd / modifier) - this.y(d.stackStart / modifier)
           : this.x(d.stackStart / modifier) - this.x(d.stackEnd / modifier);
       const hasRoom =
+        this.dataLabel.placement === 'auto' || // we ignore show small labels when running collision algorithm
+        this.dataLabel.collisionHideOnly ||
         this.accessibility.showSmallLabels ||
         verifyTextHasSpace({
           text: formatDataLabel(d, this.innerLabelAccessor, this.dataLabel.format, this.normalized),
@@ -2205,16 +2347,31 @@ export class StackedBarChart {
   }
 
   drawDataLabels() {
+    let textHeight = 15; // default label is usually 15
+    const hideOnly = this.dataLabel.placement !== 'auto' && this.dataLabel.collisionHideOnly;
+
     this.updateLabels
       .classed('stacked-bar-dataLabel-horizontal', false)
       .classed('stacked-bar-dataLabel-vertical', false)
       .classed('stacked-bar-dataLabel-' + this.layout, true)
-      .text(d => {
+      .text((d, i, n) => {
         if (d[this.valueAccessor] === 0 && !this.showZeroLabels) {
           return '';
         }
+        if (i === 0) {
+          // we just need to check this on one element
+          const textElement = n[i];
+          const style = getComputedStyle(textElement);
+          const fontSize = parseFloat(style.fontSize);
+          textHeight = Math.max(fontSize - 1, 1); // clone.getBBox().height;
+        }
         return formatDataLabel(d, this.innerLabelAccessor, this.dataLabel.format, this.normalized);
-      });
+      })
+      .style('visibility', (_, i, n) =>
+        this.dataLabel.placement === 'auto' || this.dataLabel.collisionHideOnly
+          ? select(n[i]).style('visibility')
+          : null
+      );
 
     this.updateLabelWrappers
       .transition('update')
@@ -2239,11 +2396,52 @@ export class StackedBarChart {
           this.interpolating[valueAxis](d[stack] / modifier) !== this[valueAxis](d[stack] / modifier);
         return textIsMoving;
       })
+      .attr('data-translate-x', this.padding.left + this.margin.left)
+      .attr('data-translate-y', this.padding.top + this.margin.top)
       .transition('update')
       .ease(easeCircleIn)
       .duration(this.duration);
 
-    placeDataLabels({
+    const collisionSettings = {
+      vertical: {
+        top: {
+          validPositions: ['bottom'],
+          offsets: [5]
+        },
+        middle: {
+          validPositions: ['middle'],
+          offsets: [1]
+        },
+        bottom: {
+          validPositions: ['top'],
+          offsets: [textHeight / 2]
+        }
+      },
+      horizontal: {
+        right: {
+          validPositions: ['left'],
+          offsets: [8]
+        },
+        middle: {
+          validPositions: ['middle'],
+          offsets: [1]
+        },
+        left: {
+          validPositions: ['right'],
+          offsets: [20]
+        }
+      }
+    };
+
+    const collisionPlacement = this.dataLabel && this.dataLabel.collisionPlacement;
+    const boundsScope =
+      collisionPlacement && collisionSettings[this.layout][collisionPlacement] // check whether placement provided maps correctly
+        ? this.dataLabel.collisionPlacement
+        : this.layout === 'vertical'
+        ? 'top' // if we don't have collisionPlacement
+        : 'right';
+
+    this.bitmaps = placeDataLabels({
       root: labelUpdate,
       xScale: this.x,
       yScale: this.y,
@@ -2252,7 +2450,18 @@ export class StackedBarChart {
       placement: this.dataLabel.placement,
       layout: this.layout,
       chartType: 'stacked',
-      normalized: this.normalized
+      normalized: this.normalized,
+      avoidCollision: {
+        runOccupancyBitmap: this.dataLabel.visible && this.dataLabel.placement === 'auto',
+        labelSelection: labelUpdate,
+        avoidMarks: [this.update],
+        validPositions: hideOnly ? ['middle'] : collisionSettings[this.layout][boundsScope].validPositions,
+        offsets: hideOnly ? [1] : collisionSettings[this.layout][boundsScope].offsets,
+        accessors: [this.groupAccessor, this.ordinalAccessor, 'key'], // key is created for lines by nesting done in line,
+        size: [roundTo(this.width, 0), roundTo(this.height, 0)],
+        boundsScope: hideOnly ? undefined : boundsScope,
+        hideOnly: this.dataLabel.visible && this.dataLabel.collisionHideOnly
+      }
     });
   }
   // draw total value dataLabel
@@ -2302,29 +2511,67 @@ export class StackedBarChart {
       .text(d => formatStats(d.sum, this.dataLabel.format))
       .attr('text-anchor', this.layout === 'vertical' ? 'middle' : 'start');
 
-    this.updateTotalLabels
+    const totalLabelSelection = this.updateTotalLabels
       .classed('bar-dataLabel-horizontal', false)
       .classed('bar-dataLabel-vertical', false)
       .classed('bar-dataLabel-' + this.layout, true)
+      .attr(`data-${groupDimension}`, d => {
+        return this[groupDimension](d.key) + this[groupDimension].bandwidth() / 2;
+      })
+      .attr(`data-${sumDimension}`, d => {
+        return this[sumDimension](d.sumAboveZero); // 5 is a spacer for the collision placement using middle
+      })
+      .attr('data-use-dx', true)
+      .attr('data-use-dy', true)
+      .attr('data-translate-x', this.padding.left + this.margin.left)
+      .attr('data-translate-y', this.padding.top + this.margin.top)
+      .attr('dx', this.layout === 'vertical' ? '0' : '0.3em')
+      .attr('dy', this.layout === 'vertical' ? '-0.3em' : '.3em')
+      .style('visibility', (_, i, n) =>
+        this.dataLabel.placement === 'auto' || this.dataLabel.collisionHideOnly
+          ? select(n[i]).style('visibility')
+          : null
+      )
       .transition('update')
       .ease(easeCircleIn)
       .duration(this.duration)
-      .attr('opacity', totalValueOpacity)
-      .attr(groupDimension, d => {
-        return this[groupDimension](d.key) + this[groupDimension].bandwidth() / 2;
-      })
-      .attr(sumDimension, d => {
-        return this[sumDimension](d.sumAboveZero);
-      })
-      .attr('dx', this.layout === 'vertical' ? '0' : '0.3em')
-      .attr('dy', this.layout === 'vertical' ? '-0.3em' : '.3em');
+      .attr('opacity', totalValueOpacity);
+
+    // for stacked we will only run this if data label props are true and show totals is visible
+    if (this.showTotalValue && (this.dataLabel.placement === 'auto' || this.dataLabel.collisionHideOnly)) {
+      // const validPositions = this.layout === 'vertical' ? ['middle', 'top'] : ['middle', 'right'];
+      this.bitmaps = resolveLabelCollision({
+        bitmaps: this.bitmaps,
+        labelSelection: totalLabelSelection,
+        avoidMarks: [this.update],
+        validPositions: ['middle'], // only do middle since we are forcing to collisionHideOnly
+        offsets: [1], // [1,1]
+        accessors: [this.ordinalAccessor],
+        // boundsScope: this.layout === 'vertical' ? 'top' : 'center',
+        size: [roundTo(this.width, 0), roundTo(this.height, 0)], // we need the whole width and height for pie
+        hideOnly: true
+      });
+
+      // since we are hardcoding hide only for these, we must apply x/y locations after collision
+      totalLabelSelection
+        .attr(groupDimension, d => {
+          return this[groupDimension](d.key) + this[groupDimension].bandwidth() / 2;
+        })
+        .attr(sumDimension, d => {
+          return this[sumDimension](d.sumAboveZero);
+        });
+    } else {
+      totalLabelSelection
+        .attr(groupDimension, d => {
+          return this[groupDimension](d.key) + this[groupDimension].bandwidth() / 2;
+        })
+        .attr(sumDimension, d => {
+          return this[sumDimension](d.sumAboveZero);
+        });
+    }
   }
 
   drawReferenceLines() {
-    if (!this.references) {
-      this.references = this.rootG.append('g').attr('class', 'stacked-bar-reference-line-group');
-    }
-
     const currentReferences = this.references.selectAll('g').data(this.referenceLines, d => d.label);
 
     const enterReferences = currentReferences
@@ -2480,7 +2727,12 @@ export class StackedBarChart {
       xScale: this.layout !== 'horizontal' ? ordinalScale : valueScale,
       xAccessor: this.layout !== 'horizontal' ? this.groupAccessor : this.valueAccessor,
       yScale: this.layout !== 'horizontal' ? valueScale : ordinalScale,
-      yAccessor: this.layout !== 'horizontal' ? this.valueAccessor : this.groupAccessor
+      yAccessor: this.layout !== 'horizontal' ? this.valueAccessor : this.groupAccessor,
+      width: this.width,
+      height: this.height,
+      padding: this.padding,
+      margin: this.margin,
+      bitmaps: this.bitmaps
     });
   }
 
@@ -2544,11 +2796,9 @@ export class StackedBarChart {
     // this initializes the accessibility description section of the chart
     initializeDescriptionRoot({
       rootEle: this.stackedBarChartEl,
-      geomType: 'bar',
       title: this.accessibility.title || this.mainTitle,
       chartTag: 'stacked-bar-chart',
       uniqueID: this.chartID,
-      groupName: 'stack',
       highestHeadingLevel: this.highestHeadingLevel,
       redraw: this.shouldRedrawWrapper,
       disableKeyNav:
@@ -2819,11 +3069,26 @@ export class StackedBarChart {
     return (
       <div class={`o-layout is--${this.layout} ${theme}`}>
         <div class="o-layout--chart">
-          <this.topLevel data-testid="main-title">{this.mainTitle}</this.topLevel>
-          <this.bottomLevel class="visa-ui-text--instructions" data-testid="sub-title">
+          <this.topLevel class="stacked-bar-main-title vcl-main-title">{this.mainTitle}</this.topLevel>
+          <this.bottomLevel class="visa-ui-text--instructions stacked-bar-sub-title vcl-sub-title">
             {this.subTitle}
           </this.bottomLevel>
           <div class="stacked-bar-legend vcl-legend" style={{ display: this.legend.visible ? 'block' : 'none' }} />
+          <keyboard-instructions
+            uniqueID={this.chartID}
+            geomType={'bar'}
+            groupName={'stack'} // taken from initializeDescriptionRoot, on bar this should be "bar group", stacked bar is "stack", and clustered is "cluster"
+            chartTag={'stacked-bar-chart'}
+            width={this.width - (this.margin ? this.margin.right || 0 : 0)}
+            isInteractive={this.accessibility.elementsAreInterface}
+            hasCousinNavigation
+            disabled={
+              this.suppressEvents &&
+              this.accessibility.elementsAreInterface === false &&
+              this.accessibility.keyboardNavConfig &&
+              this.accessibility.keyboardNavConfig.disabled
+            } // the chart is "simple"
+          />
           <div class="visa-viz-d3-stacked-bar-container" />
           <div class="stacked-bar-tooltip vcl-tooltip" style={{ display: this.showTooltip ? 'block' : 'none' }} />
           <data-table
@@ -2834,8 +3099,10 @@ export class StackedBarChart {
             padding={this.padding}
             margin={this.margin}
             hideDataTable={this.accessibility.hideDataTableButton}
+            unitTest={this.unitTest}
           />
         </div>
+        {/* <canvas id="bitmap-render" /> */}
       </div>
     );
   }
