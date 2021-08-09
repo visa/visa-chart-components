@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.1](https://github.com/visa/visa-chart-components/compare/@visa/charts-angular@2.3.0...@visa/charts-angular@2.3.1) (2021-08-09)
+
+
+### Bug Fixes
+
+* bump deps for map and charts-angular ([86a37a1](https://github.com/visa/visa-chart-components/commit/86a37a108f45b581e983a23e7a954c635fb3ced9))
+
+
+
+
+
 # [2.3.0](https://github.com/visa/visa-chart-components/compare/@visa/charts-angular@2.2.2...@visa/charts-angular@2.3.0) (2021-08-09)
 
 

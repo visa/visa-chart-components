@@ -1,6 +1,6 @@
 {
   "name": "@visa/bivariate-mapbox-map",
-  "version": "5.0.9",
+  "version": "5.0.10",
   "description": "a custom mapbox implementation to render a bivariate map of the US (msa and zip level)",
   "license": "SEE LICENCE IN LICENSE",
   "module": "dist/index.mjs",
