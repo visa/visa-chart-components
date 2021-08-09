@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.3.0](https://github.com/visa/visa-chart-components/compare/@visa/scatter-plot@5.2.3...@visa/scatter-plot@5.3.0) (2021-08-09)
+
+
+### Features
+
+* push keyboard-instructions, animationConfig, label-collision and fixes across lib ([ea1b1a4](https://github.com/visa/visa-chart-components/commit/ea1b1a478b3ea9bcf07e76551a45a9adaaacdb47))
+
+
+
+
+
 ## [5.2.3](https://github.com/visa/visa-chart-components/compare/@visa/scatter-plot@5.2.2...@visa/scatter-plot@5.2.3) (2021-04-13)
 
 **Note:** Version bump only for package @visa/scatter-plot
