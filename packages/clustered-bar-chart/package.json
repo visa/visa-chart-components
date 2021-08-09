@@ -1,6 +1,6 @@
 {
   "name": "@visa/clustered-bar-chart",
-  "version": "4.2.3",
+  "version": "4.3.0",
   "description": "visa's clustered-bar-chart component",
   "license": "SEE LICENCE IN LICENSE",
   "module": "dist/index.mjs",
@@ -36,10 +36,10 @@
     "access": "public"
   },
   "dependencies": {
-    "@visa/charts-types": "^0.3.2",
-    "@visa/keyboard-instructions": "^1.0.0",
-    "@visa/visa-charts-data-table": "^2.0.8",
-    "@visa/visa-charts-utils": "^4.4.1",
+    "@visa/charts-types": "^0.4.0",
+    "@visa/keyboard-instructions": "^1.1.0",
+    "@visa/visa-charts-data-table": "^2.0.9",
+    "@visa/visa-charts-utils": "^4.5.0",
     "d3-array": "^1.2.4",
     "d3-collection": "^1.0.7",
     "d3-scale": "^2.2.2",
@@ -48,7 +48,7 @@
     "uuid": "7.0.0"
   },
   "devDependencies": {
-    "@visa/visa-charts-utils-dev": "^3.3.8"
+    "@visa/visa-charts-utils-dev": "^3.3.9"
   },
   "jest": {
     "preset": "@stencil/core/testing",

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/visa/visa-chart-components/compare/@visa/charts-types@0.3.2...@visa/charts-types@0.4.0) (2021-08-09)
+
+
+### Features
+
+* add vega-label as util, update types, docs and other utils ([205ac78](https://github.com/visa/visa-chart-components/commit/205ac780821399871e866815f006bbcb63bd7eba))
+
+
+
+
+
 ## [0.3.2](https://github.com/visa/visa-chart-components/compare/@visa/charts-types@0.3.1...@visa/charts-types@0.3.2) (2021-04-02)
 
 

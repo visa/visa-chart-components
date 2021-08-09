@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.5.0](https://github.com/visa/visa-chart-components/compare/@visa/visa-charts-utils@4.4.1...@visa/visa-charts-utils@4.5.0) (2021-08-09)
+
+
+### Features
+
+* add vega-label as util, update types, docs and other utils ([205ac78](https://github.com/visa/visa-chart-components/commit/205ac780821399871e866815f006bbcb63bd7eba))
+* update accessibility controller for keyboard-instrutions, fix 300% zoom bug ([2828852](https://github.com/visa/visa-chart-components/commit/2828852d72ed3ca2bb97fb493a315c93803c308c))
+* update various utils for new animationConig capability ([9734cbc](https://github.com/visa/visa-chart-components/commit/9734cbc6810d6f064b0d797d836bd4437c4f0f12))
+
+
+
+
+
 ## [4.4.1](https://github.com/visa/visa-chart-components/compare/@visa/visa-charts-utils@4.4.0...@visa/visa-charts-utils@4.4.1) (2021-04-13)
 
 
