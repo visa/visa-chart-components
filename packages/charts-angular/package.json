@@ -101,7 +101,9 @@
     "zone.js": "~0.10.3"
   },
   "resolutions": {
-    "minimist": "^1.2.5"
+    "minimist": "^1.2.5",
+    "glob-parent": "^5.1.2",
+    "postcss": "^7.0.36"
   },
   "ngPackage": {
     "$schema": "./node_modules/ng-packagr/ng-package.schema.json",
@@ -124,6 +126,7 @@
         "@visa/scatter-plot/dist/loader": "visa-scatter-plot-loader",
         "@visa/stacked-bar-chart/dist/loader": "visa-stacked-bar-loader",
         "@visa/visa-charts-data-table/dist/loader": "visa-visa-charts-data-table-loader",
+        "@visa/keyboard-instructions/dist/loader": "visa-keyboard-instructions-loader",
         "@visa/world-map/dist/loader": "visa-world-map-loader"
       }
     },
