@@ -304,11 +304,13 @@ const mouseOutHandler = evt => {
 
 #### IDataLabelType Definition
 
-| Name            | Type    | Default Value(s) | Description                                                                                                                                              |
-| --------------- | ------- | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `labelAccessor` | string  | ''               | Key that determines which property of the data is displayed in the label.                                                                                |
-| `visible`       | boolean | false            | Toggles the visibility (opacity) of the data labels.                                                                                                     |
-| `format`        | string  | ''               | Sets the formatting for the data labels, EG %b, refer to [d3-time-format](https://github.com/d3/d3-time-format) and [numeral.js](http://numeraljs.com/). |
+| Name                | Type    | Default Value(s) | Description                                                                                                                                                                                                                                   |
+| ------------------- | ------- | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `labelAccessor`     | string  | ''               | Key that determines which property of the data is displayed in the label.                                                                                                                                                                     |
+| `visible`           | boolean | false            | Toggles the visibility (opacity) of the data labels.                                                                                                                                                                                          |
+| `placement`         | string  | 'bottom'         | Sets the placement of the data label, accepts 'bottom'. Placement option 'auto' leverages the [resolveLabelCollision](../utils/src/utils/collisionDetection.ts) algorithm and places labels without overlaps in available space on the chart. |
+| `format`            | string  | ''               | Sets the formatting for the data labels, EG %b, refer to [d3-time-format](https://github.com/d3/d3-time-format) and [numeral.js](http://numeraljs.com/).                                                                                      |
+| `collisionHideOnly` | boolean | false            | Toggles whether to run [resolveLabelCollision](../utils/src/utils/collisionDetection.ts) algorithm and hide labels if collision is detected (vs hide and then place). This is overridden by placement being set to `auto`.                    |
 
 <br>
 

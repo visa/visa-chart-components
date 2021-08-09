@@ -6,6 +6,7 @@
  *
  **/
 
+/* This file includes code covered by the following notice */
 /**
  * Copyright 2015, Mike Bostock
  * All rights reserved.

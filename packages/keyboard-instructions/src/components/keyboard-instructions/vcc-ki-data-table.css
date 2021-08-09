@@ -1,0 +1,269 @@
+/**
+ * Copyright (c) 2021 Visa, Inc.
+ *
+ * This source code is licensed under the MIT license
+ * https://github.com/visa/visa-chart-components/blob/master/LICENSE
+ *
+ **/
+.vcc-ki-thead .vcc-ki-th {
+  background-color: var(--theme-data-table-header-background, #fff);
+  box-shadow: 0 -2px 0 var(--theme-data-table-header-underline, #333333) inset;
+}
+
+.vcc-ki-tbody .vcc-ki-tr:nth-child(odd) {
+  background: var(--theme-data-table-row-background, #fff);
+}
+
+.vcc-ki-tbody .vcc-ki-tr:nth-child(even) {
+  background: var(--theme-data-table-row-background--alt, #f2f4f8);
+}
+
+.vcc-ki-th {
+  color: var(--theme-data-table-header-text, #333333);
+  font-weight: var(--theme-font-weight--semibold, 600);
+  height: var(--theme-data-tableheader-height, 48px);
+  text-align: left;
+  vertical-align: middle;
+}
+
+.vcc-ki-td {
+  height: var(--theme-data-tablerow-height, 72px);
+}
+
+.vcc-ki-td,
+.vcc-ki-th {
+  padding: 0 var(--theme-data-table-padding, 14px);
+}
+
+.vcc-ki-data-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.vcc-ki-data-table.vcc-ki-state--single-select .vcc-ki-tbody .vcc-ki-tr:hover,
+.vcc-ki-data-table.vcc-ki-state--multi-select .vcc-ki-tbody .vcc-ki-tr:hover {
+  background-color: var(--theme-data-table-row-background--hover, #e0eafa);
+}
+
+.vcc-ki-data-table.vcc-ki-state--single-select .vcc-ki-tbody .vcc-ki-tr:active,
+.vcc-ki-data-table.vcc-ki-state--multi-select .vcc-ki-tbody .vcc-ki-tr:active {
+  background-color: var(--theme-data-table-row-background--pressed, #d7d7de);
+}
+
+.vcc-ki-data-table.vcc-ki-state--single-select .vcc-ki-tbody .vcc-ki-tr:focus,
+.vcc-ki-data-table.vcc-ki-state--multi-select .vcc-ki-tbody .vcc-ki-tr:focus {
+  background-color: var(--theme-data-table-row-background--focus, #e0eafa);
+  outline: 1px dashed var(--theme-focus-outline-color, #373737);
+}
+
+.vcc-ki-data-table.vcc-ki-state--single-select .vcc-ki-tbody .vcc-ki-tr:focus.vcc-ki-state--selected,
+.vcc-ki-data-table.vcc-ki-state--multi-select .vcc-ki-tbody .vcc-ki-tr:focus.vcc-ki-state--selected {
+  background-color: var(--theme-data-table-row-background--selected, #d7d7de);
+}
+
+.vcc-ki-data-table.vcc-ki-state--single-select .vcc-ki-tbody .vcc-ki-tr.vcc-ki-state--selected,
+.vcc-ki-data-table.vcc-ki-state--multi-select .vcc-ki-tbody .vcc-ki-tr.vcc-ki-state--selected {
+  background-color: var(--theme-data-table-row-background--selected, #d7d7de);
+}
+
+.vcc-ki-data-table.vcc-ki-state--multi-select .vcc-ki-th:first-child,
+.vcc-ki-data-table.vcc-ki-state--multi-select .vcc-ki-th:first-child,
+.vcc-ki-data-table.vcc-ki-state--multi-select .vcc-ki-td:first-child,
+.vcc-ki-data-table.vcc-ki-state--multi-select .vcc-ki-td:first-child {
+  padding: 0 0 0 0.3125rem;
+}
+
+.vcc-ki-data-table.vcc-ki-state--multi-select .vcc-ki-th:nth-child(2),
+.vcc-ki-data-table.vcc-ki-state--multi-select .vcc-ki-th:nth-child(2),
+.vcc-ki-data-table.vcc-ki-state--multi-select .vcc-ki-td:nth-child(2),
+.vcc-ki-data-table.vcc-ki-state--multi-select .vcc-ki-td:nth-child(2) {
+  padding-left: 0;
+}
+
+.vcc-ki-data-table.vcc-ki-state--compact .vcc-ki-td {
+  height: var(--theme-data-tablerow-height--compact, 44px);
+}
+
+.vcc-ki-data-table.vcc-ki-state--customizable-columns .vcc-ki-thead .vcc-ki-data-table--column-control {
+  padding-right: 0;
+}
+
+.vcc-ki-data-table.vcc-ki-state--key-value-pairs .vcc-ki-th {
+  background-color: var(--theme-transparent, rgba(0, 0, 0, 0));
+  box-shadow: none;
+  font-weight: var(--theme-font-weight--semibold, 600);
+}
+
+.vcc-ki-data-table.vcc-ki-state--key-value-pairs .vcc-ki-tr:nth-child(odd) {
+  background: var(--theme-data-table-row-background--alt, #f2f4f8);
+}
+
+.vcc-ki-data-table.vcc-ki-state--key-value-pairs .vcc-ki-tr:nth-child(even) {
+  background: var(--theme-data-table-row-background, #fff);
+}
+
+.vcc-ki-data-table.vcc-ki-state--divider-lines .vcc-ki-tr:nth-child(n) {
+  background-color: var(--theme-data-table-row-background, #fff);
+}
+
+.vcc-ki-data-table.vcc-ki-state--divider-lines .vcc-ki-tr:not(:last-child) .vcc-ki-td,
+.vcc-ki-data-table.vcc-ki-state--divider-lines .vcc-ki-tr:not(:last-child) .vcc-ki-th {
+  border-bottom: 1px solid var(--theme-data-table-divider-line, #d7d7de);
+}
+
+.vcc-ki-data-table.vcc-ki-state--reveal-first-column .vcc-ki-th:first-child,
+.vcc-ki-data-table.vcc-ki-state--reveal-first-column .vcc-ki-th:first-child,
+.vcc-ki-data-table.vcc-ki-state--reveal-first-column .vcc-ki-td:first-child,
+.vcc-ki-data-table.vcc-ki-state--reveal-first-column .vcc-ki-td:first-child {
+  display: none;
+}
+
+.vcc-ki-data-table.vcc-ki-state--reveal-last-column .vcc-ki-th:last-child,
+.vcc-ki-data-table.vcc-ki-state--reveal-last-column .vcc-ki-th:last-child,
+.vcc-ki-data-table.vcc-ki-state--reveal-last-column .vcc-ki-td:last-child,
+.vcc-ki-data-table.vcc-ki-state--reveal-last-column .vcc-ki-td:last-child {
+  display: none;
+}
+
+.vcc-ki-data-table.vcc-ki-state--reveal:hover .vcc-ki-th:first-child,
+.vcc-ki-data-table.vcc-ki-state--reveal:hover .vcc-ki-th:first-child,
+.vcc-ki-data-table.vcc-ki-state--reveal:hover .vcc-ki-th:last-child,
+.vcc-ki-data-table.vcc-ki-state--reveal:hover .vcc-ki-th:last-child,
+.vcc-ki-data-table.vcc-ki-state--reveal:hover .vcc-ki-td:first-child,
+.vcc-ki-data-table.vcc-ki-state--reveal:hover .vcc-ki-td:first-child,
+.vcc-ki-data-table.vcc-ki-state--reveal:hover .vcc-ki-td:last-child,
+.vcc-ki-data-table.vcc-ki-state--reveal:hover .vcc-ki-td:last-child,
+.vcc-ki-data-table.vcc-ki-state--reveal:hover .vcc-ki-th:first-child,
+.vcc-ki-data-table.vcc-ki-state--reveal:hover .vcc-ki-th:first-child,
+.vcc-ki-data-table.vcc-ki-state--reveal:hover .vcc-ki-th:last-child,
+.vcc-ki-data-table.vcc-ki-state--reveal:hover .vcc-ki-th:last-child,
+.vcc-ki-data-table.vcc-ki-state--reveal:hover .vcc-ki-td:first-child,
+.vcc-ki-data-table.vcc-ki-state--reveal:hover .vcc-ki-td:first-child,
+.vcc-ki-data-table.vcc-ki-state--reveal:hover .vcc-ki-td:last-child,
+.vcc-ki-data-table.vcc-ki-state--reveal:hover .vcc-ki-td:last-child {
+  display: table-cell;
+}
+
+.vcc-ki-data-table.vcc-ki-state--reveal:hover .vcc-ki-data-table-inline-actions-cell {
+  padding: 0 var(--theme-data-table-padding, 14px);
+}
+
+.vcc-ki-data-table.vcc-ki-state--reveal:hover .vcc-ki-btn-group {
+  display: block;
+}
+
+.vcc-ki-data-table.vcc-ki-state--reveal.vcc-ki-state--multi-select .vcc-ki-th:nth-child(2),
+.vcc-ki-data-table.vcc-ki-state--reveal.vcc-ki-state--multi-select .vcc-ki-th:nth-child(2),
+.vcc-ki-data-table.vcc-ki-state--reveal.vcc-ki-state--multi-select .vcc-ki-td:nth-child(2),
+.vcc-ki-data-table.vcc-ki-state--reveal.vcc-ki-state--multi-select .vcc-ki-td:nth-child(2) {
+  padding-left: var(--theme-data-table-padding, 14px);
+}
+
+.vcc-ki-data-table.vcc-ki-state--sticky-header .vcc-ki-th {
+  position: sticky;
+}
+
+.vcc-ki-data-table-inline-actions-cell {
+  padding: 0;
+  width: 0;
+}
+
+.vcc-ki-data-table-inline-actions-cell .vcc-ki-btn-group {
+  display: none;
+  white-space: nowrap;
+}
+
+.vcc-ki-data-table-inline-actions-row:hover .vcc-ki-data-table-inline-actions-cell {
+  padding: 0 var(--theme-data-table-padding, 14px);
+}
+
+.vcc-ki-data-table-inline-actions-row:hover .vcc-ki-btn-group {
+  display: block;
+}
+
+.vcc-ki-data-table--border-left .vcc-ki-th:not(:first-child),
+.vcc-ki-data-table--border-left .vcc-ki-th:not(:first-child),
+.vcc-ki-data-table--border-left .vcc-ki-td:not(:first-child),
+.vcc-ki-data-table--border-left .vcc-ki-td:not(:first-child) {
+  border-left: 1px solid var(--theme-data-table-divider-line, #d7d7de);
+}
+
+.vcc-ki-data-table .vcc-ki-btn-icon {
+  display: inline-block;
+  margin-right: 0.25rem;
+}
+
+.vcc-ki-data-table .vcc-ki-data-table-cell-border-left {
+  border-left: 1px solid var(--theme-data-table-divider-line, #d7d7de);
+}
+
+.vcc-ki-data-table .vcc-ki-data-table-color-background-alt {
+  background-color: var(--theme-data-table-row-background--alt, #f2f4f8);
+}
+
+.vcc-ki-data-table .vcc-ki-text--right {
+  text-align: right;
+}
+
+.vcc-ki-pagination-bar .col {
+  align-items: center;
+  display: flex;
+}
+
+.vcc-ki-pagination-bar .col.col--no-gutter {
+  flex-direction: row;
+}
+
+.vcc-ki-pagination-bar .col--align-end {
+  justify-content: flex-end;
+}
+
+.vcc-ki-pagination {
+  margin-right: 0;
+  width: auto;
+}
+
+.vcc-ki-pagination-page-items-count {
+  margin-left: 1.6875rem;
+}
+
+.vcc-ki-pagination .vcc-ki-btn-split {
+  margin: 0;
+}
+
+.vcc-ki-btn-sortable {
+  -webkit-font-smoothing: antialiased;
+  align-items: center;
+  background: var(--theme-transparent, rgba(0, 0, 0, 0));
+  border: 0;
+  box-sizing: border-box;
+  color: var(--theme-font-color, #222);
+  cursor: pointer;
+  display: inline-flex;
+  font-family: var(--theme-font, OpenSans, sans-serif);
+  font-size: var(--theme-font-size, 14px);
+  font-weight: var(--theme-font-weight--semibold, 600);
+  height: auto;
+  justify-content: flex-start;
+  outline: none;
+  padding: 0;
+  text-align: left;
+}
+
+.vcc-ki-btn-sortable.focus-visible {
+  outline: 1px dashed var(--theme-focus-outline-color, #373737);
+}
+
+html:not(.js-focus-visible) .vcc-ki-btn-sortable:focus {
+  outline: 1px dashed var(--theme-focus-outline-color, #373737);
+}
+
+.vcc-ki-btn-sortable-icon {
+  display: flex;
+  height: 2rem;
+  width: 2rem;
+}
+
+.vcc-ki-btn-sortable-icon .vcc-ki-icon--tiny {
+  margin: auto;
+}

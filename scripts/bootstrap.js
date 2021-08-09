@@ -12,7 +12,8 @@ const commonComponents = [
   '@visa/charts-types',
   '@visa/visa-charts-utils',
   '@visa/visa-charts-utils-dev',
-  '@visa/visa-charts-data-table'
+  '@visa/visa-charts-data-table',
+  '@visa/keyboard-instructions'
 ].join();
 const ignoreComponents = ['@visa/level-indicator', '@visa/pareto-chart', '@visa/bivariate-mapbox-map'].join();
 const ignoreAppComponents = [
@@ -104,6 +105,7 @@ function run() {
             bootstrapComponents = `${component_name}`;
             break;
           case '@visa/visa-charts-data-table':
+          case '@visa/keyboard-instructions':
           default:
         }
         spawn(`lerna bootstrap --scope ${bootstrapComponents}`);
@@ -133,6 +135,7 @@ function run() {
             spawn(`lerna run --scope ${tempCommonComp} --stream --concurrency 8 build`);
             break;
           case '@visa/visa-charts-data-table':
+          case '@visa/keyboard-instructions':
           default:
             spawn(`lerna run --scope ${tempCommonComp} --stream --concurrency 8 build`);
         }

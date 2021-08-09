@@ -46,6 +46,7 @@ export class WorldMapDefaultValues {
 
   // accessibility
   static readonly accessibility = propDefaultValues.accessibility;
+  static readonly animationConfig = propDefaultValues.animationConfig;
 
   // style
   static readonly showGridLines = false;

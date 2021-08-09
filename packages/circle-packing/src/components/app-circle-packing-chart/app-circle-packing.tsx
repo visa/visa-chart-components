@@ -7,6 +7,8 @@
  **/
 import { Component, State, Event, EventEmitter, Element, h } from '@stencil/core';
 import '@visa/visa-charts-data-table';
+import '@visa/keyboard-instructions';
+
 @Component({
   tag: 'app-circle-packing',
   styleUrl: 'app-circle-packing.scss'
@@ -36,6 +38,42 @@ export class AppCirclePacking {
   @State() index: any = 1;
   @State() size: number = 500;
   @State() hellishData: any;
+  @State() animations: any = { disabled: false };
+  @State() annotations: any = [
+    {
+      note: {
+        label: '2018',
+        bgPadding: 0,
+        align: 'middle',
+        wrap: 210
+      },
+      accessibilityDescription: '2018 High Spend band total is 5,596',
+      x: '8%',
+      y: '40%',
+      disable: ['connector', 'subject'],
+      // dy: '-1%',
+      color: '#000000',
+      className: 'testing1 testing2 testing3',
+      collisionHideOnly: false
+    },
+    {
+      note: {
+        label: 'oasijfoiajsf',
+        bgPadding: 0,
+        align: 'middle',
+        wrap: 210
+      },
+      accessibilityDescription: '2018 High Spend band total is 5,596',
+      x: '8%',
+      y: '40%',
+      disable: ['connector', 'subject'],
+      // dy: '-1%',
+      color: '#000000',
+      className: 'testing1 testing2 testing3',
+      collisionHideOnly: false
+    }
+  ];
+
   @Event() updateComponent: EventEmitter;
 
   @State() accessibility: any = {
@@ -53,7 +91,12 @@ export class AppCirclePacking {
   appEl: HTMLElement;
   height: any = 400;
   width: any = 400;
-  dataLabel: any = { visible: true };
+  dataLabel: any = {
+    visible: true,
+    labelAccessor: 'cLabel',
+    placement: 'auto', // this really only can be auto or anything else
+    collisionPlacement: 'all'
+  };
   bigDataLabel: any = { visible: true, labelAccessor: 'LastName' };
   bigClickStyle: any = {
     color: 'categorical_blue',
@@ -970,6 +1013,10 @@ export class AppCirclePacking {
     this.sizeAccessor = this.sizeAccessor !== 'value' ? 'value' : 'altValue';
   }
 
+  toggleAnimations() {
+    this.animations = { disabled: !this.animations.disabled };
+  }
+
   render() {
     this.lifeCycleTestData = this.lifeCycleStates[this.index];
     this.chartData = this.lifeCycleStates[this.stateTrigger];
@@ -1028,6 +1075,13 @@ export class AppCirclePacking {
         >
           change width
         </button>
+        <button
+          onClick={() => {
+            this.toggleAnimations();
+          }}
+        >
+          Toggle Animations
+        </button>
         {/* <button
           onClick={() => {
             this.changeParentAccessor();
@@ -1043,13 +1097,14 @@ export class AppCirclePacking {
           change size accessor
         </button>
         <div style={{ display: 'flex', flexDirection: 'row' }}>
-          <circle-packing
+          {/* <circle-packing
             data={this.chartData}
             nodeAccessor={this.nodeAccessor}
             parentAccessor={this.parentAccessor}
             sizeAccessor={this.sizeAccessor}
             height={this.height}
             width={this.width}
+            animationConfig={this.animations}
             // nodeAccessor={'Type'}
             // parentAccessor={'Country'}
             // sizeAccessor={'value'}
@@ -1075,7 +1130,7 @@ export class AppCirclePacking {
             accessibility={{ ...this.accessibility, hideTextures: true }}
             suppressEvents={this.suppressEvents}
             circlePadding={3}
-          />
+          /> */}
         </div>
         <div style={{ display: 'flex', flexDirection: 'row' }}>
           <circle-packing
@@ -1089,6 +1144,7 @@ export class AppCirclePacking {
             mainTitle={'Circle Packing Component Structure'}
             displayDepth={4}
             dataDepth={5}
+            dataLabel={this.dataLabel}
             tooltipLabel={{
               labelAccessor: ['p', 'cLabel'],
               labelTitle: ['Caller', 'Callee'],
@@ -1106,9 +1162,10 @@ export class AppCirclePacking {
             onHoverFunc={d => this.onHoverFunc(d)}
             onClickFunc={d => this.onClickFunc(d)}
             onMouseOutFunc={() => this.onMouseOut()}
-            // clickHighlight={this.clickElement}
-            // hoverHighlight={this.hoverElement}
-            // zoomToNode={this.zoomTo}
+            clickHighlight={this.clickElement}
+            hoverHighlight={this.hoverElement}
+            zoomToNode={this.zoomTo}
+            // annotations={this.annotations}
             accessibility={{ ...this.accessibility, hideTextures: true }}
             circlePadding={3}
           />

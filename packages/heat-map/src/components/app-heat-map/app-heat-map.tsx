@@ -7,6 +7,8 @@
  **/
 import { Component, State, Event, EventEmitter, Element, h } from '@stencil/core';
 import '@visa/visa-charts-data-table';
+import '@visa/keyboard-instructions';
+
 @Component({
   tag: 'app-heat-map',
   styleUrl: 'app-heat-map.scss'
@@ -39,6 +41,7 @@ export class AppHeatMap {
     format: '0,0',
     labels: ['Lowest', 'V V Low', 'V Low', 'Low', 'Med-Low', 'Med', 'Med-High', 'High', 'V High', 'V V High', 'Highest']
   };
+  @State() animations: any = { disabled: false };
   startData: any = [
     [
       {
@@ -1310,6 +1313,9 @@ export class AppHeatMap {
   toggleSuppress() {
     this.suppressEvents = !this.suppressEvents;
   }
+  toggleAnimations() {
+    this.animations = { disabled: !this.animations.disabled };
+  }
 
   render() {
     this.data = this.dataStorage[this.stateTrigger];
@@ -1435,10 +1441,19 @@ export class AppHeatMap {
         >
           toggle strokes
         </button>
+
+        <button
+          onClick={() => {
+            this.toggleAnimations();
+          }}
+        >
+          toggle animations
+        </button>
         <heat-map
           colorPalette={'diverging_GtoP'} // sequential_grey // diverging_GtoP // diverging_GtoP
           // colors={[#ff4000, #555fff, #ff193f]}
           colorSteps={11}
+          animationConfig={this.animations}
           cursor={'pointer'}
           data={this.data}
           dataLabel={this.dataLabel}

@@ -12,6 +12,7 @@ import {
   IClickStyleType,
   IDataLabelType,
   ITooltipLabelType,
+  IAnimationConfig,
   IAccessibilityType
 } from '@visa/charts-types';
 import { CirclePackingDefaultValues } from './circle-packing-default-values';
@@ -64,7 +65,9 @@ const {
   scopeDataKeys,
   visaColors,
   validateAccessibilityProps,
-  findTagLevel
+  findTagLevel,
+  prepareRenderChange,
+  resolveLabelCollision
 } = Utils;
 
 @Component({
@@ -101,6 +104,7 @@ export class CirclePacking {
   @Prop({ mutable: true }) hoverStyle: IHoverStyleType = CirclePackingDefaultValues.hoverStyle;
   @Prop({ mutable: true }) clickStyle: IClickStyleType = CirclePackingDefaultValues.clickStyle;
   @Prop({ mutable: true }) hoverOpacity: number = CirclePackingDefaultValues.hoverOpacity;
+  @Prop({ mutable: true }) animationConfig: IAnimationConfig = CirclePackingDefaultValues.animationConfig;
 
   // Data label (5/7)
   @Prop({ mutable: true }) showTooltip: boolean = CirclePackingDefaultValues.showTooltip;
@@ -211,6 +215,7 @@ export class CirclePacking {
   bottomLevel: string = 'p';
   topLevel: string = 'h2';
   strokes: any = {};
+  bitmaps: any;
 
   @Watch('data')
   dataWatcher(_new, _old) {
@@ -570,7 +575,6 @@ export class CirclePacking {
       this.enterUpdateExitCircles(this.circleG, this.filterData(this.currentDepth));
       const target = this.getZoomTarget();
       this.drawZoomChildren(target);
-      this.setGlobalSelections();
       this.setChartCountAccessibility();
       this.setGeometryAccessibilityAttributes();
       this.setGeometryAriaLabels();
@@ -583,13 +587,13 @@ export class CirclePacking {
       // we want to pass the PARENT of all the <g>s that contain bars
       hideNonessentialGroups(this.root.node(), this.circleG.node(), true);
       // this.setGroupAccessibilityAttributes();
-      this.duration = 750;
       resolve('component did load');
     });
   }
 
   componentDidUpdate() {
     return new Promise(resolve => {
+      this.duration = !this.animationConfig || !this.animationConfig.disabled ? 750 : 0;
       // the following function always runs, no matter what prop changed
       this.prepareChartForDrawing();
 
@@ -669,7 +673,6 @@ export class CirclePacking {
       if (this.shouldZoom) {
         const target = this.getZoomTarget();
         this.drawZoomChildren(target);
-        this.setGlobalSelections();
         this.zoom(target);
         this.shouldZoom = false;
       } else if (this.shouldUpdateLabels) {
@@ -826,22 +829,35 @@ export class CirclePacking {
   }
 
   reSetRoot() {
-    this.svg
-      .transition('root_reset')
-      .duration(this.duration)
+    const changeSvg = prepareRenderChange({
+      selection: this.svg,
+      duration: this.duration,
+      namespace: 'root_reset'
+    });
+
+    changeSvg
       .attr('width', this.width)
       .attr('height', this.height)
       .attr('viewBox', '0 0 ' + this.width + ' ' + this.height);
 
-    this.root
-      .transition('root_reset')
-      .duration(this.duration)
-      .attr('transform', `translate(${this.diameter / 2 + this.margin.left}, ${this.diameter / 2 + this.margin.top})`);
+    const changeRoot = prepareRenderChange({
+      selection: this.root,
+      duration: this.duration,
+      namespace: 'root_reset'
+    });
 
-    this.rootG
-      .transition('root_reset')
-      .duration(this.duration)
-      .attr('transform', `translate(${this.padding.left}, ${this.padding.top})`);
+    changeRoot.attr(
+      'transform',
+      `translate(${this.diameter / 2 + this.margin.left}, ${this.diameter / 2 + this.margin.top})`
+    );
+
+    const changeRootG = prepareRenderChange({
+      selection: this.rootG,
+      duration: this.duration,
+      namespace: 'root_reset'
+    });
+
+    changeRootG.attr('transform', `translate(${this.padding.left}, ${this.padding.top})`);
 
     if (typeof this.filter !== 'undefined') {
       this.enterUpdateExitCircles(this.circleG, this.filterData(0));
@@ -1041,15 +1057,10 @@ export class CirclePacking {
       .attr('data-testid', 'dataLabel')
       .attr('data-x', d => roundTo((d.x - this.view[0]) * this.zoomRatio, 4))
       .attr('data-y', d => roundTo((d.y - this.view[1]) * this.zoomRatio, 4))
-      .attr('transform', d => {
-        return (
-          'translate(' +
-          roundTo((d.x - this.view[0]) * this.zoomRatio, 4) +
-          ',' +
-          roundTo((d.y - this.view[1]) * this.zoomRatio, 4) +
-          ')'
-        );
-      })
+      .attr('data-translate-x', this.diameter / 2 + this.margin.left)
+      .attr('data-translate-y', this.diameter / 2 + this.margin.top)
+      .attr('x', d => roundTo((d.x - this.view[0]) * this.zoomRatio, 4))
+      .attr('y', d => roundTo((d.y - this.view[1]) * this.zoomRatio, 4))
       .attr('text-anchor', 'middle');
   }
 
@@ -1061,11 +1072,13 @@ export class CirclePacking {
       .text(d =>
         this.dataLabel.labelAccessor ? d.data.data[this.dataLabel.labelAccessor] : d.data.data[this.nodeAccessor]
       );
-    this.placeLabels();
+    if (!this.shouldZoom && this.shouldUpdateLabels) this.placeLabels(); // only need to call place labels if not already calling zoom
   }
 
   placeLabels() {
-    this.updateText
+    const hideOnly = this.dataLabel.placement !== 'auto' && this.dataLabel.collisionHideOnly;
+
+    const labelUpdate = this.updateText
       .classed('moving', (d, i, n) => {
         const oldX = +select(n[i]).attr('data-x');
         const oldY = +select(n[i]).attr('data-y');
@@ -1074,28 +1087,102 @@ export class CirclePacking {
         return oldX !== newX || oldY !== newY;
       })
       .attr('data-x', d => roundTo((d.x - this.view[0]) * this.zoomRatio, 4))
-      .attr('data-y', d => roundTo((d.y - this.view[1]) * this.zoomRatio, 4));
+      .attr('data-y', d => roundTo((d.y - this.view[1]) * this.zoomRatio, 4))
+      .attr('data-translate-x', this.diameter / 2 + this.margin.left)
+      .attr('data-translate-y', this.diameter / 2 + this.margin.top)
+      .style('visibility', (_, i, n) =>
+        this.dataLabel.placement === 'auto' || this.dataLabel.collisionHideOnly
+          ? select(n[i]).style('visibility')
+          : null
+      )
 
-    this.updateText
-      .filter('.moving')
+      // .filter('.moving') // not sure why we filter this on moving
       .attr('filter', null)
       .transition('place')
-      .duration(this.duration)
-      .attr('transform', d => {
-        return (
-          'translate(' +
-          roundTo((d.x - this.view[0]) * this.zoomRatio, 4) +
-          ',' +
-          roundTo((d.y - this.view[1]) * this.zoomRatio, 4) +
-          ')'
-        );
-      })
-      .call(transitionEndAll, () => {
-        this.updateText.classed('moving', false);
-        setTimeout(() => {
-          this.addStrokeUnder();
-        }, 0);
+      .duration(this.duration);
+
+    const collisionSettings = {
+      all: {
+        validPositions: [
+          'middle',
+          'top',
+          'bottom',
+          'left',
+          'right',
+          'bottom-right',
+          'bottom-left',
+          'top-left',
+          'top-right'
+        ],
+        offsets: [1, 1, 2, 4, 4, 1, 1, 1, 1]
+      },
+      centroid: {
+        validPositions: ['middle'],
+        offsets: [1]
+      },
+      top: {
+        validPositions: ['top', 'top-left', 'top-right'],
+        offsets: [1, 1, 1]
+      },
+      middle: {
+        validPositions: ['middle', 'left', 'right'],
+        offsets: [1, 4, 4]
+      },
+      bottom: {
+        validPositions: ['bottom', 'bottom-left', 'bottom-right'],
+        offsets: [2, 1, 1]
+      },
+      right: {
+        validPositions: ['right', 'top-right', 'bottom-right'],
+        offsets: [4, 1, 1]
+      },
+      left: {
+        validPositions: ['left', 'top-left', 'bottom-left'],
+        offsets: [4, 1, 1]
+      }
+    };
+    const collisionPlacement = this.dataLabel && this.dataLabel.collisionPlacement;
+    const validPositions = hideOnly
+      ? ['middle']
+      : collisionPlacement && collisionSettings[collisionPlacement] // check whether placement provided maps correctly
+      ? collisionSettings[collisionPlacement].validPositions
+      : collisionSettings['all'].validPositions;
+    const offsets = hideOnly
+      ? [1]
+      : collisionPlacement && collisionSettings[collisionPlacement] // check whether placement provided maps correctly
+      ? collisionSettings[collisionPlacement].offsets
+      : collisionSettings['all'].offsets;
+
+    // we are only going to do collision algorithm when requested
+    if (this.dataLabel.visible && (this.dataLabel.placement === 'auto' || this.dataLabel.collisionHideOnly)) {
+      this.bitmaps = resolveLabelCollision({
+        labelSelection: labelUpdate,
+        avoidMarks: [], // this.circle can be sent, but it takes up a lot of the screen space
+        validPositions,
+        offsets,
+        accessors: [this.parentAccessor, this.nodeAccessor],
+        size: [roundTo(this.innerPaddedWidth), roundTo(this.innerPaddedHeight)],
+        hideOnly: this.dataLabel.visible && hideOnly
       });
+
+      // if hide only we still need to place the labels based on standard logic
+      if (hideOnly) {
+        labelUpdate
+          .attr('x', d => roundTo((d.x - this.view[0]) * this.zoomRatio, 4))
+          .attr('y', d => roundTo((d.y - this.view[1]) * this.zoomRatio, 4));
+      }
+    } else {
+      labelUpdate
+        .attr('x', d => roundTo((d.x - this.view[0]) * this.zoomRatio, 4))
+        .attr('y', d => roundTo((d.y - this.view[1]) * this.zoomRatio, 4));
+    }
+
+    labelUpdate.call(transitionEndAll, () => {
+      this.updateText.classed('moving', false);
+      setTimeout(() => {
+        this.addStrokeUnder();
+      }, 0);
+    });
   }
 
   addStrokeUnder() {
@@ -1151,11 +1238,16 @@ export class CirclePacking {
   drawAnnotations() {
     annotate({
       source: this.rootG.node(),
-      data: this.annotations // ,
+      data: this.annotations,
       // xScale: this.x,
       // xAccessor: this.ordinalAccessor,
       // yScale: this.y,
       // yAccessor: this.valueAccessor
+      width: this.width,
+      height: this.height,
+      padding: this.padding,
+      margin: this.margin,
+      bitmaps: this.bitmaps
     });
     setAccessAnnotation(this.circlePackingEl, this.annotations);
   }
@@ -1175,7 +1267,8 @@ export class CirclePacking {
         colors: colorsArray,
         rootSVG: this.svg.node(),
         id: this.chartID,
-        scheme: 'categorical'
+        scheme: 'categorical',
+        disableTransitions: !this.duration
       });
       this.colorArr = this.preparedColors.range ? this.preparedColors.copy().range(textures) : textures;
     }
@@ -1289,8 +1382,10 @@ export class CirclePacking {
     if (target.children && target.children.length) {
       const validId = this.generateValidId(target.data.id);
       this.enterUpdateExitCircles(this.rootG.select('#circle-in-pack-' + validId), target.children);
+      this.setGlobalSelections();
       this.setLabelSelections(target.children);
     } else if (target) {
+      this.setGlobalSelections();
       this.setLabelSelections([target]);
     }
   }
@@ -1308,24 +1403,30 @@ export class CirclePacking {
     this.circle
       .classed('moving', (_, i, n) => {
         const d = select(n[i].parentNode).datum();
-        const oldX = +select(n[i]).attr('data-x');
-        const oldY = +select(n[i]).attr('data-y');
+        const oldX = +select(n[i]).attr('data-cx');
+        const oldY = +select(n[i]).attr('data-cy');
         const oldR = +select(n[i]).attr('r');
         const newX = roundTo((d.x - this.view[0]) * this.zoomRatio, 4);
         const newY = roundTo((d.y - this.view[1]) * this.zoomRatio, 4);
         const newR = d.r * this.zoomRatio;
         return oldR !== newR || oldX !== newX || oldY !== newY;
       })
-      .attr('data-x', (_, i, n) => {
+      .attr('data-cx', (_, i, n) => {
         const d = select(n[i].parentNode).datum();
         return roundTo((d.x - this.view[0]) * this.zoomRatio, 4);
       })
-      .attr('data-y', (_, i, n) => {
+      .attr('data-cy', (_, i, n) => {
         const d = select(n[i].parentNode).datum();
         return roundTo((d.y - this.view[1]) * this.zoomRatio, 4);
-      });
+      })
+      .attr('data-r', (_, i, n) => {
+        const d = select(n[i].parentNode).datum();
+        return d.r * this.zoomRatio;
+      })
+      .attr('data-translate-x', this.diameter / 2 + this.margin.left)
+      .attr('data-translate-y', this.diameter / 2 + this.margin.top);
 
-    this.circle
+    const changeCircle = this.circle
       .filter('.moving')
       .attr('filter', null)
       .transition('zoom')
@@ -1343,38 +1444,45 @@ export class CirclePacking {
       .attr('r', (_, i, n) => {
         const d = select(n[i].parentNode).datum();
         return d.r * this.zoomRatio;
-      })
-      .attrTween('x', (_, i, n) => {
-        // we tween over an unused attribute so that it causes no reflow
-        // but we can move the focus indicator with every frame of the animation
-        // making a separate animation will cause the indicator to lag
-        const focusSource = select(n[i]).classed('vcl-accessibility-focus-source');
-        return () => {
-          if (focusSource) {
-            // only a single moving element needs this to run, if it even exists
-            retainAccessFocus({
-              parentGNode: this.rootG.node(),
-              recursive: true
-            });
-          }
-          return 0;
-        };
-      })
-      .call(transitionEndAll, () => {
-        this.zooming = false;
-        this.circle.classed('moving', false);
-        setTimeout(() => {
-          this.circle.attr('filter', this.setCircleFilter);
-        }, 0);
-        // we call this one last time
-        retainAccessFocus({
-          parentGNode: this.rootG.node(),
-          recursive: true
-          // focusDidExist // this only matters for exiting selections
-        });
       });
 
-    this.placeLabels();
+    const accessibilityAfterZoom = () => {
+      this.zooming = false;
+      this.circle.classed('moving', false);
+      setTimeout(() => {
+        this.circle.attr('filter', this.setCircleFilter);
+      }, 0);
+      // we call this one last time
+      retainAccessFocus({
+        parentGNode: this.rootG.node(),
+        recursive: true
+        // focusDidExist // this only matters for exiting selections
+      });
+    };
+
+    if (this.duration) {
+      changeCircle
+        .attrTween('x', (_, i, n) => {
+          // we tween over an unused attribute so that it causes no reflow
+          // but we can move the focus indicator with every frame of the animation
+          // making a separate animation will cause the indicator to lag
+          const focusSource = select(n[i]).classed('vcl-accessibility-focus-source');
+          return () => {
+            if (focusSource) {
+              // only a single moving element needs this to run, if it even exists
+              retainAccessFocus({
+                parentGNode: this.rootG.node(),
+                recursive: true
+              });
+            }
+            return 0;
+          };
+        })
+        .call(transitionEndAll, accessibilityAfterZoom);
+    } else {
+      accessibilityAfterZoom();
+    }
+    this.placeLabels(); // added condition to other call of this to keep from calling twice
   }
 
   onHoverHandler(d) {
@@ -1422,11 +1530,9 @@ export class CirclePacking {
   setChartDescriptionWrapper() {
     initializeDescriptionRoot({
       rootEle: this.circlePackingEl,
-      geomType: 'node',
       title: this.accessibility.title || this.mainTitle,
       chartTag: 'circle-packing',
       uniqueID: this.chartID,
-      groupName: 'node',
       recursive: true,
       redraw: this.shouldRedrawWrapper,
       disableKeyNav:
@@ -1590,6 +1696,22 @@ export class CirclePacking {
           <this.bottomLevel class="visa-ui-text--instructions" data-testid="sub-title">
             {this.subTitle}
           </this.bottomLevel>
+          <keyboard-instructions
+            uniqueID={this.chartID}
+            geomType={'node'}
+            groupName={'node collection'} // taken from initializeDescriptionRoot, on bar this should be "bar group", stacked bar is "stack", and clustered is "cluster"
+            chartTag={'circle-packing'}
+            width={this.width - (this.margin ? this.margin.right || 0 : 0)}
+            isInteractive={this.accessibility.elementsAreInterface}
+            hasCousinNavigation={true}
+            cousinResultOverride={'Drill up or down a level'}
+            disabled={
+              this.suppressEvents &&
+              this.accessibility.elementsAreInterface === false &&
+              this.accessibility.keyboardNavConfig &&
+              this.accessibility.keyboardNavConfig.disabled
+            } // the chart is "simple"
+          />
           <div class="visa-viz-circle-packing-container" data-testid="chart-container" />
           <div
             class="circle-packing-tooltip vcl-tooltip"
@@ -1606,6 +1728,7 @@ export class CirclePacking {
             hideDataTable={this.accessibility.hideDataTableButton}
           />
         </div>
+        {/* <canvas id="bitmap-render" /> */}
       </div>
     );
   }

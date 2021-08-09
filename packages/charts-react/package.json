@@ -46,6 +46,7 @@
     "@visa/dumbbell-plot": "^5.2.3",
     "@visa/group-charts": "^3.1.14",
     "@visa/heat-map": "^4.2.3",
+    "@visa/keyboard-instructions": "^1.0.0",
     "@visa/level-indicator": "^4.0.7",
     "@visa/line-chart": "^4.2.3",
     "@visa/parallel-plot": "^4.2.3",

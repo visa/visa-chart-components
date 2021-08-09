@@ -7,7 +7,7 @@
  **/
 // tslint:disable: no-string-literal
 import { SpecPage } from '@stencil/core/testing';
-import { asyncForEach, flushTransitions } from './unit-test-utils';
+import { asyncForEach, flushTransitions, getTransitionDurations } from './unit-test-utils';
 import Utils from '@visa/visa-charts-utils';
 
 const { formatStats, visaColors, getTexture, getContrastingStroke, getColors } = Utils;
@@ -76,8 +76,7 @@ const headingsMap = {
   'vcl-access-layout': 'p',
   'vcl-access-xAxis': 'p',
   'vcl-access-yAxis': 'p',
-  'vcl-access-notes': 'p',
-  'vcl-interaction-instructions': '1'
+  'vcl-access-notes': 'p'
 };
 
 const accessibilityGeomListeners = ['focus'];
@@ -140,7 +139,7 @@ export const accessibility_instructions_default = {
     // ASSERT
     // IF IT IS THE FIRST CHILD IT SHOULD BE REGION LABEL
     expect(instructionsChildren[0]).toHaveClass('vcl-region-label');
-    expect(instructionsChildren[0]).toEqualAttribute('tabindex', '0');
+    expect(instructionsChildren[0]).not.toHaveAttribute('tabindex');
 
     // CHECK THAT ALL CHIDREN HAVE THE SCREEN READER CLASS
     instructionsChildren.forEach(instruction => {
@@ -548,6 +547,247 @@ export const accessibility_headings_update_p = {
   }
 };
 
+export const accessibility_keyboard_instructions_default = {
+  prop: 'accessibility',
+  group: 'accessibility',
+  name: 'keyboard instruction component renders in default state',
+  testProps: {},
+  testSelector: 'keyboard-instructions',
+  testFunc: async (
+    component: any,
+    page: SpecPage,
+    testProps: object,
+    testSelector: string,
+    nextTestSelector: string
+  ) => {
+    const defaultHeaderText = 'Select to View Keyboard Instructions';
+
+    // if we have any testProps apply them
+    if (Object.keys(testProps).length) {
+      Object.keys(testProps).forEach(testProp => {
+        component[testProp] = testProps[testProp];
+      });
+    }
+
+    page.root.appendChild(component);
+    await page.waitForChanges();
+
+    // ACT
+    const keyboardInstructionsElement = page.root.querySelector(testSelector);
+    const keyboardInstructionsOuterContainer = keyboardInstructionsElement.querySelector(
+      '.visa-viz-keyboard-instructions-outer-container'
+    );
+    const keyboardInstructionsHeaderContainer = keyboardInstructionsOuterContainer.querySelector(
+      '.vcc-ki-keyboard-instructions-header'
+    );
+    // const keyboardInstructionsButtonContainer = keyboardInstructionsOuterContainer.querySelector('.visa-viz-keyboard-instructions-button-wrapper');
+    const keyboardInstructionsContainer = keyboardInstructionsOuterContainer.querySelector(
+      '.visa-viz-keyboard-instructions-container'
+    );
+
+    // now we can check the instructions table
+    // ASSERT - by default the table or hover message are not shown
+    expect(keyboardInstructionsOuterContainer).toBeTruthy();
+    expect(keyboardInstructionsOuterContainer).not.toHaveClass('vcc-ki-bordered');
+
+    // the header should be minized by default and the message should be its default
+    expect(keyboardInstructionsHeaderContainer).toHaveClass('vcc-ki-minimize');
+    expect(keyboardInstructionsHeaderContainer.querySelector('.vcc-ki-keyboard-heading')).toEqualText(
+      defaultHeaderText
+    );
+
+    // the instructions container should exist and be empty by default
+    expect(keyboardInstructionsContainer).toBeTruthy();
+    expect(keyboardInstructionsContainer.childNodes.length).toEqual(0);
+  }
+};
+
+export const accessibility_keyboard_instructions_focus_state = {
+  prop: 'accessibility',
+  group: 'accessibility',
+  name: 'keyboard instruction component shows header in focus state',
+  testProps: {},
+  testSelector: 'keyboard-instructions',
+  testFunc: async (
+    component: any,
+    page: SpecPage,
+    testProps: object,
+    testSelector: string,
+    nextTestSelector: string
+  ) => {
+    const defaultHeaderText = 'Select to View Keyboard Instructions';
+
+    // if we have any testProps apply them
+    if (Object.keys(testProps).length) {
+      Object.keys(testProps).forEach(testProp => {
+        component[testProp] = testProps[testProp];
+      });
+    }
+
+    page.root.appendChild(component);
+    await page.waitForChanges();
+
+    // ACT
+    const keyboardInstructionsElement = page.root.querySelector(testSelector);
+    const keyboardInstructionsOuterContainer = keyboardInstructionsElement.querySelector(
+      '.visa-viz-keyboard-instructions-outer-container'
+    );
+    const keyboardInstructionsHeaderContainer = keyboardInstructionsOuterContainer.querySelector(
+      '.vcc-ki-keyboard-instructions-header'
+    );
+    const keyboardInstructionsButtonContainer = keyboardInstructionsOuterContainer.querySelector(
+      '.visa-viz-keyboard-instructions-button-wrapper'
+    );
+    const keyboardInstructionsButton = keyboardInstructionsButtonContainer.querySelector('button');
+    const keyboardInstructionsContainer = keyboardInstructionsOuterContainer.querySelector(
+      '.visa-viz-keyboard-instructions-container'
+    );
+
+    // now we focus the button
+    keyboardInstructionsButton.dispatchEvent(new Event('focus'));
+    await page.waitForChanges();
+
+    // now we can check the instructions table
+    // ASSERT - by default the table or hover message are not shown
+    expect(keyboardInstructionsOuterContainer).toBeTruthy();
+    expect(keyboardInstructionsOuterContainer).toHaveClass('vcc-ki-bordered');
+
+    // the header should be minized by default and the message should be its default
+    expect(keyboardInstructionsHeaderContainer).not.toHaveClass('vcc-ki-minimize');
+    expect(keyboardInstructionsHeaderContainer.querySelector('.vcc-ki-keyboard-heading')).toEqualText(
+      defaultHeaderText
+    );
+
+    // the instructions container should exist and be empty by default
+    expect(keyboardInstructionsContainer).toBeTruthy();
+    expect(keyboardInstructionsContainer.childNodes.length).toEqual(0);
+  }
+};
+
+export const accessibility_keyboard_instructions_click_state = {
+  prop: 'accessibility',
+  group: 'accessibility',
+  name: 'keyboard instruction component displays table in click state',
+  testProps: {},
+  testSelector: 'keyboard-instructions',
+  testFunc: async (
+    component: any,
+    page: SpecPage,
+    testProps: object,
+    testSelector: string,
+    nextTestSelector: string
+  ) => {
+    const tableHeaderText = 'Keyboard Instructions';
+
+    // if we have any testProps apply them
+    if (Object.keys(testProps).length) {
+      Object.keys(testProps).forEach(testProp => {
+        component[testProp] = testProps[testProp];
+      });
+    }
+
+    page.root.appendChild(component);
+    await page.waitForChanges();
+
+    // ACT
+    const keyboardInstructionsElement = page.root.querySelector(testSelector);
+    const keyboardInstructionsOuterContainer = keyboardInstructionsElement.querySelector(
+      '.visa-viz-keyboard-instructions-outer-container'
+    );
+    const keyboardInstructionsHeaderContainer = keyboardInstructionsOuterContainer.querySelector(
+      '.vcc-ki-keyboard-instructions-header'
+    );
+    const keyboardInstructionsButtonContainer = keyboardInstructionsOuterContainer.querySelector(
+      '.visa-viz-keyboard-instructions-button-wrapper'
+    );
+    const keyboardInstructionsButton = keyboardInstructionsButtonContainer.querySelector('button');
+    const keyboardInstructionsContainer = keyboardInstructionsOuterContainer.querySelector(
+      '.visa-viz-keyboard-instructions-container'
+    );
+
+    // now we click the button
+    keyboardInstructionsButton.dispatchEvent(new Event('click'));
+    await page.waitForChanges();
+
+    // now we can check the instructions table
+    // ASSERT - by default the table or hover message are not shown
+    expect(keyboardInstructionsOuterContainer).toBeTruthy();
+    expect(keyboardInstructionsOuterContainer).toHaveClass('vcc-ki-bordered');
+
+    // the header should be minized by default and the message should be its default
+    expect(keyboardInstructionsHeaderContainer).not.toHaveClass('vcc-ki-minimize');
+    expect(keyboardInstructionsHeaderContainer.querySelector('.vcc-ki-keyboard-heading')).toEqualText(tableHeaderText);
+
+    // the instructions container should exist and be empty by default
+    expect(keyboardInstructionsContainer).toBeTruthy();
+    expect(keyboardInstructionsContainer.childNodes.length).toBeGreaterThan(0);
+    expect(keyboardInstructionsContainer).toMatchSnapshot();
+  }
+};
+
+export const accessibility_keyboard_instructions_click_state_interactive = {
+  prop: 'accessibility',
+  group: 'accessibility',
+  name: 'keyboard instruction component displays table in click state with space enabled',
+  testProps: {},
+  testSelector: 'keyboard-instructions',
+  testFunc: async (
+    component: any,
+    page: SpecPage,
+    testProps: object,
+    testSelector: string,
+    nextTestSelector: string
+  ) => {
+    const tableHeaderText = 'Keyboard Instructions';
+
+    // if we have any testProps apply them
+    if (Object.keys(testProps).length) {
+      Object.keys(testProps).forEach(testProp => {
+        component[testProp] = testProps[testProp];
+      });
+    }
+    // set interface to true
+    component.accessibility = { ...component.accessibility, elementsAreInterface: true };
+
+    page.root.appendChild(component);
+    await page.waitForChanges();
+
+    // ACT
+    const keyboardInstructionsElement = page.root.querySelector(testSelector);
+    const keyboardInstructionsOuterContainer = keyboardInstructionsElement.querySelector(
+      '.visa-viz-keyboard-instructions-outer-container'
+    );
+    const keyboardInstructionsHeaderContainer = keyboardInstructionsOuterContainer.querySelector(
+      '.vcc-ki-keyboard-instructions-header'
+    );
+    const keyboardInstructionsButtonContainer = keyboardInstructionsOuterContainer.querySelector(
+      '.visa-viz-keyboard-instructions-button-wrapper'
+    );
+    const keyboardInstructionsButton = keyboardInstructionsButtonContainer.querySelector('button');
+    const keyboardInstructionsContainer = keyboardInstructionsOuterContainer.querySelector(
+      '.visa-viz-keyboard-instructions-container'
+    );
+
+    // now we click the button
+    keyboardInstructionsButton.dispatchEvent(new Event('click'));
+    await page.waitForChanges();
+
+    // now we can check the instructions table
+    // ASSERT - by default the table or hover message are not shown
+    expect(keyboardInstructionsOuterContainer).toBeTruthy();
+    expect(keyboardInstructionsOuterContainer).toHaveClass('vcc-ki-bordered');
+
+    // the header should be minized by default and the message should be its default
+    expect(keyboardInstructionsHeaderContainer).not.toHaveClass('vcc-ki-minimize');
+    expect(keyboardInstructionsHeaderContainer.querySelector('.vcc-ki-keyboard-heading')).toEqualText(tableHeaderText);
+
+    // the instructions container should exist and be empty by default
+    expect(keyboardInstructionsContainer).toBeTruthy();
+    expect(keyboardInstructionsContainer.childNodes.length).toBeGreaterThan(0);
+    expect(keyboardInstructionsContainer).toMatchSnapshot();
+  }
+};
+
 export const accessibility_static_geometry_initialize = {
   prop: 'accessibility',
   group: 'accessibility',
@@ -765,7 +1005,7 @@ export const accessibility_static_controller_initialize = {
 
     // ASSERT
     const titleText = `${component.mainTitle}. `;
-    const regionText = `Static ${component.tagName.toLowerCase()} image, Titled: ${titleText}The next TAB will focus the data table button. If you are using a screen reader, this section contains additional information.`;
+    const regionText = `Static ${component.tagName.toLowerCase()} image, Titled: ${titleText}This section contains additional information about this chart. Pressing TAB will focus the data table button.`;
 
     const controller = page.doc.querySelector(testSelector);
     const regionLabel = page.doc.querySelector('.vcl-region-label');
@@ -2040,6 +2280,171 @@ export const accessibility_categorical_textures_created_by_default = {
           expect(patterns[parentI].childNodes[childI]).toEqualAttribute(attr, textureChild.attributes[attr]);
         });
       });
+    });
+  }
+};
+
+export const animationConfig_disabled_false_by_default = {
+  prop: 'animationConfig',
+  group: 'accessibility',
+  name: 'animationConfig disabled is false by default',
+  testProps: { defaultDuration: 750 },
+  testSelector: '[data-testid=mark]',
+  nextTestSelector: '[data-testid=margin-container]',
+  testFunc: async (
+    component: any,
+    page: SpecPage,
+    testProps: object,
+    testSelector: string,
+    nextTestSelector: string
+  ) => {
+    // ARRANGE
+    let defaultDuration = 750;
+    // if we have any testProps apply them
+    if (Object.keys(testProps).length) {
+      Object.keys(testProps).forEach(testProp => {
+        if (testProp === 'defaultDuration') {
+          defaultDuration = testProps[testProp];
+        } else {
+          component[testProp] = testProps[testProp];
+        }
+      });
+    }
+
+    // ACT
+    page.root.appendChild(component);
+    await page.waitForChanges();
+
+    // ACT - FLUSH ENTRY MARKER TRANSITIONS
+    const marker = page.doc.querySelector(testSelector);
+    flushTransitions(marker);
+    await page.waitForChanges();
+
+    // ACT - UPDATE TO TRIGGER ANIMATION
+    component.width = 500;
+    await page.waitForChanges();
+
+    // ASSERT
+    const paddingG = page.doc.querySelector(nextTestSelector);
+
+    // TEST DURATIONS OF TRANSITIONS ASSIGNED
+    const paddingTransitions = getTransitionDurations(paddingG);
+    Object.keys(paddingTransitions).forEach(key => {
+      expect(paddingTransitions[key]).toEqual(defaultDuration);
+    });
+
+    const markerTransitions = getTransitionDurations(marker);
+    Object.keys(markerTransitions).forEach(key => {
+      expect(markerTransitions[key]).toEqual(defaultDuration);
+    });
+  }
+};
+
+export const animationConfig_disabled_true_on_load = {
+  prop: 'animationConfig',
+  group: 'accessibility',
+  name: 'animationConfig disabled is true when passed on load',
+  testProps: { defaultDuration: 0, animationConfig: { disabled: true } },
+  testSelector: '[data-testid=mark]',
+  nextTestSelector: '[data-testid=margin-container]',
+  testFunc: async (
+    component: any,
+    page: SpecPage,
+    testProps: object,
+    testSelector: string,
+    nextTestSelector: string
+  ) => {
+    // ARRANGE
+    let defaultDuration = 0;
+    // if we have any testProps apply them
+    if (Object.keys(testProps).length) {
+      Object.keys(testProps).forEach(testProp => {
+        if (testProp === 'defaultDuration') {
+          defaultDuration = testProps[testProp];
+        } else {
+          component[testProp] = testProps[testProp];
+        }
+      });
+    }
+
+    // ACT
+    page.root.appendChild(component);
+    await page.waitForChanges();
+
+    // ACT - FLUSH ENTRY MARKER TRANSITIONS
+    const marker = page.doc.querySelector(testSelector);
+    flushTransitions(marker);
+    await page.waitForChanges();
+
+    // ACT - UPDATE TO TRIGGER ANIMATION
+    component.width = 500;
+    await page.waitForChanges();
+
+    // ASSERT
+    const paddingG = page.doc.querySelector(nextTestSelector);
+
+    // TEST DURATIONS OF TRANSITIONS ASSIGNED
+    const paddingTransitions = getTransitionDurations(paddingG);
+    expect(Object.keys(paddingTransitions).length).toEqual(0);
+
+    const markerTransitions = getTransitionDurations(marker);
+    Object.keys(markerTransitions).forEach(key => {
+      expect(markerTransitions[key]).toEqual(defaultDuration);
+    });
+  }
+};
+
+export const animationConfig_disabled_true_on_update = {
+  prop: 'animationConfig',
+  group: 'accessibility',
+  name: 'animationConfig disabled is true when passed on update',
+  testProps: { defaultDuration: 0 },
+  testSelector: '[data-testid=mark]',
+  nextTestSelector: '[data-testid=margin-container]',
+  testFunc: async (
+    component: any,
+    page: SpecPage,
+    testProps: object,
+    testSelector: string,
+    nextTestSelector: string
+  ) => {
+    // ARRANGE
+    let defaultDuration = 0;
+    // if we have any testProps apply them
+    if (Object.keys(testProps).length) {
+      Object.keys(testProps).forEach(testProp => {
+        if (testProp === 'defaultDuration') {
+          defaultDuration = testProps[testProp];
+        } else {
+          component[testProp] = testProps[testProp];
+        }
+      });
+    }
+
+    // ACT
+    page.root.appendChild(component);
+    await page.waitForChanges();
+
+    // ACT - FLUSH ENTRY MARKER TRANSITIONS
+    const marker = page.doc.querySelector(testSelector);
+    flushTransitions(marker);
+    await page.waitForChanges();
+
+    // ACT - UPDATE TO TRIGGER ANIMATION
+    component.animationConfig = { disabled: true };
+    component.width = 500;
+    await page.waitForChanges();
+
+    // ASSERT
+    const paddingG = page.doc.querySelector(nextTestSelector);
+
+    // TEST DURATIONS OF TRANSITIONS ASSIGNED
+    const paddingTransitions = getTransitionDurations(paddingG);
+    expect(Object.keys(paddingTransitions).length).toEqual(0);
+
+    const markerTransitions = getTransitionDurations(marker);
+    Object.keys(markerTransitions).forEach(key => {
+      expect(markerTransitions[key]).toEqual(defaultDuration);
     });
   }
 };

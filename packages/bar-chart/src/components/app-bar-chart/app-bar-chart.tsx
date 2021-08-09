@@ -8,6 +8,7 @@
 import { Component, State, Element, h } from '@stencil/core';
 import Utils from '@visa/visa-charts-utils';
 import '@visa/visa-charts-data-table';
+import '@visa/keyboard-instructions';
 
 const { findTagLevel } = Utils;
 
@@ -30,7 +31,13 @@ export class AppBarChart {
     bottom: 40
   };
   @State() uniqueID: string = 'thisIsUnique';
-  @State() dataLabel: any = { visible: true, placement: 'bottom', labelAccessor: 'value', format: '0.0[a]' };
+  @State() dataLabel: any = {
+    visible: true,
+    placement: 'auto',
+    labelAccessor: 'value',
+    format: '0.0[a]',
+    collisionPlacement: 'middle'
+  };
   @State() tooltipLabel: any = {
     labelAccessor: ['region', 'country', 'value'],
     labelTitle: ['', 'country', 'value'],
@@ -44,6 +51,7 @@ export class AppBarChart {
   @State() hoverElementTest: any = '';
   @State() clickElementTest: any = [];
   @State() suppressEvents: boolean = false;
+  @State() animations: any = { disabled: false };
   @State() accessibility: any = {
     elementDescriptionAccessor: 'note', // see Indonesia above
     longDescription:
@@ -59,6 +67,7 @@ export class AppBarChart {
     onChangeFunc: d => {
       this.onChangeFunc(d);
     },
+    showSmallLabels: true,
     hideDataTableButton: false,
     elementsAreInterface: true,
     disableValidation: false,
@@ -67,18 +76,50 @@ export class AppBarChart {
   @State() annotations: any = [
     {
       note: {
-        label: "China's Volume-per-capita is massively under market performance.",
-        bgPadding: 20,
-        title: 'Low Volume Per Capita',
+        label: '2018',
+        bgPadding: 0,
         align: 'middle',
         wrap: 210
       },
-      accessibilityDescription:
-        'This annotation is a callout to China, which only has 27 million volume but 1.3 billion people.',
-      data: { country: 'China', value: '27', region: 'Asia' },
-      dy: '-20%',
-      color: 'categorical_blue'
+      accessibilityDescription: '2018 High Spend band total is 5,596',
+      x: '8%',
+      y: '40%',
+      disable: ['connector', 'subject'],
+      // dy: '-1%',
+      color: '#000000',
+      className: 'testing1 testing2 testing3',
+      collisionHideOnly: true
+    },
+    {
+      note: {
+        label: 'oasijfoiajsf',
+        bgPadding: 0,
+        align: 'middle',
+        wrap: 210
+      },
+      accessibilityDescription: '2018 High Spend band total is 5,596',
+      x: '8%',
+      y: '40%',
+      disable: ['connector', 'subject'],
+      // dy: '-1%',
+      color: '#000000',
+      className: 'testing1 testing2 testing3',
+      collisionHideOnly: false
     }
+    // {
+    //   note: {
+    //     label: "China's Volume-per-capita is massively under market performance.",
+    //     bgPadding: 20,
+    //     title: 'Low Volume Per Capita',
+    //     align: 'middle',
+    //     wrap: 210
+    //   },
+    //   accessibilityDescription:
+    //     'This annotation is a callout to China, which only has 27 million volume but 1.3 billion people.',
+    //   data: { country: 'China', value: '27', region: 'Asia' },
+    //   dy: '-20%',
+    //   color: 'categorical_blue'
+    // }
   ];
   hoverStyle: any = {
     color: '#979db7',
@@ -101,7 +142,7 @@ export class AppBarChart {
       tempDate: new Date(1986, 0, 2, 11, 39, 13),
       nonSense: 'test'
     },
-    { country: 'Japan', otherValue: '24', value: '5', region: 'Asia', test: 'Group A', nonSense: 'test' },
+    { country: 'Japan', otherValue: '24', value: '3', region: 'Asia', test: 'Group A', nonSense: 'test' },
     { country: 'Thailand', otherValue: '7', value: '52', region: 'Asia', test: 'Group A', nonSense: 'test' },
     {
       country: 'United States',
@@ -125,10 +166,33 @@ export class AppBarChart {
     },
     { country: 'Germany', otherValue: '16', value: '61', test: 'Group b', region: 'Europe', nonSense: 'test' },
     { country: 'Turkey', otherValue: '21', value: '28', test: 'Group b', region: 'Europe', nonSense: 'test' },
-    { country: 'Italy', otherValue: '47', value: '16', test: 'Group b', region: 'Europe', nonSense: 'test' }
+    { country: 'Italy', otherValue: '47', value: '7', test: 'Group b', region: 'Europe', nonSense: 'test' }
   ];
   dataStorage: any = [
     this.startData,
+    [
+      {
+        country: 'China',
+        otherValue: '37',
+        value: '27',
+        region: 'Asia',
+        test: 'Group A',
+        tempDate: new Date(1986, 0, 2, 11, 39, 13),
+        nonSense: 'test'
+      },
+      { country: 'Japan', otherValue: '24', value: '5', region: 'Asia', test: 'Group A', nonSense: 'test' },
+      { country: 'Thailand', otherValue: '7', value: '52', region: 'Asia', test: 'Group A', nonSense: 'test' },
+      { country: 'India', otherValue: '37', value: '21', test: 'Group b', region: 'Asia', nonSense: 'test' },
+      {
+        country: 'Indonesia',
+        otherValue: '3',
+        value: '73',
+        test: 'Group b',
+        region: 'Asia',
+        note: 'The per capita ranking is 947% above the median',
+        nonSense: 'test'
+      }
+    ],
     [
       {
         country: 'China',
@@ -327,7 +391,7 @@ export class AppBarChart {
     }
   ];
   yAxis: any = {
-    gridVisible: false,
+    gridVisible: true,
     visible: true,
     label: 'y axis',
     format: '0.0[a]'
@@ -411,6 +475,9 @@ export class AppBarChart {
       ...this.accessibility,
       elementsAreInterface: !this.accessibility.elementsAreInterface
     };
+  }
+  toggleAnimations() {
+    this.animations = { disabled: !this.animations.disabled };
   }
   changeExperimental() {
     this.accessibility = {
@@ -553,6 +620,7 @@ export class AppBarChart {
           }
           height={400}
           width={this.width}
+          animationConfig={this.animations}
           yAxis={this.yAxis}
           padding={this.padding}
           suppressEvents={this.suppressEvents}
@@ -561,7 +629,7 @@ export class AppBarChart {
           groupAccessor={this.groupAccessor}
           // yAccessor={'region'}
           // xAccessor={'value'}
-          // layout={"horizontal"}
+          layout={'horizontal'}
           sortOrder="asc"
           dataLabel={this.dataLabel}
           tooltipLabel={this.tooltipLabel}
@@ -592,6 +660,13 @@ export class AppBarChart {
             <input type="submit" value="Submit" />
           </form>
         </span>
+        <button
+          onClick={() => {
+            this.toggleAnimations();
+          }}
+        >
+          toggle animations
+        </button>
         <button
           onClick={() => {
             this.changeAccessElements();

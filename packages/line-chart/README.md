@@ -80,14 +80,14 @@
 
 ### <a name="data-props" href="#data-props">#</a> Data Props [<>](./src/components/line-chart/line-chart.tsx 'Source')
 
-| Name              | Type                 | Default Value(s)                             | Description                                                                                                          |
-| ----------------- | -------------------- | -------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
-| `ordinalAccessor` | string               | 'label'                                      | Key used to determine line's categorical property.                                                                   |
-| `valueAccessor`   | string               | 'value'                                      | Key used to determine line's numeric property.                                                                       |
-| `seriesAccessor`  | string               | 'series'                                     | Key used to determine series.                                                                                        |
-| `uniqueID`        | string               | `undefined`                                  | ID used to identify chart (must be unique per chart), helpful for validation messages. Defaults to UUID v4 standard. |
-| `data`            | object[]             | `undefined`                                  | Data used to create chart, an array of objects which includes keys that map to above accessors.                      |
-| `secondaryLines`  | object (custom type) | [ISecondaryType](../types/src/prop-types.ts) | Array of values used to classify series as secondary                                                                 |
+| Name              | Type                 | Default Value(s)                             | Description                                                                                                                                                               |
+| ----------------- | -------------------- | -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `ordinalAccessor` | string               | 'label'                                      | Key used to determine line's categorical property.                                                                                                                        |
+| `valueAccessor`   | string               | 'value'                                      | Key used to determine line's numeric property. Note: see `Line interpolation behavior` below for further details on behavior of lines based on valueAccessor data passed. |
+| `seriesAccessor`  | string               | 'series'                                     | Key used to determine series.                                                                                                                                             |
+| `uniqueID`        | string               | `undefined`                                  | ID used to identify chart (must be unique per chart), helpful for validation messages. Defaults to UUID v4 standard.                                                      |
+| `data`            | object[]             | `undefined`                                  | Data used to create chart, an array of objects which includes keys that map to above accessors.                                                                           |
+| `secondaryLines`  | object (custom type) | [ISecondaryType](../types/src/prop-types.ts) | Array of values used to classify series as secondary                                                                                                                      |
 
 <br>
 
@@ -99,6 +99,18 @@
 | `showDataLabel`        | boolean  | true             | Sets the visibility of data labels on secondary lines.   |
 | `showSeriesLabel`      | boolean  | true             | Sets the visibility of series labels on secondary lines. |
 | `opacity`              | number   | 1                | Sets the opacity of secondary lines.                     |
+
+<br>
+
+##### Line interpolation behavior
+
+The way `data` is sent to `line-chart` will have significant impacts on how the component will render lines. Here are three main scenarios you can take advantage of to ensure lines are rendered as need be for your use case.
+
+| Scenario                                 | Description                                                                                                                                                                                                                                                                                | Expected Result                                                                                                                                                                                                                               |
+| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `All values present and passed to chart` | The data object array passed has a valid numeric value or `valueAccessor` for each `ordinalAccessor`, and `seriesAccessor` value.                                                                                                                                                          | <img src="./docs/line-chart-1.png" alt="An image depicting an example of the default line-chart component" width="250"> <br> Each point on line is rendered.                                                                                  |
+| `Missing values *not* passed to chart`   | The data object array passed has a valid numeric value or `valueAccessor` for some `ordinalAccessor`, and `seriesAccessor` values. E.g., `null` valueAccessor values are filtered, before sending `data` object to chart.                                                                  | <img src="./docs/line-chart-2.png" alt="An example of the default line-chart component, with lines connecting over data not send to chart." width="250"> <br> Lines will connect/interpolate over data which is not sent to chart.            |
+| `Missing values *are* passed to chart`   | The data object array passed has a valid numeric value or `valueAccessor` for some `ordinalAccessor`, and `seriesAccessor` values. Also, `null` or `undefined` values are passed for any missing data. E.g., `null` valueAccessor values are included when sending `data` object to chart. | <img src="./docs/line-chart-3.png" alt="An example of the default line-chart component, with lines breaking when null values of data are send to chart." width="250"> <br> Lines will break to reflect the `null` or `undefined` data passed. |
 
 <br>
 <br>
@@ -298,22 +310,25 @@ const mouseOutHandler = evt => {
 
 #### IDataLabelType Definition
 
-| Name            | Type    | Default Value(s) | Description                                                                                                                                              |
-| --------------- | ------- | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `labelAccessor` | string  | ''               | Key used to determine label's property.                                                                                                                  |
-| `visible`       | boolean | true             | Toggles the visibility (opacity) of the data labels.                                                                                                     |
-| `placement`     | string  | 'top'            | Sets the placement of the data label, accepts 'top' or 'bottom'.                                                                                         |
-| `format`        | string  | '0[.][0][0]a'    | Sets the formatting for the data labels, EG %b, refer to [d3-time-format](https://github.com/d3/d3-time-format) and [numeral.js](http://numeraljs.com/). |
+| Name                 | Type    | Default Value(s) | Description                                                                                                                                                                                                                                            |
+| -------------------- | ------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `labelAccessor`      | string  | ''               | Key used to determine label's property.                                                                                                                                                                                                                |
+| `visible`            | boolean | true             | Toggles the visibility (opacity) of the data labels.                                                                                                                                                                                                   |
+| `placement`          | string  | 'top'            | Sets the placement of the data label, accepts 'top' or 'bottom'. Placement option 'auto' leverages the [resolveLabelCollision](../utils/src/utils/collisionDetection.ts) algorithm and places labels without overlaps in available space on the chart. |
+| `format`             | string  | '0[.][0][0]a'    | Sets the formatting for the data labels, EG %b, refer to [d3-time-format](https://github.com/d3/d3-time-format) and [numeral.js](http://numeraljs.com/).                                                                                               |
+| `collisionHideOnly`  | boolean | false            | Toggles whether to run [resolveLabelCollision](../utils/src/utils/collisionDetection.ts) algorithm and hide labels if collision is detected (vs hide and then place). This is overridden by placement being set to `auto`.                             |
+| `collisionPlacement` | string  | 'all'            | Sets the placement of the data label when [resolveLabelCollision](../utils/src/utils/collisionDetection.ts) algorithm is run (dataLabel.placement must be 'auto'). Examples of values are 'all', 'top', 'middle', 'bottom', 'left' and 'right'.        |
 
 <br>
 
 #### ISeriesLabel Definition
 
-| Name        | Type     | Default Value(s) | Description                                                       |
-| ----------- | -------- | ---------------- | ----------------------------------------------------------------- |
-| `label`     | string[] | []               | An array which determines the labels for each line, in order.     |
-| `visible`   | boolean  | true             | Toggles the visibility (opacity) of the series labels.            |
-| `placement` | string   | 'right'          | Sets the placement of the series label, accepts 'left' or 'right' |
+| Name                | Type     | Default Value(s) | Description                                                                                                                                                                                                                                              |
+| ------------------- | -------- | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `label`             | string[] | []               | An array which determines the labels for each line, in order.                                                                                                                                                                                            |
+| `visible`           | boolean  | true             | Toggles the visibility (opacity) of the series labels.                                                                                                                                                                                                   |
+| `placement`         | string   | 'right'          | Sets the placement of the series label, accepts 'left' or 'right'. Placement option 'auto' leverages the [resolveLabelCollision](../utils/src/utils/collisionDetection.ts) algorithm and places labels without overlaps in available space on the chart. |
+| `collisionHideOnly` | boolean  | false            | Toggles whether to run [resolveLabelCollision](../utils/src/utils/collisionDetection.ts) algorithm and hide series labels if collision is detected (vs hide and then place). This is overridden by placement being set to `auto`.                        |
 
 <br>
 

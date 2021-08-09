@@ -20,6 +20,7 @@ import {
   IDataLabelType,
   ITooltipLabelType,
   IAccessibilityType,
+  IAnimationConfig,
   ILegendType
 } from '@visa/charts-types';
 import { ClusteredBarChartDefaultValues } from './clustered-bar-chart-default-values';
@@ -81,7 +82,9 @@ const {
   transitionEndAll,
   visaColors,
   validateAccessibilityProps,
-  findTagLevel
+  findTagLevel,
+  prepareRenderChange,
+  roundTo
 } = Utils;
 
 @Component({
@@ -127,6 +130,7 @@ export class ClusteredBarChart {
   @Prop({ mutable: true }) barIntervalRatio: number = ClusteredBarChartDefaultValues.barIntervalRatio;
   @Prop({ mutable: true }) groupIntervalRatio: number = ClusteredBarChartDefaultValues.groupIntervalRatio;
   @Prop({ mutable: true }) hoverOpacity: number = ClusteredBarChartDefaultValues.hoverOpacity;
+  @Prop({ mutable: true }) animationConfig: IAnimationConfig = ClusteredBarChartDefaultValues.animationConfig;
 
   // Data label (5/7)
   @Prop({ mutable: true }) dataLabel: IDataLabelType = ClusteredBarChartDefaultValues.dataLabel;
@@ -268,6 +272,7 @@ export class ClusteredBarChart {
   strokes: any = {};
   topLevel: string = 'h2';
   bottomLevel: string = 'p';
+  bitmaps: any;
 
   @Watch('data')
   dataWatcher(_newData, _oldData) {
@@ -894,7 +899,6 @@ export class ClusteredBarChart {
       // we want to pass the PARENT of all the <g>s that contain bars
       hideNonessentialGroups(this.root.node(), this.barG.node());
       this.setGroupAccessibilityID();
-      this.duration = 750;
       this.defaults = false;
       resolve('component did load');
     });
@@ -902,6 +906,7 @@ export class ClusteredBarChart {
 
   componentDidUpdate() {
     return new Promise(resolve => {
+      this.duration = !this.animationConfig || !this.animationConfig.disabled ? 750 : 0;
       if (this.shouldUpdateDescriptionWrapper) {
         this.setChartDescriptionWrapper();
         this.shouldUpdateDescriptionWrapper = false;
@@ -1111,11 +1116,19 @@ export class ClusteredBarChart {
   validateLabelPlacement() {
     // check data label placement assignment based on layout
     if (this.layout === 'vertical') {
-      if (this.dataLabel.placement !== 'top' && this.dataLabel.placement !== 'bottom') {
+      if (
+        this.dataLabel.placement !== 'top' &&
+        this.dataLabel.placement !== 'bottom' &&
+        this.dataLabel.placement !== 'auto'
+      ) {
         this.dataLabel.placement = 'top';
       }
     } else {
-      if (this.dataLabel.placement === 'top' || this.dataLabel.placement === 'bottom') {
+      if (
+        this.dataLabel.placement !== 'right' &&
+        this.dataLabel.placement !== 'left' &&
+        this.dataLabel.placement !== 'auto'
+      ) {
         this.dataLabel.placement = 'right';
       }
     }
@@ -1221,7 +1234,8 @@ export class ClusteredBarChart {
         colors: colorsToConvert,
         rootSVG: this.svg.node(),
         id: this.chartID,
-        scheme: 'categorical'
+        scheme: 'categorical',
+        disableTransitions: !this.duration
       });
       this.colorArr = this.preparedColors.range ? this.preparedColors.copy().range(textures) : textures;
     }
@@ -1339,25 +1353,35 @@ export class ClusteredBarChart {
 
   // reset graph size based on window size
   reSetRoot() {
-    this.svg
-      .transition('root_reset')
-      .duration(this.duration)
-      .ease(easeCircleIn)
+    const changeSvg = prepareRenderChange({
+      selection: this.svg,
+      duration: this.duration,
+      namespace: 'root_reset',
+      easing: easeCircleIn
+    });
+
+    changeSvg
       .attr('width', this.width)
       .attr('height', this.height)
       .attr('viewBox', '0 0 ' + this.width + ' ' + this.height);
 
-    this.root
-      .transition('root_reset')
-      .duration(this.duration)
-      .ease(easeCircleIn)
-      .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`);
+    const changeRoot = prepareRenderChange({
+      selection: this.root,
+      duration: this.duration,
+      namespace: 'root_reset',
+      easing: easeCircleIn
+    });
 
-    this.rootG
-      .transition('root_reset')
-      .duration(this.duration)
-      .ease(easeCircleIn)
-      .attr('transform', `translate(${this.padding.left}, ${this.padding.top})`);
+    changeRoot.attr('transform', `translate(${this.margin.left}, ${this.margin.top})`);
+
+    const changeRootG = prepareRenderChange({
+      selection: this.rootG,
+      duration: this.duration,
+      namespace: 'root_reset',
+      easing: easeCircleIn
+    });
+
+    changeRootG.attr('transform', `translate(${this.padding.left}, ${this.padding.top})`);
 
     setAccessibilityDescriptionWidth(this.chartID, this.width);
   }
@@ -1375,7 +1399,8 @@ export class ClusteredBarChart {
       tickInterval: this.xAxis.tickInterval,
       label: this.xAxis.label,
       padding: this.padding,
-      hide: !this.innerXAxis.visible
+      hide: !this.innerXAxis.visible,
+      duration: this.duration
     });
   }
 
@@ -1391,7 +1416,8 @@ export class ClusteredBarChart {
       tickInterval: this.yAxis.tickInterval,
       label: this.yAxis.label,
       padding: this.padding,
-      hide: !this.innerYAxis.visible
+      hide: !this.innerYAxis.visible,
+      duration: this.duration
     });
   }
 
@@ -1422,7 +1448,8 @@ export class ClusteredBarChart {
       left: false,
       padding: this.padding,
       markOffset: this.layout === 'vertical' ? this.y(0) || -1 : this.y0(0) || -1,
-      hide: !(this.layout === 'vertical')
+      hide: !(this.layout === 'vertical'),
+      duration: this.duration
     });
     drawAxis({
       root: this.rootG,
@@ -1432,7 +1459,8 @@ export class ClusteredBarChart {
       left: true,
       padding: this.padding,
       markOffset: this.layout === 'vertical' ? this.x0(0) || -1 : this.x(0) || -1,
-      hide: this.layout === 'vertical'
+      hide: this.layout === 'vertical',
+      duration: this.duration
     });
   }
 
@@ -1445,7 +1473,8 @@ export class ClusteredBarChart {
       this.layout === 'vertical' ? this.x0 : this.x,
       false,
       !this.innerXAxis.gridVisible,
-      this.xAxis.tickInterval
+      this.xAxis.tickInterval,
+      this.duration
     );
   }
 
@@ -1457,7 +1486,8 @@ export class ClusteredBarChart {
       this.layout === 'vertical' ? this.y : this.y0,
       true,
       !this.innerYAxis.gridVisible,
-      this.yAxis.tickInterval
+      this.yAxis.tickInterval,
+      this.duration
     );
   }
 
@@ -1692,6 +1722,30 @@ export class ClusteredBarChart {
         ]);
         return geometryIsUpdating;
       })
+      .attr(
+        `data-${ordinalAxis}`,
+        d =>
+          this.layout === 'vertical'
+            ? this[ordinalAxis + '1'](d[this.ordinalAccessor]) //+ this.x0(d[this.groupAccessor])
+            : this[ordinalAxis + '1'](d[this.ordinalAccessor]) //+ this.y0(d[this.groupAccessor])
+      )
+      .attr(
+        `data-translate-x`,
+        d => (this.layout === 'vertical' ? this.x0(d[this.groupAccessor]) : 0) + this.padding.left + this.margin.left
+      )
+      .attr(
+        `data-translate-y`,
+        d => (this.layout === 'vertical' ? 0 : this.y0(d[this.groupAccessor])) + this.padding.top + this.margin.top
+      )
+      .attr(`data-${ordinalDimension}`, this[ordinalAxis + '1'].bandwidth())
+      .attr(`data-${valueAxis}`, d => this[valueAxis](Math[choice](0, d[this.valueAccessor])))
+      .attr(`data-${valueDimension}`, d =>
+        Math.abs(
+          this.layout === 'vertical'
+            ? this[valueAxis](0) - this[valueAxis](d[this.valueAccessor])
+            : this[valueAxis](d[this.valueAccessor]) - this[valueAxis](0)
+        )
+      )
       .transition('update')
       .duration((_, i, n) => {
         return select(n[i]).classed('entering') ? this.duration / 2 : this.duration;
@@ -1822,6 +1876,8 @@ export class ClusteredBarChart {
         );
       }
       const hasRoom =
+        this.dataLabel.placement === 'auto' ||
+        this.dataLabel.collisionHideOnly ||
         this.accessibility.showSmallLabels ||
         verifyTextHasSpace({
           text: formatDataLabel(d, this.innerLabelAccessor, this.dataLabel.format),
@@ -1905,7 +1961,7 @@ export class ClusteredBarChart {
   }
 
   enterDataLabels() {
-    const dimension = this.layout === 'vertical' ? 'x' : 'y';
+    const ordinalAxis = this.layout === 'vertical' ? 'x' : 'y';
 
     this.enterLabelWrappers
       .attr('class', 'clustered-bar-label-wrapper')
@@ -1915,6 +1971,13 @@ export class ClusteredBarChart {
       );
 
     this.enterLabels
+      .attr(
+        `data-${ordinalAxis}`,
+        d =>
+          this.layout === 'vertical'
+            ? this[ordinalAxis + '1'](d[this.ordinalAccessor]) //+ this.x0(d[this.groupAccessor])
+            : this[ordinalAxis + '1'](d[this.ordinalAccessor]) //+ this.y0(d[this.groupAccessor])
+      )
       .attr('opacity', 0)
       .attr('class', 'clustered-bar-dataLabel entering')
       .attr('cursor', !this.suppressEvents ? this.cursor : null)
@@ -1937,10 +2000,10 @@ export class ClusteredBarChart {
       chartType: 'bar'
     });
 
-    this.enterLabels.attr(dimension, (d, i, n) => {
-      const zeroScale = dimension + '0';
-      const oneScale = dimension + '1';
-      const breadth = dimension === 'x' ? 'innerPaddedWidth' : 'innerPaddedHeight';
+    this.enterLabels.attr(ordinalAxis, (d, i, n) => {
+      const zeroScale = ordinalAxis + '0';
+      const oneScale = ordinalAxis + '1';
+      const breadth = ordinalAxis === 'x' ? 'innerPaddedWidth' : 'innerPaddedHeight';
       const p = select(n[i].parentNode);
       const groupEntering = p.classed('entering');
       let xStart = groupEntering ? this[zeroScale](p.datum().key) : this[oneScale](d[this.ordinalAccessor]);
@@ -2003,7 +2066,22 @@ export class ClusteredBarChart {
   }
 
   drawDataLabels() {
-    this.updateLabels.text(d => {
+    const ordinalAxis = this.layout === 'vertical' ? 'x' : 'y';
+    const ordinalDimension = this.layout === 'vertical' ? 'width' : 'height';
+    const valueAxis = this.layout === 'vertical' ? 'y' : 'x';
+    const valueDimension = this.layout === 'vertical' ? 'height' : 'width';
+    const choice = this.layout === 'vertical' ? 'max' : 'min';
+    let textHeight = 15; // default label is usually 15
+    const hideOnly = this.dataLabel.placement !== 'auto' && this.dataLabel.collisionHideOnly;
+
+    this.updateLabels.text((d, i, n) => {
+      if (i === 0) {
+        // we just need to check this on one element
+        const textElement = n[i];
+        const style = getComputedStyle(textElement);
+        const fontSize = parseFloat(style.fontSize);
+        textHeight = Math.max(fontSize - 1, 1); // clone.getBBox().height;
+      }
       return formatDataLabel(d, this.innerLabelAccessor, this.dataLabel.format);
     });
 
@@ -2022,11 +2100,79 @@ export class ClusteredBarChart {
       });
 
     const labelUpdate = this.updateLabels
+      .style('visibility', (_, i, n) =>
+        this.dataLabel.placement === 'auto' || this.dataLabel.collisionHideOnly
+          ? select(n[i]).style('visibility')
+          : null
+      )
+      .attr(
+        `data-${ordinalAxis}`,
+        d =>
+          this.layout === 'vertical'
+            ? this[ordinalAxis + '1'](d[this.ordinalAccessor]) //+ this.x0(d[this.groupAccessor])
+            : this[ordinalAxis + '1'](d[this.ordinalAccessor]) //+ this.y0(d[this.groupAccessor])
+      )
+      .attr(
+        `data-translate-x`,
+        d => (this.layout === 'vertical' ? this.x0(d[this.groupAccessor]) : 0) + this.padding.left + this.margin.left
+      )
+      .attr(
+        `data-translate-y`,
+        d => (this.layout === 'vertical' ? 0 : this.y0(d[this.groupAccessor])) + this.padding.top + this.margin.top
+      )
+      .attr(`data-${ordinalDimension}`, this[ordinalAxis + '1'].bandwidth())
+      .attr(`data-${valueAxis}`, d => this[valueAxis](Math[choice](0, d[this.valueAccessor])))
+      .attr(`data-${valueDimension}`, d =>
+        Math.abs(
+          this.layout === 'vertical'
+            ? this[valueAxis](0) - this[valueAxis](d[this.valueAccessor])
+            : this[valueAxis](d[this.valueAccessor]) - this[valueAxis](0)
+        )
+      )
       .transition('update')
       .ease(easeCircleIn)
       .duration(this.duration);
 
-    placeDataLabels({
+    const collisionSettings = {
+      vertical: {
+        top: {
+          validPositions: ['top', 'bottom'],
+          offsets: [2, 1]
+        },
+        middle: {
+          validPositions: ['middle', 'top'],
+          offsets: [1, textHeight / 2]
+        },
+        bottom: {
+          validPositions: ['middle', 'top'],
+          offsets: [1, textHeight / 2]
+        }
+      },
+      horizontal: {
+        right: {
+          validPositions: ['right', 'left'],
+          offsets: [4, 8]
+        },
+        middle: {
+          validPositions: ['middle', 'right'],
+          offsets: [1, 15]
+        },
+        left: {
+          validPositions: ['left', 'right'],
+          offsets: [1, 20]
+        }
+      }
+    };
+
+    const collisionPlacement = this.dataLabel && this.dataLabel.collisionPlacement;
+    const boundsScope =
+      collisionPlacement && collisionSettings[this.layout][collisionPlacement] // check whether placement provided maps correctly
+        ? this.dataLabel.collisionPlacement
+        : this.layout === 'vertical'
+        ? 'top' // if we don't have collisionPlacement
+        : 'right';
+
+    this.bitmaps = placeDataLabels({
       root: labelUpdate,
       xScale: this.layout === 'vertical' ? this.x1 : this.x,
       yScale: this.layout === 'vertical' ? this.y : this.y1,
@@ -2034,7 +2180,18 @@ export class ClusteredBarChart {
       valueAccessor: this.valueAccessor,
       placement: this.dataLabel.placement,
       layout: this.layout,
-      chartType: 'bar'
+      chartType: 'bar',
+      avoidCollision: {
+        runOccupancyBitmap: this.dataLabel.visible && this.dataLabel.placement === 'auto',
+        labelSelection: labelUpdate,
+        avoidMarks: [this.update],
+        validPositions: hideOnly ? ['middle'] : collisionSettings[this.layout][boundsScope].validPositions,
+        offsets: hideOnly ? [1] : collisionSettings[this.layout][boundsScope].offsets,
+        accessors: [this.groupAccessor, this.ordinalAccessor, 'key'], // key is created for lines by nesting done in line,
+        size: [roundTo(this.width, 0), roundTo(this.height, 0)], // for some reason the bitmap needs width instead of inner padded width here
+        boundsScope: hideOnly ? undefined : boundsScope,
+        hideOnly: this.dataLabel.visible && this.dataLabel.collisionHideOnly
+      }
     });
   }
 
@@ -2242,7 +2399,12 @@ export class ClusteredBarChart {
       xScale: this.layout !== 'horizontal' ? this.x0 : this.x,
       xAccessor: this.layout !== 'horizontal' ? this.groupAccessor : this.valueAccessor,
       yScale: this.layout !== 'horizontal' ? this.y : this.y0,
-      yAccessor: this.layout !== 'horizontal' ? this.valueAccessor : this.groupAccessor
+      yAccessor: this.layout !== 'horizontal' ? this.valueAccessor : this.groupAccessor,
+      width: this.width,
+      height: this.height,
+      padding: this.padding,
+      margin: this.margin,
+      bitmaps: this.bitmaps
     });
   }
 
@@ -2259,11 +2421,9 @@ export class ClusteredBarChart {
   setChartDescriptionWrapper() {
     initializeDescriptionRoot({
       rootEle: this.clusteredBarChartEl,
-      geomType: 'bar',
       title: this.accessibility.title || this.mainTitle,
       chartTag: 'clustered-bar-chart',
       uniqueID: this.chartID,
-      groupName: 'cluster',
       highestHeadingLevel: this.highestHeadingLevel,
       redraw: this.shouldRedrawWrapper,
       disableKeyNav:
@@ -2522,11 +2682,26 @@ export class ClusteredBarChart {
     return (
       <div class={`o-layout is--${this.layout} ${theme}`}>
         <div class="o-layout--chart">
-          <this.topLevel data-testid="main-title">{this.mainTitle}</this.topLevel>
-          <this.bottomLevel class="visa-ui-text--instructions" data-testid="sub-title">
+          <this.topLevel class="clustered-bar-main-title vcl-main-title">{this.mainTitle}</this.topLevel>
+          <this.bottomLevel class="visa-ui-text--instructions clustered-bar-sub-title vcl-sub-title">
             {this.subTitle}
           </this.bottomLevel>
           <div class="clustered-bar-legend vcl-legend" style={{ display: this.legend.visible ? 'block' : 'none' }} />
+          <keyboard-instructions
+            uniqueID={this.chartID}
+            geomType={'bar'}
+            groupName={'cluster'} // taken from initializeDescriptionRoot, on bar this should be "bar group", stacked bar is "stack", and clustered is "cluster"
+            chartTag={'clustered-bar-chart'}
+            width={this.width - (this.margin ? this.margin.right || 0 : 0)}
+            isInteractive={this.accessibility.elementsAreInterface}
+            hasCousinNavigation // on bar this requires checking for groupAccessor
+            disabled={
+              this.suppressEvents &&
+              this.accessibility.elementsAreInterface === false &&
+              this.accessibility.keyboardNavConfig &&
+              this.accessibility.keyboardNavConfig.disabled
+            } // the chart is "simple"
+          />
           <div class="visa-viz-d3-clustered-bar-container" />
           <div class="clustered-bar-tooltip vcl-tooltip" style={{ display: this.showTooltip ? 'block' : 'none' }} />
           <data-table
@@ -2537,8 +2712,10 @@ export class ClusteredBarChart {
             padding={this.padding}
             margin={this.margin}
             hideDataTable={this.accessibility.hideDataTableButton}
+            unitTest={this.unitTest}
           />
         </div>
+        {/* <canvas id="bitmap-render" /> */}
       </div>
     );
   }

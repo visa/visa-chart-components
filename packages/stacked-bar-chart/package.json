@@ -21,7 +21,10 @@
     "start-dev": "stencil build --dev --watch --serve",
     "watch": "chokidar -d=4  '**/*.{tsx,ts,scss}' 'node_modules/@visa/visa-charts-utils/src' -i '/^src/(.*)/*.(d|spec|test|e2e).ts$|dist/(.*)/' -c 'npm run build'",
     "tslint-check": "tslint-config-prettier-check ./tslint.json",
-    "test:es5-check": "es-check es5 'dist/*.js'"
+    "test": "stencil test --spec --no-cache --color --coverage --json --outputFile=./coverage/test-report.json",
+    "test:watch": "jest -watch",
+    "test:es5-check": "es-check es5 'dist/*.js'",
+    "update-snapshot": "jest --updateSnapshot --color"
   },
   "repository": {
     "type": "git",
@@ -34,6 +37,7 @@
   },
   "dependencies": {
     "@visa/charts-types": "^0.3.2",
+    "@visa/keyboard-instructions": "^1.0.0",
     "@visa/visa-charts-data-table": "^2.0.8",
     "@visa/visa-charts-utils": "^4.4.1",
     "d3-array": "^1.2.4",
@@ -47,16 +51,24 @@
     "@visa/visa-charts-utils-dev": "^3.3.8"
   },
   "jest": {
-    "transform": {
-      "^.+\\.(ts|tsx)$": "<rootDir>/node_modules/@stencil/core/testing/jest.preprocessor.js"
-    },
-    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(tsx?|jsx?)$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "json",
-      "jsx"
+    "preset": "@stencil/core/testing",
+    "transformIgnorePatterns": [
+      "/node_modules/(?!(@visa/charts-types)/)"
+    ],
+    "collectCoverageFrom": [
+      "**/*.{tsx,ts}",
+      "!**/node_modules/**",
+      "!**/*.d.ts",
+      "!**/*.{e2e.ts,spec.ts}",
+      "!**/(app-**).{tsx}",
+      "!**/**-values.{ts}"
     ]
+  },
+  "jest-html-reporter": {
+    "pageTitle": "@visa/stacked-bar-chart",
+    "outputPath": "./coverage/test-report.html",
+    "executionMode": "reporter",
+    "sort": "status",
+    "statusIgnoreFilter": "pending,passed"
   }
 }

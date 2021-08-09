@@ -26,6 +26,7 @@ import {
   IDataLabelType,
   ITooltipLabelType,
   IAccessibilityType,
+  IAnimationConfig,
   ILegendType
 } from '@visa/charts-types';
 import { DumbbellPlotDefaultValues } from './dumbbell-plot-default-values';
@@ -83,7 +84,11 @@ const {
   visaColors,
   transitionEndAll,
   validateAccessibilityProps,
-  findTagLevel
+  findTagLevel,
+  prepareRenderChange,
+  roundTo,
+  getTextWidth,
+  resolveLabelCollision
 } = Utils;
 
 @Component({
@@ -124,6 +129,7 @@ export class DumbbellPlot {
   @Prop({ mutable: true }) colors: string[];
   @Prop({ mutable: true }) hoverStyle: IHoverStyleType = DumbbellPlotDefaultValues.hoverStyle;
   @Prop({ mutable: true }) hoverOpacity: number = DumbbellPlotDefaultValues.hoverOpacity;
+  @Prop({ mutable: true }) animationConfig: IAnimationConfig = DumbbellPlotDefaultValues.animationConfig;
   @Prop({ mutable: true }) clickStyle: IClickStyleType = DumbbellPlotDefaultValues.clickStyle;
   @Prop({ mutable: true }) referenceStyle: IReferenceStyleType = DumbbellPlotDefaultValues.referenceStyle;
   @Prop({ mutable: true }) cursor: string = DumbbellPlotDefaultValues.cursor;
@@ -322,6 +328,7 @@ export class DumbbellPlot {
   topLevel: string = 'h2';
   bottomLevel: string = 'p';
   strokes: any = {};
+  bitmaps: any;
 
   @Watch('mainTitle')
   mainTitleWatcher(_newData, _oldData) {
@@ -729,6 +736,10 @@ export class DumbbellPlot {
       this.shouldUpdateMarkerData = true;
       this.shouldUpdateData = true;
       this.shouldUpdateMarkerSize = true;
+      this.shouldUpdateGeometries = true;
+      this.shouldUpdateLabels = true;
+      this.shouldUpdateDifferenceLabels = true;
+      this.shouldUpdateSeriesLabels = true;
     }
   }
 
@@ -1134,7 +1145,6 @@ export class DumbbellPlot {
       hideNonessentialGroups(this.root.node(), this.dumbbellG.node());
       this.setGroupAccessibilityAttributes();
       this.setGroupAccessibilityID();
-      this.duration = 750;
       this.defaults = false;
       resolve('component did load');
     });
@@ -1142,6 +1152,7 @@ export class DumbbellPlot {
 
   componentDidUpdate() {
     return new Promise(resolve => {
+      this.duration = !this.animationConfig || !this.animationConfig.disabled ? 750 : 0;
       if (this.shouldUpdateDescriptionWrapper) {
         this.setChartDescriptionWrapper();
         this.shouldUpdateDescriptionWrapper = false;
@@ -1428,12 +1439,12 @@ export class DumbbellPlot {
     this.placement = this.dataLabel.placement;
     // this.layoutOverride = !this.layout || this.data[0][this.ordinalAccessor] instanceof Date ? 'vertical' : this.layout;
 
-    if (this.layoutOverride === 'vertical') {
-      if (this.placement !== 'left' && this.placement !== 'right') {
+    if (this.isVertical) {
+      if (this.placement !== 'left' && this.placement !== 'right' && this.placement !== 'auto') {
         this.placement = 'ends';
       }
     } else {
-      if (this.placement !== 'top' && this.placement !== 'bottom') {
+      if (this.placement !== 'top' && this.placement !== 'bottom' && this.placement !== 'auto') {
         this.placement = 'ends';
       }
     }
@@ -1446,12 +1457,16 @@ export class DumbbellPlot {
     }
     if (
       this.isVertical &&
-      (this.seriesLabelDetails.placement !== 'right' && this.seriesLabelDetails.placement !== 'left')
+      (this.seriesLabelDetails.placement !== 'right' &&
+        this.seriesLabelDetails.placement !== 'left' &&
+        this.seriesLabelDetails.placement !== 'auto')
     ) {
       this.seriesLabelDetails.placement = 'right';
     } else if (
       !this.isVertical &&
-      (this.seriesLabelDetails.placement !== 'top' && this.seriesLabelDetails.placement !== 'bottom')
+      (this.seriesLabelDetails.placement !== 'top' &&
+        this.seriesLabelDetails.placement !== 'bottom' &&
+        this.seriesLabelDetails.placement !== 'auto')
     ) {
       this.seriesLabelDetails.placement = 'top';
     }
@@ -1468,12 +1483,16 @@ export class DumbbellPlot {
     }
     if (
       this.isVertical &&
-      (this.diffLabelDetails.placement !== 'right' && this.diffLabelDetails.placement !== 'left')
+      (this.diffLabelDetails.placement !== 'right' &&
+        this.diffLabelDetails.placement !== 'left' &&
+        this.diffLabelDetails.placement !== 'auto')
     ) {
       this.diffLabelDetails.placement = 'left';
     } else if (
       !this.isVertical &&
-      (this.diffLabelDetails.placement !== 'top' && this.diffLabelDetails.placement !== 'bottom')
+      (this.diffLabelDetails.placement !== 'top' &&
+        this.diffLabelDetails.placement !== 'bottom' &&
+        this.diffLabelDetails.placement !== 'auto')
     ) {
       this.diffLabelDetails.placement = 'top';
     }
@@ -1706,9 +1725,9 @@ export class DumbbellPlot {
   }
 
   prepareSeriesData() {
-    const isVertical = this.layoutOverride === 'vertical';
-    const checkString = isVertical ? 'right' : 'top';
-    const isStandard = this.seriesLabelDetails.placement.includes(checkString);
+    const isAuto = this.seriesLabelDetails.placement === 'auto';
+    const checkString = this.isVertical ? 'right' : 'top';
+    const isStandard = isAuto ? true : this.seriesLabelDetails.placement.includes(checkString);
     const first = {
       label: this.nest[0].values[0][this.seriesAccessor],
       [this.seriesAccessor]: this.nest[0].values[0][this.seriesAccessor],
@@ -1745,7 +1764,7 @@ export class DumbbellPlot {
     const minValue = min(this.data, d => parseFloat(d[this.valueAccessor]));
     const maxValue = max(this.data, d => parseFloat(d[this.valueAccessor]));
 
-    if (this.layoutOverride === 'vertical') {
+    if (this.isVertical) {
       this.xAccessor = this.ordinalAccessor;
       this.yAccessor = this.valueAccessor;
 
@@ -1780,7 +1799,7 @@ export class DumbbellPlot {
           .padding(0.5)
           .range([0, this.innerPaddedWidth]);
       }
-    } else if (this.layoutOverride === 'horizontal') {
+    } else if (!this.isVertical) {
       this.xAccessor = this.valueAccessor;
       this.yAccessor = this.ordinalAccessor;
 
@@ -1971,25 +1990,35 @@ export class DumbbellPlot {
   }
 
   reSetRoot() {
-    this.svg
-      .transition('root_reset')
-      .duration(this.duration)
-      .ease(easeCircleIn)
+    const changeSvg = prepareRenderChange({
+      selection: this.svg,
+      duration: this.duration,
+      namespace: 'root_reset',
+      easing: easeCircleIn
+    });
+
+    changeSvg
       .attr('width', this.width)
       .attr('height', this.height)
       .attr('viewBox', '0 0 ' + this.width + ' ' + this.height);
 
-    this.root
-      .transition('root_reset')
-      .duration(this.duration)
-      .ease(easeCircleIn)
-      .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`);
+    const changeRoot = prepareRenderChange({
+      selection: this.root,
+      duration: this.duration,
+      namespace: 'root_reset',
+      easing: easeCircleIn
+    });
 
-    this.rootG
-      .transition('root_reset')
-      .duration(this.duration)
-      .ease(easeCircleIn)
-      .attr('transform', `translate(${this.padding.left}, ${this.padding.top})`);
+    changeRoot.attr('transform', `translate(${this.margin.left}, ${this.margin.top})`);
+
+    const changeRootG = prepareRenderChange({
+      selection: this.rootG,
+      duration: this.duration,
+      namespace: 'root_reset',
+      easing: easeCircleIn
+    });
+
+    changeRootG.attr('transform', `translate(${this.padding.left}, ${this.padding.top})`);
 
     setAccessibilityDescriptionWidth(this.chartID, this.width);
   }
@@ -2008,7 +2037,8 @@ export class DumbbellPlot {
       tickInterval: this.xAxis.tickInterval,
       label: this.xAxis.label,
       padding: this.padding,
-      hide: !this.xAxis.visible
+      hide: !this.xAxis.visible,
+      duration: this.duration
     });
   }
 
@@ -2024,7 +2054,8 @@ export class DumbbellPlot {
       tickInterval: this.yAxis.tickInterval,
       label: this.yAxis.label,
       padding: this.padding,
-      hide: !this.yAxis.visible
+      hide: !this.yAxis.visible,
+      duration: this.duration
     });
   }
 
@@ -2055,7 +2086,8 @@ export class DumbbellPlot {
       left: true,
       padding: this.padding,
       markOffset: this.x(0),
-      hide: this.layout === 'horizontal' ? !this.showBaselineY : true
+      hide: !this.isVertical ? !this.showBaselineY : true,
+      duration: this.duration
     });
   }
 
@@ -2068,7 +2100,8 @@ export class DumbbellPlot {
       left: false,
       padding: this.padding,
       markOffset: this.y(0),
-      hide: this.layout === 'vertical' ? !this.showBaselineX : true
+      hide: this.isVertical ? !this.showBaselineX : true,
+      duration: this.duration
     });
   }
   // dashed line grid for chart
@@ -2080,7 +2113,8 @@ export class DumbbellPlot {
       this.x,
       false,
       !this.xAxis.gridVisible,
-      this.xAxis.tickInterval
+      this.xAxis.tickInterval,
+      this.duration
     );
   }
 
@@ -2092,7 +2126,8 @@ export class DumbbellPlot {
       this.y,
       true,
       !this.yAxis.gridVisible,
-      this.yAxis.tickInterval
+      this.yAxis.tickInterval,
+      this.duration
     );
   }
 
@@ -2148,8 +2183,8 @@ export class DumbbellPlot {
         const centerY1 = this.y(d.values[0][this.yAccessor]);
         const centerX2 = this.x(d.values[1][this.xAccessor]);
         const centerY2 = this.y(d.values[1][this.yAccessor]);
-        const ymod = this.layout === 'vertical' ? (centerY1 > centerY2 ? 0.001 : -0.001) : 0;
-        const xmod = this.layout === 'horizontal' ? (centerX1 > centerX2 ? 0.001 : -0.001) : 0;
+        const ymod = this.isVertical ? (centerY1 > centerY2 ? 0.001 : -0.001) : 0;
+        const xmod = !this.isVertical ? (centerX1 > centerX2 ? 0.001 : -0.001) : 0;
         return `M ${centerX1 + xmod} ${centerY1 +
           ymod} L ${centerX1} ${centerY1} L ${centerX1} ${centerY1} L ${centerX2} ${centerY2} L ${centerX2} ${centerY2} L ${centerX2} ${centerY2} L ${centerX1} ${centerY1} L ${centerX1} ${centerY1} L ${centerX1} ${centerY1} L ${centerX2} ${centerY2} L ${centerX2} ${centerY2} L ${centerX2 -
           xmod} ${centerY2 - ymod}`;
@@ -2442,8 +2477,8 @@ export class DumbbellPlot {
         const centerY1 = +me.attr('data-centerY1');
         const centerX2 = +me.attr('data-centerX2');
         const centerY2 = +me.attr('data-centerY2');
-        const ymod = this.layout === 'vertical' ? (centerY1 > centerY2 ? 0.001 : -0.001) : 0;
-        const xmod = this.layout === 'horizontal' ? (centerX1 > centerX2 ? 0.001 : -0.001) : 0;
+        const ymod = this.isVertical ? (centerY1 > centerY2 ? 0.001 : -0.001) : 0;
+        const xmod = !this.isVertical ? (centerX1 > centerX2 ? 0.001 : -0.001) : 0;
         return `M ${centerX1 + xmod} ${centerY1 +
           ymod} L ${centerX1} ${centerY1} L ${centerX1} ${centerY1} L ${centerX2} ${centerY2} L ${centerX2} ${centerY2} L ${centerX2} ${centerY2} L ${centerX1} ${centerY1} L ${centerX1} ${centerY1} L ${centerX1} ${centerY1} L ${centerX2} ${centerY2} L ${centerX2} ${centerY2} L ${centerX2 -
           xmod} ${centerY2 - ymod}`;
@@ -2496,10 +2531,10 @@ export class DumbbellPlot {
     const centerY1 = this.y(d.values[0][this.yAccessor]);
     const centerX2 = this.x(d.values[1][this.xAccessor]);
     const centerY2 = this.y(d.values[1][this.yAccessor]);
-    const ymod = this.layout === 'vertical' ? (centerY1 > centerY2 ? 0.001 : -0.001) : 0;
-    const xmod = this.layout === 'horizontal' ? (centerX1 > centerX2 ? 0.001 : -0.001) : 0;
-    const widthMod = this.layout === 'vertical' ? barSize / 2 : 0;
-    const heightMod = this.layout === 'horizontal' ? barSize / 2 : 0;
+    const ymod = this.isVertical ? (centerY1 > centerY2 ? 0.001 : -0.001) : 0;
+    const xmod = !this.isVertical ? (centerX1 > centerX2 ? 0.001 : -0.001) : 0;
+    const widthMod = this.isVertical ? barSize / 2 : 0;
+    const heightMod = !this.isVertical ? barSize / 2 : 0;
     select(n[i])
       .attr('data-barSize', barSize)
       .attr('data-centerX1', d => this.x(d.values[0][this.xAccessor]))
@@ -2543,6 +2578,9 @@ export class DumbbellPlot {
           barSize !== oldBar || centerX1 !== oldX1 || centerY1 !== oldY1 || centerX2 !== oldX2 || centerY2 !== oldY2
         );
       })
+      .attr('data-translate-x', this.margin.left + this.padding.left)
+      .attr('data-translate-y', this.margin.top + this.padding.top)
+      .attr('data-d', this.setBarSize)
       .transition('update')
       .ease(easeCircleIn)
       .duration(this.duration)
@@ -2633,7 +2671,8 @@ export class DumbbellPlot {
         }
       });
 
-    this.drawDataLabels(true);
+    // this additional call to drawDataLabels effects collision detection
+    // this.drawDataLabels(true);
 
     retainAccessFocus({
       parentGNode: this.rootG.node()
@@ -2655,8 +2694,9 @@ export class DumbbellPlot {
   enterSeriesLabels() {
     this.enterSeriesLabel.interrupt();
 
+    const isAuto = this.seriesLabelDetails.placement === 'auto';
     const checkString = this.isVertical ? 'right' : 'top';
-    const isStandard = this.seriesLabelDetails.placement.includes(checkString);
+    const isStandard = isAuto ? true : this.seriesLabelDetails.placement.includes(checkString);
     this.enterSeriesLabel
       .attr('opacity', 0)
       .attr('class', 'dumbbell-series-label')
@@ -2682,7 +2722,7 @@ export class DumbbellPlot {
       .ease(easeCircleIn)
       .duration(this.duration)
       .attr('opacity', d => {
-        const seriesLabelOpacity = !this.seriesLabel.visible ? 0 : 1;
+        const seriesLabelOpacity = !this.seriesLabelDetails.visible ? 0 : 1;
         if (!this.seriesInteraction) {
           return seriesLabelOpacity;
         } else {
@@ -2710,29 +2750,95 @@ export class DumbbellPlot {
   }
 
   drawSeriesLabels() {
+    const isAuto = this.seriesLabelDetails.placement === 'auto';
     const checkString = this.isVertical ? 'right' : 'top';
-    const isStandard = this.seriesLabelDetails.placement.includes(checkString);
+    const isStandard = isAuto ? true : this.seriesLabelDetails.placement.includes(checkString);
+    const hideOnly = !isAuto && this.seriesLabelDetails.collisionHideOnly;
 
-    this.updateSeriesLabel
+    const seriesLabelUpdate = this.updateSeriesLabel
       .text((d, i) => (this.seriesLabelDetails.label ? this.seriesLabelDetails.label[i] : d.label))
+      .style('visibility', (_, i, n) =>
+        isAuto || this.seriesLabelDetails.collisionHideOnly ? select(n[i]).style('visibility') : null
+      )
       .attr('fill', this.handleSeriesLabelColors)
+      .attr('data-x', d =>
+        this.isVertical && isStandard ? this.innerPaddedWidth : !this.isVertical ? this.x(d.value) : 0
+      )
+      .attr('data-y', (d, i, n) => {
+        const textElement = n[i];
+        const style = getComputedStyle(textElement);
+        const fontSize = parseFloat(style.fontSize);
+        const textHeight = Math.max(fontSize - 1, 1); // clone.getBBox().height;
+
+        return this.isVertical
+          ? this.y(d.value) + 0.3 * textHeight // we need to account for dy here for series labels
+          : !this.isVertical && !isStandard
+          ? this.innerPaddedHeight
+          : 0;
+      })
+      .attr('data-translate-x', this.margin.left + this.padding.left)
+      .attr('data-translate-y', this.margin.top + this.padding.top)
+      .attr('data-use-dx', hideOnly)
+      .attr('data-use-dy', hideOnly)
+      .attr('data-text-anchor', this.isVertical && isStandard ? 'start' : this.isVertical ? 'end' : 'middle')
+      .attr('dx', this.isVertical && isStandard ? '0.1em' : this.isVertical ? '-0.1em' : '0')
+      .attr('dy', this.isVertical ? '0.3em' : '-0.1em')
       .transition('update_series_labels')
       .ease(easeCircleIn)
-      .duration(this.duration)
-      .attr('text-anchor', this.isVertical && isStandard ? 'start' : this.isVertical ? 'end' : 'middle')
-      .attr('x', d => (this.isVertical && isStandard ? this.innerPaddedWidth : !this.isVertical ? this.x(d.value) : 0))
-      .attr('y', d =>
-        this.isVertical ? this.y(d.value) : !this.isVertical && !isStandard ? this.innerPaddedHeight : 0
-      )
-      .attr('dx', this.isVertical && isStandard ? '0.1em' : this.isVertical ? '-0.1em' : '0')
-      .attr('dy', this.isVertical ? '0.3em' : '-0.1em');
+      .duration(this.duration);
+
+    if (
+      this.seriesLabelDetails.visible &&
+      (this.seriesLabelDetails.placement === 'auto' || this.seriesLabelDetails.collisionHideOnly)
+    ) {
+      // for series labels we are only going to check middle for now
+      // const validPositions = hideOnly ? ['middle'] : this.isVertical ? ['right', 'middle', 'left'] : ['top', 'middle', 'bottom'];
+      this.bitmaps = resolveLabelCollision({
+        bitmaps: this.bitmaps,
+        labelSelection: seriesLabelUpdate,
+        avoidMarks: [],
+        validPositions: ['middle'],
+        offsets: [1], // hideOnly ? [1] : [4, 1, 4],
+        accessors: [this.seriesAccessor],
+        size: [roundTo(this.width, 0), roundTo(this.height, 0)],
+        hideOnly:
+          this.seriesLabelDetails.visible &&
+          this.seriesLabelDetails.collisionHideOnly &&
+          this.seriesLabelDetails.placement !== 'auto'
+      });
+
+      // if we are in hide only we need to add attributes back
+      if (hideOnly) {
+        seriesLabelUpdate
+          .attr('text-anchor', this.isVertical && isStandard ? 'start' : this.isVertical ? 'end' : 'middle')
+          .attr('x', d =>
+            this.isVertical && isStandard ? this.innerPaddedWidth : !this.isVertical ? this.x(d.value) : 0
+          )
+          .attr('y', d =>
+            this.isVertical ? this.y(d.value) : !this.isVertical && !isStandard ? this.innerPaddedHeight : 0
+          )
+          .attr('dx', this.isVertical && isStandard ? '0.1em' : this.isVertical ? '-0.1em' : '0')
+          .attr('dy', this.isVertical ? '0.3em' : '-0.1em');
+      }
+    } else {
+      seriesLabelUpdate
+        .attr('text-anchor', this.isVertical && isStandard ? 'start' : this.isVertical ? 'end' : 'middle')
+        .attr('x', d =>
+          this.isVertical && isStandard ? this.innerPaddedWidth : !this.isVertical ? this.x(d.value) : 0
+        )
+        .attr('y', d =>
+          this.isVertical ? this.y(d.value) : !this.isVertical && !isStandard ? this.innerPaddedHeight : 0
+        )
+        .attr('dx', this.isVertical && isStandard ? '0.1em' : this.isVertical ? '-0.1em' : '0')
+        .attr('dy', this.isVertical ? '0.3em' : '-0.1em');
+    }
   }
 
   setSeriesLabelOpacity() {
     this.updateSeriesLabel.interrupt('opacity_series_labels');
 
     this.updateSeriesLabel.attr('opacity', d => {
-      const seriesLabelOpacity = !this.seriesLabel.visible ? 0 : 1;
+      const seriesLabelOpacity = !this.seriesLabelDetails.visible ? 0 : 1;
       // check if interactionKeys includes seriesAccessor, if not then don't check seriesLabel for interaction
       if (!this.seriesInteraction) {
         return seriesLabelOpacity;
@@ -2836,23 +2942,28 @@ export class DumbbellPlot {
   }
 
   drawDifferenceLabels() {
+    const isAuto = this.diffLabelDetails.placement === 'auto';
     const checkString = this.isVertical ? 'left' : 'top';
-    const isStandard = this.diffLabelDetails.placement.includes(checkString);
+    const isStandard = isAuto ? true : this.diffLabelDetails.placement.includes(checkString);
+    const hideOnly = !isAuto && this.differenceLabel.collisionHideOnly;
 
-    this.updateDiffLabel
+    const updatingDiffLabels = this.updateDiffLabel
       .text(d => formatDataLabel(d, this.differenceLabel.calculation, this.differenceLabel.format))
-      .transition('update_diff_label')
-      .ease(easeCircleIn)
-      .duration(this.duration)
-      .attr('text-anchor', this.isVertical && isStandard ? 'end' : this.isVertical ? 'start' : 'middle')
-      .attr('x', d => (this.isVertical ? this.x(d.values[0][this.ordinalAccessor]) : this.x(d.middle)))
-      .attr('y', d =>
+      .style('visibility', (_, i, n) =>
+        isAuto || this.differenceLabel.collisionHideOnly ? select(n[i]).style('visibility') : null
+      )
+      .attr('data-x', d => (this.isVertical ? this.x(d.values[0][this.ordinalAccessor]) : this.x(d.middle)))
+      .attr('data-y', d =>
         !this.isVertical && isStandard
           ? this.y(d.key) - this.barStyle.width / 2 - 4
           : !this.isVertical
           ? this.y(d.key) + this.barStyle.width / 2 + 4
           : this.y(d.middle)
       )
+      .attr('data-translate-x', this.margin.left + this.padding.left)
+      .attr('data-translate-y', this.margin.top + this.padding.top)
+      .attr('data-use-dx', hideOnly)
+      .attr('data-use-dy', hideOnly)
       .attr(
         'dx',
         this.isVertical && isStandard
@@ -2861,7 +2972,86 @@ export class DumbbellPlot {
           ? this.barStyle.width / 2 + 4
           : '0'
       )
-      .attr('dy', !this.isVertical && isStandard ? '0' : !this.isVertical ? '0.6em' : '0.3em');
+      .attr('dy', !this.isVertical && isStandard ? '0' : !this.isVertical ? '0.6em' : '0.3em')
+      // text-anchor adds a blip to the update of these labels, placement also seems ok without it
+      .attr('text-anchor', (_, i, n) =>
+        isAuto && select(n[i]).attr('text-anchor')
+          ? select(n[i]).attr('text-anchor')
+          : this.isVertical && isStandard
+          ? 'end'
+          : this.isVertical
+          ? 'start'
+          : 'middle'
+      )
+      .transition('update_diff_label')
+      .ease(easeCircleIn)
+      .duration(this.duration);
+
+    if (
+      this.differenceLabel.visible &&
+      (this.diffLabelDetails.placement === 'auto' || this.differenceLabel.collisionHideOnly)
+    ) {
+      const validPositions = hideOnly ? ['middle'] : this.isVertical ? ['left', 'right'] : ['top', 'bottom'];
+      const offsets = hideOnly
+        ? [this.barStyle.width / 2 + 4]
+        : [this.barStyle.width / 2 + 4, this.barStyle.width / 2 + 4];
+      this.bitmaps = resolveLabelCollision({
+        bitmaps: this.bitmaps,
+        labelSelection: updatingDiffLabels,
+        avoidMarks: [this.update],
+        validPositions,
+        offsets,
+        accessors: ['key'],
+        size: [roundTo(this.width, 0), roundTo(this.height, 0)], // we need the whole width and height for pie
+        hideOnly:
+          this.differenceLabel.visible &&
+          this.differenceLabel.collisionHideOnly &&
+          this.diffLabelDetails.placement !== 'auto'
+      });
+
+      // if we are in hide only we need to add attributes back
+      if (hideOnly) {
+        updatingDiffLabels
+          .attr('x', d => (this.isVertical ? this.x(d.values[0][this.ordinalAccessor]) : this.x(d.middle)))
+          .attr('y', d =>
+            !this.isVertical && isStandard
+              ? this.y(d.key) - this.barStyle.width / 2 - 4
+              : !this.isVertical
+              ? this.y(d.key) + this.barStyle.width / 2 + 4
+              : this.y(d.middle)
+          )
+          .attr(
+            'dx',
+            this.isVertical && isStandard
+              ? -this.barStyle.width / 2 - 4
+              : this.isVertical
+              ? this.barStyle.width / 2 + 4
+              : '0'
+          )
+          .attr('dy', !this.isVertical && isStandard ? '0' : !this.isVertical ? '0.6em' : '0.3em')
+          .attr('text-anchor', this.isVertical && isStandard ? 'end' : this.isVertical ? 'start' : 'middle');
+      }
+    } else {
+      updatingDiffLabels
+        .attr('x', d => (this.isVertical ? this.x(d.values[0][this.ordinalAccessor]) : this.x(d.middle)))
+        .attr('y', d =>
+          !this.isVertical && isStandard
+            ? this.y(d.key) - this.barStyle.width / 2 - 4
+            : !this.isVertical
+            ? this.y(d.key) + this.barStyle.width / 2 + 4
+            : this.y(d.middle)
+        )
+        .attr(
+          'dx',
+          this.isVertical && isStandard
+            ? -this.barStyle.width / 2 - 4
+            : this.isVertical
+            ? this.barStyle.width / 2 + 4
+            : '0'
+        )
+        .attr('dy', !this.isVertical && isStandard ? '0' : !this.isVertical ? '0.6em' : '0.3em')
+        .attr('text-anchor', this.isVertical && isStandard ? 'end' : this.isVertical ? 'start' : 'middle');
+    }
   }
 
   enterDataLabels() {
@@ -2955,12 +3145,56 @@ export class DumbbellPlot {
   }
 
   drawDataLabels(interactionOverride?) {
+    const isAuto = this.placement === 'auto';
+    const hideOnly = this.placement !== 'auto' && this.dataLabel.collisionHideOnly;
+
     this.updateLabelChildren.text(d => {
       return formatDataLabel(d, this.innerLabelAccessor, this.dataLabel.format);
     });
 
     const labelUpdate = this.updateLabelChildren
       .attr('fill', this.handleLabelColors)
+      .style('visibility', (_, i, n) =>
+        isAuto || this.dataLabel.collisionHideOnly ? select(n[i]).style('visibility') : null
+      )
+      .attr('data-translate-x', this.margin.left + this.padding.left)
+      .attr('data-translate-y', this.margin.top + this.padding.top)
+      .attr('data-use-dx', hideOnly)
+      .attr('data-use-dy', hideOnly)
+      .attr('dx', d => (this.isVertical ? '0.0em' : d.offset >= 0 ? '-0.1em' : '0.1em'))
+      .attr('dy', d => {
+        return this.isVertical && d.offset >= 0 ? '0.9em' : this.isVertical ? '-0.3em' : '0.0em';
+      })
+      // .attr('data-x',d => this.isVertical ? this.x(d[this.ordinalAccessor]) : this.x(d[this.valueAccessor]) - d.offset)
+      .attr('data-y', (d, i, n) => {
+        const textElement = n[i];
+        const style = getComputedStyle(textElement);
+        const fontSize = parseFloat(style.fontSize);
+        const textHeight = Math.max(fontSize - 1, 1); // clone.getBBox().height;
+        const textWidth = getTextWidth(textElement.textContent, fontSize, true, style.fontFamily);
+        const xAdjust =
+          this.layoutOverride !== 'horizontal'
+            ? 0
+            : d.offset >= 0 // (offset >= 0 means right item)
+            ? -textWidth / 2
+            : textWidth / 2;
+
+        const heightAdjust = // since we have some logic in util that assumes certain placements, we need to adjust for it here
+          this.layoutOverride !== 'vertical'
+            ? -textHeight / 2
+            : d.offset >= 0 // (offset >= 0 means bottom item)
+            ? textHeight / 2
+            : -textHeight + -textHeight / 2;
+
+        select(textElement).attr(
+          'data-x',
+          d => (this.isVertical ? this.x(d[this.ordinalAccessor]) : this.x(d[this.valueAccessor]) - d.offset) + xAdjust
+        );
+        return this.isVertical
+          ? this.y(d[this.valueAccessor]) + d.offset + heightAdjust // + d.offset // + heightAdjust
+          : this.y(d[this.ordinalAccessor]) + heightAdjust;
+      })
+      .attr('data-offset', d => d.offset) // to be removed
       .transition('update_dataLabel')
       .ease(easeCircleIn)
       .duration((d, i, n) => {
@@ -2972,7 +3206,7 @@ export class DumbbellPlot {
         return this.duration;
       });
 
-    placeDataLabels({
+    this.bitmaps = placeDataLabels({
       root: labelUpdate,
       xScale: this.x,
       yScale: this.y,
@@ -2981,7 +3215,18 @@ export class DumbbellPlot {
       placement: this.placement,
       chartType: 'dumbbell',
       layout: this.layoutOverride,
-      labelOffset: this.markerData
+      labelOffset: this.markerData,
+      avoidCollision: {
+        runOccupancyBitmap: this.dataLabel.visible && this.placement === 'auto',
+        labelSelection: labelUpdate,
+        avoidMarks: [this.update],
+        validPositions: ['middle'],
+        offsets: [1],
+        accessors: [this.ordinalAccessor, this.seriesAccessor, 'key'], // key is created for lines by nesting done in line,
+        size: [roundTo(this.width, 0), roundTo(this.height, 0)],
+        boundsScope: 'centroid',
+        hideOnly: this.dataLabel.visible && this.dataLabel.collisionHideOnly
+      }
     });
   }
 
@@ -3103,7 +3348,7 @@ export class DumbbellPlot {
       .remove();
 
     enterReferences.attr('transform', d => {
-      const scale = this.layoutOverride === 'horizontal' ? 'x' : 'y';
+      const scale = !this.isVertical ? 'x' : 'y';
       return 'translate(0,' + this[scale](d.value) + ')';
     });
 
@@ -3112,7 +3357,7 @@ export class DumbbellPlot {
       .ease(easeCircleIn)
       .duration(this.duration)
       .attr('transform', d => {
-        const scale = this.layoutOverride === 'horizontal' ? 'x' : 'y';
+        const scale = !this.isVertical ? 'x' : 'y';
         return 'translate(0,' + this[scale](d.value) + ')';
       });
 
@@ -3168,9 +3413,14 @@ export class DumbbellPlot {
       source: this.rootG.node(),
       data: this.annotations,
       xScale: this.x,
-      xAccessor: this.layout !== 'horizontal' ? this.ordinalAccessor : this.valueAccessor,
+      xAccessor: this.layoutOverride !== 'horizontal' ? this.ordinalAccessor : this.valueAccessor,
       yScale: this.y,
-      yAccessor: this.layout !== 'horizontal' ? this.valueAccessor : this.ordinalAccessor
+      yAccessor: this.layoutOverride !== 'horizontal' ? this.valueAccessor : this.ordinalAccessor,
+      width: this.width,
+      height: this.height,
+      padding: this.padding,
+      margin: this.margin,
+      bitmaps: this.bitmaps
     });
   }
 
@@ -3187,7 +3437,6 @@ export class DumbbellPlot {
   setChartDescriptionWrapper() {
     initializeDescriptionRoot({
       rootEle: this.dumbbellPlotEl,
-      geomType: 'dumbbell',
       title: this.accessibility.title || this.mainTitle,
       chartTag: 'dumbbell-plot',
       uniqueID: this.chartID,
@@ -3516,11 +3765,8 @@ export class DumbbellPlot {
   }
 
   findMarkerIndex(data, node, mouseEvent) {
-    const pos =
-      this.layoutOverride === 'vertical'
-        ? this.findPosition(node, mouseEvent)[1]
-        : this.findPosition(node, mouseEvent)[0];
-    const a = this.layoutOverride === 'vertical' ? 'Y' : 'X';
+    const pos = this.isVertical ? this.findPosition(node, mouseEvent)[1] : this.findPosition(node, mouseEvent)[0];
+    const a = this.isVertical ? 'Y' : 'X';
     const start = +select(node).attr('data-center' + a + '1');
     const end = +select(node).attr('data-center' + a + '2');
     const middle = (end - start) / 2 + start;
@@ -3669,6 +3915,19 @@ export class DumbbellPlot {
             {this.subTitle}
           </this.bottomLevel>
           <div class="dumbbell-legend vcl-legend" style={{ display: this.legend.visible ? 'block' : 'none' }} />
+          <keyboard-instructions
+            uniqueID={this.chartID}
+            geomType={'dumbbell'}
+            chartTag={'dumbbell-plot'}
+            width={this.width - (this.margin ? this.margin.right || 0 : 0)}
+            isInteractive={this.accessibility.elementsAreInterface}
+            disabled={
+              this.suppressEvents &&
+              this.accessibility.elementsAreInterface === false &&
+              this.accessibility.keyboardNavConfig &&
+              this.accessibility.keyboardNavConfig.disabled
+            } // the chart is "simple"
+          />
           <div class="visa-viz-d3-dumbbell-container" />
           <div class="dumbbell-tooltip vcl-tooltip" style={{ display: this.showTooltip ? 'block' : 'none' }} />
           <data-table
@@ -3681,6 +3940,7 @@ export class DumbbellPlot {
             hideDataTable={this.accessibility.hideDataTableButton}
           />
         </div>
+        {/* <canvas id="bitmap-render" /> */}
       </div>
     );
   }

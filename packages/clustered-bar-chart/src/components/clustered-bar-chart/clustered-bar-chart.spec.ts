@@ -9,6 +9,10 @@ import { newSpecPage, SpecPage } from '@stencil/core/testing';
 import { ClusteredBarChart } from './clustered-bar-chart';
 import { ClusteredBarChartDefaultValues } from './clustered-bar-chart-default-values';
 import { scaleBand, scaleOrdinal, scaleLinear } from 'd3-scale';
+// we need to bring in our nested components as well, was required to bring in the source vs dist folder to get it to mount
+import { KeyboardInstructions } from '../../../node_modules/@visa/keyboard-instructions/src/components/keyboard-instructions/keyboard-instructions';
+import { DataTable } from '../../../node_modules/@visa/visa-charts-data-table/src/components/data-table/data-table';
+
 import Utils from '@visa/visa-charts-utils';
 import UtilsDev from '@visa/visa-charts-utils-dev';
 import { nest } from 'd3-collection';
@@ -73,7 +77,7 @@ describe('<clustered-bar-chart>', () => {
 
     beforeEach(async () => {
       page = await newSpecPage({
-        components: [ClusteredBarChart],
+        components: [ClusteredBarChart, KeyboardInstructions, DataTable],
         html: '<div></div>'
       });
       component = page.doc.createElement('clustered-bar-chart');
@@ -125,14 +129,8 @@ describe('<clustered-bar-chart>', () => {
             ? '[data-testid=marker]'
             : unitTestGeneric[test].testSelector;
 
-        if (unitTestGeneric[test].prop === 'margin' || unitTestGeneric[test].prop === 'padding') {
-          // skip margin and padding until we can solve issues with parseSVG() and jsdom mocked SVG elements
-          it.skip(`${unitTestGeneric[test].prop}: ${unitTestGeneric[test].name}`, () =>
-            unitTestGeneric[test].testFunc(component, page, innerTestProps, innerTestSelector));
-        } else {
-          it(`${unitTestGeneric[test].prop}: ${unitTestGeneric[test].name}`, () =>
-            unitTestGeneric[test].testFunc(component, page, innerTestProps, innerTestSelector));
-        }
+        it(`${unitTestGeneric[test].prop}: ${unitTestGeneric[test].name}`, () =>
+          unitTestGeneric[test].testFunc(component, page, innerTestProps, innerTestSelector));
       });
     });
 

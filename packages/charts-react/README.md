@@ -41,7 +41,10 @@ Step 1: Install `yarn add @visa/charts-react`
 Step 2: Use component as any other React component
 
 ```js
-import { BarChart } from '@visa/charts-react';
+import { BarChart, VisaChartsDataTable } from '@visa/charts-react';
+// OR, depending on your webpack or bundling approach you may need to pull each component directly
+import { BarChart } from '@visa/charts-react/dist/components/bar-chart';
+import { DataTable as VisaChartsDataTable } from '@visa/charts-react/dist/components/visa-charts-data-table';
 
 <BarChart
   mainTitle={'BarChart'}

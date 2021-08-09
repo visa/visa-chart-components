@@ -140,6 +140,12 @@
       </ul>
     </li>
     <li>
+      <a href="#collision">Collision Detection (leveraging vega-label)</a>
+      <ul>
+        <li><a href="#resolve-label-collision">resolveLabelCollision()</a></li>
+      </ul>
+    </li>
+    <li>
       <a href="#colors">Colors</a>
       <ul>
         <li><a href="#auto-text-color">autoTextColor()</a></li>
@@ -608,6 +614,58 @@ Example use:
 
 ```js
 const calculation = leastSquares([4, 5, 6, 7, 8], [1, 2, 3, 4, 5]); // [1, -3, 1]
+```
+
+<hr>
+<br>
+
+## <a name="collision" href="#collision">#</a> Collision Detection (leveraging vega-label) [<>](./src/utils/collisionDetection.ts 'Source')
+
+This util is leveraged by VCC components to implement a VCC specific version of [vega-label](https://github.com/vega/vega-label)'s occupancy bitmap approach for collision detection of chart labels.
+
+### **Notable Exports:**
+
+#### <a name='resolve-label-collision' href='#resolve-label-collision'>#</a> `resolveLabelCollision({...})`:
+
+This function expects to receive d3 selections of marks, labels, potential places which labels can be moved to, and even existing bitmaps (for incremental checking of additional labels, e.g., series labels on line-chart). Under the hood it leverages [vega-label](https://github.com/vega/vega-label)'s bitmap occupancy algorithm and has been extended/adapted for use in VCC. Collision related props (e.g., `collisionPlacement`) have been made available via VCC components, but are not on by default. **NOTE:** running the collision function appears to be adding ~20ms to render times in most cases, sometimes upwards of 30ms. Please keep this in mind when using collision related props in VCC.
+
+![An image depicting an example of an occupancy bitmap applied to the pie chart component in order to detect label collisions.](./docs/resolve-label-collision-pie.png 'Pie chart with occupancy bitmap')
+
+![An image depicting an example of an occupancy bitmap applied to the line chart component in order to detect label collisions.](./docs/resolve-label-collision-line.png 'Line chart with occupancy bitmap')
+
+Example use:
+
+```js
+// direct use in chart, note this function is also called in our dataLabel utility
+this.bitmaps = resolveLabelCollision({
+  bitmaps: this.bitmaps, // bitmaps previously created in component lifecycle, containing marks
+  labelSelection: seriesUpdate, // d3 selections of labels to place and determine collisions for
+  avoidMarks: [this.updateDots], // marks to write to bitmap and use for bounds to orient labels
+  validPositions: ['middle', 'top', 'bottom'], // anchor positions to try and place label in
+  offsets: [1, 1, 1], // how much to offset each position in pixels
+  accessors: [this.seriesAccessor], // the VCC accessors used to join labels to marks
+  size: [roundTo(this.width, 0), roundTo(this.innerPaddedHeight, 0)], // size of graph
+  hideOnly: this.labelDetails.visible && this.labelDetails.collisionHideOnly // toggle of whether to place or just hide labels if collision is detected
+});
+// returns an occupancy bitmap, populated with marks and labels already drawn to the graph
+// output of the function is to set the following attributes of the labels passed in:
+// 1. data-label-hidden - attribute identifying if algorithm hide the element
+// 2. visibility - style attribute used to hide element
+// 3. x/y - position updated when placing labels based on validPositions
+// 4. text-anchor - position updated when placing labels based on validPositions
+
+// use of function for annotations
+bitmaps = resolveLabelCollision({
+  bitmaps: bitmaps, // existing bitmap is passed in with all chart marks already on it
+  labelSelection: annotationsG.selectAll('.annotation-detect-collision text'), // we applied a specific class in the annotation util and leverage that here for text element selections
+  avoidMarks: [], // no avoid marks needed for annotations
+  validPositions: ['middle'], // we only check annotations based on their specified placement
+  offsets: [1],
+  accessors: ['cidx'], // not used currently
+  size: [roundTo(width, 0), roundTo(height, 0)] // we need the whole width for annotations
+  // hideOnly is set on a per annotation basis and thus is not used in this call to the function
+});
+// for annotations, we check if the any of the text is hidden, if so, we then hide the entire annotation via style.visibility
 ```
 
 <hr>

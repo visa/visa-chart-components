@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2021 Visa, Inc.
+ * Copyright (c) 2020, 2021 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -7,6 +7,7 @@
  **/
 import { Component, State, Element, h } from '@stencil/core';
 import '@visa/visa-charts-data-table';
+import '@visa/keyboard-instructions';
 
 @Component({
   tag: 'app-alluvial-diagram',
@@ -14,7 +15,9 @@ import '@visa/visa-charts-data-table';
 })
 export class AppAlluvialDiagram {
   @State() highestHeadingLevel: string | number = 'h3';
-  @State() data: any;
+  @State() data1: any;
+  @State() data2: any;
+  @State() data3: any;
   @State() nodes: any;
   @State() colorsArray: any = ['#E4E4E4', '#E4E4E4', '#E4E4E4', '#78029D', '#E4E4E4'];
   @State() fillState: any = 'new';
@@ -31,26 +34,27 @@ export class AppAlluvialDiagram {
     bottom: 50
   };
   @State() fillNodeConfig: any = false;
-  @State() compareNodeConfig: any = true;
+  @State() compareNodeConfig: any = false;
   @State() visibleLinkConfig: any = true;
   @State() fillModeLinkConfig: any = 'group';
   @State() opacityLinkConfig: any = 0.3;
 
   @State() uniqueID: string = 'thisIsUnique';
-  @State() dataLabel: any = { visible: false, placement: 'outside', labelAccessor: 'did' };
+  @State() dataLabel: any = { visible: true, placement: 'outside', labelAccessor: 'value', format: '0.0[a]' };
   @State() tooltipLabel: any = {
-    labelAccessor: ['vale'],
+    labelAccessor: ['value'],
     labelTitle: ['value'],
     format: ['0,0[.0][a]']
   };
   // @State() clickElement: any = [];
-  @State() clickElement: any = [{ group: 'New', cat: 'New Group 2018', target: 'Low 2019', vale: 3684 }];
-  @State() interactionState: any = ['value'];
+  @State() clickElement: any = [{ group: 'New', source: 'New 2018', target: 'Low 2019', value: 3684 }];
+  @State() interactionState: any = ['group'];
   @State() valueAccessor: any = 'value';
   @State() groupAccessor: any = 'region';
   @State() ordinalAccessor: any = 'country';
   @State() hoverElementTest: any = '';
   @State() clickElementTest: any = [];
+  @State() animations: any = { disabled: true };
   @State() accessibility: any = {
     elementDescriptionAccessor: 'note', // see Indonesia above
     longDescription: 'An alluvial diagram which shows the movement of groups between 2018 and 2019.',
@@ -67,89 +71,377 @@ export class AppAlluvialDiagram {
     elementsAreInterface: true,
     disableValidation: true
   };
-  @State() annotations: any = [
-    {
-      note: {
-        label: '3,148 (New to High)',
-        bgPadding: 0,
-        align: 'left',
-        wrap: 210
-      },
-      accessibilityDescription: '2018 High Category total is 8,606',
-      data: { group: 'New', cat: 'New Group 2018', target: 'High 2019', vale: 3148 },
-      positionType: 'target',
-      // dy: '-1%',
-      color: '#000000'
-    },
-    {
-      note: {
-        label: '7,279 (New to Med)',
-        bgPadding: 0,
-        align: 'left',
-        wrap: 210
-      },
-      accessibilityDescription: '2018 High Category total is 8,606',
-      data: { group: 'New', cat: 'New Group 2018', target: 'Medium 2019', vale: 7279 },
-      positionType: 'target',
-      // dy: '-1%',
-      color: '#000000'
-    },
-    {
-      note: {
-        label: '3,684 (New to Low)',
-        bgPadding: 0,
-        align: 'left',
-        wrap: 210
-      },
-      accessibilityDescription: '2018 High Category total is 8,606',
-      data: { group: 'New', cat: 'New Group 2018', target: 'Low 2019', vale: 3684 },
-      positionType: 'target',
-      // dy: '-1%',
-      color: '#000000'
-    }
-  ];
   hoverStyle: any = {
     color: '#979db7',
     strokeWidth: 1.5
   };
   clickStyle: any = {
-    color: '#8fdcc7',
+    color: '#8fdfff',
     strokeWidth: 2
   };
   // colors: any = ['#2e3047', '#43455c', '#3c3f58'];
   colors: any = ['#EDEEF3', '#A8AABB', '#6C6E86', '#3c3f58'];
 
-  startData: any = [
-    { group: 'Remained', cat: 'High 2018', target: 'High 2019', vale: 3010 },
-    { group: 'Decreased', cat: 'High 2018', target: 'Medium 2019', vale: 2754 },
-    { group: 'Decreased', cat: 'High 2018', target: 'Low 2019', vale: 2812 },
-    { group: 'Increased', cat: 'Medium 2018', target: 'High 2019', vale: 909 },
-    { group: 'Remained', cat: 'Medium 2018', target: 'Medium 2019', vale: 12712 },
-    { group: 'Decreased', cat: 'Medium 2018', target: 'Low 2019', vale: 3367 },
-    { group: 'Increased', cat: 'Low 2018', target: 'High 2019', vale: 68 },
-    { group: 'Increased', cat: 'Low 2018', target: 'Medium 2019', vale: 1133 },
-    { group: 'Remained', cat: 'Low 2018', target: 'Low 2019', vale: 6164 },
-    { group: 'New', cat: 'New Group 2018', target: 'High 2019', vale: 3148 },
-    { group: 'New', cat: 'New Group 2018', target: 'Medium 2019', vale: 7279 },
-    { group: 'New', cat: 'New Group 2018', target: 'Low 2019', vale: 3684 }
+  linkStartData: any = [
+    { group: 'Remained', source: 'High 2018', target: 'High 2019', value: 3010 },
+    { group: 'Decreased', source: 'High 2018', target: 'Medium 2019', value: 2754 },
+    { group: 'Decreased', source: 'High 2018', target: 'Low 2019', value: 2812 },
+    { group: 'Increased', source: 'Medium 2018', target: 'High 2019', value: 909 },
+    { group: 'Remained', source: 'Medium 2018', target: 'Medium 2019', value: 12712 },
+    { group: 'Decreased', source: 'Medium 2018', target: 'Low 2019', value: 3367 },
+    { group: 'Increased', source: 'Low 2018', target: 'High 2019', value: 68 },
+    { group: 'Increased', source: 'Low 2018', target: 'Medium 2019', value: 8133 },
+    { group: 'Remained', source: 'Low 2018', target: 'Low 2019', value: 6164 },
+    { group: 'New', source: 'New 2018', target: 'High 2019', value: 3148 },
+    { group: 'New', source: 'New 2018', target: 'Medium 2019', value: 7279 },
+    { group: 'New', source: 'New 2018', target: 'Low 2019', value: 3684 }
   ];
-  dataStorage: any = [this.startData];
-  test: any = [
-    { did: 'High 2018' },
-    { did: 'Medium 2018' },
-    { did: 'Low 2018' },
-    { did: 'New Group 2018' },
-    { did: 'High 2019' },
-    { did: 'Medium 2019' },
-    { did: 'Low 2019' }
+  dataStorage1: any = [
+    this.linkStartData,
+    [
+      { group: 'Remained', source: 'High 2018', target: 'High 2019', value: 301 },
+      { group: 'Decreased', source: 'High 2018', target: 'Medium 2019', value: 275 },
+      { group: 'Decreased', source: 'High 2018', target: 'Low 2019', value: 281 },
+      { group: 'Increased', source: 'Medium 2018', target: 'High 2019', value: 909 },
+      { group: 'Remained', source: 'Medium 2018', target: 'Medium 2019', value: 1271 },
+      { group: 'Decreased', source: 'Medium 2018', target: 'Low 2019', value: 3367 },
+      { group: 'Increased', source: 'Low 2018', target: 'High 2019', value: 618 },
+      { group: 'Increased', source: 'Low 2018', target: 'Medium 2019', value: 113 },
+      { group: 'Remained', source: 'Low 2018', target: 'Low 2019', value: 616 },
+      { group: 'New', source: 'New 2018', target: 'High 2019', value: 314 },
+      { group: 'New', source: 'New 2018', target: 'Medium 2019', value: 279 },
+      { group: 'New', source: 'New 2018', target: 'Low 2019', value: 364 }
+    ],
+    [
+      { group: 'Remained', source: 'High 2018', target: 'High 2019', value: 3010 },
+      { group: 'Decreased', source: 'High 2018', target: 'Medium 2019', value: 2754 },
+      { group: 'Decreased', source: 'High 2018', target: 'Low 2019', value: 2812 },
+      { group: 'Increased', source: 'Medium 2018', target: 'High 2019', value: 9091 },
+      { group: 'Remained', source: 'Medium 2018', target: 'Medium 2019', value: 12712 },
+      { group: 'Decreased', source: 'Medium 2018', target: 'Low 2019', value: 3367 },
+      { group: 'Increased', source: 'Low 2018', target: 'High 2019', value: 681 },
+      { group: 'Increased', source: 'Low 2018', target: 'Medium 2019', value: 8133 },
+      { group: 'Remained', source: 'Low 2018', target: 'Low 2019', value: 6164 },
+      { group: 'New', source: 'New 2018', target: 'High 2019', value: 3681 },
+      { group: 'New', source: 'New 2018', target: 'Medium 2019', value: 7279 },
+      { group: 'New', source: 'New 2018', target: 'Low 2019', value: 3684 }
+    ],
+    [
+      { group: 'Increased', source: 'Medium 2018', target: 'High 2019', value: 9091 },
+      { group: 'Remained', source: 'Medium 2018', target: 'Medium 2019', value: 12712 },
+      { group: 'Decreased', source: 'Medium 2018', target: 'Low 2019', value: 3367 },
+      { group: 'Increased', source: 'Low 2018', target: 'High 2019', value: 681 },
+      { group: 'Increased', source: 'Low 2018', target: 'Medium 2019', value: 8133 },
+      { group: 'Remained', source: 'Low 2018', target: 'Low 2019', value: 6164 },
+      { group: 'New', source: 'New 2018', target: 'High 2019', value: 3681 },
+      { group: 'New', source: 'New 2018', target: 'Medium 2019', value: 7279 },
+      { group: 'New', source: 'New 2018', target: 'Low 2019', value: 3684 }
+    ],
+    [
+      { group: 'Remained', source: 'High 2018', target: 'High 2019', value: 3010 },
+      { group: 'Decreased', source: 'High 2018', target: 'Medium 2019', value: 2754 },
+      { group: 'Decreased', source: 'High 2018', target: 'Low 2019', value: 2812 },
+      { group: 'Increased', source: 'Medium 2018', target: 'High 2019', value: 9091 },
+      { group: 'Remained', source: 'Medium 2018', target: 'Medium 2019', value: 12712 },
+      { group: 'Decreased', source: 'Medium 2018', target: 'Low 2019', value: 3367 },
+      { group: 'Increased', source: 'Low 2018', target: 'High 2019', value: 681 },
+      { group: 'Increased', source: 'Low 2018', target: 'Medium 2019', value: 8133 },
+      { group: 'Remained', source: 'Low 2018', target: 'Low 2019', value: 6164 },
+      { group: 'New', source: 'New 2018', target: 'High 2019', value: 3681 },
+      { group: 'New', source: 'New 2018', target: 'Medium 2019', value: 7279 },
+      { group: 'New', source: 'New 2018', target: 'Low 2019', value: 3684 }
+    ],
+    [
+      { group: 'Remained', source: 'High 2018', target: 'High 2019', value: 3010 },
+      { group: 'Decreased', source: 'High 2018', target: 'Medium 2019', value: 2754 },
+      { group: 'Decreased', source: 'High 2018', target: 'Low 2019', value: 2812 },
+      { group: 'Increased', source: 'Medium 2018', target: 'High 2019', value: 909 },
+      { group: 'Remained', source: 'Medium 2018', target: 'Medium 2019', value: 12712 },
+      { group: 'Decreased', source: 'Medium 2018', target: 'Low 2019', value: 3367 },
+      { group: 'Increased', source: 'Low 2018', target: 'High 2019', value: 68 },
+      { group: 'Remained', source: 'Low 2018', target: 'Low 2019', value: 6164 },
+      { group: 'New', source: 'New 2018', target: 'High 2019', value: 3148 },
+      { group: 'New', source: 'New 2018', target: 'Medium 2019', value: 7279 },
+      { group: 'New', source: 'New 2018', target: 'Low 2019', value: 3684 }
+    ],
+    [
+      { group: 'Remained', source: 'High 2018', target: 'High 2019', value: 3010 },
+      { group: 'Decreased', source: 'High 2018', target: 'Low 2019', value: 2812 },
+      { group: 'Increased', source: 'Medium 2018', target: 'High 2019', value: 909 },
+      { group: 'Decreased', source: 'Medium 2018', target: 'Low 2019', value: 3367 },
+      { group: 'Increased', source: 'Low 2018', target: 'High 2019', value: 68 },
+      { group: 'Remained', source: 'Low 2018', target: 'Low 2019', value: 6164 },
+      { group: 'New', source: 'New 2018', target: 'High 2019', value: 3148 },
+      { group: 'New', source: 'New 2018', target: 'Low 2019', value: 3684 }
+    ],
+    [
+      { group: 'Remained', source: 'High 2018', target: 'High 2019', value: 3010 },
+      { group: 'Decreased', source: 'High 2018', target: 'Medium 2019', value: 2754 },
+      { group: 'Decreased', source: 'High 2018', target: 'Low 2019', value: 2812 },
+      { group: 'Increased', source: 'Medium 2018', target: 'High 2019', value: 909 },
+      { group: 'Remained', source: 'Medium 2018', target: 'Medium 2019', value: 12712 },
+      { group: 'Decreased', source: 'Medium 2018', target: 'Low 2019', value: 3367 },
+      { group: 'Increased', source: 'Low 2018', target: 'High 2019', value: 68 },
+      { group: 'Remained', source: 'Low 2018', target: 'Low 2019', value: 6164 },
+      { group: 'New', source: 'New 2018', target: 'High 2019', value: 3148 },
+      { group: 'New', source: 'New 2018', target: 'Medium 2019', value: 7279 },
+      { group: 'New', source: 'New 2018', target: 'Low 2019', value: 3684 }
+    ]
+    // new column on
+    // [
+    //   { group: 'Remained', source: 'High 2018', target: 'High 2019', value: 3010 },
+    //   { group: 'Decreased', source: 'High 2018', target: 'Medium 2019', value: 2754 },
+    //   { group: 'Decreased', source: 'High 2018', target: 'Low 2019', value: 2812 },
+    //   { group: 'Increased', source: 'Medium 2018', target: 'High 2019', value: 909 },
+    //   { group: 'Remained', source: 'Medium 2018', target: 'Medium 2019', value: 12712 },
+    //   { group: 'Decreased', source: 'Medium 2018', target: 'Low 2019', value: 3367 },
+    //   { group: 'Increased', source: 'Low 2018', target: 'High 2019', value: 68 },
+    //   // { group: 'Increased', source: 'Low 2018', target: 'Medium 2019', value: 1133 },
+    //   { group: 'Remained', source: 'Low 2018', target: 'Low 2019', value: 6164 },
+    //   { group: 'New', source: 'New 2018', target: 'High 2019', value: 3148 },
+    //   { group: 'New', source: 'New 2018', target: 'Medium 2019', value: 7279 },
+    //   { group: 'New', source: 'New 2018', target: 'Low 2019', value: 3684 },
+    //   { group: 'Increased', source: 'Low 2019', target: 'High 2020', value: 3148 },
+    //   { group: 'Decreased', source: 'High 2019', target: 'Medium 2020', value: 1279 },
+    //   { group: 'New', source: 'Medium 2019', target: 'Low 2020', value: 3684 },
+    // ]
+    // [
+    //   { group: 'Remained', source: 'High 2018', target: 'High 2019', value: 3010 },
+    //   { group: 'Decreased', source: 'High 2018', target: 'Medium 2019', value: 2754 },
+    //   { group: 'Decreased', source: 'High 2018', target: 'Low 2019', value: 2812 },
+    //   { group: 'Increased', source: 'Medium 2018', target: 'High 2019', value: 909 },
+    //   { group: 'Remained', source: 'Medium 2018', target: 'Medium 2019', value: 12712 },
+    //   { group: 'Decreased', source: 'Medium 2018', target: 'Low 2019', value: 3367 },
+    //   { group: 'Increased', source: 'Low 2018', target: 'High 2019', value: 68 },
+    //   { group: 'Increased', source: 'Low 2018', target: 'Medium 2019', value: 1133 },
+    //   { group: 'Remained', source: 'Low 2018', target: 'Low 2019', value: 6164 },
+    //   { group: 'New', source: 'New 2018', target: 'High 2019', value: 3148 },
+    //   { group: 'New', source: 'New 2018', target: 'Medium 2019', value: 7279 },
+    //   { group: 'New', source: 'New 2018', target: 'Low 2019', value: 3684 }
+    // ],
+    // [
+    //   { group: 'Remained', source: 'High 2018', target: 'High 2019', value: 3010 },
+    //   { group: 'Decreased', source: 'High 2018', target: 'Medium 2019', value: 2754 },
+    //   { group: 'Decreased', source: 'High 2018', target: 'Low 2019', value: 2812 },
+    //   { group: 'Increased', source: 'Medium 2018', target: 'High 2019', value: 909 },
+    //   { group: 'Remained', source: 'Medium 2018', target: 'Medium 2019', value: 12712 },
+    //   { group: 'Decreased', source: 'Medium 2018', target: 'Low 2019', value: 3367 },
+    //   { group: 'Increased', source: 'Low 2018', target: 'High 2019', value: 68 },
+    //   { group: 'Increased', source: 'Low 2018', target: 'Medium 2019', value: 1133 },
+    //   { group: 'Remained', source: 'Low 2018', target: 'Low 2019', value: 6164 },
+    //   { group: 'New', source: 'New 2018', target: 'High 2019', value: 3148 },
+    //   { group: 'New', source: 'New 2018', target: 'Medium 2019', value: 7279 },
+    //   { group: 'New', source: 'New 2018', target: 'Low 2019', value: 3684 }
+    // ],
+    // [
+    //   { group: 'Remained', source: 'High 2018', target: 'High 2019', value: 3010 },
+    //   { group: 'Decreased', source: 'High 2018', target: 'Medium 2019', value: 2754 },
+    //   { group: 'Decreased', source: 'High 2018', target: 'Low 2019', value: 2812 },
+    //   { group: 'Increased', source: 'Medium 2018', target: 'High 2019', value: 909 },
+    //   { group: 'Remained', source: 'Medium 2018', target: 'Medium 2019', value: 12712 },
+    //   { group: 'Decreased', source: 'Medium 2018', target: 'Low 2019', value: 3367 },
+    //   { group: 'Increased', source: 'Low 2018', target: 'High 2019', value: 68 },
+    //   { group: 'Increased', source: 'Low 2018', target: 'Medium 2019', value: 1133 },
+    //   { group: 'Remained', source: 'Low 2018', target: 'Low 2019', value: 6164 },
+    //   { group: 'New', source: 'New 2018', target: 'High 2019', value: 3148 },
+    //   { group: 'New', source: 'New 2018', target: 'Medium 2019', value: 7279 },
+    //   { group: 'New', source: 'New 2018', target: 'Low 2019', value: 3684 }
+    // ],
+    // this.linkStartData
   ];
+  dataStorage2: any = [
+    this.linkStartData,
+    [
+      { group: 'Remained', source: 'High 2018', target: 'High 2019', value: 3010 },
+      { group: 'Decreased', source: 'High 2018', target: 'Medium 2019', value: 2754 },
+      { group: 'Decreased', source: 'High 2018', target: 'Low 2019', value: 2812 },
+      { group: 'Increased', source: 'Medium 2018', target: 'High 2019', value: 909 },
+      { group: 'Remained', source: 'Medium 2018', target: 'Medium 2019', value: 12712 },
+      { group: 'Decreased', source: 'Medium 2018', target: 'Low 2019', value: 3367 },
+      { group: 'Increased', source: 'Low 2018', target: 'High 2019', value: 68 },
+      { group: 'Increased', source: 'Low 2018', target: 'Medium 2019', value: 8133 },
+      { group: 'Remained', source: 'Low 2018', target: 'Low 2019', value: 6164 },
+      { group: 'New', source: 'New 2018', target: 'High 2019', value: 3148 },
+      { group: 'New', source: 'New 2018', target: 'Medium 2019', value: 7279 },
+      { group: 'New', source: 'New 2018', target: 'Low 2019', value: 3684 },
+      { group: 'Increased', source: 'Low 2019', target: 'High 2020', value: 3148 },
+      { group: 'Decreased', source: 'High 2019', target: 'Medium 2020', value: 1279 },
+      { group: 'Decreased', source: 'Medium 2019', target: 'Low 2020', value: 3684 },
+      { group: 'Decreased', source: 'Medium 2019', target: 'High 2020', value: 2684 }
+    ],
+    this.linkStartData,
+    [
+      { group: 'Remained', source: 'test', target: 'High 2018', value: 3010 },
+      { group: 'Remained', source: 'High 2018', target: 'High 2019', value: 3010 },
+      { group: 'Decreased', source: 'High 2018', target: 'Medium 2019', value: 2754 },
+      { group: 'Decreased', source: 'High 2018', target: 'Low 2019', value: 2812 },
+      { group: 'Increased', source: 'Medium 2018', target: 'High 2019', value: 909 },
+      { group: 'Remained', source: 'Medium 2018', target: 'Medium 2019', value: 12712 },
+      { group: 'Decreased', source: 'Medium 2018', target: 'Low 2019', value: 3367 },
+      { group: 'Increased', source: 'Low 2018', target: 'High 2019', value: 68 },
+      { group: 'Increased', source: 'Low 2018', target: 'Medium 2019', value: 8133 },
+      { group: 'Remained', source: 'Low 2018', target: 'Low 2019', value: 6164 },
+      { group: 'New', source: 'New 2018', target: 'High 2019', value: 3148 },
+      { group: 'New', source: 'New 2018', target: 'Medium 2019', value: 7279 },
+      { group: 'New', source: 'New 2018', target: 'Low 2019', value: 3684 }
+    ],
+    this.linkStartData,
+    [
+      { group: 'Remained', source: 'test', target: 'High 2018', value: 3010 },
+      { group: 'Remained', source: 'High 2018', target: 'High 2019', value: 3010 },
+      { group: 'Decreased', source: 'High 2018', target: 'Medium 2019', value: 2754 },
+      { group: 'Decreased', source: 'High 2018', target: 'Low 2019', value: 2812 },
+      { group: 'Increased', source: 'Medium 2018', target: 'High 2019', value: 909 },
+      { group: 'Remained', source: 'Medium 2018', target: 'Medium 2019', value: 12712 },
+      { group: 'Decreased', source: 'Medium 2018', target: 'Low 2019', value: 3367 },
+      { group: 'Increased', source: 'Low 2018', target: 'High 2019', value: 68 },
+      { group: 'Increased', source: 'Low 2018', target: 'Medium 2019', value: 8133 },
+      { group: 'Remained', source: 'Low 2018', target: 'Low 2019', value: 6164 },
+      { group: 'New', source: 'New 2018', target: 'High 2019', value: 3148 },
+      { group: 'New', source: 'New 2018', target: 'Medium 2019', value: 7279 },
+      { group: 'New', source: 'New 2018', target: 'Low 2019', value: 3684 },
+      { group: 'Increased', source: 'Low 2019', target: 'High 2020', value: 3148 },
+      { group: 'Decreased', source: 'High 2019', target: 'Medium 2020', value: 1279 },
+      { group: 'Decreased', source: 'Medium 2019', target: 'Low 2020', value: 3684 },
+      { group: 'Decreased', source: 'Medium 2019', target: 'High 2020', value: 2684 }
+    ]
+  ];
+  dataStorage3: any = [
+    this.linkStartData,
+    [
+      { group: 'Remained', source: 'High 2018', target: 'High 2019', value: 3010 },
+      { group: 'Decreased', source: 'High 2018', target: 'Medium 2019', value: 2754 },
+      { group: 'Decreased', source: 'High 2018', target: 'Low 2019', value: 2812 },
+      { group: 'Increased', source: 'Medium 2018', target: 'High 2019', value: 909 },
+      { group: 'Remained', source: 'Medium 2018', target: 'Medium 2019', value: 12712 },
+      { group: 'Decreased', source: 'Medium 2018', target: 'Low 2019', value: 3367 },
+      { group: 'Increased', source: 'Low 2018', target: 'High 2019', value: 68 },
+      { group: 'Increased', source: 'Low 2018', target: 'Medium 2019', value: 8133 },
+      { group: 'Remained', source: 'Low 2018', target: 'Low 2019', value: 6164 },
+      { group: 'New', source: 'New 2018', target: 'High 2019', value: 3148 },
+      { group: 'New', source: 'New 2018', target: 'Medium 2019', value: 7279 },
+      { group: 'New', source: 'New 2018', target: 'Low 2019', value: 3684 },
+      { group: 'Increased', source: 'Low 2019', target: 'new', value: 3148 },
+      { group: 'Decreased', source: 'High 2019', target: 'new', value: 1279 },
+      { group: 'Decreased', source: 'Medium 2019', target: 'new', value: 3684 },
+      { group: 'Decreased', source: 'Medium 2019', target: 'new', value: 2684 },
+      { group: 'Increased', source: 'new', target: 'High 2020', value: 3148 },
+      { group: 'Decreased', source: 'new', target: 'Medium 2020', value: 1279 },
+      { group: 'Decreased', source: 'new', target: 'Low 2020', value: 3684 },
+      { group: 'Decreased', source: 'new', target: 'High 2020', value: 2684 }
+    ],
+    this.linkStartData,
+    [
+      { group: 'Decreased', source: 'High 2016', target: 'Low 2017', value: 1234 },
+      { group: 'Remained', source: 'Medium 2016', target: 'Medium 2017', value: 2010 },
+      { group: 'Decreased', source: 'High 2017', target: 'Low 2018', value: 1234 },
+      { group: 'Remained', source: 'Medium 2017', target: 'Medium 2018', value: 2010 },
+      { group: 'Increased', source: 'Low 2017', target: 'Medium 2018', value: 1234 },
+      { group: 'Decreased', source: 'High 2017', target: 'Medium 2018', value: 3010 },
+      { group: 'Remained', source: 'High 2018', target: 'High 2019', value: 3010 },
+      { group: 'Decreased', source: 'High 2018', target: 'Medium 2019', value: 2754 },
+      { group: 'Decreased', source: 'High 2018', target: 'Low 2019', value: 2812 },
+      { group: 'Increased', source: 'Medium 2018', target: 'High 2019', value: 909 },
+      { group: 'Remained', source: 'Medium 2018', target: 'Medium 2019', value: 12712 },
+      { group: 'Decreased', source: 'Medium 2018', target: 'Low 2019', value: 3367 },
+      { group: 'Increased', source: 'Low 2018', target: 'High 2019', value: 68 },
+      { group: 'Increased', source: 'Low 2018', target: 'Medium 2019', value: 8133 },
+      { group: 'Remained', source: 'Low 2018', target: 'Low 2019', value: 6164 },
+      { group: 'New', source: 'New 2018', target: 'High 2019', value: 3148 },
+      { group: 'New', source: 'New 2018', target: 'Medium 2019', value: 7279 },
+      { group: 'New', source: 'New 2018', target: 'Low 2019', value: 3684 }
+    ],
+    [
+      { group: 'Decreased', source: 'High 2017', target: 'Low 2018', value: 1234 },
+      { group: 'Remained', source: 'Medium 2017', target: 'Medium 2018', value: 2010 },
+      { group: 'Increased', source: 'Low 2017', target: 'Medium 2018', value: 1234 },
+      { group: 'Decreased', source: 'High 2017', target: 'Medium 2018', value: 3010 },
+      { group: 'Remained', source: 'High 2018', target: 'High 2019', value: 3010 },
+      { group: 'Decreased', source: 'High 2018', target: 'Medium 2019', value: 2754 },
+      { group: 'Decreased', source: 'High 2018', target: 'Low 2019', value: 2812 },
+      { group: 'Increased', source: 'Medium 2018', target: 'High 2019', value: 909 },
+      { group: 'Remained', source: 'Medium 2018', target: 'Medium 2019', value: 12712 },
+      { group: 'Decreased', source: 'Medium 2018', target: 'Low 2019', value: 3367 },
+      { group: 'Increased', source: 'Low 2018', target: 'High 2019', value: 68 },
+      { group: 'Increased', source: 'Low 2018', target: 'Medium 2019', value: 8133 },
+      { group: 'Remained', source: 'Low 2018', target: 'Low 2019', value: 6164 },
+      { group: 'New', source: 'New 2018', target: 'High 2019', value: 3148 },
+      { group: 'New', source: 'New 2018', target: 'Medium 2019', value: 7279 },
+      { group: 'New', source: 'New 2018', target: 'Low 2019', value: 3684 }
+    ]
+  ];
+  // nodeStartData: any = [
+  //   { did: 'High 2018' },
+  //   { did: 'Medium 2018' },
+  //   { did: 'Low 2018' },
+  //   { did: 'New 2018' },
+  //   { did: 'High 2019' },
+  //   { did: 'Medium 2019' },
+  //   { did: 'Low 2019' }
+  // ];
+  // nodeDataStorage: any = [
+  //   this.nodeStartData,
+  //   // this.nodeStartData,
+  //   // this.nodeStartData,
+  //   // this.nodeStartData,
+  //   // [
+  //   //   { did: 'High 2018' },
+  //   //   { did: 'Medium 2018' },
+  //   //   { did: 'Low 2018' },
+  //   //   { did: 'New 2018' },
+  //   //   { did: 'High 2019' },
+  //   //   { did: 'Low 2019' }
+  //   // ],
+  //   // this.nodeStartData,
+  //   // new column on far right
+  //   [
+  //     { did: 'High 2018' },
+  //     { did: 'Medium 2018' },
+  //     { did: 'Low 2018' },
+  //     { did: 'New 2018' },
+  //     { did: 'High 2019' },
+  //     { did: 'Medium 2019' },
+  //     { did: 'Low 2019' },
+  //     { did: 'High 2020' },
+  //     { did: 'Medium 2020' },
+  //     { did: 'Low 2020' },
+  //   ],
+  //   [
+  //     { did: 'High 2018' },
+  //     { did: 'Medium 2018' },
+  //     { did: 'Low 2018' },
+  //     { did: 'New 2018' },
+  //     { did: 'High 2019' },
+  //     { did: 'Medium 2019' },
+  //     { did: 'Low 2019' },
+  //     { did: 'Nothing' },
+  //     { did: 'High 2020' },
+  //     { did: 'Medium 2020' },
+  //     { did: 'Low 2020' },
+  //   ],
+  //   [
+  //     { did: 'High 2018' },
+  //     { did: 'Medium 2018' },
+  //     { did: 'Low 2018' },
+  //     { did: 'New 2018' },
+  //     { did: 'High 2019' },
+  //     { did: 'Medium 2019' },
+  //     { did: 'Low 2019' },
+  //     { did: 'High 2020' },
+  //     { did: 'Medium 2020' },
+  //     { did: 'Low 2020' },
+  //   ],
+  //   this.nodeStartData
+  // ];
 
   @Element()
   appEl: HTMLElement;
 
   componentWillLoad() {
-    this.data = this.dataStorage[this.stateTrigger];
-    this.nodes = this.test;
+    this.data1 = this.dataStorage1[this.stateTrigger];
+    this.data2 = this.dataStorage2[this.stateTrigger];
+    this.data3 = this.dataStorage3[this.stateTrigger];
+    // this.nodes = this.nodeDataStorage[this.stateTrigger];
   }
   onClickFunc(ev) {
     const d = ev.detail;
@@ -168,7 +460,7 @@ export class AppAlluvialDiagram {
         newClicks.push(d);
       }
       this.clickElement = newClicks;
-      console.log('newClicks', this.clickElement);
+      // console.log('newClicks', this.clickElement);
     }
   }
   onHoverFunc(d) {
@@ -201,14 +493,16 @@ export class AppAlluvialDiagram {
           : "The chart's has updated again, but no change to the data was made.";
     }
   }
-  changeData() {
+  changeData(act) {
     setTimeout(() => {
       if (this.uniqueID !== 'POTENTIALLY_BUGGY_ID_CHANGE') {
         this.uniqueID = 'POTENTIALLY_BUGGY_ID_CHANGE';
       }
     }, 10000);
-    this.stateTrigger = this.stateTrigger < this.dataStorage.length - 1 ? this.stateTrigger + 1 : 0;
-    this.data = this.dataStorage[this.stateTrigger];
+    const selectedActData = this['dataStorage' + act];
+    this.stateTrigger = this.stateTrigger < selectedActData.length - 1 ? this.stateTrigger + 1 : 0;
+    this['data' + act] = selectedActData[this.stateTrigger];
+    // this.nodes = this.nodeDataStorage[this.stateTrigger];
   }
 
   changeShowLinks() {
@@ -229,7 +523,6 @@ export class AppAlluvialDiagram {
       this.visibleLinkConfig = this.visibleLinkConfig ? false : true;
       this.linkVisibilityState = this.visibleLinkConfig;
       this.fillNodeConfig = this.fillNodeConfig ? false : true;
-      this.changeAnnotations(this.visibleLinkConfig);
     }
 
     if (band) {
@@ -244,663 +537,31 @@ export class AppAlluvialDiagram {
     if (!this.linkVisibilityState) {
       if (this.fillState === 'increased') {
         this.colorsArray = ['#E4E4E4', '#E4E4E4', '#E4E4E4', '#E4E4E4', '#E4E4E4', '#0051dc', '#0051dc'];
-        this.clickElement = [{ group: 'Increased', cat: 'Medium 2018', target: 'High 2019', vale: 909 }];
+        this.clickElement = [{ group: 'Increased', source: 'Medium 2018', target: 'High 2019', value: 909 }];
       } else if (this.fillState === 'decreased') {
         this.colorsArray = ['#E4E4E4', '#E4E4E4', '#E4E4E4', '#E4E4E4', '#D90000', '#E4E4E4', '#E4E4E4'];
-        this.clickElement = [{ group: 'Decreased', cat: 'High 2018', target: 'Medium 2019', vale: 2754 }];
+        this.clickElement = [{ group: 'Decreased', source: 'High 2018', target: 'Medium 2019', value: 2754 }];
       } else if (this.fillState === 'remained') {
         this.colorsArray = ['#E4E4E4', '#E4E4E4', '#E4E4E4', '#E4E4E4', '#E4E4E4', '#E4E4E4', '#E4E4E4'];
-        this.clickElement = [{ group: 'Remained', cat: 'High 2018', target: 'High 2019', vale: 3010 }];
+        this.clickElement = [{ group: 'Remained', source: 'High 2018', target: 'High 2019', value: 3010 }];
       } else if (this.fillState === 'new') {
         this.colorsArray = ['#E4E4E4', '#E4E4E4', '#E4E4E4', '#78029D', '#E4E4E4', '#E4E4E4', '#E4E4E4'];
-        this.clickElement = [{ group: 'New', cat: 'New Group 2018', target: 'Low 2019', vale: 3684 }];
+        this.clickElement = [{ group: 'New', source: 'New 2018', target: 'Low 2019', value: 3684 }];
       }
     } else if (this.linkVisibilityState) {
       if (this.fillState === 'increased') {
         this.colorsArray = ['#E4E4E4', '#E4E4E4', '#0051dc', '#E4E4E4', '#E4E4E4', '#E4E4E4', '#E4E4E4'];
-        this.clickElement = [{ group: 'Increased', cat: 'Medium 2018', target: 'High 2019', vale: 909 }];
-        this.annotations = [
-          {
-            note: {
-              label: '2018',
-              bgPadding: 0,
-              align: 'middle',
-              wrap: 210
-            },
-            accessibilityDescription: '2018 High Category total is 5,596',
-            x: '8%',
-            y: '-25%',
-            // dy: '-1%',
-            color: '#000000'
-          },
-          {
-            note: {
-              label: '2019',
-              bgPadding: 0,
-              align: 'middle',
-              wrap: 210
-            },
-            accessibilityDescription: '2018 High Category total is 5,596',
-            x: '229%',
-            y: '-25%',
-            // dy: '-1%',
-            color: '#000000'
-          },
-          {
-            note: {
-              title: 'High:',
-              label: '0 Increased',
-              bgPadding: 0,
-              align: 'right',
-              wrap: 210
-            },
-            accessibilityDescription: '2018 High Category total is 8,606',
-            data: { did: 'High 2018' },
-            positionType: 'node',
-            // dy: '-1%',
-            color: '#000000'
-          },
-          {
-            note: {
-              title: 'Medium: 909',
-              label: 'Increased (5.3%)',
-              bgPadding: 0,
-              align: 'right',
-              wrap: 210
-            },
-            accessibilityDescription: '2018 Medium Category total is 16,988',
-            data: { did: 'Medium 2018' },
-            positionType: 'node',
-            // dy: '-1%',
-            color: '#000000'
-          },
-          {
-            note: {
-              title: 'Low: 1,201',
-              label: 'Increased (16.3%)',
-              bgPadding: 0,
-              align: 'right',
-              wrap: 210
-            },
-            accessibilityDescription: '2018 Low Category total is 7,365',
-            data: { did: 'Low 2018' },
-            positionType: 'node',
-            // dy: '-1%',
-            color: '#000000'
-          },
-          {
-            note: {
-              title: 'New Group:',
-              label: '0 Increased',
-              bgPadding: 0,
-              align: 'right',
-              wrap: 210
-            },
-            accessibilityDescription: '2018 New Group Category total is 14,081',
-            data: { did: 'New Group 2018' },
-            positionType: 'node',
-            // dy: '-1%',
-            color: '#000000'
-          },
-          {
-            note: {
-              label: '909 (Med to High)',
-              bgPadding: 0,
-              // title: 'High: 8,606',
-              align: 'left',
-              wrap: 210
-            },
-            accessibilityDescription: '2018 High Category total is 8,606',
-            data: { group: 'Increased', cat: 'Medium 2018', target: 'High 2019', vale: 909 },
-            positionType: 'target',
-            // dy: '-1%',
-            color: '#000000'
-          },
-          {
-            note: {
-              label: '68 (Low to High)',
-              bgPadding: 0,
-              // title: 'High: 8,606',
-              align: 'left',
-              wrap: 210
-            },
-            accessibilityDescription: '2018 High Category total is 8,606',
-            data: { group: 'Increased', cat: 'Low 2018', target: 'High 2019', vale: 68 },
-            positionType: 'target',
-            // dy: '-1%',
-            color: '#000000'
-          },
-          {
-            note: {
-              label: '1,133 (Low to Med)',
-              bgPadding: 0,
-              // title: 'High: 8,606',
-              align: 'left',
-              wrap: 210
-            },
-            accessibilityDescription: '2018 High Category total is 8,606',
-            data: { group: 'Increased', cat: 'Low 2018', target: 'Medium 2019', vale: 1133 },
-            positionType: 'target',
-            // dy: '-1%',
-            color: '#000000'
-          }
-        ];
+        this.clickElement = [{ group: 'Increased', source: 'Medium 2018', target: 'High 2019', value: 909 }];
       } else if (this.fillState === 'decreased') {
         this.colorsArray = ['#E4E4E4', '#D90000', '#E4E4E4', '#E4E4E4', '#E4E4E4', '#E4E4E4', '#E4E4E4'];
-        this.clickElement = [{ group: 'Decreased', cat: 'High 2018', target: 'Medium 2019', vale: 2754 }];
-        this.annotations = [
-          {
-            note: {
-              label: '2018',
-              bgPadding: 0,
-              align: 'middle',
-              wrap: 210
-            },
-            accessibilityDescription: '2018 High Category total is 5,596',
-            x: '8%',
-            y: '-25%',
-            // dy: '-1%',
-            color: '#000000'
-          },
-          {
-            note: {
-              label: '2019',
-              bgPadding: 0,
-              align: 'middle',
-              wrap: 210
-            },
-            accessibilityDescription: '2018 High Category total is 5,596',
-            x: '229%',
-            y: '-25%',
-            // dy: '-1%',
-            color: '#000000'
-          },
-          {
-            note: {
-              title: 'High: 5,596',
-              label: 'Decreased (65.0%)',
-              bgPadding: 0,
-              align: 'right',
-              wrap: 210
-            },
-            accessibilityDescription: '2018 High Category total is 5,596',
-            data: { did: 'High 2018' },
-            positionType: 'node',
-            // dy: '-1%',
-            color: '#000000'
-          },
-          {
-            note: {
-              title: 'Medium: 3,367',
-              label: 'Decreased (19.8%)',
-              bgPadding: 0,
-              align: 'right',
-              wrap: 210
-            },
-            accessibilityDescription: '2018 Medium Category total is 3,367',
-            data: { did: 'Medium 2018' },
-            positionType: 'node',
-            // dy: '-1%',
-            color: '#000000'
-          },
-          {
-            note: {
-              title: 'Low:',
-              label: '0 Decreased',
-              bgPadding: 0,
-              align: 'right',
-              wrap: 210
-            },
-            accessibilityDescription: '2018 Low Category total is 7,365',
-            data: { did: 'Low 2018' },
-            positionType: 'node',
-            // dy: '-1%',
-            color: '#000000'
-          },
-          {
-            note: {
-              title: 'New Group:',
-              label: '0 Decreased',
-              bgPadding: 0,
-              align: 'right',
-              wrap: 210
-            },
-            accessibilityDescription: '2018 New Group Category total is 14,081',
-            data: { did: 'New Group 2018' },
-            positionType: 'node',
-            // dy: '-1%',
-            color: '#000000'
-          },
-          {
-            note: {
-              label: '2,754 (High to Med)',
-              bgPadding: 0,
-              // title: 'High: 8,606',
-              align: 'left',
-              wrap: 210
-            },
-            accessibilityDescription: '2018 High Category total is 8,606',
-            data: { group: 'Decreased', cat: 'High 2018', target: 'Medium 2019', vale: 2754 },
-            positionType: 'target',
-            // dy: '-1%',
-            color: '#000000'
-          },
-          {
-            note: {
-              label: '2,812 (High to Low)',
-              bgPadding: 0,
-              // title: 'High: 8,606',
-              align: 'left',
-              wrap: 210
-            },
-            accessibilityDescription: '2018 High Category total is 8,606',
-            data: { group: 'Decreased', cat: 'High 2018', target: 'Low 2019', vale: 2812 },
-            positionType: 'target',
-            // dy: '-1%',
-            color: '#000000'
-          },
-          {
-            note: {
-              label: '3,367 (Med to Low)',
-              bgPadding: 0,
-              // title: 'High: 8,606',
-              align: 'left',
-              wrap: 210
-            },
-            accessibilityDescription: '2018 High Category total is 8,606',
-            data: { group: 'Decreased', cat: 'Medium 2018', target: 'Low 2019', vale: 3367 },
-            positionType: 'target',
-            // dy: '-1%',
-            color: '#000000'
-          }
-        ];
+        this.clickElement = [{ group: 'Decreased', source: 'High 2018', target: 'Medium 2019', value: 2754 }];
       } else if (this.fillState === 'remained') {
         this.colorsArray = ['#767676', '#E4E4E4', '#E4E4E4', '#E4E4E4', '#E4E4E4', '#E4E4E4', '#E4E4E4'];
-        this.clickElement = [{ group: 'Remained', cat: 'High 2018', target: 'High 2019', vale: 3010 }];
-        this.annotations = [
-          {
-            note: {
-              label: '2018',
-              bgPadding: 0,
-              align: 'middle',
-              wrap: 210
-            },
-            accessibilityDescription: '2018 High Category total is 5,596',
-            x: '8%',
-            y: '-25%',
-            // dy: '-1%',
-            color: '#000000'
-          },
-          {
-            note: {
-              label: '2019',
-              bgPadding: 0,
-              align: 'middle',
-              wrap: 210
-            },
-            accessibilityDescription: '2018 High Category total is 5,596',
-            x: '229%',
-            y: '-25%',
-            // dy: '-1%',
-            color: '#000000'
-          },
-          {
-            note: {
-              title: 'High: 3,010',
-              label: 'Remained (35.0%)',
-              bgPadding: 0,
-              align: 'right',
-              wrap: 210
-            },
-            accessibilityDescription: '2018 High Category total is 5,596',
-            data: { did: 'High 2018' },
-            positionType: 'node',
-            // dy: '-1%',
-            color: '#000000'
-          },
-          {
-            note: {
-              title: 'Medium: 12,712',
-              label: 'Remained (74.9%)',
-              bgPadding: 0,
-              align: 'right',
-              wrap: 210
-            },
-            accessibilityDescription: '2018 Medium Category total is 3,367',
-            data: { did: 'Medium 2018' },
-            positionType: 'node',
-            // dy: '-1%',
-            color: '#000000'
-          },
-          {
-            note: {
-              title: 'Low: 6,164',
-              label: 'Remained (83.7%)',
-              bgPadding: 0,
-              align: 'right',
-              wrap: 210
-            },
-            accessibilityDescription: '2018 Low Category total is 7,365',
-            data: { did: 'Low 2018' },
-            positionType: 'node',
-            // dy: '-1%',
-            color: '#000000'
-          },
-          {
-            note: {
-              title: 'New Group:',
-              label: '0 Remained',
-              bgPadding: 0,
-              align: 'right',
-              wrap: 210
-            },
-            accessibilityDescription: '2018 New Group Category total is 14,081',
-            data: { did: 'New Group 2018' },
-            positionType: 'node',
-            // dy: '-1%',
-            color: '#000000'
-          },
-          {
-            note: {
-              label: '3,010(High to High)',
-              bgPadding: 0,
-              // title: 'High: 8,606',
-              align: 'left',
-              wrap: 210
-            },
-            accessibilityDescription: '2018 High Category total is 8,606',
-            data: { group: 'Remained', cat: 'High 2018', target: 'High 2019', vale: 3010 },
-            positionType: 'target',
-            // dy: '-1%',
-            color: '#000000'
-          },
-          {
-            note: {
-              label: '12,712 (Med to Med)',
-              bgPadding: 0,
-              // title: 'High: 8,606',
-              align: 'left',
-              wrap: 210
-            },
-            accessibilityDescription: '2018 High Category total is 8,606',
-            data: { group: 'Remained', cat: 'Medium 2018', target: 'Medium 2019', vale: 12712 },
-            positionType: 'target',
-            // dy: '-1%',
-            color: '#000000'
-          },
-          {
-            note: {
-              label: '6,164 (Low to Low)',
-              bgPadding: 0,
-              // title: 'High: 8,606',
-              align: 'left',
-              wrap: 210
-            },
-            accessibilityDescription: '2018 High Category total is 8,606',
-            data: { group: 'Remained', cat: 'Low 2018', target: 'Low 2019', vale: 6164 },
-            positionType: 'target',
-            // dy: '-1%',
-            color: '#000000'
-          }
-        ];
+        this.clickElement = [{ group: 'Remained', source: 'High 2018', target: 'High 2019', value: 3010 }];
       } else if (this.fillState === 'new') {
         this.colorsArray = ['#E4E4E4', '#E4E4E4', '#E4E4E4', '#78029D', '#E4E4E4', '#E4E4E4', '#E4E4E4'];
-        this.clickElement = [{ group: 'New', cat: 'New Group 2018', target: 'Low 2019', vale: 3684 }];
-        this.annotations = [
-          {
-            note: {
-              label: '2018',
-              bgPadding: 0,
-              align: 'middle',
-              wrap: 210
-            },
-            accessibilityDescription: '2018 High Category total is 5,596',
-            x: '8%',
-            y: '-25%',
-            // dy: '-1%',
-            color: '#000000'
-          },
-          {
-            note: {
-              label: '2019',
-              bgPadding: 0,
-              align: 'middle',
-              wrap: 210
-            },
-            accessibilityDescription: '2018 High Category total is 5,596',
-            x: '229%',
-            y: '-25%',
-            // dy: '-1%',
-            color: '#000000'
-          },
-          {
-            note: {
-              title: 'High:',
-              label: '0 New',
-              bgPadding: 0,
-              align: 'right',
-              wrap: 210
-            },
-            accessibilityDescription: '2018 High Category total is 5,596',
-            data: { did: 'High 2018' },
-            positionType: 'node',
-            // dy: '-1%',
-            color: '#000000'
-          },
-          {
-            note: {
-              title: 'Medium:',
-              label: '0 New',
-              bgPadding: 0,
-              align: 'right',
-              wrap: 210
-            },
-            accessibilityDescription: '2018 Medium Category total is 3,367',
-            data: { did: 'Medium 2018' },
-            positionType: 'node',
-            // dy: '-1%',
-            color: '#000000'
-          },
-          {
-            note: {
-              title: 'Low:',
-              label: '0 New',
-              bgPadding: 0,
-              align: 'right',
-              wrap: 210
-            },
-            accessibilityDescription: '2018 Low Category total is 7,365',
-            data: { did: 'Low 2018' },
-            positionType: 'node',
-            // dy: '-1%',
-            color: '#000000'
-          },
-          {
-            note: {
-              title: 'New Group: 14,081',
-              label: 'New (100%)',
-              bgPadding: 0,
-              align: 'right',
-              wrap: 210
-            },
-            accessibilityDescription: '2018 New Group Category total is 14,081',
-            data: { did: 'New Group 2018' },
-            positionType: 'node',
-            // dy: '-1%',
-            color: '#000000'
-          },
-          {
-            note: {
-              label: '3,148 (New to High)',
-              bgPadding: 0,
-              align: 'left',
-              wrap: 210
-            },
-            accessibilityDescription: '2018 High Category total is 8,606',
-            data: { group: 'New', cat: 'New Group 2018', target: 'High 2019', vale: 3148 },
-            positionType: 'target',
-            // dy: '-1%',
-            color: '#000000'
-          },
-          {
-            note: {
-              label: '7,279 (New to Med)',
-              bgPadding: 0,
-              align: 'left',
-              wrap: 210
-            },
-            accessibilityDescription: '2018 High Category total is 8,606',
-            data: { group: 'New', cat: 'New Group 2018', target: 'Medium 2019', vale: 7279 },
-            positionType: 'target',
-            // dy: '-1%',
-            color: '#000000'
-          },
-          {
-            note: {
-              label: '3,684 (New to Low)',
-              bgPadding: 0,
-              align: 'left',
-              wrap: 210
-            },
-            accessibilityDescription: '2018 High Category total is 8,606',
-            data: { group: 'New', cat: 'New Group 2018', target: 'Low 2019', vale: 3684 },
-            positionType: 'target',
-            // dy: '-1%',
-            color: '#000000'
-          }
-        ];
+        this.clickElement = [{ group: 'New', source: 'New 2018', target: 'Low 2019', value: 3684 }];
       }
-    }
-  }
-
-  changeAnnotations(toggleLinks) {
-    if (!toggleLinks) {
-      this.annotations = [
-        {
-          note: {
-            label: '2018',
-            bgPadding: 0,
-            align: 'middle',
-            wrap: 210
-          },
-          accessibilityDescription: '2018 High Category total is 5,596',
-          x: '102%',
-          y: '-25%',
-          // dy: '-1%',
-          color: '#000000'
-        },
-        {
-          note: {
-            label: '2019',
-            bgPadding: 0,
-            align: 'middle',
-            wrap: 210
-          },
-          accessibilityDescription: '2018 High Category total is 5,596',
-          x: '152%',
-          y: '-25%',
-          // dy: '-1%',
-          color: '#000000'
-        },
-        {
-          note: {
-            label: 'High: 8,606',
-            bgPadding: 0,
-            // title: 'High: 8,606',
-            align: 'right',
-            wrap: 210
-          },
-          accessibilityDescription: '2018 High Category total is 8,606',
-          data: { did: 'High 2018' },
-          positionType: 'node',
-          // dy: '-1%',
-          color: '#000000'
-        },
-        {
-          note: {
-            label: 'Medium: 16,988',
-            bgPadding: 0,
-            // title: 'High: 8,606',
-            align: 'right',
-            wrap: 210
-          },
-          accessibilityDescription: '2018 Medium Category total is 16,988',
-          data: { did: 'Medium 2018' },
-          positionType: 'node',
-          // dy: '-1%',
-          color: '#000000'
-        },
-        {
-          note: {
-            label: 'Low: 7,365',
-            bgPadding: 0,
-            // title: 'High: 8,606',
-            align: 'right',
-            wrap: 210
-          },
-          accessibilityDescription: '2018 Low Category total is 7,365',
-          data: { did: 'Low 2018' },
-          positionType: 'node',
-          // dy: '-1%',
-          color: '#000000'
-        },
-        {
-          note: {
-            label: 'New Group: 14,081',
-            bgPadding: 0,
-            // title: 'High: 8,606',
-            align: 'right',
-            wrap: 210
-          },
-          accessibilityDescription: '2018 New Group Category total is 14,081',
-          data: { did: 'New Group 2018' },
-          positionType: 'node',
-          // dy: '-1%',
-          color: '#000000'
-        },
-        {
-          note: {
-            label: 'High: 7,135',
-            bgPadding: 0,
-            // title: 'High: 8,606',
-            align: 'left',
-            wrap: 210
-          },
-          accessibilityDescription: '2019 High Category total is 7,135',
-          data: { did: 'High 2019' },
-          positionType: 'node',
-          // dy: '-1%',
-          color: '#000000'
-        },
-        {
-          note: {
-            label: 'Medium: 23,878',
-            bgPadding: 0,
-            // title: 'High: 8,606',
-            align: 'left',
-            wrap: 210
-          },
-          accessibilityDescription: '2019 Medium Category total is 23,878',
-          data: { did: 'Medium 2019' },
-          positionType: 'node',
-          // dy: '-1%',
-          color: '#000000'
-        },
-        {
-          note: {
-            label: 'Low: 16,027',
-            bgPadding: 0,
-            // title: 'High: 8,606',
-            align: 'left',
-            wrap: 210
-          },
-          accessibilityDescription: '2019 Low Category total is 16,027',
-          data: { did: 'Low 2019' },
-          positionType: 'node',
-          // dy: '-1%',
-          color: '#000000'
-        }
-      ];
     }
   }
 
@@ -926,7 +587,7 @@ export class AppAlluvialDiagram {
       this.dataLabel = {
         visible: true, // !this.dataLabel.visible,
         placement: 'outside',
-        labelAccessor: 'did',
+        labelAccessor: 'value',
         format: '0.0[a]'
       };
 
@@ -940,7 +601,7 @@ export class AppAlluvialDiagram {
       this.dataLabel = {
         visible: true, // !this.dataLabel.visible,
         placement: 'inside',
-        labelAccessor: 'did',
+        labelAccessor: 'value',
         format: '0.0[a]'
       };
 
@@ -959,6 +620,7 @@ export class AppAlluvialDiagram {
   changeInteraction() {
     // this.valueAccessor !== 'value' ? (this.valueAccessor = 'value') : (this.valueAccessor = 'otherValue');
     this.interactionState = this.interactionState[0] !== ['did'] ? ['did'] : ['source'];
+    console.log(this.interactionState);
   }
 
   changeValueAccessor() {
@@ -969,6 +631,10 @@ export class AppAlluvialDiagram {
   changeGroupAccessor() {
     // this.valueAccessor !== 'value' ? (this.valueAccessor = 'value') : (this.valueAccessor = 'otherValue');
     this.groupAccessor = this.groupAccessor !== 'region' ? 'region' : null;
+  }
+
+  changeInteractionKey() {
+    this.interactionState = this.interactionState[0] === ['group'] ? ['source'] : ['group'];
   }
 
   toggleTextures() {
@@ -1008,28 +674,15 @@ export class AppAlluvialDiagram {
     return (
       <div>
         {/* <div role="alert" aria-live="polite"> */}
+        <p>{this.chartUpdates}</p>
         <div>
-          <p>{this.chartUpdates}</p>
-          {/* <button
-            onClick={() => {
-              this.changeLinkFillMode();
-            }}
-          >
-            toggle link fill type btw 'group' and 'source'
-          </button> */}
+          <h4>I. Basic Links</h4>
           <button
             onClick={() => {
-              this.changeLabels();
+              this.changeData(1);
             }}
           >
-            change labels
-          </button>
-          <button
-            onClick={() => {
-              this.changeShowLinks();
-            }}
-          >
-            toggle link visibility
+            change data
           </button>
           <button
             onClick={() => {
@@ -1038,97 +691,202 @@ export class AppAlluvialDiagram {
           >
             toggle CompareNodes
           </button>
+          <button
+            onClick={() => {
+              this.changeLabels();
+            }}
+          >
+            change label placement
+          </button>
+          <button
+            onClick={() => {
+              this.changeShowLinks();
+            }}
+          >
+            hide links
+          </button>
+          <button
+            onClick={() => {
+              this.changeInteractionKey();
+            }}
+          >
+            TEST change interaction key
+          </button>
+          <alluvial-diagram
+            linkData={this.data1}
+            // nodeData={this.nodes}
+            width={500}
+            height={450}
+            padding={this.padding}
+            colors={['#E4E4E4', '#E4E4E4', '#E4E4E4', '#D90000']}
+            sourceAccessor={'source'}
+            targetAccessor={'target'}
+            valueAccessor={'value'}
+            groupAccessor={'group'}
+            linkConfig={{
+              ...{
+                visible: this.visibleLinkConfig,
+                // fillMode: 'source',
+                fillMode: 'group',
+                opacity: 0.6
+              }
+            }}
+            nodeConfig={{
+              ...{
+                width: 15,
+                alignment: 'center',
+                padding: 10,
+                compare: this.compareNodeConfig,
+                fill: this.fillNodeConfig
+              }
+            }}
+            nodeIDAccessor={'did'}
+            mainTitle={''}
+            subTitle={''}
+            dataLabel={this.dataLabel}
+            // interactionKeys={this.interactionState}
+            interactionKeys={['group']}
+            hoverOpacity={0.2}
+            showTooltip={false}
+            hoverHighlight={this.hoverElement}
+            clickHighlight={this.clickElement}
+            onClickFunc={d => this.onClickFunc(d)}
+            onHoverFunc={d => this.onHoverFunc(d)}
+            onMouseOutFunc={() => this.onMouseOut()}
+            // clickStyle={this.clickStyle}
+            // animationConfig={this.animations}
+          />
         </div>
-        <br />
         <div>
+          <h4>II. New Columns on Edge</h4>
           <button
             onClick={() => {
-              this.changeLinkColor('increased', false);
+              this.changeData(2);
             }}
           >
-            increased
+            change data
           </button>
           <button
             onClick={() => {
-              this.changeLinkColor('decreased', false);
+              this.changeCompareNodes();
             }}
           >
-            decreased
+            toggle CompareNodes
           </button>
           <button
             onClick={() => {
-              this.changeLinkColor('remained', false);
+              this.changeLabels();
             }}
           >
-            remained
+            change label placement
           </button>
-          <button
-            onClick={() => {
-              this.changeLinkColor('new', false);
+          <alluvial-diagram
+            linkData={this.data2}
+            // nodeData={this.nodes}
+            width={500}
+            height={450}
+            padding={this.padding}
+            colors={['#717171']}
+            sourceAccessor={'source'}
+            targetAccessor={'target'}
+            valueAccessor={'value'}
+            groupAccessor={'group'}
+            linkConfig={{
+              ...{
+                visible: this.visibleLinkConfig,
+                // fillMode: 'source',
+                fillMode: 'none',
+                opacity: 0.5
+              }
             }}
-          >
-            new
-          </button>
-          <button
-            onClick={() => {
-              this.changeLinkColor('', true);
+            nodeConfig={{
+              ...{
+                width: 15,
+                alignment: 'center',
+                padding: 10,
+                compare: this.compareNodeConfig,
+                fill: this.fillNodeConfig
+              }
             }}
-          >
-            view flows?
-          </button>
+            nodeIDAccessor={'did'}
+            mainTitle={''}
+            subTitle={''}
+            dataLabel={this.dataLabel}
+            interactionKeys={this.interactionState}
+            hoverOpacity={0.2}
+            showTooltip={false}
+            hoverHighlight={this.hoverElement}
+            clickHighlight={this.clickElement}
+            onClickFunc={d => this.onClickFunc(d)}
+            onHoverFunc={d => this.onHoverFunc(d)}
+            onMouseOutFunc={() => this.onMouseOut()}
+          />
         </div>
-        <alluvial-diagram
-          linkData={this.data}
-          nodeData={this.nodes}
-          width={500}
-          height={500}
-          padding={this.padding}
-          // colors={[
-          //   '#767676',
-          //   '#D90000',
-          //   '#0051dc',
-          //   '#78029D'
-          // ]}
-          colors={this.colorsArray}
-          colorPalette={'categorical'}
-          sourceAccessor={'cat'}
-          targetAccessor={'target'}
-          valueAccessor={'vale'}
-          groupAccessor={'group'}
-          // labelAccessor={'label'}
-          linkConfig={{
-            ...{
-              visible: this.visibleLinkConfig,
-              // fillMode: 'source',
-              fillMode: 'group',
-              opacity: 1
-            }
-          }}
-          nodeConfig={{
-            ...{
-              width: 15,
-              alignment: 'center',
-              padding: 10,
-              compare: this.compareNodeConfig,
-              fill: this.fillNodeConfig
-            }
-          }}
-          nodeIDAccessor={'did'}
-          mainTitle={''}
-          subTitle={''}
-          dataLabel={this.dataLabel}
-          interactionKeys={['group']}
-          // interactionKeys={['cat']}
-          hoverOpacity={0.2}
-          showTooltip={false}
-          annotations={this.annotations}
-          // tooltipLabel={this.tooltipLabel}
-          hoverHighlight={this.hoverElement}
-          clickHighlight={this.clickElement}
-          onClickFunc={d => this.onClickFunc(d)}
-          onHoverFunc={d => this.onHoverFunc(d)}
-          onMouseOutFunc={() => this.onMouseOut()}
-        />
+        <div>
+          <h4>III. New Node between Nodes</h4>
+          <button
+            onClick={() => {
+              this.changeData(3);
+            }}
+          >
+            change data
+          </button>
+          <button
+            onClick={() => {
+              this.changeCompareNodes();
+            }}
+          >
+            toggle CompareNodes
+          </button>
+          <button
+            onClick={() => {
+              this.changeLabels();
+            }}
+          >
+            change label placement
+          </button>
+          <alluvial-diagram
+            linkData={this.data3}
+            // nodeData={this.nodes}
+            width={500}
+            height={450}
+            padding={this.padding}
+            // colors={['#717171']}
+            sourceAccessor={'source'}
+            targetAccessor={'target'}
+            valueAccessor={'value'}
+            groupAccessor={'group'}
+            linkConfig={{
+              ...{
+                visible: this.visibleLinkConfig,
+                fillMode: 'source',
+                // fillMode: 'none',
+                opacity: 0.8
+              }
+            }}
+            nodeConfig={{
+              ...{
+                width: 15,
+                alignment: 'center',
+                padding: 10,
+                compare: this.compareNodeConfig,
+                fill: this.fillNodeConfig
+              }
+            }}
+            nodeIDAccessor={'did'}
+            mainTitle={''}
+            subTitle={''}
+            dataLabel={this.dataLabel}
+            interactionKeys={this.interactionState}
+            hoverOpacity={0.2}
+            showTooltip={false}
+            hoverHighlight={this.hoverElement}
+            clickHighlight={this.clickElement}
+            onClickFunc={d => this.onClickFunc(d)}
+            onHoverFunc={d => this.onHoverFunc(d)}
+            onMouseOutFunc={() => this.onMouseOut()}
+          />
+        </div>
       </div>
     );
   }

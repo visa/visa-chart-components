@@ -1,0 +1,20 @@
+/**
+ * Copyright (c) 2020, 2021 Visa, Inc.
+ *
+ * This source code is licensed under the MIT license
+ * https://github.com/visa/visa-chart-components/blob/master/LICENSE
+ *
+ **/
+.o-layout {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+
+  &--chart {
+    width: 100%;
+
+    .is--vertical & {
+      width: 90%;
+    }
+  }
+}

@@ -7,6 +7,7 @@
  **/
 import { Component, State, Element, h } from '@stencil/core';
 import '@visa/visa-charts-data-table';
+import '@visa/keyboard-instructions';
 
 @Component({
   tag: 'app-line-chart',
@@ -33,6 +34,41 @@ export class AppLineChart {
   @State() secondaryDataLabel: any = true;
   @State() secondarySeriesLabel: any = true;
   @State() unit: any = 'month';
+  @State() animations: any = { disabled: true };
+  @State() annotations: any = [
+    {
+      note: {
+        label: '2018',
+        bgPadding: 0,
+        align: 'middle',
+        wrap: 210
+      },
+      accessibilityDescription: '2018 High Spend band total is 5,596',
+      x: '8%',
+      y: '40%',
+      disable: ['connector', 'subject'],
+      // dy: '-1%',
+      color: '#000000',
+      className: 'testing1 testing2 testing3',
+      collisionHideOnly: true
+    },
+    {
+      note: {
+        label: 'oasijfoiajsf',
+        bgPadding: 0,
+        align: 'middle',
+        wrap: 210
+      },
+      accessibilityDescription: '2018 High Spend band total is 5,596',
+      x: '8%',
+      y: '40%',
+      disable: ['connector', 'subject'],
+      // dy: '-1%',
+      color: '#000000',
+      className: 'testing1 testing2 testing3',
+      collisionHideOnly: false
+    }
+  ];
   @State() tooltipLabel: any = {
     format: '',
     labelAccessor: [this.ordinalAccessor],
@@ -85,6 +121,10 @@ export class AppLineChart {
     keyboardNavConfig: { disabled: false }
   };
   @State() suppressEvents: boolean = false;
+  @State() theWorstDataEver: any;
+  smashIt: boolean = true;
+  seriesLimit: number = 10;
+  dataPoints: number = 24;
   hoverStyle: any = { color: '#d7d7d7', strokeWidth: 3 };
   clickStyle: any = { color: '#222222', strokeWidth: 4 };
   simpleColors: any = ['#FFC4C4', '#C4DAFF'];
@@ -92,6 +132,83 @@ export class AppLineChart {
   selectedColor: string = '#00CF81';
   hoveredColor: string = '#0068FF';
   colorIndexes: any = {};
+  breakTestData: any = [
+    {
+      ordinal: 'a',
+      value: null,
+      series: '1'
+    },
+    {
+      ordinal: 'a',
+      value: 1,
+      series: '1'
+    },
+    {
+      ordinal: 'b',
+      value: 1,
+      series: '1'
+    },
+    {
+      ordinal: 'c',
+      value: 1,
+      series: '1'
+    },
+    {
+      ordinal: 'd',
+      value: 1,
+      series: '1'
+    },
+    {
+      ordinal: 'e',
+      value: 1,
+      series: '1'
+    },
+    {
+      ordinal: 'f',
+      value: 1,
+      series: '1'
+    },
+    {
+      ordinal: 'g',
+      value: null,
+      series: '1'
+    },
+    {
+      ordinal: 'a',
+      value: 2,
+      series: '2'
+    },
+    {
+      ordinal: 'b',
+      value: 2,
+      series: '2'
+    },
+    {
+      ordinal: 'c',
+      value: null,
+      series: '2'
+    },
+    {
+      ordinal: 'd',
+      value: null,
+      series: '2'
+    },
+    {
+      ordinal: 'e',
+      value: 2,
+      series: '2'
+    },
+    {
+      ordinal: 'f',
+      value: null,
+      series: '2'
+    },
+    {
+      ordinal: 'g',
+      value: 2,
+      series: '2'
+    }
+  ];
   dashTestData: any = [
     {
       ordinal: 'a',
@@ -154,6 +271,88 @@ export class AppLineChart {
       series: 'secondary'
     }
   ];
+  collisionTestData: any = [
+    {
+      ordinal: new Date('2016-01-01'),
+      value: 100000,
+      series: '1'
+    },
+    {
+      ordinal: new Date('2016-01-01'),
+      value: 110000,
+      series: '1'
+    },
+    {
+      ordinal: new Date('2016-01-01'),
+      value: 120000,
+      series: '1'
+    },
+    {
+      ordinal: new Date('2016-01-01'),
+      value: 130000,
+      series: '1'
+    },
+    {
+      ordinal: new Date('2016-01-01'),
+      value: 100004,
+      series: '1'
+    },
+    {
+      ordinal: new Date('2016-01-01'),
+      value: 100005,
+      series: '1'
+    },
+    {
+      ordinal: new Date('2016-01-01'),
+      value: 100006,
+      series: '1'
+    },
+    {
+      ordinal: new Date('2016-01-01'),
+      value: 100007,
+      series: '1'
+    },
+    {
+      ordinal: new Date('2016-01-01'),
+      value: 100008,
+      series: '1'
+    },
+    {
+      ordinal: new Date('2016-01-01'),
+      value: 100009,
+      series: '1'
+    },
+    {
+      ordinal: new Date('2016-01-01'),
+      value: 100010,
+      series: '1'
+    },
+    {
+      ordinal: new Date('2016-01-01'),
+      value: 200010,
+      series: '2'
+    },
+    {
+      ordinal: new Date('2016-01-01'),
+      value: 500010,
+      series: '3'
+    },
+    {
+      ordinal: new Date('2016-02-01'),
+      value: 990000,
+      series: '1'
+    },
+    {
+      ordinal: new Date('2016-02-01'),
+      value: 965000,
+      series: '2'
+    },
+    {
+      ordinal: new Date('2016-02-01'),
+      value: 945000,
+      series: '3'
+    }
+  ];
   startData: any = [
     {
       date: new Date('2016-01-01'),
@@ -161,7 +360,7 @@ export class AppLineChart {
       otherCat: 'ABC',
       otherVal: 100,
       category: 'Card A',
-      value: 7670994739
+      value: null
     },
     {
       date: new Date('2016-02-01'),
@@ -169,7 +368,7 @@ export class AppLineChart {
       otherCat: 'ABC',
       otherVal: 220,
       category: 'Card A',
-      value: 7628909842
+      value: null
     },
     {
       date: new Date('2016-03-01'),
@@ -265,7 +464,7 @@ export class AppLineChart {
       otherCat: 'ABC',
       otherVal: 100,
       category: 'Card A',
-      value: 6670994739
+      value: 5670994739
     },
     {
       date: new Date('2016-01-01'),
@@ -353,7 +552,7 @@ export class AppLineChart {
       otherCat: 'DEF',
       otherVal: 850,
       category: 'Card B',
-      value: 6772849978
+      value: null
     },
     {
       date: new Date('2016-12-01'),
@@ -381,6 +580,40 @@ export class AppLineChart {
     }
   ];
   dataStorage: any = [
+    [
+      {
+        date: new Date('2017-01-01'),
+        otherOrd: '13',
+        otherCat: 'ABC',
+        otherVal: 100,
+        category: 'Card A',
+        value: 7670994739
+      },
+      {
+        date: new Date('2017-02-01'),
+        otherOrd: '14',
+        otherCat: 'ABC',
+        otherVal: 100,
+        category: 'Card A',
+        value: 5670994739
+      },
+      {
+        date: new Date('2017-01-01'),
+        otherOrd: '13',
+        otherCat: 'DEF',
+        otherVal: 150,
+        category: 'Card B',
+        value: 6570994739
+      },
+      {
+        date: new Date('2017-02-01'),
+        otherOrd: '14',
+        otherCat: 'DEF',
+        otherVal: 150,
+        category: 'Card B',
+        value: 5570994739
+      }
+    ],
     this.startData,
     [
       {
@@ -469,7 +702,7 @@ export class AppLineChart {
         otherCat: 'ABC',
         otherVal: 200,
         category: 'Card A',
-        value: 8872849978
+        value: null
       },
       {
         date: new Date('2016-12-01'),
@@ -703,7 +936,7 @@ export class AppLineChart {
         otherCat: 'DEF',
         otherVal: 100,
         category: 'Card B',
-        value: 5534842966
+        value: null
       },
       {
         date: new Date('2016-05-01'),
@@ -1279,9 +1512,33 @@ export class AppLineChart {
   hoveredIndex: number = -1;
   @Element()
   appEl: HTMLElement;
-
+  componentWillLoad() {
+    this.theWorstDataEver = this.generateTheWorstDataEver();
+  }
   componentWillUpdate() {
     // console.log("will update", this.clickElement);
+  }
+  generateTheWorstDataEver() {
+    const newNightmare = [];
+    const startTime = new Date().getTime();
+    let s = 0;
+    for (s = 0; s < this.seriesLimit; s++) {
+      let i = 0;
+      for (i = 0; i < this.dataPoints; i++) {
+        const ordinal =
+          i && i !== this.dataPoints - 1
+            ? new Date(startTime + Math.random() * 10000000000)
+            : i
+            ? new Date(startTime + 10000000000)
+            : new Date(startTime);
+        newNightmare.push({
+          ordinal,
+          series: s,
+          value: !(this.smashIt && !i && !s) ? Math.random() : 10
+        });
+      }
+    }
+    return newNightmare;
   }
   prepareColor(d, e) {
     // first check if array already has click color... if so then we remove!
@@ -1355,6 +1612,9 @@ export class AppLineChart {
   changeData() {
     this.stateTrigger = this.stateTrigger < this.dataStorage.length - 1 ? this.stateTrigger + 1 : 0;
   }
+  backData() {
+    this.stateTrigger = this.stateTrigger > 0 ? this.stateTrigger - 1 : this.dataStorage.length - 1;
+  }
   changeAccessElements() {
     this.accessibility = {
       ...this.accessibility,
@@ -1413,13 +1673,17 @@ export class AppLineChart {
   changeUnit() {
     this.unit = this.unit !== 'month' ? 'month' : 'year';
   }
+  toggleAnimations() {
+    this.animations = { disabled: !this.animations.disabled };
+  }
 
   render() {
     this.data = this.dataStorage[this.stateTrigger];
-
+    let nightmareColors = [];
+    this.theWorstDataEver.forEach(_ => nightmareColors.push('#222222'));
     return (
       <div>
-        <line-chart
+        {/* <line-chart
           mainTitle={'Dash Patterns'}
           subTitle={'5 Dash Patterns + Secondary Line Pattern'}
           data={this.dashTestData}
@@ -1437,7 +1701,7 @@ export class AppLineChart {
           }}
           margin={{
             top: 5,
-            left: -200,
+            left: 0,
             bottom: 36,
             right: 5
           }}
@@ -1450,7 +1714,97 @@ export class AppLineChart {
           showBaselineX={false}
           yAxis={{ visible: false, gridVisible: false }}
           xAxis={{ visible: false, gridVisible: false }}
+        /> */}
+
+        {/* <line-chart
+          mainTitle={'Broken Lines'}
+          subTitle={'Testing broken lines with non-date ordinal data'}
+          data={this.breakTestData}
+          ordinalAccessor="ordinal"
+          seriesAccessor="series"
+          valueAccessor="value"
+          uniqueID="broken-line-test"
+          colors={['#222222', '#222222', '#222222', '#222222', '#222222', '#222222']}
+          dataLabel={{
+            visible: true,
+            placement: 'middle',
+            labelAccessor: 'value',
+            format: '0,0.[00]a'
+          }}
+          // dataLabel={{ visible: true }}
+          showBaselineX={false}
+          yAxis={{ visible: false, gridVisible: true }}
+          xAxis={{ visible: false, gridVisible: false }}
+        /> */}
+
+        {/* <line-chart
+          mainTitle={'Collision Testing'}
+          subTitle={'testing collision use cases'}
+          data={this.collisionTestData}
+          ordinalAccessor="ordinal"
+          seriesAccessor="series"
+          valueAccessor="value"
+          uniqueID="collision-test"
+          dataLabel={{
+            visible: true,
+            placement: 'middle',
+            labelAccessor: 'value',
+            format: '0,0.[00]a'
+          }}
+          width={600}
+          height={350}
+          colors={['#222222', '#222222', '#222222', '#222222', '#222222', '#222222']}
+          margin={{
+            top: 5,
+            left: 5,
+            bottom: 5,
+            right: 5
+          }}
+          padding={{
+            top: 20,
+            left: 40,
+            bottom: 20,
+            right: 40
+          }}
+          dotRadius={3}
+          showBaselineX={false}
+          yAxis={{ visible: false, gridVisible: false }}
+          xAxis={{ visible: false, gridVisible: false }}
         />
+
+        <line-chart
+          mainTitle={'XTREME Collision Testing'}
+          subTitle={'use the state/variables in the app tsx to make it a nightmare'}
+          data={this.theWorstDataEver}
+          ordinalAccessor="ordinal"
+          seriesAccessor="series"
+          valueAccessor="value"
+          uniqueID="horrific"
+          width={800}
+          height={400}
+          colors={nightmareColors}
+          dataLabel={{
+            visible: true,
+            placement: 'middle',
+            labelAccessor: 'value',
+            format: '0,0.[00]a'
+          }}
+          margin={{
+            top: 5,
+            left: 0,
+            bottom: 36,
+            right: 50
+          }}
+          padding={{
+            top: 20,
+            left: 36,
+            bottom: 36,
+            right: 20
+          }}
+          showBaselineX={false}
+          yAxis={{ visible: false, gridVisible: false }}
+          xAxis={{ visible: false, gridVisible: false }}
+        /> */}
         <button
           onClick={() => {
             this.changeAccessElements();
@@ -1471,6 +1825,13 @@ export class AppLineChart {
           }}
         >
           toggle keyboard nav
+        </button>
+        <button
+          onClick={() => {
+            this.backData();
+          }}
+        >
+          back data
         </button>
         <button
           onClick={() => {
@@ -1556,26 +1917,44 @@ export class AppLineChart {
         >
           change unit
         </button>
+
+        <button
+          onClick={() => {
+            this.toggleAnimations();
+          }}
+        >
+          toggle animations
+        </button>
         <line-chart
           // Chart Attributes (1/7)
           mainTitle={'Line Chart in app'}
+          // animationConfig={this.animations}
           subTitle={'example'}
           height={this.height}
           width={600}
           // xAxis={{ visible: true, gridVisible: true, label: 'Quarter', unit: this.unit, format: '%b' }}
           // yAxis={{ visible: true, gridVisible: true, label: 'Volume', format: '0[.][0][0]a' }}
           // minValueOverride={-2000000}
-          // padding={{
-          //   top: 20,
-          //   left: 60,
-          //   right: 190,
-          //   bottom: 50
-          // }}
+          padding={{
+            top: 20,
+            left: 60,
+            right: 80,
+            bottom: 50
+          }}
           data={this.data}
           ordinalAccessor={this.ordinalAccessor}
           valueAccessor={this.valueAccessor}
           seriesAccessor={this.seriesAccessor}
-          // dataLabel={{ visible: true, placement: 'top', labelAccessor: this.valueAccessor, format: '0.0[a]' }}
+          dataLabel={{
+            visible: true,
+            placement: 'auto',
+            labelAccessor: this.valueAccessor,
+            format: '0.0[a]'
+          }}
+          seriesLabel={{
+            visible: true,
+            placement: 'right'
+          }}
           // legend={{ visible: false, labels: [], interactive: true }}
           // colorPalette={'sequential_grey'}
           cursor={'pointer'}
@@ -1600,24 +1979,10 @@ export class AppLineChart {
           onMouseOutFunc={this.onMouseOut}
           showTooltip={true}
           tooltipLabel={this.tooltipLabel}
-          // annotations={[
-          //   {
-          //     note: { label: 'Low Card B in June', bgPadding: 0, align: 'right', wrap: 130 },
-          //     data: {
-          //       date: this.data[0][this.ordinalAccessor],
-          //       category: 'Card B',
-          //       value: this.data[0][this.valueAccessor]
-          //     },
-          //     dx: '35%',
-          //     dy: '2%',
-          //     color: 'categorical_orange',
-          //     type: 'annotationCalloutCircle',
-          //     subject: { radius: 6 }
-          //   }
-          // ]}
+          // annotations={this.annotations}
           accessibility={this.accessibility}
           suppressEvents={this.suppressEvents}
-          dotRadius={4}
+          dotRadius={5}
         />
       </div>
     );

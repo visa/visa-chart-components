@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2021 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -35,6 +35,7 @@ export class HeatMapDefaultValues {
   static readonly hideAxisPath = propDefaultValues.showBaselineFalse;
 
   static readonly accessibility = propDefaultValues.accessibility;
+  static readonly animationConfig = propDefaultValues.animationConfig;
   static readonly highestHeadingLevel = propDefaultValues.highestHeadingLevel;
 
   static readonly xAxis = propDefaultValues.xAxis;

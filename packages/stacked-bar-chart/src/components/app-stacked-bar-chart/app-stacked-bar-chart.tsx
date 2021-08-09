@@ -8,6 +8,7 @@
 import { Component, Element, State, h } from '@stencil/core';
 import Utils from '@visa/visa-charts-utils';
 import '@visa/visa-charts-data-table';
+import '@visa/keyboard-instructions';
 
 const { autoTextColor, getColors, calculateLuminance, calculateRelativeLuminance, fixNestedSparseness } = Utils;
 @Component({
@@ -17,6 +18,7 @@ const { autoTextColor, getColors, calculateLuminance, calculateRelativeLuminance
 export class AppStackedBarChart {
   @State() data: any;
   @State() stateTrigger: any = 0;
+  @State() animations: any = { disabled: false };
   @State() hoverElement: any = {};
   @State() clickElement: any = [];
   @State() ordinalAccessor: any = 'category';
@@ -37,10 +39,11 @@ export class AppStackedBarChart {
   @State() zeroLabel: boolean = true;
   @State() fixedData: any;
   @State() dataLabel: any = {
-    visible: this.dataLabelVis,
-    placement: 'middle',
+    visible: true,
+    placement: 'auto',
     labelAccessor: this.dataLabelAccessor,
-    format: ''
+    format: '',
+    collisionPlacement: 'bottom'
   };
   interactionKeys: any = ['category'];
   legend: any = { visible: true, interactive: true };
@@ -76,6 +79,40 @@ export class AppStackedBarChart {
     keyboardNavConfig: { disabled: false }
   };
   @State() suppressEvents: boolean = false;
+  @State() annotations: any = [
+    {
+      note: {
+        label: '2018',
+        bgPadding: 0,
+        align: 'middle',
+        wrap: 210
+      },
+      accessibilityDescription: '2018 High Spend band total is 5,596',
+      x: '8%',
+      y: '40%',
+      disable: ['connector', 'subject'],
+      // dy: '-1%',
+      color: '#000000',
+      className: 'testing1 testing2 testing3',
+      collisionHideOnly: true
+    },
+    {
+      note: {
+        label: 'oasijfoiajsf',
+        bgPadding: 0,
+        align: 'middle',
+        wrap: 210
+      },
+      accessibilityDescription: '2018 High Spend band total is 5,596',
+      x: '8%',
+      y: '40%',
+      disable: ['connector', 'subject'],
+      // dy: '-1%',
+      color: '#000000',
+      className: 'testing1 testing2 testing3',
+      collisionHideOnly: false
+    }
+  ];
   @Element()
   appEl: HTMLElement;
   testDate: any;
@@ -2650,6 +2687,10 @@ export class AppStackedBarChart {
     this.fixedData = this.badData;
   }
 
+  toggleAnimations() {
+    this.animations = { disabled: !this.animations.disabled };
+  }
+
   render() {
     // this.data = this.dataStorage[this.stateTrigger];
     const colorBars = [];
@@ -2665,7 +2706,7 @@ export class AppStackedBarChart {
     });
     return (
       <div>
-        {colorBars}
+        {/* {colorBars} */}
         <br />
         {this.fixedData ? (
           <stacked-bar-chart data={this.fixedData} ordinalAccessor="cat" groupAccessor="group" valueAccessor="val" />
@@ -2770,9 +2811,18 @@ export class AppStackedBarChart {
         >
           fix data
         </button>
+
+        <button
+          onClick={() => {
+            this.toggleAnimations();
+          }}
+        >
+          toggle animations
+        </button>
         <br />
         <stacked-bar-chart
           interactionKeys={this.interactionKeys}
+          animationConfig={this.animations}
           onHoverFunc={d => this.onHoverFunc(d)}
           onMouseOutFunc={() => this.onMouseOut()}
           ordinalAccessor={this.ordinalAccessor}
@@ -2797,12 +2847,13 @@ export class AppStackedBarChart {
           hoverStyle={this.hoverStyle}
           tooltipLabel={this.label}
           dataLabel={this.dataLabel}
-          hoverOpacity={0.99999999999}
+          hoverOpacity={1}
           hoverHighlight={this.hoverElement}
           clickHighlight={this.clickElement}
           onClickFunc={d => this.onClickFunc(d)}
           accessibility={this.accessibility}
           suppressEvents={this.suppressEvents}
+          // annotations={this.annotations}
           // annotations={[{"note":{"label":"*","bgPadding":0,"title":"","lineType":"none","align":"middle","wrap":175},"y":"-2%","x":[this.testDate],"dy":"1%","dx":["2016-11-15"],"color":"#f5a623","className":"stacked-bar-annotation","type":"annotationCalloutRect","subject":{"width":[this.endDate,this.startDate],"height":"104%"},"parseAsDates":["x"],"disable":["connector"]}]}
         />
       </div>

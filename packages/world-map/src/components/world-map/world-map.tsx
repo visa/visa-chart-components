@@ -22,9 +22,10 @@ import {
   ICountryStyleType,
   IDataLabelType,
   ILegendType,
-  IHoverStyleType,
   IClickStyleType,
+  IHoverStyleType,
   ITooltipLabelType,
+  IAnimationConfig,
   IAccessibilityType
 } from '@visa/charts-types';
 import { WorldMapDefaultValues } from './world-map-default-values';
@@ -38,6 +39,9 @@ const {
   createTextStrokeFilter,
   convertColorsToTextures,
   findTagLevel,
+  prepareRenderChange,
+  roundTo,
+  resolveLabelCollision,
   initializeDescriptionRoot,
   initializeElementAccess,
   setElementFocusHandler,
@@ -124,6 +128,7 @@ export class WorldMap {
   @Prop({ mutable: true }) clickStyle: IClickStyleType = WorldMapDefaultValues.clickStyle;
   @Prop({ mutable: true }) cursor: string = WorldMapDefaultValues.cursor;
   @Prop({ mutable: true }) hoverOpacity: number = WorldMapDefaultValues.hoverOpacity;
+  @Prop({ mutable: true }) animationConfig: IAnimationConfig = WorldMapDefaultValues.animationConfig;
 
   // Data label (5/7)
   @Prop({ mutable: true }) showTooltip: boolean = WorldMapDefaultValues.showTooltip;
@@ -272,6 +277,7 @@ export class WorldMap {
   strokes: any = {};
   topLevel: string = 'h2';
   bottomLevel: string = 'p';
+  bitmaps: any;
 
   @Watch('data')
   dataWatcher(_newData, _oldData) {
@@ -775,8 +781,8 @@ export class WorldMap {
       this.setTestingAttributes();
       this.enterPaths();
       this.enterMarkers();
-      this.enterLabels();
       this.drawMarkers();
+      this.enterLabels();
       this.addStrokeUnder();
       this.setChartCountAccessibility();
       this.setGeometryAccessibilityAttributes();
@@ -793,7 +799,6 @@ export class WorldMap {
       this.setGroupAccessibilityAttributes();
       this.setGroupAccessibilityID();
       this.onChangeHandler();
-      this.duration = 750;
       this.defaults = false;
       resolve('component did load');
     });
@@ -810,6 +815,7 @@ export class WorldMap {
 
   componentDidUpdate() {
     return new Promise(resolve => {
+      this.duration = !this.animationConfig || !this.animationConfig.disabled ? 750 : 0;
       if (this.shouldUpdateDescriptionWrapper) {
         this.setChartDescriptionWrapper();
         this.shouldUpdateDescriptionWrapper = false;
@@ -926,10 +932,6 @@ export class WorldMap {
         this.drawLegendElements();
         this.shouldUpdateLegend = false;
       }
-      if (this.shouldUpdateLabels) {
-        this.drawDataLabels();
-        this.shouldUpdateLabels = false;
-      }
       if (this.shouldUpdatePaths) {
         this.drawPaths();
         this.shouldUpdatePaths = false;
@@ -941,6 +943,10 @@ export class WorldMap {
       if (this.shouldOrderMarkers) {
         this.orderMarkers();
         this.shouldOrderMarkers = false;
+      }
+      if (this.shouldUpdateLabels) {
+        this.drawDataLabels();
+        this.shouldUpdateLabels = false;
       }
       if (this.shouldSetGeometryAccessibilityAttributes) {
         this.setGeometryAccessibilityAttributes();
@@ -1031,7 +1037,6 @@ export class WorldMap {
 
       // features requires that we have set/reset projection
       const featureData = this.features.find(obj => obj.id === d[this.joinAccessor]);
-
       d.innerLongitude = geo.geoPath().centroid(featureData)[0];
       d.innerLatitude = geo.geoPath().centroid(featureData)[1];
 
@@ -1481,25 +1486,35 @@ export class WorldMap {
 
   // reset graph size based on window size
   reSetRoot() {
-    this.svg
-      .transition('root_reset')
-      .duration(this.duration)
-      .ease(easeCircleIn)
+    const changeSvg = prepareRenderChange({
+      selection: this.svg,
+      duration: this.duration,
+      namespace: 'root_reset',
+      easing: easeCircleIn
+    });
+
+    changeSvg
       .attr('width', this.width)
       .attr('height', this.height)
       .attr('viewBox', '0 0 ' + this.width + ' ' + this.height);
 
-    this.root
-      .transition('root_reset')
-      .duration(this.duration)
-      .ease(easeCircleIn)
-      .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`);
+    const changeRoot = prepareRenderChange({
+      selection: this.root,
+      duration: this.duration,
+      namespace: 'root_reset',
+      easing: easeCircleIn
+    });
 
-    this.rootG
-      .transition('root_reset')
-      .duration(this.duration)
-      .ease(easeCircleIn)
-      .attr('transform', `translate(${this.padding.left}, ${this.padding.top})`);
+    changeRoot.attr('transform', `translate(${this.margin.left}, ${this.margin.top})`);
+
+    const changeRootG = prepareRenderChange({
+      selection: this.rootG,
+      duration: this.duration,
+      namespace: 'root_reset',
+      easing: easeCircleIn
+    });
+
+    changeRootG.attr('transform', `translate(${this.padding.left}, ${this.padding.top})`);
 
     setAccessibilityDescriptionWidth(this.chartID, this.width);
   }
@@ -1519,7 +1534,8 @@ export class WorldMap {
         colors: this.preparedColors,
         rootSVG: this.svg.node(),
         id: this.chartID,
-        scheme
+        scheme,
+        disableTransitions: !this.duration
       });
       this.colorArr = textures;
     }
@@ -1528,7 +1544,7 @@ export class WorldMap {
 
   // dashed line for graticule grid
   drawOutlineGrid() {
-    let duration = this.duration + 200;
+    let duration = this.duration ? this.duration + 200 : 0;
     let opacity = 1;
     if (!this.showGridlines) {
       opacity = 0;
@@ -1561,7 +1577,7 @@ export class WorldMap {
   }
 
   drawGraticuleGrid() {
-    let duration = this.duration + 200;
+    let duration = this.duration ? this.duration + 200 : 0;
     let opacity = 1;
     if (!this.showGridlines) {
       opacity = 0;
@@ -1882,7 +1898,6 @@ export class WorldMap {
 
   enterLabels() {
     const opacity = this.dataLabel.visible ? 1 : 0;
-
     this.enteringLabels
       .attr('class', 'world-map-dataLabel')
       .attr('text-anchor', 'middle')
@@ -1954,11 +1969,38 @@ export class WorldMap {
 
   drawDataLabels() {
     const opacity = this.dataLabel.visible ? 1 : 0;
+    const hideOnly = this.dataLabel.placement !== 'auto' && this.dataLabel.collisionHideOnly;
 
-    this.updatingLabels
-      .transition('update-labels')
-      .ease(easeCircleIn)
-      .duration(this.duration)
+    const labelUpdate = this.updatingLabels
+      .style('visibility', (_, i, n) =>
+        this.dataLabel.placement === 'auto' || this.dataLabel.collisionHideOnly
+          ? select(n[i]).style('visibility')
+          : null
+      )
+      .attr('data-translate-x', this.padding.left + this.margin.left)
+      .attr('data-translate-y', this.padding.top + this.margin.top)
+      .attr('data-x', d =>
+        this.latitudeAccessor && this.longitudeAccessor
+          ? this.projection([+d[this.longitudeAccessor], +d[this.latitudeAccessor]])[0]
+          : isNaN(d.innerLongitude)
+          ? 0
+          : this.projection([+d.innerLongitude, +d.innerLatitude])[0]
+      )
+      .attr('data-y', d =>
+        this.latitudeAccessor && this.longitudeAccessor
+          ? this.projection([+d[this.longitudeAccessor], +d[this.latitudeAccessor]])[1]
+          : isNaN(d.innerLatitude)
+          ? 0
+          : this.projection([+d.innerLongitude, +d.innerLatitude])[1]
+      )
+      .attr('dy', d =>
+        this.markerStyle.visible
+          ? (typeof this.radiusScale === 'function'
+              ? this.radiusScale(d[this.valueAccessor])
+              : this.markerStyle.radius || 5) + 15
+          : 0
+      )
+      .attr('data-use-dy', hideOnly)
       .text(d => {
         let showText = false;
 
@@ -1992,28 +2034,73 @@ export class WorldMap {
           return showText ? this.getMarkerLabelText(d) : '';
         }
       })
-      .attr('x', d =>
-        this.latitudeAccessor && this.longitudeAccessor
-          ? this.projection([+d[this.longitudeAccessor], +d[this.latitudeAccessor]])[0]
-          : isNaN(d.innerLongitude)
-          ? 0
-          : this.projection([+d.innerLongitude, +d.innerLatitude])[0]
-      )
-      .attr('y', d =>
-        this.latitudeAccessor && this.longitudeAccessor
-          ? this.projection([+d[this.longitudeAccessor], +d[this.latitudeAccessor]])[1]
-          : isNaN(d.innerLatitude)
-          ? 0
-          : this.projection([+d.innerLongitude, +d.innerLatitude])[1]
-      )
-      .attr('dy', d =>
-        this.markerStyle.visible
-          ? (typeof this.radiusScale === 'function'
-              ? this.radiusScale(d[this.valueAccessor])
-              : this.markerStyle.radius || 5) + 15
-          : 0
-      )
-      .attr('text-anchor', 'middle');
+      .transition('update-labels')
+      .ease(easeCircleIn)
+      .duration(this.duration);
+    if (this.dataLabel.visible && (this.dataLabel.placement === 'auto' || this.dataLabel.collisionHideOnly)) {
+      this.bitmaps = resolveLabelCollision({
+        labelSelection: labelUpdate,
+        avoidMarks: [this.updateMarker],
+        validPositions: hideOnly
+          ? ['middle']
+          : ['top', 'bottom', 'left', 'right', 'bottom-right', 'bottom-left', 'top-left', 'top-right', 'middle'],
+        offsets: hideOnly ? [1] : [5, 1, 4, 4, 1, 1, 1, 1, 1],
+        accessors: [this.markerAccessor, this.joinAccessor],
+        size: [roundTo(this.width, 0), roundTo(this.height, 0)], // we need the whole width for series labels
+        hideOnly: this.dataLabel.visible && this.dataLabel.collisionHideOnly && this.dataLabel.placement !== 'auto'
+      });
+
+      // if we are in hide only we need to add attributes back
+      if (hideOnly) {
+        labelUpdate
+          .attr('x', d =>
+            this.latitudeAccessor && this.longitudeAccessor
+              ? this.projection([+d[this.longitudeAccessor], +d[this.latitudeAccessor]])[0]
+              : isNaN(d.innerLongitude)
+              ? 0
+              : this.projection([+d.innerLongitude, +d.innerLatitude])[0]
+          )
+          .attr('y', d =>
+            this.latitudeAccessor && this.longitudeAccessor
+              ? this.projection([+d[this.longitudeAccessor], +d[this.latitudeAccessor]])[1]
+              : isNaN(d.innerLatitude)
+              ? 0
+              : this.projection([+d.innerLongitude, +d.innerLatitude])[1]
+          )
+          .attr('dy', d =>
+            this.markerStyle.visible
+              ? (typeof this.radiusScale === 'function'
+                  ? this.radiusScale(d[this.valueAccessor])
+                  : this.markerStyle.radius || 5) + 15
+              : 0
+          )
+          .attr('text-anchor', 'middle');
+      }
+    } else {
+      labelUpdate
+        .attr('x', d =>
+          this.latitudeAccessor && this.longitudeAccessor
+            ? this.projection([+d[this.longitudeAccessor], +d[this.latitudeAccessor]])[0]
+            : isNaN(d.innerLongitude)
+            ? 0
+            : this.projection([+d.innerLongitude, +d.innerLatitude])[0]
+        )
+        .attr('y', d =>
+          this.latitudeAccessor && this.longitudeAccessor
+            ? this.projection([+d[this.longitudeAccessor], +d[this.latitudeAccessor]])[1]
+            : isNaN(d.innerLatitude)
+            ? 0
+            : this.projection([+d.innerLongitude, +d.innerLatitude])[1]
+        )
+        .attr('dy', d =>
+          this.markerStyle.visible
+            ? (typeof this.radiusScale === 'function'
+                ? this.radiusScale(d[this.valueAccessor])
+                : this.markerStyle.radius || 5) + 15
+            : 0
+        )
+        .attr('text-anchor', 'middle');
+    }
   }
 
   getMarkerLabelText(d) {
@@ -2147,6 +2234,30 @@ export class WorldMap {
 
   drawMarkers() {
     this.updateMarker
+      .attr('data-translate-x', this.padding.left + this.margin.left)
+      .attr('data-translate-y', this.padding.top + this.margin.top)
+      .attr('data-r', d =>
+        this.markerStyle.visible
+          ? this.radiusScale
+            ? this.radiusScale(d[this.valueAccessor])
+            : this.markerStyle.radius || 5
+          : 0
+      )
+      .attr('data-cx', d => {
+        if (this.latitudeAccessor && this.longitudeAccessor) {
+          return this.projection([+d[this.longitudeAccessor], +d[this.latitudeAccessor]])[0];
+        } else {
+          return isNaN(d.innerLongitude) ? 0 : this.projection([+d.innerLongitude, +d.innerLatitude])[0];
+        }
+      })
+      .attr('data-cy', d => {
+        if (this.latitudeAccessor && this.longitudeAccessor) {
+          return this.projection([+d[this.longitudeAccessor], +d[this.latitudeAccessor]])[1];
+        } else {
+          return isNaN(d.innerLatitude) ? 0 : this.projection([+d.innerLongitude, +d.innerLatitude])[1];
+        }
+      })
+      .attr('data-fill', true)
       .transition('update-markers')
       .duration(this.duration)
       .ease(easeCircleIn)
@@ -2261,7 +2372,6 @@ export class WorldMap {
     // this initializes the accessibility description section of the chart
     initializeDescriptionRoot({
       rootEle: this.worldMapEl,
-      geomType: 'marker',
       title: this.accessibility.title || this.mainTitle,
       chartTag: 'world-map',
       uniqueID: this.chartID,
@@ -2534,6 +2644,21 @@ export class WorldMap {
             {this.subTitle}
           </this.bottomLevel>
           <div class="world-map-legend vcl-legend" style={{ display: this.legend.visible ? 'block' : 'none' }} />
+          <keyboard-instructions
+            uniqueID={this.chartID}
+            geomType={'marker'}
+            groupName={'marker group'} // taken from initializeDescriptionRoot, on bar this should be "bar group", stacked bar is "stack", and clustered is "cluster"
+            chartTag={'world-map'}
+            width={this.width - (this.margin ? this.margin.right || 0 : 0)}
+            isInteractive={this.accessibility.elementsAreInterface}
+            hasCousinNavigation={this.groupAccessor ? true : false} // on bar this requires checking for groupAccessor
+            disabled={
+              this.suppressEvents &&
+              this.accessibility.elementsAreInterface === false &&
+              this.accessibility.keyboardNavConfig &&
+              this.accessibility.keyboardNavConfig.disabled
+            } // the chart is "simple"
+          />
           <div class="visa-viz-world-map-container" />
           <div class="world-map-tooltip vcl-tooltip" style={{ display: this.showTooltip ? 'block' : 'none' }} />
           <data-table
@@ -2547,6 +2672,7 @@ export class WorldMap {
             unitTest={this.unitTest}
           />
         </div>
+        {/* <canvas id="bitmap-render" /> */}
       </div>
     );
   }

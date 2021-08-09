@@ -8,8 +8,8 @@
 import { Component, Element, Prop, Watch, h, Event, EventEmitter } from '@stencil/core';
 
 import { select, event } from 'd3-selection';
-import { max } from 'd3-array';
-// import * as d3Sankey from 'd3-sankey';
+import { min, max } from 'd3-array';
+import { linkHorizontal } from 'd3-shape';
 import { easeCircleIn } from 'd3-ease';
 // import { IAlluvialDiagramProps } from './alluvial-diagram-props';
 import {
@@ -19,6 +19,7 @@ import {
   IDataLabelType,
   ITooltipLabelType,
   IAccessibilityType,
+  IAnimationConfig,
   INodeConfigType,
   ILinkConfigType
 } from '@visa/charts-types';
@@ -47,6 +48,8 @@ const {
   checkAccessFocus,
   setElementInteractionAccessState,
   setAccessibilityDescriptionWidth,
+  roundTo,
+  resolveLabelCollision,
   transitionEndAll,
   annotate,
   checkClicked,
@@ -65,7 +68,8 @@ const {
   sankeyJustify,
   sankeyLeft,
   sankeyLinkHorizontal,
-  sankeyRight
+  sankeyRight,
+  prepareRenderChange
 } = Utils;
 
 @Component({
@@ -105,6 +109,7 @@ export class AlluvialDiagram {
   @Prop({ mutable: true }) clickStyle: IClickStyleType = AlluvialDiagramDefaultValues.clickStyle;
   @Prop({ mutable: true }) cursor: string = AlluvialDiagramDefaultValues.cursor;
   @Prop({ mutable: true }) hoverOpacity: number = AlluvialDiagramDefaultValues.hoverOpacity;
+  @Prop({ mutable: true }) animationConfig: IAnimationConfig = AlluvialDiagramDefaultValues.animationConfig;
 
   // Data label (5/7)
   @Prop({ mutable: true }) dataLabel: IDataLabelType = AlluvialDiagramDefaultValues.dataLabel;
@@ -141,6 +146,9 @@ export class AlluvialDiagram {
   innerPaddedWidth: number;
   dataTest: any;
   chartID: string;
+  enterNodeGroups: any;
+  exitNodeGroups: any;
+  updateNodeGroups: any;
   enterNodes: any;
   exitNodes: any;
   updateNodes: any;
@@ -158,6 +166,9 @@ export class AlluvialDiagram {
   innerNodeData: any;
   innerLinkData: any;
   preppedData: any;
+  oldNodeCount: any;
+  nodeCount: any;
+  newColumn: any;
   nodeG: any;
   linkG: any;
   labelG: any;
@@ -172,6 +183,12 @@ export class AlluvialDiagram {
   colorArr: any;
   noLinksLeftPadding: any;
   widthAllNodesNoLinks: any;
+  previousNodeLayers: any;
+  currentNodeLayers: any;
+  previousMinNodeLayer: any;
+  previousMaxNodeLayer: any;
+  currentMaxNodeLayer: any;
+  currentMinNodeLayer: any;
   topLevel: string = 'h2';
   bottomLevel: string = 'p';
   sourceLinksString: string = 'sourceLinks';
@@ -200,12 +217,32 @@ export class AlluvialDiagram {
   shouldSetAnnotationAccessibility: boolean = false;
   shouldSetGlobalSelections: boolean = false;
   shouldSetTestingAttributes: boolean = false;
+  shouldDrawInteractionState: boolean = false;
+  shouldEnterUpdateExit: boolean = false;
+  shouldUpdateNodeGeometries: boolean = false;
+  shouldUpdateLinkGeometries: boolean = false;
+  shouldDrawNodeLabels: boolean = false;
+  bitmaps: any;
 
   @Watch('linkData')
-  linkDataWatcher(_newData, _oldData) {}
+  linkDataWatcher(_newData, _oldData) {
+    this.shouldSetGlobalSelections = true;
+    this.shouldEnterUpdateExit = true;
+    this.shouldUpdateNodeGeometries = true;
+    this.shouldUpdateLinkGeometries = true;
+    this.shouldDrawNodeLabels = true;
+    // this.shouldDrawInteractionState = true;
+  }
 
   @Watch('nodeData')
-  nodeDataWatcher(_newData, _oldData) {}
+  nodeDataWatcher(_newData, _oldData) {
+    this.shouldSetGlobalSelections = true;
+    this.shouldEnterUpdateExit = true;
+    this.shouldUpdateNodeGeometries = true;
+    this.shouldUpdateLinkGeometries = true;
+    this.shouldDrawNodeLabels = true;
+    // this.shouldDrawInteractionState = true;
+  }
 
   @Watch('uniqueID')
   idWatcher(newID, _oldID) {
@@ -242,22 +279,60 @@ export class AlluvialDiagram {
   @Watch('margin')
   dimensionWatcher(_newVal, _oldVal) {
     this.shouldSetDimensions = true;
+    this.shouldUpdateNodeGeometries = true;
+    this.shouldUpdateLinkGeometries = true;
+    this.shouldDrawNodeLabels = true;
   }
 
   @Watch('sourceAccessor')
-  sourceAccessorWatcher(_newVal, _oldVal) {}
+  sourceAccessorWatcher(_newVal, _oldVal) {
+    this.shouldSetGlobalSelections = true;
+    this.shouldEnterUpdateExit = true;
+    this.shouldDrawInteractionState = true;
+    this.shouldUpdateNodeGeometries = true;
+    this.shouldUpdateLinkGeometries = true;
+    this.shouldDrawNodeLabels = true;
+  }
 
   @Watch('targetAccessor')
-  targetAccessorWatcher(_newVal, _oldVal) {}
+  targetAccessorWatcher(_newVal, _oldVal) {
+    this.shouldSetGlobalSelections = true;
+    this.shouldEnterUpdateExit = true;
+    this.shouldDrawInteractionState = true;
+    this.shouldUpdateNodeGeometries = true;
+    this.shouldUpdateLinkGeometries = true;
+    this.shouldDrawNodeLabels = true;
+  }
 
   @Watch('valueAccessor')
-  valueAccessorWatcher(_newVal, _oldVal) {}
+  valueAccessorWatcher(_newVal, _oldVal) {
+    this.shouldSetGlobalSelections = true;
+    this.shouldEnterUpdateExit = true;
+    this.shouldDrawInteractionState = true;
+    this.shouldUpdateNodeGeometries = true;
+    this.shouldUpdateLinkGeometries = true;
+    this.shouldDrawNodeLabels = true;
+  }
 
   @Watch('groupAccessor')
-  groupAccessorWatcher(_newVal, _oldVal) {}
+  groupAccessorWatcher(_newVal, _oldVal) {
+    this.shouldSetGlobalSelections = true;
+    this.shouldEnterUpdateExit = true;
+    this.shouldDrawInteractionState = true;
+    this.shouldUpdateNodeGeometries = true;
+    this.shouldUpdateLinkGeometries = true;
+    this.shouldDrawNodeLabels = true;
+  }
 
   @Watch('nodeIDAccessor')
-  nodeIDAccessorWatcher(_newVal, _oldVal) {}
+  nodeIDAccessorWatcher(_newVal, _oldVal) {
+    this.shouldSetGlobalSelections = true;
+    this.shouldEnterUpdateExit = true;
+    this.shouldDrawInteractionState = true;
+    this.shouldUpdateNodeGeometries = true;
+    this.shouldUpdateLinkGeometries = true;
+    this.shouldDrawNodeLabels = true;
+  }
 
   @Watch('nodeConfig')
   nodeConfigWatcher(_newVal, _oldVal) {
@@ -271,31 +346,60 @@ export class AlluvialDiagram {
     // const oldAlignmentVal = _oldVal && _oldVal.alignment;
     // const newCompareVal = _newVal && _newVal.compare;
     // const oldCompareVal = _oldVal && _oldVal.compare;
+    this.shouldEnterUpdateExit = true;
+    // this.shouldDrawInteractionState = true;
+    this.shouldUpdateNodeGeometries = true;
+    this.shouldUpdateLinkGeometries = true;
+    this.shouldDrawNodeLabels = true;
   }
 
   @Watch('linkConfig')
-  linkConfigWatcher(_newVal, _oldVal) {}
+  linkConfigWatcher(_newVal, _oldVal) {
+    this.shouldEnterUpdateExit = true;
+    // this.shouldDrawInteractionState = true;
+    this.shouldUpdateNodeGeometries = true;
+    this.shouldUpdateLinkGeometries = true;
+    this.shouldDrawNodeLabels = true;
+  }
 
   @Watch('colorPalette')
-  colorPaletteWatcher(_newVal, _oldVal) {}
+  colorPaletteWatcher(_newVal, _oldVal) {
+    // this.shouldDrawInteractionState = true;
+  }
 
   @Watch('colors')
-  colorsWatcher(_newVal, _oldVal) {}
+  colorsWatcher(_newVal, _oldVal) {
+    // this.shouldDrawInteractionState = true;
+  }
 
   @Watch('clickStyle')
-  clickStyleWatcher(_newVal, _oldVal) {}
+  clickStyleWatcher(_newVal, _oldVal) {
+    // this.shouldDrawInteractionState = true;
+  }
 
   @Watch('hoverStyle')
-  hoverStyleWatcher(_newVal, _oldVal) {}
+  hoverStyleWatcher(_newVal, _oldVal) {
+    // this.shouldDrawInteractionState = true;
+  }
 
   @Watch('cursor')
   cursorWatcher(_newVal, _oldVal) {}
 
   @Watch('hoverOpacity')
-  hoverOpacityWatcher(_newVal, _oldVal) {}
+  hoverOpacityWatcher(_newVal, _oldVal) {
+    // this.shouldDrawInteractionState = true;
+  }
 
   @Watch('dataLabel')
-  dataLabelWatcher(_newVal, _oldVal) {}
+  dataLabelWatcher(_newVal, _oldVal) {
+    this.shouldDrawNodeLabels = true;
+    // const newVisibleVal = _newVal && _newVal.visible;
+    // const oldVisibleVal = _oldVal && _oldVal.visible;
+    // if (newVisibleVal !== oldVisibleVal) {
+    //   this.shouldSetLabelOpacity = true;
+    // }
+    this.shouldDrawInteractionState = true;
+  }
 
   @Watch('tooltipLabel')
   tooltipLabelWatcher(_newVal, _oldVal) {}
@@ -381,19 +485,29 @@ export class AlluvialDiagram {
   }
 
   @Watch('annotations')
-  annotationsWatcher(_newVal, _oldVal) {}
+  annotationsWatcher(_newVal, _oldVal) {
+    this.shouldSetAnnotationAccessibility = true;
+  }
 
   @Watch('clickHighlight')
-  clickWatcher(_newVal, _oldVal) {}
+  clickWatcher(_newVal, _oldVal) {
+    this.shouldDrawInteractionState = true;
+  }
 
   @Watch('hoverHighlight')
-  hoverWatcher(_newVal, _oldVal) {}
+  hoverWatcher(_newVal, _oldVal) {
+    this.shouldDrawInteractionState = true;
+  }
 
   @Watch('interactionKeys')
-  interactionWatcher(_newVal, _oldVal) {}
+  interactionWatcher(_newVal, _oldVal) {
+    // this.shouldDrawInteractionState = true;
+  }
 
   @Watch('suppressEvents')
-  suppressWatcher(_newVal, _oldVal) {}
+  suppressWatcher(_newVal, _oldVal) {
+    // this.shouldDrawInteractionState = true;
+  }
 
   @Watch('unitTest')
   unitTestWatcher(_newVal, _oldVal) {
@@ -451,8 +565,17 @@ export class AlluvialDiagram {
       this.callSankeyGenerator();
       this.setGlobalSelections();
       this.setTestingAttributes();
-      this.drawNodes();
-      this.drawLinks();
+      this.enterLinkGeometries();
+      this.updateLinkGeometries();
+      this.exitLinkGeometries();
+      this.enterNodeGeometries();
+      this.updateNodeGeometries();
+      this.exitNodeGeometries();
+      this.enterNodeLabels();
+      this.updateNodeLabels();
+      this.exitNodeLabels();
+      this.drawNodeGeometries();
+      this.drawLinkGeometries();
       this.setGeometryAccessibilityAttributes();
       this.setGeometryAriaLabels();
       this.setGroupAccessibilityID();
@@ -461,7 +584,8 @@ export class AlluvialDiagram {
       this.drawNodeLabels();
       this.drawAnnotations();
       this.setAnnotationAccessibility();
-
+      this.duration = 750;
+      this.defaults = false;
       hideNonessentialGroups(this.root.node(), null);
       resolve('component did load');
     });
@@ -469,6 +593,7 @@ export class AlluvialDiagram {
 
   componentDidUpdate() {
     return new Promise(resolve => {
+      this.duration = !this.animationConfig || !this.animationConfig.disabled ? 750 : 0;
       this.reSetRoot();
 
       if (this.shouldUpdateDescriptionWrapper) {
@@ -526,8 +651,26 @@ export class AlluvialDiagram {
         this.setTestingAttributes();
         this.shouldSetTestingAttributes = false;
       }
-      this.drawNodes();
-      this.drawLinks();
+      if (this.shouldEnterUpdateExit) {
+        this.enterLinkGeometries();
+        this.updateLinkGeometries();
+        this.exitLinkGeometries();
+        this.enterNodeGeometries();
+        this.updateNodeGeometries();
+        this.exitNodeGeometries();
+        this.enterNodeLabels();
+        this.updateNodeLabels();
+        this.exitNodeLabels();
+        this.shouldEnterUpdateExit = false;
+      }
+      if (this.shouldUpdateNodeGeometries) {
+        this.drawNodeGeometries();
+        this.shouldUpdateNodeGeometries = false;
+      }
+      if (this.shouldUpdateLinkGeometries) {
+        this.drawLinkGeometries();
+        this.shouldUpdateLinkGeometries = false;
+      }
       if (this.shouldSetGeometryAccessibilityAttributes) {
         this.setGeometryAccessibilityAttributes();
         this.shouldSetGeometryAccessibilityAttributes = false;
@@ -544,8 +687,15 @@ export class AlluvialDiagram {
         this.setSelectedClass();
         this.shouldSetSelectionClass = false;
       }
-      this.drawNodeLabels();
+      if (this.shouldDrawNodeLabels) {
+        this.drawNodeLabels();
+        this.shouldDrawNodeLabels = false;
+      }
       this.drawAnnotations();
+      if (this.shouldDrawInteractionState) {
+        this.updateInteractionState();
+        this.shouldDrawInteractionState = false;
+      }
       if (this.shouldSetAnnotationAccessibility) {
         this.setAnnotationAccessibility();
         this.shouldSetAnnotationAccessibility = false;
@@ -672,6 +822,7 @@ export class AlluvialDiagram {
       });
 
     this.preppedData = sankeyData(this.nodeList, this.linkList);
+    this.nodeCount = max(this.preppedData.nodes, d => d.layer);
   }
 
   renderRootElements() {
@@ -694,30 +845,44 @@ export class AlluvialDiagram {
 
   // reset graph size based on window size
   reSetRoot() {
-    this.svg
-      .transition('root_reset')
-      .duration(this.duration)
-      .ease(easeCircleIn)
+    const changeSvg = prepareRenderChange({
+      selection: this.svg,
+      duration: this.duration,
+      namespace: 'root_reset',
+      easing: easeCircleIn
+    });
+
+    changeSvg
       .attr('width', this.width)
       .attr('height', this.height)
       .attr('viewBox', '0 0 ' + this.width + ' ' + this.height);
 
-    this.root
-      .transition('root_reset')
-      .duration(this.duration)
-      .ease(easeCircleIn)
-      .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`);
+    const changeRoot = prepareRenderChange({
+      selection: this.root,
+      duration: this.duration,
+      namespace: 'root_reset',
+      easing: easeCircleIn
+    });
 
-    this.rootG
-      .transition('root_reset')
-      .duration(this.duration)
-      .ease(easeCircleIn)
-      .attr('transform', `translate(${this.padding.left}, ${this.padding.top})`);
+    changeRoot.attr('transform', `translate(${this.margin.left}, ${this.margin.top})`);
+
+    const changeRootG = prepareRenderChange({
+      selection: this.rootG,
+      duration: this.duration,
+      namespace: 'root_reset',
+      easing: easeCircleIn
+    });
+
+    changeRootG.attr('transform', `translate(${this.padding.left}, ${this.padding.top})`);
 
     setAccessibilityDescriptionWidth(this.chartID, this.width);
   }
 
   setGlobalSelections() {
+    if (this.currentNodeLayers) {
+      this.previousNodeLayers = this.currentNodeLayers;
+    }
+
     const dataBoundToNodes = this.nodeG
       .selectAll('.node-wrapper')
       .data(this.preppedData.nodes, d => d[this.innerIDAccessor]);
@@ -731,6 +896,21 @@ export class AlluvialDiagram {
     this.exitNodes = dataBoundToNodes.exit();
     this.updateNodes = dataBoundToNodes.merge(this.enterNodes); //.selectAll('rect');
     this.updateNodes.selectAll('.alluvial-node').data(d => [d]);
+
+    this.currentNodeLayers = this.preppedData.nodes;
+    if (this.previousNodeLayers) {
+      const updatingNodesWithoutEnteringNodes = this.currentNodeLayers.filter(item =>
+        this.previousNodeLayers.map(a => a[this.innerIDAccessor]).includes(item.id)
+      );
+      this.previousMaxNodeLayer = max(updatingNodesWithoutEnteringNodes, d => d.layer);
+      this.previousMinNodeLayer = min(updatingNodesWithoutEnteringNodes, d => d.layer);
+
+      const updatingNodesWithoutExitingNodes = this.previousNodeLayers.filter(item =>
+        this.currentNodeLayers.map(a => a[this.innerIDAccessor]).includes(item.id)
+      );
+      this.currentMaxNodeLayer = max(updatingNodesWithoutExitingNodes, d => d.layer);
+      this.currentMinNodeLayer = min(updatingNodesWithoutExitingNodes, d => d.layer);
+    }
 
     // temporary, to be removed when lifecycle functions are added
     // tslint:disable-next-line:no-unused-expression
@@ -746,20 +926,14 @@ export class AlluvialDiagram {
       const dataBoundToLinkGroups = this.linkG
         .selectAll('.alluvial-link-wrapper')
         .data(linkDataGroups, d => d[this.innerIDAccessor]);
-      this.enterLinkGroups = dataBoundToLinkGroups
-        .enter()
-        .append('g')
-        .attr('class', 'alluvial-link-wrapper');
+      this.enterLinkGroups = dataBoundToLinkGroups.enter().append('g');
       this.exitLinkGroups = dataBoundToLinkGroups.exit().remove();
       this.updateLinkGroups = dataBoundToLinkGroups.merge(this.enterLinkGroups);
 
       const dataBoundToLinks = this.updateLinkGroups
         .selectAll('.alluvial-link')
         .data(d => d.sourceLinks, d => d.data[this.sourceAccessor] + d.data[this.targetAccessor]);
-      this.enterLinks = dataBoundToLinks
-        .enter()
-        .append('path')
-        .attr('class', 'alluvial-link');
+      this.enterLinks = dataBoundToLinks.enter().append('path');
       this.exitLinks = dataBoundToLinks.exit();
       this.updateLinks = dataBoundToLinks.merge(this.enterLinks).attr('data-offset-element', this.innerLinkFillMode);
     } else {
@@ -768,15 +942,12 @@ export class AlluvialDiagram {
       const dataBoundToLinks = this.linkG
         .selectAll('.alluvial-link')
         .data(this.preppedData.links, d => d.data[this.sourceAccessor] + d.data[this.targetAccessor]);
-      this.enterLinks = dataBoundToLinks
-        .enter()
-        .append('path')
-        .attr('class', 'alluvial-link');
+      this.enterLinks = dataBoundToLinks.enter().append('path');
       this.exitLinks = dataBoundToLinks.exit();
       this.updateLinks = dataBoundToLinks.merge(this.enterLinks).attr('data-offset-element', null);
     }
 
-    const dataBoundToLabels = this.labelG.selectAll('text').data(this.preppedData.nodes, d => d[this.nodeIDAccessor]);
+    const dataBoundToLabels = this.labelG.selectAll('text').data(this.preppedData.nodes, d => d[this.innerIDAccessor]);
     this.enteringLabels = dataBoundToLabels.enter().append('text');
     this.exitingLabels = dataBoundToLabels.exit();
     this.updatingLabels = dataBoundToLabels.merge(this.enteringLabels);
@@ -848,22 +1019,94 @@ export class AlluvialDiagram {
     }
   }
 
-  drawLinks() {
-    this.removeTemporaryClickedLinks(this.svg.node());
+  newColumnInterpolationPosition() {
+    return linkHorizontal()
+      .source(d =>
+        d.target.layer <= this.previousMinNodeLayer
+          ? [d.source.x0, d.y0]
+          : d.source.layer >= this.previousMaxNodeLayer
+          ? [d.target.x1, d.y0]
+          : [d.source.x1, d.y0]
+      )
+      .target(d =>
+        d.target.layer <= this.previousMinNodeLayer
+          ? [d.source.x0, d.y0]
+          : d.source.layer >= this.previousMaxNodeLayer
+          ? [d.target.x1, d.y0]
+          : [d.target.x0, d.y1]
+      );
+  }
+
+  enterLinkGeometries() {
+    this.enterLinks.interrupt();
     const linkOpacity = this.linkConfig.visible ? this.linkConfig.opacity : 0;
 
     if (this.innerLinkFillMode === 'source' || this.innerLinkFillMode === 'target') {
-      this.updateLinkGroups.classed('link-group offset-target', true);
-      // .classed('entering', true)
-      // .attr('cursor', !this.suppressEvents ? this.cursor : null);
+      this.enterLinkGroups.attr('class', 'alluvial-link-wrapper');
     }
 
-    this.updateLinks
+    this.enterLinks
+      .attr('class', 'alluvial-link')
+      .classed('entering', true)
+      .attr('d', this.newColumnInterpolationPosition());
+
+    this.enterLinks
+      .attr('cursor', !this.suppressEvents ? this.cursor : null)
       .on('click', !this.suppressEvents ? d => this.onClickHandler(d) : null)
       .on('mouseover', !this.suppressEvents ? d => this.onHoverHandler(d) : null)
       .on('mouseout', !this.suppressEvents ? () => this.onMouseOutHandler() : null)
-      .attr('cursor', !this.suppressEvents ? this.cursor : null)
-      .attr('fill', 'none')
+      .attr('stroke-dasharray', (d, i, n) => {
+        d.linelength = n[i].getTotalLength() - 2;
+        // return d.linelength + ' ' + d.linelength;
+        return d.target.layer <= this.previousMinNodeLayer || d.source.layer >= this.previousMaxNodeLayer
+          ? ''
+          : d.linelength + ' ' + d.linelength;
+      })
+      // .attr('stroke-dashoffset', d => d.linelength)
+      .attr('stroke-dashoffset', d =>
+        d.target.layer <= this.previousMinNodeLayer || d.source.layer >= this.previousMaxNodeLayer ? 0 : d.linelength
+      )
+      .attr('stroke-width', d =>
+        d.target.layer <= this.previousMinNodeLayer || d.source.layer >= this.previousMaxNodeLayer
+          ? Math.max(1, d.width)
+          : 0.1
+      )
+      .attr('stroke-opacity', linkOpacity)
+      .transition('enter')
+      .duration(this.duration)
+      .ease(easeCircleIn)
+      .attr('d', sankeyLinkHorizontal())
+      .attr('stroke-width', d =>
+        d.target.layer <= this.previousMinNodeLayer || d.source.layer >= this.previousMaxNodeLayer
+          ? Math.max(1, d.width)
+          : 1
+      )
+      .attr('stroke-dashoffset', 0);
+
+    // const test = select(this.svg.node())
+    //   .selectAll('.duplicated-clicked-link');
+
+    // this.enterLinks.each((d, i, n) => {
+    //   const clicked =
+    //     this.clickHighlight &&
+    //     this.clickHighlight.length > 0 &&
+    //     checkClicked(d.data, this.clickHighlight, this.innerInteractionKeys);
+    //   if (clicked) {
+    //     // this.drawDuplicateClickedLink(n[i]);
+    //     // if (n[i].classed('duplicated-clicked-link')){
+    //     // }
+    //   }
+    // });
+  }
+
+  updateLinkGeometries() {
+    this.updateLinks.interrupt();
+    const linkOpacity = this.linkConfig.visible ? this.linkConfig.opacity : 0;
+
+    this.updateLinks
+      .transition('opacity')
+      .ease(easeCircleIn)
+      .duration(this.duration)
       .attr('stroke-opacity', d => {
         return checkInteraction(
           d.data,
@@ -874,8 +1117,45 @@ export class AlluvialDiagram {
           this.innerInteractionKeys
           // this.nodeIDAccessor
         );
+      });
+  }
+
+  exitLinkGeometries() {
+    this.exitLinks.interrupt();
+    const linkOpacity = this.linkConfig.visible ? this.linkConfig.opacity : 0;
+
+    this.exitLinks
+      .attr('stroke-dasharray', (d, i, n) => {
+        d.linelength = n[i].getTotalLength();
+        return d.target.layer <= this.previousMinNodeLayer || d.source.layer >= this.previousMaxNodeLayer
+          ? ''
+          : d.linelength + ' ' + d.linelength;
       })
-      .attr('d', sankeyLinkHorizontal())
+      .transition('exit')
+      .ease(easeCircleIn)
+      .duration(this.duration)
+      .attr('d', this.newColumnInterpolationPosition())
+      .attr('stroke-opacity', linkOpacity)
+      .attr('stroke-dashoffset', d => d.linelength)
+      .attr('stroke-width', d =>
+        d.target.layer <= this.currentMinNodeLayer || d.source.layer >= this.currentMaxNodeLayer
+          ? Math.max(1, d.width)
+          : 0.1
+      )
+      .remove();
+  }
+
+  drawLinkGeometries() {
+    this.removeTemporaryClickedLinks(this.svg.node());
+    // const linkOpacity = this.linkConfig.visible ? this.linkConfig.opacity : 0;
+
+    if (this.innerLinkFillMode === 'source' || this.innerLinkFillMode === 'target') {
+      this.updateLinkGroups.classed('link-group offset-target', true);
+      // .classed('entering', true)
+      // .attr('cursor', !this.suppressEvents ? this.cursor : null);
+    }
+
+    this.updateLinks
       .attr('stroke', d =>
         this.innerLinkFillMode === 'group'
           ? this.colorArr[this.groupKeys.indexOf(d[this.groupAccessor])]
@@ -887,17 +1167,41 @@ export class AlluvialDiagram {
           ? this.colorArr[d.source.index]
           : this.colorArr[d.target.index]
       )
+      .attr('fill', 'none')
+      .transition('update')
+      .duration(this.duration)
+      .ease(easeCircleIn)
+      // .attr('stroke-opacity', d => {
+      //   return checkInteraction(
+      //     d.data,
+      //     linkOpacity,
+      //     this.hoverOpacity,
+      //     this.hoverHighlight,
+      //     this.clickHighlight,
+      //     this.innerInteractionKeys
+      //     // this.nodeIDAccessor
+      //   );
+      // })
+      .attr('d', sankeyLinkHorizontal())
       .attr('stroke-width', d => Math.max(1, d.width))
-      .each((d, i, n) => {
-        const clicked =
-          this.clickHighlight &&
-          this.clickHighlight.length > 0 &&
-          checkClicked(d.data, this.clickHighlight, this.innerInteractionKeys);
-        if (clicked) {
-          // this will add a non-interactive duplicate of each clicked link above the existing ones
-          // so that the link visually appears above all other links, but the keyboard nav order does not change
-          this.drawDuplicateClickedLink(n[i]);
-        }
+      .call(transitionEndAll, () => {
+        this.removeTemporaryClickedLinks(this.svg.node());
+        this.updateLinks
+          .classed('entering', false)
+          .attr('d', sankeyLinkHorizontal())
+          .attr('stroke-dasharray', '');
+
+        this.updateLinks.each((d, i, n) => {
+          const clicked =
+            this.clickHighlight &&
+            this.clickHighlight.length > 0 &&
+            checkClicked(d.data, this.clickHighlight, this.innerInteractionKeys);
+          if (clicked) {
+            // this will add a non-interactive duplicate of each clicked link above the existing ones
+            // so that the link visually appears above all other links, but the keyboard nav order does not change
+            this.drawDuplicateClickedLink(n[i], d);
+          }
+        });
       });
 
     this.updateLinks
@@ -925,7 +1229,7 @@ export class AlluvialDiagram {
   }
 
   // creates a clone of clicked links
-  drawDuplicateClickedLink(inputElement) {
+  drawDuplicateClickedLink(inputElement, d) {
     const source = inputElement;
     const className = 'vcl-accessibility-focus';
     const parent = source.parentNode;
@@ -934,6 +1238,8 @@ export class AlluvialDiagram {
       .classed('alluvial-link', false)
       .classed(className + '-highlight ' + className + '-hover', true)
       .classed('duplicated-clicked-link', true)
+      .classed('entering', false)
+      .data([d.data])
       .attr('focusable', false)
       .attr('aria-label', null)
       .attr('aria-hidden', true)
@@ -957,7 +1263,103 @@ export class AlluvialDiagram {
       .remove();
   }
 
-  drawNodes() {
+  enterNodeGeometries() {
+    this.enterNodes.interrupt();
+
+    if (!this.defaults) {
+      this.enterNodes.classed('entering', true);
+    }
+
+    this.enterNodes
+      .select('.alluvial-node')
+      .attr('fill', (_, i) => (this.nodeConfig.fill ? this.colorArr[i] || this.colorArr[0] : '#E4E4E4'))
+      .attr('stroke', '#717171')
+      .attr('stroke-width', '1px')
+      .attr('x', d => d.x0)
+      .attr('y', d => d.y0)
+      .attr('height', d => d.y1 - d.y0)
+      .attr('opacity', 0)
+      .attr('width', d => d.x1 - d.x0);
+
+    // .transition('enter_nodes')
+    // .delay(20 * this.duration)
+    // .duration(this.duration)
+    // .ease(easeCircleIn)
+    // .attr('x', d => d.x0)
+    // .attr('y', d => d.y0)
+    // .attr('height', d => d.y1 - d.y0)
+    // .attr('width', d => d.x1 - d.x0)
+    // .attr('opacity', 1);
+
+    // this.enterNodeGroups
+    //   .attr('class', 'node-wrapper')
+    //   .attr('data-offset-group', 'true');
+    // this.enterNodes
+    //   .attr('class', 'alluvial-node');
+  }
+
+  updateNodeGeometries() {
+    this.updateNodes.interrupt();
+
+    this.updateNodes
+      .select('.alluvial-node')
+      .transition('node_opacity')
+      .duration((_, i, n) => {
+        if (select(n[i].parentNode).classed('entering')) {
+          // select(n[i].parentNode).classed('entering', false);
+          return this.duration / 3;
+        }
+        return 0;
+      })
+      // .duration(this.duration)
+      .delay((_, i, n) => {
+        return select(n[i].parentNode).classed('entering') ? this.duration / 1.2 : 0;
+      })
+      .ease(easeCircleIn)
+      .attr(
+        'opacity',
+        1
+        // d => {
+        //   return checkInteraction(
+        //     d.data,
+        //     1,
+        //     this.hoverOpacity,
+        //     this.hoverHighlight,
+        //     this.clickHighlight,
+        //     this.innerInteractionKeys
+        //     // this.nodeIDAccessor
+        //   );
+        // }
+      );
+  }
+
+  exitNodeGeometries() {
+    this.exitNodes.interrupt();
+
+    this.exitNodes
+      .select('.alluvial-node')
+      .transition('exit')
+      .ease(easeCircleIn)
+      .duration(this.duration / 3)
+      .attr('opacity', 0)
+      .attr('width', 0)
+      .select(function() {
+        return this.parentNode;
+      })
+      .remove();
+
+    // this.exitNodes.remove();
+
+    // this.exitNodes
+    //   .select('.alluvial-node')
+    //   .transition('exit')
+    //   .ease(easeCircleIn)
+    //   .duration(this.duration)
+    //   // .attr('opacity', 0)
+    //   .attr('height', 0);
+  }
+
+  drawNodeGeometries() {
     this.updateNodes
       .select('.alluvial-node')
       // .on('click', !this.suppressEvents ? d => this.onClickHandler(d) : null)
@@ -965,91 +1367,73 @@ export class AlluvialDiagram {
       // .on('mouseover', !this.suppressEvents ? d => this.onHoverHandler(d) : null)
       // .on('mouseout', !this.suppressEvents ? () => this.onMouseOutHandler() : null)
       // .attr('cursor', !this.suppressEvents ? this.cursor : null)
+      .transition('update_nodes')
+      .duration((_, i, n) => {
+        return select(n[i].parentNode).classed('entering') ? this.duration / 3 : this.duration;
+      })
+      .delay((_, i, n) => {
+        return select(n[i].parentNode).classed('entering') ? this.duration / 1.2 : 0;
+      })
+      .ease(easeCircleIn)
       .attr('x', d => d.x0)
       .attr('y', d => d.y0)
       .attr('height', d => d.y1 - d.y0)
       .attr('width', d => d.x1 - d.x0)
       .attr('opacity', 1)
-      // d => {
-      // let matchHover = true;
-      // if (d[this.sourceLinksString].length) {
-      //   matchHover = d[this.sourceLinksString].some(
-      //     linkData =>
-      //       checkInteraction(
-      //         linkData,
-      //         1,
-      //         this.hoverOpacity,
-      //         this.hoverHighlight,
-      //         this.clickHighlight,
-      //         this.innerInteractionKeys,
-      //         this.interactionKeysWithObjs,
-      //         this.nodeIDAccessor
-      //       ) >= 1
-      //   );
-      // }
-      // if (d[this.targetLinksString].length) {
-      //   matchHover = d[this.targetLinksString].some(
-      //     linkData =>
-      //       checkInteraction(
-      //         linkData,
-      //         1,
-      //         this.hoverOpacity,
-      //         this.hoverHighlight,
-      //         this.clickHighlight,
-      //         this.innerInteractionKeys,
-      //         this.interactionKeysWithObjs,
-      //         this.nodeIDAccessor
-      //       ) >= 1
-      //   );
-      // }
-      // return matchHover ? 1 : this.hoverOpacity;
-      // })
-      .attr('fill', (_, i) => (this.nodeConfig.fill ? this.colorArr[i] || this.colorArr[0] : '#E4E4E4'))
-      .attr('stroke', '#717171');
+      .call(transitionEndAll, () => {
+        this.updateNodes.classed('entering', false);
+        // .attr('opacity', 1)
+        // .attr('d', sankeyLinkHorizontal())
+        // .attr('stroke-dasharray', '');
+      });
+    // d => {
+    // let matchHover = true;
+    // if (d[this.sourceLinksString].length) {
+    //   matchHover = d[this.sourceLinksString].some(
+    //     linkData =>
+    //       checkInteraction(
+    //         linkData,
+    //         1,
+    //         this.hoverOpacity,
+    //         this.hoverHighlight,
+    //         this.clickHighlight,
+    //         this.innerInteractionKeys,
+    //         this.interactionKeysWithObjs,
+    //         this.nodeIDAccessor
+    //       ) >= 1
+    //   );
+    // }
+    // if (d[this.targetLinksString].length) {
+    //   matchHover = d[this.targetLinksString].some(
+    //     linkData =>
+    //       checkInteraction(
+    //         linkData,
+    //         1,
+    //         this.hoverOpacity,
+    //         this.hoverHighlight,
+    //         this.clickHighlight,
+    //         this.innerInteractionKeys,
+    //         this.interactionKeysWithObjs,
+    //         this.nodeIDAccessor
+    //       ) >= 1
+    //   );
+    // }
+    // return matchHover ? 1 : this.hoverOpacity;
+    // })
+    // each item below should be their own functions when watchers are added
+    // .attr('fill', (_, i) => (this.nodeConfig.fill ? this.colorArr[i] || this.colorArr[0] : '#E4E4E4'))
+    // .attr('stroke', '#717171')
     // .attr('stroke-width', '1px');
   }
 
-  drawNodeLabels() {
-    const opacity = this.dataLabel.visible ? 1 : 0;
-    const lastColumnLayer = max(this.preppedData.nodes, d => d.layer);
-    this.widthAllNodesNoLinks = lastColumnLayer * this.nodeConfig.width + lastColumnLayer * this.nodeConfig.width;
+  enterNodeLabels() {
+    this.enteringLabels.interrupt();
+    this.widthAllNodesNoLinks = this.nodeCount * this.nodeConfig.width + this.nodeCount * this.nodeConfig.width;
     this.noLinksLeftPadding = (this.innerPaddedWidth - this.widthAllNodesNoLinks) / 2;
 
-    this.updatingLabels
-      .attr('opacity', d => {
-        if (this.linkConfig.visible) {
-          let matchHover = true;
-          if (d[this.sourceLinksString].length) {
-            matchHover = d[this.sourceLinksString].some(
-              linkData =>
-                checkInteraction(
-                  linkData.data,
-                  opacity,
-                  this.hoverOpacity,
-                  this.hoverHighlight,
-                  this.clickHighlight,
-                  this.innerInteractionKeys
-                ) >= 1
-            );
-          }
-          if (d[this.targetLinksString].length) {
-            matchHover = d[this.targetLinksString].some(
-              linkData =>
-                checkInteraction(
-                  linkData.data,
-                  opacity,
-                  this.hoverOpacity,
-                  this.hoverHighlight,
-                  this.clickHighlight,
-                  this.innerInteractionKeys
-                ) >= 1
-            );
-          }
-          return matchHover ? 1 : 0;
-        } else {
-          return d.layer === 0 ? opacity : d.layer === lastColumnLayer ? opacity : 0;
-        }
-      })
+    this.enteringLabels
+      .attr('class', 'alluvial-diagram-dataLabel entering')
+      .attr('opacity', 0)
       .attr('x', d => {
         if (this.linkConfig.visible) {
           return this.dataLabel.placement === 'outside'
@@ -1084,8 +1468,369 @@ export class AlluvialDiagram {
           : d.x0 < this.innerPaddedWidth / 2
           ? 'start'
           : 'end';
+      });
+  }
+
+  updateNodeLabels() {
+    this.updatingLabels.interrupt('label_opacity');
+    const opacity = this.dataLabel.visible ? 1 : 0;
+
+    this.updatingLabels
+      .transition('label_opacity')
+      .ease(easeCircleIn)
+      // .duration(this.duration)
+      .duration((_, i, n) => {
+        if (select(n[i]).classed('entering')) {
+          return this.duration / 3;
+        }
+        return 0;
       })
-      .text(d => d[this.innerLabelAccessor]);
+      // .duration(this.duration)
+      .delay((_, i, n) => {
+        return select(n[i]).classed('entering') ? this.duration / 1.2 : 0;
+      })
+      .attr('opacity', d => {
+        if (this.linkConfig.visible) {
+          let matchHover = true;
+          if (d[this.sourceLinksString].length) {
+            matchHover = d[this.sourceLinksString].some(
+              linkData =>
+                checkInteraction(
+                  linkData.data,
+                  opacity,
+                  this.hoverOpacity,
+                  this.hoverHighlight,
+                  this.clickHighlight,
+                  this.innerInteractionKeys
+                ) >= 1
+            );
+          }
+          if (d[this.targetLinksString].length) {
+            matchHover = d[this.targetLinksString].some(
+              linkData =>
+                checkInteraction(
+                  linkData.data,
+                  opacity,
+                  this.hoverOpacity,
+                  this.hoverHighlight,
+                  this.clickHighlight,
+                  this.innerInteractionKeys
+                ) >= 1
+            );
+          }
+          return matchHover ? 1 : 0;
+        } else {
+          return d.layer === 0 ? opacity : d.layer === this.nodeCount ? opacity : 0;
+        }
+      });
+  }
+
+  exitNodeLabels() {
+    this.exitingLabels.interrupt();
+
+    this.exitingLabels
+      .transition('exit_labels')
+      // .duration(this.duration)
+      .duration(this.duration / 3)
+      .ease(easeCircleIn)
+      .attr('opacity', 0)
+      .remove();
+  }
+
+  drawNodeLabels() {
+    // const opacity = this.dataLabel.visible ? 1 : 0;
+    const hideOnly = this.dataLabel.placement !== 'auto' && this.dataLabel.collisionHideOnly;
+
+    this.widthAllNodesNoLinks = this.nodeCount * this.nodeConfig.width + this.nodeCount * this.nodeConfig.width;
+    this.noLinksLeftPadding = (this.innerPaddedWidth - this.widthAllNodesNoLinks) / 2;
+
+    const nodeLabelUpdate = this.updatingLabels
+      .text(d => d[this.innerLabelAccessor])
+      .attr('data-x', d => {
+        if (this.linkConfig.visible) {
+          return this.dataLabel.placement === 'outside'
+            ? d.x0 < this.innerPaddedWidth / 2
+              ? d.x0
+              : d.x1
+            : d.x0 < this.innerPaddedWidth / 2
+            ? d.x1
+            : d.x0;
+        } else {
+          return d.x0 < this.innerPaddedWidth / 2
+            ? this.noLinksLeftPadding
+            : this.noLinksLeftPadding + this.widthAllNodesNoLinks + this.nodeConfig.width;
+        }
+      })
+      .attr('data-y', d => (d.y1 + d.y0) / 2)
+      .attr('data-translate-x', this.padding.left + this.margin.left)
+      .attr('data-translate-y', this.padding.top + this.margin.top)
+      .attr('data-use-dx', hideOnly)
+      .attr('data-use-dy', hideOnly)
+      .attr('dx', d =>
+        this.dataLabel.placement === 'outside' || !this.linkConfig.visible
+          ? d.x0 < this.innerPaddedWidth / 2
+            ? '-0.5em'
+            : '0.5em'
+          : d.x0 < this.innerPaddedWidth / 2
+          ? '0.5em'
+          : '-0.5em'
+      )
+      .attr('dy', '0.4em')
+      .transition('update_labels')
+      .duration((_, i, n) => {
+        return select(n[i]).classed('entering') ? this.duration / 3 : this.duration;
+      })
+      .delay((_, i, n) => {
+        return select(n[i]).classed('entering') ? this.duration / 1.2 : 0;
+      })
+      .ease(easeCircleIn);
+
+    if (this.dataLabel.visible && (this.dataLabel.placement === 'auto' || this.dataLabel.collisionHideOnly)) {
+      // we only need the node outlines and correct attributes on them
+      const collisionPlacement = this.dataLabel && this.dataLabel.collisionPlacement;
+      const nodeRects = this.updateNodes
+        .select('.alluvial-node')
+        .attr('data-x', d => d.x0)
+        .attr('data-y', d => d.y0)
+        .attr('data-translate-x', this.padding.left + this.margin.left)
+        .attr('data-translate-y', this.padding.top + this.margin.top)
+        .attr('data-height', d => d.y1 - d.y0)
+        .attr('data-width', d => d.x1 - d.x0)
+        .each((d, i, n) => {
+          // for each node, we create a clone and place it
+          // on either side of the rect to hack an inside/outside
+          // placement from the collision util
+          if (!hideOnly) {
+            const source = n[i];
+            const parent = source.parentNode;
+            const className = 'alluvial-node-collision-clone';
+            const sourceCopy = source.cloneNode();
+            select(sourceCopy)
+              .classed('alluvial-node', false)
+              .classed(className, true)
+              .classed('entering', false)
+              .data([d])
+              .attr('focusable', false)
+              .attr('aria-label', null)
+              .attr('aria-hidden', true)
+              .attr('role', null)
+              .style('pointer-events', 'none')
+              .style('visibility', 'hidden')
+              .attr('tabindex', null)
+              .attr(
+                'data-x',
+                collisionPlacement === 'all'
+                  ? d.x0
+                  : collisionPlacement === 'outside'
+                  ? d.x0 < this.innerPaddedWidth / 2
+                    ? d.x0
+                    : d.x1
+                  : d.x0 < this.innerPaddedWidth / 2
+                  ? d.x1
+                  : d.x0
+              )
+              .attr('data-width', collisionPlacement === 'all' ? d.x1 - d.x0 : 1);
+
+            // temporarily append these to the parent
+            parent.appendChild(sourceCopy);
+          }
+        });
+      const clonedRects = this.updateNodes.select('.alluvial-node-collision-clone');
+      this.bitmaps = resolveLabelCollision({
+        labelSelection: nodeLabelUpdate,
+        avoidMarks: hideOnly ? [nodeRects] : [nodeRects, clonedRects],
+        validPositions: hideOnly ? ['middle'] : ['left', 'right'],
+        offsets: hideOnly ? [1] : [4, 4],
+        accessors: [this.nodeIDAccessor],
+        size: [roundTo(this.width, 0), roundTo(this.height, 0)], // we need the whole width for series labels
+        hideOnly: this.dataLabel.visible && hideOnly
+      });
+      clonedRects.remove();
+
+      // if we are in hide only we need to add attributes back
+      if (hideOnly) {
+        nodeLabelUpdate
+          .attr('text-anchor', d => {
+            return this.dataLabel.placement === 'outside' || !this.linkConfig.visible
+              ? d.x0 < this.innerPaddedWidth / 2
+                ? 'end'
+                : 'start'
+              : d.x0 < this.innerPaddedWidth / 2
+              ? 'start'
+              : 'end';
+          })
+          .attr('x', d => {
+            if (this.linkConfig.visible) {
+              return this.dataLabel.placement === 'outside'
+                ? d.x0 < this.innerPaddedWidth / 2
+                  ? d.x0
+                  : d.x1
+                : d.x0 < this.innerPaddedWidth / 2
+                ? d.x1
+                : d.x0;
+            } else {
+              return d.x0 < this.innerPaddedWidth / 2
+                ? this.noLinksLeftPadding
+                : this.noLinksLeftPadding + this.widthAllNodesNoLinks + this.nodeConfig.width;
+            }
+          })
+          .attr('y', d => (d.y1 + d.y0) / 2)
+          .attr('dx', d =>
+            this.dataLabel.placement === 'outside' || !this.linkConfig.visible
+              ? d.x0 < this.innerPaddedWidth / 2
+                ? '-0.5em'
+                : '0.5em'
+              : d.x0 < this.innerPaddedWidth / 2
+              ? '0.5em'
+              : '-0.5em'
+          )
+          .attr('dy', '0.4em');
+      }
+    } else {
+      nodeLabelUpdate
+        .attr('text-anchor', d => {
+          return this.dataLabel.placement === 'outside' || !this.linkConfig.visible
+            ? d.x0 < this.innerPaddedWidth / 2
+              ? 'end'
+              : 'start'
+            : d.x0 < this.innerPaddedWidth / 2
+            ? 'start'
+            : 'end';
+        })
+        // .attr('opacity', d => {
+        //   if (this.linkConfig.visible) {
+        //     let matchHover = true;
+        //     if (d[this.sourceLinksString].length) {
+        //       matchHover = d[this.sourceLinksString].some(
+        //         linkData =>
+        //           checkInteraction(
+        //             linkData.data,
+        //             opacity,
+        //             this.hoverOpacity,
+        //             this.hoverHighlight,
+        //             this.clickHighlight,
+        //             this.innerInteractionKeys
+        //           ) >= 1
+        //       );
+        //     }
+        //     if (d[this.targetLinksString].length) {
+        //       matchHover = d[this.targetLinksString].some(
+        //         linkData =>
+        //           checkInteraction(
+        //             linkData.data,
+        //             opacity,
+        //             this.hoverOpacity,
+        //             this.hoverHighlight,
+        //             this.clickHighlight,
+        //             this.innerInteractionKeys
+        //           ) >= 1
+        //       );
+        //     }
+        //     return matchHover ? 1 : 0;
+        //   } else {
+        //     return d.layer === 0 ? opacity : d.layer === this.nodeCount ? opacity : 0;
+        //   }
+        // })
+        .attr('x', d => {
+          if (this.linkConfig.visible) {
+            return this.dataLabel.placement === 'outside'
+              ? d.x0 < this.innerPaddedWidth / 2
+                ? d.x0
+                : d.x1
+              : d.x0 < this.innerPaddedWidth / 2
+              ? d.x1
+              : d.x0;
+          } else {
+            return d.x0 < this.innerPaddedWidth / 2
+              ? this.noLinksLeftPadding
+              : this.noLinksLeftPadding + this.widthAllNodesNoLinks + this.nodeConfig.width;
+          }
+        })
+        .attr('y', d => (d.y1 + d.y0) / 2)
+        .attr('dx', d =>
+          this.dataLabel.placement === 'outside' || !this.linkConfig.visible
+            ? d.x0 < this.innerPaddedWidth / 2
+              ? '-0.5em'
+              : '0.5em'
+            : d.x0 < this.innerPaddedWidth / 2
+            ? '0.5em'
+            : '-0.5em'
+        )
+        .attr('dy', '0.4em');
+    }
+    // we need to call this after the transitions
+    nodeLabelUpdate.call(transitionEndAll, () => {
+      this.updatingLabels.classed('entering', false);
+    });
+  }
+
+  updateInteractionState() {
+    // we created an "opacity" transition namespace in update's transition
+    // we override it here to instantly display opacity state (below)
+    this.removeTemporaryClickedLinks(this.svg.node());
+    this.updateLinks.interrupt('opacity');
+    this.updatingLabels.interrupt('label_opacity');
+    const linkOpacity = this.linkConfig.visible ? this.linkConfig.opacity : 0;
+    const opacity = this.dataLabel.visible ? 1 : 0;
+
+    this.updateLinks.attr('stroke-opacity', d => {
+      return checkInteraction(
+        d.data,
+        linkOpacity,
+        this.hoverOpacity,
+        this.hoverHighlight,
+        this.clickHighlight,
+        this.innerInteractionKeys
+        // this.nodeIDAccessor
+      );
+    });
+
+    this.updateLinks.each((d, i, n) => {
+      const clicked =
+        this.clickHighlight &&
+        this.clickHighlight.length > 0 &&
+        checkClicked(d.data, this.clickHighlight, this.innerInteractionKeys);
+      if (clicked) {
+        // this will add a non-interactive duplicate of each clicked link above the existing ones
+        // so that the link visually appears above all other links, but the keyboard nav order does not change
+        this.drawDuplicateClickedLink(n[i], d);
+      }
+    });
+
+    this.updatingLabels.attr('opacity', d => {
+      if (this.linkConfig.visible) {
+        let matchHover = true;
+        if (d[this.sourceLinksString].length) {
+          matchHover = d[this.sourceLinksString].some(
+            linkData =>
+              checkInteraction(
+                linkData.data,
+                opacity,
+                this.hoverOpacity,
+                this.hoverHighlight,
+                this.clickHighlight,
+                this.innerInteractionKeys
+              ) >= 1
+          );
+        }
+        if (d[this.targetLinksString].length) {
+          matchHover = d[this.targetLinksString].some(
+            linkData =>
+              checkInteraction(
+                linkData.data,
+                opacity,
+                this.hoverOpacity,
+                this.hoverHighlight,
+                this.clickHighlight,
+                this.innerInteractionKeys
+              ) >= 1
+          );
+        }
+        return matchHover ? 1 : 0;
+      } else {
+        return d.layer === 0 ? opacity : d.layer === this.nodeCount ? opacity : 0;
+      }
+    });
   }
 
   drawAnnotations() {
@@ -1131,11 +1876,16 @@ export class AlluvialDiagram {
     annotate({
       source: this.rootG.node(),
       data: preppedAnnotations,
-      ignoreScales: true
+      ignoreScales: true,
       // xScale: this.x,
       // xAccessor: this.layout !== 'horizontal' ? this.ordinalAccessor : this.valueAccessor,
       // yScale: this.y,
-      // yAccessor: this.layout !== 'horizontal' ? this.valueAccessor : this.ordinalAccessor
+      // yAccessor: this.layout !== 'horizontal' ? this.valueAccessor : this.ordinalAccessor,
+      width: this.width,
+      height: this.height,
+      padding: this.padding,
+      margin: this.margin,
+      bitmaps: this.bitmaps
     });
   }
 
@@ -1152,11 +1902,9 @@ export class AlluvialDiagram {
     // this initializes the accessibility description section of the chart
     initializeDescriptionRoot({
       rootEle: this.alluvialDiagramEl, // this.lineChartEl,
-      geomType: 'link', // 'node', // maybe not childmost level? very tricky here...
       title: this.accessibility.title || this.mainTitle,
       chartTag: 'alluvial-diagram',
       uniqueID: this.chartID,
-      groupName: 'node', // when do we describe the columns??
       highestHeadingLevel: this.highestHeadingLevel,
       redraw: this.shouldRedrawWrapper
     });
@@ -1363,6 +2111,27 @@ export class AlluvialDiagram {
             <this.bottomLevel class="visa-ui-text--instructions alluvial-sub-title vcl-sub-title">
               {this.subTitle}
             </this.bottomLevel>
+            <keyboard-instructions
+              uniqueID={this.chartID}
+              geomType={'link'}
+              groupName={'node'} // taken from initializeDescriptionRoot, on bar this should be "bar group", stacked bar is "stack", and clustered is "cluster"
+              chartTag={'alluvial-diagram'}
+              width={this.width - (this.margin ? this.margin.right || 0 : 0)}
+              isInteractive={this.accessibility.elementsAreInterface}
+              hasCousinNavigation={this.innerLinkFillMode === 'source' || this.innerLinkFillMode === 'target'}
+              cousinActionOverride={'on a link'}
+              cousinResultOverride={
+                this.innerLinkFillMode === 'source' || this.innerLinkFillMode === 'target'
+                  ? "Drill up to link's Source or Target node"
+                  : ''
+              }
+              disabled={
+                this.suppressEvents &&
+                this.accessibility.elementsAreInterface === false &&
+                this.accessibility.keyboardNavConfig &&
+                this.accessibility.keyboardNavConfig.disabled
+              } // the chart is "simple"
+            />
             <div class="visa-viz-d3-alluvial-container" />
             <div class="alluvial-tooltip vcl-tooltip" style={{ display: this.showTooltip ? 'block' : 'none' }} />
             {/* <data-table
@@ -1377,6 +2146,7 @@ export class AlluvialDiagram {
             /> */}
           </div>
         </div>
+        {/* <canvas id="bitmap-render" /> */}
       </div>
     );
   }

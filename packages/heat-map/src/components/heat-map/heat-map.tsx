@@ -19,6 +19,7 @@ import {
   IDataLabelType,
   ITooltipLabelType,
   IAccessibilityType,
+  IAnimationConfig,
   ILegendType
 } from '@visa/charts-types';
 import { HeatMapDefaultValues } from './heat-map-default-values';
@@ -37,6 +38,7 @@ const {
   buildStrokes,
   convertColorsToTextures,
   findTagLevel,
+  prepareRenderChange,
   initializeDescriptionRoot,
   initializeElementAccess,
   setElementFocusHandler,
@@ -125,6 +127,7 @@ export class HeatMap {
   @Prop({ mutable: true }) cursor: string = HeatMapDefaultValues.cursor;
   @Prop({ mutable: true }) shape: string = HeatMapDefaultValues.shape;
   @Prop({ mutable: true }) hoverOpacity: number = HeatMapDefaultValues.hoverOpacity;
+  @Prop({ mutable: true }) animationConfig: IAnimationConfig = HeatMapDefaultValues.animationConfig;
   @Prop({ mutable: true }) strokeWidth: number = HeatMapDefaultValues.strokeWidth;
 
   // Data label (5/7)
@@ -841,7 +844,6 @@ export class HeatMap {
       hideNonessentialGroups(this.root.node(), this.map.node());
       this.setGroupAccessibilityID();
       this.onChangeHandler();
-      this.duration = 750;
       this.defaults = false;
       resolve('component did load');
     });
@@ -849,6 +851,7 @@ export class HeatMap {
 
   componentDidUpdate() {
     return new Promise(resolve => {
+      this.duration = !this.animationConfig || !this.animationConfig.disabled ? 750 : 0;
       if (this.shouldUpdateDescriptionWrapper) {
         this.setChartDescriptionWrapper();
         this.shouldUpdateDescriptionWrapper = false;
@@ -1186,7 +1189,8 @@ export class HeatMap {
         colors: this.preparedColors,
         rootSVG: this.svg.node(),
         id: this.chartID,
-        scheme
+        scheme,
+        disableTransitions: !this.duration
       });
       this.colorArr = textures;
     }
@@ -1272,25 +1276,35 @@ export class HeatMap {
 
   // reset graph size based on window size
   reSetRoot() {
-    this.svg
-      .transition('root_reset')
-      .duration(this.duration)
-      .ease(easeCircleIn)
+    const changeSvg = prepareRenderChange({
+      selection: this.svg,
+      duration: this.duration,
+      namespace: 'root_reset',
+      easing: easeCircleIn
+    });
+
+    changeSvg
       .attr('width', this.width)
       .attr('height', this.height)
       .attr('viewBox', '0 0 ' + this.width + ' ' + this.height);
 
-    this.root
-      .transition('root_reset')
-      .duration(this.duration)
-      .ease(easeCircleIn)
-      .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`);
+    const changeRoot = prepareRenderChange({
+      selection: this.root,
+      duration: this.duration,
+      namespace: 'root_reset',
+      easing: easeCircleIn
+    });
 
-    this.rootG
-      .transition('root_reset')
-      .duration(this.duration)
-      .ease(easeCircleIn)
-      .attr('transform', `translate(${this.padding.left}, ${this.padding.top})`);
+    changeRoot.attr('transform', `translate(${this.margin.left}, ${this.margin.top})`);
+
+    const changeRootG = prepareRenderChange({
+      selection: this.rootG,
+      duration: this.duration,
+      namespace: 'root_reset',
+      easing: easeCircleIn
+    });
+
+    changeRootG.attr('transform', `translate(${this.padding.left}, ${this.padding.top})`);
 
     setAccessibilityDescriptionWidth(this.chartID, this.width);
   }
@@ -1309,6 +1323,7 @@ export class HeatMap {
       label: this.xAxis.label,
       padding: this.padding,
       hide: swapping || !this.xAxis.visible,
+      duration: this.duration,
       hidePath: this.hideAxisPath
     });
   }
@@ -1327,6 +1342,7 @@ export class HeatMap {
       label: this.yAxis.label,
       padding: this.padding,
       hide: swapping || !this.yAxis.visible,
+      duration: this.duration,
       hidePath: this.hideAxisPath
     });
   }
@@ -2006,11 +2022,9 @@ export class HeatMap {
     // this initializes the accessibility description section of the chart
     initializeDescriptionRoot({
       rootEle: this.heatMapEl,
-      geomType: 'cell',
       title: this.accessibility.title || this.mainTitle,
       chartTag: 'heat-map',
       uniqueID: this.chartID,
-      groupName: 'row',
       highestHeadingLevel: this.highestHeadingLevel,
       redraw: this.shouldRedrawWrapper,
       disableKeyNav:
@@ -2241,6 +2255,21 @@ export class HeatMap {
             {this.subTitle}
           </this.bottomLevel>
           <div class="heat-map-legend vcl-legend" style={{ display: this.legend.visible ? 'block' : 'none' }} />
+          <keyboard-instructions
+            uniqueID={this.chartID}
+            geomType={'cell'}
+            groupName={'row'} // taken from initializeDescriptionRoot, on bar this should be "bar group", stacked bar is "stack", and clustered is "cluster"
+            chartTag={'heat-map'}
+            width={this.width - (this.margin ? this.margin.right || 0 : 0)}
+            isInteractive={this.accessibility.elementsAreInterface}
+            hasCousinNavigation
+            disabled={
+              this.suppressEvents &&
+              this.accessibility.elementsAreInterface === false &&
+              this.accessibility.keyboardNavConfig &&
+              this.accessibility.keyboardNavConfig.disabled
+            } // the chart is "simple"
+          />
           <div class="visa-viz-d3-heat-map-container" />
           <div class="heat-map-tooltip vcl-tooltip" style={{ display: this.showTooltip ? 'block' : 'none' }} />
           <data-table

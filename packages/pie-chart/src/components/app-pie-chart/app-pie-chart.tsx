@@ -7,6 +7,7 @@
  **/
 import { Component, State, Element, h } from '@stencil/core';
 import '@visa/visa-charts-data-table';
+import '@visa/keyboard-instructions';
 @Component({
   tag: 'app-pie-chart',
   styleUrl: 'app-pie-chart.scss'
@@ -14,6 +15,7 @@ import '@visa/visa-charts-data-table';
 export class AppPieChart {
   @State() data: any;
   @State() stateTrigger: any = 0;
+  @State() animations: any = { disabled: false };
   @State() refStateTrigger: any = 0;
   @State() hoverElement: any = '';
   @State() chartUpdates: string;
@@ -44,6 +46,40 @@ export class AppPieChart {
     keyboardNavConfig: { disabled: false }
   };
   @State() suppressEvents: boolean = false;
+  @State() annotations: any = [
+    {
+      note: {
+        label: '2018',
+        bgPadding: 0,
+        align: 'middle',
+        wrap: 210
+      },
+      accessibilityDescription: '2018 High Spend band total is 5,596',
+      x: '8%',
+      y: '40%',
+      disable: ['connector', 'subject'],
+      // dy: '-1%',
+      color: '#000000',
+      className: 'testing1 testing2 testing3',
+      collisionHideOnly: true
+    },
+    {
+      note: {
+        label: 'oasijfoiajsf',
+        bgPadding: 0,
+        align: 'middle',
+        wrap: 210
+      },
+      accessibilityDescription: '2018 High Spend band total is 5,596',
+      x: '8%',
+      y: '40%',
+      disable: ['connector', 'subject'],
+      // dy: '-1%',
+      color: '#000000',
+      className: 'testing1 testing2 testing3',
+      collisionHideOnly: false
+    }
+  ];
 
   refDataStorage: any = [
     [{ label: 'Dining', value: '6931260' }],
@@ -58,11 +94,11 @@ export class AppPieChart {
   dataStorage: any = [
     this.startData,
     [
-      { label: '2018 Share', value: '6126000', otherValue: '6126000' },
-      { label: 'Competitor 1', value: '5126000', otherValue: '5126000' },
-      { label: 'Competitor 2', value: '4126000', otherValue: '4126000' },
-      { label: 'Competitor 3', value: '3126000', otherValue: '3126000' },
-      { label: 'Competitor 4', value: '1126000', otherValue: '1126000' }
+      { label: '2018 Share', value: '1000', otherValue: '6126000' },
+      { label: 'Competitor 1', value: '1000', otherValue: '5126000' },
+      { label: 'Competitor 2', value: '1000', otherValue: '4126000' },
+      { label: 'Competitor 3', value: '6000', otherValue: '3126000' },
+      { label: 'Competitor 4', value: '26000', otherValue: '1126000' }
     ],
     [
       { label: '2018 Share', value: '3126000', otherValue: '8126000' },
@@ -77,11 +113,17 @@ export class AppPieChart {
       { label: 'Total', value: '2324500', otherValue: '5126000' }
     ],
     [
-      { label: '2018 Share', value: '12149000', otherValue: '9126000' },
+      { label: '2018 Share', value: '20149000', otherValue: '9126000' },
       { label: 'Total', value: '4324500', otherValue: '5126000' }
     ]
   ];
-  dataLabel: any = { visible: true, placement: 'middle', labelAccessor: 'value', format: 'normalized' };
+  dataLabel: any = {
+    visible: true,
+    placement: 'edge',
+    labelAccessor: 'value',
+    format: '$0[.][0]a',
+    collisionHideOnly: true
+  }; // format: 'normalized' };
   ref = [{ label: 'PY Share', value: '3396000' }];
   style = { color: 'supp_purple' };
 
@@ -200,6 +242,9 @@ export class AppPieChart {
     this.refStateTrigger = this.refStateTrigger < this.refDataStorage.length - 1 ? this.refStateTrigger + 1 : 0;
     this.refData = this.refDataStorage[this.refStateTrigger];
   }
+  toggleAnimations() {
+    this.animations = { disabled: !this.animations.disabled };
+  }
 
   render() {
     console.log('loaded!', this.chartUpdates);
@@ -278,12 +323,20 @@ export class AppPieChart {
           toggle showEdgeLine
         </button>
 
+        <button
+          onClick={() => {
+            this.toggleAnimations();
+          }}
+        >
+          toggle animations
+        </button>
         <div>
           <pie-chart
             data={this.data}
+            animationConfig={this.animations}
             mainTitle={'test'}
             subTitle={''}
-            centerSubTitle={'chart chart chart'}
+            centerSubTitle={''}
             centerTitle={'Pie'}
             accessibility={this.access}
             suppressEvents={this.suppressEvents}
@@ -292,9 +345,9 @@ export class AppPieChart {
             padding={this.padding}
             ordinalAccessor={'label'}
             valueAccessor={this.valueAccessor}
-            innerRatio={0.75} // {0.0000000001}
+            innerRatio={0} // {0.0000000001}
             dataLabel={this.dataLabel}
-            labelOffset={15}
+            labelOffset={25}
             showLabelNote={true}
             // colors={['blue','grey','brown','darkgreen','#eeeeee']}
             colorPalette={'categorical'}
@@ -302,8 +355,9 @@ export class AppPieChart {
             cursor={'pointer'}
             sortOrder={'default'}
             showTooltip={true}
-            showPercentage={true}
+            showPercentage={false}
             showEdgeLine={this.edgeline}
+            // annotations={this.annotations}
             // referenceData={this.refData}
             // referenceStyle={{ color: 'supp_purple' }}
             // interactionKeys={['category']}

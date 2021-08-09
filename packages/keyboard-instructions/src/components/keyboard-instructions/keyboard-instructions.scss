@@ -1,0 +1,118 @@
+/**
+ * Copyright (c) 2021 Visa, Inc.
+ *
+ * This source code is licensed under the MIT license
+ * https://github.com/visa/visa-chart-components/blob/master/LICENSE
+ *
+ **/
+@import './vcc-ki-button.css';
+@import './vcc-ki-data-table.css';
+
+.vcc-ki-sr {
+  height: 1px;
+  left: -1000000px;
+  overflow: hidden;
+  position: absolute !important;
+  top: auto;
+  width: 1px;
+}
+.vcc-ki-keyboard-instructions-root {
+  position: relative;
+  top: -20px;
+  left: 16px;
+}
+
+.visa-viz-keyboard-instructions-outer-container {
+  border-radius: 0.2rem;
+  background: white;
+  position: absolute;
+  right: 0;
+  z-index: 1; // 1 z-index puts it on top of chart with minimal impact on page objects
+}
+
+kbd {
+  padding: 0.0625rem 0.5rem;
+  border-radius: 0.125rem;
+  border: 1px solid #222222;
+  box-shadow: 1px 1px 0 #222222, 2px 2px 0 #d3d3d3;
+}
+.vcc-ki-keyboard-heading {
+  font-weight: bold;
+  line-height: 24px;
+}
+.vcc-ki-minimize {
+  display: none;
+}
+.vcc-ki-keyboard-instructions-header {
+  padding: 0;
+  margin-right: 32px;
+}
+.vcc-ki-thead .vcc-ki-th {
+  -webkit-box-shadow: 0 -1px 0 var(--theme-data-table-header-underline, #767676) inset;
+  box-shadow: 0 -1px 0 var(--theme-data-table-header-underline, #767676) inset;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.vcc-ki-keyboard-instructions-header > * {
+  -webkit-margin-before: 0.5rem;
+  margin-block-start: 0.5rem;
+  margin-top: 0.5rem;
+  -webkit-margin-after: 0;
+  margin-block-end: 0;
+  margin-bottom: 0;
+}
+.visa-viz-keyboard-instructions-button-wrapper {
+  height: 0px;
+  position: absolute;
+  right: 1px;
+  top: 1px;
+  button {
+    background: white;
+  }
+}
+.visa-viz-keyboard-instructions-button {
+  position: relative;
+  padding: 0;
+  height: 32px;
+  width: 32px;
+}
+.vcc-ki-btn-icon.vcc-ki-state--active [class^='vcc-ki-icon'] {
+  height: 1rem;
+  width: 1rem;
+}
+svg.vcc-ki-icons {
+  display: none;
+}
+.vcc-ki-tbody th {
+  text-align: left;
+  font-weight: normal;
+}
+
+.vcc-ki-disabled-row {
+  kbd {
+    border: 1px dashed;
+    box-shadow: 1px 1px 0 #6e6e6e, 1px 1px 0 #767676;
+  }
+  color: #6e6e6e;
+}
+
+.vcc-ki-bordered {
+  border: 1px solid #222222;
+  padding: 0rem 1rem 0.5rem;
+  .visa-viz-keyboard-instructions-button-wrapper {
+    right: 0;
+    top: 0;
+  }
+}
+.visa-viz-keyboard-instructions-outer-container:hover,
+.visa-viz-keyboard-instructions-outer-container:focus {
+  border: 1px solid #222222;
+  padding: 0rem 1rem 0.5rem;
+  .visa-viz-keyboard-instructions-button-wrapper {
+    right: 0;
+    top: 0;
+  }
+  .vcc-ki-minimize {
+    display: block;
+  }
+}

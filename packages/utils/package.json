@@ -12,7 +12,7 @@
     "prepare": "npm run build",
     "build": "rollup -c",
     "watch": "rollup -c -w",
-    "test:es5-check": "es-check es5 'dist/visa-charts-utils.cjs.js' 'dist/visa-charts-utils.umd.js'"
+    "test:es5-check": "es-check es5 'dist/visa-charts-utils.umd.js'"
   },
   "repository": {
     "type": "git",
@@ -36,6 +36,7 @@
     "d3-time-format": "^2.1.3",
     "d3-transition": "1.1.3",
     "ua-parser-js": "^0.7.21",
+    "vega-canvas": "1.2.6",
     "yup": "^0.28.1"
   },
   "devDependencies": {

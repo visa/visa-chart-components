@@ -9,6 +9,10 @@ import { drawTooltip, initTooltipStyle, overrideTitleTooltip } from './tooltip';
 
 import { circularFind } from './circular-find';
 
+import { findCollision, resolveLabelCollision } from './collisionDetection';
+
+import { prepareBitmap, addToBitmap } from './vega-label/BitMap';
+
 import { checkInteraction, checkClicked, checkHovered, interactionStyle, buildStrokes } from './interaction';
 
 import { drawAxis, wrap } from './axis';
@@ -26,6 +30,8 @@ import { formatDataLabel, placeDataLabels, getDataSymbol } from './dataLabel';
 import { formatStats, roundTo } from './formatStats';
 
 import { formatDate } from './formatDate';
+
+import { prepareRenderChange } from './renderChangeEngine';
 
 import {
   getTexture,
@@ -181,6 +187,10 @@ export {
   ensureTextContrast,
   convertVisaColor,
   circularFind,
+  resolveLabelCollision,
+  prepareBitmap,
+  addToBitmap,
+  findCollision,
   capitalized,
   chartAccessors,
   checkInteraction,
@@ -230,7 +240,8 @@ export {
   scopeDataKeys,
   visaColors,
   validateAccessibilityProps,
-  fixNestedSparseness
+  fixNestedSparseness,
+  prepareRenderChange
 };
 
 // incorporate OSS licenses into build

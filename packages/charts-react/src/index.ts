@@ -5,6 +5,7 @@
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
  *
  **/
+
 export { BarChart } from './components/bar-chart';
 export { BivariateMapboxMap } from './components/bivariate-mapbox-map';
 export { CirclePacking } from './components/circle-packing';
@@ -20,5 +21,6 @@ export { PieChart } from './components/pie-chart';
 export { ScatterPlot } from './components/scatter-plot';
 export { StackedBarChart } from './components/stacked-bar-chart';
 export { DataTable as VisaChartsDataTable } from './components/visa-charts-data-table';
+export { KeyboardInstructions } from './components/keyboard-instructions';
 export { WorldMap } from './components/world-map';
 export { AlluvialDiagram } from './components/alluvial-diagram';

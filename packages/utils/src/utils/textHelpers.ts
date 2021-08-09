@@ -1,16 +1,16 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2021 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
  *
  **/
-export function getTextWidth(text, fontSize, noPadding?) {
+export function getTextWidth(text: string, fontSize: number, noPadding?: boolean, fontFamily?: string) {
   // this gets garbage collected after this function scope closes, since we do not append
   const padding = !noPadding ? 1.1 : 1; // for a11y we add padding, up to 10% of the text's dimensions
   const canvas = document.createElement('canvas');
   const context = canvas.getContext('2d');
-  context.font = fontSize + 'px OpenSans'; //+ fontFace;
+  context.font = fontSize + 'px ' + (fontFamily || 'OpenSans');
   return context.measureText(text).width * padding;
 }
 
