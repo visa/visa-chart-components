@@ -16,13 +16,14 @@ import 'd3-transition';
 import { v4 as uuid } from 'uuid';
 import {
   IBoxModelType,
-  IHoverStyleType,
   IClickStyleType,
+  IHoverStyleType,
   IAxisType,
   IReferenceStyleType,
   IDataLabelType,
   ITooltipLabelType,
   IAccessibilityType,
+  IAnimationConfig,
   ILegendType
 } from '@visa/charts-types';
 import { ScatterPlotDefaultValues } from './scatter-plot-default-values';
@@ -79,7 +80,9 @@ const {
   transitionEndAll,
   visaColors,
   validateAccessibilityProps,
-  findTagLevel
+  findTagLevel,
+  prepareRenderChange,
+  roundTo
 } = Utils;
 
 @Component({
@@ -123,6 +126,7 @@ export class ScatterPlot {
   @Prop({ mutable: true }) referenceStyle: IReferenceStyleType = ScatterPlotDefaultValues.referenceStyle;
   @Prop({ mutable: true }) cursor: string = ScatterPlotDefaultValues.cursor;
   @Prop({ mutable: true }) hoverOpacity: number = ScatterPlotDefaultValues.hoverOpacity;
+  @Prop({ mutable: true }) animationConfig: IAnimationConfig = ScatterPlotDefaultValues.animationConfig;
   @Prop({ mutable: true }) fitLineStyle: IReferenceStyleType = ScatterPlotDefaultValues.fitLineStyle;
   @Prop({ mutable: true }) dotSymbols: string[] = ScatterPlotDefaultValues.dotSymbols;
 
@@ -272,6 +276,7 @@ export class ScatterPlot {
   filter: any;
   textFilter: any;
   strokes: any = {};
+  bitmaps: any;
 
   @Watch('data')
   dataWatcher(_newData, _oldData) {
@@ -483,6 +488,7 @@ export class ScatterPlot {
     this.shouldValidateHoverStyle = true;
     this.shouldValidateClickStyle = true;
     this.shouldSetDotRadius = true;
+    this.shouldUpdateGeometries = true; // this is need for auto placement
     this.shouldUpdateLabels = true;
   }
 
@@ -539,6 +545,7 @@ export class ScatterPlot {
   @Watch('dataLabel')
   labelWatcher(_newVal, _oldVal) {
     this.shouldUpdateLabels = true;
+    this.shouldUpdateGeometries = true; // this is need for auto placement
     this.shouldUpdateTableData = true;
     const newVisibleVal = _newVal && _newVal.visible;
     const oldVisibleVal = _oldVal && _oldVal.visible;
@@ -846,7 +853,6 @@ export class ScatterPlot {
       // we want to pass the PARENT of all the <g>s that contain bars
       hideNonessentialGroups(this.root.node(), this.dotG.node());
       this.setGroupAccessibilityID();
-      this.duration = 750;
       this.defaults = false;
       resolve('component did load');
     });
@@ -854,6 +860,7 @@ export class ScatterPlot {
 
   componentDidUpdate() {
     return new Promise(resolve => {
+      this.duration = !this.animationConfig || !this.animationConfig.disabled ? 750 : 0;
       if (this.shouldUpdateDescriptionWrapper) {
         this.setChartDescriptionWrapper();
         this.shouldUpdateDescriptionWrapper = false;
@@ -1531,6 +1538,11 @@ export class ScatterPlot {
       .attr('data-r', this.dotRadius)
       .attr('data-x', d => this.x(d[this.xAccessor]))
       .attr('data-y', d => this.y(d[this.yAccessor]))
+      .attr('data-translate-x', this.padding.left + this.margin.left)
+      .attr('data-translate-y', this.padding.top + this.margin.top)
+      .attr('data-d', (
+        d // we can use base symbol here, it is much simplier and more performant
+      ) => (this.groupAccessor ? symbols[this.symbol(d[this.groupAccessor])].base : symbols[this.dotSymbols[0]].base))
       .transition('update_d')
       .duration(this.duration)
       .ease(easeCircleIn)
@@ -1597,25 +1609,35 @@ export class ScatterPlot {
 
   // reset graph size based on window size
   reSetRoot() {
-    this.svg
-      .transition('root_reset')
-      .duration(this.duration)
-      .ease(easeCircleIn)
+    const changeSvg = prepareRenderChange({
+      selection: this.svg,
+      duration: this.duration,
+      namespace: 'root_reset',
+      easing: easeCircleIn
+    });
+
+    changeSvg
       .attr('width', this.width)
       .attr('height', this.height)
       .attr('viewBox', '0 0 ' + this.width + ' ' + this.height);
 
-    this.root
-      .transition('root_reset')
-      .duration(this.duration)
-      .ease(easeCircleIn)
-      .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`);
+    const changeRoot = prepareRenderChange({
+      selection: this.root,
+      duration: this.duration,
+      namespace: 'root_reset',
+      easing: easeCircleIn
+    });
 
-    this.rootG
-      .transition('root_reset')
-      .duration(this.duration)
-      .ease(easeCircleIn)
-      .attr('transform', `translate(${this.padding.left}, ${this.padding.top})`);
+    changeRoot.attr('transform', `translate(${this.margin.left}, ${this.margin.top})`);
+
+    const changeRootG = prepareRenderChange({
+      selection: this.rootG,
+      duration: this.duration,
+      namespace: 'root_reset',
+      easing: easeCircleIn
+    });
+
+    changeRootG.attr('transform', `translate(${this.padding.left}, ${this.padding.top})`);
 
     setAccessibilityDescriptionWidth(this.chartID, this.width);
   }
@@ -1631,7 +1653,8 @@ export class ScatterPlot {
       tickInterval: this.xAxis.tickInterval,
       label: this.xAxis.label,
       padding: this.padding,
-      hide: !this.xAxis.visible
+      hide: !this.xAxis.visible,
+      duration: this.duration
     });
   }
 
@@ -1646,7 +1669,8 @@ export class ScatterPlot {
       tickInterval: this.yAxis.tickInterval,
       label: this.yAxis.label,
       padding: this.padding,
-      hide: !this.yAxis.visible
+      hide: !this.yAxis.visible,
+      duration: this.duration
     });
   }
 
@@ -1677,7 +1701,8 @@ export class ScatterPlot {
       left: true,
       padding: this.padding,
       markOffset: this.x(0) || -1,
-      hide: !this.showBaselineY
+      hide: !this.showBaselineY,
+      duration: this.duration
     });
   }
 
@@ -1690,7 +1715,8 @@ export class ScatterPlot {
       left: false,
       padding: this.padding,
       markOffset: this.y(0) || -1,
-      hide: !this.showBaselineX
+      hide: !this.showBaselineX,
+      duration: this.duration
     });
   }
 
@@ -1702,7 +1728,8 @@ export class ScatterPlot {
       this.x,
       false,
       !this.xAxis.gridVisible,
-      this.xAxis.tickInterval
+      this.xAxis.tickInterval,
+      this.duration
     );
   }
 
@@ -1714,7 +1741,8 @@ export class ScatterPlot {
       this.y,
       true,
       !this.yAxis.gridVisible,
-      this.yAxis.tickInterval
+      this.yAxis.tickInterval,
+      this.duration
     );
   }
 
@@ -1844,6 +1872,8 @@ export class ScatterPlot {
   }
 
   drawDataLabels() {
+    const hideOnly = this.dataLabel.placement !== 'auto' && this.dataLabel.collisionHideOnly;
+
     this.updateLabels.text(d => {
       return formatDataLabel(d, this.innerLabelAccessor, this.dataLabel.format);
     });
@@ -1870,11 +1900,20 @@ export class ScatterPlot {
       //     me.classed('moving', true);
       //   }
       // })
+      .style('visibility', (_, i, n) =>
+        this.dataLabel.placement === 'auto' || this.dataLabel.collisionHideOnly
+          ? select(n[i]).style('visibility')
+          : null
+      )
+      .attr('data-x', d => this.x(d[this.xAccessor]))
+      .attr('data-y', d => this.y(d[this.yAccessor]))
+      .attr('data-translate-x', this.padding.left + this.margin.left)
+      .attr('data-translate-y', this.padding.top + this.margin.top)
       .transition('update')
       .ease(easeCircleIn)
       .duration(this.duration);
 
-    placeDataLabels({
+    this.bitmaps = placeDataLabels({
       root: labelSettingUpdate,
       xScale: this.x,
       yScale: this.y,
@@ -1882,7 +1921,19 @@ export class ScatterPlot {
       valueAccessor: this.yAccessor,
       placement: this.dataLabel.placement,
       chartType: 'scatter',
-      labelOffset: this.dotRadius
+      labelOffset: this.dotRadius + this.dotRadius * 0.25,
+      avoidCollision: {
+        runOccupancyBitmap: this.dataLabel.visible && this.dataLabel.placement === 'auto',
+        labelSelection: labelSettingUpdate,
+        avoidMarks: [this.updatePoints],
+        validPositions: hideOnly
+          ? ['middle']
+          : ['middle', 'top', 'bottom', 'left', 'right', 'bottom-right', 'bottom-left', 'top-left', 'top-right'],
+        offsets: hideOnly ? ['middle'] : [1, 2, 4, 4, 1, 1, 1, 1, 1],
+        accessors: [this.xAccessor, this.yAccessor, this.groupAccessor, 'key'], // key is created for lines by nesting done in line,
+        size: [roundTo(this.width, 0), roundTo(this.height, 0)],
+        hideOnly: this.dataLabel.visible && this.dataLabel.collisionHideOnly
+      }
     });
   }
 
@@ -2093,7 +2144,12 @@ export class ScatterPlot {
       xScale: this.x,
       xAccessor: this.xAccessor,
       yScale: this.y,
-      yAccessor: this.yAccessor
+      yAccessor: this.yAccessor,
+      width: this.width,
+      height: this.height,
+      padding: this.padding,
+      margin: this.margin,
+      bitmaps: this.bitmaps
     });
   }
 
@@ -2110,11 +2166,9 @@ export class ScatterPlot {
   setChartDescriptionWrapper() {
     initializeDescriptionRoot({
       rootEle: this.scatterChartEl,
-      geomType: 'point',
       title: this.accessibility.title || this.mainTitle,
       chartTag: 'scatter-plot',
       uniqueID: this.chartID,
-      groupName: 'scatter group',
       highestHeadingLevel: this.highestHeadingLevel,
       redraw: this.shouldRedrawWrapper,
       disableKeyNav:
@@ -2374,6 +2428,21 @@ export class ScatterPlot {
             {this.subTitle}
           </this.bottomLevel>
           <div class="scatter-legend vcl-legend" style={{ display: this.legend.visible ? 'block' : 'none' }} />
+          <keyboard-instructions
+            uniqueID={this.chartID}
+            geomType={'point'}
+            groupName={'scatter group'} // taken from initializeDescriptionRoot, on bar this should be "bar group", stacked bar is "stack", and clustered is "cluster"
+            chartTag={'scatter-plot'}
+            width={this.width - (this.margin ? this.margin.right || 0 : 0)}
+            isInteractive={this.accessibility.elementsAreInterface}
+            hasCousinNavigation
+            disabled={
+              this.suppressEvents &&
+              this.accessibility.elementsAreInterface === false &&
+              this.accessibility.keyboardNavConfig &&
+              this.accessibility.keyboardNavConfig.disabled
+            } // the chart is "simple"
+          />
           <div class="visa-viz-d3-scatter-container" />
           <div class="scatter-tooltip vcl-tooltip" style={{ display: this.showTooltip ? 'block' : 'none' }} />
           <data-table
@@ -2387,6 +2456,7 @@ export class ScatterPlot {
             unitTest={this.unitTest}
           />
         </div>
+        {/* <canvas id="bitmap-render" /> */}
       </div>
     );
   }

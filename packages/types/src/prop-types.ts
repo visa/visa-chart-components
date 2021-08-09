@@ -17,6 +17,8 @@ export interface IDataLabelType {
   placement?: string;
   labelAccessor?: string;
   format?: any;
+  collisionHideOnly?: boolean;
+  collisionPlacement?: string;
 }
 
 export interface IAxisType {
@@ -47,7 +49,9 @@ export interface IClickStyleType {
   color?: string;
   strokeWidth?: string | number;
 }
-
+export interface IAnimationConfig {
+  disabled?: boolean;
+}
 export interface IKeyConfig {
   disabled?: boolean;
 }
@@ -105,6 +109,8 @@ export interface ISeriesLabelType {
   placement?: string;
   label?: string | string[];
   format?: string;
+  collisionHideOnly?: boolean;
+  collisionPlacement?: string;
 }
 
 export interface IDifferenceLabelType {
@@ -112,6 +118,8 @@ export interface IDifferenceLabelType {
   placement?: string;
   calculation?: string;
   format?: any;
+  collisionHideOnly?: boolean;
+  collisionPlacement?: string;
 }
 
 export interface IMapMarkerStyleType {

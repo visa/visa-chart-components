@@ -7,6 +7,7 @@
  **/
 import { Component, State, Event, EventEmitter, Element, h } from '@stencil/core';
 import '@visa/visa-charts-data-table';
+import '@visa/keyboard-instructions';
 
 @Component({
   tag: 'app-dumbbell-plot',
@@ -20,20 +21,21 @@ export class AppDumbbellPlot {
   @State() stateTrigger: any = 0;
   @State() barSize: any = 1;
   @State() layout: any = 'vertical';
+  // @State() layout: any = 'horizontal';
   @State() valueAccessor: any = 'value';
   @State() ordinalAccessor: any = 'date';
   @State() seriesAccessor: any = 'category';
   @State() dataLabelAccessor: any = 'value';
   @State() markerType: any = 'dot';
-  @State() diffLabelVis: any = false;
+  @State() diffLabelVis: any = true;
   @State() markerSize: any = 8;
   @State() height: any = 500;
   @State() width: any = 700;
   @State() sortOrder: any = '';
   @State() xAxisVis: any = true;
   @State() yAxisVis: any = true;
-  @State() dataLabelPlacement: any = 'ends';
-  @State() seriesLabelPlacement: any = 'right';
+  @State() dataLabelPlacement: any = 'auto';
+  @State() seriesLabelPlacement: any = 'auto';
   @State() tooltipAccessor: any = 'category';
   @State() dataLabelVisible: any = true;
   @State() seriesLabelVisible: any = true;
@@ -51,6 +53,41 @@ export class AppDumbbellPlot {
     keyboardNavConfig: { disabled: false }
   };
   @State() suppressEvents: boolean = false;
+  @State() animations: any = { disabled: false };
+  @State() annotations: any = [
+    {
+      note: {
+        label: '2018',
+        bgPadding: 0,
+        align: 'middle',
+        wrap: 210
+      },
+      accessibilityDescription: '2018 High Spend band total is 5,596',
+      x: '8%',
+      y: '40%',
+      disable: ['connector', 'subject'],
+      // dy: '-1%',
+      color: '#000000',
+      className: 'testing1 testing2 testing3',
+      collisionHideOnly: true
+    },
+    {
+      note: {
+        label: 'oasijfoiajsf',
+        bgPadding: 0,
+        align: 'middle',
+        wrap: 210
+      },
+      accessibilityDescription: '2018 High Spend band total is 5,596',
+      x: '8%',
+      y: '40%',
+      disable: ['connector', 'subject'],
+      // dy: '-1%',
+      color: '#000000',
+      className: 'testing1 testing2 testing3',
+      collisionHideOnly: false
+    }
+  ];
   dataStorage: any = [
     [
       {
@@ -287,6 +324,9 @@ export class AppDumbbellPlot {
   }
   changeLegendLabel() {
     this.legendLabels = this.legendLabels[0] !== 'You' ? ['You', 'Them'] : ['Legend Test', 'Different Label'];
+  }
+  toggleAnimations() {
+    this.animations = { disabled: !this.animations.disabled };
   }
   // changeTimeFormat() {
   //   if (this.ordinalAccessor !== 'time') {
@@ -531,6 +571,14 @@ export class AppDumbbellPlot {
           <input
             type="button"
             onClick={() => {
+              this.dataLabelPlacement = 'auto';
+            }}
+            name="auto"
+            value="auto"
+          />
+          <input
+            type="button"
+            onClick={() => {
               this.dataLabelPlacement = 'left';
             }}
             name="left"
@@ -564,6 +612,14 @@ export class AppDumbbellPlot {
         <br />
         <form action="">
           SERIES LABEL PLACEMENT
+          <input
+            type="button"
+            onClick={() => {
+              this.seriesLabelPlacement = 'auto';
+            }}
+            name="auto"
+            value="auto"
+          />
           <input
             type="button"
             onClick={() => {
@@ -642,8 +698,16 @@ export class AppDumbbellPlot {
         >
           change bar size
         </button>
+
+        <button
+          onClick={() => {
+            this.toggleAnimations();
+          }}
+        >
+          toggle animations
+        </button>
         <dumbbell-plot
-          unitTest={true}
+          animationConfig={this.animations}
           data={this.data}
           layout={this.layout}
           height={this.height}
@@ -665,7 +729,7 @@ export class AppDumbbellPlot {
           }}
           differenceLabel={{
             visible: this.diffLabelVis,
-            placement: 'left',
+            placement: 'auto',
             calculation: 'absoluteDiff',
             format: '0.0%'
           }}
@@ -720,6 +784,7 @@ export class AppDumbbellPlot {
           // }}
           hoverOpacity={0.99999}
           showTooltip={true}
+          // annotations={this.annotations}
           hoverHighlight={this.hoverElement}
           clickHighlight={this.clickElement}
           onClickFunc={d => this.onClickFunc(d)}

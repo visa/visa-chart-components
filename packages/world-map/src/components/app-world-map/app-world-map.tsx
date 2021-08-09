@@ -7,6 +7,7 @@
  **/
 import { Component, State, Element, h } from '@stencil/core';
 import '@visa/visa-charts-data-table';
+import '@visa/keyboard-instructions';
 
 @Component({
   tag: 'app-world-map',
@@ -16,6 +17,7 @@ export class AppD3Map {
   @State() data: any = [];
   @State() hoverElement: any = '';
   @State() clickElement: any = [];
+  @State() animations: any = { disabled: false };
   //  = [
   // {
   //   ID: 507,
@@ -275,7 +277,8 @@ export class AppD3Map {
     strokeWidth: 2
   };
   @State() dataLabel: any = {
-    visible: true
+    visible: true,
+    placement: 'auto'
   };
   @State() innerMarkerStyle: any = {
     visible: true,
@@ -301,7 +304,7 @@ export class AppD3Map {
   //   labelAccessor: 'Name'
   // };
   countryStyle: any = {
-    fill: true,
+    fill: false,
     color: 'base_grey',
     opacity: 1,
     strokeWidth: 0.5
@@ -408,12 +411,14 @@ export class AppD3Map {
   changeDataLabel() {
     this.dataLabel = this.dataLabel.labelAccessor
       ? {
-          visible: true
+          visible: true,
+          placement: 'auto'
         }
       : {
           visible: true,
           labelAccessor: 'random',
-          format: '0.00'
+          format: '0.00',
+          placement: 'auto'
         };
   }
   changeAccessElements() {
@@ -442,7 +447,7 @@ export class AppD3Map {
           blend: false,
           fill: true,
           color: 'categorical_blue',
-          radiusRange: [5, 15],
+          radiusRange: [5, 10],
           opacity: 1,
           strokeWidth: 0.5
         }
@@ -451,10 +456,12 @@ export class AppD3Map {
           blend: false,
           fill: true,
           color: 'categorical_blue',
-          radiusRange: [5, 15],
+          radiusRange: [10, 50],
           opacity: 1,
           strokeWidth: 0.5
         };
+
+    this.countryStyle.fill = !this.innerMarkerStyle.visible;
   }
 
   booleanTest() {
@@ -487,6 +494,9 @@ export class AppD3Map {
       ...this.accessibility,
       showExperimentalTextures: !this.accessibility.showExperimentalTextures
     };
+  }
+  toggleAnimations() {
+    this.animations = { disabled: !this.animations.disabled };
   }
 
   render() {
@@ -620,13 +630,21 @@ export class AppD3Map {
           toggle textures
         </button>
 
+        <button
+          onClick={() => {
+            this.toggleAnimations();
+          }}
+        >
+          toggle animations
+        </button>
         <div>
           <world-map
             key={'world-map-1'}
+            animationConfig={this.animations}
             mainTitle={'WORLD'}
             subTitle="Marker Interaction"
-            width={800}
-            height={450}
+            width={400}
+            height={250}
             data={this.smallDataState}
             mapProjection={this.projectionName}
             uniqueID={'unique_map'}
@@ -654,7 +672,7 @@ export class AppD3Map {
             clickStyle={this.clickStyle}
             // hoverStyle={this.hoverStyle}
             countryStyle={this.countryStyle}
-            // markerStyle={this.innerMarkerStyle}
+            markerStyle={this.innerMarkerStyle}
             accessibility={this.accessibility}
             // annotations={[{
             //   "note":{

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2021 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -188,6 +188,12 @@ export interface IStackedBarChartProps {
   accessibility: IAccessibilityType;
 
   /**
+   * @shortDescription Manages settings for chart animation, property 'disabled' defaults to false or undefined
+   * @controlName TextArea
+   * @groupName Accessibility */
+  animationConfig: IAnimationConfig;
+
+  /**
    * @shortDescription Controls visibility, styling and placement of data labels
    * @controlName TextArea
    * @groupName Labels */
@@ -284,6 +290,8 @@ export interface IDataLabelType {
   placement?: string;
   labelAccessor?: string;
   format?: string;
+  collisionHideOnly?: boolean;
+  collisionPlacement?: string;
 }
 
 export interface ILegendType {
@@ -334,6 +342,17 @@ export interface IAccessibilityType {
   disableValidation?: boolean;
   elementsAreInterface?: any;
   onChangeFunc?: any;
+  hideTextures?: boolean;
+  hideStrokes?: boolean;
+  showSmallLabels?: boolean;
+  showExperimentalTextures?: boolean;
+  keyboardNavConfig?: IKeyConfig;
+}
+export interface IAnimationConfig {
+  disabled?: boolean;
+}
+export interface IKeyConfig {
+  disabled?: boolean;
 }
 
 export interface IReferenceStyleType {

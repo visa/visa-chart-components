@@ -48,6 +48,7 @@ export class AlluvialDiagramDefaultValues {
   };
 
   static readonly accessibility = propDefaultValues.accessibility;
+  static readonly animationConfig = propDefaultValues.animationConfig;
   static readonly colorPalette = propDefaultValues.colorPaletteCategorical;
   static readonly dataLabel = propDefaultValues.dataLabel;
   static readonly annotations = propDefaultValues.annotations;

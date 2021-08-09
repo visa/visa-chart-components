@@ -43,6 +43,12 @@ export interface IAlluvialDiagramProps {
   accessibility: IAccessibilityType;
 
   /**
+   * @shortDescription Manages settings for chart animation, property 'disabled' defaults to false or undefined
+   * @controlName TextArea
+   * @groupName Accessibility */
+  animationConfig: IAnimationConfig;
+
+  /**
    * @shortDescription Padding between plot area and axes lines
    * @controlName TextArea
    * @groupName Padding */
@@ -216,6 +222,8 @@ interface IDataLabelType {
   placement: string;
   labelAccessor: string;
   format: any;
+  collisionHideOnly?: boolean;
+  collisionPlacement?: string;
 }
 interface IBoxModelType {
   top: number;
@@ -238,20 +246,31 @@ interface ITooltipLabel {
   format: any;
 }
 
-interface IAccessibilityType {
-  longDescription: string;
-  executiveSummary: string;
-  purpose: string;
-  contextExplanation: string;
-  title: string;
-  elementDescriptionAccessor: string;
-  statisticalNotes: string;
-  structureNotes: string;
-  includeDataKeyNames: boolean;
-  hideDataTableButton: boolean;
-  disableValidation: boolean;
-  elementsAreInterface: any;
-  onChangeFunc: any;
+export interface IAccessibilityType {
+  longDescription?: string;
+  executiveSummary?: string;
+  purpose?: string;
+  contextExplanation?: string;
+  title?: string;
+  elementDescriptionAccessor?: string;
+  statisticalNotes?: string;
+  structureNotes?: string;
+  includeDataKeyNames?: boolean;
+  hideDataTableButton?: boolean;
+  disableValidation?: boolean;
+  elementsAreInterface?: any;
+  onChangeFunc?: any;
+  hideTextures?: boolean;
+  hideStrokes?: boolean;
+  showSmallLabels?: boolean;
+  showExperimentalTextures?: boolean;
+  keyboardNavConfig?: IKeyConfig;
+}
+export interface IAnimationConfig {
+  disabled?: boolean;
+}
+export interface IKeyConfig {
+  disabled?: boolean;
 }
 interface INodeConfigType {
   fill: boolean;

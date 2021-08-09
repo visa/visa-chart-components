@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2021 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -132,6 +132,12 @@ export interface IHeatMapProps {
    * @controlName TextArea
    * @groupName Accessibility */
   accessibility: IAccessibilityType;
+
+  /**
+   * @shortDescription Manages settings for chart animation, property 'disabled' defaults to false or undefined
+   * @controlName TextArea
+   * @groupName Accessibility */
+  animationConfig: IAnimationConfig;
 
   /**
    * @shortDescription Sets the color palette of the bars. Overridden by colors.
@@ -314,6 +320,17 @@ export interface IAccessibilityType {
   disableValidation?: boolean;
   elementsAreInterface?: any;
   onChangeFunc?: any;
+  hideTextures?: boolean;
+  hideStrokes?: boolean;
+  showSmallLabels?: boolean;
+  showExperimentalTextures?: boolean;
+  keyboardNavConfig?: IKeyConfig;
+}
+export interface IAnimationConfig {
+  disabled?: boolean;
+}
+export interface IKeyConfig {
+  disabled?: boolean;
 }
 export interface ITooltipLabelType {
   labelAccessor: string[];

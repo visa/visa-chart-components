@@ -9,6 +9,9 @@ import { newSpecPage, SpecPage } from '@stencil/core/testing';
 import { ScatterPlot } from './scatter-plot';
 import { ScatterPlotDefaultValues } from './scatter-plot-default-values';
 import { scaleOrdinal, scaleLinear } from 'd3-scale';
+// we need to bring in our nested components as well, was required to bring in the source vs dist folder to get it to mount
+import { KeyboardInstructions } from '../../../node_modules/@visa/keyboard-instructions/src/components/keyboard-instructions/keyboard-instructions';
+import { DataTable } from '../../../node_modules/@visa/visa-charts-data-table/src/components/data-table/data-table';
 
 import Utils from '@visa/visa-charts-utils';
 import UtilsDev from '@visa/visa-charts-utils-dev';
@@ -69,7 +72,7 @@ describe('<scatter-plot>', () => {
 
     beforeEach(async () => {
       page = await newSpecPage({
-        components: [ScatterPlot],
+        components: [ScatterPlot, KeyboardInstructions, DataTable],
         html: '<div></div>'
       });
       component = page.doc.createElement('scatter-plot');
@@ -120,14 +123,8 @@ describe('<scatter-plot>', () => {
             : unitTestGeneric[test].testSelector === '[data-testid=mark]'
             ? '[data-testid=marker]'
             : unitTestGeneric[test].testSelector;
-        if (unitTestGeneric[test].prop === 'margin' || unitTestGeneric[test].prop === 'padding') {
-          // skip margin and padding until we can solve issues with parseSVG() and jsdom mocked SVG elements
-          it.skip(`${unitTestGeneric[test].prop}: ${unitTestGeneric[test].name}`, () =>
-            unitTestGeneric[test].testFunc(component, page, innerTestProps, innerTestSelector));
-        } else {
-          it(`${unitTestGeneric[test].prop}: ${unitTestGeneric[test].name}`, () =>
-            unitTestGeneric[test].testFunc(component, page, innerTestProps, innerTestSelector));
-        }
+        it(`${unitTestGeneric[test].prop}: ${unitTestGeneric[test].name}`, () =>
+          unitTestGeneric[test].testFunc(component, page, innerTestProps, innerTestSelector));
       });
     });
 

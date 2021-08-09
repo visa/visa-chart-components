@@ -19,6 +19,10 @@ import {
 } from '../../node_modules/d3-svg-annotation/indexRollupNext.js';
 import { visaColorToHex } from './colors';
 import { hideNode } from './accessibilityUtils';
+import { select } from 'd3-selection';
+import { roundTo } from './formatStats';
+import { resolveLabelCollision } from './collisionDetection';
+import { getTextWidth } from './textHelpers';
 
 interface DatumObject {
   [key: string]: any;
@@ -40,7 +44,12 @@ export function annotate({
   xAccessor,
   yScale,
   yAccessor,
-  ignoreScales
+  ignoreScales,
+  width,
+  height,
+  padding,
+  margin,
+  bitmaps
 }: {
   source?: any;
   data?: any;
@@ -49,6 +58,12 @@ export function annotate({
   yScale?: any;
   yAccessor?: any;
   ignoreScales?: boolean;
+  width?;
+  any;
+  height?: any;
+  padding?: any;
+  margin?: any;
+  bitmaps?: any;
 }) {
   d3.select(source)
     .selectAll('.vcl-annotation-group')
@@ -225,6 +240,13 @@ export function annotate({
       if (d.color) {
         d.color = visaColorToHex(d.color) || d.color;
       }
+      if (d.collisionHideOnly) {
+        if (d.className) {
+          d.className = d.className + ' annotation-detect-collision';
+        } else {
+          d.className = 'annotation-detect-collision';
+        }
+      }
     });
     let makeAnnotations = annotation().annotations(annotationData);
     let makeEditableAnnotations = annotation()
@@ -258,6 +280,14 @@ export function annotate({
 
     annotations.call(makeAnnotations);
     editable.call(makeEditableAnnotations);
+
+    // checking if avoidCollision is set in any annotation object that user passed
+    if (annotationData && annotationData.some(e => e.collisionHideOnly === true)) {
+      hideOverlappingAnnotations(source, width, height, padding, margin, bitmaps);
+    }
+    if (annotationEditableData && annotationEditableData.some(e => e.collisionHideOnly === true)) {
+      hideOverlappingAnnotations(source, width, height, padding, margin, bitmaps);
+    }
   }
 
   // addStrokeUnder(
@@ -299,4 +329,176 @@ function checkDate(d, shouldCheck) {
     return new Date(d);
   }
   return d;
+}
+
+function hideOverlappingAnnotations(source, width, height, padding, margin, bitmaps) {
+  // now that we have annotated we can use existing bitmap to check for collisions
+  // all annotation shapes are drawn as paths
+  // circle.handle is used for edit mode, which we currently don't support
+  // annotation-connector
+  // path.connector
+  // annotation-subject
+  // path.subject
+  // annotation-note
+  // path.note-line
+  // annotation-note-content
+  // text.annotation-note-label
+  // text.annotation-note-title
+  // rect.annotation-note-bg
+  const annotationsG = select(source)
+    .select('.vcl-annotation-group')
+    .select('.annotations');
+  annotationsG.selectAll('.annotation').style('visibility', null);
+  annotationsG.selectAll('.annotation-detect-collision').each((_, i, n) => {
+    // annotationsG.selectAll('.annotation').each((_, i, n) => {
+    const me = n[i];
+    const annotationTransform = parseTransformSimple(select(me).attr('transform'));
+    const annotationTranslate = (annotationTransform && annotationTransform['translate']) || [0, 0];
+    // we will need to address transforms on:
+    // 1. g.annotation
+    // 2. g.annotation-note
+    // 3. g.annotation-note-content
+    // 4. g.connector path.connector-end.connector-dot
+    const annotationNoteTransform =
+      select(me)
+        .select('.annotation-note')
+        .attr('transform') &&
+      parseTransformSimple(
+        select(me)
+          .select('.annotation-note')
+          .attr('transform')
+      );
+    const annotationNoteTranslate = (annotationNoteTransform && annotationNoteTransform['translate']) || [0, 0];
+
+    const annotationNoteContentTransform =
+      select(me)
+        .select('.annotation-note')
+        .select('.annotation-note-content')
+        .attr('transform') &&
+      parseTransformSimple(
+        select(me)
+          .select('.annotation-note')
+          .select('.annotation-note-content')
+          .attr('transform')
+      );
+    const annotationNoteContentTranslate = (annotationNoteContentTransform &&
+      annotationNoteContentTransform['translate']) || [0, 0];
+
+    // first thing we can do is add data-d paths to draw all the annotation stuff to bitmap
+    // paths will also need to handle the various transforms
+    select(me)
+      .selectAll('path')
+      .each((_, i, n) => {
+        const pathMe = select(n[i]);
+        let translateX = annotationTranslate[0] + padding.left + margin.left;
+        let translateY = annotationTranslate[1] + padding.top + margin.top;
+        if (pathMe.classed('note-line')) {
+          translateX += annotationNoteTranslate[0];
+          translateY += annotationNoteTranslate[1];
+        }
+        pathMe
+          .attr('data-d', pathMe.attr('d'))
+          .attr('data-translate-x', translateX)
+          .attr('data-translate-y', translateY);
+      });
+
+    // next we need to try and handle our texts for the annotations
+    // this assumes all text is in the note arena
+    let maxDataWidth = 0;
+    select(me)
+      .selectAll('text')
+      .each((_, i, n) => {
+        const textElement = n[i];
+        const style = getComputedStyle(textElement);
+        const fontSize = parseFloat(style.fontSize);
+        const textHeight = Math.max(fontSize - 1, 1); // clone.getBBox().height;
+        const textWidth = getTextWidth(textElement.textContent, fontSize, true, style.fontFamily);
+        const textMe = select(textElement);
+        const translateX =
+          annotationTranslate[0] +
+          annotationNoteTranslate[0] +
+          annotationNoteContentTranslate[0] +
+          padding.left +
+          margin.left;
+        const translateY =
+          annotationTranslate[1] +
+          annotationNoteTranslate[1] +
+          annotationNoteContentTranslate[1] +
+          padding.top +
+          margin.top;
+        maxDataWidth = Math.max(textWidth, maxDataWidth);
+        textMe
+          .attr('data-x', +textMe.attr('x') || 0)
+          .attr('data-y', textHeight / 2 + +textMe.attr('y') || 0)
+          .attr('data-ignore', textWidth === 0)
+          .attr('data-width', textWidth)
+          .attr('data-height', textHeight)
+          .attr('data-translate-x', translateX)
+          .attr('data-translate-y', translateY)
+          .attr('data-no-text-anchor', true);
+      });
+
+    // if we have no text we set this flag for visibility check later
+    if (maxDataWidth === 0) {
+      select(me).attr('data-no-text', true);
+    }
+  });
+
+  bitmaps = resolveLabelCollision({
+    bitmaps: bitmaps,
+    labelSelection: select('.nothing-exists-here'),
+    avoidMarks: [annotationsG.selectAll('.annotation-detect-collision').selectAll('path')],
+    validPositions: ['middle'],
+    offsets: [1],
+    // offsets: [2, 2, 4, 2, 1, 1, 1, 1],
+    accessors: ['cidx'],
+    size: [roundTo(width, 0), roundTo(height, 0)] // we need the whole width for series labels
+  });
+
+  bitmaps = resolveLabelCollision({
+    bitmaps: bitmaps,
+    labelSelection: annotationsG.selectAll('.annotation-detect-collision text'), //.filter((_, i, n) => +select(n[i]).attr('data-width') > 0),
+    avoidMarks: [],
+    validPositions: ['middle'],
+    offsets: [1],
+    accessors: ['cidx'],
+    size: [roundTo(width, 0), roundTo(height, 0)] // we need the whole width for series labels
+  });
+
+  // now that we have hidden text, we need to  hide the rest of the annotation
+  annotationsG.selectAll('.annotation-detect-collision').each((_, i, n) => {
+    const me = n[i];
+    let textShownIndicator = false;
+    select(me)
+      .selectAll('text')
+      .each((_, i, n) => {
+        const textElement = n[i];
+        const elementIndicator =
+          select(textElement).attr('data-label-hidden') === 'false' &&
+          select(textElement).attr('data-ignore') === 'false';
+        textShownIndicator = textShownIndicator || elementIndicator; // if we already have a true, we need to keep it
+      });
+
+    // this will flip visibility on the full element if we don't find any visible text
+    if (textShownIndicator || select(me).attr('data-no-text') === 'true') {
+      select(me).style('visibility', null);
+    } else {
+      select(me).style('visibility', 'hidden');
+    }
+  });
+}
+
+function parseTransformSimple(transform) {
+  const result = {};
+  transform
+    .trim()
+    .replace(', ', ',')
+    .split(' ')
+    .forEach(transformation => {
+      const step1 = transformation.split(')')[0].split(',');
+      const step2 = step1[0].split('(');
+      result[step2[0]] = [];
+      result[step2[0]].push(+step2[1], +step1[1]);
+    });
+  return result;
 }

@@ -7,6 +7,7 @@
  **/
 import { Component, State, Element, h } from '@stencil/core';
 import '@visa/visa-charts-data-table';
+import '@visa/keyboard-instructions';
 
 @Component({
   tag: 'app-clustered-bar-chart',
@@ -29,6 +30,41 @@ export class AppClusteredBarChart {
     keyboardNavConfig: { disabled: false }
   };
   @State() suppressEvents: boolean = false;
+  @State() animations: any = { disabled: false };
+  @State() annotations: any = [
+    {
+      note: {
+        label: '2018',
+        bgPadding: 0,
+        align: 'middle',
+        wrap: 210
+      },
+      accessibilityDescription: '2018 High Spend band total is 5,596',
+      x: '8%',
+      y: '40%',
+      disable: ['connector', 'subject'],
+      // dy: '-1%',
+      color: '#000000',
+      className: 'testing1 testing2 testing3',
+      collisionHideOnly: true
+    },
+    {
+      note: {
+        label: 'oasijfoiajsf',
+        bgPadding: 0,
+        align: 'middle',
+        wrap: 210
+      },
+      accessibilityDescription: '2018 High Spend band total is 5,596',
+      x: '8%',
+      y: '40%',
+      disable: ['connector', 'subject'],
+      // dy: '-1%',
+      color: '#000000',
+      className: 'testing1 testing2 testing3',
+      collisionHideOnly: false
+    }
+  ];
 
   @Element()
   appEl: HTMLElement;
@@ -252,6 +288,9 @@ export class AppClusteredBarChart {
   changeLayout() {
     this.layout = this.layout === 'vertical' ? 'horizontal' : 'vertical';
   }
+  toggleAnimations() {
+    this.animations = { disabled: !this.animations.disabled };
+  }
 
   render() {
     console.log('!!!!app re-render');
@@ -329,12 +368,20 @@ export class AppClusteredBarChart {
           >
             change layout
           </button>
+          <button
+            onClick={() => {
+              this.toggleAnimations();
+            }}
+          >
+            toggle animations
+          </button>
         </div>
         <clustered-bar-chart
           mainTitle={'Bar Chart in app '}
           subTitle={'example'}
-          height={400}
+          height={600}
           width={800}
+          animationConfig={this.animations}
           yAxis={{
             visible: true,
             gridVisible: true,
@@ -357,7 +404,13 @@ export class AppClusteredBarChart {
             labelTitle: ['', this.tooltipAccessor, 'Transaction'],
             format: ['', '', '$0[.][0]a']
           }}
-          dataLabel={{ visible: true, placement: 'bottom', labelAccessor: 'value', format: '0.0[a]' }}
+          dataLabel={{
+            visible: true,
+            placement: 'auto',
+            labelAccessor: 'value',
+            format: '$0[a]',
+            collisionPlacement: 'right'
+          }}
           colorPalette={'categorical'}
           cursor={'pointer'}
           hoverOpacity={0.2}
@@ -370,6 +423,7 @@ export class AppClusteredBarChart {
           onHoverFunc={d => this.onHoverFunc(d)}
           onMouseOutFunc={() => this.onMouseOut()}
           showTooltip={true}
+          // annotations={this.annotations}
           accessibility={this.accessibility}
           suppressEvents={this.suppressEvents}
         />

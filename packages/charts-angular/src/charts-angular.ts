@@ -5,6 +5,7 @@
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
  *
  **/
+
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 // import { CommonModule } from '@angular/common';
 import { applyPolyfills, defineCustomElements as defineBarChart } from '@visa/bar-chart/dist/loader';
@@ -24,6 +25,7 @@ import { defineCustomElements as defineStackedBarChart } from '@visa/stacked-bar
 import { defineCustomElements as defineVisaChartsDataTable } from '@visa/visa-charts-data-table/dist/loader';
 import { defineCustomElements as defineWorldMap } from '@visa/world-map/dist/loader';
 import { defineCustomElements as defineAlluvialDiagram } from '@visa/alluvial-diagram/dist/loader';
+import { defineCustomElements as defineKeyboardInstructions } from '@visa/keyboard-instructions/dist/loader';
 
 import { AlluvialDiagram } from './directives/alluvial-diagram';
 import { BarChart } from './directives/bar-chart';
@@ -79,6 +81,7 @@ applyPolyfills().then(() => {
   defineScatterPlot();
   defineStackedBarChart();
   defineVisaChartsDataTable();
+  defineKeyboardInstructions();
   defineWorldMap();
 });
 

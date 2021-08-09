@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2021 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -307,11 +307,7 @@ export const generic_margin_default_load = {
 
     // ASSERT
     const marginG = page.doc.querySelector(testSelector);
-    flushTransitions(marginG);
-    expect(marginG).toEqualAttributes({
-      height: BASEHEIGHT - EXPECTEDMARGIN.top - EXPECTEDMARGIN.bottom,
-      width: BASEWIDTH - EXPECTEDMARGIN.left - EXPECTEDMARGIN.right
-    });
+    expect(marginG).toEqualAttribute('transform', `translate(${EXPECTEDMARGIN.left}, ${EXPECTEDMARGIN.top})`);
   }
 };
 
@@ -336,11 +332,7 @@ export const generic_margin_custom_load = {
 
     // ASSERT
     const marginG = page.doc.querySelector(testSelector);
-    flushTransitions(marginG);
-    expect(marginG).toEqualAttributes({
-      height: BASEHEIGHT - EXPECTEDMARGIN.top - EXPECTEDMARGIN.bottom,
-      width: BASEWIDTH - EXPECTEDMARGIN.left - EXPECTEDMARGIN.right
-    });
+    expect(marginG).toEqualAttribute('transform', `translate(${EXPECTEDMARGIN.left}, ${EXPECTEDMARGIN.top})`);
   }
 };
 
@@ -348,13 +340,17 @@ export const generic_margin_custom_update = {
   prop: 'margin',
   group: 'margin',
   name: 'custom margin on update',
-  testProps: { margin: { bottom: 25, left: 25, right: 25, top: 25 } },
+  testProps: { margin: { bottom: 25, left: 25, right: 25, top: 25 }, animationConfig: { disabled: true } },
   testSelector: '[data-testid=margin-container]',
   testFunc: async (component: any, page: SpecPage, testProps: object, testSelector: string) => {
     // ARRANGE
     const EXPECTEDMARGIN = testProps['margin'] || { bottom: 25, left: 25, right: 25, top: 25 }; // if default is not sent cause error
     const BASEHEIGHT = 600;
     const BASEWIDTH = 600;
+    // ARRANGE
+    Object.keys(testProps).forEach(prop => {
+      component[prop] = testProps[prop];
+    });
     component.height = BASEHEIGHT;
     component.width = BASEWIDTH;
 
@@ -368,11 +364,7 @@ export const generic_margin_custom_update = {
 
     // ASSERT
     const marginG = page.doc.querySelector(testSelector);
-    flushTransitions(marginG);
-    expect(marginG).toEqualAttributes({
-      height: BASEHEIGHT - EXPECTEDMARGIN.top - EXPECTEDMARGIN.bottom,
-      width: BASEWIDTH - EXPECTEDMARGIN.left - EXPECTEDMARGIN.right
-    });
+    expect(marginG).toEqualAttribute('transform', `translate(${EXPECTEDMARGIN.left}, ${EXPECTEDMARGIN.top})`);
   }
 };
 
@@ -399,11 +391,7 @@ export const generic_padding_default_load = {
 
     // ASSERT
     const paddingG = page.doc.querySelector(testSelector);
-    flushTransitions(paddingG);
-    expect(paddingG).toEqualAttributes({
-      height: BASEHEIGHT - EXPECTEDMARGIN.top - EXPECTEDMARGIN.bottom - EXPECTEDPADDING.top - EXPECTEDPADDING.bottom,
-      width: BASEWIDTH - EXPECTEDMARGIN.left - EXPECTEDMARGIN.right - EXPECTEDPADDING.left - EXPECTEDPADDING.right
-    });
+    expect(paddingG).toEqualAttribute('transform', `translate(${EXPECTEDPADDING.left}, ${EXPECTEDPADDING.top})`);
   }
 };
 
@@ -430,11 +418,7 @@ export const generic_padding_custom_load = {
 
     // ASSERT
     const paddingG = page.doc.querySelector(testSelector);
-    flushTransitions(paddingG);
-    expect(paddingG).toEqualAttributes({
-      height: BASEHEIGHT - EXPECTEDMARGIN.top - EXPECTEDMARGIN.bottom - EXPECTEDPADDING.top - EXPECTEDPADDING.bottom,
-      width: BASEWIDTH - EXPECTEDMARGIN.left - EXPECTEDMARGIN.right - EXPECTEDPADDING.left - EXPECTEDPADDING.right
-    });
+    expect(paddingG).toEqualAttribute('transform', `translate(${EXPECTEDPADDING.left}, ${EXPECTEDPADDING.top})`);
   }
 };
 
@@ -442,7 +426,7 @@ export const generic_padding_custom_update = {
   prop: 'padding',
   group: 'padding',
   name: 'custom padding on update',
-  testProps: { padding: { bottom: 25, left: 25, right: 25, top: 25 } },
+  testProps: { padding: { bottom: 25, left: 25, right: 25, top: 25 }, animationConfig: { disabled: true } },
   testSelector: '[data-testid=padding-container]',
   testFunc: async (component: any, page: SpecPage, testProps: object, testSelector: string) => {
     // ARRANGE
@@ -450,6 +434,11 @@ export const generic_padding_custom_update = {
     const EXPECTEDPADDING = testProps['padding'] || { bottom: 100, left: 100, right: 100, top: 100 }; // if default is not sent cause error
     const BASEHEIGHT = 600;
     const BASEWIDTH = 600;
+    // ARRANGE
+    Object.keys(testProps).forEach(prop => {
+      component[prop] = testProps[prop];
+    });
+
     component.height = BASEHEIGHT;
     component.width = BASEWIDTH;
     component.margin = EXPECTEDMARGIN;
@@ -464,11 +453,7 @@ export const generic_padding_custom_update = {
 
     // ASSERT
     const paddingG = page.doc.querySelector(testSelector);
-    flushTransitions(paddingG);
-    expect(paddingG).toEqualAttributes({
-      height: BASEHEIGHT - EXPECTEDMARGIN.top - EXPECTEDMARGIN.bottom - EXPECTEDPADDING.top - EXPECTEDPADDING.bottom,
-      width: BASEWIDTH - EXPECTEDMARGIN.left - EXPECTEDMARGIN.right - EXPECTEDPADDING.left - EXPECTEDPADDING.right
-    });
+    expect(paddingG).toEqualAttribute('transform', `translate(${EXPECTEDPADDING.left}, ${EXPECTEDPADDING.top})`);
   }
 };
 

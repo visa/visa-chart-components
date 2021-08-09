@@ -168,6 +168,7 @@ export const interaction_clickStyle_default_load = {
     let useFilter = true;
     let fillStrokeOpacity = false;
     let applyFlushTransitions = true;
+    let customRadiusModifier = [0, 0, 0, 0, 0];
     if (Object.keys(testProps).length) {
       Object.keys(testProps).forEach(testProp => {
         if (testProp === 'useFilter') {
@@ -176,13 +177,21 @@ export const interaction_clickStyle_default_load = {
           fillStrokeOpacity = testProps[testProp];
         } else if (testProp === 'applyFlushTransitions') {
           applyFlushTransitions = testProps[testProp];
+        } else if (testProp === 'customRadiusModifier') {
+          customRadiusModifier = testProps[testProp];
         } else if (testProp !== 'clickHighlight') {
           component[testProp] = testProps[testProp];
         }
       });
     }
     component.clickHighlight = [component.data[0]];
-    const expectedMorphRadius = [1, 0, 1, DEFAULTCLICKSTYLE.strokeWidth + 1, DEFAULTCLICKSTYLE.strokeWidth + 2];
+    const expectedMorphRadius = [
+      1 + customRadiusModifier[0],
+      0 + customRadiusModifier[1],
+      1 + customRadiusModifier[2],
+      DEFAULTCLICKSTYLE.strokeWidth + 1 + customRadiusModifier[3],
+      DEFAULTCLICKSTYLE.strokeWidth + 2 + customRadiusModifier[4]
+    ];
 
     // ACT
     page.root.appendChild(component);
@@ -282,6 +291,7 @@ export const interaction_clickStyle_custom_load = {
     let useFilter = true;
     let fillStrokeOpacity = false;
     let applyFlushTransitions = true;
+    let customRadiusModifier = [0, 0, 0, 0, 0];
     if (Object.keys(testProps).length) {
       Object.keys(testProps).forEach(testProp => {
         if (testProp === 'useFilter') {
@@ -290,6 +300,8 @@ export const interaction_clickStyle_custom_load = {
           fillStrokeOpacity = testProps[testProp];
         } else if (testProp === 'applyFlushTransitions') {
           applyFlushTransitions = testProps[testProp];
+        } else if (testProp === 'customRadiusModifier') {
+          customRadiusModifier = testProps[testProp];
         } else if (testProp !== 'clickStyle' && testProp !== 'hoverOpacity') {
           component[testProp] = testProps[testProp];
         }
@@ -298,7 +310,12 @@ export const interaction_clickStyle_custom_load = {
     component.clickHighlight = [component.data[0]];
     component.clickStyle = EXPECTEDCLICKSTYLE;
     component.hoverOpacity = EXPECTEDHOVEROPACITY;
-    const expectedMorphRadius = [1, 0, EXPECTEDCLICKSTYLE.strokeWidth, EXPECTEDCLICKSTYLE.strokeWidth + 1];
+    const expectedMorphRadius = [
+      1 + customRadiusModifier[0],
+      0 + customRadiusModifier[1],
+      EXPECTEDCLICKSTYLE.strokeWidth + customRadiusModifier[2],
+      EXPECTEDCLICKSTYLE.strokeWidth + 1 + customRadiusModifier[3]
+    ];
 
     // ACT
     page.root.appendChild(component);
@@ -390,6 +407,7 @@ export const interaction_clickStyle_custom_update = {
     let useFilter = true;
     let fillStrokeOpacity = false;
     let applyFlushTransitions = true;
+    let customRadiusModifier = [0, 0, 0, 0, 0];
     if (Object.keys(testProps).length) {
       Object.keys(testProps).forEach(testProp => {
         if (testProp === 'useFilter') {
@@ -398,6 +416,8 @@ export const interaction_clickStyle_custom_update = {
           fillStrokeOpacity = testProps[testProp];
         } else if (testProp === 'applyFlushTransitions') {
           applyFlushTransitions = testProps[testProp];
+        } else if (testProp === 'customRadiusModifier') {
+          customRadiusModifier = testProps[testProp];
         } else if (testProp !== 'clickStyle' && testProp !== 'hoverOpacity') {
           component[testProp] = testProps[testProp];
         }
@@ -405,7 +425,12 @@ export const interaction_clickStyle_custom_update = {
     }
     component.clickStyle = EXPECTEDCLICKSTYLE;
     component.hoverOpacity = EXPECTEDHOVEROPACITY;
-    const expectedMorphRadius = [1, 0, EXPECTEDCLICKSTYLE.strokeWidth, EXPECTEDCLICKSTYLE.strokeWidth + 1];
+    const expectedMorphRadius = [
+      1 + customRadiusModifier[0],
+      0 + customRadiusModifier[1],
+      EXPECTEDCLICKSTYLE.strokeWidth + customRadiusModifier[2],
+      EXPECTEDCLICKSTYLE.strokeWidth + 1 + customRadiusModifier[3]
+    ];
 
     // ACT RENDER
     page.root.appendChild(component);
@@ -504,6 +529,7 @@ export const interaction_hoverStyle_default_load = {
     let useFilter = true;
     let fillStrokeOpacity = false;
     let applyFlushTransitions = true;
+    let customRadiusModifier = [0, 0, 0, 0, 0];
     if (Object.keys(testProps).length) {
       Object.keys(testProps).forEach(testProp => {
         if (testProp === 'useFilter') {
@@ -512,13 +538,21 @@ export const interaction_hoverStyle_default_load = {
           fillStrokeOpacity = testProps[testProp];
         } else if (testProp === 'applyFlushTransitions') {
           applyFlushTransitions = testProps[testProp];
+        } else if (testProp === 'customRadiusModifier') {
+          customRadiusModifier = testProps[testProp];
         } else if (testProp !== 'hoverHighlight') {
           component[testProp] = testProps[testProp];
         }
       });
     }
     component.hoverHighlight = component.data[0];
-    const expectedMorphRadius = [1, 0, 1, DEFAULTHOVERSTYLE.strokeWidth + 1, DEFAULTHOVERSTYLE.strokeWidth + 2];
+    const expectedMorphRadius = [
+      1 + customRadiusModifier[0],
+      0 + customRadiusModifier[1],
+      1 + customRadiusModifier[2],
+      DEFAULTHOVERSTYLE.strokeWidth + 1 + customRadiusModifier[3],
+      DEFAULTHOVERSTYLE.strokeWidth + 2 + customRadiusModifier[4]
+    ];
 
     // ACT
     page.root.appendChild(component);
@@ -642,6 +676,7 @@ export const interaction_hoverStyle_custom_load = {
     let useFilter = true;
     let fillStrokeOpacity = false;
     let applyFlushTransitions = true;
+    let customRadiusModifier = [0, 0, 0, 0, 0];
     if (Object.keys(testProps).length) {
       Object.keys(testProps).forEach(testProp => {
         if (testProp === 'useFilter') {
@@ -650,6 +685,8 @@ export const interaction_hoverStyle_custom_load = {
           fillStrokeOpacity = testProps[testProp];
         } else if (testProp === 'applyFlushTransitions') {
           applyFlushTransitions = testProps[testProp];
+        } else if (testProp === 'customRadiusModifier') {
+          customRadiusModifier = testProps[testProp];
         } else if (testProp !== 'hoverStyle' && testProp !== 'hoverOpacity') {
           component[testProp] = testProps[testProp];
         }
@@ -658,7 +695,12 @@ export const interaction_hoverStyle_custom_load = {
     component.hoverHighlight = component.data[0];
     component.hoverStyle = EXPECTEDHOVERSTYLE;
     component.hoverOpacity = EXPECTEDHOVEROPACITY;
-    const expectedMorphRadius = [1, 0, EXPECTEDHOVERSTYLE.strokeWidth, EXPECTEDHOVERSTYLE.strokeWidth + 1];
+    const expectedMorphRadius = [
+      1 + customRadiusModifier[0],
+      0 + customRadiusModifier[1],
+      EXPECTEDHOVERSTYLE.strokeWidth + customRadiusModifier[2],
+      EXPECTEDHOVERSTYLE.strokeWidth + 1 + customRadiusModifier[3]
+    ];
 
     // ACT
     page.root.appendChild(component);
@@ -767,6 +809,7 @@ export const interaction_hoverStyle_custom_update = {
     let useFilter = true;
     let fillStrokeOpacity = false;
     let applyFlushTransitions = true;
+    let customRadiusModifier = [0, 0, 0, 0, 0];
     if (Object.keys(testProps).length) {
       Object.keys(testProps).forEach(testProp => {
         if (testProp === 'useFilter') {
@@ -775,6 +818,8 @@ export const interaction_hoverStyle_custom_update = {
           fillStrokeOpacity = testProps[testProp];
         } else if (testProp === 'applyFlushTransitions') {
           applyFlushTransitions = testProps[testProp];
+        } else if (testProp === 'customRadiusModifier') {
+          customRadiusModifier = testProps[testProp];
         } else if (testProp !== 'hoverStyle' && testProp !== 'hoverOpacity') {
           component[testProp] = testProps[testProp];
         }
@@ -782,7 +827,12 @@ export const interaction_hoverStyle_custom_update = {
     }
     component.hoverStyle = EXPECTEDHOVERSTYLE;
     component.hoverOpacity = EXPECTEDHOVEROPACITY;
-    const expectedMorphRadius = [1, 0, EXPECTEDHOVERSTYLE.strokeWidth, EXPECTEDHOVERSTYLE.strokeWidth + 1];
+    const expectedMorphRadius = [
+      1 + customRadiusModifier[0],
+      0 + customRadiusModifier[1],
+      EXPECTEDHOVERSTYLE.strokeWidth + customRadiusModifier[2],
+      EXPECTEDHOVERSTYLE.strokeWidth + 1 + customRadiusModifier[3]
+    ];
 
     // ACT RENDER
     page.root.appendChild(component);

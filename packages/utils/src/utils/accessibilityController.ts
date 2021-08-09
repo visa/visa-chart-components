@@ -98,12 +98,22 @@ export const setAccessibilityController = ({
     return titleText + descText;
   };
   if (!controller.size()) {
+    select(parent).style('position', 'relative');
     controller = select(parent).insert('div', ':first-child');
 
-    controller.attr('class', 'VCL-controller screen-reader-info');
+    controller
+      .attr('class', 'VCL-controller')
+      .style('position', 'absolute')
+      .style('top', 0)
+      .style('left', 0)
+      .style('opacity', 0)
+      .style('pointer-events', 'none');
   }
 
+  const bounds = node.getBoundingClientRect();
   controller
+    .style('width', `${bounds.width}px`)
+    .style('height', `${bounds.height}px`)
     .attr('id', 'chart-area-' + uniqueID)
     .attr('data-sgck', sameGroupCousinKey || null)
     .attr('data-group', groupAccessor)
@@ -130,7 +140,12 @@ export const setAccessibilityController = ({
               .attr('tabindex', -1);
 
             drawKeyboardFocusClone(n[i], recursive);
-            controller.attr('aria-label', getRootAriaLabel());
+            const bounds = node.getBoundingClientRect();
+
+            controller
+              .style('width', `${bounds.width}px`)
+              .style('height', `${bounds.height}px`)
+              .attr('aria-label', getRootAriaLabel());
           }
         : null
     )
@@ -405,7 +420,22 @@ const prepareControllerNodes = ({
     } else {
       drawCount++;
       rootNode.appendChild(controllerNodeAlreadyExists.parentNode);
-      select(controllerNodeAlreadyExists).on('focus', () => {});
+      const sourceNode = document.getElementById(nodeID);
+
+      // now we get bounds for height/width/top/left after populating content
+      const bounds = sourceNode.getBoundingClientRect();
+      const parentBounds = rootNode.getBoundingClientRect();
+
+      select(controllerNodeAlreadyExists)
+        .on('focus', () => {})
+        .style('position', 'absolute')
+        .style('padding', 0)
+        .style('margin', 0)
+        .style('overflow', 'visible')
+        .style('left', `${bounds.left - parentBounds.left}px`)
+        .style('top', `${bounds.top - parentBounds.top}px`)
+        .style('width', `${bounds.width}px`)
+        .style('height', `${bounds.height}px`);
     }
 
     const tabForwardNode = findTabForwardNode(nodeID, recursive);
@@ -507,10 +537,18 @@ const createControllerNode = ({
     nodeCanBePressed = select(sourceNode).attr('data-aria-pressed');
     nodeType = nodeCanBePressed ? 'button' : 'div';
   }
+
+  // now we get bounds for height/width/top/left after populating content
+  const bounds = sourceNode.getBoundingClientRect();
+  const parentBounds = rootNode.getBoundingClientRect();
   select(rootNode)
     .append(!isIEEdge ? 'figure' : 'div')
     .attr('role', 'figure')
     .append(nodeType)
+    .style('position', 'absolute')
+    .style('padding', 0)
+    .style('margin', 0)
+    .style('overflow', 'visible')
     .attr('role', nodeRole)
     .attr('id', controllerPrefix + nodeID)
     .attr('tabindex', -1)
@@ -627,7 +665,12 @@ const createControllerNode = ({
         select(n[i]).attr('aria-pressed', nodeCanBePressed);
       }
       return label;
-    });
+    })
+    .style('left', `${bounds.left - parentBounds.left}px`)
+    .style('top', `${bounds.top - parentBounds.top}px`)
+    .style('width', `${bounds.width}px`)
+    .style('height', `${bounds.height}px`)
+    .style('pointer-events', 'none');
 };
 
 const findFirstOffsetValidChild = node => {
@@ -846,7 +889,9 @@ const findValidCousin = (currentTarget: any, direction: string, returnEarly?: bo
   let parentSiblingChildren;
   let target;
   const currentParentIdx = getElementIndex(currentTarget.parentNode);
-  let currentIdx = getElementIndex(currentTarget);
+  let currentIdx = select(currentTarget).attr('data-index')
+    ? +select(currentTarget).attr('data-index')
+    : getElementIndex(currentTarget);
   const _parent = currentTarget.parentNode.parentNode;
   const parentsSiblings = [];
   // const parentsSiblings = _parent.querySelectorAll('g:not(.vcl-accessibility-focus-highlight)')
@@ -879,11 +924,19 @@ const findValidCousin = (currentTarget: any, direction: string, returnEarly?: bo
         : parentsSiblings[0].childNodes;
   }
 
-  // set target
-  target = parentSiblingChildren[currentIdx];
+  // set target -- this does assume that currentIdx and data-index are interchangable/reconciled
+  target = select(currentTarget).attr('data-index')
+    ? Array.prototype.filter.call(parentSiblingChildren, el => currentIdx === +select(el).attr('data-index'))[0]
+    : parentSiblingChildren[currentIdx];
   // ensure that target is actually something, will check backwards across groups if group sizes don't match
   while (!target && currentIdx > -1) {
-    target = parentSiblingChildren[currentIdx];
+    target = select(currentTarget).attr('data-index')
+      ? Array.prototype.filter.call(parentSiblingChildren, el => currentIdx === +select(el).attr('data-index'))[0]
+      : parentSiblingChildren[currentIdx];
+    // if we don't find anything going back, then just assign the first cousin of parent's sibling
+    if (currentIdx === 0 && !target && select(currentTarget).attr('data-index')) {
+      target = parentSiblingChildren[currentIdx];
+    }
     currentIdx--;
   }
   return !(currentTarget === target) ? target : null;
@@ -1310,8 +1363,9 @@ const findValidChildTarget = (element, requireTabIndex) => {
 
 const getOffset = (el: any) => {
   const bounds = el.getBoundingClientRect(); // bounds.top
-  const left = bounds.left + document.body.scrollLeft + document.documentElement.scrollLeft;
-  const top = bounds.top + document.body.scrollTop + document.documentElement.scrollTop;
+  // ie11 includes scroll already in pageX/Y, other tested browsers do not do this
+  const left = bounds.left + (isIE11 ? 0 : document.body.scrollLeft + document.documentElement.scrollLeft);
+  const top = bounds.top + (isIE11 ? 0 : document.body.scrollTop + document.documentElement.scrollTop);
   return {
     top,
     left

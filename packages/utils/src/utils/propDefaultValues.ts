@@ -29,6 +29,10 @@ export const accessibility = {
   }
 };
 
+export const animationConfig = {
+  disabled: false
+};
+
 export const highestHeadingLevel = 'h2';
 export const sortOrder = '';
 export const sortOrderAsc = 'asc';
@@ -100,7 +104,8 @@ export const referenceStyle = {
 export const seriesLabel = {
   visible: true,
   placement: 'right',
-  label: []
+  label: [],
+  collisionHideOnly: false
 };
 
 export const cursor = 'default';
@@ -131,50 +136,81 @@ export const secondaryLines = {
 
 export const hiddenDataLabel = {
   visible: false,
+  placement: 'bottom',
   labelAccessor: '',
-  format: ''
+  format: '',
+  collisionHideOnly: false,
+  collisionPlacement: 'all'
 };
 
 export const dataLabel = {
   visible: true,
   placement: 'top',
   labelAccessor: '',
-  format: '0[.][0][0]a'
+  format: '0[.][0][0]a',
+  collisionHideOnly: false,
+  collisionPlacement: 'top'
+};
+
+export const dataLabelLine = {
+  visible: true,
+  placement: 'top',
+  labelAccessor: '',
+  format: '0[.][0][0]a',
+  collisionHideOnly: false,
+  collisionPlacement: 'all'
 };
 
 export const dataLabelOutside = {
   visible: true,
   placement: 'outside',
   labelAccessor: '',
-  format: '0[.][0][0]a'
+  format: '0[.][0][0]a',
+  collisionHideOnly: false
 };
 
 export const dataLabelMiddle = {
   visible: true,
   placement: 'middle',
   labelAccessor: '',
-  format: '0[.][0][0]a'
+  format: '0[.][0][0]a',
+  collisionHideOnly: false,
+  collisionPlacement: 'middle'
+};
+
+export const dataLabelCenter = {
+  visible: true,
+  placement: 'center',
+  labelAccessor: '',
+  format: '',
+  collisionHideOnly: false,
+  collisionPlacement: 'centroid'
 };
 
 export const dataLabelEnds = {
   visible: true,
   placement: 'ends',
   labelAccessor: '',
-  format: '0[.][0][0]a'
+  format: '0[.][0][0]a',
+  collisionHideOnly: false
 };
 
 export const dataLabelBottomRight = {
   visible: true,
   placement: 'bottom-right',
-  labelAccessor: 'value',
-  format: '0[.][0][0]a'
+  labelAccessor: '',
+  format: '0[.][0][0]a',
+  collisionHideOnly: false,
+  collisionPlacement: 'right'
 };
 
+// used on pie, no placement for collision yet on that chart
 export const dataLabelNormalizedOut = {
   visible: true,
   placement: 'outside',
   labelAccessor: '',
-  format: 'normalized'
+  format: 'normalized',
+  collisionHideOnly: false
 };
 
 export const tooltipLabel = {

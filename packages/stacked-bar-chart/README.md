@@ -287,12 +287,12 @@ const mouseOutHandler = evt => {
 
 #### IDataLabelType Definition
 
-| Name            | Type    | Default Value(s) | Description                                                                                                                                                   |
-| --------------- | ------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `labelAccessor` | string  | ''               | Key used to determine label's property.                                                                                                                       |
-| `visible`       | boolean | true             | Toggles the visibility (opacity) of the data labels.                                                                                                          |
-| `placement`     | string  | 'middle'         | Sets the placement of the data label. Examples of values are 'top', 'middle', 'bottom' for vertical layout and 'base', 'middle', 'end' for horizontal layout. |
-| `format`        | string  | '0[.][0][0]a'    | Sets the formatting for the data labels, EG %b, refer to [d3-time-format](https://github.com/d3/d3-time-format) and [numeral.js](http://numeraljs.com/).      |
+| Name            | Type    | Default Value(s) | Description                                                                                                                                                                                                                                                                                                                                         |
+| --------------- | ------- | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `labelAccessor` | string  | ''               | Key used to determine label's property.                                                                                                                                                                                                                                                                                                             |
+| `visible`       | boolean | true             | Toggles the visibility (opacity) of the data labels.                                                                                                                                                                                                                                                                                                |
+| `placement`     | string  | 'middle'         | Sets the placement of the data label. Examples of values are 'top', 'middle', 'bottom' for vertical layout and 'base', 'middle', 'end' for horizontal layout. Placement option 'auto' leverages the [resolveLabelCollision](../utils/src/utils/collisionDetection.ts) algorithm and places labels without overlaps in available space on the chart. |
+| `format`        | string  | '0[.][0][0]a'    | Sets the formatting for the data labels, EG %b, refer to [d3-time-format](https://github.com/d3/d3-time-format) and [numeral.js](http://numeraljs.com/).                                                                                                                                                                                            |
 
 <br>
 
