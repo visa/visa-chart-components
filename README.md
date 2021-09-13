@@ -1,4 +1,4 @@
-# Visa Chart Components
+# Visa Chart Components 
 
 ![Image showing three examples of Visa Chart Components for demonstration purposes only.](docs/vcc-components.png 'clustered bar chart component')
 
