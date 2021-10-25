@@ -35,7 +35,7 @@
     "d3-svg-annotation": "^2.5.1",
     "d3-time-format": "^2.1.3",
     "d3-transition": "1.1.3",
-    "ua-parser-js": "^0.7.21",
+    "ua-parser-js": "^0.7.30",
     "vega-canvas": "1.2.6",
     "yup": "^0.28.1"
   },
