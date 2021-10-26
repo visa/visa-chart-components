@@ -6,6 +6,7 @@
  *
  **/
 import { getContrastingStroke, getAccessibleStrokes } from './colors';
+import { createUrl } from './accessibilityUtils';
 import { getBrowser } from './browser-util';
 import { transitionEndAll } from './transitionEndAll';
 import { select } from 'd3-selection';
@@ -1840,16 +1841,6 @@ const applyOutlineOverride = (selection, extraStrokeWidth, url, buffer, dash) =>
       }
       return ((buffer ? 2 : 0) + extraStrokeWidth * 2) / scale + 'px';
     });
-};
-
-const createUrl = id => {
-  let path = window.location.pathname;
-  if (path[path.length - 1] === '/') {
-    path = path.substring(0, path.length - 1);
-  }
-  return (
-    (!isSafari ? 'url(#' : 'url(' + window.location.protocol + '//' + window.location.host + path + '#') + id + ')'
-  );
 };
 
 const createId = (id, key) => {
