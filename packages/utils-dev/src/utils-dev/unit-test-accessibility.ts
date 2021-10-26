@@ -1675,6 +1675,10 @@ export const accessibility_keyboard_selection_test = {
     // ASSERT GROUP MARKER AND THEN ENABLE SVG OWNER ON ITS PARENT
     const markerToClick = page.root.querySelector(testSelector);
     const markerGroup = markerToClick.parentElement;
+    Object.defineProperty(markerToClick, 'ownerSVGElement', {
+      get: () => ownerSVG,
+      set: () => {} // tslint:disable-line: no-empty
+    });
     Object.defineProperty(markerGroup, 'ownerSVGElement', {
       get: () => ownerSVG,
       set: () => {} // tslint:disable-line: no-empty
@@ -1758,6 +1762,10 @@ export const accessibility_keyboard_nav_generic_test = {
     // ASSERT GROUP MARKER AND THEN ENABLE SVG OWNER ON ITS PARENT
     const markerToFocus = page.root.querySelector(testSelector);
     const markerGroup = markerToFocus.parentElement;
+    Object.defineProperty(markerToFocus, 'ownerSVGElement', {
+      get: () => ownerSVG,
+      set: () => {} // tslint:disable-line: no-empty
+    });
     Object.defineProperty(markerGroup, 'ownerSVGElement', {
       get: () => ownerSVG,
       set: () => {} // tslint:disable-line: no-empty

@@ -308,6 +308,32 @@ export class ParallelPlot {
   ];
   bitmaps: any;
   hiddenHash: object = {};
+  collisionSettings: object = {
+    all: {
+      validPositions: ['top', 'bottom', 'left', 'right', 'bottom-right', 'bottom-left', 'top-left', 'top-right'],
+      offsets: [3, 2, 4, 4, 1, 1, 1, 1]
+    },
+    top: {
+      validPositions: ['top', 'top-left', 'top-right'],
+      offsets: [3, 1, 1]
+    },
+    middle: {
+      validPositions: ['left', 'right'],
+      offsets: [4, 4]
+    },
+    bottom: {
+      validPositions: ['bottom', 'bottom-left', 'bottom-right'],
+      offsets: [2, 1, 1]
+    },
+    right: {
+      validPositions: ['right', 'top-right', 'bottom-right'],
+      offsets: [4, 1, 1]
+    },
+    left: {
+      validPositions: ['left', 'top-left', 'bottom-left'],
+      offsets: [4, 1, 1]
+    }
+  };
 
   @Watch('data')
   dataWatcher(_newData, _oldData) {
@@ -969,9 +995,9 @@ export class ParallelPlot {
       this.addStrokeUnder();
       this.drawReferenceLines();
       this.setSelectedClass();
-      this.updateInteractionState();
-      this.setLabelOpacity();
-      this.setSeriesLabelOpacity();
+      // this.updateInteractionState();
+      // this.setLabelOpacity();
+      // this.setSeriesLabelOpacity();
       this.updateCursor();
       this.bindInteractivity();
       this.setLegendCursor();
@@ -2266,9 +2292,26 @@ export class ParallelPlot {
       //   return this.isRight ? 0 : -(textWidth + 5);
       // })
       .attr('dx', this.isRight ? '0.3em' : '-0.3em')
-      .attr('dy', this.dataLabel && this.dataLabel.placement === 'top-right' ? '0.9em' : '-0.1em')
+      .attr('dy', this.dataLabel && this.dataLabel.placement === 'top-right' ? '0.9em' : '-0.5em')
       .attr('text-anchor', this.isRight ? 'start' : 'end')
-      .attr('opacity', 0);
+      .attr('opacity', d => {
+        const seriesLabelOpacity = !this.seriesLabel.visible
+          ? 0
+          : this.secondaryLines.keys.includes(d.key)
+          ? this.secondaryLines.opacity
+          : 1;
+
+        return checkInteraction(
+          d.values[0],
+          seriesLabelOpacity,
+          this.hoverOpacity,
+          this.hoverHighlight,
+          this.clickHighlight,
+          this.innerInteractionKeys
+        ) < 1
+          ? 0
+          : Number.EPSILON;
+      });
   }
 
   updateSeriesLabels() {
@@ -2355,7 +2398,7 @@ export class ParallelPlot {
           : this.y(d.values[0][this.valueAccessor]) + 0.4 * textHeight;
       })
       .attr('dx', this.isRight ? '0.3em' : '-0.3em')
-      .attr('dy', this.dataLabel && this.dataLabel.placement === 'top-right' ? '0.9em' : '-0.1em')
+      .attr('dy', this.dataLabel && this.dataLabel.placement === 'top-right' ? '0.9em' : '-0.5em')
       .attr('data-use-dx', hideOnly)
       .attr('data-use-dy', hideOnly)
       .attr('data-translate-x', this.margin.left + this.padding.left)
@@ -2395,7 +2438,7 @@ export class ParallelPlot {
               : this.y(d.values[0][this.valueAccessor]);
           })
           .attr('dx', this.isRight ? '0.3em' : '-0.3em')
-          .attr('dy', this.dataLabel && this.dataLabel.placement === 'top-right' ? '0.9em' : '-0.1em');
+          .attr('dy', this.dataLabel && this.dataLabel.placement === 'top-right' ? '0.9em' : '-0.5em');
       }
     } else {
       seriesUpdate
@@ -2414,7 +2457,7 @@ export class ParallelPlot {
             : this.y(d.values[0][this.valueAccessor]);
         })
         .attr('dx', this.isRight ? '0.3em' : '-0.3em')
-        .attr('dy', this.dataLabel && this.dataLabel.placement === 'top-right' ? '0.9em' : '-0.1em');
+        .attr('dy', this.dataLabel && this.dataLabel.placement === 'top-right' ? '0.9em' : '-0.5em');
     }
   }
 
@@ -2436,7 +2479,7 @@ export class ParallelPlot {
       .on('mouseout', !this.suppressEvents ? () => this.onMouseOutHandler() : null);
 
     if (this.interpolating) {
-      const childrenEnter = this.enteringLabels.attr('class', 'parallel-dataLabel').attr('opacity', 0);
+      const childrenEnter = this.enteringLabels.attr('class', 'parallel-dataLabel').attr('opacity', Number.EPSILON);
 
       placeDataLabels({
         root: childrenEnter,
@@ -2448,9 +2491,9 @@ export class ParallelPlot {
         chartType: 'parallel'
       });
 
-      this.updatingLabels.attr('opacity', d => (d.enter ? 0 : 1));
+      this.updatingLabels.attr('opacity', d => (d.enter ? Number.EPSILON : 1));
 
-      const fullEnter = this.enteringLabelGroups.selectAll('.parallel-dataLabel').attr('opacity', 0);
+      const fullEnter = this.enteringLabelGroups.selectAll('.parallel-dataLabel').attr('opacity', Number.EPSILON);
 
       placeDataLabels({
         root: fullEnter,
@@ -2462,7 +2505,7 @@ export class ParallelPlot {
         chartType: 'parallel'
       });
     } else {
-      const childrenEnter = this.enteringLabels.attr('opacity', 0).attr('class', 'parallel-dataLabel');
+      const childrenEnter = this.enteringLabels.attr('opacity', Number.EPSILON).attr('class', 'parallel-dataLabel');
 
       placeDataLabels({
         root: childrenEnter,
@@ -2673,43 +2716,17 @@ export class ParallelPlot {
         return textWidth;
       });
 
-    const collisionSettings = {
-      all: {
-        validPositions: ['top', 'bottom', 'left', 'right', 'bottom-right', 'bottom-left', 'top-left', 'top-right'],
-        offsets: [3, 2, 4, 4, 1, 1, 1, 1]
-      },
-      top: {
-        validPositions: ['top', 'top-left', 'top-right'],
-        offsets: [3, 1, 1]
-      },
-      middle: {
-        validPositions: ['left', 'right'],
-        offsets: [4, 4]
-      },
-      bottom: {
-        validPositions: ['bottom', 'bottom-left', 'bottom-right'],
-        offsets: [2, 1, 1]
-      },
-      right: {
-        validPositions: ['right', 'top-right', 'bottom-right'],
-        offsets: [4, 1, 1]
-      },
-      left: {
-        validPositions: ['left', 'top-left', 'bottom-left'],
-        offsets: [4, 1, 1]
-      }
-    };
     const collisionPlacement = this.dataLabel && this.dataLabel.collisionPlacement;
     const validPositions = hideOnly
       ? ['middle']
-      : collisionPlacement && collisionSettings[collisionPlacement] // check whether placement provided maps correctly
-      ? collisionSettings[collisionPlacement].validPositions
-      : collisionSettings['all'].validPositions;
+      : collisionPlacement && this.collisionSettings[collisionPlacement] // check whether placement provided maps correctly
+      ? this.collisionSettings[collisionPlacement].validPositions
+      : this.collisionSettings['all'].validPositions;
     const offsets = hideOnly
       ? [1]
-      : collisionPlacement && collisionSettings[collisionPlacement] // check whether placement provided maps correctly
-      ? collisionSettings[collisionPlacement].offsets
-      : collisionSettings['all'].offsets;
+      : collisionPlacement && this.collisionSettings[collisionPlacement] // check whether placement provided maps correctly
+      ? this.collisionSettings[collisionPlacement].offsets
+      : this.collisionSettings['all'].offsets;
 
     this.bitmaps = placeDataLabels({
       root: updateChildren,
@@ -2817,8 +2834,13 @@ export class ParallelPlot {
   }
 
   setSeriesLabelOpacity() {
+    const hideOnly = this.labelDetails.placement !== 'auto' && this.labelDetails.collisionHideOnly;
+    const addCollisionClass = this.labelDetails.placement === 'auto' || hideOnly;
+
     this.seriesLabelUpdate.each((d, i, n) => {
       const me = select(n[i]);
+      const prevOpacity = +me.attr('opacity');
+      const styleVisibility = me.style('visibility');
       if (!me.classed('entering')) {
         me.attr('opacity', () => {
           const seriesLabelOpacity =
@@ -2834,6 +2856,15 @@ export class ParallelPlot {
           // check if innerInteractionKeys includes seriesAccessor, if not then don't check seriesLabel for interaction
           if (!this.seriesInteraction) {
             select(n[i]).attr('data-hidden', seriesLabelOpacity === 0 ? 'true' : null);
+            if (prevOpacity !== seriesLabelOpacity && (this.labelDetails.placement === 'auto' || hideOnly)) {
+              if (seriesLabelOpacity === 1) {
+                select(n[i])
+                  .classed('collision-added', true)
+                  .style('visibility', null);
+              } else {
+                select(n[i]).classed('collision-removed', true);
+              }
+            }
             return seriesLabelOpacity;
           } else if (this.secondaryLines.keys.includes(d.key)) {
             const targetOpacity =
@@ -2848,6 +2879,18 @@ export class ParallelPlot {
                 ? 0
                 : 1;
             select(n[i]).attr('data-hidden', targetOpacity === 0 ? 'true' : null);
+            if (
+              ((targetOpacity === 1 && styleVisibility === 'hidden') || prevOpacity !== targetOpacity) &&
+              (this.labelDetails.placement === 'auto' || hideOnly)
+            ) {
+              if (targetOpacity === 1) {
+                select(n[i])
+                  .classed('collision-added', true)
+                  .style('visibility', null);
+              } else {
+                select(n[i]).classed('collision-removed', true);
+              }
+            }
             return targetOpacity;
           } else {
             const targetOpacity =
@@ -2862,14 +2905,102 @@ export class ParallelPlot {
                 ? 0
                 : 1;
             select(n[i]).attr('data-hidden', targetOpacity === 0 ? 'true' : null);
+            if (
+              ((targetOpacity === 1 && styleVisibility === 'hidden') || prevOpacity !== targetOpacity) &&
+              (this.labelDetails.placement === 'auto' || hideOnly)
+            ) {
+              if (targetOpacity === 1) {
+                select(n[i])
+                  .classed('collision-added', true)
+                  .style('visibility', null);
+              } else {
+                select(n[i]).classed('collision-removed', true);
+              }
+            }
             return targetOpacity;
           }
         });
       }
     });
+
+    if (addCollisionClass) {
+      const labelsAdded = this.seriesLabelUpdate
+        .filter((_, i, n) => select(n[i]).classed('collision-added'))
+        .attr(
+          'data-text-anchor',
+          (_, i, n) => select(n[i]).attr('collision-text-anchor') || select(n[i]).attr('data-text-anchor')
+        )
+        .attr('collision-text-anchor', null);
+      const labelsRemoved = this.seriesLabelUpdate
+        .filter((_, i, n) => select(n[i]).classed('collision-removed'))
+        .attr('data-use-dx', hideOnly)
+        .attr('data-use-dy', hideOnly)
+        .attr('keep-data-y', hideOnly)
+        .attr('collision-text-anchor', (_, i, n) => select(n[i]).attr('data-text-anchor'))
+        .attr('data-text-anchor', null); // need this for remove only
+
+      // we can now remove labels as well if we need to...
+      if (labelsRemoved.size() > 0) {
+        this.bitmaps = resolveLabelCollision({
+          bitmaps: this.bitmaps,
+          labelSelection: labelsRemoved,
+          avoidMarks: [], // [this.updateDots], // this will link the series label to the last point in the line
+          validPositions: ['middle'],
+          offsets: [1],
+          accessors: ['key'],
+          size: [roundTo(this.width, 0), roundTo(this.height, 0)],
+          hideOnly: false,
+          removeOnly: true
+        });
+
+        // remove temporary class now
+        labelsRemoved.classed('collision-removed', false).attr('keep-data-y', null);
+      }
+
+      // we can now add labels as well if we need to...
+      if (labelsAdded.size() > 0) {
+        this.bitmaps = resolveLabelCollision({
+          bitmaps: this.bitmaps,
+          labelSelection: labelsAdded,
+          avoidMarks: [this.updateDots], // this will link the series label to the last point in the line
+          validPositions: hideOnly ? ['middle'] : ['middle', 'top', 'bottom'],
+          offsets: hideOnly ? [1] : [1, 4, 4],
+          accessors: ['key'],
+          size: [roundTo(this.width, 0), roundTo(this.height, 0)],
+          hideOnly: this.labelDetails.visible && hideOnly
+        });
+
+        // if we are in hide only we still need to place the labels
+        if (hideOnly) {
+          labelsAdded
+            .attr('text-anchor', this.isRight ? 'start' : 'end')
+            .attr('x', this.isRight ? this.innerPaddedWidth + 10 : 0)
+            .attr('y', d => {
+              if (this.yAxis.scales === 'individual') {
+                return this.isRight
+                  ? this.multiYScale[d.values[d.values.length - 1][this.ordinalAccessor]].y(
+                      d.values[d.values.length - 1][this.valueAccessor]
+                    )
+                  : this.multiYScale[d.values[0][this.ordinalAccessor]].y(d.values[0][this.valueAccessor]);
+              }
+              return this.isRight
+                ? this.y(d.values[d.values.length - 1][this.valueAccessor])
+                : this.y(d.values[0][this.valueAccessor]);
+            })
+            .attr('dx', this.isRight ? '0.3em' : '-0.3em')
+            .attr('dy', this.dataLabel && this.dataLabel.placement === 'top-right' ? '0.9em' : '-0.5em');
+        }
+        // remove temporary class now
+        labelsAdded.classed('collision-added', false);
+      }
+    }
   }
 
   setLabelOpacity() {
+    const hideOnly = this.dataLabel.placement !== 'auto' && this.dataLabel.collisionHideOnly;
+    const addCollisionClass = this.dataLabel.placement === 'auto' || hideOnly;
+    const collisionPlacement = this.dataLabel && this.dataLabel.collisionPlacement;
+
     this.updatingLabelGroups.attr('opacity', d => {
       return (!this.dataLabel.visible
         ? 0
@@ -2882,6 +3013,8 @@ export class ParallelPlot {
         : 1;
     });
     this.updatingLabels.each((d, i, n) => {
+      const prevOpacity = +select(n[i]).attr('opacity');
+      const styleVisibility = select(n[i]).style('visibility');
       if (!d.enter && !d.enterWholeGroup && !d.exit && !d.exitWholeGroup) {
         select(n[i]).attr('opacity', () => {
           const targetOpacity =
@@ -2897,10 +3030,101 @@ export class ParallelPlot {
               : 1;
           const parentOpacity = +select(n[i].parentNode).attr('opacity');
           select(n[i]).attr('data-hidden', parentOpacity === 0 || targetOpacity === 0 ? 'true' : null);
+          if (
+            ((targetOpacity === 1 && styleVisibility === 'hidden') || prevOpacity !== targetOpacity) &&
+            (this.dataLabel.placement === 'auto' || hideOnly)
+          ) {
+            if (targetOpacity === 1) {
+              select(n[i])
+                .classed('collision-added', true)
+                .style('visibility', null);
+            } else {
+              select(n[i]).classed('collision-removed', true);
+            }
+          }
           return targetOpacity;
         });
       }
     });
+
+    if (addCollisionClass) {
+      const labelsAdded = this.updatingLabels
+        .filter((_, i, n) => select(n[i]).classed('collision-added'))
+        .transition()
+        .duration(0);
+      const labelsRemoved = this.updatingLabels
+        .filter((_, i, n) => select(n[i]).classed('collision-removed'))
+        .attr('data-use-dx', hideOnly)
+        .attr('data-use-dy', hideOnly);
+
+      const validPositions = hideOnly
+        ? ['middle']
+        : collisionPlacement && this.collisionSettings[collisionPlacement] // check whether placement provided maps correctly
+        ? this.collisionSettings[collisionPlacement].validPositions
+        : this.collisionSettings['all'].validPositions;
+      const offsets = hideOnly
+        ? [1]
+        : collisionPlacement && this.collisionSettings[collisionPlacement] // check whether placement provided maps correctly
+        ? this.collisionSettings[collisionPlacement].offsets
+        : this.collisionSettings['all'].offsets;
+
+      // we can now remove labels as well if we need to...
+      if (labelsRemoved.size() > 0) {
+        this.bitmaps = resolveLabelCollision({
+          bitmaps: this.bitmaps,
+          labelSelection: labelsRemoved,
+          avoidMarks: [], // [this.updateDots], // this will link the series label to the last point in the line
+          validPositions: ['middle'],
+          offsets: [1],
+          accessors: ['key'],
+          size: [roundTo(this.width, 0), roundTo(this.height, 0)],
+          hideOnly: false,
+          removeOnly: true
+        });
+
+        // remove temporary class now
+        labelsRemoved.classed('collision-removed', false);
+      }
+
+      // we can now add labels as well if we need to...
+      if (labelsAdded.size() > 0) {
+        this.bitmaps = placeDataLabels({
+          root: labelsAdded,
+          xScale: this.x,
+          yScale: this.dynamicY,
+          ordinalAccessor: this.ordinalAccessor,
+          valueAccessor: this.valueAccessor,
+          placement: this.dataLabel.placement,
+          chartType: 'parallel',
+          avoidCollision: {
+            runOccupancyBitmap: this.dataLabel.visible && this.dataLabel.placement === 'auto',
+            bitmaps: this.bitmaps,
+            labelSelection: labelsAdded,
+            avoidMarks: [this.updateLines, this.updateDots],
+            validPositions,
+            offsets,
+            accessors: [this.ordinalAccessor, this.seriesAccessor, 'key'], // key is created for lines by nesting done in line,
+            size: [roundTo(this.width, 0), roundTo(this.height, 0)],
+            hideOnly: this.dataLabel.visible && this.dataLabel.collisionHideOnly,
+            suppressMarkDraw: true
+          }
+        });
+
+        // we need to maintain some values since line has customized lifecycle setup
+        labelsAdded.call(transitionEndAll, () => {
+          this.updatingLabels.each((d, i, n) => {
+            select(n[i]).classed('collision-added', false);
+            // store results to hash so we can use them in lifecycle (specific to line/parallel lifecycle only)
+            this.hiddenHash[`${d[this.ordinalAccessor]}-${d[this.seriesAccessor] || 'b'}`] = {
+              'data-label-hidden': select(n[i]).attr('data-label-hidden') === 'true',
+              x: +select(n[i]).attr('x') - +select(n[i]).attr('data-x'),
+              y: +select(n[i]).attr('y') - +select(n[i]).attr('data-y'),
+              'text-anchor': select(n[i]).attr('text-anchor')
+            };
+          });
+        });
+      }
+    }
   }
 
   bindInteractivity() {

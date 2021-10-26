@@ -125,7 +125,7 @@ Used by every chart. Specifies a robust set of settings that make VCC data exper
 
 Description props are used to explain the chart to a user who cannot see it and should be carefully considered early in the design process. In addition, it is always best to provide explanations of the chart's context, purpose, summaries, statistics in visual, textual form for people with cognitive impairment/disability. In cases where this information is provided outside of the chart, it does not need to be provided to these props.
 
-Note that some of these props are required by [chart accessibility validation](../utils/README#validation) and will throw warnings until the default values are changed (such as `elementsAreInterface`). The prop for `disableValidation` should be set to true before an application's production build and deployment process but _only_ if the chart is considered accessible (validation can slow down the chart's lifecycle performance significantly).
+Note that some of these props are required by [chart accessibility validation](../utils#validation) and will throw warnings until the default values are changed (such as `elementsAreInterface`). The prop for `disableValidation` should be set to true before an application's production build and deployment process but _only_ if the chart is considered accessible (validation can slow down the chart's lifecycle performance significantly).
 
 | Name (accessibility.)        | Type                                     | Default Value(s)      | Description                                                                                                                                                                                                                |
 | ---------------------------- | ---------------------------------------- | --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -304,7 +304,7 @@ Used by every chart to set the label values, titles, and formatting within a too
 
 ### <a name="IReferenceStyleType" href="#IReferenceStyleType">#</a> IReferenceStyleType
 
-Note: The referenceLines and Style props are currently deprecated and will ultimately be fully replaced by the [`annotation` prop](../utils/README.md#annotate). For the time being, this prop will work, but will not pass accessibility requirements. Use at your own risk or migrate to [annotations](../utils/README.md#annotation).
+Note: The referenceLines and Style props are currently deprecated and will ultimately be fully replaced by the [`annotation` prop](../utils#annotate). For the time being, this prop will work, but will not pass accessibility requirements. Use at your own risk or migrate to [annotations](../utils#annotations).
 
 | Name          | Type   | Default Value(s) | Description                                                             |
 | ------------- | ------ | ---------------- | ----------------------------------------------------------------------- |

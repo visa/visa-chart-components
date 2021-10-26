@@ -346,7 +346,7 @@ const mouseOutHandler = evt => {
 
 | Name            | Type     | Default Value(s) | Description                                                                                                                                    |
 | --------------- | -------- | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| `colorPalette`  | string   | 'single_blue'    | Included color palettes can be found in our [color utility](../utils/src/utils/colors.ts). Overridden by colors.                               |
+| `colorPalette`  | string   | 'single_blue'    | Included color palettes can be found in our [color utility](../utils#colors). Overridden by colors.                                            |
 | `colorSteps`    | number   | 5                | Sets numbers of heatmap color steps.                                                                                                           |
 | `colors`        | string[] | `undefined`      | Accepts array of color strings or color values to customize colors beyond our palettes. Overridden by groupAccessor, colors assigned in order. |
 | `roundedCorner` | number   | 0                | Sets the border radius of the chart geometries.                                                                                                |

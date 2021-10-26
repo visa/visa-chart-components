@@ -84,7 +84,8 @@ const {
   validateAccessibilityProps,
   findTagLevel,
   prepareRenderChange,
-  roundTo
+  roundTo,
+  resolveLabelCollision
 } = Utils;
 
 @Component({
@@ -241,10 +242,11 @@ export class ClusteredBarChart {
   shouldUpdateLegendInteractivity: boolean = false;
   shouldSetLegendCursor: boolean = false;
   shouldUpdateReferenceLines: boolean = false;
-  shouldUpdateLabels: boolean = false;
   shouldUpdateCursor: boolean = false;
   shouldDrawInteractionState: boolean = false;
   shouldSetLabelOpacity: boolean = false;
+  shouldSetLabelPosition: boolean = false;
+  shouldSetLabelContent: boolean = false;
   shouldCheckLabelColor: boolean = false;
   shouldBindInteractivity: boolean = false;
   shouldUpdateDescriptionWrapper: boolean = false;
@@ -280,12 +282,14 @@ export class ClusteredBarChart {
     this.shouldUpdateData = true;
     this.shouldSetColors = true;
     this.shouldSetTextures = true;
-    this.shouldDrawInteractionState = true;
-    this.shouldCheckLabelColor = true;
     this.shouldUpdateTableData = true;
     this.shouldSetGlobalSelections = true;
     this.shouldSetTestingAttributes = true;
     this.shouldEnterUpdateExit = true;
+    this.shouldSetLabelContent = true;
+    this.shouldSetLabelPosition = true;
+    // this.shouldDrawInteractionState = true; // called from updateGeometries
+    // this.shouldCheckLabelColor = true; // called from updateGeometries
     this.shouldSetGeometryAccessibilityAttributes = true;
     this.shouldSetGeometryAriaLabels = true;
     this.shouldUpdateLegendData = true;
@@ -298,8 +302,6 @@ export class ClusteredBarChart {
     this.shouldSetYAxisAccessibility = true;
     this.shouldUpdateXGrid = true;
     this.shouldUpdateYGrid = true;
-    this.shouldSetLabelOpacity = true;
-    this.shouldUpdateLabels = true;
     this.shouldUpdateLegend = true;
     this.shouldUpdateReferenceLines = true;
     this.shouldUpdateBaseline = true;
@@ -365,12 +367,12 @@ export class ClusteredBarChart {
     this.shouldUpdateYAxis = true;
     this.shouldUpdateXGrid = true;
     this.shouldUpdateYGrid = true;
-    this.shouldUpdateLabels = true;
+    this.shouldSetLabelPosition = true;
+    this.shouldCheckLabelColor = true;
     this.shouldUpdateLegend = true;
     this.shouldUpdateReferenceLines = true;
     this.shouldUpdateBaseline = true;
     this.shouldUpdateAnnotations = true;
-    this.shouldSetLabelOpacity = true;
   }
 
   @Watch('layout')
@@ -384,14 +386,14 @@ export class ClusteredBarChart {
     this.shouldUpdateYAxis = true;
     this.shouldUpdateXGrid = true;
     this.shouldUpdateYGrid = true;
-    this.shouldUpdateLabels = true;
+    this.shouldSetLabelPosition = true;
+    this.shouldCheckLabelColor = true;
     this.shouldUpdateLegend = true;
     this.shouldUpdateReferenceLines = true;
     this.shouldUpdateBaseline = true;
     this.shouldUpdateAnnotations = true;
     this.shouldSetGeometryAccessibilityAttributes = true;
     this.shouldSetTestingAttributes = true;
-    this.shouldSetLabelOpacity = true;
   }
 
   @Watch('ordinalAccessor')
@@ -407,7 +409,6 @@ export class ClusteredBarChart {
     this.shouldUpdateReferenceLines = true;
     this.shouldUpdateAnnotations = true;
     this.shouldSetGeometryAriaLabels = true;
-    this.shouldSetLabelOpacity = true;
     this.shouldSetStrokes = true;
     this.shouldSetTextures = true;
     if (!(this.interactionKeys && this.interactionKeys.length)) {
@@ -424,11 +425,11 @@ export class ClusteredBarChart {
     this.shouldSetColors = true;
     this.shouldUpdateGeometries = true;
     this.shouldDrawInteractionState = true;
-    this.shouldCheckLabelColor = true;
-    this.shouldSetLabelOpacity = true;
     this.shouldCheckValueAxis = true;
     this.shouldValidateDataLabelAccessor = true;
-    this.shouldUpdateLabels = true;
+    this.shouldSetLabelContent = true;
+    this.shouldSetLabelPosition = true;
+    this.shouldCheckLabelColor = true;
     this.shouldUpdateReferenceLines = true;
     this.shouldUpdateAnnotations = true;
     this.shouldSetGeometryAriaLabels = true;
@@ -446,8 +447,6 @@ export class ClusteredBarChart {
     this.shouldUpdateGeometries = true;
     this.shouldDrawInteractionState = true;
     this.shouldCheckLabelColor = true;
-    this.shouldSetLabelOpacity = true;
-    this.shouldUpdateLabels = true;
     this.shouldCheckLabelAxis = true;
     this.shouldUpdateBaseline = true;
     this.shouldUpdateReferenceLines = true;
@@ -467,7 +466,8 @@ export class ClusteredBarChart {
     this.shouldUpdateTableData = true;
     this.shouldUpdateScales = true;
     this.shouldUpdateGeometries = true;
-    this.shouldUpdateLabels = true;
+    this.shouldSetLabelPosition = true;
+    this.shouldCheckLabelColor = true;
     this.shouldUpdateAnnotations = true;
     this.shouldSetGeometryAccessibilityAttributes = true;
     this.shouldSetGeometryAriaLabels = true;
@@ -516,17 +516,8 @@ export class ClusteredBarChart {
     this.shouldUpdateYAxis = true;
   }
 
-  @Watch('colorPalette')
-  paletteWatcher(_newVal, _oldVal) {
-    this.shouldSetColors = true;
-    this.shouldDrawInteractionState = true;
-    this.shouldUpdateLegend = true;
-    this.shouldCheckLabelColor = true;
-    this.shouldSetStrokes = true;
-    this.shouldSetTextures = true;
-  }
-
   @Watch('colors')
+  @Watch('colorPalette')
   colorsWatcher(_newVal, _oldVal) {
     this.shouldSetColors = true;
     this.shouldDrawInteractionState = true;
@@ -540,7 +531,6 @@ export class ClusteredBarChart {
   hoverStyleWatcher(_newVal, _oldVal) {
     this.shouldDrawInteractionState = true;
     this.shouldCheckLabelColor = true;
-    this.shouldSetLabelOpacity = true;
     this.shouldSetStrokes = true;
   }
 
@@ -548,7 +538,6 @@ export class ClusteredBarChart {
   clickStyleWatcher(_newVal, _oldVal) {
     this.shouldDrawInteractionState = true;
     this.shouldCheckLabelColor = true;
-    this.shouldSetLabelOpacity = true;
     this.shouldSetStrokes = true;
   }
 
@@ -573,9 +562,9 @@ export class ClusteredBarChart {
   intervalRatioWatcher(_newVal, _oldVal) {
     this.shouldUpdateScales = true;
     this.shouldUpdateGeometries = true;
-    this.shouldSetLabelOpacity = true;
     this.shouldCheckLabelAxis = true;
-    this.shouldUpdateLabels = true;
+    this.shouldSetLabelPosition = true;
+    this.shouldCheckLabelColor = true;
     this.shouldUpdateAnnotations = true;
   }
 
@@ -583,7 +572,8 @@ export class ClusteredBarChart {
   groupIntervalRatioWatcher(_newVal, _oldVal) {
     this.shouldUpdateScales = true;
     this.shouldUpdateGeometries = true;
-    this.shouldUpdateLabels = true;
+    this.shouldSetLabelPosition = true;
+    this.shouldCheckLabelColor = true;
     this.shouldUpdateAnnotations = true;
   }
 
@@ -591,29 +581,42 @@ export class ClusteredBarChart {
   hoverOpacityWatcher(_newVal, _oldVal) {
     this.shouldDrawInteractionState = true;
     this.shouldCheckLabelColor = true;
-    this.shouldSetLabelOpacity = true;
   }
 
   @Watch('dataLabel')
   labelWatcher(_newVal, _oldVal) {
-    this.shouldUpdateLabels = true;
-    this.shouldUpdateTableData = true;
     const newPlacementVal = _newVal && _newVal.placement ? _newVal.placement : false;
     const oldPlacementVal = _oldVal && _oldVal.placement ? _oldVal.placement : false;
+    const newCollisionPlacementVal = _newVal && _newVal.collisionPlacement ? _newVal.collisionPlacement : false;
+    const oldCollisionPlacementVal = _oldVal && _oldVal.collisionPlacement ? _oldVal.collisionPlacement : false;
     const newVisibleVal = _newVal && _newVal.visible;
     const oldVisibleVal = _oldVal && _oldVal.visible;
     const newAccessor = _newVal && _newVal.labelAccessor ? _newVal.labelAccessor : false;
     const oldAccessor = _oldVal && _oldVal.labelAccessor ? _oldVal.labelAccessor : false;
+    const newFormatVal = _newVal && _newVal.format ? _newVal.format : false;
+    const oldFormatVal = _oldVal && _oldVal.format ? _oldVal.format : false;
+    const newCollisionHideOnlyVal = _newVal && _newVal.collisionHideOnly ? _newVal.collisionHideOnly : false;
+    const oldCollisionHideOnlyVal = _oldVal && _oldVal.collisionHideOnly ? _oldVal.collisionHideOnly : false;
+    // if only visible changes we just flip opacity, but don't redraw
     if (newVisibleVal !== oldVisibleVal) {
       this.shouldSetLabelOpacity = true;
     }
-    if (newPlacementVal !== oldPlacementVal) {
-      this.shouldSetLabelOpacity = true;
+    // any placement related stuff and we do a full redraw, no opacity
+    if (
+      newPlacementVal !== oldPlacementVal ||
+      newCollisionPlacementVal !== oldCollisionPlacementVal ||
+      newCollisionHideOnlyVal !== oldCollisionHideOnlyVal
+    ) {
       this.shouldValidateLabelPlacement = true;
+      this.shouldSetLabelPosition = true;
       this.shouldCheckLabelColor = true;
     }
-    if (newAccessor !== oldAccessor) {
+    // text/format required redraw/table but no opacity
+    if (newAccessor !== oldAccessor || newFormatVal !== oldFormatVal) {
       this.shouldValidateDataLabelAccessor = true;
+      this.shouldUpdateTableData = true;
+      this.shouldSetLabelContent = true;
+      this.shouldCheckLabelColor = true;
     }
   }
 
@@ -752,7 +755,8 @@ export class ClusteredBarChart {
     this.shouldUpdateScales = true;
     this.shouldCheckValueAxis = true;
     this.shouldUpdateGeometries = true;
-    this.shouldUpdateLabels = true;
+    this.shouldSetLabelPosition = true;
+    this.shouldCheckLabelColor = true;
     this.shouldUpdateReferenceLines = true;
     this.shouldUpdateBaseline = true;
     this.shouldUpdateAnnotations = true;
@@ -762,7 +766,6 @@ export class ClusteredBarChart {
   clickWatcher(_newVal, _oldVal) {
     this.shouldDrawInteractionState = true;
     this.shouldCheckLabelColor = true;
-    this.shouldSetLabelOpacity = true;
     this.shouldSetSelectionClass = true;
   }
 
@@ -770,7 +773,6 @@ export class ClusteredBarChart {
   hoverWatcher(_newVal, _oldVal) {
     this.shouldDrawInteractionState = true;
     this.shouldCheckLabelColor = true;
-    this.shouldSetLabelOpacity = true;
   }
 
   @Watch('interactionKeys')
@@ -778,7 +780,6 @@ export class ClusteredBarChart {
     this.shouldValidateInteractionKeys = true;
     this.shouldDrawInteractionState = true;
     this.shouldCheckLabelColor = true;
-    this.shouldSetLabelOpacity = true;
     this.shouldSetSelectionClass = true;
     this.shouldUpdateTableData = true;
     this.shouldSetGeometryAriaLabels = true;
@@ -878,11 +879,10 @@ export class ClusteredBarChart {
       this.setGeometryAriaLabels();
       this.drawLegendElements();
       this.bindLegendInteractivity();
-      this.drawDataLabels();
+      this.setLabelContent();
+      this.processLabelPosition(this.updateLabels, false, true, false);
       this.drawReferenceLines();
       this.setSelectedClass();
-      this.updateInteractionState();
-      this.setLabelOpacity();
       this.checkLabelColorAgainstBackground();
       this.updateCursor();
       this.bindInteractivity();
@@ -900,6 +900,9 @@ export class ClusteredBarChart {
       hideNonessentialGroups(this.root.node(), this.barG.node());
       this.setGroupAccessibilityID();
       this.defaults = false;
+
+      // catch all to remove entering class from labels once we have loaded component
+      this.updateLabels.classed('entering', false);
       resolve('component did load');
     });
   }
@@ -1012,9 +1015,13 @@ export class ClusteredBarChart {
         this.drawLegendElements();
         this.shouldUpdateLegend = false;
       }
-      if (this.shouldUpdateLabels) {
-        this.drawDataLabels();
-        this.shouldUpdateLabels = false;
+      if (this.shouldSetLabelContent) {
+        this.setLabelContent();
+        this.shouldSetLabelContent = false;
+      }
+      if (this.shouldSetLabelPosition) {
+        this.setLabelPosition();
+        this.shouldSetLabelPosition = false;
       }
       if (this.shouldUpdateReferenceLines) {
         this.drawReferenceLines();
@@ -1081,6 +1088,7 @@ export class ClusteredBarChart {
         this.shouldUpdateBaseline = false;
       }
       this.onChangeHandler();
+      this.updateLabels.classed('entering', false);
       resolve('component did update');
     });
   }
@@ -1553,6 +1561,22 @@ export class ClusteredBarChart {
       .on('click', !this.suppressEvents ? d => this.onClickHandler(d) : null)
       .on('mouseover', !this.suppressEvents ? d => this.onHoverHandler(d) : null)
       .on('mouseout', !this.suppressEvents ? () => this.onMouseOutHandler() : null)
+      .attr('fill', (d, i) => {
+        const clicked =
+          this.clickHighlight &&
+          this.clickHighlight.length > 0 &&
+          checkClicked(d, this.clickHighlight, this.innerInteractionKeys);
+        const hovered = this.hoverHighlight && checkHovered(d, this.hoverHighlight, this.innerInteractionKeys);
+        const baseColor = this.colorArr[i];
+        return clicked && this.clickStyle.color
+          ? visaColors[this.clickStyle.color] || this.clickStyle.color
+          : clicked
+          ? baseColor
+          : hovered && this.hoverStyle.color
+          ? visaColors[this.hoverStyle.color] || this.hoverStyle.color
+          : baseColor;
+      })
+      .attr('opacity', 0)
       .attr(valueAxis, d => this[valueAxis](Math[choice](0, d[this.valueAccessor])))
       .attr(valueDimension, d =>
         Math.abs(
@@ -1564,11 +1588,7 @@ export class ClusteredBarChart {
       .attr(ordinalAxis, d => this[ordinalAxis + '1'](d[this.ordinalAccessor]))
       .attr(ordinalDimension, this[ordinalAxis + '1'].bandwidth());
 
-    if (this.defaults) {
-      this.enter.attr('opacity', d =>
-        checkInteraction(d, 1, this.hoverOpacity, this.hoverHighlight, this.clickHighlight, this.innerInteractionKeys)
-      );
-    } else {
+    if (!this.defaults) {
       this.enter
         .classed('entering', true)
         .attr(ordinalAxis, (d, i, n) => {
@@ -1768,6 +1788,7 @@ export class ClusteredBarChart {
         this.update.classed('geometryIsMoving', false);
 
         this.updateInteractionState();
+        this.checkLabelColorAgainstBackground();
         // we must make sure if geometries move, that our focus indicator does too
         retainAccessFocus({
           parentGNode: this.rootG.node()
@@ -1780,11 +1801,11 @@ export class ClusteredBarChart {
     // we created an "opacity" transition namespace in update's transition
     // we override it here to instantly display opacity state (below)
     this.update.interrupt('opacity');
-    this.updateLabels.interrupt('opacity');
 
-    // we use this.update and this.labelCurrent from setGlobalSelection here
+    // we use this.update and this.updateLabels from setGlobalSelection here
     // the lifecycle state does not matter (enter/update/exit)
     // since interaction state can happen at any time
+    // first we address interaction state on marks/bars
     this.update
       .attr('opacity', d =>
         checkInteraction(d, 1, this.hoverOpacity, this.hoverHighlight, this.clickHighlight, this.innerInteractionKeys)
@@ -1837,6 +1858,8 @@ export class ClusteredBarChart {
     retainAccessFocus({
       parentGNode: this.rootG.node()
     });
+
+    // then we set the legend interactive state
     setLegendInteractionState({
       root: this.legendG,
       uniqueID: this.chartID,
@@ -1848,13 +1871,54 @@ export class ClusteredBarChart {
       clickStyle: this.clickStyle,
       hoverOpacity: this.hoverOpacity
     });
+
+    // and lastly we have to check for labels, especially when auto placement is in place
+    this.updateLabels.interrupt('opacity');
+    const addCollisionClass = this.dataLabel.placement === 'auto' || this.dataLabel.collisionHideOnly;
+    const hideOnly = this.dataLabel.placement !== 'auto' && this.dataLabel.collisionHideOnly;
+
+    this.processLabelOpacity(this.updateLabels, addCollisionClass);
+
+    // if we have collision on, we need to update the bitmap on interaction
+    if (addCollisionClass) {
+      const labelsAdded = this.updateLabels.filter((_, i, n) => select(n[i]).classed('collision-added'));
+      const labelsRemoved = this.updateLabels
+        .filter((_, i, n) => select(n[i]).classed('collision-removed'))
+        .attr('data-use-dx', hideOnly) // need to add this for remove piece of collision below
+        .attr('data-use-dy', hideOnly); // .transition().duration(0);
+
+      // we can now remove labels as well if we need to...
+      if (labelsRemoved.size() > 0) {
+        this.bitmaps = resolveLabelCollision({
+          bitmaps: this.bitmaps,
+          labelSelection: labelsRemoved,
+          avoidMarks: [],
+          validPositions: ['middle'],
+          offsets: [1],
+          accessors: ['key'],
+          size: [roundTo(this.width, 0), roundTo(this.height, 0)],
+          hideOnly: false,
+          removeOnly: true
+        });
+
+        // remove temporary class now
+        labelsRemoved.classed('collision-removed', false);
+      }
+
+      // we can now add labels as well if we need to...
+      if (labelsAdded.size() > 0) {
+        this.processLabelPosition(labelsAdded, false, false, true);
+        // remove temporary class now
+        labelsAdded.classed('collision-added', false);
+      }
+    }
   }
 
   setLabelOpacity() {
     this.processLabelOpacity(this.updateLabels);
   }
 
-  processLabelOpacity(selection) {
+  processLabelOpacity(selection, addCollisionClass?) {
     const opacity = this.dataLabel.visible ? 1 : 0;
     const ordinalAxis = this.layout === 'vertical' ? 'x' : 'y';
     const ordinalDimension = this.layout === 'vertical' ? 'width' : 'height';
@@ -1862,7 +1926,9 @@ export class ClusteredBarChart {
     const valueDimension = this.layout === 'vertical' ? 'height' : 'width';
     const fullBandwidth = this[ordinalAxis + '0'].bandwidth() / this.nest[0].values.length;
 
-    selection.attr('opacity', d => {
+    selection.attr('opacity', (d, i, n) => {
+      const prevOpacity = +select(n[i]).attr('opacity');
+      const styleVisibility = select(n[i]).style('visibility');
       const dimensions = {};
       dimensions[ordinalDimension] =
         this.dataLabel.placement === 'left' || this.dataLabel.placement === 'bottom'
@@ -1884,7 +1950,7 @@ export class ClusteredBarChart {
           dimensions,
           fontSize: 14
         });
-      return hasRoom
+      const targetOpacity = hasRoom
         ? checkInteraction(
             d,
             opacity,
@@ -1896,6 +1962,19 @@ export class ClusteredBarChart {
           ? 0
           : 1
         : 0;
+      if (
+        ((targetOpacity === 1 && styleVisibility === 'hidden') || prevOpacity !== targetOpacity) &&
+        addCollisionClass
+      ) {
+        if (targetOpacity === 1) {
+          select(n[i])
+            .classed('collision-added', true)
+            .style('visibility', null);
+        } else {
+          select(n[i]).classed('collision-removed', true);
+        }
+      }
+      return targetOpacity;
     });
   }
 
@@ -1915,6 +1994,7 @@ export class ClusteredBarChart {
   }
 
   textTreatmentHandler = (d, i, n) => {
+    const me = select(n[i]);
     const bgColor =
       this.clickHighlight &&
       this.clickHighlight.length > 0 &&
@@ -1927,18 +2007,35 @@ export class ClusteredBarChart {
         ? visaColors[this.hoverStyle.color] || this.hoverStyle.color
         : this.preparedColors[i];
 
+    const autoPlacementBackgroundColor =
+      this.dataLabel.placement === 'auto' // can ignore this for collisionHideOnly
+        ? this.layout === 'vertical'
+          ? (this.dataLabel.collisionPlacement === 'top' && me.attr('data-baseline') !== 'bottom') ||
+            (this.dataLabel.collisionPlacement === 'middle' && me.attr('data-baseline') !== 'bottom') ||
+            (this.dataLabel.collisionPlacement === 'bottom' &&
+              me.attr('data-baseline') === 'bottom' &&
+              ((d[this.valueAccessor] >= 0 && this.y(0) - this.y(d[this.valueAccessor]) > 20) ||
+                (d[this.valueAccessor] < 0 && this.y(0) - this.y(d[this.valueAccessor]) < -20))) // if bottom we can check against baseline value of 0, helps to handle charts with negative values
+          : (this.dataLabel.collisionPlacement === 'right' && me.attr('data-align') !== 'left') ||
+            (this.dataLabel.collisionPlacement === 'middle' && me.attr('data-align') !== 'left') ||
+            (this.dataLabel.collisionPlacement === 'left' && me.attr('data-align') !== 'right')
+        : false;
     const color =
-      this.dataLabel.placement === 'bottom' || this.dataLabel.placement === 'left'
+      autoPlacementBackgroundColor || this.dataLabel.placement === 'bottom' || this.dataLabel.placement === 'left'
         ? autoTextColor(bgColor)
         : visaColors.dark_text;
-    const me = select(n[i]);
     me.attr(
       'filter',
       !me.classed('textIsMoving')
         ? createTextStrokeFilter({
             root: this.svg.node(),
             id: this.chartID,
-            color: this.dataLabel.placement === 'bottom' || this.dataLabel.placement === 'left' ? bgColor : '#ffffff'
+            color:
+              autoPlacementBackgroundColor ||
+              this.dataLabel.placement === 'bottom' ||
+              this.dataLabel.placement === 'left'
+                ? bgColor
+                : '#ffffff'
           })
         : null
     );
@@ -1962,6 +2059,7 @@ export class ClusteredBarChart {
 
   enterDataLabels() {
     const ordinalAxis = this.layout === 'vertical' ? 'x' : 'y';
+    const opacity = this.dataLabel.visible ? 1 : 0;
 
     this.enterLabelWrappers
       .attr('class', 'clustered-bar-label-wrapper')
@@ -1971,34 +2069,28 @@ export class ClusteredBarChart {
       );
 
     this.enterLabels
-      .attr(
-        `data-${ordinalAxis}`,
-        d =>
-          this.layout === 'vertical'
-            ? this[ordinalAxis + '1'](d[this.ordinalAccessor]) //+ this.x0(d[this.groupAccessor])
-            : this[ordinalAxis + '1'](d[this.ordinalAccessor]) //+ this.y0(d[this.groupAccessor])
-      )
-      .attr('opacity', 0)
-      .attr('class', 'clustered-bar-dataLabel entering')
-      .attr('cursor', !this.suppressEvents ? this.cursor : null)
+      .attr('class', 'clustered-bar-dataLabel')
+      .classed('entering', true)
       .classed('clustered-bar-dataLabel-horizontal', false)
       .classed('clustered-bar-dataLabel-vertical', false)
       .classed('clustered-bar-dataLabel-' + this.layout, true)
+      .attr('cursor', !this.suppressEvents ? this.cursor : null)
+      .attr('opacity', d =>
+        checkInteraction(
+          d,
+          opacity,
+          this.hoverOpacity,
+          this.hoverHighlight,
+          this.clickHighlight,
+          this.innerInteractionKeys
+        ) < 1
+          ? 0
+          : Number.EPSILON
+      )
       .attr('fill', this.textTreatmentHandler)
       .on('click', !this.suppressEvents ? d => this.onClickHandler(d) : null)
       .on('mouseover', !this.suppressEvents ? d => this.onHoverHandler(d) : null)
       .on('mouseout', !this.suppressEvents ? () => this.onMouseOutHandler() : null);
-
-    placeDataLabels({
-      root: this.enterLabels,
-      xScale: this.layout === 'vertical' ? this.x1 : this.x,
-      yScale: this.layout === 'vertical' ? this.y : this.y1,
-      ordinalAccessor: this.ordinalAccessor,
-      valueAccessor: this.valueAccessor,
-      placement: this.dataLabel.placement,
-      layout: this.layout,
-      chartType: 'bar'
-    });
 
     this.enterLabels.attr(ordinalAxis, (d, i, n) => {
       const zeroScale = ordinalAxis + '0';
@@ -2023,8 +2115,15 @@ export class ClusteredBarChart {
       .transition('opacity')
       .duration((_, i, n) => {
         if (select(n[i]).classed('entering')) {
-          select(n[i]).classed('entering', false);
-          return this.duration / 2;
+          // select(n[i]).classed('entering', false);
+          return this.duration / 4;
+        }
+        return 0;
+      })
+      .delay((_, i, n) => {
+        if (select(n[i]).classed('entering')) {
+          // select(n[i]).classed('entering', false);
+          return (this.duration / 4) * 3;
         }
         return 0;
       })
@@ -2043,6 +2142,7 @@ export class ClusteredBarChart {
       )
       .call(transitionEndAll, () => {
         this.updateLabels.classed('entering', false);
+        // this.checkLabelColorAgainstBackground();
       });
   }
 
@@ -2065,33 +2165,25 @@ export class ClusteredBarChart {
       .remove();
   }
 
-  drawDataLabels() {
-    const ordinalAxis = this.layout === 'vertical' ? 'x' : 'y';
-    const ordinalDimension = this.layout === 'vertical' ? 'width' : 'height';
-    const valueAxis = this.layout === 'vertical' ? 'y' : 'x';
-    const valueDimension = this.layout === 'vertical' ? 'height' : 'width';
-    const choice = this.layout === 'vertical' ? 'max' : 'min';
-    let textHeight = 15; // default label is usually 15
-    const hideOnly = this.dataLabel.placement !== 'auto' && this.dataLabel.collisionHideOnly;
+  setLabelContent() {
+    this.updateLabels.text(d => formatDataLabel(d, this.innerLabelAccessor, this.dataLabel.format));
+  }
 
-    this.updateLabels.text((d, i, n) => {
-      if (i === 0) {
-        // we just need to check this on one element
-        const textElement = n[i];
-        const style = getComputedStyle(textElement);
-        const fontSize = parseFloat(style.fontSize);
-        textHeight = Math.max(fontSize - 1, 1); // clone.getBBox().height;
-      }
-      return formatDataLabel(d, this.innerLabelAccessor, this.dataLabel.format);
-    });
-
+  setLabelPosition() {
+    // position the label wrappers with/without transition
     this.updateLabelWrappers
       .classed('clustered-bar-dataLabel-horizontal', false)
       .classed('clustered-bar-dataLabel-vertical', false)
-      .classed('clustered-bar-dataLabel-' + this.layout, true)
-      .transition('update')
-      .duration(this.duration)
-      .ease(easeCircleIn)
+      .classed('clustered-bar-dataLabel-' + this.layout, true);
+
+    const changeLabelWrappers = prepareRenderChange({
+      selection: this.updateLabelWrappers,
+      duration: this.duration,
+      namespace: 'position-label-wrappers',
+      easing: easeCircleIn
+    });
+
+    changeLabelWrappers
       .attr('transform', d =>
         this.layout === 'vertical' ? 'translate(' + this.x0(d.key) + ',0)' : 'translate(0,' + this.y0(d.key) + ')'
       )
@@ -2099,45 +2191,40 @@ export class ClusteredBarChart {
         this.updateLabelWrappers.classed('entering', false);
       });
 
-    const labelUpdate = this.updateLabels
-      .style('visibility', (_, i, n) =>
-        this.dataLabel.placement === 'auto' || this.dataLabel.collisionHideOnly
-          ? select(n[i]).style('visibility')
-          : null
-      )
-      .attr(
-        `data-${ordinalAxis}`,
-        d =>
-          this.layout === 'vertical'
-            ? this[ordinalAxis + '1'](d[this.ordinalAccessor]) //+ this.x0(d[this.groupAccessor])
-            : this[ordinalAxis + '1'](d[this.ordinalAccessor]) //+ this.y0(d[this.groupAccessor])
-      )
-      .attr(
-        `data-translate-x`,
-        d => (this.layout === 'vertical' ? this.x0(d[this.groupAccessor]) : 0) + this.padding.left + this.margin.left
-      )
-      .attr(
-        `data-translate-y`,
-        d => (this.layout === 'vertical' ? 0 : this.y0(d[this.groupAccessor])) + this.padding.top + this.margin.top
-      )
-      .attr(`data-${ordinalDimension}`, this[ordinalAxis + '1'].bandwidth())
-      .attr(`data-${valueAxis}`, d => this[valueAxis](Math[choice](0, d[this.valueAccessor])))
-      .attr(`data-${valueDimension}`, d =>
-        Math.abs(
-          this.layout === 'vertical'
-            ? this[valueAxis](0) - this[valueAxis](d[this.valueAccessor])
-            : this[valueAxis](d[this.valueAccessor]) - this[valueAxis](0)
-        )
-      )
-      .transition('update')
-      .ease(easeCircleIn)
-      .duration(this.duration);
+    // we have to run this filter as there are times when enter/update will one another's nodes in them.
+    const enteringOnly = this.enterLabels.filter((_, i, n) => {
+      return select(n[i]).classed('entering');
+    });
+    const updatingOnly = this.updateLabels.filter((_, i, n) => {
+      return !select(n[i]).classed('entering');
+    });
 
+    // if we have enter and update we need to process them separately
+    // enter with no transition, update with transition
+    // the transition is the main reason we need to do this.
+    if (enteringOnly.size() > 0) {
+      this.processLabelPosition(enteringOnly, false, true, false);
+      this.processLabelPosition(updatingOnly, true, false, true);
+    } else {
+      // otherwise we can just process update and do it all in one step with transition
+      // doing this all at once saves processing time from calling resolveLabelCollision less
+      this.processLabelPosition(updatingOnly, true, true, false);
+    }
+  }
+
+  processLabelPosition(selection, runTransition?, redrawBitmap?, suppressMarkDraw?) {
+    const ordinalAxis = this.layout === 'vertical' ? 'x' : 'y';
+    const ordinalDimension = this.layout === 'vertical' ? 'width' : 'height';
+    const valueAxis = this.layout === 'vertical' ? 'y' : 'x';
+    const valueDimension = this.layout === 'vertical' ? 'height' : 'width';
+    const choice = this.layout === 'vertical' ? 'max' : 'min';
+    const hideOnly = this.dataLabel.placement !== 'auto' && this.dataLabel.collisionHideOnly;
+    let textHeight = 15; // default label is usually 15
     const collisionSettings = {
       vertical: {
         top: {
           validPositions: ['top', 'bottom'],
-          offsets: [2, 1]
+          offsets: [4, 1]
         },
         middle: {
           validPositions: ['middle', 'top'],
@@ -2172,8 +2259,55 @@ export class ClusteredBarChart {
         ? 'top' // if we don't have collisionPlacement
         : 'right';
 
+    // prep the data- attributes for label collision algorithm
+    // only needs to be run if we are running collision though
+    selection
+      .style('visibility', (_, i, n) =>
+        this.dataLabel.placement === 'auto' || this.dataLabel.collisionHideOnly
+          ? select(n[i]).style('visibility')
+          : null
+      )
+      .attr(`data-${ordinalAxis}`, (d, i, n) => {
+        if (i === 0) {
+          // we just need to check this on one element
+          const textElement = n[i];
+          const style = getComputedStyle(textElement);
+          const fontSize = parseFloat(style.fontSize);
+          textHeight = Math.max(fontSize - 1, 1); // clone.getBBox().height;
+        }
+
+        return this[ordinalAxis + '1'](d[this.ordinalAccessor]);
+      })
+      .attr(
+        `data-translate-x`,
+        d => (this.layout === 'vertical' ? this.x0(d[this.groupAccessor]) : 0) + this.padding.left + this.margin.left
+      )
+      .attr(
+        `data-translate-y`,
+        d => (this.layout === 'vertical' ? 0 : this.y0(d[this.groupAccessor])) + this.padding.top + this.margin.top
+      )
+      .attr(`data-${ordinalDimension}`, this[ordinalAxis + '1'].bandwidth())
+      .attr(`data-${valueAxis}`, d => this[valueAxis](Math[choice](0, d[this.valueAccessor])))
+      .attr(`data-${valueDimension}`, d =>
+        Math.abs(
+          this.layout === 'vertical'
+            ? this[valueAxis](0) - this[valueAxis](d[this.valueAccessor])
+            : this[valueAxis](d[this.valueAccessor]) - this[valueAxis](0)
+        )
+      );
+
+    // we use prepareRenderChange to use or not use .transition()
+    // immediate - label enter and interaction effects
+    // transition - update effects (e.g., data change)
+    const changeLabels = prepareRenderChange({
+      selection: selection,
+      duration: !runTransition ? 0 : this.duration,
+      namespace: 'position-labels',
+      easing: easeCircleIn
+    });
+
     this.bitmaps = placeDataLabels({
-      root: labelUpdate,
+      root: changeLabels,
       xScale: this.layout === 'vertical' ? this.x1 : this.x,
       yScale: this.layout === 'vertical' ? this.y : this.y1,
       ordinalAccessor: this.ordinalAccessor,
@@ -2183,14 +2317,16 @@ export class ClusteredBarChart {
       chartType: 'bar',
       avoidCollision: {
         runOccupancyBitmap: this.dataLabel.visible && this.dataLabel.placement === 'auto',
-        labelSelection: labelUpdate,
+        bitmaps: !redrawBitmap ? this.bitmaps : undefined,
+        labelSelection: changeLabels,
         avoidMarks: [this.update],
         validPositions: hideOnly ? ['middle'] : collisionSettings[this.layout][boundsScope].validPositions,
         offsets: hideOnly ? [1] : collisionSettings[this.layout][boundsScope].offsets,
         accessors: [this.groupAccessor, this.ordinalAccessor, 'key'], // key is created for lines by nesting done in line,
         size: [roundTo(this.width, 0), roundTo(this.height, 0)], // for some reason the bitmap needs width instead of inner padded width here
         boundsScope: hideOnly ? undefined : boundsScope,
-        hideOnly: this.dataLabel.visible && this.dataLabel.collisionHideOnly
+        hideOnly: this.dataLabel.visible && this.dataLabel.collisionHideOnly,
+        suppressMarkDraw: suppressMarkDraw
       }
     });
   }

@@ -86,7 +86,8 @@ const {
   validateAccessibilityProps,
   findTagLevel,
   prepareRenderChange,
-  roundTo
+  roundTo,
+  resolveLabelCollision
 } = Utils;
 
 @Component({
@@ -212,7 +213,6 @@ export class BarChart {
   shouldUpdateLayoutVariables: boolean = false;
   shouldUpdateScales: boolean = false;
   shouldUpdateTableData: boolean = false;
-  shouldUpdateLabels: boolean = false;
   shouldUpdateAnnotations: boolean = false;
   shouldDrawInteractionState: boolean = false;
   shouldValidateClickStyle: boolean = false;
@@ -242,6 +242,8 @@ export class BarChart {
   shouldValidateDataLabelAccessor: boolean = false;
   shouldCheckLabelColor: boolean = false;
   shouldSetLabelOpacity: boolean = false;
+  shouldSetLabelPosition: boolean = false;
+  shouldSetLabelContent: boolean = false;
   shouldUpdateDescriptionWrapper: boolean = false;
   shouldSetChartAccessibilityTitle: boolean = false;
   shouldSetChartAccessibilitySubtitle: boolean = false;
@@ -276,11 +278,13 @@ export class BarChart {
     this.shouldUpdateData = true;
     this.shouldSetColors = true;
     this.shouldSetTextures = true;
-    this.shouldDrawInteractionState = true;
-    this.shouldCheckLabelColor = true;
+    // this.shouldDrawInteractionState = true; // called from updateGeometries
+    // this.shouldCheckLabelColor = true; // called from updateGeometries
     this.shouldSetGlobalSelections = true;
     this.shouldSetTestingAttributes = true;
     this.shouldEnterUpdateExit = true;
+    this.shouldSetLabelContent = true;
+    this.shouldSetLabelPosition = true;
     this.shouldSetGeometryAccessibilityAttributes = true;
     this.shouldSetGeometryAriaLabels = true;
     this.shouldUpdateLegendData = true;
@@ -294,7 +298,6 @@ export class BarChart {
     this.shouldSetYAxisAccessibility = true;
     this.shouldUpdateXGrid = true;
     this.shouldUpdateYGrid = true;
-    this.shouldUpdateLabels = true;
     this.shouldUpdateLegend = true;
     this.shouldUpdateReferenceLines = true;
     this.shouldUpdateBaseline = true;
@@ -314,7 +317,8 @@ export class BarChart {
     this.shouldUpdateTableData = true;
     this.shouldUpdateScales = true;
     this.shouldUpdateGeometries = true;
-    this.shouldUpdateLabels = true;
+    this.shouldSetLabelContent = true;
+    this.shouldSetLabelPosition = true;
     this.shouldUpdateAnnotations = true;
   }
 
@@ -325,7 +329,6 @@ export class BarChart {
     this.shouldSetTextures = true;
     this.shouldDrawInteractionState = true;
     this.shouldCheckLabelColor = true;
-    this.shouldSetLabelOpacity = true;
     this.shouldUpdateLegend = true;
     this.shouldSetGeometryAriaLabels = true;
     this.shouldSetGeometryAccessibilityAttributes = true;
@@ -344,9 +347,7 @@ export class BarChart {
     this.shouldUpdateGeometries = true;
     this.shouldDrawInteractionState = true;
     this.shouldCheckLabelColor = true;
-    this.shouldSetLabelOpacity = true;
     this.shouldCheckLabelAxis = true;
-    this.shouldUpdateLabels = true;
     this.shouldUpdateReferenceLines = true;
     this.shouldUpdateBaseline = true;
     this.shouldUpdateAnnotations = true;
@@ -366,11 +367,11 @@ export class BarChart {
     this.shouldSetTextures = true;
     this.shouldUpdateGeometries = true;
     this.shouldDrawInteractionState = true;
-    this.shouldCheckLabelColor = true;
-    this.shouldSetLabelOpacity = true;
     this.shouldCheckValueAxis = true;
     this.shouldValidateDataLabelAccessor = true;
-    this.shouldUpdateLabels = true;
+    this.shouldCheckLabelColor = true;
+    this.shouldSetLabelContent = true;
+    this.shouldSetLabelPosition = true;
     this.shouldUpdateReferenceLines = true;
     this.shouldUpdateBaseline = true;
     this.shouldUpdateAnnotations = true;
@@ -384,7 +385,8 @@ export class BarChart {
     this.shouldUpdateScales = true;
     this.shouldUpdateGeometries = true;
     this.shouldCheckValueAxis = true;
-    this.shouldUpdateLabels = true;
+    this.shouldSetLabelPosition = true;
+    this.shouldCheckLabelColor = true;
     this.shouldUpdateReferenceLines = true;
     this.shouldUpdateBaseline = true;
     this.shouldUpdateAnnotations = true;
@@ -455,6 +457,7 @@ export class BarChart {
   }
 
   @Watch('colors')
+  @Watch('colorPalette')
   colorsWatcher(_newVal, _oldVal) {
     this.shouldSetColors = true;
     this.shouldSetTextures = true;
@@ -475,12 +478,12 @@ export class BarChart {
     this.shouldUpdateYAxis = true;
     this.shouldUpdateXGrid = true;
     this.shouldUpdateYGrid = true;
-    this.shouldUpdateLabels = true;
+    this.shouldSetLabelPosition = true;
+    this.shouldCheckLabelColor = true;
     this.shouldUpdateLegend = true;
     this.shouldUpdateReferenceLines = true;
     this.shouldUpdateBaseline = true;
     this.shouldUpdateAnnotations = true;
-    this.shouldSetLabelOpacity = true;
   }
 
   @Watch('height')
@@ -496,22 +499,12 @@ export class BarChart {
     this.shouldUpdateYAxis = true;
     this.shouldUpdateXGrid = true;
     this.shouldUpdateYGrid = true;
-    this.shouldUpdateLabels = true;
+    this.shouldSetLabelPosition = true;
+    this.shouldCheckLabelColor = true;
     this.shouldUpdateLegend = true;
     this.shouldUpdateReferenceLines = true;
     this.shouldUpdateBaseline = true;
     this.shouldUpdateAnnotations = true;
-    this.shouldSetLabelOpacity = true;
-  }
-
-  @Watch('colorPalette')
-  paletteWatcher(_newVal, _oldVal) {
-    this.shouldSetColors = true;
-    this.shouldSetTextures = true;
-    this.shouldDrawInteractionState = true;
-    this.shouldCheckLabelColor = true;
-    this.shouldUpdateLegend = true;
-    this.shouldSetStrokes = true;
   }
 
   @Watch('roundedCorner')
@@ -523,32 +516,43 @@ export class BarChart {
   intervalRatioWatcher(_newVal, _oldVal) {
     this.shouldUpdateScales = true;
     this.shouldUpdateGeometries = true;
-    this.shouldSetLabelOpacity = true;
     this.shouldCheckLabelAxis = true;
-    this.shouldUpdateLabels = true;
+    this.shouldSetLabelPosition = true;
+    this.shouldCheckLabelColor = true;
     this.shouldUpdateAnnotations = true;
   }
 
   @Watch('dataLabel')
   labelWatcher(_newVal, _oldVal) {
-    this.shouldUpdateLabels = true;
-    this.shouldUpdateTableData = true;
     const newPlacementVal = _newVal && _newVal.placement ? _newVal.placement : false;
     const oldPlacementVal = _oldVal && _oldVal.placement ? _oldVal.placement : false;
+    const newCollisionPlacementVal = _newVal && _newVal.collisionPlacement ? _newVal.collisionPlacement : false;
+    const oldCollisionPlacementVal = _oldVal && _oldVal.collisionPlacement ? _oldVal.collisionPlacement : false;
     const newVisibleVal = _newVal && _newVal.visible;
     const oldVisibleVal = _oldVal && _oldVal.visible;
     const newAccessor = _newVal && _newVal.labelAccessor ? _newVal.labelAccessor : false;
     const oldAccessor = _oldVal && _oldVal.labelAccessor ? _oldVal.labelAccessor : false;
+    const newFormatVal = _newVal && _newVal.format ? _newVal.format : false;
+    const oldFormatVal = _oldVal && _oldVal.format ? _oldVal.format : false;
+    const newCollisionHideOnlyVal = _newVal && _newVal.collisionHideOnly ? _newVal.collisionHideOnly : false;
+    const oldCollisionHideOnlyVal = _oldVal && _oldVal.collisionHideOnly ? _oldVal.collisionHideOnly : false;
     if (newVisibleVal !== oldVisibleVal) {
       this.shouldSetLabelOpacity = true;
     }
-    if (newPlacementVal !== oldPlacementVal) {
-      this.shouldSetLabelOpacity = true;
+    if (
+      newPlacementVal !== oldPlacementVal ||
+      newCollisionPlacementVal !== oldCollisionPlacementVal ||
+      newCollisionHideOnlyVal !== oldCollisionHideOnlyVal
+    ) {
       this.shouldValidateLabelPlacement = true;
+      this.shouldSetLabelPosition = true;
       this.shouldCheckLabelColor = true;
     }
-    if (newAccessor !== oldAccessor) {
+    if (newAccessor !== oldAccessor || newFormatVal !== oldFormatVal) {
+      this.shouldUpdateTableData = true;
       this.shouldValidateDataLabelAccessor = true;
+      this.shouldSetLabelContent = true;
+      this.shouldCheckLabelColor = true;
     }
   }
 
@@ -583,14 +587,12 @@ export class BarChart {
   hoverOpacityWatcher(_newVal, _oldVal) {
     this.shouldDrawInteractionState = true;
     this.shouldCheckLabelColor = true;
-    this.shouldSetLabelOpacity = true;
   }
 
   @Watch('clickStyle')
   clickStyleWatcher(_newVal, _oldVal) {
     this.shouldDrawInteractionState = true;
     this.shouldCheckLabelColor = true;
-    this.shouldSetLabelOpacity = true;
     this.shouldValidateClickStyle = true;
     this.shouldSetStrokes = true;
   }
@@ -599,7 +601,6 @@ export class BarChart {
   hoverStyleWatcher(_newVal, _oldVal) {
     this.shouldDrawInteractionState = true;
     this.shouldCheckLabelColor = true;
-    this.shouldSetLabelOpacity = true;
     this.shouldValidateHoverStyle = true;
     this.shouldSetStrokes = true;
   }
@@ -608,7 +609,6 @@ export class BarChart {
   clickWatcher(_newVal, _oldVal) {
     this.shouldDrawInteractionState = true;
     this.shouldCheckLabelColor = true;
-    this.shouldSetLabelOpacity = true;
     this.shouldSetSelectionClass = true;
   }
 
@@ -616,7 +616,6 @@ export class BarChart {
   hoverWatcher(_newVal, _oldVal) {
     this.shouldDrawInteractionState = true;
     this.shouldCheckLabelColor = true;
-    this.shouldSetLabelOpacity = true;
   }
 
   @Watch('interactionKeys')
@@ -624,7 +623,6 @@ export class BarChart {
     this.shouldValidateInteractionKeys = true;
     this.shouldDrawInteractionState = true;
     this.shouldCheckLabelColor = true;
-    this.shouldSetLabelOpacity = true;
     this.shouldSetSelectionClass = true;
     this.shouldSetGeometryAriaLabels = true;
     this.shouldUpdateTableData = true;
@@ -863,11 +861,10 @@ export class BarChart {
       this.setRoundedCorners();
       this.drawLegendElements();
       this.validateLabelPlacement();
-      this.drawDataLabels();
+      this.setLabelContent();
+      this.processLabelPosition(this.updatingLabels, false, true, false);
       this.drawReferenceLines();
       this.setSelectedClass();
-      this.updateInteractionState();
-      this.setLabelOpacity();
       this.checkLabelColorAgainstBackground();
       this.updateCursor();
       this.bindInteractivity();
@@ -887,6 +884,8 @@ export class BarChart {
       this.setGroupAccessibilityAttributes();
       this.setGroupAccessibilityID();
       this.defaults = false;
+      // catch all to remove entering class from labels once we have loaded component
+      this.updatingLabels.classed('entering', false);
       resolve('component did load');
     });
   }
@@ -1005,9 +1004,13 @@ export class BarChart {
         this.drawLegendElements();
         this.shouldUpdateLegend = false;
       }
-      if (this.shouldUpdateLabels) {
-        this.drawDataLabels();
-        this.shouldUpdateLabels = false;
+      if (this.shouldSetLabelContent) {
+        this.setLabelContent();
+        this.shouldSetLabelContent = false;
+      }
+      if (this.shouldSetLabelPosition) {
+        this.setLabelPosition();
+        this.shouldSetLabelPosition = false;
       }
       if (this.shouldUpdateReferenceLines) {
         this.drawReferenceLines();
@@ -1074,6 +1077,7 @@ export class BarChart {
         this.shouldUpdateBaseline = false;
       }
       this.onChangeHandler();
+      this.updatingLabels.classed('entering', false);
       resolve('component did update');
     });
   }
@@ -1477,6 +1481,22 @@ export class BarChart {
       .attr('cursor', !this.suppressEvents ? this.cursor : null)
       .attr('rx', this.roundedCorner)
       .attr('ry', this.roundedCorner)
+      .attr('fill', d => {
+        // the following line could be added back in to improve performance, but it is visually quite jarring
+        // const fillSource = !select(n[i]).classed('geometryIsMoving') ? this.colorArr : this.preparedColors
+        return this.clickHighlight &&
+          this.clickHighlight.length > 0 &&
+          checkClicked(d, this.clickHighlight, this.innerInteractionKeys) &&
+          this.innerClickStyle.color
+          ? visaColors[this.innerClickStyle.color] || this.innerClickStyle.color
+          : this.hoverHighlight &&
+            checkHovered(d, this.hoverHighlight, this.innerInteractionKeys) &&
+            this.innerHoverStyle.color
+          ? visaColors[this.innerHoverStyle.color] || this.innerHoverStyle.color
+          : this.groupAccessor
+          ? this.colorArr(d[this.groupAccessor])
+          : this.colorArr(d[this.valueAccessor]);
+      })
       .attr(valueAxis, d => this[valueAxis](Math[choice](0, d[this.valueAccessor])))
       .attr(valueDimension, d =>
         Math.abs(
@@ -1636,6 +1656,7 @@ export class BarChart {
         this.update.classed('geometryIsMoving', false);
 
         this.updateInteractionState();
+        this.checkLabelColorAgainstBackground();
 
         // we must make sure if geometries move, that our focus indicator does too
         retainAccessFocus({
@@ -1781,6 +1802,7 @@ export class BarChart {
     // we use this.update and this.labelCurrent from setGlobalSelection here
     // the lifecycle state does not matter (enter/update/exit)
     // since interaction state can happen at any time
+    // first we address interaction state on marks/bars
     this.update
       .attr('opacity', d =>
         checkInteraction(d, 1, this.hoverOpacity, this.hoverHighlight, this.clickHighlight, this.innerInteractionKeys)
@@ -1856,6 +1878,8 @@ export class BarChart {
     retainAccessFocus({
       parentGNode: this.rootG.node()
     });
+
+    // then we set the legend interactive state
     setLegendInteractionState({
       root: this.legendG,
       uniqueID: this.chartID,
@@ -1867,14 +1891,55 @@ export class BarChart {
       clickStyle: this.innerClickStyle,
       hoverOpacity: this.hoverOpacity
     });
+
+    // and lastly we have to check for labels, especially when auto placement is in place
+    this.updatingLabels.interrupt('opacity');
+    const addCollisionClass = this.placement === 'auto' || this.dataLabel.collisionHideOnly;
+    const hideOnly = this.placement !== 'auto' && this.dataLabel.collisionHideOnly;
+
+    this.processLabelOpacity(this.updatingLabels, addCollisionClass);
+
+    // if we have collision on, we need to update the bitmap on interaction
+    if (addCollisionClass) {
+      const labelsAdded = this.updatingLabels.filter((_, i, n) => select(n[i]).classed('collision-added'));
+      const labelsRemoved = this.updatingLabels
+        .filter((_, i, n) => select(n[i]).classed('collision-removed'))
+        .attr('data-use-dx', hideOnly) // need to add this for remove piece of collision below
+        .attr('data-use-dy', hideOnly); // .transition().duration(0);
+
+      // we can now remove labels as well if we need to...
+      if (labelsRemoved.size() > 0) {
+        this.bitmaps = resolveLabelCollision({
+          bitmaps: this.bitmaps,
+          labelSelection: labelsRemoved,
+          avoidMarks: [],
+          validPositions: ['middle'],
+          offsets: [1],
+          accessors: ['key'],
+          size: [roundTo(this.width, 0), roundTo(this.height, 0)],
+          hideOnly: false,
+          removeOnly: true
+        });
+
+        // remove temporary class now
+        labelsRemoved.classed('collision-removed', false);
+      }
+
+      // we can now add labels as well if we need to...
+      if (labelsAdded.size() > 0) {
+        this.processLabelPosition(labelsAdded, false, false, true);
+
+        // remove temporary class now
+        labelsAdded.classed('collision-added', false);
+      }
+    }
   }
 
   setLabelOpacity() {
-    this.updatingLabels.interrupt('opacity');
     this.processLabelOpacity(this.updatingLabels);
   }
 
-  processLabelOpacity(selection) {
+  processLabelOpacity(selection, addCollisionClass?) {
     const opacity = this.dataLabel.visible ? 1 : 0;
     const ordinalAxis = this.layout === 'vertical' ? 'x' : 'y';
     const ordinalDimension = this.layout === 'vertical' ? 'width' : 'height';
@@ -1883,7 +1948,9 @@ export class BarChart {
     const fullBandwidth =
       this.layout === 'vertical' ? this.innerPaddedWidth / this.data.length : this.innerPaddedHeight / this.data.length;
 
-    selection.attr('opacity', d => {
+    selection.attr('opacity', (d, i, n) => {
+      const prevOpacity = +select(n[i]).attr('opacity');
+      const styleVisibility = select(n[i]).style('visibility');
       const dimensions = {};
       dimensions[ordinalDimension] =
         this.placement === 'left' || this.placement === 'bottom' ? this[ordinalAxis].bandwidth() : fullBandwidth;
@@ -1903,7 +1970,7 @@ export class BarChart {
           dimensions,
           fontSize: 14
         });
-      return hasRoom
+      const targetOpacity = hasRoom
         ? checkInteraction(
             d,
             opacity,
@@ -1915,6 +1982,19 @@ export class BarChart {
           ? 0
           : 1
         : 0;
+      if (
+        ((targetOpacity === 1 && styleVisibility === 'hidden') || prevOpacity !== targetOpacity) &&
+        addCollisionClass
+      ) {
+        if (targetOpacity === 1) {
+          select(n[i])
+            .classed('collision-added', true)
+            .style('visibility', null);
+        } else {
+          select(n[i]).classed('collision-removed', true);
+        }
+      }
+      return targetOpacity;
     });
   }
 
@@ -1949,17 +2029,34 @@ export class BarChart {
         : this.groupAccessor
         ? this[colorScale](d[this.groupAccessor])
         : this[colorScale](d[this.valueAccessor]);
-
-    const color =
-      this.placement === 'bottom' || this.placement === 'left' ? autoTextColor(bgColor) : visaColors.dark_text;
     const me = select(n[i]);
+    const autoPlacementBackgroundColor =
+      this.placement === 'auto' // can ignore this for collisionHideOnly
+        ? this.layout === 'vertical'
+          ? (this.dataLabel.collisionPlacement === 'top' && me.attr('data-baseline') !== 'bottom') ||
+            (this.dataLabel.collisionPlacement === 'middle' && me.attr('data-baseline') !== 'bottom') ||
+            (this.dataLabel.collisionPlacement === 'bottom' &&
+              me.attr('data-baseline') === 'bottom' &&
+              ((d[this.valueAccessor] >= 0 && this.y(0) - this.y(d[this.valueAccessor]) > 20) ||
+                (d[this.valueAccessor] < 0 && this.y(0) - this.y(d[this.valueAccessor]) < -20))) // if bottom we can check against baseline value of 0, helps to handle charts with negative values
+          : (this.dataLabel.collisionPlacement === 'right' && me.attr('data-align') !== 'left') ||
+            (this.dataLabel.collisionPlacement === 'middle' && me.attr('data-align') !== 'left') ||
+            (this.dataLabel.collisionPlacement === 'left' && me.attr('data-align') !== 'right')
+        : false;
+    const color =
+      autoPlacementBackgroundColor || this.placement === 'bottom' || this.placement === 'left'
+        ? autoTextColor(bgColor)
+        : visaColors.dark_text;
     me.attr(
       'filter',
       !me.classed('textIsMoving')
         ? createTextStrokeFilter({
             root: this.svg.node(),
             id: this.chartID,
-            color: this.placement === 'bottom' || this.placement === 'left' ? bgColor : '#ffffff'
+            color:
+              autoPlacementBackgroundColor || this.placement === 'bottom' || this.placement === 'left'
+                ? bgColor
+                : '#ffffff'
           })
         : null
     );
@@ -2011,25 +2108,38 @@ export class BarChart {
   }
 
   enterLabels() {
+    const opacity = this.dataLabel.visible ? 1 : 0;
+
     this.enteringLabels
-      .attr('opacity', 0)
-      .attr('class', 'bar-dataLabel entering')
+      .attr('opacity', d => {
+        return checkInteraction(
+          d,
+          opacity,
+          this.hoverOpacity,
+          this.hoverHighlight,
+          this.clickHighlight,
+          this.innerInteractionKeys
+        ) < 1
+          ? 0
+          : Number.EPSILON; // we need this to be epsilon initially to enable auto placement algorithm to run on load
+      })
+      .attr('class', 'bar-dataLabel entering') // entering class is used by collision
       .attr('fill', this.textTreatmentHandler)
       .attr('cursor', !this.suppressEvents ? this.cursor : null)
       .on('click', !this.suppressEvents ? d => this.onClickHandler(d) : null)
       .on('mouseover', !this.suppressEvents ? d => this.onHoverHandler(d) : null)
       .on('mouseout', !this.suppressEvents ? () => this.onMouseOutHandler() : null);
 
-    placeDataLabels({
-      root: this.enteringLabels,
-      xScale: this.x,
-      yScale: this.y,
-      ordinalAccessor: this.ordinalAccessor,
-      valueAccessor: this.valueAccessor,
-      placement: this.placement,
-      layout: this.layout,
-      chartType: 'bar'
-    });
+    // placeDataLabels({
+    //   root: this.enteringLabels,
+    //   xScale: this.x,
+    //   yScale: this.y,
+    //   ordinalAccessor: this.ordinalAccessor,
+    //   valueAccessor: this.valueAccessor,
+    //   placement: this.placement,
+    //   layout: this.layout,
+    //   chartType: 'bar'
+    // });
   }
 
   updateLabels() {
@@ -2050,30 +2160,42 @@ export class BarChart {
       .remove();
   }
 
-  drawDataLabels() {
+  setLabelContent() {
+    this.updatingLabels.text(d => formatDataLabel(d, this.innerLabelAccessor, this.dataLabel.format));
+  }
+
+  setLabelPosition() {
+    const enteringOnly = this.enteringLabels.filter((_, i, n) => {
+      return select(n[i]).classed('entering');
+    });
+    const updatingOnly = this.updatingLabels.filter((_, i, n) => {
+      return !select(n[i]).classed('entering');
+    });
+    // if we have enter and update we need to process them separately
+    // enter with no transition, update with transition
+    if (enteringOnly.size() > 0) {
+      this.processLabelPosition(enteringOnly, false, true, false);
+      this.processLabelPosition(updatingOnly, true, false, true);
+    } else {
+      // otherwise we can just process update and do it all in one step with transition
+      this.processLabelPosition(updatingOnly, true, true, false);
+    }
+  }
+
+  processLabelPosition(selection, runTransition?, redrawBitmap?, suppressMarkDraw?) {
+    const ordinalAxis = this.layout === 'vertical' ? 'x' : 'y';
+    const ordinalDimension = this.layout === 'vertical' ? 'width' : 'height';
+    const valueAxis = this.layout === 'vertical' ? 'y' : 'x';
+    const valueDimension = this.layout === 'vertical' ? 'height' : 'width';
+    const choice = this.layout === 'vertical' ? 'max' : 'min';
     let textHeight = 15; // default label is usually 15
     const hideOnly = this.placement !== 'auto' && this.dataLabel.collisionHideOnly;
-
-    this.updatingLabels
-      .text((d, i, n) => {
-        if (i === 0) {
-          // we just need to check this on one element
-          const textElement = n[i];
-          const style = getComputedStyle(textElement);
-          const fontSize = parseFloat(style.fontSize);
-          textHeight = Math.max(fontSize - 1, 1); // clone.getBBox().height;
-        }
-        return formatDataLabel(d, this.innerLabelAccessor, this.dataLabel.format);
-      })
-      .style('visibility', (_, i, n) =>
-        this.placement === 'auto' || this.dataLabel.collisionHideOnly ? select(n[i]).style('visibility') : null
-      );
 
     const collisionSettings = {
       vertical: {
         top: {
           validPositions: ['top', 'bottom'],
-          offsets: [2, 1]
+          offsets: [5, 1]
         },
         middle: {
           validPositions: ['middle', 'top'],
@@ -2095,7 +2217,7 @@ export class BarChart {
         },
         left: {
           validPositions: ['left', 'right'],
-          offsets: [1, 20]
+          offsets: [4, 20]
         }
       }
     };
@@ -2108,15 +2230,40 @@ export class BarChart {
         ? 'top' // if we don't have collisionPlacement
         : 'right';
 
-    const labelUpdate = this.updatingLabels
+    selection
+      .style('visibility', (_, i, n) => {
+        if (i === 0) {
+          // we just need to check this on one element
+          const textElement = n[i];
+          const style = getComputedStyle(textElement);
+          const fontSize = parseFloat(style.fontSize);
+          textHeight = Math.max(fontSize - 1, 1); // clone.getBBox().height;
+        }
+
+        return this.placement === 'auto' || this.dataLabel.collisionHideOnly ? select(n[i]).style('visibility') : null;
+      })
+      .attr(`data-${ordinalAxis}`, d => this[ordinalAxis](d[this.ordinalAccessor]))
+      .attr(`data-${ordinalDimension}`, this[ordinalAxis].bandwidth())
+      .attr(`data-${valueAxis}`, d => this[valueAxis](Math[choice](0, d[this.valueAccessor]))) // this.y(d[this.valueAccessor]))
+      .attr(`data-${valueDimension}`, d =>
+        Math.abs(
+          this.layout === 'vertical'
+            ? this[valueAxis](0) - this[valueAxis](d[this.valueAccessor])
+            : this[valueAxis](d[this.valueAccessor]) - this[valueAxis](0)
+        )
+      )
       .attr('data-translate-x', this.padding.left + this.margin.left)
-      .attr('data-translate-y', this.padding.top + this.margin.top)
-      .transition('update')
-      .ease(easeCircleIn)
-      .duration(this.duration);
+      .attr('data-translate-y', this.padding.top + this.margin.top);
+
+    const changeLabels = prepareRenderChange({
+      selection: selection,
+      duration: !runTransition ? 0 : this.duration,
+      namespace: 'position-labels',
+      easing: easeCircleIn
+    });
 
     this.bitmaps = placeDataLabels({
-      root: labelUpdate,
+      root: changeLabels,
       xScale: this.x,
       yScale: this.y,
       ordinalAccessor: this.ordinalAccessor,
@@ -2126,14 +2273,16 @@ export class BarChart {
       chartType: 'bar',
       avoidCollision: {
         runOccupancyBitmap: this.dataLabel.visible && this.placement === 'auto',
-        labelSelection: labelUpdate,
+        bitmaps: !redrawBitmap ? this.bitmaps : undefined,
+        labelSelection: changeLabels,
         avoidMarks: [this.update],
         validPositions: hideOnly ? ['middle'] : collisionSettings[this.layout][boundsScope].validPositions,
         offsets: hideOnly ? [1] : collisionSettings[this.layout][boundsScope].offsets,
         accessors: [this.ordinalAccessor, this.groupAccessor], // key is created for lines by nesting done in line,
         size: [roundTo(this.width, 0), roundTo(this.height, 0)], // for some reason the bitmap needs width instead of inner padded width here
         boundsScope: hideOnly ? undefined : boundsScope,
-        hideOnly: this.dataLabel.visible && this.dataLabel.collisionHideOnly
+        hideOnly: this.dataLabel.visible && this.dataLabel.collisionHideOnly,
+        suppressMarkDraw: suppressMarkDraw
       }
     });
   }

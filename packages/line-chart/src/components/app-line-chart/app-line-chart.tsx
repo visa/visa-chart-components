@@ -16,19 +16,34 @@ import '@visa/keyboard-instructions';
 export class AppLineChart {
   @State() data: any;
   @State() secondData: any;
-  @State() stateTrigger: any = 0;
+  @State() stateTrigger: any = 1;
   @State() hoverElement: any = '';
   @State() secondaryHoverElement: any = '';
   @State() secondaryHover: any = '';
-  @State() clickElement: any = [];
+  @State() clickElement: any = [
+    // {
+    // date: new Date('2017-01-01'),
+    // otherOrd: '13',
+    // otherCat: 'ABC',
+    // otherVal: 100,
+    // category: 'Card A',
+    // value: 7670994739
+    // }
+  ];
   @State() secondaryClick: any = [];
   @State() yAxis: any = { visible: true, gridVisible: true, label: 'Score', format: '0[.][0]' };
-  @State() seriesLabel: any = { visible: false, placement: 'right' };
   @State() ordinalAccessor: any = 'date';
   @State() valueAccessor: any = 'value';
   @State() seriesAccessor: any = 'category';
+  @State() seriesLabel: any = { visible: true, placement: 'auto' };
+  @State() dataLabel: any = {
+    visible: true,
+    placement: 'auto',
+    labelAccessor: this.valueAccessor,
+    format: '0.0[a]'
+  };
   @State() height: any = 300;
-  @State() interactionKeys: any = [this.seriesAccessor];
+  @State() interactionKeys: any = [this.ordinalAccessor];
   @State() secondaryKey: any = 'Card B';
   @State() secondaryOpacity: any = 1;
   @State() secondaryDataLabel: any = true;
@@ -125,8 +140,8 @@ export class AppLineChart {
   smashIt: boolean = true;
   seriesLimit: number = 10;
   dataPoints: number = 24;
-  hoverStyle: any = { color: '#d7d7d7', strokeWidth: 3 };
-  clickStyle: any = { color: '#222222', strokeWidth: 4 };
+  hoverStyle: any = { color: '#d7d7d7', strokeWidth: 2 };
+  clickStyle: any = { color: '#FFC4C4', strokeWidth: 5 };
   simpleColors: any = ['#FFC4C4', '#C4DAFF'];
   colorsBase: any = ['#f2f2f2', '#d7d7d7', '#bdbdbd', '#a3a3a3', '#898989', '#717171', '#595959', '#434343', '#2e2e2e'];
   selectedColor: string = '#00CF81';
@@ -1935,26 +1950,18 @@ export class AppLineChart {
           // xAxis={{ visible: true, gridVisible: true, label: 'Quarter', unit: this.unit, format: '%b' }}
           // yAxis={{ visible: true, gridVisible: true, label: 'Volume', format: '0[.][0][0]a' }}
           // minValueOverride={-2000000}
-          padding={{
-            top: 20,
-            left: 60,
-            right: 80,
-            bottom: 50
-          }}
+          // padding={{
+          //   top: 20,
+          //   left: 60,
+          //   right: 80,
+          //   bottom: 50
+          // }}
           data={this.data}
           ordinalAccessor={this.ordinalAccessor}
           valueAccessor={this.valueAccessor}
           seriesAccessor={this.seriesAccessor}
-          dataLabel={{
-            visible: true,
-            placement: 'auto',
-            labelAccessor: this.valueAccessor,
-            format: '0.0[a]'
-          }}
-          seriesLabel={{
-            visible: true,
-            placement: 'right'
-          }}
+          dataLabel={this.dataLabel}
+          seriesLabel={this.seriesLabel}
           // legend={{ visible: false, labels: [], interactive: true }}
           // colorPalette={'sequential_grey'}
           cursor={'pointer'}
@@ -1977,7 +1984,7 @@ export class AppLineChart {
           onHoverFunc={this.onHoverFunc}
           onClickFunc={this.onClickFunc}
           onMouseOutFunc={this.onMouseOut}
-          showTooltip={true}
+          showTooltip={false}
           tooltipLabel={this.tooltipLabel}
           // annotations={this.annotations}
           accessibility={this.accessibility}

@@ -301,6 +301,32 @@ export class LineChart {
   ];
   bitmaps: any;
   hiddenHash: object = {};
+  collisionSettings: object = {
+    all: {
+      validPositions: ['top', 'bottom', 'left', 'right', 'bottom-right', 'bottom-left', 'top-left', 'top-right'],
+      offsets: [3, 2, 4, 4, 1, 1, 1, 1]
+    },
+    top: {
+      validPositions: ['top', 'top-left', 'top-right'],
+      offsets: [3, 1, 1]
+    },
+    middle: {
+      validPositions: ['left', 'right'],
+      offsets: [4, 4]
+    },
+    bottom: {
+      validPositions: ['bottom', 'bottom-left', 'bottom-right'],
+      offsets: [2, 1, 1]
+    },
+    right: {
+      validPositions: ['right', 'top-right', 'bottom-right'],
+      offsets: [4, 1, 1]
+    },
+    left: {
+      validPositions: ['left', 'top-left', 'bottom-left'],
+      offsets: [4, 1, 1]
+    }
+  };
 
   @Watch('data')
   dataWatcher(_newData, _oldData) {
@@ -940,7 +966,7 @@ export class LineChart {
       this.enterDataLabels();
       this.updateDataLabels();
       this.exitDataLabels();
-      this.setSeriesLabelOpacity();
+      // this.setSeriesLabelOpacity();
       this.setChartCountAccessibility();
       this.setGeometryAccessibilityAttributes();
       this.setGeometryAriaLabels();
@@ -2199,7 +2225,29 @@ export class LineChart {
     this.seriesLabelEnter.interrupt();
 
     this.seriesLabelEnter
-      .attr('opacity', 0)
+      .attr('opacity', d => {
+        const seriesLabelOpacity = !this.seriesLabel.visible
+          ? 0
+          : this.secondaryLines.keys.includes(d.key) &&
+            (!this.secondaryLines.showSeriesLabel || this.secondaryLines.opacity < 1)
+          ? 0
+          : 1;
+        // check if interactionKeys includes seriesAccessor, if not then don't check seriesLabel for interaction
+        if (!this.seriesInteraction) {
+          return seriesLabelOpacity;
+        } else {
+          return checkInteraction(
+            d.values[0],
+            seriesLabelOpacity,
+            this.hoverOpacity,
+            this.hoverHighlight,
+            this.clickHighlight,
+            this.innerInteractionKeys
+          ) < 1
+            ? 0
+            : Number.EPSILON;
+        }
+      })
       .attr('class', 'line-series-label')
       .attr('cursor', !this.suppressEvents && this.seriesInteraction ? this.cursor : null)
       .on(
@@ -2368,7 +2416,7 @@ export class LineChart {
     this.enteringLabels.attr('fill', this.handleTextFill);
 
     if (this.interpolating) {
-      const childrenEnter = this.enteringLabels.attr('class', 'line-dataLabel').attr('opacity', 0);
+      const childrenEnter = this.enteringLabels.attr('class', 'line-dataLabel').attr('opacity', Number.EPSILON);
 
       placeDataLabels({
         root: childrenEnter,
@@ -2382,7 +2430,7 @@ export class LineChart {
 
       this.updatingLabels.attr('opacity', d =>
         d.enter
-          ? 0
+          ? Number.EPSILON
           : checkInteraction(
               d,
               1,
@@ -2397,7 +2445,7 @@ export class LineChart {
 
       const fullEnter = this.enteringLabelGroups
         .selectAll('.line-dataLabel')
-        .attr('opacity', 0)
+        .attr('opacity', Number.EPSILON)
         .classed('entering', true);
 
       placeDataLabels({
@@ -2410,7 +2458,7 @@ export class LineChart {
         chartType: 'line'
       });
     } else {
-      const childrenEnter = this.enteringLabels.attr('opacity', 0).attr('class', 'line-dataLabel');
+      const childrenEnter = this.enteringLabels.attr('opacity', Number.EPSILON).attr('class', 'line-dataLabel');
 
       placeDataLabels({
         root: childrenEnter,
@@ -2588,44 +2636,17 @@ export class LineChart {
         .ease(easeCircleIn)
         .duration(this.duration);
     }
-
-    const collisionSettings = {
-      all: {
-        validPositions: ['top', 'bottom', 'left', 'right', 'bottom-right', 'bottom-left', 'top-left', 'top-right'],
-        offsets: [3, 2, 4, 4, 1, 1, 1, 1]
-      },
-      top: {
-        validPositions: ['top', 'top-left', 'top-right'],
-        offsets: [3, 1, 1]
-      },
-      middle: {
-        validPositions: ['left', 'right'],
-        offsets: [4, 4]
-      },
-      bottom: {
-        validPositions: ['bottom', 'bottom-left', 'bottom-right'],
-        offsets: [2, 1, 1]
-      },
-      right: {
-        validPositions: ['right', 'top-right', 'bottom-right'],
-        offsets: [4, 1, 1]
-      },
-      left: {
-        validPositions: ['left', 'top-left', 'bottom-left'],
-        offsets: [4, 1, 1]
-      }
-    };
     const collisionPlacement = this.dataLabel && this.dataLabel.collisionPlacement;
     const validPositions = hideOnly
       ? ['middle']
-      : collisionPlacement && collisionSettings[collisionPlacement] // check whether placement provided maps correctly
-      ? collisionSettings[collisionPlacement].validPositions
-      : collisionSettings['all'].validPositions;
+      : collisionPlacement && this.collisionSettings[collisionPlacement] // check whether placement provided maps correctly
+      ? this.collisionSettings[collisionPlacement].validPositions
+      : this.collisionSettings['all'].validPositions;
     const offsets = hideOnly
       ? [1]
-      : collisionPlacement && collisionSettings[collisionPlacement] // check whether placement provided maps correctly
-      ? collisionSettings[collisionPlacement].offsets
-      : collisionSettings['all'].offsets;
+      : collisionPlacement && this.collisionSettings[collisionPlacement] // check whether placement provided maps correctly
+      ? this.collisionSettings[collisionPlacement].offsets
+      : this.collisionSettings['all'].offsets;
 
     this.bitmaps = placeDataLabels({
       root: updateChildren, // this must have a transition cause we copy it
@@ -2767,6 +2788,9 @@ export class LineChart {
 
   setLabelOpacity() {
     // this.updatingLabelGroups.interrupt();
+    const hideOnly = this.dataLabel.placement !== 'auto' && this.dataLabel.collisionHideOnly;
+    const addCollisionClass = this.dataLabel.placement === 'auto' || hideOnly;
+    const collisionPlacement = this.dataLabel && this.dataLabel.collisionPlacement;
 
     this.updatingLabelGroups.attr('opacity', d => {
       const labelOpacity = !this.dataLabel.visible
@@ -2780,6 +2804,8 @@ export class LineChart {
     if (this.interpolating) {
       this.updatingLabels.each((d, i, n) => {
         const me = select(n[i]);
+        const prevOpacity = +me.attr('opacity');
+        const styleVisibility = me.style('visibility');
         if (!d.enter && !me.classed('entering') && !d.exit) {
           me.attr('opacity', () => {
             const targetOpacity =
@@ -2795,12 +2821,26 @@ export class LineChart {
                 : 1;
             const parentOpacity = +select(n[i].parentNode).attr('opacity');
             me.attr('data-hidden', parentOpacity === 0 || targetOpacity === 0 ? 'true' : null);
+            if (
+              ((targetOpacity === 1 && styleVisibility === 'hidden') || prevOpacity !== targetOpacity) &&
+              (this.dataLabel.placement === 'auto' || hideOnly)
+            ) {
+              if (targetOpacity === 1) {
+                select(n[i])
+                  .classed('collision-added', true)
+                  .style('visibility', null);
+              } else {
+                select(n[i]).classed('collision-removed', true);
+              }
+            }
             return targetOpacity;
           });
         }
       });
     } else {
       this.updatingLabels.attr('opacity', (d, i, n) => {
+        const prevOpacity = +select(n[i]).attr('opacity');
+        const styleVisibility = select(n[i]).style('visibility');
         const targetOpacity =
           checkInteraction(
             d,
@@ -2814,15 +2854,107 @@ export class LineChart {
             : 1;
         const parentOpacity = +select(n[i].parentNode).attr('opacity');
         select(n[i]).attr('data-hidden', parentOpacity === 0 || targetOpacity === 0 ? 'true' : null);
+        if (
+          ((targetOpacity === 1 && styleVisibility === 'hidden') || prevOpacity !== targetOpacity) &&
+          (this.dataLabel.placement === 'auto' || hideOnly)
+        ) {
+          if (targetOpacity === 1) {
+            select(n[i])
+              .classed('collision-added', true)
+              .style('visibility', null);
+          } else {
+            select(n[i]).classed('collision-removed', true);
+          }
+        }
         return targetOpacity;
       });
+    }
+
+    if (addCollisionClass) {
+      const labelsAdded = this.updatingLabels
+        .filter((_, i, n) => select(n[i]).classed('collision-added'))
+        .transition()
+        .duration(0);
+      const labelsRemoved = this.updatingLabels.filter((_, i, n) => select(n[i]).classed('collision-removed')); // .transition().duration(0);
+      const validPositions = hideOnly
+        ? ['middle']
+        : collisionPlacement && this.collisionSettings[collisionPlacement] // check whether placement provided maps correctly
+        ? this.collisionSettings[collisionPlacement].validPositions
+        : this.collisionSettings['all'].validPositions;
+      const offsets = hideOnly
+        ? [1]
+        : collisionPlacement && this.collisionSettings[collisionPlacement] // check whether placement provided maps correctly
+        ? this.collisionSettings[collisionPlacement].offsets
+        : this.collisionSettings['all'].offsets;
+
+      // we can now remove labels as well if we need to...
+      if (labelsRemoved.size() > 0) {
+        this.bitmaps = resolveLabelCollision({
+          bitmaps: this.bitmaps,
+          labelSelection: labelsRemoved,
+          avoidMarks: [], // [this.updateDots], // this will link the series label to the last point in the line
+          validPositions: ['middle'],
+          offsets: [1],
+          accessors: ['key'],
+          size: [roundTo(this.width, 0), roundTo(this.innerPaddedHeight, 0)],
+          hideOnly: false,
+          removeOnly: true
+        });
+
+        // remove temporary class now
+        labelsRemoved.classed('collision-removed', false);
+      }
+
+      // we can now add labels as well if we need to...
+      if (labelsAdded.size() > 0) {
+        this.bitmaps = placeDataLabels({
+          root: labelsAdded,
+          xScale: this.x,
+          yScale: this.y,
+          ordinalAccessor: this.ordinalAccessor,
+          valueAccessor: this.valueAccessor,
+          placement: this.dataLabel.placement,
+          chartType: 'line',
+          avoidCollision: {
+            runOccupancyBitmap: this.dataLabel.visible && this.dataLabel.placement === 'auto',
+            bitmaps: this.bitmaps,
+            labelSelection: labelsAdded,
+            avoidMarks: [this.updateDots, this.update],
+            validPositions,
+            offsets,
+            accessors: [this.ordinalAccessor, this.seriesAccessor, 'key'], // key is created for lines by nesting done in line,
+            size: [roundTo(this.width, 0), roundTo(this.innerPaddedHeight, 0)],
+            hideOnly: this.dataLabel.visible && this.dataLabel.collisionHideOnly,
+            suppressMarkDraw: true
+          }
+        });
+
+        // we need to maintain some values since line has customized lifecycle setup
+        labelsAdded.call(transitionEndAll, () => {
+          this.updatingLabels.each((d, i, n) => {
+            select(n[i]).classed('collision-added', false);
+            // store results to hash so we can use them in lifecycle (specific to line/parallel lifecycle only)
+            this.hiddenHash[`${d[this.ordinalAccessor]}-${d[this.seriesAccessor] || 'b'}`] = {
+              'data-label-hidden': select(n[i]).attr('data-label-hidden') === 'true',
+              x: +select(n[i]).attr('x') - +select(n[i]).attr('data-x'),
+              y: +select(n[i]).attr('y') - +select(n[i]).attr('data-y'),
+              'text-anchor': select(n[i]).attr('text-anchor')
+            };
+          });
+        });
+      }
     }
   }
 
   setSeriesLabelOpacity() {
+    const hideOnly = this.labelDetails.placement !== 'auto' && this.labelDetails.collisionHideOnly;
+    const addCollisionClass = this.labelDetails.placement === 'auto' || hideOnly;
+
     this.seriesLabelUpdate.interrupt('opacity');
 
     this.seriesLabelUpdate.attr('opacity', (d, i, n) => {
+      const prevOpacity = +select(n[i]).attr('opacity');
+      const styleVisibility = select(n[i]).style('visibility');
       const seriesLabelOpacity = !this.seriesLabel.visible
         ? 0
         : this.secondaryLines.keys.includes(d.key) &&
@@ -2846,9 +2978,96 @@ export class LineChart {
             ? 0
             : 1;
         select(n[i]).attr('data-hidden', targetOpacity === 0 ? 'true' : null);
+        if (
+          ((targetOpacity === 1 && styleVisibility === 'hidden') || prevOpacity !== targetOpacity) &&
+          (this.labelDetails.placement === 'auto' || hideOnly)
+        ) {
+          if (targetOpacity === 1) {
+            select(n[i])
+              .classed('collision-added', true)
+              .style('visibility', null);
+          } else {
+            select(n[i]).classed('collision-removed', true);
+          }
+        }
         return targetOpacity;
       }
     });
+
+    if (addCollisionClass) {
+      const labelsAdded = this.seriesLabelUpdate
+        .filter((_, i, n) => select(n[i]).classed('collision-added'))
+        .attr(
+          'data-text-anchor',
+          (_, i, n) => select(n[i]).attr('collision-text-anchor') || select(n[i]).attr('data-text-anchor')
+        )
+        .attr('collision-text-anchor', null);
+
+      const labelsRemoved = this.seriesLabelUpdate
+        .filter((_, i, n) => select(n[i]).classed('collision-removed'))
+        .attr('data-use-dx', hideOnly)
+        .attr('data-use-dy', hideOnly)
+        .attr('keep-data-y', hideOnly)
+        .attr('collision-text-anchor', (_, i, n) => select(n[i]).attr('data-text-anchor'))
+        .attr('data-text-anchor', null); // need this for remove only
+
+      // we can now remove labels as well if we need to...
+      if (labelsRemoved.size() > 0) {
+        this.bitmaps = resolveLabelCollision({
+          bitmaps: this.bitmaps,
+          labelSelection: labelsRemoved,
+          avoidMarks: [], // [this.updateDots], // this will link the series label to the last point in the line
+          validPositions: ['middle'],
+          offsets: [1],
+          accessors: ['key'],
+          size: [roundTo(this.width, 0), roundTo(this.innerPaddedHeight, 0)],
+          hideOnly: false,
+          removeOnly: true
+        });
+
+        // remove temporary class now
+        labelsRemoved.classed('collision-removed', false).attr('keep-data-y', null);
+      }
+
+      // we can now add labels as well if we need to...
+      if (labelsAdded.size() > 0) {
+        // if we keep this in here, we are assuming the last point will always be on the right of the chart
+        // it also adds about 8-9 ms per run to redraw this.update to canvas => bitmap
+        if (
+          this.labelDetails.visible &&
+          (this.labelDetails.placement === 'auto' || this.labelDetails.collisionHideOnly)
+        ) {
+          this.bitmaps = resolveLabelCollision({
+            bitmaps: this.bitmaps,
+            labelSelection: labelsAdded,
+            avoidMarks: [], // [this.updateDots], // this will link the series label to the last point in the line
+            validPositions: hideOnly ? ['middle'] : ['middle', 'top', 'bottom'],
+            offsets: hideOnly ? [1] : [1, 1, 1],
+            accessors: ['key'],
+            size: [roundTo(this.width, 0), roundTo(this.innerPaddedHeight, 0)],
+            hideOnly: this.labelDetails.visible && hideOnly,
+            suppressMarkDraw: true
+          });
+
+          // if we are in hide only we need to add attributes back
+          if (hideOnly) {
+            labelsAdded
+              .attr('text-anchor', this.isRight ? 'start' : 'end')
+              .attr('x', this.isRight ? this.innerPaddedWidth + 10 : 0)
+              .attr('y', d =>
+                this.isRight
+                  ? this.y(d.values[d.values.length - 1][this.valueAccessor])
+                  : this.y(d.values[0][this.valueAccessor])
+              )
+              .attr('dx', this.isRight ? '0.1em' : '-0.1em')
+              .attr('dy', '0.3em');
+          }
+        }
+
+        // remove temporary class now
+        labelsAdded.classed('collision-added', false);
+      }
+    }
   }
 
   updateInteractionState() {

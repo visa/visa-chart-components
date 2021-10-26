@@ -60,7 +60,9 @@ export const resolveLabelCollision = ({
   size, // an array with chart [ width, height ]
   boundsScope, // used in getting mark bounds, can help more specifically define placment of labels
   bitmaps, // outputted/inputted bitmap created, used to speed up subsequent calls to this function
-  hideOnly // a boolean that will be off by default, but when true is passed it will not place, only hide overlapping
+  hideOnly, // a boolean that will be off by default, but when true is passed it will not place, only hide overlapping
+  removeOnly, // a boolean that will be off by default, but when true is passed it will only remove labels passed from bitmap
+  suppressMarkDraw // a boolean that will be off by default, but when true is passed it will skip drawing chart marks to canvas/bitmap
 }: {
   labelSelection: any;
   avoidMarks: any;
@@ -72,6 +74,8 @@ export const resolveLabelCollision = ({
   boundsScope?: string;
   bitmaps?: any;
   hideOnly?: boolean;
+  removeOnly?: boolean;
+  suppressMarkDraw?: boolean;
 }) => {
   const anchors = validPositions; // this should be the allowed placements
   // const padding = 100; // The padding in pixels (default 0) by which a label may extend past the chart bounding box.
@@ -90,16 +94,14 @@ export const resolveLabelCollision = ({
       const innerMarkArray = [];
       marks.each((d, i, n) => {
         const item = {};
-        const b = n[i].getBBox();
         item['node'] = n[i];
         item['nodeName'] = n[i].nodeName;
-        item['bbox'] = b;
         item['datum'] = d && d.data && d.data.data ? d.data.data : d && d.data ? d.data : d ? d : {};
         n[i].getAttributeNames().forEach(attrName => {
           item[attrName] = select(n[i]).attr(attrName);
         });
         item['boundsScope'] = boundsScope;
-        item['bounds'] = getMarkItemBounds(item, b);
+        item['bounds'] = getMarkItemBounds(item);
         const accessorValues = accessors.map(key => item['datum'][key] || 'Not Found');
         boundsHash[accessorValues.join('-')] = item['bounds'];
         item['key'] = accessorValues.join('-');
@@ -117,7 +119,6 @@ export const resolveLabelCollision = ({
       const style = getComputedStyle(textElement);
       const fontSize = parseFloat(style.fontSize);
       const fontFamily = style.fontFamily;
-      const b = textElement.getBBox();
       item['node'] = n[i];
       item['i'] = i;
       item['nodeName'] = textElement.nodeName;
@@ -127,7 +128,6 @@ export const resolveLabelCollision = ({
       item['sort'] = false;
       item['originalOpacity'] = 1; // should be opacity of the element ultimately
       item['datum'] = d && d.data && d.data.data ? d.data.data : d && d.data ? d.data : d ? d : {};
-      item['bbox'] = b;
       textElement.getAttributeNames().forEach(attrName => {
         item[attrName] = select(textElement).attr(attrName);
       });
@@ -142,15 +142,20 @@ export const resolveLabelCollision = ({
       // but the success of this algorithm seems very reliant on mark boundaries
       item['key'] = accessorValues.join('-');
       item['boundsScope'] = boundsScope;
+      const oldDataX = item['data-x'];
+      const oldDataY = item['data-y'];
+      if (removeOnly && item['x'] && item['y'] && !(item['keep-data-y'] === 'true')) {
+        item['data-x'] = item['x'];
+        item['data-y'] = item['y'];
+      }
       item['markBound'] =
         boundsHash[accessorValues.join('-')] && !hideOnly // if hide only, we need to use text as is
           ? boundsHash[accessorValues.join('-')]
-          : item['data-x'] &&
-            item['data-y'] &&
-            (item['textWidth'] || item['data-width']) &&
-            (item['textHeight'] || item['data-height'])
-          ? getMarkItemBounds(item, b)
-          : [b.x, b.x + b.width / 2.0, b.x + b.width, b.y, b.y + b.height / 2.0, b.y + b.height];
+          : getMarkItemBounds(item);
+      if (removeOnly) {
+        item['data-x'] = oldDataX;
+        item['data-y'] = oldDataY;
+      }
       labelsArray.push(item);
     });
   }
@@ -162,9 +167,9 @@ export const resolveLabelCollision = ({
 
   // console.log('calling bitmap', bitmaps, labelsArray, size, 'markType_unused', avoidBaseMark, marksArray, false, 1);
   // if we received an inputted bitmap, add to it, otherwise, create a new one from scratch
-  if (bitmaps && bitmaps.length === 2) {
+  if (bitmaps && bitmaps.length === 2 && !removeOnly && !suppressMarkDraw) {
     addToBitmap(bitmaps, labelsArray, size, 'markType_unused', avoidBaseMark, marksArray, false, 1);
-  } else {
+  } else if (!removeOnly && !suppressMarkDraw) {
     bitmaps = prepareBitmap(labelsArray, size, 'markType_unused', avoidBaseMark, marksArray, false, 1);
   }
 
@@ -191,106 +196,142 @@ export const resolveLabelCollision = ({
   const anchorPositions = anchors.map(anchor => anchorTextToNumber[anchor]);
   const labelPlacer = new LabelPlacer(bitmaps, size, anchorPositions, offsets);
   const attributeHash = {};
-  labelsArray.forEach((item, i) => {
-    // this handles when we don't have a data match
-    // requires the lowest level selection in d3
-    const itemKey = item.key === 'Not Found' ? i : `${item.i}-${item.key}`;
-    if (item['data-hidden'] === 'true') {
-      // console.log('data-hidden', item.i, item.key, item);
+  if (removeOnly) {
+    // removeOnly will circumvent anything done below as it relates to stuff outside
+    // of this utility
+    labelsArray.forEach((item, i) => {
+      const itemKey = item.key === 'Not Found' ? i : `${item.i}-${item.key}`;
+      // console.log('remove-item-from-bitmap', item.i, item.key, item);
+
+      // call the bitmap remover function we added (tweaked copy of .place())
+      // we only do this if the label was not already hidden
+      if (item['data-label-hidden'] !== 'true') labelPlacer.unplace(item);
+
+      // we don't do anything when we remove from bitmap only
       attributeHash[itemKey] = {
         'do-nothing': true
       };
-    } else if (item['opacity'] === 0) {
-      // console.log('opacity-0', item);
-      attributeHash[itemKey] = {
-        'do-nothing': true
-      };
-    } else if (!item['data-hidden'] && labelPlacer.place(item)) {
-      // console.log(
-      //   'placing node',
-      //   i,
-      //   item.key,
-      //   item.key === 'Not Found' ? i : item.key,
-      //   item,
-      //   item.baseline === 'top'
-      //     ? item['textHeight']
-      //     : item.baseline === 'bottom'
-      //     ? -item['textHeight'] / 5
-      //     : item['textHeight'] / 3,
-      //   select(item.node).attr('x'),
-      //   item.x,
-      //   select(item.node).attr('y'),
-      //   item.y
-      // );
-      attributeHash[itemKey] = {
-        visibility: null,
-        x: item.x,
-        y: item.y,
-        translateX: !+item['data-translate-x'] ? 0 : +item['data-translate-x'],
-        translateY: !+item['data-translate-y'] ? 0 : +item['data-translate-y'],
-        // this adjusts the placement of text based on LabelPlacer logic from vega-label
-        translateHeight: !item['data-no-text-anchor']
-          ? item.baseline === 'top'
-            ? +item['textHeight'] //  / 3
-            : item.baseline === 'middle'
-            ? +item['textHeight'] / 3
-            : 0
-          : 0,
-        'text-anchor': !item['data-no-text-anchor'] ? alignMap[item.align] : null,
-        'data-align': item.align,
-        'data-baseline': item.baseline,
-        'data-label-moved': true,
-        'data-label-hidden': false,
-        textHeight: item.textHeight
-      };
-      // we will have to place item here based on whats comes back
-    } else {
-      // console.log('hiding node', i, item.key, item.key === 'Not Found' ? i : item.key, item);
-      attributeHash[itemKey] = {
-        visibility: 'hidden',
-        'data-label-hidden': true
-      };
-    }
-  });
+    });
+  } else {
+    labelsArray.forEach((item, i) => {
+      // this handles when we don't have a data match
+      // requires the lowest level selection in d3
+      const itemKey = item.key === 'Not Found' ? i : `${item.i}-${item.key}`;
+      if (item['data-hidden'] === 'true') {
+        // console.log('data-hidden', item.i, item.key, item);
+        attributeHash[itemKey] = {
+          'do-nothing': true
+        };
+      } else if (+item['opacity'] === 0) {
+        // console.log('opacity-0', item);
+        attributeHash[itemKey] = {
+          'do-nothing': true
+        };
+      } else if (!item['data-hidden'] && labelPlacer.place(item)) {
+        // console.log(
+        //   'placing node',
+        //   i,
+        //   item.key,
+        //   item.key === 'Not Found' ? i : item.key,
+        //   item,
+        //   item.baseline === 'top'
+        //     ? item['textHeight']
+        //     : item.baseline === 'bottom'
+        //     ? -item['textHeight'] / 5
+        //     : item['textHeight'] / 3,
+        //   select(item.node).attr('x'),
+        //   item.x,
+        //   select(item.node).attr('y'),
+        //   item.y
+        // );
+        attributeHash[itemKey] = {
+          visibility: null,
+          x: item.x,
+          y: item.y,
+          translateX: !+item['data-translate-x'] ? 0 : +item['data-translate-x'],
+          translateY: !+item['data-translate-y'] ? 0 : +item['data-translate-y'],
+          // this adjusts the placement of text based on LabelPlacer logic from vega-label
+          translateHeight: !item['data-no-text-anchor']
+            ? item.baseline === 'top'
+              ? +item['textHeight'] //  / 3
+              : item.baseline === 'middle'
+              ? +item['textHeight'] / 3
+              : 0
+            : 0,
+          'text-anchor': !item['data-no-text-anchor'] ? alignMap[item.align] : null,
+          'data-align': item.align,
+          'data-baseline': item.baseline,
+          'data-label-moved': true,
+          'data-label-hidden': false,
+          textHeight: item.textHeight
+        };
+        // we will have to place item here based on whats comes back
+      } else {
+        // console.log('hiding node', i, item.key, item.key === 'Not Found' ? i : item.key, item);
+        attributeHash[itemKey] = {
+          visibility: 'hidden',
+          x: item.x,
+          y: item.y,
+          translateX: !+item['data-translate-x'] ? 0 : +item['data-translate-x'],
+          translateY: !+item['data-translate-y'] ? 0 : +item['data-translate-y'],
+          // this adjusts the placement of text based on LabelPlacer logic from vega-label
+          translateHeight: !item['data-no-text-anchor']
+            ? item.baseline === 'top'
+              ? +item['textHeight'] //  / 3
+              : item.baseline === 'middle'
+              ? +item['textHeight'] / 3
+              : 0
+            : 0,
+          'text-anchor': !item['data-no-text-anchor'] ? alignMap[item.align] : null,
+          'data-align': item.align,
+          'data-baseline': item.baseline,
+          textHeight: item.textHeight,
+          'data-label-moved': true,
+          'data-label-hidden': true
+        };
+      }
+    });
 
-  // now that we are done we set the selection values onto the transition
-  labelSelection.style('visibility', (d, i, n) => {
-    const innerD = d && d.data && d.data.data ? d.data.data : d && d.data ? d.data : d ? d : {};
-    const accessorValues = accessors.map(key => innerD[key] || 'Not Found');
-    const attributes =
-      accessorValues.join('-') === 'Not Found' ? attributeHash[i] : attributeHash[`${i}-${accessorValues.join('-')}`];
-    // first we check if we are not supposed to do anything
-    if (accessors && accessors.length && attributes && attributes['do-nothing']) {
-      // console.log('we are in do nothing', i, d, n[i], attributes);
-      return select(n[i]).style('visibility');
-    } else {
-      // console.log('we are in do something', i, d, n[i], attributes);
-      // if we get past that, then we can apply visibility update
-      select(n[i])
-        .attr('data-label-hidden', accessors && accessors.length && attributes && attributes['data-label-hidden'])
-        .attr('dx', !(select(n[i]).attr('data-use-dx') === 'true') ? null : select(n[i]).attr('dx'))
-        .attr('dy', !(select(n[i]).attr('data-use-dy') === 'true') ? null : select(n[i]).attr('dy'))
-        .attr('data-use-dx', null)
-        .attr('data-use-dy', null); // we may still need these, but it was causing a blip of placement on world-map during hideOnly mode
-      return accessors && accessors.length && attributes && (attributes.visibility === null || !attributes.visibility)
-        ? null
-        : 'hidden';
-    }
-  });
-  // we only update placement if hideOnly is not passed/truthy, which should be default
-  // matching the selection to the array above has lead to a lot of repeated code
-  // we can likely improve the performance, conciseness and readibility of this code
-  // in future revisions
-  if (!hideOnly) {
-    labelSelection
-      .each((d, i, n) => {
-        const innerD = d && d.data && d.data.data ? d.data.data : d && d.data ? d.data : d ? d : {};
-        const accessorValues = accessors.map(key => innerD[key] || 'Not Found');
-        const attributes =
-          accessorValues.join('-') === 'Not Found'
-            ? attributeHash[i]
-            : attributeHash[`${i}-${accessorValues.join('-')}`];
-
+    // now that we are done we set the selection values onto the transition
+    labelSelection.style('visibility', (d, i, n) => {
+      const innerD = d && d.data && d.data.data ? d.data.data : d && d.data ? d.data : d ? d : {};
+      const accessorValues = accessors.map(key => innerD[key] || 'Not Found');
+      const attributes =
+        accessorValues.join('-') === 'Not Found' ? attributeHash[i] : attributeHash[`${i}-${accessorValues.join('-')}`];
+      // first we check if we are not supposed to do anything
+      if (accessors && accessors.length && attributes && attributes['do-nothing']) {
+        // console.log('we are in do nothing', i, d, n[i], attributes);
+        return select(n[i]).style('visibility');
+      } else {
+        // console.log('we are in do something', i, d, n[i], attributes);
+        // if we get past that, then we can apply visibility update
+        select(n[i])
+          .attr('data-label-hidden', accessors && accessors.length && attributes && attributes['data-label-hidden'])
+          .attr('data-label-moved', accessors && accessors.length && attributes && attributes['data-label-moved'])
+          .attr('data-align', attributes['data-align'])
+          .attr('data-baseline', attributes['data-baseline'])
+          .attr('dx', !(select(n[i]).attr('data-use-dx') === 'true') ? null : select(n[i]).attr('dx'))
+          .attr('dy', !(select(n[i]).attr('data-use-dy') === 'true') ? null : select(n[i]).attr('dy'))
+          .attr('data-use-dx', null)
+          .attr('data-use-dy', null); // we may still need these, but it was causing a blip of placement on world-map during hideOnly mode
+        return accessors && accessors.length && attributes && (attributes.visibility === null || !attributes.visibility)
+          ? null
+          : 'hidden';
+      }
+    });
+    // we only update placement if hideOnly is not passed/truthy, which should be default
+    // matching the selection to the array above has lead to a lot of repeated code
+    // we can likely improve the performance, conciseness and readibility of this code
+    // in future revisions
+    if (!hideOnly) {
+      labelSelection
+        // .each((d, i, n) => {
+        //   const innerD = d && d.data && d.data.data ? d.data.data : d && d.data ? d.data : d ? d : {};
+        //   const accessorValues = accessors.map(key => innerD[key] || 'Not Found');
+        //   const attributes =
+        //     accessorValues.join('-') === 'Not Found'
+        //       ? attributeHash[i]
+        //       : attributeHash[`${i}-${accessorValues.join('-')}`];
         // this is more concise, but since it is a different selection it doesn't transition
         // we would have to get transition info from the passed selection somehow to do it this way
         // select(n[i])
@@ -302,42 +343,43 @@ export const resolveLabelCollision = ({
         // .attr('y', attributes && attributes.y ? attributes.y : select(n[i]).attr('y'))
         // .attr('dx', (_, i, n) => (!select(n[i]).attr('data-use-dx') ? null : select(n[i]).attr('dx')))
         // .attr('dy', (_, i, n) => (!select(n[i]).attr('data-use-dy') ? null : select(n[i]).attr('dy')));
-      })
-      .attr('x', (d, i, n) => {
-        const innerD = d && d.data && d.data.data ? d.data.data : d && d.data ? d.data : d ? d : {};
-        const accessorValues = accessors.map(key => innerD[key] || 'Not Found');
-        const attributes =
-          accessorValues.join('-') === 'Not Found'
-            ? attributeHash[i]
-            : attributeHash[`${i}-${accessorValues.join('-')}`];
-        // console.log('checking stuff', accessorValues, attributeHash, attributes);
-        return accessors && accessors.length && attributes && attributes.x
-          ? attributes.x - attributes.translateX
-          : select(n[i]).attr('data-x');
-      })
-      .attr('y', (d, i, n) => {
-        const innerD = d && d.data && d.data.data ? d.data.data : d && d.data ? d.data : d ? d : {};
-        const accessorValues = accessors.map(key => innerD[key] || 'Not Found');
-        const attributes =
-          accessorValues.join('-') === 'Not Found'
-            ? attributeHash[i]
-            : attributeHash[`${i}-${accessorValues.join('-')}`];
-        const translateTextHeight = accessors && accessors.length && attributes && attributes['translateHeight'];
-        return accessors && accessors.length && attributes && attributes.y
-          ? attributes.y - attributes.translateY + translateTextHeight
-          : select(n[i]).attr('data-y');
-      })
-      .attr('text-anchor', (d, i, n) => {
-        const innerD = d && d.data && d.data.data ? d.data.data : d && d.data ? d.data : d ? d : {};
-        const accessorValues = accessors.map(key => innerD[key] || 'Not Found');
-        const attributes =
-          accessorValues.join('-') === 'Not Found'
-            ? attributeHash[i]
-            : attributeHash[`${i}-${accessorValues.join('-')}`];
-        return accessors && accessors.length && attributes && attributes['text-anchor']
-          ? attributes['text-anchor']
-          : select(n[i]).attr('text-anchor');
-      });
+        // })
+        .attr('x', (d, i, n) => {
+          const innerD = d && d.data && d.data.data ? d.data.data : d && d.data ? d.data : d ? d : {};
+          const accessorValues = accessors.map(key => innerD[key] || 'Not Found');
+          const attributes =
+            accessorValues.join('-') === 'Not Found'
+              ? attributeHash[i]
+              : attributeHash[`${i}-${accessorValues.join('-')}`];
+          // console.log('checking stuff', n[i], accessorValues, attributeHash, attributes, accessors && accessors.length && attributes && attributes.x);
+          return accessors && accessors.length && attributes && attributes.x
+            ? attributes.x - attributes.translateX
+            : select(n[i]).attr('data-x');
+        })
+        .attr('y', (d, i, n) => {
+          const innerD = d && d.data && d.data.data ? d.data.data : d && d.data ? d.data : d ? d : {};
+          const accessorValues = accessors.map(key => innerD[key] || 'Not Found');
+          const attributes =
+            accessorValues.join('-') === 'Not Found'
+              ? attributeHash[i]
+              : attributeHash[`${i}-${accessorValues.join('-')}`];
+          const translateTextHeight = accessors && accessors.length && attributes && attributes['translateHeight'];
+          return accessors && accessors.length && attributes && attributes.y
+            ? attributes.y - attributes.translateY + translateTextHeight
+            : select(n[i]).attr('data-y');
+        })
+        .attr('text-anchor', (d, i, n) => {
+          const innerD = d && d.data && d.data.data ? d.data.data : d && d.data ? d.data : d ? d : {};
+          const accessorValues = accessors.map(key => innerD[key] || 'Not Found');
+          const attributes =
+            accessorValues.join('-') === 'Not Found'
+              ? attributeHash[i]
+              : attributeHash[`${i}-${accessorValues.join('-')}`];
+          return accessors && accessors.length && attributes && attributes['text-anchor']
+            ? attributes['text-anchor']
+            : select(n[i]).attr('text-anchor');
+        });
+    }
   }
   // this print is super userful for debugging, it is coupled with the commented out
   // canvas element on each VCC component
@@ -346,7 +388,7 @@ export const resolveLabelCollision = ({
 };
 
 // function created for VCC to get the 6 point bounds for vega-label algorithm
-export const getMarkItemBounds = (markItem, bbox) => {
+export const getMarkItemBounds = markItem => {
   const translateX = !+markItem['data-translate-x'] ? 0 : +markItem['data-translate-x'];
   const translateY = !+markItem['data-translate-y'] ? 0 : +markItem['data-translate-y'];
   switch (markItem['nodeName']) {
@@ -573,13 +615,23 @@ export const getMarkItemBounds = (markItem, bbox) => {
             +markItem['data-y'] + translateY + (+markItem['data-r'] || 0)
           ];
     default:
+      // we should not really be hitting default with anything at this point
       return [
-        bbox.x,
-        bbox.x + bbox.width / 2.0,
-        bbox.x + bbox.width,
-        bbox.y,
-        bbox.y + bbox.height / 2.0,
-        bbox.y + bbox.height
+        +markItem['data-x'] + translateX,
+        +markItem['data-x'] + translateX + +markItem['data-width'] / 2,
+        +markItem['data-x'] + translateX + +markItem['data-width'],
+        +markItem['data-y'] + translateY,
+        +markItem['data-y'] + translateY + +markItem['data-height'] / 2,
+        +markItem['data-y'] + translateY + +markItem['data-height']
       ];
+    // remove bbox from algorithm because it is slow and we don't need it
+    // return [
+    //   bbox.x,
+    //   bbox.x + bbox.width / 2.0,
+    //   bbox.x + bbox.width,
+    //   bbox.y,
+    //   bbox.y + bbox.height / 2.0,
+    //   bbox.y + bbox.height
+    // ];
   }
 };

@@ -750,9 +750,9 @@ export class PieChart {
       this.setGeometryAccessibilityAttributes();
       this.setGeometryAriaLabels();
       this.setSelectedClass();
-      this.updateInteractionState();
-      this.setLabelOpacity();
-      this.checkLabelColorAgainstBackground();
+      // this.updateInteractionState();
+      // this.setLabelOpacity();
+      // this.checkLabelColorAgainstBackground();
       this.updateCursor();
       this.bindInteractivity();
       this.drawAnnotations();
@@ -887,7 +887,8 @@ export class PieChart {
         this.shouldSetLabelOpacity = false;
       }
       if (this.shouldCheckLabelColor) {
-        this.checkLabelColorAgainstBackground();
+        this.checkLabelColorAgainstBackground('Labels');
+        this.checkLabelColorAgainstBackground('RefLabels');
         this.shouldCheckLabelColor = false;
       }
       if (this.shouldSetSelectionClass) {
@@ -1231,117 +1232,159 @@ export class PieChart {
   setLabelOpacity() {
     const labelOpacity = this.dataLabel.visible ? 1 : 0;
     const noteOpacity = this.showLabelNote ? 1 : 0;
+    // for this we can combine the labels and notes selections
+    const tempLabels = this.updatingLabels.merge(this.updatingRefLabels);
+    const tempNotes = this.updatingLabelsNotes.merge(this.updatingRefLabelsNotes);
 
-    this.updatingLabels.attr('opacity', d =>
-      checkInteraction(
-        d.data,
-        labelOpacity,
-        this.hoverOpacity,
-        this.hoverHighlight,
-        this.clickHighlight,
-        this.innerInteractionKeys
-      ) < 1
-        ? 0
-        : 1
-    );
-    // addStrokeUnder(this.updatingLabels, 'white');
+    tempLabels
+      .attr('data-use-dx', true) // need to add this for remove piece of collision below
+      .attr('data-use-dy', true)
+      .attr('opacity', (d, i, n) => {
+        const prevOpacity = +select(n[i]).attr('opacity');
+        const styleVisibility = select(n[i]).style('visibility');
+        const targetOpacity =
+          checkInteraction(
+            d.data,
+            labelOpacity,
+            this.hoverOpacity,
+            this.hoverHighlight,
+            this.clickHighlight,
+            this.innerInteractionKeys
+          ) < 1
+            ? 0
+            : 1;
+        if ((targetOpacity === 1 && styleVisibility === 'hidden') || prevOpacity !== targetOpacity) {
+          if (targetOpacity === 1) {
+            select(n[i])
+              .classed('collision-added', true)
+              .style('visibility', null);
+          } else {
+            select(n[i]).classed('collision-removed', true);
+          }
+        }
+        return targetOpacity;
+      });
+    // addStrokeUnder(tempLabels, 'white');
 
-    this.updatingRefLabels.attr('opacity', d =>
-      checkInteraction(
-        d.data,
-        labelOpacity,
-        this.hoverOpacity,
-        this.hoverHighlight,
-        this.clickHighlight,
-        this.innerInteractionKeys
-      ) < 1
-        ? 0
-        : 1
-    );
-    // addStrokeUnder(this.updatingRefLabels, 'white');
+    tempNotes
+      .attr('data-use-dx', true) // need to add this for remove piece of collision below
+      .attr('data-use-dy', true)
+      .attr('opacity', (d, i, n) => {
+        const prevOpacity = +select(n[i]).attr('opacity');
+        const styleVisibility = select(n[i]).style('visibility');
+        const targetOpacity =
+          checkInteraction(
+            d.data,
+            noteOpacity,
+            this.hoverOpacity,
+            this.hoverHighlight,
+            this.clickHighlight,
+            this.innerInteractionKeys
+          ) < 1
+            ? 0
+            : 1;
+        if ((targetOpacity === 1 && styleVisibility === 'hidden') || prevOpacity !== targetOpacity) {
+          if (targetOpacity === 1) {
+            select(n[i])
+              .classed('collision-added', true)
+              .style('visibility', null);
+          } else {
+            select(n[i]).classed('collision-removed', true);
+          }
+        }
+        return targetOpacity;
+      });
+    // addStrokeUnder(tempNotes, 'white');
 
-    this.updatingLabelsNotes.attr('opacity', d =>
-      checkInteraction(
-        d.data,
-        noteOpacity,
-        this.hoverOpacity,
-        this.hoverHighlight,
-        this.clickHighlight,
-        this.innerInteractionKeys
-      ) < 1
-        ? 0
-        : 1
-    );
-    // addStrokeUnder(this.updatingLabelsNotes, 'white');
+    if (this.dataLabel.collisionHideOnly) {
+      const labelsAdded = tempLabels.filter((_, i, n) => select(n[i]).classed('collision-added'));
+      const labelsRemoved = tempLabels.filter((_, i, n) => select(n[i]).classed('collision-removed'));
+      const notesAdded = tempNotes.filter((_, i, n) => select(n[i]).classed('collision-added'));
+      const notesRemoved = tempNotes.filter((_, i, n) => select(n[i]).classed('collision-removed'));
+      const validPositions = ['middle']; // , 'left', 'right'];
+      const offsets = [1]; //,1,1];
 
-    this.updatingRefLabelsNotes.attr('opacity', d =>
-      checkInteraction(
-        d.data,
-        noteOpacity,
-        this.hoverOpacity,
-        this.hoverHighlight,
-        this.clickHighlight,
-        this.innerInteractionKeys
-      ) < 1
-        ? 0
-        : 1
-    );
-    // addStrokeUnder(this.updatingRefLabelsNotes, 'white');
+      // we can now remove labels as well if we need to...
+      if (labelsRemoved.size() > 0) {
+        this.bitmaps = resolveLabelCollision({
+          bitmaps: this.bitmaps,
+          labelSelection: labelsRemoved,
+          avoidMarks: [],
+          validPositions: ['middle'],
+          offsets: [1],
+          accessors: ['key'],
+          size: [roundTo(this.width, 0), roundTo(this.height, 0)],
+          hideOnly: false,
+          removeOnly: true
+        });
+
+        // remove temporary class now
+        labelsRemoved.classed('collision-removed', false);
+      }
+
+      if (notesRemoved.size() > 0) {
+        this.bitmaps = resolveLabelCollision({
+          bitmaps: this.bitmaps,
+          labelSelection: notesRemoved,
+          avoidMarks: [],
+          validPositions: ['middle'],
+          offsets: [1],
+          accessors: ['key'],
+          size: [roundTo(this.width, 0), roundTo(this.height, 0)],
+          hideOnly: false,
+          removeOnly: true
+        });
+
+        // remove temporary class now
+        notesRemoved.classed('collision-removed', false);
+      }
+
+      // we can now add labels as well if we need to...
+      if (labelsAdded.size() > 0) {
+        this.bitmaps = resolveLabelCollision({
+          bitmaps: this.bitmaps,
+          labelSelection: labelsAdded,
+          avoidMarks: [],
+          validPositions,
+          offsets,
+          accessors: [this.ordinalAccessor],
+          size: [roundTo(this.width, 0), roundTo(this.height, 0)], // we need the whole width and height for pie
+          hideOnly: this.dataLabel.visible && this.dataLabel.collisionHideOnly,
+          suppressMarkDraw: true
+        });
+
+        // remove temporary class now
+        labelsAdded.classed('collision-added', false);
+      }
+
+      // we can now add labels as well if we need to...
+      if (notesAdded.size() > 0) {
+        this.bitmaps = resolveLabelCollision({
+          bitmaps: this.bitmaps,
+          labelSelection: notesAdded,
+          avoidMarks: [],
+          validPositions,
+          offsets,
+          accessors: [this.ordinalAccessor],
+          size: [roundTo(this.width, 0), roundTo(this.height, 0)], // we need the whole width and height for pie
+          hideOnly: this.dataLabel.visible && this.dataLabel.collisionHideOnly,
+          suppressMarkDraw: true
+        });
+
+        // remove temporary class now
+        notesAdded.classed('collision-added', false);
+      }
+    }
   }
 
-  // setLabelOpacity() {
-  //   this.updatingLabels.interrupt('opacity');
-  //   this.processLabelOpacity(this.updatingLabels);
-  // }
+  checkLabelColorAgainstBackground(group) {
+    const placement = group === 'RefLabels' ? 'edge' : this.dataLabel.placement;
 
-  // processLabelOpacity(selection) {
-  //   const opacity = this.dataLabel.visible ? 1 : 0;
-  //   const ordinalAxis = this.layout === 'vertical' ? 'x' : 'y';
-  //   const ordinalDimension = this.layout === 'vertical' ? 'width' : 'height';
-  //   const valueAxis = this.layout === 'vertical' ? 'y' : 'x';
-  //   const valueDimension = this.layout === 'vertical' ? 'height' : 'width';
-  //   const fullBandwidth =
-  //     this.layout === 'vertical' ? this.innerPaddedWidth / this.data.length : this.innerPaddedHeight / this.data.length;
-
-  //   selection.attr('opacity', d => {
-  //     const dimensions = {};
-  //     dimensions[ordinalDimension] =
-  //       this.placement === 'left' || this.placement === 'bottom' ? this[ordinalAxis].bandwidth() : fullBandwidth;
-  //     if (this.placement === 'left' || this.placement === 'bottom') {
-  //       dimensions[valueDimension] = Math.abs(
-  //         this.layout === 'vertical'
-  //           ? this[valueAxis](0) - this[valueAxis](d[this.valueAccessor])
-  //           : this[valueAxis](d[this.valueAccessor]) - this[valueAxis](0)
-  //       );
-  //     }
-  //     const hasRoom =
-  //       this.accessibility.showSmallLabels ||
-  //       verifyTextHasSpace({
-  //         text: formatDataLabel(d, this.innerLabelAccessor, this.dataLabel.format),
-  //         dimensions,
-  //         fontSize: 14
-  //       });
-  //     return hasRoom
-  //       ? checkInteraction(
-  //           d,
-  //           opacity,
-  //           this.hoverOpacity,
-  //           this.hoverHighlight,
-  //           this.clickHighlight,
-  //           this.innerInteractionKeys
-  //         ) < 1
-  //         ? 0
-  //         : 1
-  //       : 0;
-  //   });
-  // }
-
-  checkLabelColorAgainstBackground() {
-    this.updatingLabels.attr('fill', this.textTreatmentHandler);
+    this.updatingLabels.attr('fill', (d, i, n) => this.textTreatmentHandler(d, i, n, placement));
   }
 
   textTreatmentHandler = (d, i, n, specifiedPlacement?) => {
-    const placement = specifiedPlacement || this.placement;
+    const placement = specifiedPlacement || this.dataLabel.placement;
     const bgColor =
       this.clickHighlight &&
       this.clickHighlight.length > 0 &&
@@ -1655,10 +1698,24 @@ export class PieChart {
 
   enterLabels(group) {
     const placement = group === 'RefLabels' ? 'edge' : this.dataLabel.placement;
+    const labelOpacity = this.dataLabel.visible ? 1 : 0;
+    const noteOpacity = this.showLabelNote ? 1 : 0;
 
     this['entering' + group]
       .attr('class', 'pie-dataLabel-highlight')
       .attr('opacity', 0)
+      .attr('opacity', d =>
+        checkInteraction(
+          d.data,
+          labelOpacity,
+          this.hoverOpacity,
+          this.hoverHighlight,
+          this.clickHighlight,
+          this.innerInteractionKeys
+        ) < 1
+          ? 0
+          : Number.EPSILON
+      )
       .classed('entering', true)
       .attr('fill', (d, i, n) => this.textTreatmentHandler(d, i, n, placement))
       .attr('cursor', !this.suppressEvents && group !== 'RefLabels' ? this.cursor : null)
@@ -1669,6 +1726,18 @@ export class PieChart {
     this['entering' + group + 'Notes']
       .attr('class', 'pie-dataLabel-note')
       .attr('opacity', 0)
+      .attr('opacity', d =>
+        checkInteraction(
+          d.data,
+          noteOpacity,
+          this.hoverOpacity,
+          this.hoverHighlight,
+          this.clickHighlight,
+          this.innerInteractionKeys
+        ) < 1
+          ? 0
+          : Number.EPSILON
+      )
       .classed('entering', true)
       .attr('cursor', !this.suppressEvents && group !== 'RefLabels' ? this.cursor : null)
       .on('click', !this.suppressEvents && group !== 'RefLabels' ? d => this.onClickHandler(d.data) : null)
@@ -1861,7 +1930,18 @@ export class PieChart {
           .attr('data-r', 1)
           .attr('dx', 0)
           .attr('dy', placement === 'inside' ? '0.1em' : 0)
-          .attr('text-anchor', placement === 'inside' ? 'middle' : d.endAngle < Math.PI || i === 0 ? 'start' : 'end')
+          .attr(
+            'text-anchor',
+            placement === 'inside'
+              ? 'middle'
+              : placement === 'edge'
+              ? d.endAngle < Math.PI
+                ? 'start'
+                : 'end'
+              : d.startAngle + (d.endAngle - d.startAngle) / 2 < Math.PI
+              ? 'start'
+              : 'end'
+          )
           .text(
             // we need text end point to determine if we can fit label (gets reset by interpolation below)
             placement === 'edge' && i === this.preppedData.length - 1 && group !== 'RefLabels'
@@ -1975,7 +2055,16 @@ export class PieChart {
               : d.data[this.ordinalAccessor]
           ) // can I move this here? was in a seperate update
           .attr('dy', placement === 'inside' ? 0 : '1.4em')
-          .attr('text-anchor', d.endAngle < Math.PI || i === 0 ? 'start' : 'end');
+          .attr(
+            'text-anchor',
+            placement === 'edge'
+              ? d.endAngle < Math.PI
+                ? 'start'
+                : 'end'
+              : d.startAngle + (d.endAngle - d.startAngle) / 2 < Math.PI
+              ? 'start'
+              : 'end'
+          );
         const interpolator = interpolate(start, end);
         if (this.showLabelNote && this.dataLabel.visible && this.dataLabel.collisionHideOnly) {
           const validPositions = ['middle']; // , 'left', 'right'];

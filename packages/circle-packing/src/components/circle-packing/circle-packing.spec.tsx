@@ -112,13 +112,18 @@ describe('<circle-packing>', () => {
     // need to investigate this in the browser once we are able to connect the debugger again
     describe('generic test suite', () => {
       Object.keys(unitTestGeneric).forEach(test => {
+        const marginModifier = unitTestGeneric[test].testProps.margin
+          ? unitTestGeneric[test].testDefault
+            ? (600 - 8 - CirclePackingDefaultValues.margin.top * 2) / 2
+            : (600 - 8 - unitTestGeneric[test].testProps.margin.top * 2) / 2
+          : 0;
         if (unitTestGeneric[test].prop !== 'data') {
           // temporary if until we remove theme from testing util (part of props PR)
           const innerTestProps = unitTestGeneric[test].testDefault
-            ? { [unitTestGeneric[test].prop]: CirclePackingDefaultValues[unitTestGeneric[test].prop] }
+            ? { [unitTestGeneric[test].prop]: CirclePackingDefaultValues[unitTestGeneric[test].prop], marginModifier }
             : unitTestGeneric[test].prop === 'data'
             ? { data: EXPECTEDDATA }
-            : unitTestGeneric[test].testProps;
+            : { ...unitTestGeneric[test].testProps, marginModifier }; // (600 height|width - 4*4 padding|margin)
           const innerTestSelector =
             unitTestGeneric[test].testSelector === 'component-name'
               ? 'circle-packing'
@@ -154,8 +159,17 @@ describe('<circle-packing>', () => {
     // current these tests are failing due to attrTween / jsdom error where (_, i, n) is undefined
     // in the attrTween callback function
     describe.skip('interaction', () => {
+      beforeEach(() => {
+        jest.useFakeTimers();
+      });
+      afterEach(() => {
+        jest.clearAllTimers();
+      });
       describe('circle pack based interaction tests', () => {
-        const innerTestProps = {};
+        const innerTestProps = {
+          transitionEndAllSelector: '[data-testid=circle]',
+          runJestTimers: true
+        };
         const innerTestSelector = '[data-testid=circle][data-id=circle-World-Mexico]';
         const innerNegTestSelector = '[data-testid=circle][data-id=circle-World-Canada]';
         Object.keys(unitTestInteraction).forEach(test => {
@@ -186,7 +200,9 @@ describe('<circle-packing>', () => {
         const innerTestProps = {
           clickStyle: CUSTOMCLICKSTYLE,
           hoverOpacity: EXPECTEDHOVEROPACITY,
-          interactionKeys: ['Country']
+          interactionKeys: ['Country'],
+          transitionEndAllSelector: '[data-testid=circle]',
+          runJestTimers: true
         };
 
         it(`[${unitTestInteraction[testLoad].group}] ${unitTestInteraction[testLoad].prop}: ${
@@ -214,7 +230,9 @@ describe('<circle-packing>', () => {
         const newInnerTestProps = {
           clickStyle: CUSTOMCLICKSTYLE,
           hoverOpacity: EXPECTEDHOVEROPACITY,
-          interactionKeys: ['Type', 'Country']
+          interactionKeys: ['Type', 'Country'],
+          transitionEndAllSelector: '[data-testid=circle]',
+          runJestTimers: true
         };
         it(`[${unitTestInteraction[testLoad].group}] ${unitTestInteraction[testLoad].prop}: ${
           unitTestInteraction[testLoad].name

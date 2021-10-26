@@ -17,17 +17,45 @@ export class AppClusteredBarChart {
   @State() data: any;
   @State() stateTrigger: any = 0;
   @State() hoverElement: any = '';
-  @State() clickElement: any = [];
+  @State() clickElement: any = [
+    { year: '2017', otherCategory: '1991', otherGroup: 'D', otherValue: 27, item: 'A', value: 15 }
+  ];
   @State() ordinalAccessor: any = 'item';
   @State() valueAccessor: any = 'value';
   @State() groupAccessor: any = 'year';
   @State() legendLabels: any = [];
   @State() tooltipAccessor: any = 'item';
   @State() layout: string = 'vertical';
+  @State() interactionKeys: any = ['item'];
   @State() accessibility: any = {
     hideStrokes: false,
     includeDataKeyNames: true,
     keyboardNavConfig: { disabled: false }
+  };
+  @State() yAxis: any = {
+    visible: true,
+    gridVisible: true,
+    label: 'y axis',
+    format: '0.0[a]'
+  };
+  @State() padding: any = {
+    top: 20,
+    left: 100,
+    right: 30,
+    bottom: 50
+  };
+  @State() dataLabel: any = {
+    visible: true,
+    placement: 'middle',
+    labelAccessor: 'value',
+    format: '$0[a]',
+    collisionPlacement: 'right',
+    collisionHideOnly: true
+  };
+  @State() tooltipLabel: any = {
+    labelAccessor: ['year', this.tooltipAccessor, 'value'],
+    labelTitle: ['', this.tooltipAccessor, 'Transaction'],
+    format: ['', '', '$0[.][0]a']
   };
   @State() suppressEvents: boolean = false;
   @State() animations: any = { disabled: false };
@@ -382,41 +410,21 @@ export class AppClusteredBarChart {
           height={600}
           width={800}
           animationConfig={this.animations}
-          yAxis={{
-            visible: true,
-            gridVisible: true,
-            label: 'y axis',
-            format: '0.0[a]'
-          }}
-          padding={{
-            top: 20,
-            left: 100,
-            right: 30,
-            bottom: 50
-          }}
+          yAxis={this.yAxis}
+          padding={this.padding}
           data={this.data}
           layout={this.layout}
           ordinalAccessor={this.ordinalAccessor}
           valueAccessor={this.valueAccessor}
           groupAccessor={this.groupAccessor}
-          tooltipLabel={{
-            labelAccessor: ['year', this.tooltipAccessor, 'value'],
-            labelTitle: ['', this.tooltipAccessor, 'Transaction'],
-            format: ['', '', '$0[.][0]a']
-          }}
-          dataLabel={{
-            visible: true,
-            placement: 'auto',
-            labelAccessor: 'value',
-            format: '$0[a]',
-            collisionPlacement: 'right'
-          }}
+          tooltipLabel={this.tooltipLabel}
+          dataLabel={this.dataLabel}
           colorPalette={'categorical'}
           cursor={'pointer'}
           hoverOpacity={0.2}
           legend={{ labels: this.legendLabels, visible: true, interactive: true }}
           clickStyle={{ strokeWidth: '2px' }}
-          interactionKeys={['item']}
+          interactionKeys={this.interactionKeys}
           hoverHighlight={this.hoverElement}
           clickHighlight={this.clickElement}
           onClickFunc={d => this.onClickFunc(d)}
