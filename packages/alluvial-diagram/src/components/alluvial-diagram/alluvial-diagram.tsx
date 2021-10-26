@@ -55,8 +55,10 @@ const {
   checkClicked,
   checkInteraction,
   convertVisaColor,
+  createTextStrokeFilter,
   drawTooltip,
   findTagLevel,
+  formatDataLabel,
   getColors,
   getPadding,
   initTooltipStyle,
@@ -748,7 +750,9 @@ export class AlluvialDiagram {
   }
 
   validateLabelText() {
-    this.innerLabelAccessor = this.dataLabel.labelAccessor ? this.dataLabel.labelAccessor : this.innerIDAccessor;
+    // if label accessor is passed use that, otherwise default to value hardcoded which is the total
+    // of valueAccessor at the node level
+    this.innerLabelAccessor = this.dataLabel.labelAccessor ? this.dataLabel.labelAccessor : 'value';
   }
 
   // if  there is no nodeData present, use 'id', otherwise use the nodeIDAccessor that is passed
@@ -1428,12 +1432,47 @@ export class AlluvialDiagram {
 
   enterNodeLabels() {
     this.enteringLabels.interrupt();
+    const opacity = this.dataLabel.visible ? 1 : 0;
+    const hiddenOpacity = this.dataLabel.visible ? Number.EPSILON : 0;
     this.widthAllNodesNoLinks = this.nodeCount * this.nodeConfig.width + this.nodeCount * this.nodeConfig.width;
     this.noLinksLeftPadding = (this.innerPaddedWidth - this.widthAllNodesNoLinks) / 2;
 
     this.enteringLabels
       .attr('class', 'alluvial-diagram-dataLabel entering')
-      .attr('opacity', 0)
+      .attr('opacity', d => {
+        if (this.linkConfig.visible) {
+          let matchHover = true;
+          if (d[this.sourceLinksString].length) {
+            matchHover = d[this.sourceLinksString].some(
+              linkData =>
+                checkInteraction(
+                  linkData.data,
+                  opacity,
+                  this.hoverOpacity,
+                  this.hoverHighlight,
+                  this.clickHighlight,
+                  this.innerInteractionKeys
+                ) >= 1
+            );
+          }
+          if (d[this.targetLinksString].length) {
+            matchHover = d[this.targetLinksString].some(
+              linkData =>
+                checkInteraction(
+                  linkData.data,
+                  opacity,
+                  this.hoverOpacity,
+                  this.hoverHighlight,
+                  this.clickHighlight,
+                  this.innerInteractionKeys
+                ) >= 1
+            );
+          }
+          return matchHover ? hiddenOpacity : 0;
+        } else {
+          return d.layer === 0 ? hiddenOpacity : d.layer === this.nodeCount ? hiddenOpacity : 0;
+        }
+      })
       .attr('x', d => {
         if (this.linkConfig.visible) {
           return this.dataLabel.placement === 'outside'
@@ -1537,15 +1576,27 @@ export class AlluvialDiagram {
       .remove();
   }
 
+  addStrokeUnder() {
+    const filter = createTextStrokeFilter({
+      root: this.svg.node(),
+      id: this.chartID,
+      color: '#ffffff'
+    });
+    this.updatingLabels.attr('filter', filter);
+  }
+
   drawNodeLabels() {
     // const opacity = this.dataLabel.visible ? 1 : 0;
     const hideOnly = this.dataLabel.placement !== 'auto' && this.dataLabel.collisionHideOnly;
 
     this.widthAllNodesNoLinks = this.nodeCount * this.nodeConfig.width + this.nodeCount * this.nodeConfig.width;
     this.noLinksLeftPadding = (this.innerPaddedWidth - this.widthAllNodesNoLinks) / 2;
-
     const nodeLabelUpdate = this.updatingLabels
-      .text(d => d[this.innerLabelAccessor])
+      .text(d =>
+        this.dataLabel.format
+          ? formatDataLabel(d, this.innerLabelAccessor, this.dataLabel.format)
+          : d[this.innerLabelAccessor]
+      )
       .attr('data-x', d => {
         if (this.linkConfig.visible) {
           return this.dataLabel.placement === 'outside'
@@ -1641,7 +1692,7 @@ export class AlluvialDiagram {
         avoidMarks: hideOnly ? [nodeRects] : [nodeRects, clonedRects],
         validPositions: hideOnly ? ['middle'] : ['left', 'right'],
         offsets: hideOnly ? [1] : [4, 4],
-        accessors: [this.nodeIDAccessor],
+        accessors: [this.innerIDAccessor],
         size: [roundTo(this.width, 0), roundTo(this.height, 0)], // we need the whole width for series labels
         hideOnly: this.dataLabel.visible && hideOnly
       });
@@ -1761,6 +1812,7 @@ export class AlluvialDiagram {
     // we need to call this after the transitions
     nodeLabelUpdate.call(transitionEndAll, () => {
       this.updatingLabels.classed('entering', false);
+      this.addStrokeUnder();
     });
   }
 
@@ -1772,6 +1824,9 @@ export class AlluvialDiagram {
     this.updatingLabels.interrupt('label_opacity');
     const linkOpacity = this.linkConfig.visible ? this.linkConfig.opacity : 0;
     const opacity = this.dataLabel.visible ? 1 : 0;
+    const addCollisionClass =
+      this.dataLabel.visible && (this.dataLabel.placement === 'auto' || this.dataLabel.collisionHideOnly);
+    const hideOnly = this.dataLabel.placement !== 'auto' && this.dataLabel.collisionHideOnly;
 
     this.updateLinks.attr('stroke-opacity', d => {
       return checkInteraction(
@@ -1797,7 +1852,10 @@ export class AlluvialDiagram {
       }
     });
 
-    this.updatingLabels.attr('opacity', d => {
+    this.updatingLabels.attr('opacity', (d, i, n) => {
+      const prevOpacity = +select(n[i]).attr('opacity');
+      const styleVisibility = select(n[i]).style('visibility');
+      let targetOpacity;
       if (this.linkConfig.visible) {
         let matchHover = true;
         if (d[this.sourceLinksString].length) {
@@ -1826,11 +1884,159 @@ export class AlluvialDiagram {
               ) >= 1
           );
         }
-        return matchHover ? 1 : 0;
+        targetOpacity = matchHover ? opacity : 0;
       } else {
-        return d.layer === 0 ? opacity : d.layer === this.nodeCount ? opacity : 0;
+        targetOpacity = d.layer === 0 ? opacity : d.layer === this.nodeCount ? opacity : 0;
       }
+      if (
+        ((targetOpacity === 1 && styleVisibility === 'hidden') || prevOpacity !== targetOpacity) &&
+        addCollisionClass
+      ) {
+        if (targetOpacity === 1) {
+          select(n[i])
+            .classed('collision-added', true)
+            .style('visibility', null);
+        } else {
+          select(n[i]).classed('collision-removed', true);
+        }
+      }
+      return targetOpacity;
     });
+
+    if (addCollisionClass) {
+      const labelsAdded = this.updatingLabels.filter((_, i, n) => select(n[i]).classed('collision-added'));
+      const labelsRemoved = this.updatingLabels
+        .filter((_, i, n) => select(n[i]).classed('collision-removed'))
+        .attr('data-use-dx', hideOnly) // need to add this for remove piece of collision below
+        .attr('data-use-dy', hideOnly);
+
+      // we can now remove labels as well if we need to...
+      if (labelsRemoved.size() > 0) {
+        this.bitmaps = resolveLabelCollision({
+          bitmaps: this.bitmaps,
+          labelSelection: labelsRemoved,
+          avoidMarks: [],
+          validPositions: ['middle'],
+          offsets: [1],
+          accessors: ['key'],
+          size: [roundTo(this.width, 0), roundTo(this.height, 0)],
+          hideOnly: false,
+          removeOnly: true
+        });
+
+        // remove temporary class now
+        labelsRemoved.classed('collision-removed', false);
+      }
+
+      // we can now add labels as well if we need to...
+      if (labelsAdded.size() > 0) {
+        // we only need the node outlines and correct attributes on them
+        const collisionPlacement = this.dataLabel && this.dataLabel.collisionPlacement;
+        const nodeRects = this.updateNodes
+          .select('.alluvial-node')
+          .attr('data-x', d => d.x0)
+          .attr('data-y', d => d.y0)
+          .attr('data-translate-x', this.padding.left + this.margin.left)
+          .attr('data-translate-y', this.padding.top + this.margin.top)
+          .attr('data-height', d => d.y1 - d.y0)
+          .attr('data-width', d => d.x1 - d.x0)
+          .each((d, i, n) => {
+            // for each node, we create a clone and place it
+            // on either side of the rect to hack an inside/outside
+            // placement from the collision util
+            if (!hideOnly) {
+              const source = n[i];
+              const parent = source.parentNode;
+              const className = 'alluvial-node-collision-clone';
+              const sourceCopy = source.cloneNode();
+              select(sourceCopy)
+                .classed('alluvial-node', false)
+                .classed(className, true)
+                .classed('entering', false)
+                .data([d])
+                .attr('focusable', false)
+                .attr('aria-label', null)
+                .attr('aria-hidden', true)
+                .attr('role', null)
+                .style('pointer-events', 'none')
+                .style('visibility', 'hidden')
+                .attr('tabindex', null)
+                .attr(
+                  'data-x',
+                  collisionPlacement === 'all'
+                    ? d.x0
+                    : collisionPlacement === 'outside'
+                    ? d.x0 < this.innerPaddedWidth / 2
+                      ? d.x0
+                      : d.x1
+                    : d.x0 < this.innerPaddedWidth / 2
+                    ? d.x1
+                    : d.x0
+                )
+                .attr('data-width', collisionPlacement === 'all' ? d.x1 - d.x0 : 1);
+
+              // temporarily append these to the parent
+              parent.appendChild(sourceCopy);
+            }
+          });
+        const clonedRects = this.updateNodes.select('.alluvial-node-collision-clone');
+        this.bitmaps = resolveLabelCollision({
+          labelSelection: labelsAdded,
+          bitmaps: this.bitmaps,
+          avoidMarks: hideOnly ? [nodeRects] : [nodeRects, clonedRects],
+          validPositions: hideOnly ? ['middle'] : ['left', 'right'],
+          offsets: hideOnly ? [1] : [4, 4],
+          accessors: [this.innerIDAccessor],
+          size: [roundTo(this.width, 0), roundTo(this.height, 0)], // we need the whole width for series labels
+          hideOnly: this.dataLabel.visible && hideOnly,
+          suppressMarkDraw: true
+        });
+        clonedRects.remove();
+
+        // if we are in hide only we need to add attributes back
+        if (hideOnly) {
+          labelsAdded
+            .attr('text-anchor', d => {
+              return this.dataLabel.placement === 'outside' || !this.linkConfig.visible
+                ? d.x0 < this.innerPaddedWidth / 2
+                  ? 'end'
+                  : 'start'
+                : d.x0 < this.innerPaddedWidth / 2
+                ? 'start'
+                : 'end';
+            })
+            .attr('x', d => {
+              if (this.linkConfig.visible) {
+                return this.dataLabel.placement === 'outside'
+                  ? d.x0 < this.innerPaddedWidth / 2
+                    ? d.x0
+                    : d.x1
+                  : d.x0 < this.innerPaddedWidth / 2
+                  ? d.x1
+                  : d.x0;
+              } else {
+                return d.x0 < this.innerPaddedWidth / 2
+                  ? this.noLinksLeftPadding
+                  : this.noLinksLeftPadding + this.widthAllNodesNoLinks + this.nodeConfig.width;
+              }
+            })
+            .attr('y', d => (d.y1 + d.y0) / 2)
+            .attr('dx', d =>
+              this.dataLabel.placement === 'outside' || !this.linkConfig.visible
+                ? d.x0 < this.innerPaddedWidth / 2
+                  ? '-0.5em'
+                  : '0.5em'
+                : d.x0 < this.innerPaddedWidth / 2
+                ? '0.5em'
+                : '-0.5em'
+            )
+            .attr('dy', '0.4em');
+        }
+
+        // remove temporary class now
+        labelsAdded.classed('collision-added', false);
+      }
+    }
   }
 
   drawAnnotations() {
@@ -1840,8 +2046,8 @@ export class AlluvialDiagram {
       const d = { ...datum };
       let internalData = datum.data;
       if (positionData && internalData) {
-        if (d.positionType === 'node' && d.data.hasOwnProperty(this.nodeIDAccessor)) {
-          const index = positionData.nodes.findIndex(x => x[this.nodeIDAccessor] === d.data[this.nodeIDAccessor]);
+        if (d.positionType === 'node' && d.data.hasOwnProperty(this.innerIDAccessor)) {
+          const index = positionData.nodes.findIndex(x => x[this.innerIDAccessor] === d.data[this.innerIDAccessor]);
           internalData = positionData.nodes[index];
         } else if (
           d.positionType === 'source' ||
