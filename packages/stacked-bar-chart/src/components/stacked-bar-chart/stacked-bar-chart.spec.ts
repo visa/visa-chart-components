@@ -892,11 +892,21 @@ describe('<stacked-bar-chart>', () => {
     });
 
     describe('interaction', () => {
+      // the transitionEndAll is wrapped in a 0ms setTimeout for browser support
+      // need to enable jest timers in order to enable code wrapped in the setTimeout(()=>{})
+      beforeEach(() => {
+        jest.useFakeTimers();
+      });
+      afterEach(() => {
+        jest.clearAllTimers();
+      });
       describe('bar based interaction tests', () => {
         const innerTestProps = {
           // set color palette to dark color to make sure morphology follows dark pattern
           colorPalette: 'single_blue',
-          customRadiusModifier: [-1, 0.5, 0.5, 0.5, 0.5]
+          customRadiusModifier: [-1, 0.5, 0.5, 0.5, 0.5],
+          transitionEndAllSelector: '[data-testid=bar]',
+          runJestTimers: true
         };
         const innerTestSelector = '[data-testid=bar][data-id=bar-2016-A]';
         const innerNegTestSelector = '[data-testid=bar][data-id=bar-2017-B]';
@@ -928,7 +938,9 @@ describe('<stacked-bar-chart>', () => {
           clickStyle: CUSTOMCLICKSTYLE,
           hoverOpacity: EXPECTEDHOVEROPACITY,
           interactionKeys: ['year'],
-          customRadiusModifier: [-1, 0.5, 0.5, 0.5, 0.5]
+          customRadiusModifier: [-1, 0.5, 0.5, 0.5, 0.5],
+          transitionEndAllSelector: '[data-testid=bar]',
+          runJestTimers: true
         };
 
         it(`[${unitTestInteraction[testLoad].group}] ${unitTestInteraction[testLoad].prop}: ${
@@ -957,7 +969,9 @@ describe('<stacked-bar-chart>', () => {
           clickStyle: CUSTOMCLICKSTYLE,
           hoverOpacity: EXPECTEDHOVEROPACITY,
           interactionKeys: ['year', 'item'],
-          customRadiusModifier: [-1, 0.5, 0.5, 0.5, 0.5]
+          customRadiusModifier: [-1, 0.5, 0.5, 0.5, 0.5],
+          transitionEndAllSelector: '[data-testid=bar]',
+          runJestTimers: true
         };
         it(`[${unitTestInteraction[testLoad].group}] ${unitTestInteraction[testLoad].prop}: ${
           unitTestInteraction[testLoad].name
@@ -996,7 +1010,9 @@ describe('<stacked-bar-chart>', () => {
           clickStyle: CUSTOMCLICKSTYLE,
           hoverOpacity: EXPECTEDHOVEROPACITY,
           interactionKeys: ['year'],
-          customRadiusModifier: [-1, 0.5, 0.5, 0.5, 0.5]
+          customRadiusModifier: [-1, 0.5, 0.5, 0.5, 0.5],
+          transitionEndAllSelector: '[data-testid=bar]',
+          runJestTimers: true
         };
 
         it(`[${unitTestInteraction[testLoad].group}] ${unitTestInteraction[testLoad].prop}: ${
@@ -1025,7 +1041,9 @@ describe('<stacked-bar-chart>', () => {
           clickStyle: CUSTOMCLICKSTYLE,
           hoverOpacity: EXPECTEDHOVEROPACITY,
           interactionKeys: ['year', 'item'],
-          customRadiusModifier: [-1, 0.5, 0.5, 0.5, 0.5]
+          customRadiusModifier: [-1, 0.5, 0.5, 0.5, 0.5],
+          transitionEndAllSelector: '[data-testid=bar]',
+          runJestTimers: true
         };
         it(`[${unitTestInteraction[testLoad].group}] ${unitTestInteraction[testLoad].prop}: ${
           unitTestInteraction[testLoad].name
@@ -1239,7 +1257,9 @@ describe('<stacked-bar-chart>', () => {
             page.root.appendChild(component);
             await page.waitForChanges();
 
-            const dataLabel = await page.doc.querySelector('[data-testid=dataLabel]');
+            const dataLabel = page.doc.querySelector('[data-testid=dataLabel]');
+            flushTransitions(dataLabel);
+            await page.waitForChanges();
             expect(dataLabel).toEqualAttribute('opacity', 1);
           });
           it('should not render the bar data labels if visible is false', async () => {
@@ -1252,7 +1272,7 @@ describe('<stacked-bar-chart>', () => {
             // ACT
             page.root.appendChild(component);
             await page.waitForChanges();
-            const dataLabel = await page.doc.querySelector('[data-testid=dataLabel]');
+            const dataLabel = page.doc.querySelector('[data-testid=dataLabel]');
             expect(dataLabel).toEqualAttribute('opacity', 0);
           });
         });
@@ -1356,7 +1376,9 @@ describe('<stacked-bar-chart>', () => {
             page.root.appendChild(component);
             await page.waitForChanges();
 
-            const totalLabel = await page.doc.querySelector('[data-testid=totalLabel]');
+            const totalLabel = page.doc.querySelector('[data-testid=totalLabel]');
+            flushTransitions(totalLabel);
+            await page.waitForChanges();
             expect(totalLabel).toEqualAttribute('opacity', 1);
           });
           it('should not render the bar total labels showTotalLabel is false', async () => {
@@ -1366,7 +1388,9 @@ describe('<stacked-bar-chart>', () => {
             // ACT
             page.root.appendChild(component);
             await page.waitForChanges();
-            const totalLabel = await page.doc.querySelector('[data-testid=totalLabel]');
+            const totalLabel = page.doc.querySelector('[data-testid=totalLabel]');
+            flushTransitions(totalLabel);
+            await page.waitForChanges();
             expect(totalLabel).toEqualAttribute('opacity', 0);
           });
         });

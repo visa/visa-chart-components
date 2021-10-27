@@ -453,7 +453,7 @@ export class DumbbellPlot {
     this.shouldSetSeriesLabelOpacity = true;
     this.shouldSetDifferenceLabelOpacity = true;
     this.shouldCheckLabelAxis = true;
-    this.shouldUpdateLabels = true;
+    // this.shouldUpdateLabels = true;
     this.shouldUpdateSeriesLabels = true;
     this.shouldUpdateDifferenceLabels = true;
     this.shouldUpdateReferenceLines = true;
@@ -484,7 +484,7 @@ export class DumbbellPlot {
     this.shouldSetSeriesLabelOpacity = true;
     this.shouldCheckValueAxis = true;
     this.shouldValidateDataLabelAccessor = true;
-    this.shouldUpdateLabels = true;
+    // this.shouldUpdateLabels = true;
     this.shouldUpdateSeriesLabels = true;
     this.shouldUpdateDifferenceLabels = true;
     this.shouldUpdateReferenceLines = true;
@@ -507,7 +507,7 @@ export class DumbbellPlot {
     this.shouldEnterUpdateExitMarkers = true;
     this.shouldUpdateMarkerSize = true;
     this.shouldUpdateSeriesLabels = true;
-    this.shouldUpdateLabels = true;
+    // this.shouldUpdateLabels = true;
     this.shouldUpdateDifferenceLabels = true;
     this.shouldAddStrokeUnder = true;
     this.shouldSetLabelOpacity = true;
@@ -979,7 +979,7 @@ export class DumbbellPlot {
     this.shouldSetSeriesLabelOpacity = true;
     this.shouldSetDifferenceLabelOpacity = true;
     this.shouldUpdateData = true;
-    this.shouldUpdateLabels = true;
+    // this.shouldUpdateLabels = true;
     this.shouldUpdateMarkerData = true;
     this.shouldSetGlobalSelections = true;
   }
@@ -995,7 +995,7 @@ export class DumbbellPlot {
     this.shouldSetSeriesLabelOpacity = true;
     this.shouldSetDifferenceLabelOpacity = true;
     this.shouldUpdateData = true;
-    this.shouldUpdateLabels = true;
+    // this.shouldUpdateLabels = true;
     this.shouldUpdateMarkerData = true;
     this.shouldSetGlobalSelections = true;
   }
@@ -1013,7 +1013,7 @@ export class DumbbellPlot {
     this.shouldSetGeometryAriaLabels = true;
     this.shouldUpdateTableData = true;
     this.shouldUpdateData = true;
-    this.shouldUpdateLabels = true;
+    // this.shouldUpdateLabels = true;
     this.shouldUpdateMarkerData = true;
     this.shouldSetGlobalSelections = true;
     // if the new value is the seriesAccessor rebind the legend
@@ -1311,10 +1311,6 @@ export class DumbbellPlot {
         this.drawReferenceLines();
         this.shouldUpdateReferenceLines = false;
       }
-      if (this.shouldDrawInteractionState) {
-        this.updateInteractionState();
-        this.shouldDrawInteractionState = false;
-      }
       if (this.shouldSetLabelOpacity) {
         this.setLabelOpacity();
         this.shouldSetLabelOpacity = false;
@@ -1330,6 +1326,10 @@ export class DumbbellPlot {
       if (this.shouldUpdateDiffLabelColor) {
         this.updateDiffLabelColor();
         this.shouldUpdateDiffLabelColor = false;
+      }
+      if (this.shouldDrawInteractionState) {
+        this.updateInteractionState();
+        this.shouldDrawInteractionState = false;
       }
       if (this.shouldSetSelectionClass) {
         this.setSelectedClass();
@@ -2671,9 +2671,20 @@ export class DumbbellPlot {
         }
       });
 
-    // this additional call to drawDataLabels effects collision detection
-    // this.drawDataLabels(true);
-
+    // we have to make sure this call does not clash with shouldUpdateLabels in watchers
+    this.drawDataLabels(true);
+    if (
+      this.seriesLabelDetails.visible &&
+      (this.seriesLabelDetails.placement === 'auto' || this.seriesLabelDetails.collisionHideOnly)
+    ) {
+      this.drawSeriesLabels(true);
+    }
+    if (
+      this.diffLabelDetails.visible &&
+      (this.diffLabelDetails.placement === 'auto' || this.diffLabelDetails.collisionHideOnly)
+    ) {
+      this.drawDifferenceLabels(true);
+    }
     retainAccessFocus({
       parentGNode: this.rootG.node()
     });
@@ -2698,7 +2709,23 @@ export class DumbbellPlot {
     const checkString = this.isVertical ? 'right' : 'top';
     const isStandard = isAuto ? true : this.seriesLabelDetails.placement.includes(checkString);
     this.enterSeriesLabel
-      .attr('opacity', 0)
+      .attr('opacity', d => {
+        const seriesLabelOpacity = !this.seriesLabelDetails.visible ? 0 : 1;
+        if (!this.seriesInteraction) {
+          return seriesLabelOpacity;
+        } else {
+          return checkInteraction(
+            d,
+            seriesLabelOpacity,
+            this.hoverOpacity,
+            this.hoverHighlight,
+            this.clickHighlight,
+            this.innerInteractionKeys
+          ) < 1
+            ? 0
+            : Number.EPSILON;
+        }
+      })
       .attr('class', 'dumbbell-series-label')
       .attr('fill', this.handleSeriesLabelColors)
       .attr('cursor', !this.suppressEvents && this.seriesInteraction ? this.cursor : null)
@@ -2749,7 +2776,7 @@ export class DumbbellPlot {
       .remove();
   }
 
-  drawSeriesLabels() {
+  drawSeriesLabels(interactionOverride?) {
     const isAuto = this.seriesLabelDetails.placement === 'auto';
     const checkString = this.isVertical ? 'right' : 'top';
     const isStandard = isAuto ? true : this.seriesLabelDetails.placement.includes(checkString);
@@ -2785,7 +2812,12 @@ export class DumbbellPlot {
       .attr('dy', this.isVertical ? '0.3em' : '-0.1em')
       .transition('update_series_labels')
       .ease(easeCircleIn)
-      .duration(this.duration);
+      .duration(() => {
+        if (interactionOverride) {
+          return 0;
+        }
+        return this.duration;
+      });
 
     if (
       this.seriesLabelDetails.visible &&
@@ -2865,7 +2897,24 @@ export class DumbbellPlot {
 
     this.enterDiffLabel
       .attr('class', 'dumbbell-diff-label')
-      .attr('opacity', 0)
+      .attr('opacity', d => {
+        const diffLabelOpacity = this.differenceLabel.visible ? 1 : 0;
+        // check if interactionKeys includes seriesAccessor, if not then don't check seriesLabel for interaction
+        if (!this.dumbbellInteraction) {
+          return diffLabelOpacity;
+        } else {
+          return checkInteraction(
+            d.values[0],
+            diffLabelOpacity,
+            this.hoverOpacity,
+            this.hoverHighlight,
+            this.clickHighlight,
+            this.innerInteractionKeys
+          ) < 1
+            ? 0
+            : Number.EPSILON;
+        }
+      })
       .attr('fill', this.setDiffLabelColor)
       .attr('cursor', !this.suppressEvents && this.dumbbellInteraction ? this.cursor : null)
       .on(
@@ -2941,7 +2990,7 @@ export class DumbbellPlot {
       .remove();
   }
 
-  drawDifferenceLabels() {
+  drawDifferenceLabels(interactionOverride?) {
     const isAuto = this.diffLabelDetails.placement === 'auto';
     const checkString = this.isVertical ? 'left' : 'top';
     const isStandard = isAuto ? true : this.diffLabelDetails.placement.includes(checkString);
@@ -2985,7 +3034,12 @@ export class DumbbellPlot {
       )
       .transition('update_diff_label')
       .ease(easeCircleIn)
-      .duration(this.duration);
+      .duration(() => {
+        if (interactionOverride) {
+          return 0;
+        }
+        return this.duration;
+      });
 
     if (
       this.differenceLabel.visible &&
@@ -3064,7 +3118,18 @@ export class DumbbellPlot {
 
     this.enterLabelChildren
       .attr('class', 'dumbbell-dataLabel')
-      .attr('opacity', 0)
+      .attr('opacity', d => {
+        return checkInteraction(
+          d,
+          1,
+          this.hoverOpacity,
+          this.hoverHighlight,
+          this.clickHighlight,
+          this.innerInteractionKeys
+        ) < 1
+          ? 0
+          : Number.EPSILON;
+      })
       .attr('fill', this.handleLabelColors)
       .attr('cursor', !this.suppressEvents && this.dataLabel.visible ? this.cursor : null)
       .on('click', !this.suppressEvents && this.dataLabel.visible ? d => this.onClickHandler(d) : null)
@@ -3197,10 +3262,8 @@ export class DumbbellPlot {
       .attr('data-offset', d => d.offset) // to be removed
       .transition('update_dataLabel')
       .ease(easeCircleIn)
-      .duration((d, i, n) => {
-        const hovered = checkHovered(d, this.hoverHighlight, this.innerInteractionKeys);
-        const clicked = checkClicked(d, this.clickHighlight, this.innerInteractionKeys);
-        if ((hovered || clicked) && interactionOverride && !select(n[i]).classed('transitioning')) {
+      .duration(() => {
+        if (interactionOverride) {
           return 0;
         }
         return this.duration;

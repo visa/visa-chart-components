@@ -16,7 +16,17 @@ import '@visa/keyboard-instructions';
 export class AppD3Map {
   @State() data: any = [];
   @State() hoverElement: any = '';
-  @State() clickElement: any = [];
+  @State() clickElement: any = [
+    { ID: 133, Name: 'Greenland', 'Birth Rate': 14.4, random: Math.random() * 10, 'Country Code': '304', Type: 'B' }
+  ];
+  @State() dataLabel: any = {
+    visible: true,
+    placement: 'bottom',
+    labelAccessor: 'Name',
+    format: '',
+    collisionHideOnly: true,
+    collisionPlacement: 'all'
+  };
   @State() animations: any = { disabled: false };
   //  = [
   // {
@@ -276,10 +286,6 @@ export class AppD3Map {
     color: 'comp_blue',
     strokeWidth: 2
   };
-  @State() dataLabel: any = {
-    visible: true,
-    placement: 'auto'
-  };
   @State() innerMarkerStyle: any = {
     visible: true,
     blend: false,
@@ -296,8 +302,9 @@ export class AppD3Map {
   appEl: HTMLElement;
   legend: any = {
     visible: true,
+    interactive: true,
     type: 'key',
-    format: '0,0[a]'
+    format: ''
   };
   // dataLabel: any = {
   //   visible: true,
@@ -339,11 +346,11 @@ export class AppD3Map {
         let conditionsMet = 0;
         keys.forEach(key => {
           conditionsMet += (isNaN(o[key]) ? 0 : o[key]) === (isNaN(d[key]) ? 0 : d[key]) ? 1 : 0;
-          console.log('checking conditions met', keys.length, conditionsMet, o[key], d[key]);
+          // console.log('checking conditions met', keys.length, conditionsMet, o[key], d[key]);
         });
         return conditionsMet && conditionsMet === keys.length;
       });
-      console.log('checking clickFunc', ev, newClicks, keys, index);
+      // console.log('checking clickFunc', ev, newClicks, keys, index);
       if (index > -1) {
         newClicks.splice(index, 1);
       } else {
@@ -667,7 +674,7 @@ export class AppD3Map {
             // markerNameAccessor={'Country Code'}
             interactionKeys={this.interactionKeys}
             hoverOpacity={0.8}
-            // legend={this.legend}
+            legend={this.legend}
             dataLabel={this.dataLabel}
             clickStyle={this.clickStyle}
             // hoverStyle={this.hoverStyle}

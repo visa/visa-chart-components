@@ -1364,21 +1364,115 @@ export class WorldMap {
 
   updateLabelStyle() {
     const opacity = this.dataLabel.visible ? 1 : 0;
+    const hideOnly = this.dataLabel.placement !== 'auto' && this.dataLabel.collisionHideOnly;
+    const addCollisionClass = this.dataLabel.placement === 'auto' || hideOnly;
 
-    this.updatingLabels.attr('opacity', d => {
+    this.updatingLabels.attr('opacity', (d, i, n) => {
+      const prevOpacity = +select(n[i]).attr('opacity');
+      const styleVisibility = select(n[i]).style('visibility');
       const showText =
         checkClicked(d, this.clickHighlight, this.innerInteractionKeys) ||
         checkHovered(d, this.hoverHighlight, this.innerInteractionKeys);
       const labelOpacity = showText ? 1 : opacity;
-      return checkInteraction(
-        d,
-        labelOpacity,
-        this.hoverOpacity,
-        this.hoverHighlight,
-        this.clickHighlight,
-        this.innerInteractionKeys
-      );
+      const targetOpacity =
+        checkInteraction(
+          d,
+          labelOpacity,
+          this.hoverOpacity,
+          this.hoverHighlight,
+          this.clickHighlight,
+          this.innerInteractionKeys
+        ) < 1
+          ? 0
+          : 1; // we need this to be epsilon initially to enable auto placement algorithm to run on load;
+      // we capture any item with opacity changing OR any item with opacity 1 and currently hidden
+      if (
+        ((targetOpacity === 1 && styleVisibility === 'hidden') || prevOpacity !== targetOpacity) &&
+        addCollisionClass
+      ) {
+        if (targetOpacity === 1) {
+          select(n[i])
+            .classed('collision-added', true)
+            .style('visibility', null);
+        } else {
+          select(n[i]).classed('collision-removed', true);
+        }
+      }
+      return targetOpacity;
     });
+
+    if (addCollisionClass) {
+      const labelsAdded = this.updatingLabels.filter((_, i, n) => select(n[i]).classed('collision-added'));
+      const labelsRemoved = this.updatingLabels
+        .filter((_, i, n) => select(n[i]).classed('collision-removed'))
+        .attr('data-use-dx', hideOnly) // need this for direct resolveCollision call
+        .attr('data-use-dy', hideOnly);
+
+      // we can now remove labels as well if we need to...
+      if (labelsRemoved.size() > 0) {
+        this.bitmaps = resolveLabelCollision({
+          bitmaps: this.bitmaps,
+          labelSelection: labelsRemoved,
+          avoidMarks: [],
+          validPositions: ['middle'],
+          offsets: [1],
+          accessors: ['key'],
+          size: [roundTo(this.width, 0), roundTo(this.height, 0)],
+          hideOnly: false,
+          removeOnly: true
+        });
+
+        // remove temporary class now
+        labelsRemoved.classed('collision-removed', false);
+      }
+
+      // we can now add labels as well if we need to...
+      if (labelsAdded.size() > 0) {
+        this.bitmaps = resolveLabelCollision({
+          labelSelection: labelsAdded,
+          bitmaps: this.bitmaps,
+          avoidMarks: [this.updateMarker],
+          validPositions: hideOnly
+            ? ['middle']
+            : ['top', 'bottom', 'left', 'right', 'bottom-right', 'bottom-left', 'top-left', 'top-right', 'middle'],
+          offsets: hideOnly ? [1] : [5, 1, 4, 4, 1, 1, 1, 1, 1],
+          accessors: [this.markerAccessor, this.joinAccessor],
+          size: [roundTo(this.width, 0), roundTo(this.height, 0)], // we need the whole width for series labels
+          hideOnly: this.dataLabel.visible && this.dataLabel.collisionHideOnly && this.dataLabel.placement !== 'auto',
+          suppressMarkDraw: true
+        });
+
+        // if we are in hide only we need to add attributes back
+        if (hideOnly) {
+          labelsAdded
+            .attr('x', d =>
+              this.latitudeAccessor && this.longitudeAccessor
+                ? this.projection([+d[this.longitudeAccessor], +d[this.latitudeAccessor]])[0]
+                : isNaN(d.innerLongitude)
+                ? 0
+                : this.projection([+d.innerLongitude, +d.innerLatitude])[0]
+            )
+            .attr('y', d =>
+              this.latitudeAccessor && this.longitudeAccessor
+                ? this.projection([+d[this.longitudeAccessor], +d[this.latitudeAccessor]])[1]
+                : isNaN(d.innerLatitude)
+                ? 0
+                : this.projection([+d.innerLongitude, +d.innerLatitude])[1]
+            )
+            .attr('dy', d =>
+              this.markerStyle.visible
+                ? (typeof this.radiusScale === 'function'
+                    ? this.radiusScale(d[this.valueAccessor])
+                    : this.markerStyle.radius || 5) + 20
+                : 0
+            )
+            .attr('text-anchor', 'middle');
+        }
+
+        // remove temporary class now
+        labelsAdded.classed('collision-added', false);
+      }
+    }
   }
 
   updateLegendInteractionState() {
@@ -1787,10 +1881,14 @@ export class WorldMap {
   updatePathStyle(innerDuration) {
     this.update.interrupt('opacity');
 
-    this.update
-      .transition('update-path')
-      .duration(innerDuration || 0)
-      .ease(easeCircleIn)
+    const updatePaths = prepareRenderChange({
+      selection: this.update,
+      duration: innerDuration,
+      namespace: 'update-path',
+      easing: easeCircleIn
+    });
+
+    updatePaths
       .attr('opacity', d => {
         const joinedDataRecord = this.preppedData.find(obj => obj[this.joinAccessor] === d.id);
         return this.markerStyle.visible
@@ -1914,7 +2012,9 @@ export class WorldMap {
           this.hoverHighlight,
           this.clickHighlight,
           this.innerInteractionKeys
-        );
+        ) < 1
+          ? 0
+          : Number.EPSILON; // we need this to be epsilon initially to enable auto placement algorithm to run on load
       })
       .attr('x', d =>
         this.latitudeAccessor && this.longitudeAccessor
@@ -1934,7 +2034,7 @@ export class WorldMap {
         this.markerStyle.visible
           ? (typeof this.radiusScale === 'function'
               ? this.radiusScale(d[this.valueAccessor])
-              : this.markerStyle.radius || 5) + 15
+              : this.markerStyle.radius || 5) + 20
           : 0
       )
       .on(
@@ -1977,6 +2077,23 @@ export class WorldMap {
           ? select(n[i]).style('visibility')
           : null
       )
+      .attr('opacity', d => {
+        // since we don't have an updateLabels() adding opacity update to draw as well
+        const showText =
+          checkClicked(d, this.clickHighlight, this.innerInteractionKeys) ||
+          checkHovered(d, this.hoverHighlight, this.innerInteractionKeys);
+        const labelOpacity = showText ? 1 : opacity;
+        return checkInteraction(
+          d,
+          labelOpacity,
+          this.hoverOpacity,
+          this.hoverHighlight,
+          this.clickHighlight,
+          this.innerInteractionKeys
+        ) < 1
+          ? 0
+          : 1; // we need this to be epsilon initially to enable auto placement algorithm to run on load
+      })
       .attr('data-translate-x', this.padding.left + this.margin.left)
       .attr('data-translate-y', this.padding.top + this.margin.top)
       .attr('data-x', d =>
@@ -1997,7 +2114,7 @@ export class WorldMap {
         this.markerStyle.visible
           ? (typeof this.radiusScale === 'function'
               ? this.radiusScale(d[this.valueAccessor])
-              : this.markerStyle.radius || 5) + 15
+              : this.markerStyle.radius || 5) + 20
           : 0
       )
       .attr('data-use-dy', hideOnly)
@@ -2071,7 +2188,7 @@ export class WorldMap {
             this.markerStyle.visible
               ? (typeof this.radiusScale === 'function'
                   ? this.radiusScale(d[this.valueAccessor])
-                  : this.markerStyle.radius || 5) + 15
+                  : this.markerStyle.radius || 5) + 20
               : 0
           )
           .attr('text-anchor', 'middle');
@@ -2096,7 +2213,7 @@ export class WorldMap {
           this.markerStyle.visible
             ? (typeof this.radiusScale === 'function'
                 ? this.radiusScale(d[this.valueAccessor])
-                : this.markerStyle.radius || 5) + 15
+                : this.markerStyle.radius || 5) + 20
             : 0
         )
         .attr('text-anchor', 'middle');

@@ -110,6 +110,13 @@ describe('<clustered-bar-chart>', () => {
         page.root.appendChild(component);
         await page.waitForChanges();
 
+        // flush labels for testing to ensure opacity of 1 on initial render
+        const elements = page.doc.querySelectorAll('[data-testid=dataLabel]');
+        await asyncForEach(elements, async element => {
+          flushTransitions(element);
+          await page.waitForChanges();
+        });
+
         // ASSERT
         expect(page.root).toMatchSnapshot();
       });
@@ -943,12 +950,13 @@ describe('<clustered-bar-chart>', () => {
 
     describe('interaction', () => {
       describe('bar based interaction tests', () => {
-        const innerTestProps = {
-          // set color palette to dark color to make sure morphology follows dark pattern
-          colorPalette: 'single_blue'
-        };
         const innerTestSelector = '[data-testid=bar][data-id=bar-2016-A]';
         const innerNegTestSelector = '[data-testid=bar][data-id=bar-2017-B]';
+        const innerTestProps = {
+          // set color palette to dark color to make sure morphology follows dark pattern
+          colorPalette: 'single_blue',
+          transitionEndAllSelector: '[data-testid=bar]'
+        };
         Object.keys(unitTestInteraction).forEach(test => {
           it(`[${unitTestInteraction[test].group}] ${unitTestInteraction[test].prop}: ${
             unitTestInteraction[test].name
@@ -976,7 +984,8 @@ describe('<clustered-bar-chart>', () => {
         const innerTestProps = {
           clickStyle: CUSTOMCLICKSTYLE,
           hoverOpacity: EXPECTEDHOVEROPACITY,
-          interactionKeys: ['year']
+          interactionKeys: ['year'],
+          transitionEndAllSelector: '[data-testid=bar]'
         };
 
         it(`[${unitTestInteraction[testLoad].group}] ${unitTestInteraction[testLoad].prop}: ${
@@ -1004,7 +1013,8 @@ describe('<clustered-bar-chart>', () => {
         const newInnerTestProps = {
           clickStyle: CUSTOMCLICKSTYLE,
           hoverOpacity: EXPECTEDHOVEROPACITY,
-          interactionKeys: ['year', 'item']
+          interactionKeys: ['year', 'item'],
+          transitionEndAllSelector: '[data-testid=bar]'
         };
         it(`[${unitTestInteraction[testLoad].group}] ${unitTestInteraction[testLoad].prop}: ${
           unitTestInteraction[testLoad].name
@@ -1042,7 +1052,8 @@ describe('<clustered-bar-chart>', () => {
         const innerTestProps = {
           clickStyle: CUSTOMCLICKSTYLE,
           hoverOpacity: EXPECTEDHOVEROPACITY,
-          interactionKeys: ['year']
+          interactionKeys: ['year'],
+          transitionEndAllSelector: '[data-testid=bar]'
         };
 
         it(`[${unitTestInteraction[testLoad].group}] ${unitTestInteraction[testLoad].prop}: ${
@@ -1070,7 +1081,8 @@ describe('<clustered-bar-chart>', () => {
         const newInnerTestProps = {
           clickStyle: CUSTOMCLICKSTYLE,
           hoverOpacity: EXPECTEDHOVEROPACITY,
-          interactionKeys: ['year', 'item']
+          interactionKeys: ['year', 'item'],
+          transitionEndAllSelector: '[data-testid=bar]'
         };
         it(`[${unitTestInteraction[testLoad].group}] ${unitTestInteraction[testLoad].prop}: ${
           unitTestInteraction[testLoad].name
@@ -1246,6 +1258,8 @@ describe('<clustered-bar-chart>', () => {
             await page.waitForChanges();
 
             const dataLabel = await page.doc.querySelector('[data-testid=dataLabel]');
+            flushTransitions(dataLabel);
+            await page.waitForChanges();
             expect(dataLabel).toEqualAttribute('opacity', 1);
           });
           it('should not render the bar data labels if visible is false', async () => {

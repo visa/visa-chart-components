@@ -180,7 +180,7 @@ export class KeyboardInstructions {
               id={`visa-viz-keyboard-instructions-button-${this.uniqueID}`}
               type="button"
               class="vcc-ki-btn-icon vcc-ki-btn-icon--light-tiny visa-viz-keyboard-instructions-button"
-              aria-label="display keyboard instructions"
+              aria-label={this.showInstructions ? 'close keyboard instructions' : 'display keyboard instructions'}
               aria-expanded={this.showInstructions ? 'true' : 'false'}
               role="button"
               tabIndex={0}
@@ -197,7 +197,11 @@ export class KeyboardInstructions {
             </button>
             <svg class="vcc-ki-icons">
               <symbol id={`visa-viz-keyboard-instructions-info--tiny-${this.uniqueID}`} {...symbolProps}>
-                <path d="M8.7,3.8a.68.68,0,0,1,.7.7.79.79,0,0,1-.8.8H8.5c-.4,0-.6-.3-.6-.7A.79.79,0,0,1,8.7,3.8ZM6.6,12.1l1.2-6H9l-1.2,6ZM14,8a6,6,0,1,0-6,6A6,6,0,0,0,14,8Zm2,0A8,8,0,1,1,8,0,8,8,0,0,1,16,8Z" />
+                {this.showInstructions ? (
+                  <path d="M9.41,8l5.3,5.29a1,1,0,0,1-1.42,1.42L8,9.41l-5.29,5.3a1,1,0,0,1-1.42-1.42L6.59,8,1.29,2.71A1,1,0,0,1,2.71,1.29L8,6.59l5.29-5.3a1,1,0,1,1,1.42,1.42Z" />
+                ) : (
+                  <path d="M8.7,3.8a.68.68,0,0,1,.7.7.79.79,0,0,1-.8.8H8.5c-.4,0-.6-.3-.6-.7A.79.79,0,0,1,8.7,3.8ZM6.6,12.1l1.2-6H9l-1.2,6ZM14,8a6,6,0,1,0-6,6A6,6,0,0,0,14,8Zm2,0A8,8,0,1,1,8,0,8,8,0,0,1,16,8Z" />
+                )}
               </symbol>
             </svg>
           </div>

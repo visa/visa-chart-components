@@ -296,6 +296,7 @@ export const generic_margin_default_load = {
   testFunc: async (component: any, page: SpecPage, testProps: object, testSelector: string) => {
     // ARRANGE
     const EXPECTEDMARGIN = testProps['margin'] || { bottom: 100, left: 100, right: 100, top: 100 }; // if default is not sent cause error
+    const MARGINMODIFIER = testProps['marginModifier'] || 0;
     const BASEHEIGHT = 600;
     const BASEWIDTH = 600;
     component.height = BASEHEIGHT;
@@ -307,7 +308,10 @@ export const generic_margin_default_load = {
 
     // ASSERT
     const marginG = page.doc.querySelector(testSelector);
-    expect(marginG).toEqualAttribute('transform', `translate(${EXPECTEDMARGIN.left}, ${EXPECTEDMARGIN.top})`);
+    expect(marginG).toEqualAttribute(
+      'transform',
+      `translate(${EXPECTEDMARGIN.left + MARGINMODIFIER}, ${EXPECTEDMARGIN.top + MARGINMODIFIER})`
+    );
   }
 };
 
@@ -322,6 +326,7 @@ export const generic_margin_custom_load = {
     const EXPECTEDMARGIN = testProps['margin'] || { bottom: 25, left: 25, right: 25, top: 25 }; // if default is not sent cause error
     const BASEHEIGHT = 600;
     const BASEWIDTH = 600;
+    const MARGINMODIFIER = testProps['marginModifier'] || 0;
     component.height = BASEHEIGHT;
     component.width = BASEWIDTH;
     component.margin = EXPECTEDMARGIN;
@@ -332,7 +337,10 @@ export const generic_margin_custom_load = {
 
     // ASSERT
     const marginG = page.doc.querySelector(testSelector);
-    expect(marginG).toEqualAttribute('transform', `translate(${EXPECTEDMARGIN.left}, ${EXPECTEDMARGIN.top})`);
+    expect(marginG).toEqualAttribute(
+      'transform',
+      `translate(${EXPECTEDMARGIN.left + MARGINMODIFIER}, ${EXPECTEDMARGIN.top + MARGINMODIFIER})`
+    );
   }
 };
 
@@ -347,6 +355,8 @@ export const generic_margin_custom_update = {
     const EXPECTEDMARGIN = testProps['margin'] || { bottom: 25, left: 25, right: 25, top: 25 }; // if default is not sent cause error
     const BASEHEIGHT = 600;
     const BASEWIDTH = 600;
+    const MARGINMODIFIER = testProps['marginModifier'] || 0;
+
     // ARRANGE
     Object.keys(testProps).forEach(prop => {
       component[prop] = testProps[prop];
@@ -364,7 +374,10 @@ export const generic_margin_custom_update = {
 
     // ASSERT
     const marginG = page.doc.querySelector(testSelector);
-    expect(marginG).toEqualAttribute('transform', `translate(${EXPECTEDMARGIN.left}, ${EXPECTEDMARGIN.top})`);
+    expect(marginG).toEqualAttribute(
+      'transform',
+      `translate(${EXPECTEDMARGIN.left + MARGINMODIFIER}, ${EXPECTEDMARGIN.top + MARGINMODIFIER})`
+    );
   }
 };
 

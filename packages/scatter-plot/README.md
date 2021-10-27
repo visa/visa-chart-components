@@ -308,13 +308,13 @@ const mouseOutHandler = evt => {
 
 #### IDataLabelType Definition
 
-| Name                | Type    | Default Value(s) | Description                                                                                                                                                                                                                                                              |
-| ------------------- | ------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `labelAccessor`     | string  | ''               | Key used to determine label's property.                                                                                                                                                                                                                                  |
-| `visible`           | boolean | true             | Toggles the visibility (opacity) of the data labels.                                                                                                                                                                                                                     |
-| `placement`         | string  | 'top'            | Sets the placement of the data label, accepts 'top', 'bottom', 'left', or 'right'. Placement option 'auto' leverages the [resolveLabelCollision](../utils/src/utils/collisionDetection.ts) algorithm and places labels without overlaps in available space on the chart. |
-| `format`            | string  | '0[.][0][0]a'    | Sets the formatting for the data labels, EG %b, refer to [d3-time-format](https://github.com/d3/d3-time-format) and [numeral.js](http://numeraljs.com/).                                                                                                                 |
-| `collisionHideOnly` | boolean | false            | Toggles whether to run [resolveLabelCollision](../utils/src/utils/collisionDetection.ts) algorithm and hide labels if collision is detected (vs hide and then place). This is overridden by placement being set to `auto`.                                               |
+| Name                | Type    | Default Value(s) | Description                                                                                                                                                                                                                                                      |
+| ------------------- | ------- | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `labelAccessor`     | string  | ''               | Key used to determine label's property.                                                                                                                                                                                                                          |
+| `visible`           | boolean | true             | Toggles the visibility (opacity) of the data labels.                                                                                                                                                                                                             |
+| `placement`         | string  | 'top'            | Sets the placement of the data label, accepts 'top', 'bottom', 'left', or 'right'. Placement option 'auto' leverages the [resolveLabelCollision](../utils#resolve-label-collision) algorithm and places labels without overlaps in available space on the chart. |
+| `format`            | string  | '0[.][0][0]a'    | Sets the formatting for the data labels, EG %b, refer to [d3-time-format](https://github.com/d3/d3-time-format) and [numeral.js](http://numeraljs.com/).                                                                                                         |
+| `collisionHideOnly` | boolean | false            | Toggles whether to run [resolveLabelCollision](../utils#resolve-label-collision) algorithm and hide labels if collision is detected (vs hide and then place). This is overridden by placement being set to `auto`.                                               |
 
 <br>
 
@@ -365,7 +365,7 @@ const mouseOutHandler = evt => {
 
 | Name           | Type     | Default Value(s) | Description                                                                                                                                    |
 | -------------- | -------- | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| `colorPalette` | string   | 'single_blue'    | Included color palettes can be found in our [color utility](../utils/src/utils/colors.ts). Overridden by colors.                               |
+| `colorPalette` | string   | 'single_blue'    | Included color palettes can be found in our [color utility](../utils#colors). Overridden by colors.                                            |
 | `colors`       | string[] | `undefined`      | Accepts array of color strings or color values to customize colors beyond our palettes. Overridden by groupAccessor, colors assigned in order. |
 | `dotOpacity`   | number   | 1                | Sets the opacity of data points.                                                                                                               |
 | `dotRadius`    | number   | 6                | Sets the radius of data points, if visible.                                                                                                    |

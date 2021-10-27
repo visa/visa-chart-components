@@ -701,7 +701,8 @@ const generateRandomStringID = (lead: string) => {
 };
 
 const findTabForwardNode = (elementID: string, recursive?: boolean, siblingsOnly?: boolean) => {
-  const target = document.getElementById(elementID);
+  const target = elementID === '' ? null : document.getElementById(elementID);
+
   if (!target || target.tagName === 'svg') {
     return null;
   } else if (!recursive && target.nextElementSibling) {
@@ -731,7 +732,7 @@ const findTabForwardNode = (elementID: string, recursive?: boolean, siblingsOnly
 };
 
 const findTabBackwardNode = (elementID: string, recursive?: boolean) => {
-  const target = document.getElementById(elementID);
+  const target = elementID === '' ? null : document.getElementById(elementID);
 
   if (!target || target.tagName === 'svg') {
     return null;
@@ -820,9 +821,12 @@ const findValidFinalSibling = node => {
   return target;
 };
 
-const findValidParent = (currentTarget: any, recursive?: boolean) => {
+const findValidParent = (currentTarget: any, recursive?: boolean, requireTabIndex?: boolean) => {
   if (!recursive) {
-    return currentTarget.parentNode;
+    if (requireTabIndex && select(currentTarget.parentNode).attr('tabindex') !== null) {
+      return currentTarget.parentNode;
+    }
+    return findSVGRoot(currentTarget);
   }
   if (
     currentTarget.parentNode &&
@@ -1066,7 +1070,7 @@ const getInteractionResult = (
         target = findSVGRoot(currentTarget);
       } else {
         const isOffset = select(currentTarget).attr('data-offset-element');
-        target = !isOffset ? findValidParent(currentTarget, recursive) : findOffsetParent(currentTarget);
+        target = !isOffset ? findValidParent(currentTarget, recursive, true) : findOffsetParent(currentTarget);
       }
     }
   }

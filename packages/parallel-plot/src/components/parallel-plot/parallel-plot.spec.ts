@@ -105,6 +105,34 @@ describe('<parallel-plot>', () => {
         page.root.appendChild(component);
         await page.waitForChanges();
 
+        // flush marks for testing to ensure opacity of 1 on initial render
+        const markers = page.doc.querySelectorAll('[data-testid=marker]');
+        await asyncForEach(markers, async marker => {
+          flushTransitions(marker);
+          await page.waitForChanges();
+        });
+
+        // flush lines for testing to ensure opacity of 1 on initial render
+        const lines = page.doc.querySelectorAll('[data-testid=parallel-line]');
+        await asyncForEach(lines, async line => {
+          flushTransitions(line);
+          await page.waitForChanges();
+        });
+
+        // flush labels for testing to ensure opacity of 1 on initial render
+        const labels = page.doc.querySelectorAll('[data-testid=dataLabel]');
+        await asyncForEach(labels, async label => {
+          flushTransitions(label);
+          await page.waitForChanges();
+        });
+
+        // flush series labels for testing to ensure opacity of 1 on initial render
+        const seriesLabels = page.doc.querySelectorAll('[data-testid=parallel-series-label]');
+        await asyncForEach(seriesLabels, async seriesLabel => {
+          flushTransitions(seriesLabel);
+          await page.waitForChanges();
+        });
+
         // ASSERT
         expect(page.root).toMatchSnapshot();
       });
@@ -1821,6 +1849,13 @@ describe('<parallel-plot>', () => {
         const labels = page.doc.querySelectorAll('[data-testid=dataLabel]');
         await asyncForEach(labels, async label => {
           flushTransitions(label); // flush transitions to trigger transitionEndAll
+          await page.waitForChanges();
+        });
+
+        // flush series labels for testing to ensure opacity of 1 on initial render
+        const seriesLabels = page.doc.querySelectorAll('[data-testid=parallel-series-label]');
+        await asyncForEach(seriesLabels, async seriesLabel => {
+          flushTransitions(seriesLabel);
           await page.waitForChanges();
         });
 

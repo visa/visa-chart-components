@@ -921,14 +921,14 @@ export class StackedBarChart {
       this.enterGeometries();
       this.updateGeometries();
       this.exitGeometries();
+      this.setRoundedCorners();
+      this.drawGeometries();
       this.enterDataLabels();
       this.updateDataLabels();
       this.exitDataLabels();
       this.enterTotalDataLabels();
       this.updateTotalDataLabels();
       this.exitTotalDataLabels();
-      this.setRoundedCorners();
-      this.drawGeometries();
       this.setChartCountAccessibility();
       this.setGeometryAccessibilityAttributes();
       this.setGeometryAriaLabels();
@@ -939,8 +939,8 @@ export class StackedBarChart {
       this.drawTotalDataLabels();
       this.drawReferenceLines();
       this.setSelectedClass();
-      this.updateInteractionState();
-      this.setLabelOpacity();
+      // this.updateInteractionState();
+      // this.setLabelOpacity();
       this.checkLabelColorAgainstBackground();
       this.updateCursor();
       this.bindInteractivity();
@@ -1049,6 +1049,10 @@ export class StackedBarChart {
         this.exitTotalDataLabels();
         this.shouldEnterUpdateExit = false;
       }
+      if (this.shouldUpdateCorners) {
+        this.setRoundedCorners();
+        this.shouldUpdateCorners = false;
+      }
       if (this.shouldUpdateGeometries) {
         this.drawGeometries();
         this.shouldUpdateGeometries = false;
@@ -1064,10 +1068,6 @@ export class StackedBarChart {
       if (this.shouldSetGroupAccessibilityLabel) {
         this.setGroupAccessibilityID();
         this.shouldSetGroupAccessibilityLabel = false;
-      }
-      if (this.shouldUpdateCorners) {
-        this.setRoundedCorners();
-        this.shouldUpdateCorners = false;
       }
       if (this.shouldUpdateLegend) {
         this.drawLegendElements();
@@ -1804,6 +1804,22 @@ export class StackedBarChart {
       .on('click', !this.suppressEvents ? d => this.onClickHandler(d) : null)
       .on('mouseover', !this.suppressEvents ? d => this.onHoverHandler(d) : null)
       .on('mouseout', !this.suppressEvents ? () => this.onMouseOutHandler() : null)
+      .attr('fill', (d, i) => {
+        const clicked =
+          this.clickHighlight &&
+          this.clickHighlight.length > 0 &&
+          checkClicked(d, this.clickHighlight, this.innerInteractionKeys);
+        const hovered = this.hoverHighlight && checkHovered(d, this.hoverHighlight, this.innerInteractionKeys);
+        const baseColor = this.colorArr[i];
+        return clicked && this.clickStyle.color
+          ? visaColors[this.clickStyle.color] || this.clickStyle.color
+          : clicked
+          ? baseColor
+          : hovered && this.hoverStyle.color
+          ? visaColors[this.hoverStyle.color] || this.hoverStyle.color
+          : baseColor;
+      })
+      .attr('opacity', 0)
       .attr(valueAxis, d => {
         let scale = this[valueAxis];
         if (this.interpolating) {
@@ -1849,28 +1865,21 @@ export class StackedBarChart {
           : this.x(d.stackStart / modifier) - this.x(d.stackEnd / modifier);
       });
 
-    if (this.defaults) {
-      this.enter.attr('opacity', d =>
-        checkInteraction(d, 1, this.hoverOpacity, this.hoverHighlight, this.clickHighlight, this.innerInteractionKeys)
-      );
-    } else {
-      this.enter.attr('opacity', 0);
+    this.enterBarWrappers
+      .selectAll('.stacked-bar')
+      .attr(valueAxis, d => {
+        const modifier = !this.normalized ? 1 : d.getSum();
+        return this.layout === 'vertical' ? this.y(d.stackStart / modifier) : this.x(d.stackEnd / modifier);
+      })
+      .attr(ordinalAxis, d => {
+        let shift = this[ordinalAxis](d[this.groupAccessor]) + this[ordinalAxis].bandwidth() / 2;
+        shift =
+          this[ordinalAxis](d[this.groupAccessor]) +
+          (this[ordinalAxis].bandwidth() / 2) * (shift / (this[padding] / 2));
+        return shift;
+      })
+      .attr(ordinalDimension, 0);
 
-      this.enterBarWrappers
-        .selectAll('.stacked-bar')
-        .attr(valueAxis, d => {
-          const modifier = !this.normalized ? 1 : d.getSum();
-          return this.layout === 'vertical' ? this.y(d.stackStart / modifier) : this.x(d.stackEnd / modifier);
-        })
-        .attr(ordinalAxis, d => {
-          let shift = this[ordinalAxis](d[this.groupAccessor]) + this[ordinalAxis].bandwidth() / 2;
-          shift =
-            this[ordinalAxis](d[this.groupAccessor]) +
-            (this[ordinalAxis].bandwidth() / 2) * (shift / (this[padding] / 2));
-          return shift;
-        })
-        .attr(ordinalDimension, 0);
-    }
     this.enterBarWrappers.order();
     this.enter.order();
   }
@@ -2148,17 +2157,130 @@ export class StackedBarChart {
   }
 
   setLabelOpacity() {
-    this.processLabelOpacity(this.updateLabels);
+    const addCollisionClass = this.dataLabel.placement === 'auto' || this.dataLabel.collisionHideOnly;
+    const hideOnly = this.dataLabel.placement !== 'auto' && this.dataLabel.collisionHideOnly;
+    let textHeight = 15; // default label is usually 15
+
+    this.updateLabels
+      // .interrupt('opacity')
+      .each((_, i, n) => {
+        if (i === 0) {
+          // we just need to check this on one element
+          const textElement = n[i];
+          const style = getComputedStyle(textElement);
+          const fontSize = parseFloat(style.fontSize);
+          textHeight = Math.max(fontSize - 1, 1); // clone.getBBox().height;
+        }
+      });
+    this.processLabelOpacity(this.updateLabels, addCollisionClass);
     this.updateTotalLabels.attr('opacity', this.showTotalValue && !this.normalized ? 1 : 0);
+
+    if (addCollisionClass) {
+      const labelsAdded = this.updateLabels.filter((_, i, n) => select(n[i]).classed('collision-added'));
+      const labelsRemoved = this.updateLabels
+        .filter((_, i, n) => select(n[i]).classed('collision-removed'))
+        .attr('data-use-dx', hideOnly) // need to add this for remove piece of collision below
+        .attr('data-use-dy', hideOnly); // .transition().duration(0);
+
+      const collisionSettings = {
+        vertical: {
+          top: {
+            validPositions: ['bottom'],
+            offsets: [5]
+          },
+          middle: {
+            validPositions: ['middle'],
+            offsets: [1]
+          },
+          bottom: {
+            validPositions: ['top'],
+            offsets: [textHeight / 2]
+          }
+        },
+        horizontal: {
+          right: {
+            validPositions: ['left'],
+            offsets: [8]
+          },
+          middle: {
+            validPositions: ['middle'],
+            offsets: [1]
+          },
+          left: {
+            validPositions: ['right'],
+            offsets: [20]
+          }
+        }
+      };
+
+      const collisionPlacement = this.dataLabel && this.dataLabel.collisionPlacement;
+      const boundsScope =
+        collisionPlacement && collisionSettings[this.layout][collisionPlacement] // check whether placement provided maps correctly
+          ? this.dataLabel.collisionPlacement
+          : this.layout === 'vertical'
+          ? 'top' // if we don't have collisionPlacement
+          : 'right';
+
+      // we can now remove labels as well if we need to...
+      if (labelsRemoved.size() > 0) {
+        this.bitmaps = resolveLabelCollision({
+          bitmaps: this.bitmaps,
+          labelSelection: labelsRemoved,
+          avoidMarks: [],
+          validPositions: ['middle'],
+          offsets: [1],
+          accessors: ['key'],
+          size: [roundTo(this.width, 0), roundTo(this.height, 0)],
+          hideOnly: false,
+          removeOnly: true
+        });
+
+        // remove temporary class now
+        labelsRemoved.classed('collision-removed', false);
+      }
+
+      // we can now add labels as well if we need to...
+      if (labelsAdded.size() > 0) {
+        this.bitmaps = placeDataLabels({
+          root: labelsAdded,
+          xScale: this.x,
+          yScale: this.y,
+          ordinalAccessor: this.groupAccessor,
+          valueAccessor: this.valueAccessor,
+          placement: this.dataLabel.placement,
+          layout: this.layout,
+          chartType: 'stacked',
+          normalized: this.normalized,
+          avoidCollision: {
+            runOccupancyBitmap: this.dataLabel.visible && this.dataLabel.placement === 'auto',
+            bitmaps: this.bitmaps,
+            labelSelection: labelsAdded,
+            avoidMarks: [this.update],
+            validPositions: hideOnly ? ['middle'] : collisionSettings[this.layout][boundsScope].validPositions,
+            offsets: hideOnly ? [1] : collisionSettings[this.layout][boundsScope].offsets,
+            accessors: [this.groupAccessor, this.ordinalAccessor, 'key'], // key is created for lines by nesting done in line,
+            size: [roundTo(this.width, 0), roundTo(this.height, 0)],
+            boundsScope: hideOnly ? undefined : boundsScope,
+            hideOnly: this.dataLabel.visible && this.dataLabel.collisionHideOnly,
+            suppressMarkDraw: true
+          }
+        });
+
+        // remove temporary class now
+        labelsAdded.classed('collision-added', false);
+      }
+    }
   }
 
-  processLabelOpacity(selection) {
+  processLabelOpacity(selection, addCollisionClass?) {
     const opacity = this.dataLabel.visible ? 1 : 0;
     const ordinalAxis = this.layout === 'vertical' ? 'x' : 'y';
     const ordinalDimension = this.layout === 'vertical' ? 'width' : 'height';
     const valueDimension = this.layout === 'vertical' ? 'height' : 'width';
 
-    selection.attr('opacity', d => {
+    selection.attr('opacity', (d, i, n) => {
+      const prevOpacity = +select(n[i]).attr('opacity');
+      const styleVisibility = select(n[i]).style('visibility');
       const modifier = !this.normalized ? 1 : d.getSum();
       const dimensions = {};
       dimensions[ordinalDimension] = this[ordinalAxis].bandwidth();
@@ -2175,7 +2297,7 @@ export class StackedBarChart {
           dimensions,
           fontSize: 14
         });
-      return hasRoom
+      const targetOpacity = hasRoom
         ? checkInteraction(
             d,
             opacity,
@@ -2184,9 +2306,24 @@ export class StackedBarChart {
             this.clickHighlight,
             this.innerInteractionKeys
           ) < 1
-          ? 0
+          ? addCollisionClass
+            ? Number.EPSILON
+            : 0
           : 1
         : 0;
+      if (
+        ((targetOpacity === 1 && styleVisibility === 'hidden') || prevOpacity !== targetOpacity) &&
+        addCollisionClass
+      ) {
+        if (targetOpacity === 1) {
+          select(n[i])
+            .classed('collision-added', true)
+            .style('visibility', null);
+        } else {
+          select(n[i]).classed('collision-removed', true);
+        }
+      }
+      return targetOpacity;
     });
   }
 
@@ -2264,13 +2401,27 @@ export class StackedBarChart {
   }
 
   enterDataLabels() {
+    const opacity = this.dataLabel.visible ? 1 : 0;
     this.enterLabelWrappers.attr('class', 'stacked-bar-dataLabel-series entering');
 
     this.enterLabels
       .attr('class', 'stacked-bar-dataLabel entering')
       .style('pointer-events', 'none')
       .classed('stacked-bar-dataLabel-' + this.layout, true)
-      .attr('opacity', 0)
+      .attr(
+        'opacity',
+        d =>
+          checkInteraction(
+            d,
+            opacity,
+            this.hoverOpacity,
+            this.hoverHighlight,
+            this.clickHighlight,
+            this.innerInteractionKeys
+          ) < 1
+            ? 0
+            : Number.EPSILON // we need this to be epsilon initially to enable auto placement algorithm to run on load
+      )
       .attr('fill', this.textTreatmentHandler);
 
     placeDataLabels({
@@ -2288,7 +2439,6 @@ export class StackedBarChart {
 
   updateDataLabels() {
     this.updateLabels.interrupt();
-    const opacity = this.dataLabel.visible ? 1 : 0;
 
     this.updateLabelWrappers
       .transition('update')
@@ -2298,7 +2448,7 @@ export class StackedBarChart {
         this.updateLabelWrappers.classed('entering', false);
       });
 
-    this.updateLabels
+    const updatingLabels = this.updateLabels
       .transition('opacity')
       .ease(easeCircleIn)
       .duration((_, i, n) => {
@@ -2307,22 +2457,11 @@ export class StackedBarChart {
           return this.duration;
         }
         return 0;
-      })
-      .attr('opacity', d =>
-        checkInteraction(
-          d,
-          opacity,
-          this.hoverOpacity,
-          this.hoverHighlight,
-          this.clickHighlight,
-          this.innerInteractionKeys
-        ) < 1
-          ? 0
-          : 1
-      )
-      .call(transitionEndAll, () => {
-        this.updateLabels.classed('entering', false);
       });
+    this.processLabelOpacity(updatingLabels);
+    updatingLabels.call(transitionEndAll, () => {
+      this.updateLabels.classed('entering', false);
+    });
   }
 
   exitDataLabels() {
@@ -2472,7 +2611,7 @@ export class StackedBarChart {
 
     this.enterTotalLabels
       .attr('class', 'bar-dataLabel-' + this.layout)
-      .attr('opacity', 0)
+      .attr('opacity', Number.EPSILON)
       .attr('fill', visaColors.dark_text)
       .attr(groupDimension, d => {
         return this[groupDimension](d.key) + this[groupDimension].bandwidth() / 2;

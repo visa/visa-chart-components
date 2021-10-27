@@ -20,7 +20,17 @@ export class AppStackedBarChart {
   @State() stateTrigger: any = 0;
   @State() animations: any = { disabled: false };
   @State() hoverElement: any = {};
-  @State() clickElement: any = [];
+  @State() clickElement: any = [
+    {
+      date: new Date('2016-02-01'),
+      otherCategory: 'group1',
+      otherGroup: '2',
+      otherValue: 22,
+      category: 'Restaurant',
+      value: 121,
+      count: 439
+    }
+  ];
   @State() ordinalAccessor: any = 'category';
   @State() valueAccessor: any = 'value';
   @State() groupAccessor: any = 'date';
@@ -40,10 +50,11 @@ export class AppStackedBarChart {
   @State() fixedData: any;
   @State() dataLabel: any = {
     visible: true,
-    placement: 'auto',
+    placement: 'end',
     labelAccessor: this.dataLabelAccessor,
     format: '',
-    collisionPlacement: 'bottom'
+    collisionPlacement: 'right',
+    collisionHideOnly: true
   };
   interactionKeys: any = ['category'];
   legend: any = { visible: true, interactive: true };
@@ -2687,6 +2698,52 @@ export class AppStackedBarChart {
     this.fixedData = this.badData;
   }
 
+  // test printing of chart to canvas
+  // noted that we have to move the <defs /> element under legend and then back
+  // to print the chart and legend correctly
+  drawCanvas = canvas => {
+    console.log('canvas data is ', canvas);
+    document.body.appendChild(canvas);
+    console.log('your application may safely print now');
+  };
+
+  generateCanvas = () => {
+    // async () => {
+    //   await customElements.whenDefined('stacked-bar-chart');
+    const chartSVG = document.querySelector('.visa-viz-d3-stacked-bar-container svg');
+    const chartDefs = document.querySelector('.visa-viz-d3-stacked-bar-container svg defs');
+    const legendSVG = document.querySelector('.stacked-bar-legend svg');
+    legendSVG.appendChild(chartDefs);
+    const imageArray = [];
+    this.svgToImage(legendSVG, 997, 49, imageArray);
+    // console.log('checking image array', chartSVG, imageArray);
+    chartSVG.appendChild(chartDefs);
+    this.svgToImage(chartSVG, 1000, 500, imageArray);
+    imageArray.forEach(img => this.drawCanvas(img));
+    // legendSVG.removeChild(legendDefs);
+    // };
+    // });
+  };
+
+  // This function serializes svg to string and creates image data url
+  svgToImage(svg, w, h, imageArray) {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    const img = new Image(), // DOM element
+      serializer = new window.XMLSerializer(), // Serialize SVG code into XML.
+      svgStr = serializer.serializeToString(svg);
+    canvas.width = w;
+    canvas.height = h;
+    img.onload = function() {
+      ctx.drawImage(img, 0, 0, w, h);
+      imageArray.push(canvas.toDataURL('image/png'));
+      // if (index === numImages) writeToXLS(imageArray, w, h, fileData, containsTableData, getTableContent, setTableColumnWidth, alignChartToLeft, TableData);
+    };
+    img.src = 'data:image/svg+xml;charset=utf8,' + window.encodeURIComponent(svgStr);
+    document.body.appendChild(canvas);
+    // console.log('checking image', ctx, img);
+  }
+
   toggleAnimations() {
     this.animations = { disabled: !this.animations.disabled };
   }
@@ -2713,6 +2770,7 @@ export class AppStackedBarChart {
         ) : (
           ''
         )}
+        <button onClick={() => this.generateCanvas()}>Generate Canvas</button>
         <button
           onClick={() => {
             this.changeAccessElements();
@@ -2847,7 +2905,7 @@ export class AppStackedBarChart {
           hoverStyle={this.hoverStyle}
           tooltipLabel={this.label}
           dataLabel={this.dataLabel}
-          hoverOpacity={1}
+          hoverOpacity={0.999}
           hoverHighlight={this.hoverElement}
           clickHighlight={this.clickElement}
           onClickFunc={d => this.onClickFunc(d)}

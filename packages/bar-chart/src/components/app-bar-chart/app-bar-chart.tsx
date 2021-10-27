@@ -33,17 +33,20 @@ export class AppBarChart {
   @State() uniqueID: string = 'thisIsUnique';
   @State() dataLabel: any = {
     visible: true,
-    placement: 'auto',
+    placement: 'left',
     labelAccessor: 'value',
     format: '0.0[a]',
-    collisionPlacement: 'middle'
+    collisionPlacement: 'left',
+    collisionHideOnly: true
   };
   @State() tooltipLabel: any = {
     labelAccessor: ['region', 'country', 'value'],
     labelTitle: ['', 'country', 'value'],
     format: ['', '', '0,0[.0][a]']
   };
-  @State() clickElement: any = [];
+  @State() clickElement: any = [
+    // { country: 'Japan', otherValue: '24', value: '3', region: 'Asia', test: 'Group A', nonSense: 'test' }
+  ];
   @State() interactionState: any = ['region'];
   @State() valueAccessor: any = 'value';
   @State() groupAccessor: any = 'region';

@@ -543,7 +543,9 @@ describe('<world-map />', () => {
     describe('interaction', () => {
       describe('path based interaction tests', () => {
         const innerTestProps = {
+          interactionKeys: ['Country Code'],
           colorPalette: 'single_categorical_light_purple',
+          groupAccessor: 'Type',
           useFilter: false
         };
         const innerTestSelector = '[data-testid=country][data-id=country-path-840]';
@@ -591,7 +593,7 @@ describe('<world-map />', () => {
         const innerTestSelector = '[data-testid=country][data-id=country-path-076]';
         const innerNegTestSelector = '[data-testid=country][data-id=country-path-024]';
         const CUSTOMCLICKSTYLE = {
-          color: visaColors.categorical_light_purple, // this has to be light enough to require a contrasting stroke
+          color: visaColors.categorical_light_rose, // this has to be light enough to require a contrasting stroke
           strokeWidth: 4
         };
         const EXPECTEDHOVEROPACITY = 0.25;
@@ -599,6 +601,8 @@ describe('<world-map />', () => {
           clickStyle: CUSTOMCLICKSTYLE,
           hoverOpacity: EXPECTEDHOVEROPACITY,
           interactionKeys: ['Type'],
+          colorPalette: 'single_categorical_light_purple',
+          groupAccessor: 'Type',
           useFilter: false
         };
 
@@ -628,6 +632,8 @@ describe('<world-map />', () => {
           clickStyle: CUSTOMCLICKSTYLE,
           hoverOpacity: EXPECTEDHOVEROPACITY,
           interactionKeys: ['Type', 'Country Code'],
+          colorPalette: 'single_categorical_light_purple',
+          groupAccessor: 'Type',
           useFilter: false
         };
         it(`[${unitTestInteraction[testLoad].group}] ${unitTestInteraction[testLoad].prop}: ${
@@ -668,6 +674,8 @@ describe('<world-map />', () => {
           clickStyle: CUSTOMCLICKSTYLE,
           hoverOpacity: EXPECTEDHOVEROPACITY,
           interactionKeys: ['Type'],
+          colorPalette: 'single_categorical_light_purple',
+          groupAccessor: 'Type',
           useFilter: false
         };
 
@@ -697,6 +705,8 @@ describe('<world-map />', () => {
           clickStyle: CUSTOMCLICKSTYLE,
           hoverOpacity: EXPECTEDHOVEROPACITY,
           interactionKeys: ['Type', 'Country Code'],
+          colorPalette: 'single_categorical_light_purple',
+          groupAccessor: 'Type',
           useFilter: false
         };
         it(`[${unitTestInteraction[testLoad].group}] ${unitTestInteraction[testLoad].prop}: ${
@@ -754,7 +764,7 @@ describe('<world-map />', () => {
             .querySelector('[data-testid=legend-container]')
             .querySelector('g')
             .querySelectorAll('g');
-          const legendGText = legendGs[0].childNodes[1]['__data__']; // tslint:disable-line: no-string-literal
+          const legendGText = legendGs[0].childNodes[1].textContent; // tslint:disable-line: no-string-literal
           const markerCircles = page.doc.querySelectorAll('[data-testid=marker]');
           expect(legendGText.substring(0, 1)).toEqual('0');
           markerCircles.forEach((circle, i) => {
@@ -780,7 +790,7 @@ describe('<world-map />', () => {
             .querySelector('[data-testid=legend-container]')
             .querySelector('g')
             .querySelectorAll('g');
-          const legendGText = legendGs[3].childNodes[1]['__data__']; // tslint:disable-line: no-string-literal
+          const legendGText = legendGs[3].childNodes[1].textContent; // tslint:disable-line: no-string-literal
           const markerCircles = page.doc.querySelectorAll('[data-testid=marker]');
           expect(legendGText.substring(legendGText.length - 3)).toEqual('100');
           markerCircles.forEach((circle, i) => {
@@ -806,8 +816,8 @@ describe('<world-map />', () => {
             .querySelector('[data-testid=legend-container]')
             .querySelector('g')
             .querySelectorAll('g');
-          const legendMinText = legendGs[0].childNodes[1]['__data__']; // tslint:disable-line: no-string-literal
-          const legendMaxText = legendGs[3].childNodes[1]['__data__']; // tslint:disable-line: no-string-literal
+          const legendMinText = legendGs[0].childNodes[1].textContent; // tslint:disable-line: no-string-literal
+          const legendMaxText = legendGs[3].childNodes[1].textContent; // tslint:disable-line: no-string-literal
           const markerCircles = page.doc.querySelectorAll('[data-testid=marker]');
           expect(legendMinText.substring(0, 2)).toEqual('25');
           expect(legendMaxText.substring(legendMaxText.length - 3)).toEqual('100');
@@ -824,6 +834,12 @@ describe('<world-map />', () => {
 
           component.groupAccessor = 'Type';
           component.markerStyle = DEFAULTMARKERSTYLEVISIBLE;
+          component.legend = {
+            visible: true,
+            interactive: false,
+            format: '',
+            labels: ''
+          };
 
           // ACT
           page.root.appendChild(component);
@@ -835,7 +851,7 @@ describe('<world-map />', () => {
             .querySelector('g')
             .querySelectorAll('g');
           legendGs.forEach((legendG, i) => {
-            expect(legendG.childNodes[1]['__data__']).toEqual(groupColorScale.domain()[i]); // tslint:disable-line: no-string-literal
+            expect(legendG.childNodes[1].textContent).toEqual(groupColorScale.domain()[i]); // tslint:disable-line: no-string-literal
           });
 
           const markerCircles = page.doc.querySelectorAll('[data-testid=marker]');
@@ -1139,7 +1155,7 @@ describe('<world-map />', () => {
             .querySelector('[data-testid=legend-container]')
             .querySelector('g')
             .querySelector('g');
-          const legendGText = legendG.childNodes[1]['__data__']; // tslint:disable-line: no-string-literal
+          const legendGText = legendG.childNodes[1].textContent; // tslint:disable-line: no-string-literal
           expect(legendGText).toEqual('$14.2-$23.2');
         });
       });
@@ -1154,7 +1170,7 @@ describe('<world-map />', () => {
             .querySelector('[data-testid=legend-container]')
             .querySelector('g')
             .querySelector('g');
-          const legendGText = legendG.childNodes[1]['__data__']; // tslint:disable-line: no-string-literal
+          const legendGText = legendG.childNodes[1].textContent; // tslint:disable-line: no-string-literal
           expect(legendGText).toEqual('14.2-23.2');
         });
         it('should have custom labels when passed as prop', async () => {
@@ -1177,7 +1193,7 @@ describe('<world-map />', () => {
             .querySelector('g')
             .querySelectorAll('g');
           legendG.forEach((g, i) => {
-            const gText = g.childNodes[1]['__data__']; // tslint:disable-line: no-string-literal
+            const gText = g.childNodes[1].textContent; // tslint:disable-line: no-string-literal
             expect(gText).toEqual(EXPECTEDLABELS[i]);
           });
         });

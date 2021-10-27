@@ -14,7 +14,7 @@ import '@visa/keyboard-instructions';
 })
 export class AppScatterPlot {
   @State() data: any;
-  @State() stateTrigger: any = 0;
+  @State() stateTrigger: any = 3;
   @State() hoverElement: any = '';
   @State() xAccessor: any = 'item';
   @State() yAccessor: any = 'value';
@@ -37,8 +37,20 @@ export class AppScatterPlot {
     keyboardNavConfig: { disabled: false }
   };
   @State() suppressEvents: boolean = false;
+  @State() dotSymbols: any = ['cross', 'square', 'diamond', 'circle', 'star'];
+  @State() padding: any = {
+    top: 20,
+    left: 60,
+    right: 50,
+    bottom: 50
+  };
+  @State() xAxis: any = { visible: true, gridVisible: false, label: 'Age', format: '0' };
+  @State() yAxis: any = { visible: true, gridVisible: true, label: 'Monthly Spending', format: '$0[a]' };
 
-  @State() clickElement: any = [];
+  @State() clickElement: any = [
+    { item: 4, otherItem: 1, group: 'C', value: 22135, otherValue: 111, test: 'B' }
+    // { item: 3, otherItem: 8, group: 'A', value: 4004, otherValue: 385, test: 'B' }
+  ];
   startData: any = [
     { item: 1, otherItem: 234, group: 'A', value: -2700, otherValue: 235, test: 'A' },
     { item: 2, otherItem: 164, group: 'A', value: 1000, otherValue: 1235, test: 'B' },
@@ -384,21 +396,16 @@ export class AppScatterPlot {
             subTitle={'Interaction Style'}
             height={400}
             width={800}
-            xAxis={{ visible: true, gridVisible: false, label: 'Age', format: '0' }}
-            yAxis={{ visible: true, gridVisible: true, label: 'Monthly Spending', format: '$0[a]' }}
+            xAxis={this.xAxis}
+            yAxis={this.yAxis}
             showTooltip={true}
             // yMinValueOverride={0}
-            padding={{
-              top: 20,
-              left: 60,
-              right: 50,
-              bottom: 50
-            }}
+            padding={this.padding}
             cursor={'pointer'}
-            hoverOpacity={1}
+            hoverOpacity={0.5}
             colors={this.colors}
             colorPalette={this.colorPalette}
-            dotSymbols={['cross', 'square', 'diamond', 'circle', 'star']}
+            dotSymbols={this.dotSymbols}
             data={this.data}
             xAccessor={this.xAccessor}
             yAccessor={this.yAccessor}

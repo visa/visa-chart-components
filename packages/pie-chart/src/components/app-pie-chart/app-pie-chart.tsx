@@ -14,20 +14,22 @@ import '@visa/keyboard-instructions';
 })
 export class AppPieChart {
   @State() data: any;
-  @State() stateTrigger: any = 0;
+  @State() stateTrigger: any = 1;
   @State() animations: any = { disabled: false };
   @State() refStateTrigger: any = 0;
   @State() hoverElement: any = '';
   @State() chartUpdates: string;
-  @State() width: any = 450;
-  @State() height: any = 450;
+  @State() width: any = 500;
+  @State() height: any = 500;
   @State() padding: any = {
-    top: 20,
-    left: 60,
-    right: 85,
-    bottom: 40
+    top: 50,
+    left: 50,
+    right: 50,
+    bottom: 50
   };
-  @State() clickElement: any = [];
+  @State() clickElement: any = [
+    // { label: 'Competitor 2', value: '1000', otherValue: '4126000' }
+  ];
   @State() colorPalette: any = 'single_suppPink';
   @State() edge: any = true;
   @State() valueAccessor: any = 'value';
@@ -119,7 +121,7 @@ export class AppPieChart {
   ];
   dataLabel: any = {
     visible: true,
-    placement: 'edge',
+    placement: 'inside',
     labelAccessor: 'value',
     format: '$0[.][0]a',
     collisionHideOnly: true
@@ -345,7 +347,7 @@ export class AppPieChart {
             padding={this.padding}
             ordinalAccessor={'label'}
             valueAccessor={this.valueAccessor}
-            innerRatio={0} // {0.0000000001}
+            innerRatio={0.1} // {0.0000000001}
             dataLabel={this.dataLabel}
             labelOffset={25}
             showLabelNote={true}

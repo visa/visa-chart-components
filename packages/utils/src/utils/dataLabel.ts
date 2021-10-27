@@ -44,6 +44,7 @@ export const placeDataLabels = ({
   normalized?: any;
   avoidCollision?: {
     runOccupancyBitmap: boolean;
+    bitmaps: any;
     labelSelection: any;
     avoidMarks: any;
     validPositions: string[];
@@ -52,6 +53,8 @@ export const placeDataLabels = ({
     size: [number, number];
     boundsScope?: string;
     hideOnly?: boolean;
+    removeOnly?: boolean;
+    suppressMarkDraw?: boolean;
   };
 }) => {
   let xPlacement;
@@ -419,6 +422,7 @@ export const placeDataLabels = ({
   const hideNoPlaceIndicator = avoidCollision && avoidCollision.hideOnly && !autoPlacementIndicator;
   if (chartType !== 'heat-map' && autoPlacementIndicator && !hideNoPlaceIndicator) {
     const bitmaps = resolveLabelCollision({
+      bitmaps: avoidCollision.bitmaps,
       labelSelection: avoidCollision.labelSelection, // this should be root everytime basically...
       avoidMarks: avoidCollision.avoidMarks,
       validPositions: avoidCollision.validPositions,
@@ -426,14 +430,19 @@ export const placeDataLabels = ({
       accessors: avoidCollision.accessors,
       size: avoidCollision.size,
       boundsScope: avoidCollision.boundsScope,
-      hideOnly: hideNoPlaceIndicator // should be false always
+      hideOnly: hideNoPlaceIndicator, // should be false always
+      removeOnly: avoidCollision.removeOnly,
+      suppressMarkDraw: avoidCollision.suppressMarkDraw
     });
 
     // now that the collision check is done we apply original placement to anything hidden (not placed) by it
+    // this is needed because the marks will otherwise be placed at [0, 0], this util is expected to place them
     // checking for data-label-hidden !== false will capture anything that didn't go through collision and/or
-    // was hidden by it
+    // was hidden by it, though we need to ignore this if we are in the setLabelOpacity interaction updates
+    // thus we use the class temporarily added to each label to handle that
+    // update during label interaction updates, we are excluding hidden labels that we moved from this now as well
     root
-      .filter((_, i, n) => n[i].getAttribute('data-label-hidden') !== 'false')
+      .filter((_, i, n) => select(n[i]).attr('data-label-moved') !== 'true' && !select(n[i]).classed('collision-added'))
       .attr('x', xPlacement)
       .attr('y', yPlacement)
       .attr(layout === 'vertical' ? 'dy' : 'dx', offset)
@@ -456,25 +465,31 @@ export const placeDataLabels = ({
     });
 
     // next we draw the bitmap with only the marks
-    let bitmaps = resolveLabelCollision({
-      labelSelection: select('.empty-stuff-vcc-do-not-use'), // this should be root everytime basically...
-      avoidMarks: avoidCollision.avoidMarks,
-      validPositions: ['middle'],
-      offsets: [1],
-      accessors: avoidCollision.accessors,
-      size: avoidCollision.size
-    });
+    let bitmaps;
+    if (!avoidCollision.suppressMarkDraw) {
+      bitmaps = resolveLabelCollision({
+        bitmaps: avoidCollision.bitmaps,
+        labelSelection: select('.empty-stuff-vcc-do-not-use'), // this should be root everytime basically...
+        avoidMarks: avoidCollision.avoidMarks,
+        validPositions: ['middle'],
+        offsets: [1],
+        accessors: avoidCollision.accessors,
+        size: avoidCollision.size
+      });
+    }
 
     // next we try to place labels based on the util placed positions
     bitmaps = resolveLabelCollision({
-      bitmaps: bitmaps,
+      bitmaps: bitmaps || avoidCollision.bitmaps,
       labelSelection: root,
       avoidMarks: [],
       validPositions: ['middle'],
       offsets: [1],
       accessors: avoidCollision.accessors,
       size: avoidCollision.size,
-      hideOnly: hideNoPlaceIndicator // should be true always
+      hideOnly: hideNoPlaceIndicator, // should be true always
+      removeOnly: avoidCollision.removeOnly,
+      suppressMarkDraw: avoidCollision.suppressMarkDraw
     });
 
     // hideOnly is passed, we need to place everything as we usually would
