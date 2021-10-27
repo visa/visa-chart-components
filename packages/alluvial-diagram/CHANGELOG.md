@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.1](https://github.com/visa/visa-chart-components/compare/@visa/alluvial-diagram@1.2.0...@visa/alluvial-diagram@1.2.1) (2021-10-27)
+
+
+### Bug Fixes
+
+* add label collision to lifecycle and update a11y features on alluvial-diagram ([74b32fd](https://github.com/visa/visa-chart-components/commit/74b32fd0c03205d80fae6d65b7645a4f1dfd9849))
+
+
+
+
+
 # [1.2.0](https://github.com/visa/visa-chart-components/compare/@visa/alluvial-diagram@1.1.2...@visa/alluvial-diagram@1.2.0) (2021-08-09)
 
 

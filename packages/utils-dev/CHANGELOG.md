@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.3.10](https://github.com/visa/visa-chart-components/compare/@visa/visa-charts-utils-dev@3.3.9...@visa/visa-charts-utils-dev@3.3.10) (2021-10-27)
+
+
+### Bug Fixes
+
+* add label collision to update functions across lib, doc and testing updates to support ([83e63dc](https://github.com/visa/visa-chart-components/commit/83e63dc352165a68aee9db4e7175fd241c13f523))
+
+
+
+
+
 ## [3.3.9](https://github.com/visa/visa-chart-components/compare/@visa/visa-charts-utils-dev@3.3.8...@visa/visa-charts-utils-dev@3.3.9) (2021-08-09)
 
 **Note:** Version bump only for package @visa/visa-charts-utils-dev

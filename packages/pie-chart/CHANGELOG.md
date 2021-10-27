@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.2.1](https://github.com/visa/visa-chart-components/compare/@visa/pie-chart@4.2.0...@visa/pie-chart@4.2.1) (2021-10-27)
+
+
+### Bug Fixes
+
+* add label collision to update functions across lib, doc and testing updates to support ([83e63dc](https://github.com/visa/visa-chart-components/commit/83e63dc352165a68aee9db4e7175fd241c13f523))
+
+
+
+
+
 # [4.2.0](https://github.com/visa/visa-chart-components/compare/@visa/pie-chart@4.1.3...@visa/pie-chart@4.2.0) (2021-08-09)
 
 
