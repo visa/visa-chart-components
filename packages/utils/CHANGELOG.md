@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.5.1](https://github.com/visa/visa-chart-components/compare/@visa/visa-charts-utils@4.5.0...@visa/visa-charts-utils@4.5.1) (2021-10-27)
+
+
+### Bug Fixes
+
+* add label collision to update functions across lib, doc and testing updates to support ([83e63dc](https://github.com/visa/visa-chart-components/commit/83e63dc352165a68aee9db4e7175fd241c13f523))
+* leverage createURL from a11y util for textures, fix escape bug in alluvial key nav ([b25ec61](https://github.com/visa/visa-chart-components/commit/b25ec6155fb343a5774981b77fa2b1116f9b5fba))
+
+
+
+
+
 # [4.5.0](https://github.com/visa/visa-chart-components/compare/@visa/visa-charts-utils@4.4.1...@visa/visa-charts-utils@4.5.0) (2021-08-09)
 
 

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.16](https://github.com/visa/visa-chart-components/compare/@visa/group-charts@3.1.15...@visa/group-charts@3.1.16) (2021-10-27)
+
+**Note:** Version bump only for package @visa/group-charts
+
+
+
+
+
 ## [3.1.15](https://github.com/visa/visa-chart-components/compare/@visa/group-charts@3.1.14...@visa/group-charts@3.1.15) (2021-08-09)
 
 **Note:** Version bump only for package @visa/group-charts

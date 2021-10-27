@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.10](https://github.com/visa/visa-chart-components/compare/@visa/pareto-chart@4.0.9...@visa/pareto-chart@4.0.10) (2021-10-27)
+
+**Note:** Version bump only for package @visa/pareto-chart
+
+
+
+
+
 ## [4.0.9](https://github.com/visa/visa-chart-components/compare/@visa/pareto-chart@4.0.8...@visa/pareto-chart@4.0.9) (2021-08-09)
 
 **Note:** Version bump only for package @visa/pareto-chart
