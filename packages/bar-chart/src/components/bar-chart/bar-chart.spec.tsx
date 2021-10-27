@@ -100,6 +100,13 @@ describe('<bar-chart>', () => {
         page.root.appendChild(component);
         await page.waitForChanges();
 
+        // flush labels for testing to ensure opacity of 1 on initial render
+        const elements = page.doc.querySelectorAll('[data-testid=dataLabel]');
+        await asyncForEach(elements, async element => {
+          flushTransitions(element);
+          await page.waitForChanges();
+        });
+
         // ASSERT
         expect(page.root).toMatchSnapshot();
       });
@@ -881,7 +888,9 @@ describe('<bar-chart>', () => {
 
     describe('interaction', () => {
       describe('bar based interaction tests', () => {
-        const innerTestProps = {};
+        const innerTestProps = {
+          transitionEndAllSelector: '[data-testid=bar]'
+        };
         const innerTestSelector = '[data-testid=bar][data-id=bar-Apr-17]';
         const innerNegTestSelector = '[data-testid=bar][data-id=bar-May-17]';
         Object.keys(unitTestInteraction).forEach(test => {
@@ -910,7 +919,8 @@ describe('<bar-chart>', () => {
         const innerTestProps = {
           clickStyle: CUSTOMCLICKSTYLE,
           hoverOpacity: EXPECTEDHOVEROPACITY,
-          interactionKeys: ['cat']
+          interactionKeys: ['cat'],
+          transitionEndAllSelector: '[data-testid=bar]'
         };
 
         it(`[${unitTestInteraction[testLoad].group}] ${unitTestInteraction[testLoad].prop}: ${
@@ -938,7 +948,8 @@ describe('<bar-chart>', () => {
         const newInnerTestProps = {
           clickStyle: CUSTOMCLICKSTYLE,
           hoverOpacity: EXPECTEDHOVEROPACITY,
-          interactionKeys: ['cat', 'month']
+          interactionKeys: ['cat', 'month'],
+          transitionEndAllSelector: '[data-testid=bar]'
         };
         it(`[${unitTestInteraction[testLoad].group}] ${unitTestInteraction[testLoad].prop}: ${
           unitTestInteraction[testLoad].name
@@ -976,7 +987,8 @@ describe('<bar-chart>', () => {
         const innerTestProps = {
           clickStyle: CUSTOMCLICKSTYLE,
           hoverOpacity: EXPECTEDHOVEROPACITY,
-          interactionKeys: ['cat']
+          interactionKeys: ['cat'],
+          transitionEndAllSelector: '[data-testid=bar]'
         };
 
         it(`[${unitTestInteraction[testLoad].group}] ${unitTestInteraction[testLoad].prop}: ${
@@ -1004,7 +1016,8 @@ describe('<bar-chart>', () => {
         const newInnerTestProps = {
           clickStyle: CUSTOMCLICKSTYLE,
           hoverOpacity: EXPECTEDHOVEROPACITY,
-          interactionKeys: ['cat', 'month']
+          interactionKeys: ['cat', 'month'],
+          transitionEndAllSelector: '[data-testid=bar]'
         };
         it(`[${unitTestInteraction[testLoad].group}] ${unitTestInteraction[testLoad].prop}: ${
           unitTestInteraction[testLoad].name
@@ -1227,6 +1240,8 @@ describe('<bar-chart>', () => {
             await page.waitForChanges();
 
             const dataLabel = page.doc.querySelector('[data-testid=dataLabel]');
+            flushTransitions(dataLabel);
+            await page.waitForChanges();
             expect(dataLabel).toEqualAttribute('opacity', 1);
           });
           it('should not render the bar data labels if visible is false', async () => {

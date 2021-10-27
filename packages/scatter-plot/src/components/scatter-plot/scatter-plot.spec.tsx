@@ -105,6 +105,13 @@ describe('<scatter-plot>', () => {
         page.root.appendChild(component);
         await page.waitForChanges();
 
+        // flush labels for testing to ensure opacity of 1 on initial render
+        const elements = page.doc.querySelectorAll('[data-testid=dataLabel]');
+        await asyncForEach(elements, async element => {
+          flushTransitions(element);
+          await page.waitForChanges();
+        });
+
         // ASSERT
         expect(page.root).toMatchSnapshot();
       });

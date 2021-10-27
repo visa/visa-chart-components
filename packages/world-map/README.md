@@ -304,13 +304,13 @@ const mouseOutHandler = evt => {
 
 #### IDataLabelType Definition
 
-| Name                | Type    | Default Value(s) | Description                                                                                                                                                                                                                                   |
-| ------------------- | ------- | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `labelAccessor`     | string  | ''               | Key that determines which property of the data is displayed in the label.                                                                                                                                                                     |
-| `visible`           | boolean | false            | Toggles the visibility (opacity) of the data labels.                                                                                                                                                                                          |
-| `placement`         | string  | 'bottom'         | Sets the placement of the data label, accepts 'bottom'. Placement option 'auto' leverages the [resolveLabelCollision](../utils/src/utils/collisionDetection.ts) algorithm and places labels without overlaps in available space on the chart. |
-| `format`            | string  | ''               | Sets the formatting for the data labels, EG %b, refer to [d3-time-format](https://github.com/d3/d3-time-format) and [numeral.js](http://numeraljs.com/).                                                                                      |
-| `collisionHideOnly` | boolean | false            | Toggles whether to run [resolveLabelCollision](../utils/src/utils/collisionDetection.ts) algorithm and hide labels if collision is detected (vs hide and then place). This is overridden by placement being set to `auto`.                    |
+| Name                | Type    | Default Value(s) | Description                                                                                                                                                                                                                           |
+| ------------------- | ------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `labelAccessor`     | string  | ''               | Key that determines which property of the data is displayed in the label.                                                                                                                                                             |
+| `visible`           | boolean | false            | Toggles the visibility (opacity) of the data labels.                                                                                                                                                                                  |
+| `placement`         | string  | 'bottom'         | Sets the placement of the data label, accepts 'bottom'. Placement option 'auto' leverages the [resolveLabelCollision](../utils#resolve-label-collision) algorithm and places labels without overlaps in available space on the chart. |
+| `format`            | string  | ''               | Sets the formatting for the data labels, EG %b, refer to [d3-time-format](https://github.com/d3/d3-time-format) and [numeral.js](http://numeraljs.com/).                                                                              |
+| `collisionHideOnly` | boolean | false            | Toggles whether to run [resolveLabelCollision](../utils#resolve-label-collision) algorithm and hide labels if collision is detected (vs hide and then place). This is overridden by placement being set to `auto`.                    |
 
 <br>
 
@@ -360,11 +360,11 @@ const mouseOutHandler = evt => {
 
 ### <a name="style-props" href="#style-props">#</a> Style Props [<>](./src/components/world-map/world-map.tsx 'Source')
 
-| Name           | Type     | Default Value(s)  | Description                                                                                                                                                       |
-| -------------- | -------- | ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `colorPalette` | string   | 'sequential_blue' | Sets the color palette of the countries/markers. Overridden by colors. Included color palettes can be found in our [color utility](../utils/src/utils/colors.ts). |
-| `colorSteps`   | number   | 4                 | Specifies the number of steps to use from colorPalette, overridden by colors.                                                                                     |
-| `colors`       | string[] | `undefined`       | Accepts array of color strings or values to customize colors.                                                                                                     |
+| Name           | Type     | Default Value(s)  | Description                                                                                                                                          |
+| -------------- | -------- | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `colorPalette` | string   | 'sequential_blue' | Sets the color palette of the countries/markers. Overridden by colors. Included color palettes can be found in our [color utility](../utils#colors). |
+| `colorSteps`   | number   | 4                 | Specifies the number of steps to use from colorPalette, overridden by colors.                                                                        |
+| `colors`       | string[] | `undefined`       | Accepts array of color strings or values to customize colors.                                                                                        |
 
 <br>
 <br>

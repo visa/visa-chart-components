@@ -82,7 +82,8 @@ const {
   validateAccessibilityProps,
   findTagLevel,
   prepareRenderChange,
-  roundTo
+  roundTo,
+  resolveLabelCollision
 } = Utils;
 
 @Component({
@@ -1780,13 +1781,26 @@ export class ScatterPlot {
   }
 
   enterDataLabels() {
+    const opacity = this.dataLabel.visible ? 1 : 0;
+
     this.enteringLabelGroups
       .attr('class', 'series-dataLabel-group')
       .attr('cursor', !this.suppressEvents && this.dataLabel.visible ? this.cursor : null);
 
     this.enterLabels
       .attr('filter', this.textFilter)
-      .attr('opacity', 0)
+      .attr('opacity', d => {
+        return checkInteraction(
+          d,
+          opacity,
+          this.hoverOpacity,
+          this.hoverHighlight,
+          this.clickHighlight,
+          this.innerInteractionKeys
+        ) < 1
+          ? 0
+          : Number.EPSILON; // we need this to be epsilon initially to enable auto placement algorithm to run on load
+      })
       .attr('class', 'scatter-dataLabel entering')
       .attr('fill', this.textFillHandler)
       .on('click', !this.suppressEvents && this.dataLabel.visible ? d => this.onClickHandler(d) : null)
@@ -1841,6 +1855,9 @@ export class ScatterPlot {
         ) < 1
           ? 0
           : 1;
+      }) // ensure that entering class is getting removed after enter
+      .call(transitionEndAll, (_, i, n) => {
+        select(n[i]).classed('entering', false);
       });
   }
 
@@ -1929,7 +1946,7 @@ export class ScatterPlot {
         validPositions: hideOnly
           ? ['middle']
           : ['middle', 'top', 'bottom', 'left', 'right', 'bottom-right', 'bottom-left', 'top-left', 'top-right'],
-        offsets: hideOnly ? ['middle'] : [1, 2, 4, 4, 1, 1, 1, 1, 1],
+        offsets: hideOnly ? [1] : [1, 5, 4, 4, 1, 1, 1, 1, 1],
         accessors: [this.xAccessor, this.yAccessor, this.groupAccessor, 'key'], // key is created for lines by nesting done in line,
         size: [roundTo(this.width, 0), roundTo(this.height, 0)],
         hideOnly: this.dataLabel.visible && this.dataLabel.collisionHideOnly
@@ -1996,18 +2013,94 @@ export class ScatterPlot {
   }
 
   setLabelOpacity() {
-    this.updateLabels.attr('opacity', d => {
-      return checkInteraction(
-        d,
-        this.dataLabel.visible ? 1 : 0,
-        this.hoverOpacity,
-        this.hoverHighlight,
-        this.clickHighlight,
-        this.innerInteractionKeys
-      ) < 1
-        ? 0
-        : 1;
-    });
+    const hideOnly = this.dataLabel.placement !== 'auto' && this.dataLabel.collisionHideOnly;
+    const addCollisionClass = this.dataLabel.placement === 'auto' || hideOnly;
+
+    this.updateLabels
+      .attr('data-use-dx', hideOnly) // need this for direct resolveCollision call
+      .attr('data-use-dy', hideOnly)
+      .attr('opacity', (d, i, n) => {
+        const prevOpacity = +select(n[i]).attr('opacity');
+        const styleVisibility = select(n[i]).style('visibility');
+        const targetOpacity =
+          checkInteraction(
+            d,
+            this.dataLabel.visible ? 1 : 0,
+            this.hoverOpacity,
+            this.hoverHighlight,
+            this.clickHighlight,
+            this.innerInteractionKeys
+          ) < 1
+            ? 0
+            : 1;
+        if (
+          ((targetOpacity === 1 && styleVisibility === 'hidden') || prevOpacity !== targetOpacity) &&
+          (this.dataLabel.placement === 'auto' || hideOnly)
+        ) {
+          if (targetOpacity === 1) {
+            select(n[i])
+              .classed('collision-added', true)
+              .style('visibility', null);
+          } else {
+            select(n[i]).classed('collision-removed', true);
+          }
+        }
+        return targetOpacity;
+      });
+
+    if (addCollisionClass) {
+      const labelsAdded = this.updateLabels.filter((_, i, n) => select(n[i]).classed('collision-added'));
+      const labelsRemoved = this.updateLabels.filter((_, i, n) => select(n[i]).classed('collision-removed')); // .transition().duration(0);
+
+      // we can now remove labels as well if we need to...
+      if (labelsRemoved.size() > 0) {
+        this.bitmaps = resolveLabelCollision({
+          bitmaps: this.bitmaps,
+          labelSelection: labelsRemoved,
+          avoidMarks: [], // [this.updateDots], // this will link the series label to the last point in the line
+          validPositions: ['middle'],
+          offsets: [1],
+          accessors: ['key'],
+          size: [roundTo(this.width, 0), roundTo(this.height, 0)],
+          hideOnly: false,
+          removeOnly: true
+        });
+
+        // remove temporary class now
+        labelsRemoved.classed('collision-removed', false);
+      }
+
+      // we can now add labels as well if we need to...
+      if (labelsAdded.size() > 0) {
+        this.bitmaps = placeDataLabels({
+          root: labelsAdded,
+          xScale: this.x,
+          yScale: this.y,
+          ordinalAccessor: this.xAccessor,
+          valueAccessor: this.yAccessor,
+          placement: this.dataLabel.placement,
+          chartType: 'scatter',
+          labelOffset: this.dotRadius + this.dotRadius * 0.25,
+          avoidCollision: {
+            runOccupancyBitmap: this.dataLabel.visible && this.dataLabel.placement === 'auto',
+            bitmaps: this.bitmaps,
+            labelSelection: labelsAdded,
+            avoidMarks: [this.updatePoints],
+            validPositions: hideOnly
+              ? ['middle']
+              : ['middle', 'top', 'bottom', 'left', 'right', 'bottom-right', 'bottom-left', 'top-left', 'top-right'],
+            offsets: hideOnly ? [1] : [1, 5, 4, 4, 1, 1, 1, 1, 1],
+            accessors: [this.xAccessor, this.yAccessor, this.groupAccessor, 'key'], // key is created for lines by nesting done in line,
+            size: [roundTo(this.width, 0), roundTo(this.height, 0)],
+            hideOnly: this.dataLabel.visible && this.dataLabel.collisionHideOnly,
+            suppressMarkDraw: true
+          }
+        });
+
+        // remove temporary class now
+        labelsAdded.classed('collision-added', false);
+      }
+    }
   }
 
   drawFitLine() {

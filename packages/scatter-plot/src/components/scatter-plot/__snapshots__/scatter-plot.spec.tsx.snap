@@ -607,52 +607,52 @@ exports[`<scatter-plot> rendered-html render should render with minimal props[da
               </g>
               <g aria-hidden="true" class="scatter-dataLabel-group" data-testid="dataLabel-group-container" focusable="false" role="presentation">
                 <g class="series-dataLabel-group" cursor="default" data-id="label-series-A" data-testid="dataLabel-series-group">
-                  <text class="entering scatter-dataLabel" data-id="label-A-1-2700" data-testid="dataLabel" data-translate-x="66.5" data-translate-y="23" data-x="43.916666666666664" data-y="174.04738900391072" dy="-0.35em" fill="#587893" filter="url(#VCL-t-s-f-ffffffscatter-plot-unit-test)" opacity="0" text-anchor="middle" x="43.916666666666664" y="168.04738900391072">
+                  <text class="entering scatter-dataLabel" data-id="label-A-1-2700" data-testid="dataLabel" data-translate-x="66.5" data-translate-y="23" data-x="43.916666666666664" data-y="174.04738900391072" dy="-0.35em" fill="#587893" filter="url(#VCL-t-s-f-ffffffscatter-plot-unit-test)" opacity="1" text-anchor="middle" x="43.916666666666664" y="166.54738900391072">
                     2.7k
                   </text>
-                  <text class="entering scatter-dataLabel" data-id="label-A-2-1000" data-testid="dataLabel" data-translate-x="66.5" data-translate-y="23" data-x="77.69871794871794" data-y="205.33333333333331" dy="-0.35em" fill="#587893" filter="url(#VCL-t-s-f-ffffffscatter-plot-unit-test)" opacity="0" text-anchor="middle" x="77.69871794871794" y="199.33333333333331">
+                  <text class="entering scatter-dataLabel" data-id="label-A-2-1000" data-testid="dataLabel" data-translate-x="66.5" data-translate-y="23" data-x="77.69871794871794" data-y="205.33333333333331" dy="-0.35em" fill="#587893" filter="url(#VCL-t-s-f-ffffffscatter-plot-unit-test)" opacity="1" text-anchor="middle" x="77.69871794871794" y="197.83333333333331">
                     1k
                   </text>
-                  <text class="entering scatter-dataLabel" data-id="label-A-3-4004" data-testid="dataLabel" data-translate-x="66.5" data-translate-y="23" data-x="111.48076923076921" data-y="150.04922935357718" dy="-0.35em" fill="#587893" filter="url(#VCL-t-s-f-ffffffscatter-plot-unit-test)" opacity="0" text-anchor="middle" x="111.48076923076921" y="144.04922935357718">
+                  <text class="entering scatter-dataLabel" data-id="label-A-3-4004" data-testid="dataLabel" data-translate-x="66.5" data-translate-y="23" data-x="111.48076923076921" data-y="150.04922935357718" dy="-0.35em" fill="#587893" filter="url(#VCL-t-s-f-ffffffscatter-plot-unit-test)" opacity="1" text-anchor="middle" x="111.48076923076921" y="142.54922935357718">
                     4k
                   </text>
                 </g>
                 <g class="series-dataLabel-group" cursor="default" data-id="label-series-B" data-testid="dataLabel-series-group">
-                  <text class="entering scatter-dataLabel" data-id="label-B-4-2454" data-testid="dataLabel" data-translate-x="66.5" data-translate-y="23" data-x="145.2628205128205" data-y="178.57464918334483" dy="-0.35em" fill="#6b6bbc" filter="url(#VCL-t-s-f-ffffffscatter-plot-unit-test)" opacity="0" text-anchor="middle" x="145.2628205128205" y="172.57464918334483">
+                  <text class="entering scatter-dataLabel" data-id="label-B-4-2454" data-testid="dataLabel" data-translate-x="66.5" data-translate-y="23" data-x="145.2628205128205" data-y="178.57464918334483" dy="-0.35em" fill="#6b6bbc" filter="url(#VCL-t-s-f-ffffffscatter-plot-unit-test)" opacity="1" text-anchor="middle" x="145.2628205128205" y="171.07464918334483">
                     2.5k
                   </text>
-                  <text class="entering scatter-dataLabel" data-id="label-B-5-2135" data-testid="dataLabel" data-translate-x="66.5" data-translate-y="23" data-x="179.04487179487177" data-y="184.44536461927765" dy="-0.35em" fill="#6b6bbc" filter="url(#VCL-t-s-f-ffffffscatter-plot-unit-test)" opacity="0" text-anchor="middle" x="179.04487179487177" y="178.44536461927765">
+                  <text class="entering scatter-dataLabel" data-id="label-B-5-2135" data-testid="dataLabel" data-translate-x="66.5" data-translate-y="23" data-x="179.04487179487177" data-y="184.44536461927765" dy="-0.35em" fill="#6b6bbc" filter="url(#VCL-t-s-f-ffffffscatter-plot-unit-test)" opacity="1" text-anchor="middle" x="179.04487179487177" y="176.94536461927765">
                     2.1k
                   </text>
-                  <text class="entering scatter-dataLabel" data-id="label-B-6-11143" data-testid="dataLabel" data-translate-x="66.5" data-translate-y="23" data-x="212.82692307692307" data-y="18.66666666666665" dy="-0.35em" fill="#6b6bbc" filter="url(#VCL-t-s-f-ffffffscatter-plot-unit-test)" opacity="0" text-anchor="middle" x="212.82692307692307" y="12.66666666666665">
+                  <text class="entering scatter-dataLabel" data-id="label-B-6-11143" data-testid="dataLabel" data-translate-x="66.5" data-translate-y="23" data-x="212.82692307692307" data-y="18.66666666666665" dy="-0.35em" fill="#6b6bbc" filter="url(#VCL-t-s-f-ffffffscatter-plot-unit-test)" opacity="1" text-anchor="middle" x="212.82692307692307" y="11.16666666666665">
                     11.1k
                   </text>
                 </g>
                 <g class="series-dataLabel-group" cursor="default" data-id="label-series-C" data-testid="dataLabel-series-group">
-                  <text class="entering scatter-dataLabel" data-id="label-C-7-3845" data-testid="dataLabel" data-translate-x="66.5" data-translate-y="23" data-x="246.60897435897434" data-y="152.9753853232114" dy="-0.35em" fill="#6c7a55" filter="url(#VCL-t-s-f-ffffffscatter-plot-unit-test)" opacity="0" text-anchor="middle" x="246.60897435897434" y="146.9753853232114">
+                  <text class="entering scatter-dataLabel" data-id="label-C-7-3845" data-testid="dataLabel" data-translate-x="66.5" data-translate-y="23" data-x="246.60897435897434" data-y="152.9753853232114" dy="-0.35em" fill="#6c7a55" filter="url(#VCL-t-s-f-ffffffscatter-plot-unit-test)" opacity="1" text-anchor="middle" x="246.60897435897434" y="145.4753853232114">
                     3.8k
                   </text>
-                  <text class="entering scatter-dataLabel" data-id="label-C-8-2823" data-testid="dataLabel" data-translate-x="66.5" data-translate-y="23" data-x="280.39102564102564" data-y="171.7837589141937" dy="-0.35em" fill="#6c7a55" filter="url(#VCL-t-s-f-ffffffscatter-plot-unit-test)" opacity="0" text-anchor="middle" x="280.39102564102564" y="165.7837589141937">
+                  <text class="entering scatter-dataLabel" data-id="label-C-8-2823" data-testid="dataLabel" data-translate-x="66.5" data-translate-y="23" data-x="280.39102564102564" data-y="171.7837589141937" dy="-0.35em" fill="#6c7a55" filter="url(#VCL-t-s-f-ffffffscatter-plot-unit-test)" opacity="1" text-anchor="middle" x="280.39102564102564" y="164.2837589141937">
                     2.8k
                   </text>
-                  <text class="entering scatter-dataLabel" data-id="label-C-9-1666" data-testid="dataLabel" data-translate-x="66.5" data-translate-y="23" data-x="314.1730769230769" data-y="193.0766045548654" dy="-0.35em" fill="#6c7a55" filter="url(#VCL-t-s-f-ffffffscatter-plot-unit-test)" opacity="0" text-anchor="middle" x="314.1730769230769" y="187.0766045548654">
+                  <text class="entering scatter-dataLabel" data-id="label-C-9-1666" data-testid="dataLabel" data-translate-x="66.5" data-translate-y="23" data-x="314.1730769230769" data-y="193.0766045548654" dy="-0.35em" fill="#6c7a55" filter="url(#VCL-t-s-f-ffffffscatter-plot-unit-test)" opacity="1" text-anchor="middle" x="314.1730769230769" y="185.5766045548654">
                     1.7k
                   </text>
-                  <text class="entering scatter-dataLabel" data-id="label-C-10-1421" data-testid="dataLabel" data-translate-x="66.5" data-translate-y="23" data-x="347.9551282051282" data-y="197.58546123763514" dy="-0.35em" fill="#6c7a55" filter="url(#VCL-t-s-f-ffffffscatter-plot-unit-test)" opacity="0" text-anchor="middle" x="347.9551282051282" y="191.58546123763514">
+                  <text class="entering scatter-dataLabel" data-id="label-C-10-1421" data-testid="dataLabel" data-translate-x="66.5" data-translate-y="23" data-x="347.9551282051282" data-y="197.58546123763514" dy="-0.35em" fill="#6c7a55" filter="url(#VCL-t-s-f-ffffffscatter-plot-unit-test)" opacity="1" text-anchor="middle" x="347.9551282051282" y="190.08546123763514">
                     1.4k
                   </text>
                 </g>
                 <g class="series-dataLabel-group" cursor="default" data-id="label-series-D" data-testid="dataLabel-series-group">
-                  <text class="entering scatter-dataLabel" data-id="label-D-11-8845" data-testid="dataLabel" data-translate-x="66.5" data-translate-y="23" data-x="381.7371794871795" data-y="60.95790200138026" dy="-0.35em" fill="#81726e" filter="url(#VCL-t-s-f-ffffffscatter-plot-unit-test)" opacity="0" text-anchor="middle" x="381.7371794871795" y="54.95790200138026">
+                  <text class="entering scatter-dataLabel" data-id="label-D-11-8845" data-testid="dataLabel" data-translate-x="66.5" data-translate-y="23" data-x="381.7371794871795" data-y="60.95790200138026" dy="-0.35em" fill="#81726e" filter="url(#VCL-t-s-f-ffffffscatter-plot-unit-test)" opacity="1" text-anchor="middle" x="381.7371794871795" y="53.45790200138026">
                     8.8k
                   </text>
-                  <text class="entering scatter-dataLabel" data-id="label-D-12-6865" data-testid="dataLabel" data-translate-x="66.5" data-translate-y="23" data-x="415.5192307692308" data-y="97.39682539682539" dy="-0.35em" fill="#81726e" filter="url(#VCL-t-s-f-ffffffscatter-plot-unit-test)" opacity="0" text-anchor="middle" x="415.5192307692308" y="91.39682539682539">
+                  <text class="entering scatter-dataLabel" data-id="label-D-12-6865" data-testid="dataLabel" data-translate-x="66.5" data-translate-y="23" data-x="415.5192307692308" data-y="97.39682539682539" dy="-0.35em" fill="#81726e" filter="url(#VCL-t-s-f-ffffffscatter-plot-unit-test)" opacity="1" text-anchor="middle" x="415.5192307692308" y="89.89682539682539">
                     6.9k
                   </text>
-                  <text class="entering scatter-dataLabel" data-id="label-D-13-6154" data-testid="dataLabel" data-translate-x="66.5" data-translate-y="23" data-x="449.30128205128204" data-y="110.48171152518977" dy="-0.35em" fill="#81726e" filter="url(#VCL-t-s-f-ffffffscatter-plot-unit-test)" opacity="0" text-anchor="middle" x="449.30128205128204" y="104.48171152518977">
+                  <text class="entering scatter-dataLabel" data-id="label-D-13-6154" data-testid="dataLabel" data-translate-x="66.5" data-translate-y="23" data-x="449.30128205128204" data-y="110.48171152518977" dy="-0.35em" fill="#81726e" filter="url(#VCL-t-s-f-ffffffscatter-plot-unit-test)" opacity="1" text-anchor="middle" x="449.30128205128204" y="102.98171152518977">
                     6.2k
                   </text>
-                  <text class="entering scatter-dataLabel" data-id="label-D-14-4109" data-testid="dataLabel" data-translate-x="66.5" data-translate-y="23" data-x="483.0833333333333" data-y="148.1168622038187" dy="-0.35em" fill="#81726e" filter="url(#VCL-t-s-f-ffffffscatter-plot-unit-test)" opacity="0" text-anchor="middle" x="483.0833333333333" y="142.1168622038187">
+                  <text class="entering scatter-dataLabel" data-id="label-D-14-4109" data-testid="dataLabel" data-translate-x="66.5" data-translate-y="23" data-x="483.0833333333333" data-y="148.1168622038187" dy="-0.35em" fill="#81726e" filter="url(#VCL-t-s-f-ffffffscatter-plot-unit-test)" opacity="1" text-anchor="middle" x="483.0833333333333" y="140.6168622038187">
                     4.1k
                   </text>
                 </g>

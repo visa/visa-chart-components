@@ -60,8 +60,9 @@ export const createUrl = (id?: string) => {
   if (path[path.length - 1] === '/') {
     path = path.substring(0, path.length - 1);
   }
+
   const ending = id ? id + ')' : '';
-  return (!isSafari ? 'url(#' : 'url(' + window.location.protocol + '//' + window.location.host + path + '#') + ending;
+  return 'url(#' + ending;
 };
 
 export const setHighContrastListener = (root: any, id: string) => {

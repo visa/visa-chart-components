@@ -14,12 +14,60 @@ import '@visa/keyboard-instructions';
   styleUrl: 'app-parallel-plot.scss'
 })
 export class AppParallelPlot {
+  @State() ordinalAccessor: any = 'them';
+  @State() valueAccessor: any = 'spend';
+  @State() seriesAccessor: any = 'filter';
+  @State() tooltipLabel: any = {
+    format: '',
+    labelAccessor: [this.valueAccessor],
+    labelTitle: ['value']
+  };
+  @State() height: any = 300;
+  // @State() xFormat: any = '%Y';
+  @State() labelAccessor: any = 'spend';
+  @State() legendLabels: any = null;
+  @State() clickStrokeWidth: any = '3px';
+  @State() hoverStrokeWidth: any = '3px';
+  @State() cursor: any = 'default';
+  @State() dotOpacity: any = true;
   @State() data: any;
   @State() hoverElement: any = '';
-  @State() clickElement: any = [];
-  @State() stateTrigger: any = 0;
+  @State() clickElement: any = [
+    {
+      otherOrd: 'Q1',
+      date: new Date('2012-01-01T00:00:00.000Z'),
+      otherVal: 0.1,
+      otherCat: 'NY',
+      them: 'them',
+      filter: 'group 1',
+      spend: 0.29
+    }
+  ];
+  @State() stateTrigger: any = 2;
   @State() seriesLabel: any = [];
   @State() animations: any = { disabled: false };
+  @State() dataLabel: any = {
+    visible: true,
+    // placement: 'top-right',
+    placement: 'auto',
+    labelAccessor: this.valueAccessor,
+    format: '0.0[a]',
+    collisionHideOnly: true
+  };
+  @State() seriesLabelProp: any = {
+    visible: true,
+    placement: 'auto',
+    label: this.seriesLabel,
+    collisionHideOnly: true
+  };
+  @State() yAxis: any = {
+    visible: true,
+    gridVisible: false,
+    label: 'y axis',
+    tickInterval: 2,
+    format: '%',
+    scales: 'preNormalized'
+  };
   @State() accessibility: any = {
     longDescription: 'This is a chart template that was made to showcase the Visa Chart Components parallel plot',
     contextExplanation: 'This chart exists in a demo app created to let you quickly change props and see results',
@@ -70,7 +118,6 @@ export class AppParallelPlot {
   ];
   clickStyle: any;
   hoverStyle: any;
-  seriesLabelProp: any = { visible: true, placement: 'left', label: this.seriesLabel };
   secondaryLines: any = { keys: [], showDataLabel: true, showSeriesLabel: true, opacity: 0.8 };
   dataStorage: any = [
     [
@@ -603,22 +650,6 @@ export class AppParallelPlot {
       }
     ]
   ];
-  @State() ordinalAccessor: any = 'them';
-  @State() valueAccessor: any = 'spend';
-  @State() seriesAccessor: any = 'filter';
-  @State() tooltipLabel: any = {
-    format: '',
-    labelAccessor: [this.valueAccessor],
-    labelTitle: ['value']
-  };
-  @State() height: any = 300;
-  // @State() xFormat: any = '%Y';
-  @State() labelAccessor: any = 'spend';
-  @State() legendLabels: any = null;
-  @State() clickStrokeWidth: any = '3px';
-  @State() hoverStrokeWidth: any = '3px';
-  @State() cursor: any = 'default';
-  @State() dotOpacity: any = true;
 
   @Element()
   appEl: HTMLElement;
@@ -870,26 +901,13 @@ export class AppParallelPlot {
           valueAccessor={this.valueAccessor}
           seriesAccessor={this.seriesAccessor}
           seriesLabel={this.seriesLabelProp}
-          dataLabel={{
-            visible: true,
-            // placement: 'top-right',
-            placement: 'auto',
-            labelAccessor: this.valueAccessor,
-            format: '0.0[a]'
-          }}
-          yAxis={{
-            visible: true,
-            gridVisible: false,
-            label: 'y axis',
-            tickInterval: 2,
-            format: '%',
-            scales: 'preNormalized'
-          }}
+          dataLabel={this.dataLabel}
+          yAxis={this.yAxis}
           dotRadius={5}
           strokeWidth={2}
           showDots={this.dotOpacity}
           tooltipLabel={this.tooltipLabel}
-          hoverOpacity={1}
+          hoverOpacity={0.5}
           secondaryLines={this.secondaryLines}
           cursor={this.cursor}
           // annotations={this.annotations}

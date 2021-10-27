@@ -20,6 +20,26 @@ export class AppAlluvialDiagram {
   @State() data3: any;
   @State() nodes: any;
   @State() colorsArray: any = ['#E4E4E4', '#E4E4E4', '#E4E4E4', '#78029D', '#E4E4E4'];
+  @State() colors: any = ['#E4E4E4', '#E4E4E4', '#E4E4E4', '#D90000']; //['#2e3047', '#43455c', '#3c3f58']
+  @State() fillNodeConfig: any = false;
+  @State() compareNodeConfig: any = false;
+  @State() visibleLinkConfig: any = true;
+  @State() fillModeLinkConfig: any = 'group';
+  @State() opacityLinkConfig: any = 0.3;
+  @State() linkConfig: any = {
+    visible: this.visibleLinkConfig,
+    // fillMode: 'source',
+    fillMode: 'group',
+    opacity: 0.6
+  };
+  @State() nodeConfig: any = {
+    width: 15,
+    alignment: 'center',
+    padding: 10,
+    compare: this.compareNodeConfig,
+    fill: this.fillNodeConfig
+  };
+  @State() interactionKeys: any = ['group'];
   @State() fillState: any = 'new';
   @State() linkVisibilityState: any = true;
   @State() stateTrigger: any = 0;
@@ -33,14 +53,16 @@ export class AppAlluvialDiagram {
     right: 110,
     bottom: 50
   };
-  @State() fillNodeConfig: any = false;
-  @State() compareNodeConfig: any = false;
-  @State() visibleLinkConfig: any = true;
-  @State() fillModeLinkConfig: any = 'group';
-  @State() opacityLinkConfig: any = 0.3;
 
   @State() uniqueID: string = 'thisIsUnique';
-  @State() dataLabel: any = { visible: true, placement: 'outside', labelAccessor: 'value', format: '0.0[a]' };
+  @State() dataLabel: any = {
+    visible: true,
+    placement: 'auto',
+    labelAccessor: 'value',
+    format: '0.0a',
+    collisionHideOnly: false,
+    collisionPlacement: 'inside'
+  };
   @State() tooltipLabel: any = {
     labelAccessor: ['value'],
     labelTitle: ['value'],
@@ -80,7 +102,7 @@ export class AppAlluvialDiagram {
     strokeWidth: 2
   };
   // colors: any = ['#2e3047', '#43455c', '#3c3f58'];
-  colors: any = ['#EDEEF3', '#A8AABB', '#6C6E86', '#3c3f58'];
+  // colors: any = ['#EDEEF3', '#A8AABB', '#6C6E86', '#3c3f58'];
 
   linkStartData: any = [
     { group: 'Remained', source: 'High 2018', target: 'High 2019', value: 3010 },
@@ -718,34 +740,19 @@ export class AppAlluvialDiagram {
             width={500}
             height={450}
             padding={this.padding}
-            colors={['#E4E4E4', '#E4E4E4', '#E4E4E4', '#D90000']}
+            colors={this.colors}
             sourceAccessor={'source'}
             targetAccessor={'target'}
             valueAccessor={'value'}
             groupAccessor={'group'}
-            linkConfig={{
-              ...{
-                visible: this.visibleLinkConfig,
-                // fillMode: 'source',
-                fillMode: 'group',
-                opacity: 0.6
-              }
-            }}
-            nodeConfig={{
-              ...{
-                width: 15,
-                alignment: 'center',
-                padding: 10,
-                compare: this.compareNodeConfig,
-                fill: this.fillNodeConfig
-              }
-            }}
+            linkConfig={this.linkConfig}
+            nodeConfig={this.nodeConfig}
             nodeIDAccessor={'did'}
             mainTitle={''}
             subTitle={''}
             dataLabel={this.dataLabel}
             // interactionKeys={this.interactionState}
-            interactionKeys={['group']}
+            interactionKeys={this.interactionKeys}
             hoverOpacity={0.2}
             showTooltip={false}
             hoverHighlight={this.hoverElement}
@@ -753,7 +760,7 @@ export class AppAlluvialDiagram {
             onClickFunc={d => this.onClickFunc(d)}
             onHoverFunc={d => this.onHoverFunc(d)}
             onMouseOutFunc={() => this.onMouseOut()}
-            // clickStyle={this.clickStyle}
+            clickStyle={this.clickStyle}
             // animationConfig={this.animations}
           />
         </div>

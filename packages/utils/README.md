@@ -154,7 +154,7 @@
         <li><a href="#calculate-luminance">calculateLuminance()</a></li>
       </ul>
       <ul>
-        <li><a href="#calculate-relative-luminanc">calculateRelativeLuminance()</a></li>
+        <li><a href="#calculate-relative-luminance">calculateRelativeLuminance()</a></li>
       </ul>
       <ul>
         <li><a href="#convert-visa-color">convertVisaColor()</a></li>
@@ -169,7 +169,7 @@
         <li><a href="#get-contrasting-stroke">getContrastingStroke()</a></li>
       </ul>
       <ul>
-        <li><a href="#visa-color-to-he">visaColorToHex()</a></li>
+        <li><a href="#visa-color-to-hex">visaColorToHex()</a></li>
       </ul>
     </li>
     <li>

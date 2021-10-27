@@ -16,9 +16,19 @@ import '@visa/keyboard-instructions';
 export class AppDumbbellPlot {
   @State() data: any = [];
   @State() hoverElement: any = '';
-  @State() clickElement: any = [];
+  @State() clickElement: any = [
+    // {
+    //   altOrdinal: 'B',
+    //   altValue: 2,
+    //   altSeries: 'abc',
+    //   time: new Date('2016-02-01T02:00:00.000Z'),
+    //   date: 'Second',
+    //   category: 'You',
+    //   value: 0.022628909842
+    // }
+  ];
   @Event() updateComponent: EventEmitter;
-  @State() stateTrigger: any = 0;
+  @State() stateTrigger: any = 3;
   @State() barSize: any = 1;
   @State() layout: any = 'vertical';
   // @State() layout: any = 'horizontal';
@@ -51,6 +61,57 @@ export class AppDumbbellPlot {
     hideStrokes: false,
     includeDataKeyNames: true,
     keyboardNavConfig: { disabled: false }
+  };
+  @State() dataLabel: any = {
+    visible: this.dataLabelVisible,
+    placement: this.dataLabelPlacement,
+    labelAccessor: this.dataLabelAccessor,
+    format: '0.0%'
+  };
+  @State() seriesLabel: any = {
+    visible: this.seriesLabelVisible,
+    placement: this.seriesLabelPlacement,
+    label: this.seriesAccessor,
+    format: '0.0%'
+  };
+  @State() differenceLabel: any = {
+    visible: this.diffLabelVis,
+    placement: 'auto',
+    calculation: 'absoluteDiff',
+    format: '0.0%'
+  };
+  @State() xAxis: any = {
+    visible: this.xAxisVis,
+    gridVisible: true,
+    label: 'x-axis',
+    tickInterval: 1,
+    format: this.xFormat,
+    unit: this.timeUnit
+  };
+  @State() yAxis: any = {
+    visible: this.yAxisVis,
+    gridVisible: true,
+    label: '',
+    format: '%',
+    tickInterval: 2
+  };
+  @State() marker: any = {
+    visible: this.markerVisible,
+    type: this.markerType,
+    sizeFromBar: this.markerSize
+  };
+  @State() focusMarker: any = {
+    key: this.focusKey,
+    sizeFromBar: this.focusSize
+  };
+  @State() barStyle: any = {
+    width: this.barSize,
+    opacity: 0.5,
+    colorRule: 'default'
+  };
+  @State() legend: any = {
+    labels: this.legendLabels,
+    visible: true
   };
   @State() suppressEvents: boolean = false;
   @State() animations: any = { disabled: false };
@@ -715,57 +776,14 @@ export class AppDumbbellPlot {
           ordinalAccessor={this.ordinalAccessor}
           valueAccessor={this.valueAccessor}
           seriesAccessor={this.seriesAccessor}
-          dataLabel={{
-            visible: this.dataLabelVisible,
-            placement: this.dataLabelPlacement,
-            labelAccessor: this.dataLabelAccessor,
-            format: '0.0%'
-          }}
-          seriesLabel={{
-            visible: this.seriesLabelVisible,
-            placement: this.seriesLabelPlacement,
-            label: this.seriesAccessor,
-            format: '0.0%'
-          }}
-          differenceLabel={{
-            visible: this.diffLabelVis,
-            placement: 'auto',
-            calculation: 'absoluteDiff',
-            format: '0.0%'
-          }}
-          xAxis={{
-            visible: this.xAxisVis,
-            gridVisible: true,
-            label: 'x-axis',
-            tickInterval: 1,
-            format: this.xFormat,
-            unit: this.timeUnit
-          }}
-          yAxis={{
-            visible: this.yAxisVis,
-            gridVisible: true,
-            label: '',
-            format: '%',
-            tickInterval: 2
-          }}
-          marker={{
-            ...{
-              visible: this.markerVisible,
-              type: this.markerType,
-              sizeFromBar: this.markerSize
-            }
-          }}
-          focusMarker={{
-            ...{
-              key: this.focusKey,
-              sizeFromBar: this.focusSize
-            }
-          }}
-          barStyle={{
-            width: this.barSize,
-            opacity: 0.5,
-            colorRule: 'default'
-          }}
+          dataLabel={this.dataLabel}
+          seriesLabel={this.seriesLabel}
+          differenceLabel={this.differenceLabel}
+          xAxis={this.xAxis}
+          yAxis={this.yAxis}
+          marker={this.marker}
+          focusMarker={this.focusMarker}
+          barStyle={this.barStyle}
           accessibility={this.accessibility}
           suppressEvents={this.suppressEvents}
           colorPalette={this.colorPalette}
@@ -773,16 +791,13 @@ export class AppDumbbellPlot {
           // hoverStyle={{ color: 'red', strokeWidth: 17 }}
           interactionKeys={this.interactionKeys}
           sortOrder={this.sortOrder}
-          legend={{
-            labels: this.legendLabels,
-            visible: true
-          }}
+          legend={this.legend}
           // tooltipLabel={{
           //   format: '',
           //   labelAccessor: [this.tooltipAccessor],
           //   labelTitle: 'asdasdffas'
           // }}
-          hoverOpacity={0.99999}
+          hoverOpacity={0.5}
           showTooltip={true}
           // annotations={this.annotations}
           hoverHighlight={this.hoverElement}

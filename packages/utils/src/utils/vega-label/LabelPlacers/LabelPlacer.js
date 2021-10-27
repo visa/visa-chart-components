@@ -118,14 +118,16 @@ export default class LabelPlacer {
       _x1 = this.bm0.scalePixel(x1);
       _x2 = this.bm0.scalePixel(x2);
 
+      // place label if the position is placable
+      // VCC moves this outside of the below if statement as we need write placement
+      // even if we hide label for better interactivity and transition/lifecycle experience
+      d.x = !dx ? xc : dx * insideFactor < 0 ? x2 : x1;
+      d.y = !dy ? yc : dy * insideFactor < 0 ? y2 : y1;
+
+      d.align = ALIGN[dx * insideFactor + 1];
+      d.baseline = BASELINE[dy * insideFactor + 1];
+
       if (isLabelPlacable(_x1, _x2, _y1, _y2, this.bm0, this.bm1, x1, x2, y1, y2, markBound, isInside)) {
-        // place label if the position is placable
-        d.x = !dx ? xc : dx * insideFactor < 0 ? x2 : x1;
-        d.y = !dy ? yc : dy * insideFactor < 0 ? y2 : y1;
-
-        d.align = ALIGN[dx * insideFactor + 1];
-        d.baseline = BASELINE[dy * insideFactor + 1];
-
         this.bm0.markInRangeScaled(_x1, _y1, _x2, _y2);
         return true;
       }
@@ -134,6 +136,45 @@ export default class LabelPlacer {
       // }
     }
     return false;
+  }
+
+  unplace(d) {
+    const n = this.offsets.length;
+    const textHeight = d.textHeight;
+    const markBound = d.markBound;
+    let textWidth = d.textWidth;
+    let dx, dy, sizeFactor, insideFactor;
+    let x, x1, xc, x2, y1, yc, y2;
+    let _x1, _x2, _y1, _y2;
+
+    // for each anchor and offset
+    for (let i = 0; i < n; i++) {
+      dx = (this.anchors[i] & 0x3) - 1; // this is used to pick anchor position x
+      dy = ((this.anchors[i] >>> 0x2) & 0x3) - 1; // this is used to pick anchor position y
+
+      sizeFactor = dx && dy ? SIZE_FACTOR : 1;
+      insideFactor = this.offsets[i] < 0 ? -1 : 1;
+
+      yc = markBound[4 + dy] + (insideFactor * textHeight * dy) / 2.0 + this.offsets[i] * dy * sizeFactor;
+      x = markBound[1 + dx] + this.offsets[i] * dx * sizeFactor;
+
+      y1 = yc - textHeight / 2.0;
+      y2 = yc + textHeight / 2.0;
+
+      _y1 = this.bm0.scalePixel(y1);
+      _y2 = this.bm0.scalePixel(y2);
+      _x1 = this.bm0.scalePixel(x);
+
+      xc = x + (insideFactor * textWidth * dx) / 2.0;
+      x1 = xc - textWidth / 2.0;
+      x2 = xc + textWidth / 2.0;
+
+      _x1 = this.bm0.scalePixel(x1);
+      _x2 = this.bm0.scalePixel(x2);
+
+      this.bm0.unmarkInRangeScaled(_x1, _y1, _x2, _y2 + 3);
+    }
+    return true;
   }
 }
 

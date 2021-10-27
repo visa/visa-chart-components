@@ -6,7 +6,7 @@
  *
  **/
 import { SpecPage } from '@stencil/core/testing';
-import { flushTransitions } from './unit-test-utils';
+import { flushTransitions, asyncForEach } from './unit-test-utils';
 import { rgb } from 'd3-color';
 
 import Utils from '@visa/visa-charts-utils';
@@ -168,7 +168,9 @@ export const interaction_clickStyle_default_load = {
     let useFilter = true;
     let fillStrokeOpacity = false;
     let applyFlushTransitions = true;
+    let runJestTimers = false;
     let customRadiusModifier = [0, 0, 0, 0, 0];
+    let transitionEndAllSelector;
     if (Object.keys(testProps).length) {
       Object.keys(testProps).forEach(testProp => {
         if (testProp === 'useFilter') {
@@ -179,6 +181,10 @@ export const interaction_clickStyle_default_load = {
           applyFlushTransitions = testProps[testProp];
         } else if (testProp === 'customRadiusModifier') {
           customRadiusModifier = testProps[testProp];
+        } else if (testProp === 'transitionEndAllSelector') {
+          transitionEndAllSelector = testProps[testProp];
+        } else if (testProp === 'runJestTimers') {
+          runJestTimers = testProps[testProp];
         } else if (testProp !== 'clickHighlight') {
           component[testProp] = testProps[testProp];
         }
@@ -201,10 +207,29 @@ export const interaction_clickStyle_default_load = {
     // GET MARKS SELECTED AND NOT
     const selectedMark = page.doc.querySelector(testSelector);
     const notSelectedMark = page.doc.querySelector(negTestSelector);
-    if (applyFlushTransitions) {
-      flushTransitions(selectedMark);
-      flushTransitions(notSelectedMark);
-      await page.waitForChanges();
+    if (!transitionEndAllSelector) {
+      if (applyFlushTransitions) {
+        flushTransitions(selectedMark);
+        flushTransitions(notSelectedMark);
+        await page.waitForChanges();
+      }
+    } else {
+      if (applyFlushTransitions) {
+        const elements = page.doc.querySelectorAll(transitionEndAllSelector);
+        await asyncForEach(elements, async (element, i) => {
+          // since we have a timeout in the transitionEndAll we need to advance timers
+          // if (i === elements.length - 1 && runJestTimers) jest.runOnlyPendingTimers();
+
+          flushTransitions(element);
+          await page.waitForChanges();
+        });
+
+        if (runJestTimers) {
+          // since we have a timeout in the transitionEndAll we need to advance timers
+          jest.runOnlyPendingTimers();
+          await page.waitForChanges();
+        }
+      }
     }
 
     // FIGURE OUT WHAT COLOR THEY ARE AND DETERMINE EXPECTED STROKE USING OUR UTIL
@@ -292,6 +317,8 @@ export const interaction_clickStyle_custom_load = {
     let fillStrokeOpacity = false;
     let applyFlushTransitions = true;
     let customRadiusModifier = [0, 0, 0, 0, 0];
+    let transitionEndAllSelector;
+    let runJestTimers = false;
     if (Object.keys(testProps).length) {
       Object.keys(testProps).forEach(testProp => {
         if (testProp === 'useFilter') {
@@ -302,6 +329,10 @@ export const interaction_clickStyle_custom_load = {
           applyFlushTransitions = testProps[testProp];
         } else if (testProp === 'customRadiusModifier') {
           customRadiusModifier = testProps[testProp];
+        } else if (testProp === 'transitionEndAllSelector') {
+          transitionEndAllSelector = testProps[testProp];
+        } else if (testProp === 'runJestTimers') {
+          runJestTimers = testProps[testProp];
         } else if (testProp !== 'clickStyle' && testProp !== 'hoverOpacity') {
           component[testProp] = testProps[testProp];
         }
@@ -325,10 +356,26 @@ export const interaction_clickStyle_custom_load = {
     // GET MARKS SELECTED AND NOT
     const selectedMark = page.doc.querySelector(testSelector);
     const notSelectedMark = page.doc.querySelector(negTestSelector);
-    if (applyFlushTransitions) {
-      flushTransitions(selectedMark);
-      flushTransitions(notSelectedMark);
-      await page.waitForChanges();
+    if (!transitionEndAllSelector) {
+      if (applyFlushTransitions) {
+        flushTransitions(selectedMark);
+        flushTransitions(notSelectedMark);
+        await page.waitForChanges();
+      }
+    } else {
+      if (applyFlushTransitions) {
+        const elements = page.doc.querySelectorAll(transitionEndAllSelector);
+        await asyncForEach(elements, async element => {
+          flushTransitions(element);
+          await page.waitForChanges();
+        });
+
+        if (runJestTimers) {
+          // since we have a timeout in the transitionEndAll we need to advance timers
+          jest.runOnlyPendingTimers();
+          await page.waitForChanges();
+        }
+      }
     }
 
     // FIGURE OUT WHAT COLOR THEY ARE AND DETERMINE EXPECTED STROKE USING OUR UTIL
@@ -407,7 +454,9 @@ export const interaction_clickStyle_custom_update = {
     let useFilter = true;
     let fillStrokeOpacity = false;
     let applyFlushTransitions = true;
+    let runJestTimers = false;
     let customRadiusModifier = [0, 0, 0, 0, 0];
+    let transitionEndAllSelector;
     if (Object.keys(testProps).length) {
       Object.keys(testProps).forEach(testProp => {
         if (testProp === 'useFilter') {
@@ -416,6 +465,10 @@ export const interaction_clickStyle_custom_update = {
           fillStrokeOpacity = testProps[testProp];
         } else if (testProp === 'applyFlushTransitions') {
           applyFlushTransitions = testProps[testProp];
+        } else if (testProp === 'runJestTimers') {
+          runJestTimers = testProps[testProp];
+        } else if (testProp === 'transitionEndAllSelector') {
+          transitionEndAllSelector = testProps[testProp];
         } else if (testProp === 'customRadiusModifier') {
           customRadiusModifier = testProps[testProp];
         } else if (testProp !== 'clickStyle' && testProp !== 'hoverOpacity') {
@@ -439,9 +492,23 @@ export const interaction_clickStyle_custom_update = {
     const selectedMark = page.doc.querySelector(testSelector);
     const notSelectedMark = page.doc.querySelector(negTestSelector);
     if (applyFlushTransitions) {
-      flushTransitions(selectedMark);
-      flushTransitions(notSelectedMark);
-      await page.waitForChanges();
+      if (!transitionEndAllSelector) {
+        flushTransitions(selectedMark);
+        flushTransitions(notSelectedMark);
+        await page.waitForChanges();
+      } else {
+        const elements = page.doc.querySelectorAll(transitionEndAllSelector);
+        await asyncForEach(elements, async element => {
+          flushTransitions(element);
+          await page.waitForChanges();
+        });
+
+        if (runJestTimers) {
+          // since we have a timeout in the transitionEndAll we need to advance timers
+          jest.runOnlyPendingTimers();
+          await page.waitForChanges();
+        }
+      }
     }
 
     // ACT UPDATE
@@ -495,7 +562,11 @@ export const interaction_clickStyle_custom_update = {
 
       // FILL COLOR TEST
       if (!(selectedMark.getAttribute('fill') === 'none')) {
-        expect(selectedMark).toEqualAttribute('fill', EXPECTEDCLICKSTYLE.color);
+        if (checkRGB(selectedMark)) {
+          expect(selectedMark).toEqualAttribute('fill', rgb(EXPECTEDCLICKSTYLE.color));
+        } else {
+          expect(selectedMark).toEqualAttribute('fill', EXPECTEDCLICKSTYLE.color);
+        }
       }
     }
 
@@ -530,6 +601,8 @@ export const interaction_hoverStyle_default_load = {
     let fillStrokeOpacity = false;
     let applyFlushTransitions = true;
     let customRadiusModifier = [0, 0, 0, 0, 0];
+    let transitionEndAllSelector;
+    let runJestTimers = false;
     if (Object.keys(testProps).length) {
       Object.keys(testProps).forEach(testProp => {
         if (testProp === 'useFilter') {
@@ -540,6 +613,10 @@ export const interaction_hoverStyle_default_load = {
           applyFlushTransitions = testProps[testProp];
         } else if (testProp === 'customRadiusModifier') {
           customRadiusModifier = testProps[testProp];
+        } else if (testProp === 'runJestTimers') {
+          runJestTimers = testProps[testProp];
+        } else if (testProp === 'transitionEndAllSelector') {
+          transitionEndAllSelector = testProps[testProp];
         } else if (testProp !== 'hoverHighlight') {
           component[testProp] = testProps[testProp];
         }
@@ -562,10 +639,26 @@ export const interaction_hoverStyle_default_load = {
     // GET MARKS SELECTED AND NOT
     const selectedMark = page.doc.querySelector(testSelector);
     const notSelectedMark = page.doc.querySelector(negTestSelector);
-    if (applyFlushTransitions) {
-      flushTransitions(selectedMark);
-      flushTransitions(notSelectedMark);
-      await page.waitForChanges();
+    if (!transitionEndAllSelector) {
+      if (applyFlushTransitions) {
+        flushTransitions(selectedMark);
+        flushTransitions(notSelectedMark);
+        await page.waitForChanges();
+      }
+    } else {
+      if (applyFlushTransitions) {
+        const elements = page.doc.querySelectorAll(transitionEndAllSelector);
+        await asyncForEach(elements, async element => {
+          flushTransitions(element);
+          await page.waitForChanges();
+        });
+
+        if (runJestTimers) {
+          // since we have a timeout in the transitionEndAll we need to advance timers
+          jest.runOnlyPendingTimers();
+          await page.waitForChanges();
+        }
+      }
     }
 
     // FIGURE OUT WHAT COLOR THEY ARE AND DETERMINE EXPECTED STROKE USING OUR UTIL
@@ -677,6 +770,8 @@ export const interaction_hoverStyle_custom_load = {
     let fillStrokeOpacity = false;
     let applyFlushTransitions = true;
     let customRadiusModifier = [0, 0, 0, 0, 0];
+    let transitionEndAllSelector;
+    let runJestTimers = false;
     if (Object.keys(testProps).length) {
       Object.keys(testProps).forEach(testProp => {
         if (testProp === 'useFilter') {
@@ -687,6 +782,10 @@ export const interaction_hoverStyle_custom_load = {
           applyFlushTransitions = testProps[testProp];
         } else if (testProp === 'customRadiusModifier') {
           customRadiusModifier = testProps[testProp];
+        } else if (testProp === 'runJestTimers') {
+          runJestTimers = testProps[testProp];
+        } else if (testProp === 'transitionEndAllSelector') {
+          transitionEndAllSelector = testProps[testProp];
         } else if (testProp !== 'hoverStyle' && testProp !== 'hoverOpacity') {
           component[testProp] = testProps[testProp];
         }
@@ -710,10 +809,26 @@ export const interaction_hoverStyle_custom_load = {
     // GET MARKS SELECTED AND NOT
     const selectedMark = page.doc.querySelector(testSelector);
     const notSelectedMark = page.doc.querySelector(negTestSelector);
-    if (applyFlushTransitions) {
-      flushTransitions(selectedMark);
-      flushTransitions(notSelectedMark);
-      await page.waitForChanges();
+    if (!transitionEndAllSelector) {
+      if (applyFlushTransitions) {
+        flushTransitions(selectedMark);
+        flushTransitions(notSelectedMark);
+        await page.waitForChanges();
+      }
+    } else {
+      if (applyFlushTransitions) {
+        const elements = page.doc.querySelectorAll(transitionEndAllSelector);
+        await asyncForEach(elements, async element => {
+          flushTransitions(element);
+          await page.waitForChanges();
+        });
+
+        if (runJestTimers) {
+          // since we have a timeout in the transitionEndAll we need to advance timers
+          jest.runOnlyPendingTimers();
+          await page.waitForChanges();
+        }
+      }
     }
 
     // FIGURE OUT WHAT COLOR THEY ARE AND DETERMINE EXPECTED STROKE USING OUR UTIL
@@ -810,6 +925,8 @@ export const interaction_hoverStyle_custom_update = {
     let fillStrokeOpacity = false;
     let applyFlushTransitions = true;
     let customRadiusModifier = [0, 0, 0, 0, 0];
+    let transitionEndAllSelector;
+    let runJestTimers = false;
     if (Object.keys(testProps).length) {
       Object.keys(testProps).forEach(testProp => {
         if (testProp === 'useFilter') {
@@ -820,6 +937,10 @@ export const interaction_hoverStyle_custom_update = {
           applyFlushTransitions = testProps[testProp];
         } else if (testProp === 'customRadiusModifier') {
           customRadiusModifier = testProps[testProp];
+        } else if (testProp === 'runJestTimers') {
+          runJestTimers = testProps[testProp];
+        } else if (testProp === 'transitionEndAllSelector') {
+          transitionEndAllSelector = testProps[testProp];
         } else if (testProp !== 'hoverStyle' && testProp !== 'hoverOpacity') {
           component[testProp] = testProps[testProp];
         }
@@ -853,9 +974,23 @@ export const interaction_hoverStyle_custom_update = {
     // ASSERT
     // GET MARKS SELECTED AND NOT
     if (applyFlushTransitions) {
-      flushTransitions(selectedMark);
-      flushTransitions(notSelectedMark);
-      await page.waitForChanges();
+      if (!transitionEndAllSelector) {
+        flushTransitions(selectedMark);
+        flushTransitions(notSelectedMark);
+        await page.waitForChanges();
+      } else {
+        const elements = page.doc.querySelectorAll(transitionEndAllSelector);
+        await asyncForEach(elements, async element => {
+          flushTransitions(element);
+          await page.waitForChanges();
+        });
+
+        if (runJestTimers) {
+          // since we have a timeout in the transitionEndAll we need to advance timers
+          jest.runOnlyPendingTimers();
+          await page.waitForChanges();
+        }
+      }
     }
 
     // FIGURE OUT WHAT COLOR THEY ARE AND DETERMINE EXPECTED STROKE USING OUR UTIL
@@ -915,7 +1050,11 @@ export const interaction_hoverStyle_custom_update = {
 
       // FILL COLOR TEST
       if (!(selectedMark.getAttribute('fill') === 'none')) {
-        expect(selectedMark).toEqualAttribute('fill', EXPECTEDHOVERSTYLE.color);
+        if (checkRGB(selectedMark)) {
+          expect(selectedMark).toEqualAttribute('fill', rgb(EXPECTEDHOVERSTYLE.color));
+        } else {
+          expect(selectedMark).toEqualAttribute('fill', EXPECTEDHOVERSTYLE.color);
+        }
       }
     }
     // HOVER OPACITY TEST
