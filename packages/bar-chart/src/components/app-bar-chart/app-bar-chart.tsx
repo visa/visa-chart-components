@@ -47,7 +47,7 @@ export class AppBarChart {
   @State() clickElement: any = [
     // { country: 'Japan', otherValue: '24', value: '3', region: 'Asia', test: 'Group A', nonSense: 'test' }
   ];
-  @State() interactionState: any = ['region'];
+  @State() interactionKeys: any = ['region'];
   @State() valueAccessor: any = 'value';
   @State() groupAccessor: any = 'region';
   @State() ordinalAccessor: any = 'country';
@@ -408,17 +408,25 @@ export class AppBarChart {
     this.data = this.dataStorage[this.stateTrigger];
   }
   onClickFunc(d) {
-    const index = this.clickElement.indexOf(d.detail);
+    let index = -1;
+    this.clickElement.forEach((el, i) => {
+      let keyMatch = [];
+      this.interactionKeys.forEach(k => {
+        el[k] == d.detail.data[k] ? keyMatch.push(true) : keyMatch.push(false);
+      });
+      keyMatch.every(v => v === true) ? (index = i) : null;
+    });
+
     const newClicks = [...this.clickElement];
     if (index > -1) {
       newClicks.splice(index, 1);
     } else {
-      newClicks.push(d.detail);
+      newClicks.push(d.detail.data);
     }
     this.clickElement = newClicks;
   }
   onHoverFunc(d) {
-    this.hoverElement = d.detail;
+    this.hoverElement = d.detail.data;
   }
   onMouseOut() {
     this.hoverElement = '';
@@ -531,8 +539,8 @@ export class AppBarChart {
 
   changeInteraction() {
     // this.valueAccessor !== 'value' ? (this.valueAccessor = 'value') : (this.valueAccessor = 'otherValue');
-    this.interactionState = this.interactionState[0] !== 'region' ? ['region'] : ['country'];
-    const shouldBeInteractive = this.interactionState[0] === 'region';
+    this.interactionKeys = this.interactionKeys[0] !== 'region' ? ['region'] : ['country'];
+    const shouldBeInteractive = this.interactionKeys[0] === 'region';
     this.legend = { ...this.legend, interactive: shouldBeInteractive };
   }
 
@@ -642,13 +650,17 @@ export class AppBarChart {
           cursor={'pointer'}
           barIntervalRatio={this.barIntervalRatio}
           hoverOpacity={0.99999}
-          interactionKeys={this.interactionState}
+          interactionKeys={this.interactionKeys}
           // interactionKeys={['region']}
           hoverHighlight={this.hoverElement}
           clickHighlight={this.clickElement}
-          onClickFunc={d => this.onClickFunc(d)}
-          onHoverFunc={d => this.onHoverFunc(d)}
-          onMouseOutFunc={() => this.onMouseOut()}
+          onClickEvent={d => this.onClickFunc(d)}
+          onHoverEvent={d => this.onHoverFunc(d)}
+          onMouseOutEvent={() => this.onMouseOut()}
+          onInitialLoadEvent={e => e} // console.log('load event', e.detail, e)}
+          onDrawStartEvent={e => e} // console.log('draw start event', e.detail, e)}
+          onDrawEndEvent={e => e} // console.log('draw end event', e.detail, e)}
+          onTransitionEndEvent={e => e} // console.log('transition event', e.detail, e)}
           hoverStyle={this.hoverStyle}
           clickStyle={this.clickStyle}
           accessibility={this.accessibility}
@@ -830,9 +842,9 @@ export class AppBarChart {
           interactionKeys={['power', 'role']}
           hoverHighlight={this.hoverElementTest}
           clickHighlight={this.clickElementTest}
-          onClickFunc={d => this.onTestClickFunc(d)}
-          onHoverFunc={d => this.onTestHoverFunc(d)}
-          onMouseOutFunc={() => this.onTestMouseOut()}
+          onClickEvent={d => this.onTestClickFunc(d)}
+          onHoverEvent={d => this.onTestHoverFunc(d)}
+          onMouseOutEvent={() => this.onTestMouseOut()}
           accessibility={{
             elementDescriptionAccessor: 'note', // see Indonesia above
             longDescription:
