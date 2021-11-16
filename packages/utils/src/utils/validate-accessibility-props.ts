@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2021 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -76,7 +76,7 @@ const VALIDATIONMESSAGES = {
     TITLE: 'Either mainTitle or accessibility.title is required',
     LONGDESCRIPTION: 'Either accessibility.longDescription or accessibility.contextExplanation is required',
     EXECUTIVESUMMARY: 'Either accessibility.purpose or accessibility.executiveSummary is required',
-    ONCLICKFUNC: 'accessibility.elementsAreInterface needs a boolean value either true or false',
+    ONCLICKEVENT: 'accessibility.elementsAreInterface needs a boolean value either true or false',
     ANNOTATIONDESCRIPTION: 'Either annotation.accessibilityDescription or annotation.note.label is required',
     WARNINGLOGGROUP: 'CHARTNAME has accessibility warnings and other messages',
     NORMALIZED: 'Either tooltipLabel or dataLabel should have normalized format'
@@ -110,7 +110,7 @@ const ACCESSIBILITYPROPS = {
   LONGDESCRIPTION: 'longDescription',
   CONTEXTEXPLANATION: 'contextExplanation',
   PURPOSE: 'purpose',
-  ONCLICKFUNC: 'onClickFunc',
+  ONCLICKEVENT: 'onClickEvent',
   NOTE: 'note',
   DISABLEVALIDATION: 'disableValidation',
   INCLUDEDATAKEYNAMES: 'includeDataKeyNames',
@@ -258,8 +258,8 @@ const getAccessibilityWarningsSchema = function() {
     elementsAreInterface: (yupBool() as any).validateBySchemaRefBoolean(
       accessibilityWarningsSubSchema.requiredSchema,
       accessibilityWarningsSubSchema.requiredBooleanSchema,
-      ref(`\$${ACCESSIBILITYPROPS.ONCLICKFUNC}`),
-      VALIDATIONMESSAGES.WARNINGS.ONCLICKFUNC
+      ref(`\$${ACCESSIBILITYPROPS.ONCLICKEVENT}`),
+      VALIDATIONMESSAGES.WARNINGS.ONCLICKEVENT
     ),
 
     normalized: (yupBool() as any).validateBySchemaRefs(
