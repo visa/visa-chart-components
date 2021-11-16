@@ -28,7 +28,7 @@ export const config: Config | any = {
     }),
     angularOutputTarget({
       componentCorePackage: '@visa/stacked-bar-chart',
-      directivesProxyFile: '../charts-angular/src/directives/stacked-bar-chart.ts'
+      directivesProxyFile: '../charts-angular/src/lib/directives/stacked-bar-chart.ts'
     }),
     { type: 'dist' },
     { type: 'www' }

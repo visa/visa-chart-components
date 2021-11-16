@@ -28,7 +28,7 @@ export const config: Config | any = {
     }),
     angularOutputTarget({
       componentCorePackage: '@visa/scatter-plot',
-      directivesProxyFile: '../charts-angular/src/directives/scatter-plot.ts'
+      directivesProxyFile: '../charts-angular/src/lib/directives/scatter-plot.ts'
     }),
     { type: 'dist' },
     { type: 'www' }

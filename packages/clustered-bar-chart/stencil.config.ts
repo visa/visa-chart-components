@@ -28,7 +28,7 @@ export const config: Config | any = {
     }),
     angularOutputTarget({
       componentCorePackage: '@visa/clustered-bar-chart',
-      directivesProxyFile: '../charts-angular/src/directives/clustered-bar-chart.ts'
+      directivesProxyFile: '../charts-angular/src/lib/directives/clustered-bar-chart.ts'
     }),
     { type: 'dist' },
     { type: 'www' }
