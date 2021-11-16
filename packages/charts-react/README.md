@@ -26,12 +26,11 @@ This package bundles [visa chart components](../../) web components and exports 
 - [@visa/parallel-plot](../parallel-plot)
 - [@visa/dumbbell-plot](../dumbbell-plot)
 - [@visa/world-map](../world-map)
-- [@visa/visa-charts-data-table](../data-table)
-
-#### Components with `Development` status
-
 - [@visa/alluvial-diagram](../alluvial-diagram)
+- [@visa/visa-charts-data-table](../data-table)
+- [@visa/keyboard-instructions](packages/keyboard-instructions)
 
+<!-- #### Components with `Development` status -->
 <hr>
 
 #### <a name="react_components" href="#react_components">#</a> Use VCC as react components
