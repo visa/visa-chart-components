@@ -89,9 +89,13 @@ const {
   styleUrl: 'world-map.scss'
 })
 export class WorldMap {
-  @Event() clickFunc: EventEmitter;
-  @Event() hoverFunc: EventEmitter;
-  @Event() mouseOutFunc: EventEmitter;
+  @Event() clickEvent: EventEmitter;
+  @Event() hoverEvent: EventEmitter;
+  @Event() mouseOutEvent: EventEmitter;
+  @Event() initialLoadEvent: EventEmitter;
+  @Event() drawStartEvent: EventEmitter;
+  @Event() drawEndEvent: EventEmitter;
+  @Event() transitionEndEvent: EventEmitter;
   @Prop({ mutable: true }) highestHeadingLevel: string | number = WorldMapDefaultValues.highestHeadingLevel;
   @Prop({ mutable: true }) height: number = WorldMapDefaultValues.height;
   @Prop({ mutable: true }) width: number = WorldMapDefaultValues.width;
@@ -732,13 +736,15 @@ export class WorldMap {
   }
 
   componentWillLoad() {
+    const chartID = this.uniqueID || 'world-map-' + uuid();
+    this.initialLoadEvent.emit({ chartID: chartID });
     // contrary to componentWillUpdate, this method appears safe to use for
     // any calculations we need. Keeping them here reduces future refactor,
     // since componentWillUpdate should eventually mirror this method
     return new Promise(resolve => {
       this.duration = 0;
       this.defaults = true;
-      this.chartID = this.uniqueID || 'world-map-' + uuid();
+      this.chartID = chartID;
       this.worldMapEl.id = this.chartID;
       this.setTagLevels();
       this.updateChartVariable(); // this sets innerPaddedWidth/Height needed by Projection
@@ -988,7 +994,7 @@ export class WorldMap {
       }
       this.onChangeHandler();
       resolve('component did update');
-    });
+    }).then(() => this.drawEndEvent.emit({ chartID: this.chartID }));
   }
 
   shouldValidateAccessibilityProps() {
@@ -1003,7 +1009,7 @@ export class WorldMap {
           uniqueID: this.uniqueID,
           context: {
             mainTitle: this.mainTitle,
-            onClickFunc: !this.suppressEvents ? this.clickFunc.emit : undefined
+            onClickEvent: this.suppressEvents ? undefined : this.clickEvent.emit
           }
         }
       );
@@ -1729,8 +1735,15 @@ export class WorldMap {
 
   bindLegendInteractivity() {
     this.innerLegend
-      .on('click', this.legend.interactive && !this.suppressEvents ? d => this.onClickHandler(d) : null)
-      .on('mouseover', this.legend.interactive && !this.suppressEvents ? d => this.hoverFunc.emit(d) : null)
+      .on('click', this.legend.interactive && !this.suppressEvents ? (d, i, n) => this.onClickHandler(d, n[i]) : null)
+      .on(
+        'mouseover',
+        this.legend.interactive && !this.suppressEvents
+          ? (d, i, n) => {
+              this.hoverEvent.emit({ data: d, target: n[i] });
+            }
+          : null
+      )
       .on('mouseout', this.legend.interactive && !this.suppressEvents ? d => this.onMouseOutHandler(d) : null);
   }
 
@@ -1740,18 +1753,18 @@ export class WorldMap {
       .on(
         'click',
         interactiveToggle
-          ? d => {
+          ? (d, i, n) => {
               const joinedDataRecord = this.preppedData.find(obj => obj[this.joinAccessor] === d.id);
-              return this.onClickHandler(joinedDataRecord);
+              return this.onClickHandler(joinedDataRecord, n[i]);
             }
           : null
       )
       .on(
         'mouseover',
         interactiveToggle
-          ? d => {
+          ? (d, i, n) => {
               const joinedDataRecord = this.preppedData.find(obj => obj[this.joinAccessor] === d.id);
-              return this.onHoverHandler(joinedDataRecord);
+              return this.onHoverHandler(joinedDataRecord, n[i]);
             }
           : null
       )
@@ -1766,8 +1779,11 @@ export class WorldMap {
       );
 
     this.updateMarker
-      .on('click', !this.suppressEvents && this.markerStyle.visible ? d => this.onClickHandler(d) : null)
-      .on('mouseover', !this.suppressEvents && this.markerStyle.visible ? d => this.onHoverHandler(d) : null)
+      .on('click', !this.suppressEvents && this.markerStyle.visible ? (d, i, n) => this.onClickHandler(d, n[i]) : null)
+      .on(
+        'mouseover',
+        !this.suppressEvents && this.markerStyle.visible ? (d, i, n) => this.onHoverHandler(d, n[i]) : null
+      )
       .on('mouseout', !this.suppressEvents && this.markerStyle.visible ? d => this.onMouseOutHandler(d) : null);
 
     this.updatingLabels
@@ -1776,7 +1792,7 @@ export class WorldMap {
         !this.suppressEvents && this.dataLabel.visible
           ? (d, i, n) => {
               moveToFront(select(n[i]));
-              this.onClickHandler(d);
+              this.onClickHandler(d, n[i]);
             }
           : null
       )
@@ -1785,7 +1801,7 @@ export class WorldMap {
         !this.suppressEvents
           ? (d, i, n) => {
               moveToFront(select(n[i]));
-              this.onHoverHandler(d);
+              this.onHoverHandler(d, n[i]);
             }
           : null
       )
@@ -1802,18 +1818,18 @@ export class WorldMap {
       .on(
         'click',
         interactiveToggle
-          ? d => {
+          ? (d, i, n) => {
               const joinedDataRecord = this.preppedData.find(obj => obj[this.joinAccessor] === d.id);
-              return this.onClickHandler(joinedDataRecord);
+              return this.onClickHandler(joinedDataRecord, n[i]);
             }
           : null
       )
       .on(
         'mouseover',
         interactiveToggle
-          ? d => {
+          ? (d, i, n) => {
               const joinedDataRecord = this.preppedData.find(obj => obj[this.joinAccessor] === d.id);
-              return this.onHoverHandler(joinedDataRecord);
+              return this.onHoverHandler(joinedDataRecord, n[i]);
             }
           : null
       )
@@ -2042,7 +2058,7 @@ export class WorldMap {
         !this.suppressEvents && this.dataLabel.visible
           ? (d, i, n) => {
               moveToFront(select(n[i]));
-              this.onClickHandler(d);
+              this.onClickHandler(d, n[i]);
             }
           : null
       )
@@ -2051,7 +2067,7 @@ export class WorldMap {
         !this.suppressEvents
           ? (d, i, n) => {
               moveToFront(select(n[i]));
-              this.onHoverHandler(d);
+              this.onHoverHandler(d, n[i]);
             }
           : null
       )
@@ -2304,8 +2320,11 @@ export class WorldMap {
       .each((_d, i, n) => {
         initializeElementAccess(n[i]);
       })
-      .on('click', !this.suppressEvents && this.markerStyle.visible ? d => this.onClickHandler(d) : null)
-      .on('mouseover', !this.suppressEvents && this.markerStyle.visible ? d => this.onHoverHandler(d) : null)
+      .on('click', !this.suppressEvents && this.markerStyle.visible ? (d, i, n) => this.onClickHandler(d, n[i]) : null)
+      .on(
+        'mouseover',
+        !this.suppressEvents && this.markerStyle.visible ? (d, i, n) => this.onHoverHandler(d, n[i]) : null
+      )
       .on('mouseout', !this.suppressEvents && this.markerStyle.visible ? d => this.onMouseOutHandler(d) : null);
   }
 
@@ -2404,6 +2423,9 @@ export class WorldMap {
         retainAccessFocus({
           parentGNode: this.rootG.node()
         });
+
+        // now we can emit the event that transitions are complete
+        this.transitionEndEvent.emit({ chartID: this.chartID });
       });
   }
 
@@ -2627,17 +2649,17 @@ export class WorldMap {
     this.exitSize = 0;
   }
 
-  onClickHandler(d) {
+  onClickHandler(d, n) {
     if (d) {
-      this.clickFunc.emit(d);
+      this.clickEvent.emit({ data: d, target: n });
     }
   }
 
   // handle mouse over of countries
-  onHoverHandler(d) {
+  onHoverHandler(d, n) {
     overrideTitleTooltip(this.chartID, true);
     if (d) {
-      this.hoverFunc.emit(d);
+      this.hoverEvent.emit({ data: d, target: n });
       if (this.showTooltip) {
         this.eventsTooltip({ data: d, evt: event, isToShow: true });
       }
@@ -2648,7 +2670,7 @@ export class WorldMap {
   onMouseOutHandler(d) {
     overrideTitleTooltip(this.chartID, false);
     if (d) {
-      this.mouseOutFunc.emit();
+      this.mouseOutEvent.emit();
       if (this.showTooltip) {
         this.eventsTooltip({ isToShow: false });
       }
@@ -2683,6 +2705,7 @@ export class WorldMap {
   }
 
   render() {
+    this.drawStartEvent.emit({ chartID: this.chartID });
     // harcoding theme to light until we add the functionality
     const theme = 'light';
 

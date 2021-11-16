@@ -94,9 +94,13 @@ const {
   styleUrl: 'stacked-bar-chart.scss'
 })
 export class StackedBarChart {
-  @Event() clickFunc: EventEmitter;
-  @Event() hoverFunc: EventEmitter;
-  @Event() mouseOutFunc: EventEmitter;
+  @Event() clickEvent: EventEmitter;
+  @Event() hoverEvent: EventEmitter;
+  @Event() mouseOutEvent: EventEmitter;
+  @Event() initialLoadEvent: EventEmitter;
+  @Event() drawStartEvent: EventEmitter;
+  @Event() drawEndEvent: EventEmitter;
+  @Event() transitionEndEvent: EventEmitter;
   // Chart Attributes (1/7)
   @Prop({ mutable: true }) mainTitle: string = StackedBarChartDefaultValues.mainTitle;
   @Prop({ mutable: true }) subTitle: string = StackedBarChartDefaultValues.subTitle;
@@ -864,13 +868,15 @@ export class StackedBarChart {
   }
 
   componentWillLoad() {
+    const chartID = this.uniqueID || 'stacked-bar-chart-' + uuid();
+    this.initialLoadEvent.emit({ chartID: chartID });
     // contrary to componentWillUpdate, this method appears safe to use for
     // any calculations we need. Keeping them here reduces future refactor,
     // since componentWillUpdate should eventually mirror this method
     return new Promise(resolve => {
       this.duration = 0;
       this.defaults = true;
-      this.chartID = this.uniqueID || 'stacked-bar-chart-' + uuid();
+      this.chartID = chartID;
       this.stackedBarChartEl.id = this.chartID;
       this.setTagLevels();
       this.prepareData();
@@ -1143,7 +1149,7 @@ export class StackedBarChart {
       }
       this.onChangeHandler();
       resolve('component did update');
-    });
+    }).then(() => this.drawEndEvent.emit({ chartID: this.chartID }));
   }
 
   shouldValidateAccessibilityProps() {
@@ -1155,7 +1161,7 @@ export class StackedBarChart {
         uniqueID: this.uniqueID,
         context: {
           mainTitle: this.mainTitle,
-          onClickFunc: !this.suppressEvents ? this.clickFunc.emit : undefined,
+          onClickEvent: this.suppressEvents ? undefined : this.clickEvent.emit,
           tooltipLabel: this.tooltipLabel,
           dataLabel: this.dataLabel,
           valueAccessor: this.valueAccessor
@@ -1801,8 +1807,8 @@ export class StackedBarChart {
       .each((_d, i, n) => {
         initializeElementAccess(n[i]);
       })
-      .on('click', !this.suppressEvents ? d => this.onClickHandler(d) : null)
-      .on('mouseover', !this.suppressEvents ? d => this.onHoverHandler(d) : null)
+      .on('click', !this.suppressEvents ? (d, i, n) => this.onClickHandler(d, n[i]) : null)
+      .on('mouseover', !this.suppressEvents ? (d, i, n) => this.onHoverHandler(d, n[i]) : null)
       .on('mouseout', !this.suppressEvents ? () => this.onMouseOutHandler() : null)
       .attr('fill', (d, i) => {
         const clicked =
@@ -2059,6 +2065,9 @@ export class StackedBarChart {
         retainAccessFocus({
           parentGNode: this.rootG.node()
         });
+
+        // now we can emit the event that transitions are complete
+        this.transitionEndEvent.emit({ chartID: this.chartID });
       });
   }
 
@@ -2369,8 +2378,8 @@ export class StackedBarChart {
 
   bindInteractivity() {
     this.update
-      .on('click', !this.suppressEvents ? d => this.onClickHandler(d) : null)
-      .on('mouseover', !this.suppressEvents ? d => this.onHoverHandler(d) : null)
+      .on('click', !this.suppressEvents ? (d, i, n) => this.onClickHandler(d, n[i]) : null)
+      .on('mouseover', !this.suppressEvents ? (d, i, n) => this.onHoverHandler(d, n[i]) : null)
       .on('mouseout', !this.suppressEvents ? () => this.onMouseOutHandler() : null);
   }
 
@@ -2913,11 +2922,17 @@ export class StackedBarChart {
       .style('cursor', !this.suppressEvents && this.legend.interactive && this.legend.visible ? this.cursor : null)
       .on(
         'click',
-        !this.suppressEvents && this.legend.interactive && this.legend.visible ? d => this.onClickHandler(d) : null
+        !this.suppressEvents && this.legend.interactive && this.legend.visible
+          ? (d, i, n) => this.onClickHandler(d, n[i])
+          : null
       )
       .on(
         'mouseover',
-        !this.suppressEvents && this.legend.interactive && this.legend.visible ? d => this.hoverFunc.emit(d) : null
+        !this.suppressEvents && this.legend.interactive && this.legend.visible
+          ? (d, i, n) => {
+              this.hoverEvent.emit({ data: d, target: n[i] });
+            }
+          : null
       )
       .on(
         'mouseout',
@@ -3075,13 +3090,13 @@ export class StackedBarChart {
     this.exitSize = 0;
   }
 
-  onClickHandler(d) {
-    this.clickFunc.emit(d);
+  onClickHandler(d, n) {
+    this.clickEvent.emit({ data: d, target: n });
   }
 
-  onHoverHandler(d) {
+  onHoverHandler(d, n) {
     overrideTitleTooltip(this.chartID, true);
-    this.hoverFunc.emit(d);
+    this.hoverEvent.emit({ data: d, target: n });
     if (this.showTooltip && d) {
       this.eventsTooltip({ data: d, evt: event, isToShow: true });
     }
@@ -3089,7 +3104,7 @@ export class StackedBarChart {
 
   onMouseOutHandler() {
     overrideTitleTooltip(this.chartID, false);
-    this.mouseOutFunc.emit();
+    this.mouseOutEvent.emit();
     if (this.showTooltip) {
       this.eventsTooltip({ isToShow: false });
     }
@@ -3121,6 +3136,7 @@ export class StackedBarChart {
   }
 
   render() {
+    this.drawStartEvent.emit({ chartID: this.chartID });
     // theme hardcoded until functionality is added
     const theme = 'light';
 

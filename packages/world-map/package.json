@@ -53,6 +53,9 @@
   "devDependencies": {
     "@visa/visa-charts-utils-dev": "^3.3.10"
   },
+  "resolutions": {
+    "path-parse": "^1.0.7"
+  },
   "jest": {
     "preset": "@stencil/core/testing",
     "collectCoverageFrom": [
