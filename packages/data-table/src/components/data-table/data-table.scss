@@ -18,6 +18,11 @@
 }
 
 .visa-viz-data-table-outer-container {
+  .visa-viz-data-table-container {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
   .visa-viz-button-wrapper {
     height: 0px;
   }
@@ -34,6 +39,10 @@
   svg.vcc-icons {
     display: none;
   }
+  .vcc-data-table {
+    float: left;
+  }
+
   .vcc-data-table th {
     text-align: left;
   }

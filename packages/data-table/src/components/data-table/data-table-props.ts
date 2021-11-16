@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2021 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -17,11 +17,23 @@ export interface IDataTableProps {
    * @controlName TextArea
    * @groupName Data */
   data: object[];
+
+  /**
+   * @shortDescription Chart data used to create a secondary table, if necessary
+   * @controlName TextArea
+   * @groupName Data */
+  secondaryData: object[];
+
   /**
    * @shortDescription Chart columns used to order columns in data table
    * @controlName TextArea
    * @groupName Data */
   tableColumns: object[];
+  /**
+   * @shortDescription Chart columns used to order columns in secondary data table, if it exists
+   * @controlName TextArea
+   * @groupName Data */
+  secondaryTableColumns: object[];
   /**
    * @shortDescription When selected, applies compact height to rows of table
    * @controlName Toggle
