@@ -312,9 +312,21 @@ This important function handles the cloning, placement, and display of the keybo
 
 This util handles the descriptive area that precedes a Visa Chart Component, which helps to explain the various features of the chart to a screen reader user. Most of the functions in this utility are a direct plug into a chart's lifecycle and based on developer declarations when using the [accessibility prop](../types/README.md#accessibility) that each Visa Chart Component ships with. For more in-depth descriptions of each of these description sections, see their corresponding props in [any component README](../bar-chart/README.md#accessibility-props) file under the Accessibility Props section.
 
-Aside from these prop-driven functions, this utility also handles providing instructions for screen reader users on how to use and navigate the chart, if it is interactive, as well as managing some programmatically generated description sections.
+Preceding each chart we provide instructions to screen reader users on how to navigate the experience. This leverages our keyboard instructions menu (if the chart is interactive). See our [keyboard-instructions](../keyboard-instructions) component for more information about this menu and our keyboard instructions.
 
-![Bar chart example with a description area shown above the chart once it has been navigated to by a keybaord user.](./docs/accessibility-description.jpg 'Accessibility description shown over a chart')
+```js
+// An example of accessibility descriptions provided by a developer. The exports in this util will apply these descriptions to the chart.
+
+const accessibility = {
+  longDescription: 'An alluvial diagram which shows the movement of users to different groups between 2018 and 2019.',
+  executiveSummary: 'Group C is now the largest group in 2019.',
+  contextExplanation: 'This chart is standalone, and can be manipulated by the preceding buttons.',
+  purpose: 'This chart highlights that most users are now in the group C',
+  structureNotes:
+    'The groups are sorted from high to low, with the group C at the bottom. Links are used to visualize the population of the group moving between different groups year over year.',
+  statisticalNotes: 'Group C is visibly larger than all of the other groups combined in 2019'
+};
+```
 
 ### **Notable Exports:**
 
