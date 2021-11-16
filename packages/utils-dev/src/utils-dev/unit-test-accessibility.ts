@@ -1531,6 +1531,13 @@ export const accessibility_focus_marker_style = {
 
     // ACT FOCUS
     const markerToFocus = page.root.querySelector(testSelector);
+    const markerToFocusParent = markerToFocus.parentNode;
+
+    // need to mock bbox on the element and parent g
+    markerToFocus['getBBox'] = () => mockBBox;
+    markerToFocusParent['getBBox'] = () => mockBBox;
+
+    // now that bbox is mocked we can fire event
     markerToFocus.dispatchEvent(mockFocusEvent);
 
     // FIND FOCUS MARKER CONTAINER
@@ -1665,7 +1672,7 @@ export const accessibility_keyboard_selection_test = {
       });
     }
     page.root.appendChild(component);
-    page.doc.addEventListener('clickFunc', _callback);
+    page.doc.addEventListener('clickEvent', _callback);
     await page.waitForChanges();
 
     // ACT
@@ -1708,7 +1715,12 @@ export const accessibility_keyboard_selection_test = {
 
     // ASSERT
     expect(_callback).toHaveBeenCalled();
-    expect(_callback.mock.calls[0][0].detail).toMatchObject(expectedData);
+
+    // first we need to mock the targetNode id before the snapshot
+    _callback.mock.calls[0][0].detail.target.id = 'chart-unit-test-123457-123457-123457';
+    expect(_callback.mock.calls[0][0].detail.target).toMatchSnapshot();
+
+    expect(_callback.mock.calls[0][0].detail.data).toMatchObject(expectedData);
 
     // FIRE THE KEYUP EVENT TO PREPARE FOR NEXT TEST
     focusedFigure.dispatchEvent(mockKeyUpEvent);

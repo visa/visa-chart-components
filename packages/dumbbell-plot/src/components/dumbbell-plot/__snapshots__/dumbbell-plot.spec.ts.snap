@@ -23,6 +23,18 @@ Array [
 ]
 `;
 
+exports[`<dumbbell-plot> rendered-html event-emitter generic event testing label based events [event] clickEvent: event object should emit and contain first data record when first mark is clicked 1`] = `
+<text class="dumbbell-dataLabel transitioning" cursor="default" data-id="label-North America-CardA" data-offset="8" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="67.125" data-y="NaN" dx="0.0em" dy="0.9em" fill="#587893" opacity="1" text-anchor="middle" x="67.125" y="206.15384615384613">
+  3.5b
+</text>
+`;
+
+exports[`<dumbbell-plot> rendered-html event-emitter generic event testing label based events [event] hoverEvent: event object should emit and contain first data record when first mark is hovered 1`] = `
+<text class="dumbbell-dataLabel transitioning" cursor="default" data-id="label-North America-CardA" data-offset="8" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="67.125" data-y="NaN" dx="0.0em" dy="0.9em" fill="#587893" opacity="1" text-anchor="middle" x="67.125" y="206.15384615384613">
+  3.5b
+</text>
+`;
+
 exports[`<dumbbell-plot> rendered-html generic test suite accessibility: should not print accessibility console warnings and logs when accessibility.disableValidation set to true 1`] = `Array []`;
 
 exports[`<dumbbell-plot> rendered-html generic test suite accessibility: should not print accessibility console warnings and logs when accessibility.disableValidation set to true 2`] = `Array []`;

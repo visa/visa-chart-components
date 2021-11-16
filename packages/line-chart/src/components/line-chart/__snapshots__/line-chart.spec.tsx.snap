@@ -212,6 +212,12 @@ exports[`<line-chart> rendered-html accessibility generic accessibility test sui
 </div>
 `;
 
+exports[`<line-chart> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: test whether space bar performs click action 1`] = `<circle class="vcl-accessibility-focus-source" cursor="default" data-cx="22.375" data-cy="79.79816729742207" data-fill="true" data-id="marker-Card-A-2016-01" data-r="5" data-role="img" data-testid="marker" data-translate-x="56.5" fill="#7c99b1" focusable="false" id="chart-unit-test-123457-123457-123457" r="5" role="presentation" stroke="#35495a" stroke-width="2" tabindex="-1"></circle>`;
+
+exports[`<line-chart> rendered-html event-emitter generic event testing marker based events [event] clickEvent: event object should emit and contain first data record when first mark is clicked 1`] = `<circle cursor="default" cx="22.375" cy="79.79816729742207" data-cx="22.375" data-cy="79.79816729742207" data-fill="true" data-id="marker-Card-A-2016-01" data-index="0" data-r="5" data-role="img" data-testid="marker" data-translate-x="56.5" fill="#7c99b1" focusable="false" id="line-chart-unit-test-123457-123457-123457" opacity="1" r="5" role="presentation" stroke="#35495a" stroke-width="2" tabindex="-1"></circle>`;
+
+exports[`<line-chart> rendered-html event-emitter generic event testing marker based events [event] hoverEvent: event object should emit and contain first data record when first mark is hovered 1`] = `<circle cursor="default" cx="22.375" cy="79.79816729742207" data-cx="22.375" data-cy="79.79816729742207" data-fill="true" data-id="marker-Card-A-2016-01" data-index="0" data-r="5" data-role="img" data-testid="marker" data-translate-x="56.5" fill="#7c99b1" focusable="false" id="line-chart-unit-test-123457-123457-123457" opacity="1" r="5" role="presentation" stroke="#35495a" stroke-width="2" tabindex="-1"></circle>`;
+
 exports[`<line-chart> rendered-html generic test suite accessibility: should not print accessibility console warnings and logs when accessibility.disableValidation set to true 1`] = `Array []`;
 
 exports[`<line-chart> rendered-html generic test suite accessibility: should not print accessibility console warnings and logs when accessibility.disableValidation set to true 2`] = `Array []`;

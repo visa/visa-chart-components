@@ -907,7 +907,15 @@ describe('<dumbbell-plot>', () => {
       // Open issue: https://github.com/ionic-team/stencil/issues/1964
       // Jest throwing TypeError : mouseover,mouseout, focus, blur etc.
       // TECH-DEBT: Once above issue is resolved, write more precise test for event params.
+      beforeEach(() => {
+        // MOCK MATH.Random TO HANDLE UNIQUE ID CODE FROM ACCESSIBILITY UTIL
+        jest.spyOn(global.Math, 'random').mockReturnValue(0.123456789);
+      });
 
+      afterEach(() => {
+        // RESTORE GLOBAL FUNCTION FROM MOCK AFTER TEST
+        jest.spyOn(global.Math, 'random').mockRestore();
+      });
       const commonInteractionProps = { data: LAYOUTDATA, ordinalAccessor: 'region', seriesAccessor: 'category' };
       describe('generic event testing', () => {
         describe('label based events', () => {
@@ -915,7 +923,8 @@ describe('<dumbbell-plot>', () => {
             const innerTestProps = {
               ...commonInteractionProps,
               ...{
-                showTooltip: false
+                showTooltip: false,
+                transitionEndAllSelector: '[data-testid=line]'
               }
             };
             const innerTestSelector = '[data-testid=dataLabel][data-id="label-North America-CardA"]';
@@ -1352,7 +1361,7 @@ describe('<dumbbell-plot>', () => {
               ...unitTestTooltip[test].testProps,
               ...innerTooltipProps[test]
             };
-            // we have to handle clickFunc separately due to this.zooming boolean in circle-packing load
+            // we have to handle clickEvent separately due to this.zooming boolean in circle-packing load
 
             it(`${unitTestTooltip[test].prop}: ${unitTestTooltip[test].name}`, () =>
               unitTestTooltip[test].testFunc(

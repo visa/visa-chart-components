@@ -891,6 +891,118 @@ describe('<stacked-bar-chart>', () => {
       });
     });
 
+    describe('data', () => {
+      describe('uniqueId', () => {
+        it('refer to generic results above for uniqueID tests', () => {
+          expect(true).toBeTruthy();
+        });
+      });
+
+      describe('data', () => {
+        it('refer to generic results above for data tests', () => {
+          expect(true).toBeTruthy();
+        });
+      });
+
+      describe('sortOrder', () => {
+        it('should render bars in order by default', async () => {
+          // ARRANGE
+          const expectedOrder = ['2016', '2017', '2018'];
+          // ACT
+          page.root.appendChild(component);
+          await page.waitForChanges();
+
+          // ASSERT
+          const bars = await page.doc.querySelectorAll('[data-testid=bar]');
+          const positions = {
+            2016: 0,
+            2017: 0,
+            2018: 0
+          };
+          bars.forEach(bar => {
+            positions[bar['__data__'][EXPECTEDGROUPACCESSOR]] = parseFloat(bar.getAttribute('x'));
+          });
+          // sort keys by values
+          const sortedKeys = Object.keys(positions).sort((a, b) => positions[a] - positions[b]);
+          sortedKeys.forEach((key, i) => {
+            expect(key).toEqual(expectedOrder[i]);
+          });
+        });
+
+        it('should render bars in sortOrder asc when passed as true on load', async () => {
+          // ARRANGE
+          jest.useFakeTimers();
+          component.sortOrder = 'asc';
+          const expectedOrder = ['2016', '2018', '2017'];
+
+          // ACT
+          page.root.appendChild(component);
+          await page.waitForChanges();
+
+          // ASSERT
+          const bars = await page.doc.querySelectorAll('[data-testid=bar]');
+          const positions = {
+            2016: 0,
+            2017: 0,
+            2018: 0
+          };
+          await asyncForEach(bars, async (bar, i) => {
+            // since we have a timeout in the transitionEndAll we need to advance timers
+            if (i === bars.length - 1) jest.runOnlyPendingTimers();
+
+            // now that we have advanced timers we can try to flushTransitions
+            flushTransitions(bar);
+            await page.waitForChanges();
+            positions[bar['__data__'][EXPECTEDGROUPACCESSOR]] = parseFloat(bar.getAttribute('x'));
+          });
+          // sort keys by values
+          const sortedKeys = Object.keys(positions).sort((a, b) => positions[a] - positions[b]);
+          sortedKeys.forEach((key, i) => {
+            expect(key).toEqual(expectedOrder[i]);
+          });
+
+          jest.clearAllTimers();
+        });
+        it('should render bars in sortOrder desc when passed as true on update', async () => {
+          const expectedOrder = ['2017', '2018', '2016'];
+          jest.useFakeTimers();
+
+          // ACT RENDER
+          page.root.appendChild(component);
+          await page.waitForChanges();
+
+          // ACT UPDATE
+          component.sortOrder = 'desc';
+          await page.waitForChanges();
+
+          // ASSERT
+          const bars = await page.doc.querySelectorAll('[data-testid=bar]');
+          const positions = {
+            2016: 0,
+            2017: 0,
+            2018: 0
+          };
+          await asyncForEach(bars, async (bar, i) => {
+            // since we have a timeout in the transitionEndAll we need to advance timers
+            if (i === bars.length - 1) jest.runOnlyPendingTimers();
+
+            // now that we have advanced timers we can try to flushTransitions
+            flushTransitions(bar);
+            await page.waitForChanges();
+            positions[bar['__data__'][EXPECTEDGROUPACCESSOR]] = parseFloat(bar.getAttribute('x'));
+          });
+
+          // sort keys by values and test that it matches order of bars
+          const sortedKeys = Object.keys(positions).sort((a, b) => positions[a] - positions[b]);
+          sortedKeys.forEach((key, i) => {
+            expect(key).toEqual(expectedOrder[i]);
+          });
+
+          jest.clearAllTimers();
+        });
+      });
+    });
+
     describe('interaction', () => {
       // the transitionEndAll is wrapped in a 0ms setTimeout for browser support
       // need to enable jest timers in order to enable code wrapped in the setTimeout(()=>{})
@@ -1073,130 +1185,27 @@ describe('<stacked-bar-chart>', () => {
       // Open issue: https://github.com/ionic-team/stencil/issues/1964
       // Jest throwing TypeError : mouseover,mouseout, focus, blur etc.
       // TECH-DEBT: Once above issue is resolved, write more precise test for event params.
+      beforeEach(() => {
+        // MOCK MATH.Random TO HANDLE UNIQUE ID CODE FROM ACCESSIBILITY UTIL
+        jest.spyOn(global.Math, 'random').mockReturnValue(0.123456789);
+      });
 
+      afterEach(() => {
+        // RESTORE GLOBAL FUNCTION FROM MOCK AFTER TEST
+        jest.spyOn(global.Math, 'random').mockRestore();
+      });
       describe('generic event testing', () => {
         describe('bar based events', () => {
           Object.keys(unitTestEvent).forEach(test => {
             const innerTestProps = {
-              showTooltip: false
+              showTooltip: false,
+              transitionEndAllSelector: '[data-testid=bar]'
             };
             const innerTestSelector = '[data-testid=bar]';
 
             it(`[${unitTestEvent[test].group}] ${unitTestEvent[test].prop}: ${unitTestEvent[test].name}`, () =>
               unitTestEvent[test].testFunc(component, page, innerTestProps, innerTestSelector, EXPECTEDDATA[0]));
           });
-        });
-      });
-    });
-
-    describe('data', () => {
-      describe('uniqueId', () => {
-        it('refer to generic results above for uniqueID tests', () => {
-          expect(true).toBeTruthy();
-        });
-      });
-
-      describe('data', () => {
-        it('refer to generic results above for data tests', () => {
-          expect(true).toBeTruthy();
-        });
-      });
-
-      describe('sortOrder', () => {
-        it('should render bars in order by default', async () => {
-          // ARRANGE
-          const expectedOrder = ['2016', '2017', '2018'];
-          // ACT
-          page.root.appendChild(component);
-          await page.waitForChanges();
-
-          // ASSERT
-          const bars = await page.doc.querySelectorAll('[data-testid=bar]');
-          const positions = {
-            2016: 0,
-            2017: 0,
-            2018: 0
-          };
-          bars.forEach(bar => {
-            positions[bar['__data__'][EXPECTEDGROUPACCESSOR]] = parseFloat(bar.getAttribute('x'));
-          });
-          // sort keys by values
-          const sortedKeys = Object.keys(positions).sort((a, b) => positions[a] - positions[b]);
-          sortedKeys.forEach((key, i) => {
-            expect(key).toEqual(expectedOrder[i]);
-          });
-        });
-
-        it('should render bars in sortOrder asc when passed as true on load', async () => {
-          // ARRANGE
-          jest.useFakeTimers();
-          component.sortOrder = 'asc';
-          const expectedOrder = ['2016', '2018', '2017'];
-
-          // ACT
-          page.root.appendChild(component);
-          await page.waitForChanges();
-
-          // ASSERT
-          const bars = await page.doc.querySelectorAll('[data-testid=bar]');
-          const positions = {
-            2016: 0,
-            2017: 0,
-            2018: 0
-          };
-          await asyncForEach(bars, async (bar, i) => {
-            // since we have a timeout in the transitionEndAll we need to advance timers
-            if (i === bars.length - 1) jest.runOnlyPendingTimers();
-
-            // now that we have advanced timers we can try to flushTransitions
-            flushTransitions(bar);
-            await page.waitForChanges();
-            positions[bar['__data__'][EXPECTEDGROUPACCESSOR]] = parseFloat(bar.getAttribute('x'));
-          });
-          // sort keys by values
-          const sortedKeys = Object.keys(positions).sort((a, b) => positions[a] - positions[b]);
-          sortedKeys.forEach((key, i) => {
-            expect(key).toEqual(expectedOrder[i]);
-          });
-
-          jest.clearAllTimers();
-        });
-        it('should render bars in sortOrder desc when passed as true on update', async () => {
-          const expectedOrder = ['2017', '2018', '2016'];
-          jest.useFakeTimers();
-
-          // ACT RENDER
-          page.root.appendChild(component);
-          await page.waitForChanges();
-
-          // ACT UPDATE
-          component.sortOrder = 'desc';
-          await page.waitForChanges();
-
-          // ASSERT
-          const bars = await page.doc.querySelectorAll('[data-testid=bar]');
-          const positions = {
-            2016: 0,
-            2017: 0,
-            2018: 0
-          };
-          await asyncForEach(bars, async (bar, i) => {
-            // since we have a timeout in the transitionEndAll we need to advance timers
-            if (i === bars.length - 1) jest.runOnlyPendingTimers();
-
-            // now that we have advanced timers we can try to flushTransitions
-            flushTransitions(bar);
-            await page.waitForChanges();
-            positions[bar['__data__'][EXPECTEDGROUPACCESSOR]] = parseFloat(bar.getAttribute('x'));
-          });
-
-          // sort keys by values and test that it matches order of bars
-          const sortedKeys = Object.keys(positions).sort((a, b) => positions[a] - positions[b]);
-          sortedKeys.forEach((key, i) => {
-            expect(key).toEqual(expectedOrder[i]);
-          });
-
-          jest.clearAllTimers();
         });
       });
     });
@@ -1237,7 +1246,7 @@ describe('<stacked-bar-chart>', () => {
                 '<p style="margin: 0;">Testing123:<b>A</b><br>Count:<b>-$30</b><br></p>'
             };
             const innerTestProps = { ...unitTestTooltip[test].testProps, ...innerTooltipProps[test] };
-            // we have to handle clickFunc separately due to this.zooming boolean in circle-packing load
+            // we have to handle clickEvent separately due to this.zooming boolean in circle-packing load
 
             it(`${unitTestTooltip[test].prop}: ${unitTestTooltip[test].name}`, () =>
               unitTestTooltip[test].testFunc(

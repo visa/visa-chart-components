@@ -212,6 +212,8 @@ exports[`<stacked-bar-chart> rendered-html accessibility generic accessibility t
 </div>
 `;
 
+exports[`<stacked-bar-chart> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: test whether space bar performs click action 1`] = `<rect class="geometryIsMoving stacked-bar vcl-accessibility-focus-source" cursor="default" data-height="44.888888888888914" data-id="bar-2016-A" data-role="img" data-testid="bar" data-translate-x="54" data-translate-y="24" data-width="148.00000000000003" data-x="37" data-y="149.62962962962962" fill="url(#stacked-bar-test_texture_0)" focusable="false" height="44.888888888888914" id="chart-unit-test-123457-123457-123457" opacity="0" role="presentation" tabindex="-1" width="0" x="64.75000000000001" y="149.62962962962962"></rect>`;
+
 exports[`<stacked-bar-chart> rendered-html annotations should pass annotation prop 1`] = `
 <g aria-hidden="true" class="vcl-annotation-group" data-testid="annotation-group" focusable="false" role="presentation">
   <g class="annotations">
@@ -235,6 +237,10 @@ exports[`<stacked-bar-chart> rendered-html annotations should pass annotation pr
   </g>
 </g>
 `;
+
+exports[`<stacked-bar-chart> rendered-html event-emitter generic event testing bar based events [event] clickEvent: event object should emit and contain first data record when first mark is clicked 1`] = `<rect class="geometryIsMoving stacked-bar" cursor="default" data-height="44.888888888888914" data-id="bar-2016-A" data-role="img" data-testid="bar" data-translate-x="54" data-translate-y="24" data-width="148.00000000000003" data-x="37" data-y="149.62962962962962" fill="url(#stacked-bar-test_texture_0)" focusable="false" height="44.888888888888914" id="stacked-bar-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="148.00000000000003" x="37" y="149.62962962962962"></rect>`;
+
+exports[`<stacked-bar-chart> rendered-html event-emitter generic event testing bar based events [event] hoverEvent: event object should emit and contain first data record when first mark is hovered 1`] = `<rect class="geometryIsMoving stacked-bar" cursor="default" data-height="44.888888888888914" data-id="bar-2016-A" data-role="img" data-testid="bar" data-translate-x="54" data-translate-y="24" data-width="148.00000000000003" data-x="37" data-y="149.62962962962962" fill="url(#stacked-bar-test_texture_0)" focusable="false" height="44.888888888888914" id="stacked-bar-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="148.00000000000003" x="37" y="149.62962962962962"></rect>`;
 
 exports[`<stacked-bar-chart> rendered-html generic test suite accessibility: should not print accessibility console warnings and logs when accessibility.disableValidation set to true 1`] = `Array []`;
 
