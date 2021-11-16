@@ -26,12 +26,11 @@ This packages bundles [visa chart components](../../) web components into a sing
 - [@visa/parallel-plot](../parallel-plot)
 - [@visa/dumbbell-plot](../dumbbell-plot)
 - [@visa/world-map](../world-map)
-- [@visa/visa-charts-data-table](../data-table)
-
-#### Components with `Development` status
-
 - [@visa/alluvial-diagram](../alluvial-diagram)
+- [@visa/visa-charts-data-table](../data-table)
+- [@visa/keyboard-instructions](packages/keyboard-instructions)
 
+<!-- #### Components with `Development` status -->
 <hr>
 
 ### <a name="how_to" href="#how_to">#</a> How to use the @visa/charts web component bundle in different environments
