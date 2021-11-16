@@ -93,9 +93,13 @@ const {
   styleUrl: 'line-chart.scss'
 })
 export class LineChart {
-  @Event() clickFunc: EventEmitter;
-  @Event() hoverFunc: EventEmitter;
-  @Event() mouseOutFunc: EventEmitter;
+  @Event() clickEvent: EventEmitter;
+  @Event() hoverEvent: EventEmitter;
+  @Event() mouseOutEvent: EventEmitter;
+  @Event() initialLoadEvent: EventEmitter;
+  @Event() drawStartEvent: EventEmitter;
+  @Event() drawEndEvent: EventEmitter;
+  @Event() transitionEndEvent: EventEmitter;
 
   // Chart Attributes (1/7)
   @Prop({ mutable: true }) mainTitle: string = LineChartDefaultValues.mainTitle;
@@ -901,13 +905,15 @@ export class LineChart {
   }
 
   componentWillLoad() {
+    const chartID = this.uniqueID || 'line-chart-' + uuid();
+    this.initialLoadEvent.emit({ chartID: chartID });
     // contrary to componentWillUpdate, this method appears safe to use for
     // any calculations we need. Keeping them here reduces future refactor,
     // since componentWillUpdate should eventually mirror this method
     return new Promise(resolve => {
       this.duration = 0;
       this.defaults = true;
-      this.chartID = this.uniqueID || 'line-chart-' + uuid();
+      this.chartID = chartID;
       this.lineChartEl.id = this.chartID;
       this.setTagLevels();
       this.setDimensions();
@@ -1195,7 +1201,7 @@ export class LineChart {
       }
       this.onChangeHandler();
       resolve('component did update');
-    });
+    }).then(() => this.drawEndEvent.emit({ chartID: this.chartID }));
   }
 
   shouldValidateAccessibilityProps() {
@@ -1210,7 +1216,7 @@ export class LineChart {
           uniqueID: this.uniqueID,
           context: {
             mainTitle: this.mainTitle,
-            onClickFunc: !this.suppressEvents ? this.clickFunc.emit : undefined
+            onClickEvent: this.suppressEvents ? undefined : this.clickEvent.emit
           }
         }
       );
@@ -1768,9 +1774,9 @@ export class LineChart {
       .on(
         'click',
         !this.suppressEvents && this.seriesInteraction
-          ? d => {
+          ? (d, i, n) => {
               if (d.values) {
-                this.onClickHandler(d.values[0]);
+                this.onClickHandler(d.values[0], n[i]);
               }
             }
           : null
@@ -1778,9 +1784,9 @@ export class LineChart {
       .on(
         'mouseover',
         !this.suppressEvents && this.seriesInteraction
-          ? d => {
+          ? (d, i, n) => {
               if (d.values) {
-                this.onHoverHandler(d.values[0], false);
+                this.onHoverHandler(d.values[0], n[i], false);
               }
             }
           : null
@@ -1898,8 +1904,8 @@ export class LineChart {
       .attr('cursor', !this.suppressEvents ? this.cursor : null)
       .attr('data-fill', true)
       .attr('data-translate-x', this.margin.left + this.padding.left)
-      .on('click', !this.suppressEvents ? d => this.onClickHandler(d) : null)
-      .on('mouseover', !this.suppressEvents ? d => this.onHoverHandler(d, true) : null)
+      .on('click', !this.suppressEvents ? (d, i, n) => this.onClickHandler(d, n[i]) : null)
+      .on('mouseover', !this.suppressEvents ? (d, i, n) => this.onHoverHandler(d, n[i], true) : null)
       .on('mouseout', !this.suppressEvents ? () => this.onMouseOutHandler() : null);
 
     if (this.interpolating) {
@@ -2163,6 +2169,9 @@ export class LineChart {
         retainAccessFocus({
           parentGNode: this.rootG.node()
         });
+
+        // now we can emit the event that transitions are complete
+        this.transitionEndEvent.emit({ chartID: this.chartID });
       });
   }
 
@@ -2253,9 +2262,9 @@ export class LineChart {
       .on(
         'click',
         !this.suppressEvents && this.seriesInteraction
-          ? d => {
+          ? (d, i, n) => {
               if (d.values) {
-                this.onClickHandler(d.values[0]);
+                this.onClickHandler(d.values[0], n[i]);
               }
             }
           : null
@@ -2263,9 +2272,9 @@ export class LineChart {
       .on(
         'mouseover',
         !this.suppressEvents && this.seriesInteraction
-          ? d => {
+          ? (d, i, n) => {
               if (d.values) {
-                this.onHoverHandler(d.values[0], false);
+                this.onHoverHandler(d.values[0], n[i], false);
               }
             }
           : null
@@ -3299,9 +3308,9 @@ export class LineChart {
       .on(
         'click',
         !this.suppressEvents && this.legend.interactive && this.seriesInteraction
-          ? d => {
+          ? (d, i, n) => {
               if (d.values) {
-                this.onClickHandler(d.values[0]);
+                this.onClickHandler(d.values[0], n[i]);
               }
             }
           : null
@@ -3309,9 +3318,9 @@ export class LineChart {
       .on(
         'mouseover',
         !this.suppressEvents && this.legend.interactive && this.seriesInteraction
-          ? d => {
+          ? (d, i, n) => {
               if (d.values) {
-                this.hoverFunc.emit(d.values[0]);
+                this.hoverEvent.emit({ data: d.values[0], target: n[i] });
               }
             }
           : null
@@ -3335,9 +3344,9 @@ export class LineChart {
       .on(
         'click',
         !this.suppressEvents && this.seriesInteraction
-          ? d => {
+          ? (d, i, n) => {
               if (d.values) {
-                this.onClickHandler(d.values[0]);
+                this.onClickHandler(d.values[0], n[i]);
               }
             }
           : null
@@ -3345,9 +3354,9 @@ export class LineChart {
       .on(
         'mouseover',
         !this.suppressEvents && this.seriesInteraction
-          ? d => {
+          ? (d, i, n) => {
               if (d.values) {
-                this.onHoverHandler(d.values[0], false);
+                this.onHoverHandler(d.values[0], n[i], false);
               }
             }
           : null
@@ -3355,17 +3364,17 @@ export class LineChart {
       .on('mouseout', !this.suppressEvents && this.seriesInteraction ? () => this.onMouseOutHandler() : null);
 
     this.updateDots
-      .on('click', !this.suppressEvents ? d => this.onClickHandler(d) : null)
-      .on('mouseover', !this.suppressEvents ? d => this.onHoverHandler(d, true) : null)
+      .on('click', !this.suppressEvents ? (d, i, n) => this.onClickHandler(d, n[i]) : null)
+      .on('mouseover', !this.suppressEvents ? (d, i, n) => this.onHoverHandler(d, n[i], true) : null)
       .on('mouseout', !this.suppressEvents ? () => this.onMouseOutHandler() : null);
 
     this.seriesLabelUpdate
       .on(
         'click',
         !this.suppressEvents && this.seriesInteraction
-          ? d => {
+          ? (d, i, n) => {
               if (d.values) {
-                this.onClickHandler(d.values[0]);
+                this.onClickHandler(d.values[0], n[i]);
               }
             }
           : null
@@ -3373,17 +3382,17 @@ export class LineChart {
       .on(
         'mouseover',
         !this.suppressEvents && this.seriesInteraction
-          ? d => {
+          ? (d, i, n) => {
               if (d.values) {
-                this.onHoverHandler(d.values[0], false);
+                this.onHoverHandler(d.values[0], n[i], false);
               }
             }
           : null
       )
       .on('mouseout', !this.suppressEvents && this.seriesInteraction ? () => this.onMouseOutHandler() : null);
     this.updatingLabels
-      .on('click', !this.suppressEvents ? d => this.onClickHandler(d) : null)
-      .on('mouseover', !this.suppressEvents ? d => this.onHoverHandler(d, true) : null)
+      .on('click', !this.suppressEvents ? (d, i, n) => this.onClickHandler(d, n[i]) : null)
+      .on('mouseover', !this.suppressEvents ? (d, i, n) => this.onHoverHandler(d, n[i], true) : null)
       .on('mouseout', !this.suppressEvents ? () => this.onMouseOutHandler() : null);
   }
 
@@ -3534,13 +3543,13 @@ export class LineChart {
     this.exitSize = 0;
   }
 
-  onClickHandler(d) {
-    this.clickFunc.emit(d);
+  onClickHandler(d, n) {
+    this.clickEvent.emit({ data: d, target: n });
   }
 
-  onHoverHandler(d, hasTooltip) {
+  onHoverHandler(d, n, hasTooltip) {
     overrideTitleTooltip(this.chartID, true);
-    this.hoverFunc.emit(d);
+    this.hoverEvent.emit({ data: d, target: n });
     if (this.showTooltip && hasTooltip) {
       this.eventsTooltip({ data: d, evt: event, isToShow: true });
     }
@@ -3548,7 +3557,7 @@ export class LineChart {
 
   onMouseOutHandler() {
     overrideTitleTooltip(this.chartID, false);
-    this.mouseOutFunc.emit();
+    this.mouseOutEvent.emit();
     if (this.showTooltip) {
       this.eventsTooltip({ isToShow: false });
     }
@@ -3578,6 +3587,7 @@ export class LineChart {
   }
 
   render() {
+    this.drawStartEvent.emit({ chartID: this.chartID });
     // everything between this comment and the third should eventually
     // be moved into componentWillUpdate (if the stenicl bug is fixed)
     this.init();
