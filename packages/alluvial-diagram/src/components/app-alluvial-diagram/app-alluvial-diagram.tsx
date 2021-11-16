@@ -20,15 +20,15 @@ export class AppAlluvialDiagram {
   @State() data3: any;
   @State() nodes: any;
   @State() colorsArray: any = ['#E4E4E4', '#E4E4E4', '#E4E4E4', '#78029D', '#E4E4E4'];
-  @State() colors: any = ['#E4E4E4', '#E4E4E4', '#E4E4E4', '#D90000']; //['#2e3047', '#43455c', '#3c3f58']
-  @State() fillNodeConfig: any = false;
+  @State() colors: any = undefined;
+  @State() fillNodeConfig: any = true;
   @State() compareNodeConfig: any = false;
   @State() visibleLinkConfig: any = true;
   @State() fillModeLinkConfig: any = 'group';
   @State() opacityLinkConfig: any = 0.3;
   @State() linkConfig: any = {
     visible: this.visibleLinkConfig,
-    // fillMode: 'source',
+    // fillMode: 'none',
     fillMode: 'group',
     opacity: 0.6
   };
@@ -39,11 +39,13 @@ export class AppAlluvialDiagram {
     compare: this.compareNodeConfig,
     fill: this.fillNodeConfig
   };
-  @State() interactionKeys: any = ['group'];
+  @State() interactionKeys: any = ['source'];
   @State() fillState: any = 'new';
   @State() linkVisibilityState: any = true;
   @State() stateTrigger: any = 0;
-  @State() width: number = 400;
+  @State() nodeData: any;
+  @State() nodeID: any = 'dataID';
+  @State() width: number = 700;
   @State() hoverElement: any = '';
   @State() chartUpdates: string;
   @State() barIntervalRatio = 0.15;
@@ -58,8 +60,8 @@ export class AppAlluvialDiagram {
   @State() dataLabel: any = {
     visible: true,
     placement: 'auto',
-    labelAccessor: 'value',
-    format: '0.0a',
+    // labelAccessor: this.nodeID,
+    format: '',
     collisionHideOnly: false,
     collisionPlacement: 'inside'
   };
@@ -68,15 +70,43 @@ export class AppAlluvialDiagram {
     labelTitle: ['value'],
     format: ['0,0[.0][a]']
   };
-  // @State() clickElement: any = [];
-  @State() clickElement: any = [{ group: 'New', source: 'New 2018', target: 'Low 2019', value: 3684 }];
+  @State() clickElement: any = [];
+  // @State() clickElement: any = [{ group: 'New', source: 'New 2018', target: 'Low 2019', value: 3684 }];
   @State() interactionState: any = ['group'];
+  @State() sourceAccessor: any = 'source';
+  @State() targetAccessor: any = 'target';
   @State() valueAccessor: any = 'value';
-  @State() groupAccessor: any = 'region';
-  @State() ordinalAccessor: any = 'country';
+  @State() groupAccessor: any = 'group';
   @State() hoverElementTest: any = '';
   @State() clickElementTest: any = [];
   @State() animations: any = { disabled: true };
+  @State() annotations: any = [
+    {
+      note: {
+        label: 'test 1',
+        bgPadding: 0,
+        align: 'left',
+        wrap: 810
+      },
+      // className: 'link-labels-right',
+      data: {
+        otherGroup: 'b',
+        otherSource: 'LA',
+        otherTarget: 'Medium',
+        otherValue: 346,
+        group: 'Remained',
+        source: 'Medium 2018',
+        target: 'Medium 2019',
+        value: 12712
+      },
+      positionType: 'target',
+      disable: ['connector', 'subject'],
+      color: '#88ee22'
+      // sortOrder: 100 + currYrCt++,
+      // collisionHideOnly: targetArr.indexOf(node[this.targetAccessor])!== i ? true : false
+    }
+  ];
+  @State() suppressEvents: any = false;
   @State() accessibility: any = {
     elementDescriptionAccessor: 'note', // see Indonesia above
     longDescription: 'An alluvial diagram which shows the movement of groups between 2018 and 2019.',
@@ -89,385 +119,636 @@ export class AppAlluvialDiagram {
     onChangeFunc: d => {
       this.onChangeFunc(d);
     },
-    hideDataTableButton: true,
+    hideDataTableButton: false,
     elementsAreInterface: true,
-    disableValidation: true
+    disableValidation: false
   };
-  hoverStyle: any = {
-    color: '#979db7',
-    strokeWidth: 1.5
+  @State() hoverStyle: any = {
+    color: '#000000'
+    // strokeWidth: 1.5
   };
-  clickStyle: any = {
-    color: '#8fdfff',
-    strokeWidth: 2
+  @State() clickStyle: any = {
+    color: '#88ee22'
   };
-  // colors: any = ['#2e3047', '#43455c', '#3c3f58'];
-  // colors: any = ['#EDEEF3', '#A8AABB', '#6C6E86', '#3c3f58'];
 
   linkStartData: any = [
-    { group: 'Remained', source: 'High 2018', target: 'High 2019', value: 3010 },
-    { group: 'Decreased', source: 'High 2018', target: 'Medium 2019', value: 2754 },
-    { group: 'Decreased', source: 'High 2018', target: 'Low 2019', value: 2812 },
-    { group: 'Increased', source: 'Medium 2018', target: 'High 2019', value: 909 },
-    { group: 'Remained', source: 'Medium 2018', target: 'Medium 2019', value: 12712 },
-    { group: 'Decreased', source: 'Medium 2018', target: 'Low 2019', value: 3367 },
-    { group: 'Increased', source: 'Low 2018', target: 'High 2019', value: 68 },
-    { group: 'Increased', source: 'Low 2018', target: 'Medium 2019', value: 8133 },
-    { group: 'Remained', source: 'Low 2018', target: 'Low 2019', value: 6164 },
-    { group: 'New', source: 'New 2018', target: 'High 2019', value: 3148 },
-    { group: 'New', source: 'New 2018', target: 'Medium 2019', value: 7279 },
-    { group: 'New', source: 'New 2018', target: 'Low 2019', value: 3684 }
+    {
+      otherGroup: 'a',
+      otherSource: 'US',
+      otherTarget: 'High',
+      otherValue: 234,
+      group: 'Remained',
+      source: 'High 2018',
+      target: 'High 2019',
+      value: 3010
+    },
+    {
+      otherGroup: 'a',
+      otherSource: 'US',
+      otherTarget: 'Medium',
+      otherValue: 342,
+      group: 'Decreased',
+      source: 'High 2018',
+      target: 'Medium 2019',
+      value: 2754
+    },
+    {
+      otherGroup: 'a',
+      otherSource: 'US',
+      otherTarget: 'Low',
+      otherValue: 451,
+      group: 'Decreased',
+      source: 'High 2018',
+      target: 'Low 2019',
+      value: 2812
+    },
+    {
+      otherGroup: 'b',
+      otherSource: 'LA',
+      otherTarget: 'High',
+      otherValue: 534,
+      group: 'Increased',
+      source: 'Medium 2018',
+      target: 'High 2019',
+      value: 909
+    },
+    {
+      otherGroup: 'b',
+      otherSource: 'LA',
+      otherTarget: 'Medium',
+      otherValue: 346,
+      group: 'Remained',
+      source: 'Medium 2018',
+      target: 'Medium 2019',
+      value: 12712
+    },
+    {
+      otherGroup: 'b',
+      otherSource: 'LA',
+      otherTarget: 'Low',
+      otherValue: 467,
+      group: 'Decreased',
+      source: 'Medium 2018',
+      target: 'Low 2019',
+      value: 3367
+    },
+    {
+      otherGroup: 'c',
+      otherSource: 'EU',
+      otherTarget: 'High',
+      otherValue: 234,
+      group: 'Increased',
+      source: 'Low 2018',
+      target: 'High 2019',
+      value: 68
+    },
+    {
+      otherGroup: 'c',
+      otherSource: 'EU',
+      otherTarget: 'Medium',
+      otherValue: 356,
+      group: 'Increased',
+      source: 'Low 2018',
+      target: 'Medium 2019',
+      value: 8133
+    },
+    {
+      otherGroup: 'c',
+      otherSource: 'EU',
+      otherTarget: 'Low',
+      otherValue: 261,
+      group: 'Remained',
+      source: 'Low 2018',
+      target: 'Low 2019',
+      value: 6164
+    },
+    {
+      otherGroup: 'd',
+      otherSource: 'NEW',
+      otherTarget: 'High',
+      otherValue: 123,
+      group: 'New',
+      source: 'New 2018',
+      target: 'High 2019',
+      value: 3148
+    },
+    {
+      otherGroup: 'd',
+      otherSource: 'NEW',
+      otherTarget: 'Medium',
+      otherValue: 987,
+      group: 'New',
+      source: 'New 2018',
+      target: 'Medium 2019',
+      value: 7279
+    },
+    {
+      otherGroup: 'd',
+      otherSource: 'NEW',
+      otherTarget: 'Low',
+      otherValue: 345,
+      group: 'New',
+      source: 'New 2018',
+      target: 'Low 2019',
+      value: 3684
+    }
   ];
   dataStorage1: any = [
     this.linkStartData,
     [
-      { group: 'Remained', source: 'High 2018', target: 'High 2019', value: 301 },
-      { group: 'Decreased', source: 'High 2018', target: 'Medium 2019', value: 275 },
-      { group: 'Decreased', source: 'High 2018', target: 'Low 2019', value: 281 },
-      { group: 'Increased', source: 'Medium 2018', target: 'High 2019', value: 909 },
-      { group: 'Remained', source: 'Medium 2018', target: 'Medium 2019', value: 1271 },
-      { group: 'Decreased', source: 'Medium 2018', target: 'Low 2019', value: 3367 },
-      { group: 'Increased', source: 'Low 2018', target: 'High 2019', value: 618 },
-      { group: 'Increased', source: 'Low 2018', target: 'Medium 2019', value: 113 },
-      { group: 'Remained', source: 'Low 2018', target: 'Low 2019', value: 616 },
-      { group: 'New', source: 'New 2018', target: 'High 2019', value: 314 },
-      { group: 'New', source: 'New 2018', target: 'Medium 2019', value: 279 },
-      { group: 'New', source: 'New 2018', target: 'Low 2019', value: 364 }
+      {
+        otherValue: 234,
+        otherGroup: 'a',
+        otherSource: 'US',
+        otherTarget: 'High',
+        group: 'Remained',
+        source: 'High 2018',
+        target: 'High 2019',
+        value: 301
+      },
+      {
+        otherValue: 342,
+        otherGroup: 'a',
+        otherSource: 'US',
+        otherTarget: 'Medium',
+        group: 'Decreased',
+        source: 'High 2018',
+        target: 'Medium 2019',
+        value: 275
+      },
+      {
+        otherValue: 451,
+        otherGroup: 'a',
+        otherSource: 'US',
+        otherTarget: 'Low',
+        group: 'Decreased',
+        source: 'High 2018',
+        target: 'Low 2019',
+        value: 281
+      },
+      {
+        otherValue: 534,
+        otherGroup: 'b',
+        otherSource: 'LA',
+        otherTarget: 'High',
+        group: 'Increased',
+        source: 'Medium 2018',
+        target: 'High 2019',
+        value: 909
+      },
+      {
+        otherValue: 346,
+        otherGroup: 'b',
+        otherSource: 'LA',
+        otherTarget: 'Medium',
+        group: 'Remained',
+        source: 'Medium 2018',
+        target: 'Medium 2019',
+        value: 1271
+      },
+      {
+        otherValue: 467,
+        otherGroup: 'b',
+        otherSource: 'LA',
+        otherTarget: 'Low',
+        group: 'Decreased',
+        source: 'Medium 2018',
+        target: 'Low 2019',
+        value: 3367
+      },
+      {
+        otherValue: 234,
+        otherGroup: 'c',
+        otherSource: 'EU',
+        otherTarget: 'High',
+        group: 'Increased',
+        source: 'Low 2018',
+        target: 'High 2019',
+        value: 618
+      },
+      {
+        otherValue: 356,
+        otherGroup: 'c',
+        otherSource: 'EU',
+        otherTarget: 'Medium',
+        group: 'Increased',
+        source: 'Low 2018',
+        target: 'Medium 2019',
+        value: 113
+      },
+      {
+        otherValue: 261,
+        otherGroup: 'c',
+        otherSource: 'EU',
+        otherTarget: 'Low',
+        group: 'Remained',
+        source: 'Low 2018',
+        target: 'Low 2019',
+        value: 616
+      },
+      {
+        otherValue: 123,
+        otherGroup: 'd',
+        otherSource: 'NEW',
+        otherTarget: 'High',
+        group: 'New',
+        source: 'New 2018',
+        target: 'High 2019',
+        value: 314
+      },
+      {
+        otherValue: 987,
+        otherGroup: 'd',
+        otherSource: 'NEW',
+        otherTarget: 'Medium',
+        group: 'New',
+        source: 'New 2018',
+        target: 'Medium 2019',
+        value: 279
+      },
+      {
+        otherValue: 345,
+        otherGroup: 'd',
+        otherSource: 'NEW',
+        otherTarget: 'Low',
+        group: 'New',
+        source: 'New 2018',
+        target: 'Low 2019',
+        value: 364
+      }
     ],
     [
-      { group: 'Remained', source: 'High 2018', target: 'High 2019', value: 3010 },
-      { group: 'Decreased', source: 'High 2018', target: 'Medium 2019', value: 2754 },
-      { group: 'Decreased', source: 'High 2018', target: 'Low 2019', value: 2812 },
-      { group: 'Increased', source: 'Medium 2018', target: 'High 2019', value: 9091 },
-      { group: 'Remained', source: 'Medium 2018', target: 'Medium 2019', value: 12712 },
-      { group: 'Decreased', source: 'Medium 2018', target: 'Low 2019', value: 3367 },
-      { group: 'Increased', source: 'Low 2018', target: 'High 2019', value: 681 },
-      { group: 'Increased', source: 'Low 2018', target: 'Medium 2019', value: 8133 },
-      { group: 'Remained', source: 'Low 2018', target: 'Low 2019', value: 6164 },
-      { group: 'New', source: 'New 2018', target: 'High 2019', value: 3681 },
-      { group: 'New', source: 'New 2018', target: 'Medium 2019', value: 7279 },
-      { group: 'New', source: 'New 2018', target: 'Low 2019', value: 3684 }
+      {
+        otherValue: 234,
+        otherGroup: 'a',
+        otherSource: 'US',
+        otherTarget: 'High',
+        group: 'Remained',
+        source: 'High 2018',
+        target: 'High 2019',
+        value: 3010
+      },
+      {
+        otherValue: 342,
+        otherGroup: 'a',
+        otherSource: 'US',
+        otherTarget: 'Medium',
+        group: 'Decreased',
+        source: 'High 2018',
+        target: 'Medium 2019',
+        value: 2754
+      },
+      {
+        otherValue: 451,
+        otherGroup: 'a',
+        otherSource: 'US',
+        otherTarget: 'Low',
+        group: 'Decreased',
+        source: 'High 2018',
+        target: 'Low 2019',
+        value: 2812
+      },
+      {
+        otherValue: 534,
+        otherGroup: 'b',
+        otherSource: 'LA',
+        otherTarget: 'High',
+        group: 'Increased',
+        source: 'Medium 2018',
+        target: 'High 2019',
+        value: 9091
+      },
+      {
+        otherValue: 346,
+        otherGroup: 'b',
+        otherSource: 'LA',
+        otherTarget: 'Medium',
+        group: 'Remained',
+        source: 'Medium 2018',
+        target: 'Medium 2019',
+        value: 12712
+      },
+      {
+        otherValue: 467,
+        otherGroup: 'b',
+        otherSource: 'LA',
+        otherTarget: 'Low',
+        group: 'Decreased',
+        source: 'Medium 2018',
+        target: 'Low 2019',
+        value: 3367
+      },
+      {
+        otherValue: 234,
+        otherGroup: 'c',
+        otherSource: 'EU',
+        otherTarget: 'High',
+        group: 'Increased',
+        source: 'Low 2018',
+        target: 'High 2019',
+        value: 681
+      },
+      {
+        otherValue: 356,
+        otherGroup: 'c',
+        otherSource: 'EU',
+        otherTarget: 'Medium',
+        group: 'Increased',
+        source: 'Low 2018',
+        target: 'Medium 2019',
+        value: 8133
+      },
+      {
+        otherValue: 261,
+        otherGroup: 'c',
+        otherSource: 'EU',
+        otherTarget: 'Low',
+        group: 'Remained',
+        source: 'Low 2018',
+        target: 'Low 2019',
+        value: 6164
+      },
+      {
+        otherValue: 123,
+        otherGroup: 'd',
+        otherSource: 'NEW',
+        otherTarget: 'High',
+        group: 'New',
+        source: 'New 2018',
+        target: 'High 2019',
+        value: 3681
+      },
+      {
+        otherValue: 987,
+        otherGroup: 'd',
+        otherSource: 'NEW',
+        otherTarget: 'Medium',
+        group: 'New',
+        source: 'New 2018',
+        target: 'Medium 2019',
+        value: 7279
+      },
+      {
+        otherValue: 345,
+        otherGroup: 'd',
+        otherSource: 'NEW',
+        otherTarget: 'Low',
+        group: 'New',
+        source: 'New 2018',
+        target: 'Low 2019',
+        value: 3684
+      }
     ],
     [
-      { group: 'Increased', source: 'Medium 2018', target: 'High 2019', value: 9091 },
-      { group: 'Remained', source: 'Medium 2018', target: 'Medium 2019', value: 12712 },
-      { group: 'Decreased', source: 'Medium 2018', target: 'Low 2019', value: 3367 },
-      { group: 'Increased', source: 'Low 2018', target: 'High 2019', value: 681 },
-      { group: 'Increased', source: 'Low 2018', target: 'Medium 2019', value: 8133 },
-      { group: 'Remained', source: 'Low 2018', target: 'Low 2019', value: 6164 },
-      { group: 'New', source: 'New 2018', target: 'High 2019', value: 3681 },
-      { group: 'New', source: 'New 2018', target: 'Medium 2019', value: 7279 },
-      { group: 'New', source: 'New 2018', target: 'Low 2019', value: 3684 }
+      {
+        otherValue: 534,
+        otherGroup: 'b',
+        otherSource: 'LA',
+        otherTarget: 'High',
+        group: 'Increased',
+        source: 'Medium 2018',
+        target: 'High 2019',
+        value: 9091
+      },
+      {
+        otherValue: 346,
+        otherGroup: 'b',
+        otherSource: 'LA',
+        otherTarget: 'Medium',
+        group: 'Remained',
+        source: 'Medium 2018',
+        target: 'Medium 2019',
+        value: 12712
+      },
+      {
+        otherValue: 467,
+        otherGroup: 'b',
+        otherSource: 'LA',
+        otherTarget: 'Low',
+        group: 'Decreased',
+        source: 'Medium 2018',
+        target: 'Low 2019',
+        value: 3367
+      },
+      {
+        otherValue: 234,
+        otherGroup: 'c',
+        otherSource: 'EU',
+        otherTarget: 'High',
+        group: 'Increased',
+        source: 'Low 2018',
+        target: 'High 2019',
+        value: 681
+      },
+      {
+        otherValue: 356,
+        otherGroup: 'c',
+        otherSource: 'EU',
+        otherTarget: 'Medium',
+        group: 'Increased',
+        source: 'Low 2018',
+        target: 'Medium 2019',
+        value: 8133
+      },
+      {
+        otherValue: 261,
+        otherGroup: 'c',
+        otherSource: 'EU',
+        otherTarget: 'Low',
+        group: 'Remained',
+        source: 'Low 2018',
+        target: 'Low 2019',
+        value: 6164
+      },
+      {
+        otherValue: 345,
+        otherGroup: 'd',
+        otherSource: 'NEW',
+        otherTarget: 'High',
+        group: 'New',
+        source: 'New 2018',
+        target: 'High 2019',
+        value: 3681
+      },
+      {
+        otherValue: 345,
+        otherGroup: 'd',
+        otherSource: 'NEW',
+        otherTarget: 'Medium',
+        group: 'New',
+        source: 'New 2018',
+        target: 'Medium 2019',
+        value: 7279
+      },
+      {
+        otherValue: 345,
+        otherGroup: 'd',
+        otherSource: 'NEW',
+        otherTarget: 'Low',
+        group: 'New',
+        source: 'New 2018',
+        target: 'Low 2019',
+        value: 3684
+      }
     ],
     [
-      { group: 'Remained', source: 'High 2018', target: 'High 2019', value: 3010 },
-      { group: 'Decreased', source: 'High 2018', target: 'Medium 2019', value: 2754 },
-      { group: 'Decreased', source: 'High 2018', target: 'Low 2019', value: 2812 },
-      { group: 'Increased', source: 'Medium 2018', target: 'High 2019', value: 9091 },
-      { group: 'Remained', source: 'Medium 2018', target: 'Medium 2019', value: 12712 },
-      { group: 'Decreased', source: 'Medium 2018', target: 'Low 2019', value: 3367 },
-      { group: 'Increased', source: 'Low 2018', target: 'High 2019', value: 681 },
-      { group: 'Increased', source: 'Low 2018', target: 'Medium 2019', value: 8133 },
-      { group: 'Remained', source: 'Low 2018', target: 'Low 2019', value: 6164 },
-      { group: 'New', source: 'New 2018', target: 'High 2019', value: 3681 },
-      { group: 'New', source: 'New 2018', target: 'Medium 2019', value: 7279 },
-      { group: 'New', source: 'New 2018', target: 'Low 2019', value: 3684 }
-    ],
-    [
-      { group: 'Remained', source: 'High 2018', target: 'High 2019', value: 3010 },
-      { group: 'Decreased', source: 'High 2018', target: 'Medium 2019', value: 2754 },
-      { group: 'Decreased', source: 'High 2018', target: 'Low 2019', value: 2812 },
-      { group: 'Increased', source: 'Medium 2018', target: 'High 2019', value: 909 },
-      { group: 'Remained', source: 'Medium 2018', target: 'Medium 2019', value: 12712 },
-      { group: 'Decreased', source: 'Medium 2018', target: 'Low 2019', value: 3367 },
-      { group: 'Increased', source: 'Low 2018', target: 'High 2019', value: 68 },
-      { group: 'Remained', source: 'Low 2018', target: 'Low 2019', value: 6164 },
-      { group: 'New', source: 'New 2018', target: 'High 2019', value: 3148 },
-      { group: 'New', source: 'New 2018', target: 'Medium 2019', value: 7279 },
-      { group: 'New', source: 'New 2018', target: 'Low 2019', value: 3684 }
-    ],
-    [
-      { group: 'Remained', source: 'High 2018', target: 'High 2019', value: 3010 },
-      { group: 'Decreased', source: 'High 2018', target: 'Low 2019', value: 2812 },
-      { group: 'Increased', source: 'Medium 2018', target: 'High 2019', value: 909 },
-      { group: 'Decreased', source: 'Medium 2018', target: 'Low 2019', value: 3367 },
-      { group: 'Increased', source: 'Low 2018', target: 'High 2019', value: 68 },
-      { group: 'Remained', source: 'Low 2018', target: 'Low 2019', value: 6164 },
-      { group: 'New', source: 'New 2018', target: 'High 2019', value: 3148 },
-      { group: 'New', source: 'New 2018', target: 'Low 2019', value: 3684 }
-    ],
-    [
-      { group: 'Remained', source: 'High 2018', target: 'High 2019', value: 3010 },
-      { group: 'Decreased', source: 'High 2018', target: 'Medium 2019', value: 2754 },
-      { group: 'Decreased', source: 'High 2018', target: 'Low 2019', value: 2812 },
-      { group: 'Increased', source: 'Medium 2018', target: 'High 2019', value: 909 },
-      { group: 'Remained', source: 'Medium 2018', target: 'Medium 2019', value: 12712 },
-      { group: 'Decreased', source: 'Medium 2018', target: 'Low 2019', value: 3367 },
-      { group: 'Increased', source: 'Low 2018', target: 'High 2019', value: 68 },
-      { group: 'Remained', source: 'Low 2018', target: 'Low 2019', value: 6164 },
-      { group: 'New', source: 'New 2018', target: 'High 2019', value: 3148 },
-      { group: 'New', source: 'New 2018', target: 'Medium 2019', value: 7279 },
-      { group: 'New', source: 'New 2018', target: 'Low 2019', value: 3684 }
+      {
+        otherValue: 234,
+        otherGroup: 'a',
+        otherSource: 'US',
+        otherTarget: 'High',
+        group: 'Remained',
+        source: 'High 2018',
+        target: 'High 2019',
+        value: 3010
+      },
+      {
+        otherValue: 342,
+        otherGroup: 'a',
+        otherSource: 'US',
+        otherTarget: 'Medium',
+        group: 'Decreased',
+        source: 'High 2018',
+        target: 'Medium 2019',
+        value: 2754
+      },
+      {
+        otherValue: 451,
+        otherGroup: 'a',
+        otherSource: 'US',
+        otherTarget: 'Low',
+        group: 'Decreased',
+        source: 'High 2018',
+        target: 'Low 2019',
+        value: 2812
+      },
+      {
+        otherValue: 534,
+        otherGroup: 'b',
+        otherSource: 'LA',
+        otherTarget: 'High',
+        group: 'Increased',
+        source: 'Medium 2018',
+        target: 'High 2019',
+        value: 9091
+      },
+      {
+        otherValue: 346,
+        otherGroup: 'b',
+        otherSource: 'LA',
+        otherTarget: 'Medium',
+        group: 'Remained',
+        source: 'Medium 2018',
+        target: 'Medium 2019',
+        value: 12712
+      },
+      {
+        otherValue: 467,
+        otherGroup: 'b',
+        otherSource: 'LA',
+        otherTarget: 'Low',
+        group: 'Decreased',
+        source: 'Medium 2018',
+        target: 'Low 2019',
+        value: 3367
+      },
+      {
+        otherValue: 234,
+        otherGroup: 'c',
+        otherSource: 'EU',
+        otherTarget: 'High',
+        group: 'Increased',
+        source: 'Low 2018',
+        target: 'High 2019',
+        value: 681
+      },
+      {
+        otherValue: 356,
+        otherGroup: 'c',
+        otherSource: 'EU',
+        otherTarget: 'Medium',
+        group: 'Increased',
+        source: 'Low 2018',
+        target: 'Medium 2019',
+        value: 8133
+      },
+      {
+        otherValue: 261,
+        otherGroup: 'c',
+        otherSource: 'EU',
+        otherTarget: 'Low',
+        group: 'Remained',
+        source: 'Low 2018',
+        target: 'Low 2019',
+        value: 6164
+      },
+      {
+        otherValue: 123,
+        otherGroup: 'd',
+        otherSource: 'NEW',
+        otherTarget: 'High',
+        group: 'New',
+        source: 'New 2018',
+        target: 'High 2019',
+        value: 3681
+      },
+      {
+        otherValue: 987,
+        otherGroup: 'd',
+        otherSource: 'NEW',
+        otherTarget: 'Medium',
+        group: 'New',
+        source: 'New 2018',
+        target: 'Medium 2019',
+        value: 7279
+      },
+      {
+        otherValue: 345,
+        otherGroup: 'd',
+        otherSource: 'NEW',
+        otherTarget: 'Low',
+        group: 'New',
+        source: 'New 2018',
+        target: 'Low 2019',
+        value: 3684
+      }
     ]
-    // new column on
-    // [
-    //   { group: 'Remained', source: 'High 2018', target: 'High 2019', value: 3010 },
-    //   { group: 'Decreased', source: 'High 2018', target: 'Medium 2019', value: 2754 },
-    //   { group: 'Decreased', source: 'High 2018', target: 'Low 2019', value: 2812 },
-    //   { group: 'Increased', source: 'Medium 2018', target: 'High 2019', value: 909 },
-    //   { group: 'Remained', source: 'Medium 2018', target: 'Medium 2019', value: 12712 },
-    //   { group: 'Decreased', source: 'Medium 2018', target: 'Low 2019', value: 3367 },
-    //   { group: 'Increased', source: 'Low 2018', target: 'High 2019', value: 68 },
-    //   // { group: 'Increased', source: 'Low 2018', target: 'Medium 2019', value: 1133 },
-    //   { group: 'Remained', source: 'Low 2018', target: 'Low 2019', value: 6164 },
-    //   { group: 'New', source: 'New 2018', target: 'High 2019', value: 3148 },
-    //   { group: 'New', source: 'New 2018', target: 'Medium 2019', value: 7279 },
-    //   { group: 'New', source: 'New 2018', target: 'Low 2019', value: 3684 },
-    //   { group: 'Increased', source: 'Low 2019', target: 'High 2020', value: 3148 },
-    //   { group: 'Decreased', source: 'High 2019', target: 'Medium 2020', value: 1279 },
-    //   { group: 'New', source: 'Medium 2019', target: 'Low 2020', value: 3684 },
-    // ]
-    // [
-    //   { group: 'Remained', source: 'High 2018', target: 'High 2019', value: 3010 },
-    //   { group: 'Decreased', source: 'High 2018', target: 'Medium 2019', value: 2754 },
-    //   { group: 'Decreased', source: 'High 2018', target: 'Low 2019', value: 2812 },
-    //   { group: 'Increased', source: 'Medium 2018', target: 'High 2019', value: 909 },
-    //   { group: 'Remained', source: 'Medium 2018', target: 'Medium 2019', value: 12712 },
-    //   { group: 'Decreased', source: 'Medium 2018', target: 'Low 2019', value: 3367 },
-    //   { group: 'Increased', source: 'Low 2018', target: 'High 2019', value: 68 },
-    //   { group: 'Increased', source: 'Low 2018', target: 'Medium 2019', value: 1133 },
-    //   { group: 'Remained', source: 'Low 2018', target: 'Low 2019', value: 6164 },
-    //   { group: 'New', source: 'New 2018', target: 'High 2019', value: 3148 },
-    //   { group: 'New', source: 'New 2018', target: 'Medium 2019', value: 7279 },
-    //   { group: 'New', source: 'New 2018', target: 'Low 2019', value: 3684 }
-    // ],
-    // [
-    //   { group: 'Remained', source: 'High 2018', target: 'High 2019', value: 3010 },
-    //   { group: 'Decreased', source: 'High 2018', target: 'Medium 2019', value: 2754 },
-    //   { group: 'Decreased', source: 'High 2018', target: 'Low 2019', value: 2812 },
-    //   { group: 'Increased', source: 'Medium 2018', target: 'High 2019', value: 909 },
-    //   { group: 'Remained', source: 'Medium 2018', target: 'Medium 2019', value: 12712 },
-    //   { group: 'Decreased', source: 'Medium 2018', target: 'Low 2019', value: 3367 },
-    //   { group: 'Increased', source: 'Low 2018', target: 'High 2019', value: 68 },
-    //   { group: 'Increased', source: 'Low 2018', target: 'Medium 2019', value: 1133 },
-    //   { group: 'Remained', source: 'Low 2018', target: 'Low 2019', value: 6164 },
-    //   { group: 'New', source: 'New 2018', target: 'High 2019', value: 3148 },
-    //   { group: 'New', source: 'New 2018', target: 'Medium 2019', value: 7279 },
-    //   { group: 'New', source: 'New 2018', target: 'Low 2019', value: 3684 }
-    // ],
-    // [
-    //   { group: 'Remained', source: 'High 2018', target: 'High 2019', value: 3010 },
-    //   { group: 'Decreased', source: 'High 2018', target: 'Medium 2019', value: 2754 },
-    //   { group: 'Decreased', source: 'High 2018', target: 'Low 2019', value: 2812 },
-    //   { group: 'Increased', source: 'Medium 2018', target: 'High 2019', value: 909 },
-    //   { group: 'Remained', source: 'Medium 2018', target: 'Medium 2019', value: 12712 },
-    //   { group: 'Decreased', source: 'Medium 2018', target: 'Low 2019', value: 3367 },
-    //   { group: 'Increased', source: 'Low 2018', target: 'High 2019', value: 68 },
-    //   { group: 'Increased', source: 'Low 2018', target: 'Medium 2019', value: 1133 },
-    //   { group: 'Remained', source: 'Low 2018', target: 'Low 2019', value: 6164 },
-    //   { group: 'New', source: 'New 2018', target: 'High 2019', value: 3148 },
-    //   { group: 'New', source: 'New 2018', target: 'Medium 2019', value: 7279 },
-    //   { group: 'New', source: 'New 2018', target: 'Low 2019', value: 3684 }
-    // ],
-    // this.linkStartData
   ];
-  dataStorage2: any = [
-    this.linkStartData,
-    [
-      { group: 'Remained', source: 'High 2018', target: 'High 2019', value: 3010 },
-      { group: 'Decreased', source: 'High 2018', target: 'Medium 2019', value: 2754 },
-      { group: 'Decreased', source: 'High 2018', target: 'Low 2019', value: 2812 },
-      { group: 'Increased', source: 'Medium 2018', target: 'High 2019', value: 909 },
-      { group: 'Remained', source: 'Medium 2018', target: 'Medium 2019', value: 12712 },
-      { group: 'Decreased', source: 'Medium 2018', target: 'Low 2019', value: 3367 },
-      { group: 'Increased', source: 'Low 2018', target: 'High 2019', value: 68 },
-      { group: 'Increased', source: 'Low 2018', target: 'Medium 2019', value: 8133 },
-      { group: 'Remained', source: 'Low 2018', target: 'Low 2019', value: 6164 },
-      { group: 'New', source: 'New 2018', target: 'High 2019', value: 3148 },
-      { group: 'New', source: 'New 2018', target: 'Medium 2019', value: 7279 },
-      { group: 'New', source: 'New 2018', target: 'Low 2019', value: 3684 },
-      { group: 'Increased', source: 'Low 2019', target: 'High 2020', value: 3148 },
-      { group: 'Decreased', source: 'High 2019', target: 'Medium 2020', value: 1279 },
-      { group: 'Decreased', source: 'Medium 2019', target: 'Low 2020', value: 3684 },
-      { group: 'Decreased', source: 'Medium 2019', target: 'High 2020', value: 2684 }
-    ],
-    this.linkStartData,
-    [
-      { group: 'Remained', source: 'test', target: 'High 2018', value: 3010 },
-      { group: 'Remained', source: 'High 2018', target: 'High 2019', value: 3010 },
-      { group: 'Decreased', source: 'High 2018', target: 'Medium 2019', value: 2754 },
-      { group: 'Decreased', source: 'High 2018', target: 'Low 2019', value: 2812 },
-      { group: 'Increased', source: 'Medium 2018', target: 'High 2019', value: 909 },
-      { group: 'Remained', source: 'Medium 2018', target: 'Medium 2019', value: 12712 },
-      { group: 'Decreased', source: 'Medium 2018', target: 'Low 2019', value: 3367 },
-      { group: 'Increased', source: 'Low 2018', target: 'High 2019', value: 68 },
-      { group: 'Increased', source: 'Low 2018', target: 'Medium 2019', value: 8133 },
-      { group: 'Remained', source: 'Low 2018', target: 'Low 2019', value: 6164 },
-      { group: 'New', source: 'New 2018', target: 'High 2019', value: 3148 },
-      { group: 'New', source: 'New 2018', target: 'Medium 2019', value: 7279 },
-      { group: 'New', source: 'New 2018', target: 'Low 2019', value: 3684 }
-    ],
-    this.linkStartData,
-    [
-      { group: 'Remained', source: 'test', target: 'High 2018', value: 3010 },
-      { group: 'Remained', source: 'High 2018', target: 'High 2019', value: 3010 },
-      { group: 'Decreased', source: 'High 2018', target: 'Medium 2019', value: 2754 },
-      { group: 'Decreased', source: 'High 2018', target: 'Low 2019', value: 2812 },
-      { group: 'Increased', source: 'Medium 2018', target: 'High 2019', value: 909 },
-      { group: 'Remained', source: 'Medium 2018', target: 'Medium 2019', value: 12712 },
-      { group: 'Decreased', source: 'Medium 2018', target: 'Low 2019', value: 3367 },
-      { group: 'Increased', source: 'Low 2018', target: 'High 2019', value: 68 },
-      { group: 'Increased', source: 'Low 2018', target: 'Medium 2019', value: 8133 },
-      { group: 'Remained', source: 'Low 2018', target: 'Low 2019', value: 6164 },
-      { group: 'New', source: 'New 2018', target: 'High 2019', value: 3148 },
-      { group: 'New', source: 'New 2018', target: 'Medium 2019', value: 7279 },
-      { group: 'New', source: 'New 2018', target: 'Low 2019', value: 3684 },
-      { group: 'Increased', source: 'Low 2019', target: 'High 2020', value: 3148 },
-      { group: 'Decreased', source: 'High 2019', target: 'Medium 2020', value: 1279 },
-      { group: 'Decreased', source: 'Medium 2019', target: 'Low 2020', value: 3684 },
-      { group: 'Decreased', source: 'Medium 2019', target: 'High 2020', value: 2684 }
-    ]
+  nodeStartData: any = [
+    { otherID: 'US', label: 'A', dataID: 'High 2018' },
+    { otherID: 'LA', label: 'B', dataID: 'Medium 2018' },
+    { otherID: 'EU', label: 'C', dataID: 'Low 2018' },
+    { otherID: 'NEW', label: 'D', dataID: 'New 2018' },
+    { otherID: 'High', label: 'E', dataID: 'High 2019' },
+    { otherID: 'Medium', label: 'F', dataID: 'Medium 2019' },
+    { otherID: 'Low', label: 'G', dataID: 'Low 2019' }
   ];
-  dataStorage3: any = [
-    this.linkStartData,
+  nodeDataStorage: any = [
+    this.nodeStartData,
+    this.nodeStartData,
+    this.nodeStartData,
     [
-      { group: 'Remained', source: 'High 2018', target: 'High 2019', value: 3010 },
-      { group: 'Decreased', source: 'High 2018', target: 'Medium 2019', value: 2754 },
-      { group: 'Decreased', source: 'High 2018', target: 'Low 2019', value: 2812 },
-      { group: 'Increased', source: 'Medium 2018', target: 'High 2019', value: 909 },
-      { group: 'Remained', source: 'Medium 2018', target: 'Medium 2019', value: 12712 },
-      { group: 'Decreased', source: 'Medium 2018', target: 'Low 2019', value: 3367 },
-      { group: 'Increased', source: 'Low 2018', target: 'High 2019', value: 68 },
-      { group: 'Increased', source: 'Low 2018', target: 'Medium 2019', value: 8133 },
-      { group: 'Remained', source: 'Low 2018', target: 'Low 2019', value: 6164 },
-      { group: 'New', source: 'New 2018', target: 'High 2019', value: 3148 },
-      { group: 'New', source: 'New 2018', target: 'Medium 2019', value: 7279 },
-      { group: 'New', source: 'New 2018', target: 'Low 2019', value: 3684 },
-      { group: 'Increased', source: 'Low 2019', target: 'new', value: 3148 },
-      { group: 'Decreased', source: 'High 2019', target: 'new', value: 1279 },
-      { group: 'Decreased', source: 'Medium 2019', target: 'new', value: 3684 },
-      { group: 'Decreased', source: 'Medium 2019', target: 'new', value: 2684 },
-      { group: 'Increased', source: 'new', target: 'High 2020', value: 3148 },
-      { group: 'Decreased', source: 'new', target: 'Medium 2020', value: 1279 },
-      { group: 'Decreased', source: 'new', target: 'Low 2020', value: 3684 },
-      { group: 'Decreased', source: 'new', target: 'High 2020', value: 2684 }
+      { label: 'B', dataID: 'Medium 2018' },
+      { label: 'C', dataID: 'Low 2018' },
+      { label: 'D', dataID: 'New 2018' },
+      { label: 'E', dataID: 'High 2019' },
+      { label: 'F', dataID: 'Medium 2019' },
+      { label: 'G', dataID: 'Low 2019' }
     ],
-    this.linkStartData,
-    [
-      { group: 'Decreased', source: 'High 2016', target: 'Low 2017', value: 1234 },
-      { group: 'Remained', source: 'Medium 2016', target: 'Medium 2017', value: 2010 },
-      { group: 'Decreased', source: 'High 2017', target: 'Low 2018', value: 1234 },
-      { group: 'Remained', source: 'Medium 2017', target: 'Medium 2018', value: 2010 },
-      { group: 'Increased', source: 'Low 2017', target: 'Medium 2018', value: 1234 },
-      { group: 'Decreased', source: 'High 2017', target: 'Medium 2018', value: 3010 },
-      { group: 'Remained', source: 'High 2018', target: 'High 2019', value: 3010 },
-      { group: 'Decreased', source: 'High 2018', target: 'Medium 2019', value: 2754 },
-      { group: 'Decreased', source: 'High 2018', target: 'Low 2019', value: 2812 },
-      { group: 'Increased', source: 'Medium 2018', target: 'High 2019', value: 909 },
-      { group: 'Remained', source: 'Medium 2018', target: 'Medium 2019', value: 12712 },
-      { group: 'Decreased', source: 'Medium 2018', target: 'Low 2019', value: 3367 },
-      { group: 'Increased', source: 'Low 2018', target: 'High 2019', value: 68 },
-      { group: 'Increased', source: 'Low 2018', target: 'Medium 2019', value: 8133 },
-      { group: 'Remained', source: 'Low 2018', target: 'Low 2019', value: 6164 },
-      { group: 'New', source: 'New 2018', target: 'High 2019', value: 3148 },
-      { group: 'New', source: 'New 2018', target: 'Medium 2019', value: 7279 },
-      { group: 'New', source: 'New 2018', target: 'Low 2019', value: 3684 }
-    ],
-    [
-      { group: 'Decreased', source: 'High 2017', target: 'Low 2018', value: 1234 },
-      { group: 'Remained', source: 'Medium 2017', target: 'Medium 2018', value: 2010 },
-      { group: 'Increased', source: 'Low 2017', target: 'Medium 2018', value: 1234 },
-      { group: 'Decreased', source: 'High 2017', target: 'Medium 2018', value: 3010 },
-      { group: 'Remained', source: 'High 2018', target: 'High 2019', value: 3010 },
-      { group: 'Decreased', source: 'High 2018', target: 'Medium 2019', value: 2754 },
-      { group: 'Decreased', source: 'High 2018', target: 'Low 2019', value: 2812 },
-      { group: 'Increased', source: 'Medium 2018', target: 'High 2019', value: 909 },
-      { group: 'Remained', source: 'Medium 2018', target: 'Medium 2019', value: 12712 },
-      { group: 'Decreased', source: 'Medium 2018', target: 'Low 2019', value: 3367 },
-      { group: 'Increased', source: 'Low 2018', target: 'High 2019', value: 68 },
-      { group: 'Increased', source: 'Low 2018', target: 'Medium 2019', value: 8133 },
-      { group: 'Remained', source: 'Low 2018', target: 'Low 2019', value: 6164 },
-      { group: 'New', source: 'New 2018', target: 'High 2019', value: 3148 },
-      { group: 'New', source: 'New 2018', target: 'Medium 2019', value: 7279 },
-      { group: 'New', source: 'New 2018', target: 'Low 2019', value: 3684 }
-    ]
+    this.nodeStartData
   ];
-  // nodeStartData: any = [
-  //   { did: 'High 2018' },
-  //   { did: 'Medium 2018' },
-  //   { did: 'Low 2018' },
-  //   { did: 'New 2018' },
-  //   { did: 'High 2019' },
-  //   { did: 'Medium 2019' },
-  //   { did: 'Low 2019' }
-  // ];
-  // nodeDataStorage: any = [
-  //   this.nodeStartData,
-  //   // this.nodeStartData,
-  //   // this.nodeStartData,
-  //   // this.nodeStartData,
-  //   // [
-  //   //   { did: 'High 2018' },
-  //   //   { did: 'Medium 2018' },
-  //   //   { did: 'Low 2018' },
-  //   //   { did: 'New 2018' },
-  //   //   { did: 'High 2019' },
-  //   //   { did: 'Low 2019' }
-  //   // ],
-  //   // this.nodeStartData,
-  //   // new column on far right
-  //   [
-  //     { did: 'High 2018' },
-  //     { did: 'Medium 2018' },
-  //     { did: 'Low 2018' },
-  //     { did: 'New 2018' },
-  //     { did: 'High 2019' },
-  //     { did: 'Medium 2019' },
-  //     { did: 'Low 2019' },
-  //     { did: 'High 2020' },
-  //     { did: 'Medium 2020' },
-  //     { did: 'Low 2020' },
-  //   ],
-  //   [
-  //     { did: 'High 2018' },
-  //     { did: 'Medium 2018' },
-  //     { did: 'Low 2018' },
-  //     { did: 'New 2018' },
-  //     { did: 'High 2019' },
-  //     { did: 'Medium 2019' },
-  //     { did: 'Low 2019' },
-  //     { did: 'Nothing' },
-  //     { did: 'High 2020' },
-  //     { did: 'Medium 2020' },
-  //     { did: 'Low 2020' },
-  //   ],
-  //   [
-  //     { did: 'High 2018' },
-  //     { did: 'Medium 2018' },
-  //     { did: 'Low 2018' },
-  //     { did: 'New 2018' },
-  //     { did: 'High 2019' },
-  //     { did: 'Medium 2019' },
-  //     { did: 'Low 2019' },
-  //     { did: 'High 2020' },
-  //     { did: 'Medium 2020' },
-  //     { did: 'Low 2020' },
-  //   ],
-  //   this.nodeStartData
-  // ];
 
   @Element()
   appEl: HTMLElement;
 
   componentWillLoad() {
     this.data1 = this.dataStorage1[this.stateTrigger];
-    this.data2 = this.dataStorage2[this.stateTrigger];
-    this.data3 = this.dataStorage3[this.stateTrigger];
-    // this.nodes = this.nodeDataStorage[this.stateTrigger];
+    this.nodes = this.nodeDataStorage[this.stateTrigger];
+    this.nodeData = this.nodes;
   }
   onClickFunc(ev) {
-    const d = ev.detail;
-
+    const d = ev.detail.data;
+    // console.log('click', ev, ev.detail, d);
     if (d) {
       const newClicks = [...this.clickElement];
       const index = this.clickElement.findIndex(o => {
@@ -486,45 +767,54 @@ export class AppAlluvialDiagram {
     }
   }
   onHoverFunc(d) {
-    this.hoverElement = d.detail;
+    this.hoverElement = d.detail.data;
   }
   onMouseOut() {
     this.hoverElement = '';
   }
   onChangeFunc(d) {
+    console.log(d);
     if (d.updated && (d.removed || d.added)) {
-      let updates = 'The bar chart has ';
+      let updates = 'The alluvial chart has ';
       if (d.removed) {
-        updates += 'removed ' + d.removed + ' bar' + (d.removed > 1 ? 's ' : ' ');
+        updates += 'removed ' + d.removed + ' link' + (d.removed > 1 ? 's ' : ' ');
       }
       if (d.added) {
-        updates += (d.removed ? 'and ' : '') + 'added ' + d.added + (d.removed ? '' : d.added > 1 ? ' bars' : ' bar');
+        updates += (d.removed ? 'and ' : '') + 'added ' + d.added + (d.removed ? '' : d.added > 1 ? ' links' : ' link');
       }
       this.chartUpdates = updates;
     } else if (d.updated) {
-      const newUpdate = "The chart's data has changed, but no bars were removed or added.";
+      const newUpdate = "The chart's data has changed, but no links were removed or added.";
       this.chartUpdates =
         newUpdate !== this.chartUpdates
           ? newUpdate
-          : "The chart's data has changed again, but no bars were removed or added.";
+          : "The chart's data has changed again, but no links were removed or added.";
     } else {
-      const newUpdate = "The chart's has updated, but no change to the data was made.";
+      const newUpdate = 'The chart has updated, but no change to the data was made.';
       this.chartUpdates =
         newUpdate !== this.chartUpdates
           ? newUpdate
-          : "The chart's has updated again, but no change to the data was made.";
+          : 'The chart has updated again, but no change to the data was made.';
     }
   }
+
   changeData(act) {
-    setTimeout(() => {
-      if (this.uniqueID !== 'POTENTIALLY_BUGGY_ID_CHANGE') {
-        this.uniqueID = 'POTENTIALLY_BUGGY_ID_CHANGE';
-      }
-    }, 10000);
+    // setTimeout(() => {
+    //   if (this.uniqueID !== 'POTENTIALLY_BUGGY_ID_CHANGE') {
+    //     this.uniqueID = 'POTENTIALLY_BUGGY_ID_CHANGE';
+    //   }
+    // }, 10000);
     const selectedActData = this['dataStorage' + act];
     this.stateTrigger = this.stateTrigger < selectedActData.length - 1 ? this.stateTrigger + 1 : 0;
     this['data' + act] = selectedActData[this.stateTrigger];
+    // console.log(this.chartUpdates);
     // this.nodes = this.nodeDataStorage[this.stateTrigger];
+  }
+
+  toggleNodeData() {
+    this.nodeData = this.nodeData && this.nodeData.length > 1 ? null : this.nodes;
+    // this.nodeID = this.nodeData && this.nodeData.length > 1 ? 'dataID' : 'id';
+    // console.log(this.nodeData, this.nodeID);
   }
 
   changeShowLinks() {
@@ -532,13 +822,19 @@ export class AppAlluvialDiagram {
     this.fillNodeConfig = this.fillNodeConfig ? false : true;
   }
 
+  changeTooltip() {
+    this.tooltipLabel.labelAccessor[0] !== 'group'
+      ? (this.tooltipLabel = {
+          labelAccessor: ['group', 'value'],
+          labelTitle: ['Group ', 'Value'],
+          format: ['', '0,0[.0][a]']
+        })
+      : (this.tooltipLabel = { labelAccessor: ['value'], labelTitle: ['Value'], format: ['0,0[.0][a]'] });
+  }
+
   changeCompareNodes() {
     this.compareNodeConfig = this.compareNodeConfig ? false : true;
   }
-
-  // changeLinkFillMode() {
-  //   this.fillModeLinkConfig = this.fillModeLinkConfig === 'group' ? 'source' : 'group';
-  // }
 
   changeLinkColor(band, toggleLinks) {
     if (toggleLinks) {
@@ -588,71 +884,176 @@ export class AppAlluvialDiagram {
   }
 
   changeDimension() {
-    this.padding =
-      this.padding.left === 60
-        ? {
-            top: 50,
-            left: 150,
-            right: 180,
-            bottom: 40
-          }
-        : {
-            top: 50,
-            left: 60,
-            right: 30,
-            bottom: 40
-          };
-    this.width = this.width === 800 ? 700 : 800;
+    this.width = this.width === 700 ? 400 : 700;
   }
+
   changeLabels() {
-    if (this.dataLabel.placement === 'inside') {
+    if (this.dataLabel.labelAccessor === 'otherID') {
+      this.dataLabel = {
+        visible: true,
+        placement: 'auto',
+        labelAccessor: 'dataID',
+        format: '',
+        collisionHideOnly: false,
+        collisionPlacement: 'inside'
+      };
+    } else {
+      this.dataLabel = {
+        visible: true,
+        placement: 'auto',
+        labelAccessor: 'otherID',
+        format: '',
+        collisionHideOnly: false,
+        collisionPlacement: 'inside'
+      };
+    }
+  }
+
+  changeAnnotations() {
+    this.annotations =
+      this.annotations[0].positionType === 'target'
+        ? [
+            {
+              note: {
+                label: 'test 1',
+                bgPadding: 0,
+                align: 'left',
+                wrap: 810
+              },
+              // className: 'link-labels-right',
+              data: {
+                otherGroup: 'b',
+                otherSource: 'LA',
+                otherTarget: 'Medium',
+                otherValue: 346,
+                group: 'Remained',
+                source: 'Medium 2018',
+                target: 'Medium 2019',
+                value: 12712
+              },
+              positionType: 'source',
+              disable: ['connector', 'subject'],
+              color: '#222222'
+              // sortOrder: 100 + currYrCt++,
+              // collisionHideOnly: targetArr.indexOf(node[this.targetAccessor])!== i ? true : false
+            }
+          ]
+        : [
+            {
+              note: {
+                label: 'test 1',
+                bgPadding: 0,
+                align: 'left',
+                wrap: 810
+              },
+              // className: 'link-labels-right',
+              data: {
+                otherGroup: 'b',
+                otherSource: 'LA',
+                otherTarget: 'Medium',
+                otherValue: 346,
+                group: 'Remained',
+                source: 'Medium 2018',
+                target: 'Medium 2019',
+                value: 12712
+              },
+              positionType: 'target',
+              disable: ['connector', 'subject'],
+              color: '#88ee22'
+              // sortOrder: 100 + currYrCt++,
+              // collisionHideOnly: targetArr.indexOf(node[this.targetAccessor])!== i ? true : false
+            }
+          ];
+  }
+
+  simpleChartToggle() {
+    this.suppressEvents = this.accessibility.elementsAreInterface ? true : false;
+    this.accessibility = this.accessibility.elementsAreInterface
+      ? {
+          elementDescriptionAccessor: 'note', // see Indonesia above
+          longDescription: 'An alluvial diagram which shows the movement of groups between 2018 and 2019.',
+          contextExplanation: 'This chart is standalone, and can be manipulated by the preceding buttons.',
+          executiveSummary: 'Medium is now the largest category in 2019.',
+          purpose: 'Examines the flow of groups, between cateogries, over years.',
+          structureNotes:
+            'The categories are sorted from high to low, with new at the bottom. Links are used to visualize the population of the group moving between categories year over year.',
+          statisticalNotes: 'Count of group members.',
+          onChangeFunc: d => {
+            this.onChangeFunc(d);
+          },
+          hideDataTableButton: false,
+          elementsAreInterface: false,
+          disableValidation: true,
+          keyboardNavConfig: { disabled: true }
+        }
+      : {
+          elementDescriptionAccessor: 'note', // see Indonesia above
+          longDescription: 'An alluvial diagram which shows the movement of groups between 2018 and 2019.',
+          contextExplanation: 'This chart is standalone, and can be manipulated by the preceding buttons.',
+          executiveSummary: 'Medium is now the largest category in 2019.',
+          purpose: 'Examines the flow of groups, between cateogries, over years.',
+          structureNotes:
+            'The categories are sorted from high to low, with new at the bottom. Links are used to visualize the population of the group moving between categories year over year.',
+          statisticalNotes: 'Count of group members.',
+          onChangeFunc: d => {
+            this.onChangeFunc(d);
+          },
+          hideDataTableButton: false,
+          elementsAreInterface: true,
+          disableValidation: true,
+          keyboardNavConfig: { disabled: false }
+        };
+  }
+
+  changeLabelAccessors() {
+    if (this.dataLabel.labelAccessor === 'dataID') {
       this.dataLabel = {
         visible: true, // !this.dataLabel.visible,
-        placement: 'outside',
-        labelAccessor: 'value',
-        format: '0.0[a]'
-      };
-
-      this.padding = {
-        top: 50,
-        left: 140,
-        right: 110,
-        bottom: 50
+        placement: 'inside',
+        labelAccessor: 'label',
+        format: ''
       };
     } else {
       this.dataLabel = {
         visible: true, // !this.dataLabel.visible,
         placement: 'inside',
-        labelAccessor: 'value',
-        format: '0.0[a]'
-      };
-
-      this.padding = {
-        top: 50,
-        left: 10,
-        right: 10,
-        bottom: 50
+        labelAccessor: 'dataID',
+        format: ''
       };
     }
   }
-  changeTooltip() {
-    this.tooltipLabel = { labelAccessor: ['value', 'test'], labelTitle: ['', ''], format: ['0,0[.0][a]', ''] };
-  }
 
   changeInteraction() {
-    // this.valueAccessor !== 'value' ? (this.valueAccessor = 'value') : (this.valueAccessor = 'otherValue');
     this.interactionState = this.interactionState[0] !== ['did'] ? ['did'] : ['source'];
-    console.log(this.interactionState);
+  }
+
+  toggleColors() {
+    this.colors = this.colors
+      ? undefined
+      : ['#E4E4E4', '#D90000', '#E4E4E4', '#E4E4E4', '#E4E4E4', '#E4E4E4', '#E4E4E4'];
   }
 
   changeValueAccessor() {
-    // this.valueAccessor !== 'value' ? (this.valueAccessor = 'value') : (this.valueAccessor = 'otherValue');
     this.valueAccessor = this.valueAccessor !== 'value' ? 'value' : 'otherValue';
   }
 
   changeGroupAccessor() {
-    // this.valueAccessor !== 'value' ? (this.valueAccessor = 'value') : (this.valueAccessor = 'otherValue');
-    this.groupAccessor = this.groupAccessor !== 'region' ? 'region' : null;
+    this.groupAccessor = this.groupAccessor !== 'group' ? 'group' : 'otherGroup';
+  }
+
+  changeSourceAccessor() {
+    this.sourceAccessor = this.sourceAccessor !== 'source' ? 'source' : 'otherSource';
+  }
+
+  changeTargetAccessor() {
+    this.targetAccessor = this.targetAccessor !== 'target' ? 'target' : 'otherTarget';
+  }
+
+  changeNodeIDAccessor() {
+    this.nodeID = this.nodeID !== 'dataID' ? 'dataID' : 'otherID';
+    this.sourceAccessor = this.sourceAccessor !== 'source' ? 'source' : 'otherSource';
+    this.targetAccessor = this.targetAccessor !== 'target' ? 'target' : 'otherTarget';
+    this.dataLabel = { ...this.dataLabel };
   }
 
   changeInteractionKey() {
@@ -696,7 +1097,7 @@ export class AppAlluvialDiagram {
     return (
       <div>
         {/* <div role="alert" aria-live="polite"> */}
-        <p>{this.chartUpdates}</p>
+        <p>heyyyyy {this.chartUpdates}</p>
         <div>
           <h4>I. Basic Links</h4>
           <button
@@ -708,190 +1109,126 @@ export class AppAlluvialDiagram {
           </button>
           <button
             onClick={() => {
-              this.changeCompareNodes();
+              this.toggleNodeData();
             }}
           >
-            toggle CompareNodes
+            toggle node data
+          </button>
+          <button
+            onClick={() => {
+              this.changeDimension();
+            }}
+          >
+            set dimensions
+          </button>
+          <button
+            onClick={() => {
+              this.toggleColors();
+            }}
+          >
+            toggle colors
+          </button>
+          <button
+            onClick={() => {
+              this.changeTooltip();
+            }}
+          >
+            change tooltip label
+          </button>
+          <button
+            onClick={() => {
+              this.changeValueAccessor();
+            }}
+          >
+            change value accessor
+          </button>
+          <button
+            onClick={() => {
+              this.changeGroupAccessor();
+            }}
+          >
+            change group accessor
+          </button>
+          <button
+            onClick={() => {
+              this.changeSourceAccessor();
+            }}
+          >
+            change source accessor
+          </button>
+          <button
+            onClick={() => {
+              this.changeTargetAccessor();
+            }}
+          >
+            change target accessor
+          </button>
+          <button
+            onClick={() => {
+              this.changeNodeIDAccessor();
+            }}
+          >
+            change nodeID accessor
           </button>
           <button
             onClick={() => {
               this.changeLabels();
             }}
           >
-            change label placement
+            toggle label accessor
           </button>
           <button
             onClick={() => {
-              this.changeShowLinks();
+              this.changeAnnotations();
             }}
           >
-            hide links
+            annotations
           </button>
           <button
             onClick={() => {
-              this.changeInteractionKey();
+              this.simpleChartToggle();
             }}
           >
-            TEST change interaction key
+            simple chart toggle
           </button>
+          <p>{this.nodeID}</p>
           <alluvial-diagram
             linkData={this.data1}
-            // nodeData={this.nodes}
-            width={500}
+            // nodeData={this.nodeData}
+            width={this.width}
             height={450}
             padding={this.padding}
             colors={this.colors}
-            sourceAccessor={'source'}
-            targetAccessor={'target'}
-            valueAccessor={'value'}
-            groupAccessor={'group'}
+            sourceAccessor={this.sourceAccessor}
+            targetAccessor={this.targetAccessor}
+            valueAccessor={this.valueAccessor}
+            groupAccessor={this.groupAccessor}
+            // nodeIDAccessor={this.nodeID}
             linkConfig={this.linkConfig}
             nodeConfig={this.nodeConfig}
-            nodeIDAccessor={'did'}
             mainTitle={''}
             subTitle={''}
             dataLabel={this.dataLabel}
-            // interactionKeys={this.interactionState}
             interactionKeys={this.interactionKeys}
             hoverOpacity={0.2}
-            showTooltip={false}
+            showTooltip={true}
+            colorPalette={'categorical'}
+            tooltipLabel={this.tooltipLabel}
             hoverHighlight={this.hoverElement}
             clickHighlight={this.clickElement}
-            onClickFunc={d => this.onClickFunc(d)}
-            onHoverFunc={d => this.onHoverFunc(d)}
-            onMouseOutFunc={() => this.onMouseOut()}
+            onClickEvent={d => this.onClickFunc(d)}
+            onHoverEvent={d => this.onHoverFunc(d)}
+            onMouseOutEvent={() => this.onMouseOut()}
+            // onInitialLoadEvent={e => console.log('load event', e.detail, e)}
+            // onDrawStartEvent={e => console.log('draw start event', e.detail, e)}
+            // onDrawEndEvent={e => console.log('draw end event', e.detail, e)}
+            // onTransitionEndEvent={e => console.log('transition event', e.detail, e)}
             clickStyle={this.clickStyle}
+            hoverStyle={this.hoverStyle}
+            annotations={this.annotations}
+            accessibility={this.accessibility}
+            suppressEvents={this.suppressEvents}
             // animationConfig={this.animations}
-          />
-        </div>
-        <div>
-          <h4>II. New Columns on Edge</h4>
-          <button
-            onClick={() => {
-              this.changeData(2);
-            }}
-          >
-            change data
-          </button>
-          <button
-            onClick={() => {
-              this.changeCompareNodes();
-            }}
-          >
-            toggle CompareNodes
-          </button>
-          <button
-            onClick={() => {
-              this.changeLabels();
-            }}
-          >
-            change label placement
-          </button>
-          <alluvial-diagram
-            linkData={this.data2}
-            // nodeData={this.nodes}
-            width={500}
-            height={450}
-            padding={this.padding}
-            colors={['#717171']}
-            sourceAccessor={'source'}
-            targetAccessor={'target'}
-            valueAccessor={'value'}
-            groupAccessor={'group'}
-            linkConfig={{
-              ...{
-                visible: this.visibleLinkConfig,
-                // fillMode: 'source',
-                fillMode: 'none',
-                opacity: 0.5
-              }
-            }}
-            nodeConfig={{
-              ...{
-                width: 15,
-                alignment: 'center',
-                padding: 10,
-                compare: this.compareNodeConfig,
-                fill: this.fillNodeConfig
-              }
-            }}
-            nodeIDAccessor={'did'}
-            mainTitle={''}
-            subTitle={''}
-            dataLabel={this.dataLabel}
-            interactionKeys={this.interactionState}
-            hoverOpacity={0.2}
-            showTooltip={false}
-            hoverHighlight={this.hoverElement}
-            clickHighlight={this.clickElement}
-            onClickFunc={d => this.onClickFunc(d)}
-            onHoverFunc={d => this.onHoverFunc(d)}
-            onMouseOutFunc={() => this.onMouseOut()}
-          />
-        </div>
-        <div>
-          <h4>III. New Node between Nodes</h4>
-          <button
-            onClick={() => {
-              this.changeData(3);
-            }}
-          >
-            change data
-          </button>
-          <button
-            onClick={() => {
-              this.changeCompareNodes();
-            }}
-          >
-            toggle CompareNodes
-          </button>
-          <button
-            onClick={() => {
-              this.changeLabels();
-            }}
-          >
-            change label placement
-          </button>
-          <alluvial-diagram
-            linkData={this.data3}
-            // nodeData={this.nodes}
-            width={500}
-            height={450}
-            padding={this.padding}
-            // colors={['#717171']}
-            sourceAccessor={'source'}
-            targetAccessor={'target'}
-            valueAccessor={'value'}
-            groupAccessor={'group'}
-            linkConfig={{
-              ...{
-                visible: this.visibleLinkConfig,
-                fillMode: 'source',
-                // fillMode: 'none',
-                opacity: 0.8
-              }
-            }}
-            nodeConfig={{
-              ...{
-                width: 15,
-                alignment: 'center',
-                padding: 10,
-                compare: this.compareNodeConfig,
-                fill: this.fillNodeConfig
-              }
-            }}
-            nodeIDAccessor={'did'}
-            mainTitle={''}
-            subTitle={''}
-            dataLabel={this.dataLabel}
-            interactionKeys={this.interactionState}
-            hoverOpacity={0.2}
-            showTooltip={false}
-            hoverHighlight={this.hoverElement}
-            clickHighlight={this.clickElement}
-            onClickFunc={d => this.onClickFunc(d)}
-            onHoverFunc={d => this.onHoverFunc(d)}
-            onMouseOutFunc={() => this.onMouseOut()}
           />
         </div>
       </div>
