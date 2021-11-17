@@ -5,10 +5,10 @@ Object {
   "alluvial-diagram": Array [
     Object {
       "data": Object {
-        "dependencies": 114,
+        "dependencies": 111,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 114,
+        "totalDependencies": 111,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -23,10 +23,10 @@ Object {
   "bar-chart": Array [
     Object {
       "data": Object {
-        "dependencies": 111,
+        "dependencies": 110,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 111,
+        "totalDependencies": 110,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -41,10 +41,10 @@ Object {
   "bivariate-mapbox-map": Array [
     Object {
       "data": Object {
-        "dependencies": 351,
+        "dependencies": 315,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 351,
+        "totalDependencies": 315,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -58,11 +58,15 @@ Object {
   ],
   "charts": Array [
     Object {
+      "data": "No lockfile found.",
+      "type": "info",
+    },
+    Object {
       "data": Object {
-        "dependencies": 145,
+        "dependencies": 134,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 145,
+        "totalDependencies": 134,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -77,10 +81,10 @@ Object {
   "charts-angular": Array [
     Object {
       "data": Object {
-        "dependencies": 1530,
+        "dependencies": 1827,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 1530,
+        "totalDependencies": 1827,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -95,10 +99,10 @@ Object {
   "charts-react": Array [
     Object {
       "data": Object {
-        "dependencies": 397,
+        "dependencies": 350,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 397,
+        "totalDependencies": 350,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -113,10 +117,10 @@ Object {
   "circle-packing": Array [
     Object {
       "data": Object {
-        "dependencies": 112,
+        "dependencies": 111,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 112,
+        "totalDependencies": 111,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -131,10 +135,10 @@ Object {
   "clustered-bar-chart": Array [
     Object {
       "data": Object {
-        "dependencies": 112,
+        "dependencies": 111,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 112,
+        "totalDependencies": 111,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -149,10 +153,10 @@ Object {
   "data-table": Array [
     Object {
       "data": Object {
-        "dependencies": 106,
+        "dependencies": 104,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 106,
+        "totalDependencies": 104,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -167,10 +171,10 @@ Object {
   "dumbbell-plot": Array [
     Object {
       "data": Object {
-        "dependencies": 111,
+        "dependencies": 110,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 111,
+        "totalDependencies": 110,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -185,10 +189,32 @@ Object {
   "heat-map": Array [
     Object {
       "data": Object {
-        "dependencies": 111,
+        "dependencies": 110,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 111,
+        "totalDependencies": 110,
+        "vulnerabilities": Object {
+          "critical": 0,
+          "high": 0,
+          "info": 0,
+          "low": 0,
+          "moderate": 0,
+        },
+      },
+      "type": "auditSummary",
+    },
+  ],
+  "keyboard-instructions": Array [
+    Object {
+      "data": "No lockfile found.",
+      "type": "info",
+    },
+    Object {
+      "data": Object {
+        "dependencies": 102,
+        "devDependencies": 0,
+        "optionalDependencies": 0,
+        "totalDependencies": 102,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -201,24 +227,6 @@ Object {
     },
   ],
   "line-chart": Array [
-    Object {
-      "data": Object {
-        "dependencies": 115,
-        "devDependencies": 0,
-        "optionalDependencies": 0,
-        "totalDependencies": 115,
-        "vulnerabilities": Object {
-          "critical": 0,
-          "high": 0,
-          "info": 0,
-          "low": 0,
-          "moderate": 0,
-        },
-      },
-      "type": "auditSummary",
-    },
-  ],
-  "parallel-plot": Array [
     Object {
       "data": Object {
         "dependencies": 114,
@@ -236,7 +244,43 @@ Object {
       "type": "auditSummary",
     },
   ],
+  "parallel-plot": Array [
+    Object {
+      "data": Object {
+        "dependencies": 113,
+        "devDependencies": 0,
+        "optionalDependencies": 0,
+        "totalDependencies": 113,
+        "vulnerabilities": Object {
+          "critical": 0,
+          "high": 0,
+          "info": 0,
+          "low": 0,
+          "moderate": 0,
+        },
+      },
+      "type": "auditSummary",
+    },
+  ],
   "pie-chart": Array [
+    Object {
+      "data": Object {
+        "dependencies": 110,
+        "devDependencies": 0,
+        "optionalDependencies": 0,
+        "totalDependencies": 110,
+        "vulnerabilities": Object {
+          "critical": 0,
+          "high": 0,
+          "info": 0,
+          "low": 0,
+          "moderate": 0,
+        },
+      },
+      "type": "auditSummary",
+    },
+  ],
+  "scatter-plot": Array [
     Object {
       "data": Object {
         "dependencies": 111,
@@ -254,31 +298,13 @@ Object {
       "type": "auditSummary",
     },
   ],
-  "scatter-plot": Array [
-    Object {
-      "data": Object {
-        "dependencies": 112,
-        "devDependencies": 0,
-        "optionalDependencies": 0,
-        "totalDependencies": 112,
-        "vulnerabilities": Object {
-          "critical": 0,
-          "high": 0,
-          "info": 0,
-          "low": 0,
-          "moderate": 0,
-        },
-      },
-      "type": "auditSummary",
-    },
-  ],
   "stacked-bar-chart": Array [
     Object {
       "data": Object {
-        "dependencies": 112,
+        "dependencies": 111,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 112,
+        "totalDependencies": 111,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -308,31 +334,14 @@ Object {
       "type": "auditSummary",
     },
   ],
-  "utils": Array [
-    Object {
-      "data": Object {
-        "dependencies": 189,
-        "devDependencies": 0,
-        "optionalDependencies": 0,
-        "totalDependencies": 189,
-        "vulnerabilities": Object {
-          "critical": 0,
-          "high": 0,
-          "info": 0,
-          "low": 0,
-          "moderate": 0,
-        },
-      },
-      "type": "auditSummary",
-    },
-  ],
+  "utils": Array [],
   "utils-dev": Array [
     Object {
       "data": Object {
-        "dependencies": 202,
+        "dependencies": 200,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 202,
+        "totalDependencies": 200,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -344,13 +353,13 @@ Object {
       "type": "auditSummary",
     },
   ],
-  "visa-charts-lib": Array [
+  "visa-chart-components": Array [
     Object {
       "data": Object {
-        "dependencies": 1544,
+        "dependencies": 1486,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 1544,
+        "totalDependencies": 1486,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -365,10 +374,10 @@ Object {
   "world-map": Array [
     Object {
       "data": Object {
-        "dependencies": 129,
+        "dependencies": 128,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 129,
+        "totalDependencies": 128,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,

@@ -95,6 +95,21 @@
     "workbox-build": "4.3.1",
     "es-check": "5.2.0"
   },
+  "resolutions": {
+    "ansi-regex": "^5.0.1",
+    "browserslist": "^4.16.5",
+    "glob-parent": "^5.1.2",
+    "hosted-git-info": "^2.8.9",
+    "node-notifier": "^8.0.1",
+    "path-parse": "^1.0.7",
+    "property-expr": "^2.0.3",
+    "ssri": "^6.0.2",
+    "tar": "^4.4.18",
+    "tmpl": "^1.0.5",
+    "trim-newlines": "^3.0.1",
+    "trim-off-newlines": "^1.0.3",
+    "ws": "^5.2.3"
+  },
   "config": {
     "scripts": {
       "bootstrap": "Install and builds all packages",
