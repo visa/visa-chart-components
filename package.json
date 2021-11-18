@@ -41,6 +41,7 @@
     "prettier-all-check": "prettier --config  ./.prettierrc --ignore ./.prettierignore --debug-check \"**/*.{js,jsx,ts,tsx,html,jsx,json,css,scss,md}\"",
     "prettier-all": "prettier --config  ./.prettierrc --ignore ./.prettierignore --write \"**/*.{js,jsx,ts,tsx,html,jsx,json,css,scss,md}\"",
     "release": "node scripts/alter-change-log.js && lerna version --no-push --conventional-commits --conventional-graduate --no-commit-hooks",
+    "release:no-grad": "node scripts/alter-change-log.js && lerna version --no-push --conventional-commits --no-commit-hooks",
     "release:no-git-tag": "node scripts/alter-change-log.js && lerna version --no-push --no-git-tag-version --conventional-commits --conventional-graduate --no-commit-hooks",
     "install:demo": "npm i @visa/visa-charts-utils && npm -C ./packages/visa-charts-demo run install:demo",
     "install:angular-demo": "npm -C ./packages/charts-angular-demo run install:demo",
