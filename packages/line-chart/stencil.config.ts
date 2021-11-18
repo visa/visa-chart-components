@@ -28,7 +28,7 @@ export const config: Config | any = {
     }),
     angularOutputTarget({
       componentCorePackage: '@visa/line-chart',
-      directivesProxyFile: '../charts-angular/src/directives/line-chart.ts'
+      directivesProxyFile: '../charts-angular/src/lib/directives/line-chart.ts'
     }),
     { type: 'dist' },
     { type: 'www' }

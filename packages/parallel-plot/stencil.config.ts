@@ -28,7 +28,7 @@ export const config: Config | any = {
     }),
     angularOutputTarget({
       componentCorePackage: '@visa/parallel-plot',
-      directivesProxyFile: '../charts-angular/src/directives/parallel-plot.ts'
+      directivesProxyFile: '../charts-angular/src/lib/directives/parallel-plot.ts'
     }),
     { type: 'dist' },
     { type: 'www' }

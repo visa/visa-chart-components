@@ -203,19 +203,23 @@ const changeHandler = d => {
 
 [Events in stencil.js](https://stenciljs.com/docs/events) dispatch [Custom DOM events](https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Creating_and_triggering_events) for other components to handle, we use Stencil's @Event() decorator to emit events (click, hover, mouseOut) from end user activity on our charts.
 
-| Name              | Type                 | Default Value(s)                              | Description                                                                                                                                                                                                                                                                             |
-| ----------------- | -------------------- | --------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `suppressEvents`  | boolean              | false                                         | Suppresses and disables all event emitters. Setting to true can increase performance for non-interactive charts.                                                                                                                                                                        |
-| `cursor`          | string               | 'default'                                     | Changes pointer type during mouse over on elements. Valid values are 'default' or 'pointer'.                                                                                                                                                                                            |
-| `onClickFunc`     | function             | `undefined`                                   | When clickFunc event occurs (e.g., mouse/keyboard click on chart geometry), this event handler will be called with the custom event object (e.g., e), containing data at e.detail. You will need to construct your own functionality of what actions to take within the callback.       |
-| `clickHighlight`  | object[]             | []                                            | Data used to track chart selections, an array of objects which includes keys that map to above accessors.                                                                                                                                                                               |
-| `clickStyle`      | object (custom type) | [IClickStyleType](../types/src/prop-types.ts) | Sets the styling of elements when they are selected, _see object definition below_.                                                                                                                                                                                                     |
-| `onHoverFunc`     | function             | `undefined`                                   | When hoverFunc event occurs (e.g., mouse hover/keyboard focus on chart geometry), this event handler will be called with the custom event object (e.g., e), containing data at e.detail. You will need to construct your own functionality of what actions to take within the callback. |
-| `onMouseOutFunc`  | function             | `undefined`                                   | When mouseOutFunc event occurs (e.g., mouse/keyboard blur on chart geometry), this event handler will be called, and has no data object. You will need to construct your own functionality of what actions to take within the callback.                                                 |
-| `hoverHighlight`  | object               | {}                                            | Datum object used to track active chart element, the object should include keys that map to above accessors.                                                                                                                                                                            |
-| `hoverStyle`      | object (custom type) | [IHoverStyleType](../types/src/prop-types.ts) | Sets the styling of a elements when they are hovered/focused, _see object definition below_.                                                                                                                                                                                            |
-| `interactionKeys` | string[]             | []                                            | Sets the key names of data to interact with.                                                                                                                                                                                                                                            |
-| `hoverOpacity`    | number               | 1                                             | Sets opacity of inactive elements when hovering/focused on a chart geometry.                                                                                                                                                                                                            |
+| Name                   | Type                 | Default Value(s)                              | Description                                                                                                                                                                                                                                                                                                                     |
+| ---------------------- | -------------------- | --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `suppressEvents`       | boolean              | false                                         | Suppresses and disables click, hover and mouseOut event emitters. Setting to true can increase performance for non-interactive charts.                                                                                                                                                                                          |
+| `cursor`               | string               | 'default'                                     | Changes pointer type during mouse over on elements. Valid values are 'default' or 'pointer'.                                                                                                                                                                                                                                    |
+| `onClickEvent`         | function             | `undefined`                                   | When clickEvent event occurs (e.g., mouse/keyboard click on chart geometry), this event handler will be called with the custom event object (e.g., e), containing data and target node at e.detail `{data: d, target: n}`. You will need to construct your own functionality of what actions to take within the callback.       |
+| `clickHighlight`       | object[]             | []                                            | Data used to track chart selections, an array of objects which includes keys that map to above accessors.                                                                                                                                                                                                                       |
+| `clickStyle`           | object (custom type) | [IClickStyleType](../types/src/prop-types.ts) | Sets the styling of an element when they are selected, _see object definition below_.                                                                                                                                                                                                                                           |
+| `onHoverEvent`         | function             | `undefined`                                   | When hoverEvent event occurs (e.g., mouse hover/keyboard focus on chart geometry), this event handler will be called with the custom event object (e.g., e), containing data and target node at e.detail `{data: d, target: n}`. You will need to construct your own functionality of what actions to take within the callback. |
+| `onMouseOutEvent`      | function             | `undefined`                                   | When mouseOutEvent event occurs (e.g., mouse/keyboard blur on chart geometry), this event handler will be called, and has no data object. You will need to construct your own functionality of what actions to take within the callback.                                                                                        |
+| `hoverHighlight`       | object               | {}                                            | Datum object used to track active chart element, the object should include keys that map to above accessors.                                                                                                                                                                                                                    |
+| `hoverStyle`           | object (custom type) | [IHoverStyleType](../types/src/prop-types.ts) | Sets the styling of elements when they are hovered/focused, _see object definition below_.                                                                                                                                                                                                                                      |
+| `interactionKeys`      | string[]             | []                                            | Sets the column names of data to interact with.                                                                                                                                                                                                                                                                                 |
+| `hoverOpacity`         | number               | 1                                             | Sets opacity of inactive elements when hovering/focused on a chart geometry.                                                                                                                                                                                                                                                    |
+| `onInitialLoadEvent`   | function             | `undefined`                                   | When initalLoad event occurs (e.g., chart is mounted to window), this event handler will be called with the custom event object (e.g., e), containing the corresponding chartID at e.detail. You will need to construct your own functionality of what actions to take within the callback.                                     |
+| `onDrawStartEvent`     | function             | `undefined`                                   | When drawStart event occurs (e.g., chart render function is called), this event handler will be called with the custom event object (e.g., e), containing the corresponding chartID at e.detail. You will need to construct your own functionality of what actions to take within the callback.                                 |
+| `onDrawEndEvent`       | function             | `undefined`                                   | When drawEnd event occurs (e.g., chart's stencil lifecycle completes), this event handler will be called with the custom event object (e.g., e), containing the corresponding chartID at e.detail. You will need to construct your own functionality of what actions to take within the callback.                               |
+| `onTransitionEndEvent` | function             | `undefined`                                   | When transitionEnd event occurs (e.g., chart geometry's transition lifecycle completes), this event handler will be called with the custom event object (e.g., e), containing the corresponding chartID at e.detail. You will need to construct your own functionality of what actions to take within the callback.             |
 
 <br>
 
@@ -240,12 +244,16 @@ const changeHandler = d => {
 // note this only tracks a single click, you need your own logic to build the array of currnet selections made by user and then pass that result back to chart
 //...
 const clickHandler = evt => {
-  const d = evt.detail; // data is located here
+  const d = evt.detail.data; // data is located here
+  const t = evt.detail.target; // chart mark/label clicked is located here
+
   this.currentClickedElement = [d]; // this is passed to clickHighlight prop
 };
 
 const hoverHandler = evt => {
-  const d = evt.detail; // data is located here
+  const d = evt.detail.data; // data is located here
+  const t = evt.detail.target; // chart mark/label clicked is located here
+
   this.currentHoveredElement = d; // this is passed to hoverHighlight prop
 };
 
@@ -260,11 +268,11 @@ const mouseOutHandler = evt => {
   yAccessor={'value'}
   groupAccessor={'group'}
   interactionKeys={['group']}
-  onClickFunc={this.onClickFunc}
+  onClickEvent={this.onClickEvent}
   clickHighlight={this.currentClickedElement}
   clickStyle={this.clickStyle}
-  onHoverFunc={this.onHoverFunc}
-  onMouseOutFunc={this.onMouseOut}
+  onHoverEvent={this.onHoverEvent}
+  onMouseOutEvent={this.onMouseOut}
   hoverHighlight={this.currentHoveredElement}
   hoverStyle={this.hoverStyle}
 />;

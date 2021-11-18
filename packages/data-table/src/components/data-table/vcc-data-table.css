@@ -37,7 +37,12 @@
 
 .vcc-data-table {
   border-collapse: collapse;
-  width: 100%;
+  flex: 1;
+}
+
+.vcc-secondary-data-table {
+  margin-left: 20px;
+  flex: 1;
 }
 
 .vcc-data-table.vcc-state--single-select .vcc-tbody .vcc-tr:hover,

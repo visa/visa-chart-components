@@ -1,5 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`<circle-packing> rendered-html event-emitter generic event testing customized mark based event testing [interaction] clickEvent: customized for circle-pack event object should emit and contain first data record when first mark is clicked 1`] = `<circle class="node node-level-1" cursor="default" data-cx="-84.1188" data-cy="-26.8081" data-id="circle-World-Mexico" data-r="99.35968555800707" data-role="img" data-testid="circle" data-translate-x="196" data-translate-y="196" fill="url(#circle-packing-test_texture_1)" focusable="false" id="circle-packing-test-123457-123457-123457" opacity="1" r="99.35968555800707" role="presentation" stroke="#666666" stroke-dasharray="" stroke-width="1" tabindex="-1" transform="translate(-84.1188,-26.8081)"></circle>`;
+
+exports[`<circle-packing> rendered-html event-emitter generic event testing mark based events [event] hoverEvent: event object should emit and contain first data record when first mark is hovered 1`] = `<circle class="node node-level-1" cursor="default" data-cx="-84.1188" data-cy="-26.8081" data-id="circle-World-Mexico" data-r="99.35968555800707" data-role="img" data-testid="circle" data-translate-x="196" data-translate-y="196" fill="url(#circle-packing-test_texture_1)" focusable="false" id="circle-packing-test-123457-123457-123457" opacity="1" r="99.35968555800707" role="presentation" stroke="#666666" stroke-dasharray="" stroke-width="1" tabindex="-1" transform="translate(-84.1188,-26.8081)"></circle>`;
+
 exports[`<circle-packing> rendered-html generic test suite accessibility: should not print accessibility console warnings and logs when accessibility.disableValidation set to true 1`] = `Array []`;
 
 exports[`<circle-packing> rendered-html generic test suite accessibility: should not print accessibility console warnings and logs when accessibility.disableValidation set to true 2`] = `Array []`;

@@ -61,8 +61,8 @@ describe('<circle-packing>', () => {
     const EXPECTEDPARENTACCESSOR = 'Country';
     const EXPECTEDSIZEACCESSOR = 'value';
     const EXPECTEDUNIQUEID = 'circle-packing-test';
-    const MINVALUE = 4;
-    const MAXVALUE = 73;
+    // const MINVALUE = 4;
+    // const MAXVALUE = 73;
     // END:minimal props need to be passed to component
 
     // disable accessibility validation to keep output stream(terminal) clean
@@ -80,6 +80,13 @@ describe('<circle-packing>', () => {
       component.parentAccessor = EXPECTEDPARENTACCESSOR;
       component.sizeAccessor = EXPECTEDSIZEACCESSOR;
       component.accessibility = EXPECTEDACCESSIBILITY;
+
+      // for circle pack specifically we need
+      jest.useFakeTimers();
+    });
+
+    afterEach(() => {
+      jest.clearAllTimers();
     });
 
     it('should build', () => {
@@ -158,17 +165,14 @@ describe('<circle-packing>', () => {
 
     // current these tests are failing due to attrTween / jsdom error where (_, i, n) is undefined
     // in the attrTween callback function
-    describe.skip('interaction', () => {
-      beforeEach(() => {
-        jest.useFakeTimers();
-      });
-      afterEach(() => {
-        jest.clearAllTimers();
-      });
+    describe('interaction', () => {
+      // for now we are only testing interaction on circle pack without textures applied
       describe('circle pack based interaction tests', () => {
         const innerTestProps = {
           transitionEndAllSelector: '[data-testid=circle]',
-          runJestTimers: true
+          runJestTimers: true,
+          accessibility: { disableValidation: true, hideTextures: true },
+          useFilter: false
         };
         const innerTestSelector = '[data-testid=circle][data-id=circle-World-Mexico]';
         const innerNegTestSelector = '[data-testid=circle][data-id=circle-World-Canada]';
@@ -202,7 +206,9 @@ describe('<circle-packing>', () => {
           hoverOpacity: EXPECTEDHOVEROPACITY,
           interactionKeys: ['Country'],
           transitionEndAllSelector: '[data-testid=circle]',
-          runJestTimers: true
+          runJestTimers: true,
+          accessibility: { disableValidation: true, hideTextures: true },
+          useFilter: false
         };
 
         it(`[${unitTestInteraction[testLoad].group}] ${unitTestInteraction[testLoad].prop}: ${
@@ -232,7 +238,9 @@ describe('<circle-packing>', () => {
           hoverOpacity: EXPECTEDHOVEROPACITY,
           interactionKeys: ['Type', 'Country'],
           transitionEndAllSelector: '[data-testid=circle]',
-          runJestTimers: true
+          runJestTimers: true,
+          accessibility: { disableValidation: true, hideTextures: true },
+          useFilter: false
         };
         it(`[${unitTestInteraction[testLoad].group}] ${unitTestInteraction[testLoad].prop}: ${
           unitTestInteraction[testLoad].name
@@ -271,7 +279,9 @@ describe('<circle-packing>', () => {
         const innerTestProps = {
           clickStyle: CUSTOMCLICKSTYLE,
           hoverOpacity: EXPECTEDHOVEROPACITY,
-          interactionKeys: ['Country']
+          interactionKeys: ['Country'],
+          accessibility: { disableValidation: true, hideTextures: true },
+          useFilter: false
         };
 
         it(`[${unitTestInteraction[testLoad].group}] ${unitTestInteraction[testLoad].prop}: ${
@@ -299,7 +309,9 @@ describe('<circle-packing>', () => {
         const newInnerTestProps = {
           clickStyle: CUSTOMCLICKSTYLE,
           hoverOpacity: EXPECTEDHOVEROPACITY,
-          interactionKeys: ['Type', 'Country']
+          interactionKeys: ['Type', 'Country'],
+          accessibility: { disableValidation: true, hideTextures: true },
+          useFilter: false
         };
         it(`[${unitTestInteraction[testLoad].group}] ${unitTestInteraction[testLoad].prop}: ${
           unitTestInteraction[testLoad].name
@@ -327,21 +339,30 @@ describe('<circle-packing>', () => {
 
     // current these tests are failing due to attrTween / jsdom error where (_, i, n) is undefined
     // in the attrTween callback function
-    describe.skip('event-emitter', () => {
+    describe('event-emitter', () => {
       // Open issue: https://github.com/ionic-team/stencil/issues/1964
       // Jest throwing TypeError : mouseover,mouseout, focus, blur etc.
       // TECH-DEBT: Once above issue is resolved, write more precise test for event params.
+      beforeEach(() => {
+        // MOCK MATH.Random TO HANDLE UNIQUE ID CODE FROM ACCESSIBILITY UTIL
+        jest.spyOn(global.Math, 'random').mockReturnValue(0.123456789);
+      });
 
+      afterEach(() => {
+        // RESTORE GLOBAL FUNCTION FROM MOCK AFTER TEST
+        jest.spyOn(global.Math, 'random').mockRestore();
+      });
       describe('generic event testing', () => {
         describe('mark based events', () => {
           Object.keys(unitTestEvent).forEach(test => {
             const innerTestProps = {
               showTooltip: false,
-              nestedDataLocation: true
+              nestedDataLocation: true,
+              transitionEndAllSelector: '[data-testid=circle]'
             };
             const innerTestSelector = '[data-testid=circle][data-id=circle-World-Mexico]';
-            // we have to handle clickFunc separately due to this.zooming boolean in circle-packing load
-            if (test !== 'event_clickFunc_emit') {
+            // we have to handle clickEvent separately due to this.zooming boolean in circle-packing load
+            if (test !== 'event_clickEvent_emit') {
               it(`[${unitTestEvent[test].group}] ${unitTestEvent[test].prop}: ${unitTestEvent[test].name}`, () =>
                 unitTestEvent[test].testFunc(component, page, innerTestProps, innerTestSelector, EXPECTEDDATA[0]));
             }
@@ -350,11 +371,11 @@ describe('<circle-packing>', () => {
         describe('customized mark based event testing', () => {
           const testSelector = '[data-testid=circle][data-id=circle-World-Mexico]';
           const allSelector = '[data-testid=circle]';
-          it('[interaction] clickFunc: customized for circle-pack event object should emit and contain first data record when first mark is clicked', async () => {
+          it('[interaction] clickEvent: customized for circle-pack event object should emit and contain first data record when first mark is clicked', async () => {
             // ARRANGE
             const _callback = jest.fn();
             page.root.appendChild(component);
-            page.doc.addEventListener('clickFunc', _callback);
+            page.doc.addEventListener('clickEvent', _callback);
             await page.waitForChanges();
 
             // ACT - Flush Initial Transition
@@ -372,7 +393,8 @@ describe('<circle-packing>', () => {
 
             // ASSERT
             expect(_callback).toHaveBeenCalled();
-            expect(_callback.mock.calls[0][0].detail).toMatchObject(EXPECTEDDATA[0]);
+            expect(_callback.mock.calls[0][0].detail.target).toMatchSnapshot();
+            expect(_callback.mock.calls[0][0].detail.data).toMatchObject(EXPECTEDDATA[0]);
           });
         });
       });
@@ -654,7 +676,7 @@ describe('<circle-packing>', () => {
                 '<p style="margin: 0;">Testing123:<b>Mexico</b><br>Count:<b>$73</b><br></p>'
             };
             const innerTestProps = { ...unitTestTooltip[test].testProps, ...innerTooltipProps[test] };
-            // we have to handle clickFunc separately due to this.zooming boolean in circle-packing load
+            // we have to handle clickEvent separately due to this.zooming boolean in circle-packing load
 
             it(`${unitTestTooltip[test].prop}: ${unitTestTooltip[test].name}`, () =>
               unitTestTooltip[test].testFunc(

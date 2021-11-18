@@ -28,7 +28,7 @@ export const config: Config | any = {
     }),
     angularOutputTarget({
       componentCorePackage: '@visa/world-map',
-      directivesProxyFile: '../charts-angular/src/directives/world-map.ts'
+      directivesProxyFile: '../charts-angular/src/lib/directives/world-map.ts'
     }),
     { type: 'dist' },
     { type: 'www' }

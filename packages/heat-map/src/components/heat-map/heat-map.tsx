@@ -90,9 +90,13 @@ const {
   styleUrl: 'heat-map.scss'
 })
 export class HeatMap {
-  @Event() clickFunc: EventEmitter;
-  @Event() hoverFunc: EventEmitter;
-  @Event() mouseOutFunc: EventEmitter;
+  @Event() clickEvent: EventEmitter;
+  @Event() hoverEvent: EventEmitter;
+  @Event() mouseOutEvent: EventEmitter;
+  @Event() initialLoadEvent: EventEmitter;
+  @Event() drawStartEvent: EventEmitter;
+  @Event() drawEndEvent: EventEmitter;
+  @Event() transitionEndEvent: EventEmitter;
 
   // Chart Attributes (1/7)
   @Prop({ mutable: true }) mainTitle: string = HeatMapDefaultValues.mainTitle;
@@ -768,13 +772,15 @@ export class HeatMap {
   }
 
   componentWillLoad() {
+    const chartID = this.uniqueID || 'heat-map-' + uuid();
+    this.initialLoadEvent.emit({ chartID: chartID });
     // contrary to componentWillUpdate, this method appears safe to use for
     // any calculations we need. Keeping them here reduces future refactor,
     // since componentWillUpdate should eventually mirror this method
     return new Promise(resolve => {
       this.duration = 0;
       this.defaults = true;
-      this.chartID = this.uniqueID || 'heat-map-' + uuid();
+      this.chartID = chartID;
       this.heatMapEl.id = this.chartID;
       this.setTagLevels();
       this.prepareData();
@@ -999,7 +1005,7 @@ export class HeatMap {
       }
       this.onChangeHandler();
       resolve('component did update');
-    });
+    }).then(() => this.drawEndEvent.emit({ chartID: this.chartID }));
   }
 
   shouldValidateAccessibilityProps() {
@@ -1014,7 +1020,7 @@ export class HeatMap {
           uniqueID: this.uniqueID,
           context: {
             mainTitle: this.mainTitle,
-            onClickFunc: !this.suppressEvents ? this.clickFunc.emit : undefined
+            onClickEvent: this.suppressEvents ? undefined : this.clickEvent.emit
           }
         }
       );
@@ -1440,16 +1446,16 @@ export class HeatMap {
       .on(
         'click',
         !this.suppressEvents
-          ? d => {
-              this.onClickHandler(d);
+          ? (d, i, n) => {
+              this.onClickHandler(d, n[i]);
             }
           : null
       )
       .on(
         'mouseover',
         !this.suppressEvents
-          ? d => {
-              this.onHoverHandler(d);
+          ? (d, i, n) => {
+              this.onHoverHandler(d, n[i]);
             }
           : null
       )
@@ -1687,6 +1693,9 @@ export class HeatMap {
       retainAccessFocus({
         parentGNode: this.rootG.node()
       });
+
+      // now we can emit the event that transitions are complete
+      this.transitionEndEvent.emit({ chartID: this.chartID });
     });
   }
 
@@ -1843,24 +1852,27 @@ export class HeatMap {
       .on(
         'click',
         !this.suppressEvents
-          ? d => {
-              this.onClickHandler(d);
+          ? (d, i, n) => {
+              this.onClickHandler(d, n[i]);
             }
           : null
       )
       .on(
         'mouseover',
         !this.suppressEvents
-          ? d => {
-              this.onHoverHandler(d);
+          ? (d, i, n) => {
+              this.onHoverHandler(d, n[i]);
             }
           : null
       )
       .on('mouseout', !this.suppressEvents ? () => this.onMouseOutHandler() : null);
 
     this.updateLabels
-      .on('click', this.dataLabel.visible && !this.suppressEvents ? d => this.onClickHandler(d) : null)
-      .on('mouseover', this.dataLabel.visible && !this.suppressEvents ? d => this.onHoverHandler(d) : null)
+      .on('click', this.dataLabel.visible && !this.suppressEvents ? (d, i, n) => this.onClickHandler(d, n[i]) : null)
+      .on(
+        'mouseover',
+        this.dataLabel.visible && !this.suppressEvents ? (d, i, n) => this.onHoverHandler(d, n[i]) : null
+      )
       .on('mouseout', this.dataLabel.visible && !this.suppressEvents ? () => this.onMouseOutHandler() : null);
   }
 
@@ -1872,8 +1884,11 @@ export class HeatMap {
       .attr('opacity', 0)
       .attr('fill', this.textTreatmentHandler)
       .attr('cursor', !this.suppressEvents ? this.cursor : null)
-      .on('click', this.dataLabel.visible && !this.suppressEvents ? d => this.onClickHandler(d) : null)
-      .on('mouseover', this.dataLabel.visible && !this.suppressEvents ? d => this.onHoverHandler(d) : null)
+      .on('click', this.dataLabel.visible && !this.suppressEvents ? (d, i, n) => this.onClickHandler(d, n[i]) : null)
+      .on(
+        'mouseover',
+        this.dataLabel.visible && !this.suppressEvents ? (d, i, n) => this.onHoverHandler(d, n[i]) : null
+      )
       .on('mouseout', this.dataLabel.visible && !this.suppressEvents ? () => this.onMouseOutHandler() : null);
 
     placeDataLabels({
@@ -2157,13 +2172,13 @@ export class HeatMap {
     this.exitSize = 0;
   }
 
-  onClickHandler(d) {
-    this.clickFunc.emit(d);
+  onClickHandler(d, n) {
+    this.clickEvent.emit({ data: d, target: n });
   }
 
-  onHoverHandler(d) {
+  onHoverHandler(d, n) {
     overrideTitleTooltip(this.chartID, true);
-    this.hoverFunc.emit(d);
+    this.hoverEvent.emit({ data: d, target: n });
     if (this.showTooltip) {
       this.eventsTooltip({ data: d, evt: event, isToShow: true });
     }
@@ -2171,7 +2186,7 @@ export class HeatMap {
 
   onMouseOutHandler() {
     overrideTitleTooltip(this.chartID, false);
-    this.mouseOutFunc.emit();
+    this.mouseOutEvent.emit();
     if (this.showTooltip) {
       this.eventsTooltip({ isToShow: false });
     }
@@ -2201,6 +2216,7 @@ export class HeatMap {
   }
 
   render() {
+    this.drawStartEvent.emit({ chartID: this.chartID });
     // everything between this comment and the third should eventually
     // be moved into componentWillUpdate (if the stenicl bug is fixed)
     this.init();

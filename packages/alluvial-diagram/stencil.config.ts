@@ -28,7 +28,7 @@ export const config: Config | any = {
     }),
     angularOutputTarget({
       componentCorePackage: '@visa/alluvial-diagram',
-      directivesProxyFile: '../charts-angular/src/directives/alluvial-diagram.ts'
+      directivesProxyFile: '../charts-angular/src/lib/directives/alluvial-diagram.ts'
     }),
     { type: 'dist' },
     { type: 'www' }

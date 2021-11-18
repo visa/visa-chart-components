@@ -1405,12 +1405,22 @@ describe('<world-map />', () => {
     });
 
     describe('event-emitter', () => {
+      beforeEach(() => {
+        // MOCK MATH.Random TO HANDLE UNIQUE ID CODE FROM ACCESSIBILITY UTIL
+        jest.spyOn(global.Math, 'random').mockReturnValue(0.123456789);
+      });
+
+      afterEach(() => {
+        // RESTORE GLOBAL FUNCTION FROM MOCK AFTER TEST
+        jest.spyOn(global.Math, 'random').mockRestore();
+      });
       describe('generic event testing', () => {
         describe('path based events', () => {
           Object.keys(unitTestEvent).forEach(test => {
             const innerTestProps = {
               // markerStyle: DEFAULTMARKERSTYLEVISIBLE,
-              showTooltip: false
+              showTooltip: false,
+              transitionEndAllSelector: '[data-testid=marker]'
             };
             const innerTestSelector = '[data-testid=country][data-id=country-path-840]';
 
@@ -1422,7 +1432,8 @@ describe('<world-map />', () => {
           Object.keys(unitTestEvent).forEach(test => {
             const innerTestProps = {
               markerStyle: DEFAULTMARKERSTYLEVISIBLE,
-              showTooltip: false
+              showTooltip: false,
+              transitionEndAllSelector: '[data-testid=marker]'
             };
             const innerTestSelector = '[data-testid=marker]';
 

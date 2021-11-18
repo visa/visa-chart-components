@@ -96,9 +96,13 @@ const {
   styleUrl: 'dumbbell-plot.scss'
 })
 export class DumbbellPlot {
-  @Event() clickFunc: EventEmitter;
-  @Event() hoverFunc: EventEmitter;
-  @Event() mouseOutFunc: EventEmitter;
+  @Event() clickEvent: EventEmitter;
+  @Event() hoverEvent: EventEmitter;
+  @Event() mouseOutEvent: EventEmitter;
+  @Event() initialLoadEvent: EventEmitter;
+  @Event() drawStartEvent: EventEmitter;
+  @Event() drawEndEvent: EventEmitter;
+  @Event() transitionEndEvent: EventEmitter;
   // Chart Attributes (1/7)
   @Prop({ mutable: true }) mainTitle: string = DumbbellPlotDefaultValues.mainTitle;
   @Prop({ mutable: true }) subTitle: string = DumbbellPlotDefaultValues.subTitle;
@@ -1034,12 +1038,14 @@ export class DumbbellPlot {
   }
 
   componentWillLoad() {
+    const chartID = this.uniqueID || 'dumbbell-plot-' + uuid();
+    this.initialLoadEvent.emit({ chartID: chartID });
     // contrary to componentWillUpdate, this method appears safe to use for
     // any calculations we need. Keeping them here reduces future refactor,
     // since componentWillUpdate should eventually mirror this method
     return new Promise(resolve => {
       this.duration = 0;
-      this.chartID = this.uniqueID || 'dumbbell-plot-' + uuid();
+      this.chartID = chartID;
       this.dumbbellPlotEl.id = this.chartID;
       this.setTagLevels();
       this.checkIfSafari();
@@ -1393,7 +1399,7 @@ export class DumbbellPlot {
       }
       this.onChangeHandler();
       resolve('component did update');
-    });
+    }).then(() => this.drawEndEvent.emit({ chartID: this.chartID }));
   }
 
   shouldValidateAccessibilityProps() {
@@ -1408,7 +1414,7 @@ export class DumbbellPlot {
           uniqueID: this.uniqueID,
           context: {
             mainTitle: this.mainTitle,
-            onClickFunc: !this.suppressEvents ? this.clickFunc.emit : undefined
+            onClickEvent: this.suppressEvents ? undefined : this.clickEvent.emit
           }
         }
       );
@@ -2202,7 +2208,7 @@ export class DumbbellPlot {
                 const node = n[i];
                 const mouseEvent = event;
                 const index = this.findMarkerIndex(d, node, mouseEvent);
-                this.onClickHandler(d.values[index]);
+                this.onClickHandler(d.values[index], n[i]);
               }
             }
           : null
@@ -2218,7 +2224,7 @@ export class DumbbellPlot {
                 const index = this.findMarkerIndex(d, node, mouseEvent);
                 overrideTitleTooltip(this.chartID, true);
                 data = d.values[index];
-                this.hoverFunc.emit(data);
+                this.hoverEvent.emit({ data: data, target: n[i] });
               }
               this.showTooltip
                 ? this.eventsTooltip({
@@ -2593,6 +2599,9 @@ export class DumbbellPlot {
           // focusDidExist // this only matters for exiting selections
           // recursive: true // this only matters for
         });
+
+        // now we can emit the event that transitions are complete
+        this.transitionEndEvent.emit({ chartID: this.chartID });
       });
   }
 
@@ -2729,8 +2738,11 @@ export class DumbbellPlot {
       .attr('class', 'dumbbell-series-label')
       .attr('fill', this.handleSeriesLabelColors)
       .attr('cursor', !this.suppressEvents && this.seriesInteraction ? this.cursor : null)
-      .on('click', !this.suppressEvents && this.seriesInteraction ? d => this.onClickHandler(d) : null)
-      .on('mouseover', !this.suppressEvents && this.seriesInteraction ? d => this.onHoverHandler(d, false) : null)
+      .on('click', !this.suppressEvents && this.seriesInteraction ? (d, i, n) => this.onClickHandler(d, n[i]) : null)
+      .on(
+        'mouseover',
+        !this.suppressEvents && this.seriesInteraction ? (d, i, n) => this.onHoverHandler(d, n[i], false) : null
+      )
       .on('mouseout', !this.suppressEvents && this.seriesInteraction ? () => this.onMouseOutHandler() : null)
       .attr('text-anchor', this.isVertical && isStandard ? 'start' : this.isVertical ? 'end' : 'middle')
       .attr('x', d => (this.isVertical && isStandard ? this.innerPaddedWidth : !this.isVertical ? this.x(d.value) : 0))
@@ -2920,13 +2932,13 @@ export class DumbbellPlot {
       .on(
         'click',
         !this.suppressEvents && this.dumbbellInteraction && this.differenceLabel.visible
-          ? d => this.onClickHandler(d)
+          ? (d, i, n) => this.onClickHandler(d, n[i])
           : null
       )
       .on(
         'mouseover',
         !this.suppressEvents && this.dumbbellInteraction && this.differenceLabel.visible
-          ? d => this.onHoverHandler(d, true)
+          ? (d, i, n) => this.onHoverHandler(d, n[i], true)
           : null
       )
       .on(
@@ -3132,8 +3144,11 @@ export class DumbbellPlot {
       })
       .attr('fill', this.handleLabelColors)
       .attr('cursor', !this.suppressEvents && this.dataLabel.visible ? this.cursor : null)
-      .on('click', !this.suppressEvents && this.dataLabel.visible ? d => this.onClickHandler(d) : null)
-      .on('mouseover', !this.suppressEvents && this.dataLabel.visible ? d => this.onHoverHandler(d, true) : null)
+      .on('click', !this.suppressEvents && this.dataLabel.visible ? (d, i, n) => this.onClickHandler(d, n[i]) : null)
+      .on(
+        'mouseover',
+        !this.suppressEvents && this.dataLabel.visible ? (d, i, n) => this.onHoverHandler(d, n[i], true) : null
+      )
       .on('mouseout', !this.suppressEvents && this.dataLabel.visible ? () => this.onMouseOutHandler() : null);
 
     placeDataLabels({
@@ -3643,13 +3658,13 @@ export class DumbbellPlot {
     this.exitSize = 0;
   }
 
-  onClickHandler(d) {
-    this.clickFunc.emit(d);
+  onClickHandler(d, n) {
+    this.clickEvent.emit({ data: d, target: n });
   }
 
-  onHoverHandler(d, hasTooltip) {
+  onHoverHandler(d, n, hasTooltip) {
     overrideTitleTooltip(this.chartID, true);
-    this.hoverFunc.emit(d);
+    this.hoverEvent.emit({ data: d, target: n });
     if (this.showTooltip && hasTooltip) {
       this.eventsTooltip({ data: d, evt: event, isToShow: true });
     }
@@ -3657,7 +3672,7 @@ export class DumbbellPlot {
 
   onMouseOutHandler() {
     overrideTitleTooltip(this.chartID, false);
-    this.mouseOutFunc.emit();
+    this.mouseOutEvent.emit();
     if (this.showTooltip) {
       this.eventsTooltip({ isToShow: false });
     }
@@ -3728,12 +3743,14 @@ export class DumbbellPlot {
       .selectAll('.legend')
       .on(
         'click',
-        this.legend.interactive && this.seriesInteraction && !this.suppressEvents ? d => this.onClickHandler(d) : null
+        this.legend.interactive && this.seriesInteraction && !this.suppressEvents
+          ? (d, i, n) => this.onClickHandler(d, n[i])
+          : null
       )
       .on(
         'mouseover',
         this.legend.interactive && this.seriesInteraction && !this.suppressEvents
-          ? d => this.onHoverHandler(d, false)
+          ? (d, i, n) => this.onHoverHandler(d, n[i], false)
           : null
       )
       .on(
@@ -3756,8 +3773,11 @@ export class DumbbellPlot {
 
   bindSeriesInteractivity() {
     this.updateSeriesLabel
-      .on('click', !this.suppressEvents && this.seriesInteraction ? d => this.onClickHandler(d) : null)
-      .on('mouseover', !this.suppressEvents && this.seriesInteraction ? d => this.onHoverHandler(d, false) : null)
+      .on('click', !this.suppressEvents && this.seriesInteraction ? (d, i, n) => this.onClickHandler(d, n[i]) : null)
+      .on(
+        'mouseover',
+        !this.suppressEvents && this.seriesInteraction ? (d, i, n) => this.onHoverHandler(d, n[i], false) : null
+      )
       .on('mouseout', !this.suppressEvents && this.seriesInteraction ? () => this.onMouseOutHandler() : null);
   }
 
@@ -3771,7 +3791,7 @@ export class DumbbellPlot {
                 const node = n[i];
                 const mouseEvent = event;
                 const index = this.findMarkerIndex(d, node, mouseEvent);
-                this.onClickHandler(d.values[index]);
+                this.onClickHandler(d.values[index], n[i]);
               }
             }
           : null
@@ -3787,7 +3807,7 @@ export class DumbbellPlot {
                 const index = this.findMarkerIndex(d, node, mouseEvent);
                 overrideTitleTooltip(this.chartID, true);
                 data = d.values[index];
-                this.hoverFunc.emit(data);
+                this.hoverEvent.emit({ data: data, target: n[i] });
               }
               this.showTooltip
                 ? this.eventsTooltip({
@@ -3802,21 +3822,24 @@ export class DumbbellPlot {
       .on('mouseout', !this.suppressEvents ? () => this.onMouseOutHandler() : null);
 
     this.updateLabelChildren
-      .on('click', !this.suppressEvents && this.dataLabel.visible ? d => this.onClickHandler(d) : null)
-      .on('mouseover', !this.suppressEvents && this.dataLabel.visible ? d => this.onHoverHandler(d, true) : null)
+      .on('click', !this.suppressEvents && this.dataLabel.visible ? (d, i, n) => this.onClickHandler(d, n[i]) : null)
+      .on(
+        'mouseover',
+        !this.suppressEvents && this.dataLabel.visible ? (d, i, n) => this.onHoverHandler(d, n[i], true) : null
+      )
       .on('mouseout', !this.suppressEvents && this.dataLabel.visible ? () => this.onMouseOutHandler() : null);
 
     this.updateDiffLabel
       .on(
         'click',
         !this.suppressEvents && this.dumbbellInteraction && this.differenceLabel.visible
-          ? d => this.onClickHandler(d)
+          ? (d, i, n) => this.onClickHandler(d, n[i])
           : null
       )
       .on(
         'mouseover',
         !this.suppressEvents && this.dumbbellInteraction && this.differenceLabel.visible
-          ? d => this.onHoverHandler(d, true)
+          ? (d, i, n) => this.onHoverHandler(d, n[i], true)
           : null
       )
       .on(
@@ -3875,6 +3898,7 @@ export class DumbbellPlot {
   }
 
   render() {
+    this.drawStartEvent.emit({ chartID: this.chartID });
     // everything between this comment and the third should eventually
     // be moved into componentWillUpdate (if the stenicl bug is fixed)
     this.init();

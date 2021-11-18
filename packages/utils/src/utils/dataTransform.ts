@@ -62,6 +62,7 @@ export const accessorFormats = {
 };
 export const orderColumns = {
   'alluvial-diagram': ['sourceAccessor', 'targetAccessor', 'groupAccessor', 'valueAccessor'],
+  'alluvial-diagram-secondary-table': ['nodeIDAccessor', 'labelAccessor', 'valueAccessor'],
   'bar-chart': ['ordinalAccessor', 'valueAccessor', 'groupAccessor'],
   'clustered-bar-chart': ['groupAccessor', 'ordinalAccessor', 'valueAccessor'],
   'stacked-bar-chart': ['groupAccessor', 'ordinalAccessor', 'valueAccessor'],

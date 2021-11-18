@@ -212,6 +212,8 @@ exports[`<clustered-bar-chart> rendered-html accessibility generic accessibility
 </div>
 `;
 
+exports[`<clustered-bar-chart> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: test whether space bar performs click action 1`] = `<rect class="clustered-bar vcl-accessibility-focus-source" cursor="default" data-height="68.8" data-id="bar-2016-A" data-role="img" data-testid="bar" data-translate-x="89.43749999999997" data-translate-y="24" data-width="35" data-x="9" data-y="103.2" fill="url(#clustered-bar-test_texture_0)" focusable="false" height="68.8" id="chart-unit-test-123457-123457-123457" opacity="0" role="presentation" rx="0" ry="0" tabindex="-1" width="35" x="9" y="103.2"></rect>`;
+
 exports[`<clustered-bar-chart> rendered-html annotations should pass annotation prop 1`] = `
 <g aria-hidden="true" class="vcl-annotation-group" data-testid="annotation-group" focusable="false" role="presentation">
   <g class="annotations">
@@ -235,6 +237,10 @@ exports[`<clustered-bar-chart> rendered-html annotations should pass annotation 
   </g>
 </g>
 `;
+
+exports[`<clustered-bar-chart> rendered-html event-emitter generic event testing bar based events [event] clickEvent: event object should emit and contain first data record when first mark is clicked 1`] = `<rect class="clustered-bar" cursor="default" data-height="68.8" data-id="bar-2016-A" data-role="img" data-testid="bar" data-translate-x="89.43749999999997" data-translate-y="24" data-width="35" data-x="9" data-y="103.2" fill="url(#clustered-bar-test_texture_0)" focusable="false" height="68.8" id="clustered-bar-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35" x="9" y="103.2"></rect>`;
+
+exports[`<clustered-bar-chart> rendered-html event-emitter generic event testing bar based events [event] hoverEvent: event object should emit and contain first data record when first mark is hovered 1`] = `<rect class="clustered-bar" cursor="default" data-height="68.8" data-id="bar-2016-A" data-role="img" data-testid="bar" data-translate-x="89.43749999999997" data-translate-y="24" data-width="35" data-x="9" data-y="103.2" fill="url(#clustered-bar-test_texture_0)" focusable="false" height="68.8" id="clustered-bar-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35" x="9" y="103.2"></rect>`;
 
 exports[`<clustered-bar-chart> rendered-html generic test suite accessibility: should not print accessibility console warnings and logs when accessibility.disableValidation set to true 1`] = `Array []`;
 

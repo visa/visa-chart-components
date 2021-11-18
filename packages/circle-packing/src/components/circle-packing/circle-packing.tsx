@@ -75,9 +75,14 @@ const {
   styleUrl: 'circle-packing.scss'
 })
 export class CirclePacking {
-  @Event() clickFunc: EventEmitter;
-  @Event() hoverFunc: EventEmitter;
-  @Event() mouseOutFunc: EventEmitter;
+  @Event() clickEvent: EventEmitter;
+  @Event() hoverEvent: EventEmitter;
+  @Event() mouseOutEvent: EventEmitter;
+  @Event() initialLoadEvent: EventEmitter;
+  @Event() drawStartEvent: EventEmitter;
+  @Event() drawEndEvent: EventEmitter;
+  @Event() transitionEndEvent: EventEmitter;
+
   // Chart Attributes (1/7)
   @Prop({ mutable: true }) mainTitle: string = CirclePackingDefaultValues.mainTitle;
   @Prop({ mutable: true }) subTitle: string = CirclePackingDefaultValues.subTitle;
@@ -173,9 +178,6 @@ export class CirclePacking {
   shouldZoom: boolean = false;
   shouldValidateInteractionKeys: boolean = false;
   shouldDrawInteractionState: boolean = false;
-  shouldUpdateClickFunc: boolean = false;
-  shouldUpdateHoverFunc: boolean = false;
-  shouldUpdateMouseoutFunc: boolean = false;
   // shouldUpdateAccessibility: boolean = false;
   shouldUpdateAnnotations: boolean = false;
   shouldResetRoot: boolean = false;
@@ -529,9 +531,11 @@ export class CirclePacking {
   }
 
   componentWillLoad() {
+    const chartID = this.uniqueID || 'circle-pack-' + uuid();
+    this.initialLoadEvent.emit({ chartID: chartID });
     return new Promise(resolve => {
       this.duration = 0;
-      this.chartID = this.uniqueID || 'circle-pack-' + uuid();
+      this.chartID = chartID;
       this.circlePackingEl.id = this.chartID;
       this.setTagLevels();
       this.validateInteractionKeys();
@@ -715,7 +719,7 @@ export class CirclePacking {
       }
       this.onChangeHandler();
       resolve('component did update');
-    });
+    }).then(() => this.drawEndEvent.emit({ chartID: this.chartID }));
   }
 
   shouldValidateAccessibilityProps() {
@@ -730,7 +734,7 @@ export class CirclePacking {
           uniqueID: this.uniqueID,
           context: {
             mainTitle: this.mainTitle,
-            onClickFunc: !this.suppressEvents ? this.clickFunc.emit : undefined
+            onClickEvent: !this.suppressEvents ? this.clickEvent.emit : undefined
           }
         }
       );
@@ -920,7 +924,7 @@ export class CirclePacking {
         !this.suppressEvents
           ? (_, i, n) => {
               const d = select(n[i].parentNode).datum();
-              this.onHoverHandler(d);
+              this.onHoverHandler(d, n[i]);
             }
           : null
       )
@@ -938,7 +942,7 @@ export class CirclePacking {
           ? (_, i, n) => {
               const d = select(n[i].parentNode).datum();
               if (!this.zooming) {
-                this.clickFunc.emit({ ...d.data.data });
+                this.clickEvent.emit({ data: d.data.data, target: n[i] });
               }
             }
           : null
@@ -1210,7 +1214,7 @@ export class CirclePacking {
         !this.suppressEvents
           ? (_, i, n) => {
               const d = select(n[i].parentNode).datum();
-              this.onHoverHandler(d);
+              this.onHoverHandler(d, n[i]);
             }
           : null
       )
@@ -1228,7 +1232,7 @@ export class CirclePacking {
           ? (_, i, n) => {
               const d = select(n[i].parentNode).datum();
               if (!this.zooming) {
-                this.clickFunc.emit({ ...d.data.data });
+                this.clickEvent.emit({ data: d.data.data, target: n[i] });
               }
             }
           : null
@@ -1458,6 +1462,7 @@ export class CirclePacking {
         recursive: true
         // focusDidExist // this only matters for exiting selections
       });
+      this.transitionEndEvent.emit({ chartID: this.chartID });
     };
 
     if (this.duration) {
@@ -1485,9 +1490,9 @@ export class CirclePacking {
     this.placeLabels(); // added condition to other call of this to keep from calling twice
   }
 
-  onHoverHandler(d) {
+  onHoverHandler(d, n) {
     overrideTitleTooltip(this.chartID, true);
-    this.hoverFunc.emit(d.data.data);
+    this.hoverEvent.emit({ data: d.data.data, target: n });
     if (this.showTooltip) {
       this.eventsTooltip({ data: d.data.data, evt: event, isToShow: true });
     }
@@ -1495,7 +1500,7 @@ export class CirclePacking {
 
   onMouseOutHandler() {
     overrideTitleTooltip(this.chartID, false);
-    this.mouseOutFunc.emit();
+    this.mouseOutEvent.emit();
     if (this.showTooltip) {
       this.eventsTooltip({ isToShow: false });
     }
@@ -1664,6 +1669,7 @@ export class CirclePacking {
   }
 
   render() {
+    this.drawStartEvent.emit({ chartID: this.chartID });
     this.init();
     if (this.shouldSetTagLevels) {
       this.setTagLevels();

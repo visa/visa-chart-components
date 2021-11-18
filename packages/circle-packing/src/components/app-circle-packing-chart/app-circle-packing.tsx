@@ -935,16 +935,16 @@ export class AppCirclePacking {
     return <div>{this.clickElement}</div>;
   }
   onClickCountryFunc(d) {
-    if (d.detail && d.detail.location_id > 100) {
-      this.clickElement = [d.detail];
+    if (d.detail.data && d.detail.data.location_id > 100) {
+      this.clickElement = [d.detail.data];
     }
   }
   onClickFunc(d) {
-    if (d.detail) {
-      const alreadyClicked = this.clickElement.filter(e => e.id === d.detail.id).length > 0;
-      this.clickElement = alreadyClicked ? [] : [d.detail];
+    if (d.detail.data) {
+      const alreadyClicked = this.clickElement.filter(e => e.id === d.detail.data.id).length > 0;
+      this.clickElement = alreadyClicked ? [] : [d.detail.data];
       //toggle this to test that zoomToNode works watcher works as expected
-      this.zoomTo = !this.zoomTo ? d.detail : this.zoomTo.id !== d.detail.id ? d.detail : undefined;
+      this.zoomTo = !this.zoomTo ? d.detail.data : this.zoomTo.id !== d.detail.data.id ? d.detail.data : undefined;
       // this.zoomTo = this.lifeCycleStates[1][1];
     }
   }
@@ -973,22 +973,26 @@ export class AppCirclePacking {
     this.suppressEvents = !this.suppressEvents;
   }
   onHoverFunc(d) {
-    this.hoverElement = d.detail;
+    this.hoverElement = d.detail.data;
   }
   onMouseOut() {
     this.hoverElement = '';
   }
   onBigHoverFunc(d) {
-    this.bigHoverElement = d.detail;
+    this.bigHoverElement = d.detail.data;
   }
   onBigMouseOut() {
     this.bigHoverElement = '';
   }
   onBigClickFunc(d) {
-    if (d.detail) {
-      const alreadyClicked = this.bigClickElement.filter(e => e.id === d.detail.id).length > 0;
-      this.bigClickElement = alreadyClicked ? [] : [d.detail];
-      this.bigZoomTo = !this.bigZoomTo ? d.detail : this.bigZoomTo.id !== d.detail.id ? d.detail : undefined;
+    if (d.detail.data) {
+      const alreadyClicked = this.bigClickElement.filter(e => e.id === d.detail.data.id).length > 0;
+      this.bigClickElement = alreadyClicked ? [] : [d.detail.data];
+      this.bigZoomTo = !this.bigZoomTo
+        ? d.detail.data
+        : this.bigZoomTo.id !== d.detail.data.id
+        ? d.detail.data
+        : undefined;
     }
   }
 
@@ -1023,7 +1027,6 @@ export class AppCirclePacking {
 
     // tslint:disable-next-line:no-unused-expression
     // const cat = ['Sketch', 'SQL', 'React'];
-
     return (
       <div style={{ padding: '50px' }}>
         <button
@@ -1097,7 +1100,7 @@ export class AppCirclePacking {
           change size accessor
         </button>
         <div style={{ display: 'flex', flexDirection: 'row' }}>
-          {/* <circle-packing
+          <circle-packing
             data={this.chartData}
             nodeAccessor={this.nodeAccessor}
             parentAccessor={this.parentAccessor}
@@ -1110,7 +1113,7 @@ export class AppCirclePacking {
             // sizeAccessor={'value'}
             subTitle={''}
             mainTitle={'Chart Height is ' + this.height + 'px and Width is ' + this.width}
-            displayDepth={1}
+            displayDepth={2}
             // hoverStyle={{
             //   strokeWidth: 2,
             //   color: '#fafafa'
@@ -1121,19 +1124,23 @@ export class AppCirclePacking {
             // }}
             colors={['white', 'white', 'white']}
             dataLabel={this.dataLabel}
-            onHoverFunc={d => this.onHoverFunc(d)}
-            onClickFunc={d => this.onClickFunc(d)}
-            onMouseOutFunc={() => this.onMouseOut()}
+            onHoverEvent={d => this.onHoverFunc(d)}
+            onClickEvent={d => this.onClickFunc(d)}
+            onMouseOutEvent={() => this.onMouseOut()}
+            onInitialLoadEvent={e => e} // console.log('load event', e.detail, e)}
+            onDrawStartEvent={e => e} // console.log('draw start event', e.detail, e)}
+            onDrawEndEvent={e => e} // console.log('draw end event', e.detail, e)}
+            onTransitionEndEvent={e => e} // console.log('transition event', e.detail, e)}
             clickHighlight={this.clickElement}
             hoverHighlight={this.hoverElement}
             zoomToNode={this.zoomTo}
             accessibility={{ ...this.accessibility, hideTextures: true }}
             suppressEvents={this.suppressEvents}
             circlePadding={3}
-          /> */}
+          />
         </div>
         <div style={{ display: 'flex', flexDirection: 'row' }}>
-          <circle-packing
+          {/* <circle-packing
             data={this.circlePackComponentData}
             nodeAccessor="c"
             parentAccessor="p"
@@ -1159,16 +1166,16 @@ export class AppCirclePacking {
             //   color: '#e4e4e4'
             // }}
             colors={['white', 'white', 'white', 'white', 'white', 'white']}
-            onHoverFunc={d => this.onHoverFunc(d)}
-            onClickFunc={d => this.onClickFunc(d)}
-            onMouseOutFunc={() => this.onMouseOut()}
+            onHoverEvent={d => this.onHoverFunc(d)}
+            onClickEvent={d => this.onClickFunc(d)}
+            onMouseOutEvent={() => this.onMouseOut()}
             clickHighlight={this.clickElement}
             hoverHighlight={this.hoverElement}
             zoomToNode={this.zoomTo}
             // annotations={this.annotations}
             accessibility={{ ...this.accessibility, hideTextures: true }}
             circlePadding={3}
-          />
+          /> */}
         </div>
       </div>
     );

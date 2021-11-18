@@ -244,11 +244,19 @@ export class AppClusteredBarChart {
     // console.log('will update', this.clickElement);
   }
   onClickFunc(d) {
-    const index = this.clickElement.indexOf(d.detail);
+    let index = -1;
+    this.clickElement.forEach((el, i) => {
+      let keyMatch = [];
+      this.interactionKeys.forEach(k => {
+        el[k] == d.detail.data[k] ? keyMatch.push(true) : keyMatch.push(false);
+      });
+      keyMatch.every(v => v === true) ? (index = i) : null;
+    });
+
     if (index > -1) {
       this.clickElement.splice(index, 1);
     } else {
-      this.clickElement.push(d.detail);
+      this.clickElement.push(d.detail.data);
     }
     this.data = [
       { year: '2017', item: 'A', value: 15 },
@@ -266,7 +274,7 @@ export class AppClusteredBarChart {
     ];
   }
   onHoverFunc(d) {
-    this.hoverElement = d.detail;
+    this.hoverElement = d.detail.data;
   }
   onMouseOut() {
     this.hoverElement = '';
@@ -427,9 +435,13 @@ export class AppClusteredBarChart {
           interactionKeys={this.interactionKeys}
           hoverHighlight={this.hoverElement}
           clickHighlight={this.clickElement}
-          onClickFunc={d => this.onClickFunc(d)}
-          onHoverFunc={d => this.onHoverFunc(d)}
-          onMouseOutFunc={() => this.onMouseOut()}
+          onClickEvent={d => this.onClickFunc(d)}
+          onHoverEvent={d => this.onHoverFunc(d)}
+          onMouseOutEvent={() => this.onMouseOut()}
+          onInitialLoadEvent={e => e} // console.log('load event', e.detail, e)}
+          onDrawStartEvent={e => e} // console.log('draw start event', e.detail, e)}
+          onDrawEndEvent={e => e} // console.log('draw end event', e.detail, e)}
+          onTransitionEndEvent={e => e} // console.log('transition event', e.detail, e)}
           showTooltip={true}
           // annotations={this.annotations}
           accessibility={this.accessibility}
@@ -476,9 +488,9 @@ export class AppClusteredBarChart {
           legend={{ visible: true, interactive: true }}
           hoverHighlight={this.hoverElement}
           clickHighlight={this.clickElement}
-          onClickFunc={d => this.onClickFunc(d)}
-          onHoverFunc={d => this.onHoverFunc(d)}
-          onMouseOutFunc={() => this.onMouseOut()}
+          onClickEvent={d => this.onClickFunc(d)}
+          onHoverEvent={d => this.onHoverFunc(d)}
+          onMouseOutEvent={() => this.onMouseOut()}
           accessibility={{
             elementDescriptionAccessor: 'note', // see Indonesia above
             longDescription:

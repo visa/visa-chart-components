@@ -1047,12 +1047,21 @@ describe('<bar-chart>', () => {
       // Open issue: https://github.com/ionic-team/stencil/issues/1964
       // Jest throwing TypeError : mouseover,mouseout, focus, blur etc.
       // TECH-DEBT: Once above issue is resolved, write more precise test for event params.
+      beforeEach(() => {
+        // MOCK MATH.Random TO HANDLE UNIQUE ID CODE FROM ACCESSIBILITY UTIL
+        jest.spyOn(global.Math, 'random').mockReturnValue(0.123456789);
+      });
 
+      afterEach(() => {
+        // RESTORE GLOBAL FUNCTION FROM MOCK AFTER TEST
+        jest.spyOn(global.Math, 'random').mockRestore();
+      });
       describe('generic event testing', () => {
         describe('bar based events', () => {
           Object.keys(unitTestEvent).forEach(test => {
             const innerTestProps = {
-              showTooltip: false
+              showTooltip: false,
+              transitionEndAllSelector: '[data-testid=bar]'
             };
             const innerTestSelector = '[data-testid=bar]';
 
@@ -1218,7 +1227,7 @@ describe('<bar-chart>', () => {
                 '<p style="margin: 0;">Testing123:<b>A</b><br>Count:<b>$1.4m</b><br></p>'
             };
             const innerTestProps = { ...unitTestTooltip[test].testProps, ...innerTooltipProps[test] };
-            // we have to handle clickFunc separately due to this.zooming boolean in circle-packing load
+            // we have to handle clickEvent separately due to this.zooming boolean in circle-packing load
 
             it(`${unitTestTooltip[test].prop}: ${unitTestTooltip[test].name}`, () =>
               unitTestTooltip[test].testFunc(

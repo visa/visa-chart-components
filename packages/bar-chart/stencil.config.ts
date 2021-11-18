@@ -28,7 +28,7 @@ export const config: Config | any = {
     }),
     angularOutputTarget({
       componentCorePackage: '@visa/bar-chart',
-      directivesProxyFile: '../charts-angular/src/directives/bar-chart.ts'
+      directivesProxyFile: '../charts-angular/src/lib/directives/bar-chart.ts'
     }),
     { type: 'dist' },
     { type: 'www' }

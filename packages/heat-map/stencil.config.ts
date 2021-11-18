@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2021 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -28,7 +28,7 @@ export const config: Config | any = {
     }),
     angularOutputTarget({
       componentCorePackage: '@visa/heat-map',
-      directivesProxyFile: '../charts-angular/src/directives/heat-map.ts'
+      directivesProxyFile: '../charts-angular/src/lib/directives/heat-map.ts'
     }),
     { type: 'dist' },
     { type: 'www' }

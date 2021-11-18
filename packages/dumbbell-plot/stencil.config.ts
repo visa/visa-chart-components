@@ -28,7 +28,7 @@ export const config: Config | any = {
     }),
     angularOutputTarget({
       componentCorePackage: '@visa/dumbbell-plot',
-      directivesProxyFile: '../charts-angular/src/directives/dumbbell-plot.ts'
+      directivesProxyFile: '../charts-angular/src/lib/directives/dumbbell-plot.ts'
     }),
     { type: 'dist' },
     { type: 'www' }

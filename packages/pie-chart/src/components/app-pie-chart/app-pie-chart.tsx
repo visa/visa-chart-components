@@ -27,6 +27,7 @@ export class AppPieChart {
     right: 50,
     bottom: 50
   };
+  @State() interactionKeys: any = ['label'];
   @State() clickElement: any = [
     // { label: 'Competitor 2', value: '1000', otherValue: '4126000' }
   ];
@@ -138,19 +139,26 @@ export class AppPieChart {
   // componentWillUpdate() {
   //   // console.log('will update', this.clickElement);
   // }
-  onClickFunc(evt) {
-    const d = evt.detail;
-    const index = this.clickElement.indexOf(d);
+  onClickFunc(d) {
+    let index = -1;
+    this.clickElement.forEach((el, i) => {
+      let keyMatch = [];
+      this.interactionKeys.forEach(k => {
+        el[k] == d.detail.data[k] ? keyMatch.push(true) : keyMatch.push(false);
+      });
+      keyMatch.every(v => v === true) ? (index = i) : null;
+    });
+
     const newClicks = [...this.clickElement];
     if (index > -1) {
       newClicks.splice(index, 1);
     } else {
-      newClicks.push(d);
+      newClicks.push(d.detail.data);
     }
     this.clickElement = newClicks;
   }
   onHoverFunc(d) {
-    this.hoverElement = d.detail;
+    this.hoverElement = d.detail.data;
   }
   onMouseOut() {
     this.hoverElement = '';
@@ -362,12 +370,16 @@ export class AppPieChart {
             // annotations={this.annotations}
             // referenceData={this.refData}
             // referenceStyle={{ color: 'supp_purple' }}
-            // interactionKeys={['category']}
+            interactionKeys={this.interactionKeys}
             hoverHighlight={this.hoverElement}
             clickHighlight={this.clickElement}
-            onClickFunc={d => this.onClickFunc(d)}
-            onHoverFunc={d => this.onHoverFunc(d)}
-            onMouseOutFunc={() => this.onMouseOut()}
+            onClickEvent={d => this.onClickFunc(d)}
+            onHoverEvent={d => this.onHoverFunc(d)}
+            onMouseOutEvent={() => this.onMouseOut()}
+            onInitialLoadEvent={e => e} // console.log('load event', e.detail, e)}
+            onDrawStartEvent={e => e} // console.log('draw start event', e.detail, e)}
+            onDrawEndEvent={e => e} // console.log('draw end event', e.detail, e)}
+            onTransitionEndEvent={e => e} // console.log('transition event', e.detail, e)}
           />
         </div>
         <div>

@@ -772,15 +772,13 @@ const focusTarget = target => {
     // https://mkyong.com/javascript/focus-is-not-working-in-ie-solution/
     // IE has lazy focusing, so it must be wrapped in a timeout
     setTimeout(function() {
-      target.focus();
-      // target.dispatchEvent(new Event('focus')); // .focus() is not working in jsdom dispatch for testing instead
+      'focus' in target ? target.focus() : target.dispatchEvent(new Event('focus'));
     }, 10);
     // HTMLElement.prototype.focus.apply(target);
   } /* else if (isIEEdge) {
     FocusableForeignObject(target);
   }*/ else {
-    target.focus();
-    // target.dispatchEvent(new Event('focus')); // .focus() is not working in jsdom dispatch for testing instead
+    'focus' in target ? target.focus() : target.dispatchEvent(new Event('focus'));
   }
 };
 

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2021 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -25,9 +25,11 @@ export class DataTable {
   @Prop({ mutable: true }) margin: IBoxModelType = DataTableDefaultValues.margin;
   @Prop({ mutable: true }) padding: IBoxModelType = DataTableDefaultValues.padding;
   @Prop({ mutable: true }) tableColumns: string[];
+  @Prop({ mutable: true }) secondaryTableColumns: string[];
 
   // data for the table
   @Prop() data: object[];
+  @Prop() secondaryData: object[];
 
   // debugging props
   @Prop({ mutable: true }) unitTest: boolean = false;
@@ -39,6 +41,7 @@ export class DataTable {
   @Element()
   dataTableEl: HTMLElement;
   table: any;
+  secondaryTable: any;
   thead: any;
   tbody: any;
   rows: any;
@@ -74,6 +77,11 @@ export class DataTable {
       this.table = null;
     }
 
+    if (this.secondaryTable) {
+      this.secondaryTable.remove();
+      this.secondaryTable = null;
+    }
+
     if (!this.table && this.showTable) {
       this.defaults = true;
       this.table = select(this.dataTableEl)
@@ -82,6 +90,24 @@ export class DataTable {
         .attr('class', 'vcc-data-table vcc-state--single-select')
         .classed('vcc-state--compact', this.isCompact)
         .attr('data-header', 'header');
+
+      if (this.secondaryData) {
+        this.table.attr(
+          'aria-label',
+          'You are currently on data table 1 of 2. This table contains data for the chart nodes'
+        );
+
+        this.secondaryTable = select(this.dataTableEl)
+          .select('#visa-viz-data-table-container-' + this.uniqueID)
+          .append('table')
+          .attr('class', 'vcc-secondary-data-table vcc-data-table vcc-state--single-select')
+          .attr(
+            'aria-label',
+            'You are currently on data table 2 of 2. This table contains the data for the chart links'
+          )
+          .classed('vcc-state--compact', this.isCompact)
+          .attr('data-header', 'header');
+      }
     }
   }
 
@@ -132,6 +158,53 @@ export class DataTable {
         .attr('scope', (_, i) => (i ? null : 'row'))
         .html(d => d.value)
         .attr('class', 'vcc-td');
+
+      // draw secondary data table
+      if (this.secondaryData) {
+        this.thead = this.secondaryTable
+          .append('thead')
+          .attr('class', 'vcc-thead')
+          .append('tr')
+          .attr('class', 'vcc-tr');
+
+        // now add the secondary column headers to the table header
+        this.thead
+          .selectAll('th')
+          .data(this.secondaryTableColumns)
+          .enter()
+          .append('th')
+          .attr('class', 'vcc-th')
+          .attr('scope', 'col')
+          .text(d => d);
+
+        this.tbody = this.secondaryTable.append('tbody').attr('class', 'vcc-tbody');
+
+        this.rows = this.tbody
+          .selectAll('tr')
+          .data(this.secondaryData)
+          .enter()
+          .append('tr')
+          .attr('class', 'vcc-tr');
+
+        this.cells = this.rows
+          .selectAll('.vcc-td')
+          .data(row => {
+            return this.secondaryTableColumns.map(col => {
+              return {
+                column: col,
+                value: row[col]
+              };
+            });
+          })
+          .enter()
+          .append((_, i) => {
+            const element = i ? 'td' : 'th';
+            return document.createElement(element);
+          })
+          .attr('scope', (_, i) => (i ? null : 'row'))
+          .html(d => d.value)
+          .attr('class', 'vcc-td');
+      }
     }
   }
   // using a similar workaround: https://github.com/Microsoft/TypeScript/issues/10761

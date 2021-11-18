@@ -93,9 +93,13 @@ const {
   styleUrl: 'clustered-bar-chart.scss'
 })
 export class ClusteredBarChart {
-  @Event() clickFunc: EventEmitter;
-  @Event() hoverFunc: EventEmitter;
-  @Event() mouseOutFunc: EventEmitter;
+  @Event() clickEvent: EventEmitter;
+  @Event() hoverEvent: EventEmitter;
+  @Event() mouseOutEvent: EventEmitter;
+  @Event() initialLoadEvent: EventEmitter;
+  @Event() drawStartEvent: EventEmitter;
+  @Event() drawEndEvent: EventEmitter;
+  @Event() transitionEndEvent: EventEmitter;
 
   // Chart Attributes (1/7)
   @Prop({ mutable: true }) mainTitle: string = ClusteredBarChartDefaultValues.mainTitle;
@@ -812,13 +816,15 @@ export class ClusteredBarChart {
   }
 
   componentWillLoad() {
+    const chartID = this.uniqueID || 'clustered-bar-chart-' + uuid();
+    this.initialLoadEvent.emit({ chartID: chartID });
     // contrary to componentWillUpdate, this method appears safe to use for
     // any calculations we need. Keeping them here reduces future refactor,
     // since componentWillUpdate should eventually mirror this method
     return new Promise(resolve => {
       this.duration = 0;
       this.defaults = true;
-      this.chartID = this.uniqueID || 'clustered-bar-chart-' + uuid();
+      this.chartID = chartID;
       this.clusteredBarChartEl.id = this.chartID;
       this.setTagLevels();
       this.prepareData();
@@ -1090,7 +1096,7 @@ export class ClusteredBarChart {
       this.onChangeHandler();
       this.updateLabels.classed('entering', false);
       resolve('component did update');
-    });
+    }).then(() => this.drawEndEvent.emit({ chartID: this.chartID }));
   }
 
   shouldValidateAccessibilityProps() {
@@ -1105,7 +1111,7 @@ export class ClusteredBarChart {
           uniqueID: this.uniqueID,
           context: {
             mainTitle: this.mainTitle,
-            onClickFunc: !this.suppressEvents ? this.clickFunc.emit : undefined
+            onClickEvent: !this.suppressEvents ? this.clickEvent.emit : undefined
           }
         }
       );
@@ -1558,8 +1564,8 @@ export class ClusteredBarChart {
       .each((_d, i, n) => {
         initializeElementAccess(n[i]);
       })
-      .on('click', !this.suppressEvents ? d => this.onClickHandler(d) : null)
-      .on('mouseover', !this.suppressEvents ? d => this.onHoverHandler(d) : null)
+      .on('click', !this.suppressEvents ? (d, i, n) => this.onClickHandler(d, n[i]) : null)
+      .on('mouseover', !this.suppressEvents ? (d, i, n) => this.onHoverHandler(d, n[i]) : null)
       .on('mouseout', !this.suppressEvents ? () => this.onMouseOutHandler() : null)
       .attr('fill', (d, i) => {
         const clicked =
@@ -1793,6 +1799,8 @@ export class ClusteredBarChart {
         retainAccessFocus({
           parentGNode: this.rootG.node()
         });
+        // now we can emit the event that transitions are complete
+        this.transitionEndEvent.emit({ chartID: this.chartID });
       });
   }
 
@@ -2088,8 +2096,8 @@ export class ClusteredBarChart {
           : Number.EPSILON
       )
       .attr('fill', this.textTreatmentHandler)
-      .on('click', !this.suppressEvents ? d => this.onClickHandler(d) : null)
-      .on('mouseover', !this.suppressEvents ? d => this.onHoverHandler(d) : null)
+      .on('click', !this.suppressEvents ? (d, i, n) => this.onClickHandler(d, n[i]) : null)
+      .on('mouseover', !this.suppressEvents ? (d, i, n) => this.onHoverHandler(d, n[i]) : null)
       .on('mouseout', !this.suppressEvents ? () => this.onMouseOutHandler() : null);
 
     this.enterLabels.attr(ordinalAxis, (d, i, n) => {
@@ -2505,8 +2513,15 @@ export class ClusteredBarChart {
     select(this.clusteredBarChartEl)
       .selectAll('.legend')
       .style('cursor', this.legend.interactive && !this.suppressEvents ? this.cursor : '')
-      .on('click', this.legend.interactive && !this.suppressEvents ? d => this.onClickHandler(d) : null)
-      .on('mouseover', this.legend.interactive && !this.suppressEvents ? d => this.hoverFunc.emit(d) : null)
+      .on('click', this.legend.interactive && !this.suppressEvents ? (d, i, n) => this.onClickHandler(d, n[i]) : null)
+      .on(
+        'mouseover',
+        this.legend.interactive && !this.suppressEvents
+          ? (d, i, n) => {
+              this.hoverEvent.emit({ data: d, target: n[i] });
+            }
+          : null
+      )
       .on('mouseout', this.legend.interactive && !this.suppressEvents ? () => this.onMouseOutHandler() : null);
   }
 
@@ -2518,13 +2533,13 @@ export class ClusteredBarChart {
 
   bindInteractivity() {
     this.update
-      .on('click', !this.suppressEvents ? d => this.onClickHandler(d) : null)
-      .on('mouseover', !this.suppressEvents ? d => this.onHoverHandler(d) : null)
+      .on('click', !this.suppressEvents ? (d, i, n) => this.onClickHandler(d, n[i]) : null)
+      .on('mouseover', !this.suppressEvents ? (d, i, n) => this.onHoverHandler(d, n[i]) : null)
       .on('mouseout', !this.suppressEvents ? () => this.onMouseOutHandler() : null);
 
     this.updateLabels
-      .on('click', !this.suppressEvents ? d => this.onClickHandler(d) : null)
-      .on('mouseover', !this.suppressEvents ? d => this.onHoverHandler(d) : null)
+      .on('click', !this.suppressEvents ? (d, i, n) => this.onClickHandler(d, n[i]) : null)
+      .on('mouseover', !this.suppressEvents ? (d, i, n) => this.onHoverHandler(d, n[i]) : null)
       .on('mouseout', !this.suppressEvents ? () => this.onMouseOutHandler() : null);
   }
 
@@ -2690,13 +2705,13 @@ export class ClusteredBarChart {
     this.exitSize = 0;
   }
 
-  onClickHandler(d) {
-    this.clickFunc.emit(d);
+  onClickHandler(d, n) {
+    this.clickEvent.emit({ data: d, target: n });
   }
 
-  onHoverHandler(d) {
+  onHoverHandler(d, n) {
     overrideTitleTooltip(this.chartID, true);
-    this.hoverFunc.emit(d);
+    this.hoverEvent.emit({ data: d, target: n });
     if (this.showTooltip && d[this.ordinalAccessor]) {
       this.eventsTooltip({ data: d, evt: event, isToShow: true });
     }
@@ -2704,7 +2719,7 @@ export class ClusteredBarChart {
 
   onMouseOutHandler() {
     overrideTitleTooltip(this.chartID, false);
-    this.mouseOutFunc.emit();
+    this.mouseOutEvent.emit();
     if (this.showTooltip) {
       this.eventsTooltip({ isToShow: false });
     }
@@ -2735,6 +2750,7 @@ export class ClusteredBarChart {
   }
 
   render() {
+    this.drawStartEvent.emit({ chartID: this.chartID });
     // hardcoded theme to light until we add this functionality
     const theme = 'light';
 

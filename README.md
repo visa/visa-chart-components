@@ -34,12 +34,11 @@ While we do deliver React (`@visa/charts-react`) and Angular (`@visa/charts-angu
 - [@visa/parallel-plot](packages/parallel-plot)
 - [@visa/dumbbell-plot](packages/dumbbell-plot)
 - [@visa/world-map](packages/world-map)
+- [@visa/alluvial-diagram](packages/alluvial-diagram)
 - [@visa/visa-charts-data-table](packages/data-table)
 - [@visa/keyboard-instructions](packages/keyboard-instructions)
 
-#### Components with `Development` status
-
-- [@visa/alluvial-diagram](packages/alluvial-diagram)
+<!-- #### Components with `Development` status -->
 
 #### Our utilities can also be leveraged directly
 
@@ -156,6 +155,7 @@ This project was/is built with tireless efforts from:
 - Chris DeMartini ([@visa](https://github.com/chris-demartini) / [personal](https://github.com/demartsc))
 - Jaime Tanner ([@visa](https://github.com/jaime-tanner) / [personal](https://github.com/tannerjaime))
 - Basavaraj Kabbure ([@visa](https://github.com/basav-kabbure) / [personal](https://github.com/basavarajk))
+- Stephanie Modica ([@visa](https://github.com/steph-modica) / [personal](https://github.com/stephmod))
 - Lilach Manheim ([personal](https://github.com/lmanheim))
 - Frank Elavsky ([personal](https://github.com/frankelavsky))
 - Tica Lin ([personal](https://github.com/ticahere))

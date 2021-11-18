@@ -83,9 +83,13 @@ const {
   styleUrl: 'pie-chart.scss'
 })
 export class PieChart {
-  @Event() clickFunc: EventEmitter;
-  @Event() hoverFunc: EventEmitter;
-  @Event() mouseOutFunc: EventEmitter;
+  @Event() clickEvent: EventEmitter;
+  @Event() hoverEvent: EventEmitter;
+  @Event() mouseOutEvent: EventEmitter;
+  @Event() initialLoadEvent: EventEmitter;
+  @Event() drawStartEvent: EventEmitter;
+  @Event() drawEndEvent: EventEmitter;
+  @Event() transitionEndEvent: EventEmitter;
 
   // Chart Attributes (1/7)
   @Prop({ mutable: true }) mainTitle: string = PieChartDefaultValues.mainTitle;
@@ -217,9 +221,6 @@ export class PieChart {
   shouldSetPieRadius: boolean = false;
   shouldprepareChartData: boolean = false;
   shouldUpdateReferenceLines: boolean = false;
-  shouldUpdateClickFunc: boolean = false;
-  shouldUpdateHoverFunc: boolean = false;
-  shouldUpdateMouseoutFunc: boolean = false;
   shouldValidateInteractionKeys: boolean = false;
   shouldSetGlobalSelections: boolean = false;
   shouldEnterUpdateExit: boolean = false;
@@ -677,12 +678,14 @@ export class PieChart {
   }
 
   componentWillLoad() {
+    const chartID = this.uniqueID || 'pie-chart-' + uuid();
+    this.initialLoadEvent.emit({ chartID: chartID });
     // contrary to componentWillUpdate, this method appears safe to use for
     // any calculations we need. Keeping them here reduces future refactor,
     // since componentWillUpdate should eventually mirror this method
     return new Promise(resolve => {
       this.duration = 0;
-      this.chartID = this.uniqueID || 'pie-chart-' + uuid();
+      this.chartID = chartID;
       this.pieChartEl.id = this.chartID;
       this.setTagLevels();
       this.prepareScales();
@@ -913,7 +916,7 @@ export class PieChart {
       }
       this.onChangeHandler();
       resolve('component did update');
-    });
+    }).then(() => this.drawEndEvent.emit({ chartID: this.chartID }));
   }
 
   shouldValidateAccessibilityProps() {
@@ -926,7 +929,7 @@ export class PieChart {
         uniqueID: this.uniqueID,
         context: {
           mainTitle: this.mainTitle,
-          onClickFunc: this.suppressEvents ? undefined : this.clickFunc.emit,
+          onClickEvent: this.suppressEvents ? undefined : this.clickEvent.emit,
           tooltipLabel: this.tooltipLabel,
           dataLabel: this.dataLabel,
           valueAccessor: this.valueAccessor
@@ -1419,8 +1422,8 @@ export class PieChart {
       .attr('class', 'arc')
       .classed('entering', true)
       .attr('opacity', 0)
-      .on('click', !this.suppressEvents ? d => this.onClickHandler(d.data) : null)
-      .on('mouseover', !this.suppressEvents ? d => this.onHoverHandler(d.data) : null)
+      .on('click', !this.suppressEvents ? (d, i, n) => this.onClickHandler(d.data, n[i]) : null)
+      .on('mouseover', !this.suppressEvents ? (d, i, n) => this.onHoverHandler(d.data, n[i]) : null)
       .on('mouseout', !this.suppressEvents ? () => this.onMouseOutHandler() : null)
       .attr('cursor', !this.suppressEvents ? this.cursor : null)
       .each((_d, i, n) => {
@@ -1594,6 +1597,9 @@ export class PieChart {
           // focusDidExist // this only matters for exiting selections
           // recursive: true // this only matters for
         });
+
+        // now we can emit the event that transitions are complete
+        this.transitionEndEvent.emit({ chartID: this.chartID });
       });
   }
 
@@ -1719,8 +1725,14 @@ export class PieChart {
       .classed('entering', true)
       .attr('fill', (d, i, n) => this.textTreatmentHandler(d, i, n, placement))
       .attr('cursor', !this.suppressEvents && group !== 'RefLabels' ? this.cursor : null)
-      .on('click', !this.suppressEvents && group !== 'RefLabels' ? d => this.onClickHandler(d.data) : null)
-      .on('mouseover', !this.suppressEvents && group !== 'RefLabels' ? d => this.onHoverHandler(d.data) : null)
+      .on(
+        'click',
+        !this.suppressEvents && group !== 'RefLabels' ? (d, i, n) => this.onClickHandler(d.data, n[i]) : null
+      )
+      .on(
+        'mouseover',
+        !this.suppressEvents && group !== 'RefLabels' ? (d, i, n) => this.onHoverHandler(d.data, n[i]) : null
+      )
       .on('mouseout', !this.suppressEvents && group !== 'RefLabels' ? () => this.onMouseOutHandler() : null);
 
     this['entering' + group + 'Notes']
@@ -1740,8 +1752,14 @@ export class PieChart {
       )
       .classed('entering', true)
       .attr('cursor', !this.suppressEvents && group !== 'RefLabels' ? this.cursor : null)
-      .on('click', !this.suppressEvents && group !== 'RefLabels' ? d => this.onClickHandler(d.data) : null)
-      .on('mouseover', !this.suppressEvents && group !== 'RefLabels' ? d => this.onHoverHandler(d.data) : null)
+      .on(
+        'click',
+        !this.suppressEvents && group !== 'RefLabels' ? (d, i, n) => this.onClickHandler(d.data, n[i]) : null
+      )
+      .on(
+        'mouseover',
+        !this.suppressEvents && group !== 'RefLabels' ? (d, i, n) => this.onHoverHandler(d.data, n[i]) : null
+      )
       .on('mouseout', !this.suppressEvents && group !== 'RefLabels' ? () => this.onMouseOutHandler() : null);
   }
 
@@ -2470,27 +2488,27 @@ export class PieChart {
 
   bindInteractivity() {
     this.update
-      .on('click', !this.suppressEvents ? d => this.onClickHandler(d.data) : null)
-      .on('mouseover', !this.suppressEvents ? d => this.onHoverHandler(d.data) : null)
+      .on('click', !this.suppressEvents ? (d, i, n) => this.onClickHandler(d.data, n[i]) : null)
+      .on('mouseover', !this.suppressEvents ? (d, i, n) => this.onHoverHandler(d.data, n[i]) : null)
       .on('mouseout', !this.suppressEvents ? () => this.onMouseOutHandler() : null);
 
     this.updatingLabels
-      .on('click', !this.suppressEvents ? d => this.onClickHandler(d.data) : null)
-      .on('mouseover', !this.suppressEvents ? d => this.onHoverHandler(d.data) : null)
+      .on('click', !this.suppressEvents ? (d, i, n) => this.onClickHandler(d.data, n[i]) : null)
+      .on('mouseover', !this.suppressEvents ? (d, i, n) => this.onHoverHandler(d.data, n[i]) : null)
       .on('mouseout', !this.suppressEvents ? () => this.onMouseOutHandler() : null);
     this.updatingLabelsNotes
-      .on('click', !this.suppressEvents ? d => this.onClickHandler(d.data) : null)
-      .on('mouseover', !this.suppressEvents ? d => this.onHoverHandler(d.data) : null)
+      .on('click', !this.suppressEvents ? (d, i, n) => this.onClickHandler(d.data, n[i]) : null)
+      .on('mouseover', !this.suppressEvents ? (d, i, n) => this.onHoverHandler(d.data, n[i]) : null)
       .on('mouseout', !this.suppressEvents ? () => this.onMouseOutHandler() : null);
   }
 
-  onClickHandler(d) {
-    this.clickFunc.emit(d);
+  onClickHandler(d, n) {
+    this.clickEvent.emit({ data: d, target: n });
   }
 
-  onHoverHandler(d) {
+  onHoverHandler(d, n) {
     overrideTitleTooltip(this.chartID, true);
-    this.hoverFunc.emit(d);
+    this.hoverEvent.emit({ data: d, target: n });
     if (this.showTooltip) {
       this.eventsTooltip({ data: d, evt: event, isToShow: true });
     }
@@ -2498,7 +2516,7 @@ export class PieChart {
 
   onMouseOutHandler() {
     overrideTitleTooltip(this.chartID, false);
-    this.mouseOutFunc.emit();
+    this.mouseOutEvent.emit();
     if (this.showTooltip) {
       this.eventsTooltip({ isToShow: false });
     }
@@ -2526,6 +2544,7 @@ export class PieChart {
   }
 
   render() {
+    this.drawStartEvent.emit({ chartID: this.chartID });
     // everything between this comment and the third should eventually
     // be moved into componentWillUpdate (if the stenicl bug is fixed)
     this.init();
