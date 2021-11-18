@@ -15,13 +15,8 @@ const commonComponents = [
   '@visa/visa-charts-data-table',
   '@visa/keyboard-instructions'
 ].join();
-const ignoreComponents = ['@visa/level-indicator', '@visa/pareto-chart', '@visa/bivariate-mapbox-map'].join();
-const ignoreAppComponents = [
-  'charts-react-demo',
-  'charts-react-hooks-demo',
-  'charts-angular-demo',
-  'visa-charts-demo'
-].join();
+const ignoreComponents = ['@visa/bivariate-mapbox-map'].join();
+const ignoreAppComponents = ['charts-react-demo', 'charts-react-hooks-demo', 'visa-charts-demo'].join();
 
 const logger = console;
 let cooldown = 0;
@@ -327,16 +322,6 @@ function run() {
         // spawn(`npm -C ./packages/charts-react-hooks-demo run start`);
       },
       order: 13
-    }),
-
-    sad: createTask({
-      name: `start charts angular demo ${chalk.gray('(start charts angular demo)')}`,
-      defaultValue: false,
-      option: '--sad',
-      command: () => {
-        spawn(`lerna run --scope charts-angular-demo start`);
-      },
-      order: 14
     }),
 
     c: createTask({

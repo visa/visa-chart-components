@@ -19,11 +19,7 @@ import '@visa/heat-map';
 /* STARTS: comment this code for faster demo build / uncomment for full build */
 import '@visa/parallel-plot';
 import '@visa/dumbbell-plot';
-import '@visa/pareto-chart';
 import '@visa/world-map';
-import '@visa/clustered-force-layout';
-import '@visa/level-indicator';
-import '@visa/group-charts';
 import '@visa/visa-charts-data-table';
 import '@visa/keyboard-instructions';
 // import '@visa/bivariate-mapbox-map';
@@ -46,11 +42,7 @@ export class VisaCharts {
         <heat-map />
         <parallel-plot />
         <dumbbell-plot />
-        <pareto-chart />
-        <clustered-force-layout />
         <world-map />
-        <level-indicator-alternative />
-        <group-charts />
         {/* <bivariate-mapbox-map /> */}
       </div>
     );

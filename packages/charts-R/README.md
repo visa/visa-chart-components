@@ -26,11 +26,9 @@ This package wraps [@visa/charts](../charts) web components for use in [R](https
 - [@visa/parallel-plot](../parallel-plot)
 - [@visa/dumbbell-plot](../dumbbell-plot)
 - [@visa/world-map](../world-map)
-
-#### Components with `Development` status
-
 - [@visa/alluvial-diagram](../alluvial-diagram)
 
+<!-- #### Components with `Development` status -->
 <hr>
 
 #### <a name="R_components" href="#R_components">#</a> Use VCC as R functions

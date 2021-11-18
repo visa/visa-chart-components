@@ -32,7 +32,7 @@ export const config: Config | any = {
     }),
     angularOutputTarget({
       componentCorePackage: '@visa/bivariate-mapbox-map',
-      directivesProxyFile: '../charts-angular/src/directives/bivariate-mapbox-map.ts'
+      directivesProxyFile: '../charts-angular/src/lib/directives/bivariate-mapbox-map.ts'
     }),
     { type: 'dist' },
     { type: 'www' }

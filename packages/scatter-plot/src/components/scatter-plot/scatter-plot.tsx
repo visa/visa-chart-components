@@ -91,9 +91,13 @@ const {
   styleUrl: 'scatter-plot.scss'
 })
 export class ScatterPlot {
-  @Event() clickFunc: EventEmitter;
-  @Event() hoverFunc: EventEmitter;
-  @Event() mouseOutFunc: EventEmitter;
+  @Event() clickEvent: EventEmitter;
+  @Event() hoverEvent: EventEmitter;
+  @Event() mouseOutEvent: EventEmitter;
+  @Event() initialLoadEvent: EventEmitter;
+  @Event() drawStartEvent: EventEmitter;
+  @Event() drawEndEvent: EventEmitter;
+  @Event() transitionEndEvent: EventEmitter;
 
   // Chart Attributes (1/7)
   @Prop({ mutable: true }) mainTitle: string = ScatterPlotDefaultValues.mainTitle;
@@ -769,10 +773,12 @@ export class ScatterPlot {
     // contrary to componentWillUpdate, this method appears safe to use for
     // any calculations we need. Keeping them here reduces future refactor,
     // since componentWillUpdate should eventually mirror this method
+    const chartID = this.uniqueID || 'scatter-plot-' + uuid();
+    this.initialLoadEvent.emit({ chartID: chartID });
     return new Promise(resolve => {
       this.duration = 0;
       this.defaults = true;
-      this.chartID = this.uniqueID || 'scatter-plot-' + uuid();
+      this.chartID = chartID;
       this.scatterChartEl.id = this.chartID;
       this.setTagLevels();
       this.prepareData();
@@ -1045,7 +1051,7 @@ export class ScatterPlot {
       }
       this.onChangeHandler();
       resolve('component did update');
-    });
+    }).then(() => this.drawEndEvent.emit({ chartID: this.chartID }));
   }
 
   shouldValidateAccessibilityProps() {
@@ -1060,7 +1066,7 @@ export class ScatterPlot {
           uniqueID: this.uniqueID,
           context: {
             mainTitle: this.mainTitle,
-            onClickFunc: !this.suppressEvents ? this.clickFunc.emit : undefined
+            onClickEvent: this.suppressEvents ? undefined : this.clickEvent.emit
           }
         }
       );
@@ -1442,8 +1448,8 @@ export class ScatterPlot {
       .each((_d, i, n) => {
         initializeElementAccess(n[i]);
       })
-      .on('click', d => this.onClickHandler(d))
-      .on('mouseover', d => this.onHoverHandler(d))
+      .on('click', (d, i, n) => this.onClickHandler(d, n[i]))
+      .on('mouseover', (d, i, n) => this.onHoverHandler(d, n[i]))
       .on('mouseout', () => this.onMouseOutHandler())
       .attr('opacity', 0)
       .attr('stroke', this.handleDotStyle)
@@ -1572,6 +1578,9 @@ export class ScatterPlot {
         retainAccessFocus({
           parentGNode: this.rootG.node()
         });
+
+        // now we can emit the event that transitions are complete
+        this.transitionEndEvent.emit({ chartID: this.chartID });
       });
   }
 
@@ -1752,12 +1761,14 @@ export class ScatterPlot {
       .selectAll('.legend')
       .on(
         'click',
-        this.legend.interactive && !this.suppressEvents ? d => this.onClickHandler(d.values ? d.values[0] : d) : null
+        this.legend.interactive && !this.suppressEvents
+          ? (d, i, n) => this.onClickHandler(d.values ? d.values[0] : d, n[i])
+          : null
       )
       .on(
         'mouseover',
         this.legend.interactive && !this.suppressEvents
-          ? d => this.onHoverHandler(d.values ? d.values[0] : d, true)
+          ? (d, i, n) => this.onHoverHandler(d.values ? d.values[0] : d, n[i], true)
           : null
       )
       .on('mouseout', this.legend.interactive && !this.suppressEvents ? () => this.onMouseOutHandler() : null);
@@ -1771,12 +1782,12 @@ export class ScatterPlot {
 
   bindInteractivity() {
     this.updatePoints
-      .on('click', !this.suppressEvents ? d => this.onClickHandler(d) : null)
-      .on('mouseover', !this.suppressEvents ? d => this.onHoverHandler(d) : null)
+      .on('click', !this.suppressEvents ? (d, i, n) => this.onClickHandler(d, n[i]) : null)
+      .on('mouseover', !this.suppressEvents ? (d, i, n) => this.onHoverHandler(d, n[i]) : null)
       .on('mouseout', !this.suppressEvents ? () => this.onMouseOutHandler() : null);
     this.updateLabels
-      .on('click', !this.suppressEvents ? d => this.onClickHandler(d) : null)
-      .on('mouseover', !this.suppressEvents ? d => this.onHoverHandler(d) : null)
+      .on('click', !this.suppressEvents ? (d, i, n) => this.onClickHandler(d, n[i]) : null)
+      .on('mouseover', !this.suppressEvents ? (d, i, n) => this.onHoverHandler(d, n[i]) : null)
       .on('mouseout', !this.suppressEvents ? () => this.onMouseOutHandler() : null);
   }
 
@@ -1803,8 +1814,11 @@ export class ScatterPlot {
       })
       .attr('class', 'scatter-dataLabel entering')
       .attr('fill', this.textFillHandler)
-      .on('click', !this.suppressEvents && this.dataLabel.visible ? d => this.onClickHandler(d) : null)
-      .on('mouseover', !this.suppressEvents && this.dataLabel.visible ? d => this.onHoverHandler(d) : null)
+      .on('click', !this.suppressEvents && this.dataLabel.visible ? (d, i, n) => this.onClickHandler(d, n[i]) : null)
+      .on(
+        'mouseover',
+        !this.suppressEvents && this.dataLabel.visible ? (d, i, n) => this.onHoverHandler(d, n[i]) : null
+      )
       .on('mouseout', !this.suppressEvents && this.dataLabel.visible ? () => this.onMouseOutHandler() : null);
 
     placeDataLabels({
@@ -2420,13 +2434,13 @@ export class ScatterPlot {
     this.exitSize = 0;
   }
 
-  onClickHandler(d) {
-    this.clickFunc.emit(d);
+  onClickHandler(d, n) {
+    this.clickEvent.emit({ data: d, target: n });
   }
 
-  onHoverHandler(d, isLegend?) {
+  onHoverHandler(d, n, isLegend?) {
     overrideTitleTooltip(this.chartID, true);
-    this.hoverFunc.emit(d);
+    this.hoverEvent.emit({ data: d, target: n });
     if (this.showTooltip && !isLegend) {
       this.eventsTooltip({ data: d, evt: event, isToShow: true });
     }
@@ -2434,7 +2448,7 @@ export class ScatterPlot {
 
   onMouseOutHandler() {
     overrideTitleTooltip(this.chartID, false);
-    this.mouseOutFunc.emit();
+    this.mouseOutEvent.emit();
     if (this.showTooltip) {
       this.eventsTooltip({ isToShow: false });
     }
@@ -2463,6 +2477,7 @@ export class ScatterPlot {
   }
 
   render() {
+    this.drawStartEvent.emit({ chartID: this.chartID });
     // everything between this comment and the third should eventually
     // be moved into componentWillUpdate (if the stenicl bug is fixed)
     this.init();

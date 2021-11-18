@@ -94,9 +94,13 @@ const {
   styleUrl: 'parallel-plot.scss'
 })
 export class ParallelPlot {
-  @Event() clickFunc: EventEmitter;
-  @Event() hoverFunc: EventEmitter;
-  @Event() mouseOutFunc: EventEmitter;
+  @Event() clickEvent: EventEmitter;
+  @Event() hoverEvent: EventEmitter;
+  @Event() mouseOutEvent: EventEmitter;
+  @Event() initialLoadEvent: EventEmitter;
+  @Event() drawStartEvent: EventEmitter;
+  @Event() drawEndEvent: EventEmitter;
+  @Event() transitionEndEvent: EventEmitter;
 
   // Chart Attributes (1/7)
   @Prop({ mutable: true }) mainTitle: string = ParallelPlotDefaultValues.mainTitle;
@@ -914,13 +918,15 @@ export class ParallelPlot {
   }
 
   componentWillLoad() {
+    const chartID = this.uniqueID || 'parallel-plot-' + uuid();
+    this.initialLoadEvent.emit({ chartID: chartID });
     // contrary to componentWillUpdate, this method appears safe to use for
     // any calculations we need. Keeping them here reduces future refactor,
     // since componentWillUpdate should eventually mirror this method
     return new Promise(resolve => {
       this.duration = 0;
       this.defaults = true;
-      this.chartID = this.uniqueID || 'parallel-plot-' + uuid();
+      this.chartID = chartID;
       this.parallelChartEl.id = this.chartID;
       this.setTagLevels();
       this.setDimensions();
@@ -1215,7 +1221,7 @@ export class ParallelPlot {
       }
       this.onChangeHandler();
       resolve('component did update');
-    });
+    }).then(() => this.drawEndEvent.emit({ chartID: this.chartID }));
   }
 
   shouldValidateAccessibilityProps() {
@@ -1230,7 +1236,7 @@ export class ParallelPlot {
           uniqueID: this.uniqueID,
           context: {
             mainTitle: this.mainTitle,
-            onClickFunc: !this.suppressEvents ? this.clickFunc.emit : undefined
+            onClickEvent: this.suppressEvents ? undefined : this.clickEvent.emit
           }
         }
       );
@@ -1830,9 +1836,9 @@ export class ParallelPlot {
       .on(
         'click',
         !this.suppressEvents && this.seriesInteraction
-          ? d => {
+          ? (d, i, n) => {
               if (d.values) {
-                this.onClickHandler(d.values[0]);
+                this.onClickHandler(d.values[0], n[i]);
               }
             }
           : null
@@ -1840,9 +1846,9 @@ export class ParallelPlot {
       .on(
         'mouseover',
         !this.suppressEvents && this.seriesInteraction
-          ? d => {
+          ? (d, i, n) => {
               if (d.values) {
-                this.onHoverHandler(d.values[0]);
+                this.onHoverHandler(d.values[0], n[i]);
               }
             }
           : null
@@ -1981,8 +1987,8 @@ export class ParallelPlot {
       .attr('data-fill', true)
       .attr('data-translate-x', this.margin.left + this.padding.left)
       .attr('data-translate-y', this.margin.top + this.padding.top)
-      .on('click', !this.suppressEvents ? d => this.onClickHandler(d) : null)
-      .on('mouseover', !this.suppressEvents ? d => this.onHoverHandler(d) : null)
+      .on('click', !this.suppressEvents ? (d, i, n) => this.onClickHandler(d, n[i]) : null)
+      .on('mouseover', !this.suppressEvents ? (d, i, n) => this.onHoverHandler(d, n[i]) : null)
       .on('mouseout', !this.suppressEvents ? () => this.onMouseOutHandler() : null);
 
     if (this.interpolating) {
@@ -2240,6 +2246,9 @@ export class ParallelPlot {
         retainAccessFocus({
           parentGNode: this.rootG.node()
         });
+
+        // now we can emit the event that transitions are complete
+        this.transitionEndEvent.emit({ chartID: this.chartID });
       });
   }
 
@@ -2252,9 +2261,9 @@ export class ParallelPlot {
       .on(
         'click',
         !this.suppressEvents && this.seriesInteraction
-          ? d => {
+          ? (d, i, n) => {
               if (d.values) {
-                this.onClickHandler(d.values[0]);
+                this.onClickHandler(d.values[0], n[i]);
               }
             }
           : null
@@ -2262,9 +2271,9 @@ export class ParallelPlot {
       .on(
         'mouseover',
         !this.suppressEvents && this.seriesInteraction
-          ? d => {
+          ? (d, i, n) => {
               if (d.values) {
-                this.onSeriesHoverHandler(d.values[0]);
+                this.onSeriesHoverHandler(d.values[0], n[i]);
               }
             }
           : null
@@ -2474,8 +2483,8 @@ export class ParallelPlot {
       .attr('fill', this.handleTextFill)
       .attr('class', 'parallel-dataLabel')
       .attr('cursor', !this.suppressEvents ? this.cursor : null)
-      .on('click', !this.suppressEvents ? d => this.onClickHandler(d) : null)
-      .on('mouseover', !this.suppressEvents ? d => this.onHoverHandler(d) : null)
+      .on('click', !this.suppressEvents ? (d, i, n) => this.onClickHandler(d, n[i]) : null)
+      .on('mouseover', !this.suppressEvents ? (d, i, n) => this.onHoverHandler(d, n[i]) : null)
       .on('mouseout', !this.suppressEvents ? () => this.onMouseOutHandler() : null);
 
     if (this.interpolating) {
@@ -3132,9 +3141,9 @@ export class ParallelPlot {
       .on(
         'click',
         !this.suppressEvents && this.seriesInteraction
-          ? d => {
+          ? (d, i, n) => {
               if (d.values) {
-                this.onClickHandler(d.values[0]);
+                this.onClickHandler(d.values[0], n[i]);
               }
             }
           : null
@@ -3142,9 +3151,9 @@ export class ParallelPlot {
       .on(
         'mouseover',
         !this.suppressEvents && this.seriesInteraction
-          ? d => {
+          ? (d, i, n) => {
               if (d.values) {
-                this.onHoverHandler(d.values[0]);
+                this.onHoverHandler(d.values[0], n[i]);
               }
             }
           : null
@@ -3152,17 +3161,17 @@ export class ParallelPlot {
       .on('mouseout', !this.suppressEvents ? () => this.onMouseOutHandler() : null);
 
     this.updateDots
-      .on('click', !this.suppressEvents ? d => this.onClickHandler(d) : null)
-      .on('mouseover', !this.suppressEvents ? d => this.onHoverHandler(d) : null)
+      .on('click', !this.suppressEvents ? (d, i, n) => this.onClickHandler(d, n[i]) : null)
+      .on('mouseover', !this.suppressEvents ? (d, i, n) => this.onHoverHandler(d, n[i]) : null)
       .on('mouseout', !this.suppressEvents ? () => this.onMouseOutHandler() : null);
 
     this.seriesLabelUpdate
       .on(
         'click',
         !this.suppressEvents && this.seriesInteraction
-          ? d => {
+          ? (d, i, n) => {
               if (d.values) {
-                this.onClickHandler(d.values[0]);
+                this.onClickHandler(d.values[0], n[i]);
               }
             }
           : null
@@ -3170,9 +3179,9 @@ export class ParallelPlot {
       .on(
         'mouseover',
         !this.suppressEvents && this.seriesInteraction
-          ? d => {
+          ? (d, i, n) => {
               if (d.values) {
-                this.onSeriesHoverHandler(d.values[0]);
+                this.onSeriesHoverHandler(d.values[0], n[i]);
               }
             }
           : null
@@ -3180,8 +3189,8 @@ export class ParallelPlot {
       .on('mouseout', !this.suppressEvents ? () => this.onMouseOutHandler() : null);
 
     this.updatingLabels
-      .on('click', !this.suppressEvents ? d => this.onClickHandler(d) : null)
-      .on('mouseover', !this.suppressEvents ? d => this.onHoverHandler(d) : null)
+      .on('click', !this.suppressEvents ? (d, i, n) => this.onClickHandler(d, n[i]) : null)
+      .on('mouseover', !this.suppressEvents ? (d, i, n) => this.onHoverHandler(d, n[i]) : null)
       .on('mouseout', !this.suppressEvents ? () => this.onMouseOutHandler() : null);
   }
 
@@ -3611,25 +3620,25 @@ export class ParallelPlot {
     this.exitSize = 0;
   }
 
-  onClickHandler(d) {
-    this.clickFunc.emit(d);
+  onClickHandler(d, n) {
+    this.clickEvent.emit({ data: d, target: n });
   }
 
-  onHoverHandler(d) {
+  onHoverHandler(d, n) {
     overrideTitleTooltip(this.chartID, true);
-    this.hoverFunc.emit(d);
+    this.hoverEvent.emit({ data: d, target: n });
     if (this.showTooltip && d[this.ordinalAccessor]) {
       this.eventsTooltip({ data: d, evt: event, isToShow: true });
     }
   }
 
-  onSeriesHoverHandler(d) {
-    this.hoverFunc.emit(d);
+  onSeriesHoverHandler(d, n) {
+    this.hoverEvent.emit({ data: d, target: n });
   }
 
   onMouseOutHandler() {
     overrideTitleTooltip(this.chartID, false);
-    this.mouseOutFunc.emit();
+    this.mouseOutEvent.emit();
     if (this.showTooltip) {
       this.eventsTooltip({ isToShow: false });
     }
@@ -3664,9 +3673,9 @@ export class ParallelPlot {
       .on(
         'click',
         !this.suppressEvents && this.seriesInteraction && this.legend.interactive
-          ? d => {
+          ? (d, i, n) => {
               if (d.values) {
-                this.onClickHandler(d.values[0]);
+                this.onClickHandler(d.values[0], n[i]);
               }
             }
           : null
@@ -3674,9 +3683,9 @@ export class ParallelPlot {
       .on(
         'mouseover',
         !this.suppressEvents && this.seriesInteraction && this.legend.interactive
-          ? d => {
+          ? (d, i, n) => {
               if (d.values) {
-                this.hoverFunc.emit(d.values[0]);
+                this.hoverEvent.emit({ data: d.values[0], target: n[i] });
               }
             }
           : null
@@ -3718,6 +3727,7 @@ export class ParallelPlot {
   }
 
   render() {
+    this.drawStartEvent.emit({ chartID: this.chartID });
     // everything between this comment and the third should eventually
     // be moved into componentWillUpdate (if the stenicl bug is fixed)
     this.init();

@@ -212,28 +212,52 @@ export interface IPieChartProps {
   interactionKeys: any[];
 
   /**
-   * @shortDescription Set a callback for click event on each data point.
-   * @controlName TextArea
-   * @groupName Events */
-  clickFunc: any;
-
-  /**
    * @shortDescription Suppresses and disables all event emitters. Setting to true can increase performance for non-interactive charts.
    * @controlName Toggle
    * @groupName Events */
   suppressEvents: boolean;
 
   /**
-   * @shortDescription Set a callback to execute when mouse enters the chart.
-   * @controlName TextArea
+   * @shortDescription Set a callback for click event on each data point.
+   * @controlName Toggle
    * @groupName Events */
-  hoverFunc: any;
+  clickEvent: any;
+
+  /**
+   * @shortDescription Set a callback to execute when mouse enters the chart.
+   * @controlName Toggle
+   * @groupName Events */
+  hoverEvent: any;
 
   /**
    * @shortDescription Set a callback to execute when mouse leaves the chart.
-   * @controlName TextArea
+   * @controlName Toggle
    * @groupName Events */
-  mouseOutFunc: any;
+  mouseOutEvent: any;
+
+  /**
+   * @shortDescription Set a callback to execute when chart initially loads.
+   * @controlName Toggle
+   * @groupName Events */
+  initialLoadEvent: any;
+
+  /**
+   * @shortDescription Set a callback to execute when chart drawing starts.
+   * @controlName Toggle
+   * @groupName Events */
+  drawStartEvent: any;
+
+  /**
+   * @shortDescription Set a callback to execute when chart drawing ends.
+   * @controlName Toggle
+   * @groupName Events */
+  drawEndEvent: any;
+
+  /**
+   * @shortDescription Set a callback to execute when chart geometry transitions end.
+   * @controlName Toggle
+   * @groupName Events */
+  transitionEndEvent: any;
 
   /**
    * @shortDescription

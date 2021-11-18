@@ -49,6 +49,9 @@
     "tslib": "^1.9.3",
     "typescript": "^3.2.2"
   },
+  "resolutions": {
+    "path-parse": "^1.0.7"
+  },
   "files": [
     "dist"
   ]

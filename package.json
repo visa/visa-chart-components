@@ -40,7 +40,8 @@
     "lint-lib": "npm -C ./packages/visa-charts-lib run tslint-check",
     "prettier-all-check": "prettier --config  ./.prettierrc --ignore ./.prettierignore --debug-check \"**/*.{js,jsx,ts,tsx,html,jsx,json,css,scss,md}\"",
     "prettier-all": "prettier --config  ./.prettierrc --ignore ./.prettierignore --write \"**/*.{js,jsx,ts,tsx,html,jsx,json,css,scss,md}\"",
-    "release": "node scripts/alter-change-log.js && lerna version --no-push --conventional-commits --conventional-graduate --no-commit-hooks",
+    "release": "node scripts/alter-change-log.js && lerna version --no-push --conventional-commits --no-commit-hooks",
+    "release:grad": "node scripts/alter-change-log.js && lerna version --no-push --conventional-commits --conventional-graduate --no-commit-hooks",
     "release:no-git-tag": "node scripts/alter-change-log.js && lerna version --no-push --no-git-tag-version --conventional-commits --conventional-graduate --no-commit-hooks",
     "install:demo": "npm i @visa/visa-charts-utils && npm -C ./packages/visa-charts-demo run install:demo",
     "install:angular-demo": "npm -C ./packages/charts-angular-demo run install:demo",
@@ -94,6 +95,21 @@
     "tslint-config-prettier": "^1.14.0",
     "workbox-build": "4.3.1",
     "es-check": "5.2.0"
+  },
+  "resolutions": {
+    "ansi-regex": "^5.0.1",
+    "browserslist": "^4.16.5",
+    "glob-parent": "^5.1.2",
+    "hosted-git-info": "^2.8.9",
+    "node-notifier": "^8.0.1",
+    "path-parse": "^1.0.7",
+    "property-expr": "^2.0.3",
+    "ssri": "^6.0.2",
+    "tar": "^4.4.18",
+    "tmpl": "^1.0.5",
+    "trim-newlines": "^3.0.1",
+    "trim-off-newlines": "^1.0.3",
+    "ws": "^5.2.3"
   },
   "config": {
     "scripts": {

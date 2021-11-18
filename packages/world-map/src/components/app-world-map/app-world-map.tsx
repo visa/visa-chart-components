@@ -337,27 +337,23 @@ export class AppD3Map {
   }
 
   // Demo Interactivity
-  onClickHandler(ev) {
-    const d = ev.detail;
-    if (d) {
-      const newClicks = [...this.clickElement];
-      const keys = Object.keys(d);
-      const index = this.clickElement.findIndex(o => {
-        let conditionsMet = 0;
-        keys.forEach(key => {
-          conditionsMet += (isNaN(o[key]) ? 0 : o[key]) === (isNaN(d[key]) ? 0 : d[key]) ? 1 : 0;
-          // console.log('checking conditions met', keys.length, conditionsMet, o[key], d[key]);
-        });
-        return conditionsMet && conditionsMet === keys.length;
+  onClickHandler(d) {
+    let index = -1;
+    this.clickElement.forEach((el, i) => {
+      let keyMatch = [];
+      this.interactionKeys.forEach(k => {
+        el[k] == d.detail.data[k] ? keyMatch.push(true) : keyMatch.push(false);
       });
-      // console.log('checking clickFunc', ev, newClicks, keys, index);
-      if (index > -1) {
-        newClicks.splice(index, 1);
-      } else {
-        newClicks.push(d);
-      }
-      this.clickElement = newClicks;
+      keyMatch.every(v => v === true) ? (index = i) : null;
+    });
+
+    const newClicks = [...this.clickElement];
+    if (index > -1) {
+      newClicks.splice(index, 1);
+    } else {
+      newClicks.push(d.detail.data);
     }
+    this.clickElement = newClicks;
   }
   onHoverHandler(ev) {
     this.hoverElement = ev.detail;
@@ -660,9 +656,13 @@ export class AppD3Map {
             suppressEvents={this.suppressEvents}
             hoverHighlight={this.hoverElement}
             clickHighlight={this.clickElement}
-            onClickFunc={d => this.onClickHandler(d)}
-            onHoverFunc={d => this.onHoverHandler(d)}
-            onMouseOutFunc={() => this.onHoverHandler('')}
+            onClickEvent={d => this.onClickHandler(d)}
+            onHoverEvent={d => this.onHoverHandler(d)}
+            onMouseOutEvent={() => this.onHoverHandler('')}
+            onInitialLoadEvent={e => console.log('load event', e.detail, e)}
+            onDrawStartEvent={e => console.log('draw start event', e.detail, e)}
+            onDrawEndEvent={e => console.log('draw end event', e.detail, e)}
+            onTransitionEndEvent={e => console.log('transition event', e.detail, e)}
             showGridlines
             // maxValueOverride={this.propChange}
             colorPalette={this.colorPalette}

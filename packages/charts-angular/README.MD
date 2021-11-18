@@ -1,6 +1,6 @@
 # @visa/charts-angular
 
-This package bundles [visa chart components](../../) web components and exports them as angular components. We leveage [stencil's angular bindings](https://stenciljs.com/docs/framework-bindings) in the creation of @visa/charts-angular.
+This package bundles [visa chart components](../../) web components and exports them as angular components. We leverage [stencil's angular bindings](https://stenciljs.com/docs/framework-bindings) in the creation of @visa/charts-angular.
 
 ### Installation Steps
 
@@ -26,12 +26,11 @@ This package bundles [visa chart components](../../) web components and exports 
 - [@visa/parallel-plot](../parallel-plot)
 - [@visa/dumbbell-plot](../dumbbell-plot)
 - [@visa/world-map](../world-map)
-- [@visa/visa-charts-data-table](../data-table)
-
-#### Components with `Development` status
-
 - [@visa/alluvial-diagram](../alluvial-diagram)
+- [@visa/visa-charts-data-table](../data-table)
+- [@visa/keyboard-instructions](packages/keyboard-instructions)
 
+<!-- #### Components with `Development` status -->
 <hr>
 
 #### <a name="angular_components" href="#angular_components">#</a> Use VCC as angular components

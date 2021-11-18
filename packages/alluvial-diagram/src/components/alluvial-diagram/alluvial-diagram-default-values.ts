@@ -29,8 +29,8 @@ export class AlluvialDiagramDefaultValues {
   static readonly sourceAccessor = 'source';
   static readonly targetAccessor = 'target';
   static readonly valueAccessor = 'value';
-  static readonly groupAccessor = 'group';
-  static readonly labelAccessor = 'name';
+  static readonly groupAccessor = '';
+  // static readonly labelAccessor = '';
   static readonly nodeIDAccessor = 'id';
 
   static readonly nodeConfig = {

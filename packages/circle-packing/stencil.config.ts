@@ -28,7 +28,7 @@ export const config: Config | any = {
     }),
     angularOutputTarget({
       componentCorePackage: '@visa/circle-packing',
-      directivesProxyFile: '../charts-angular/src/directives/circle-packing.ts'
+      directivesProxyFile: '../charts-angular/src/lib/directives/circle-packing.ts'
     }),
     { type: 'dist' },
     { type: 'www' }

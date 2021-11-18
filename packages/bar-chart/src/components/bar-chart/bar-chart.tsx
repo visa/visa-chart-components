@@ -95,9 +95,13 @@ const {
   styleUrl: 'bar-chart.scss'
 })
 export class BarChart {
-  @Event() clickFunc: EventEmitter;
-  @Event() hoverFunc: EventEmitter;
-  @Event() mouseOutFunc: EventEmitter;
+  @Event() clickEvent: EventEmitter;
+  @Event() hoverEvent: EventEmitter;
+  @Event() mouseOutEvent: EventEmitter;
+  @Event() initialLoadEvent: EventEmitter;
+  @Event() drawStartEvent: EventEmitter;
+  @Event() drawEndEvent: EventEmitter;
+  @Event() transitionEndEvent: EventEmitter;
 
   // Chart Attributes (1/7)
   @Prop({ mutable: true }) mainTitle: string = BarChartDefaultValues.mainTitle;
@@ -218,9 +222,6 @@ export class BarChart {
   shouldValidateClickStyle: boolean = false;
   shouldValidateHoverStyle: boolean = false;
   shouldSetSelectionClass: boolean = false;
-  shouldUpdateClickFunc: boolean = false;
-  shouldUpdateHoverFunc: boolean = false;
-  shouldUpdateMouseoutFunc: boolean = false;
   shouldUpdateCursor: boolean = false;
   shouldSetColors: boolean = false;
   shouldUpdateGeometries: boolean = false;
@@ -791,13 +792,15 @@ export class BarChart {
   }
 
   componentWillLoad() {
+    const chartID = this.uniqueID || 'bar-chart-' + uuid();
+    this.initialLoadEvent.emit({ chartID: chartID });
     // contrary to componentWillUpdate, this method appears safe to use for
     // any calculations we need. Keeping them here reduces future refactor,
     // since componentWillUpdate should eventually mirror this method
     return new Promise(resolve => {
       this.duration = 0;
       this.defaults = true;
-      this.chartID = this.uniqueID || 'bar-chart-' + uuid();
+      this.chartID = chartID;
       this.barChartEl.id = this.chartID;
       this.setTagLevels();
       this.prepareData();
@@ -1079,7 +1082,7 @@ export class BarChart {
       this.onChangeHandler();
       this.updatingLabels.classed('entering', false);
       resolve('component did update');
-    });
+    }).then(() => this.drawEndEvent.emit({ chartID: this.chartID }));
   }
 
   shouldValidateAccessibilityProps() {
@@ -1094,7 +1097,7 @@ export class BarChart {
           uniqueID: this.uniqueID,
           context: {
             mainTitle: this.mainTitle,
-            onClickFunc: this.suppressEvents ? undefined : this.clickFunc.emit
+            onClickEvent: this.suppressEvents ? undefined : this.clickEvent.emit
           }
         }
       );
@@ -1475,8 +1478,8 @@ export class BarChart {
 
     this.enter
       .attr('class', 'bar')
-      .on('click', !this.suppressEvents ? d => this.onClickHandler(d) : null)
-      .on('mouseover', !this.suppressEvents ? d => this.onHoverHandler(d) : null)
+      .on('click', !this.suppressEvents ? (d, i, n) => this.onClickHandler(d, n[i]) : null)
+      .on('mouseover', !this.suppressEvents ? (d, i, n) => this.onHoverHandler(d, n[i]) : null)
       .on('mouseout', !this.suppressEvents ? () => this.onMouseOutHandler() : null)
       .attr('cursor', !this.suppressEvents ? this.cursor : null)
       .attr('rx', this.roundedCorner)
@@ -1664,6 +1667,9 @@ export class BarChart {
           // focusDidExist // this only matters for exiting selections
           // recursive: true // this only matters for
         });
+
+        // now we can emit the event that transitions are complete
+        this.transitionEndEvent.emit({ chartID: this.chartID });
       });
   }
 
@@ -2085,8 +2091,11 @@ export class BarChart {
   bindLegendInteractivity() {
     select(this.barChartEl)
       .selectAll('.legend')
-      .on('click', this.legend.interactive && !this.suppressEvents ? d => this.onClickHandler(d) : null)
-      .on('mouseover', this.legend.interactive && !this.suppressEvents ? d => this.onHoverHandler(d, true) : null)
+      .on('click', this.legend.interactive && !this.suppressEvents ? (d, i, n) => this.onClickHandler(d, n[i]) : null)
+      .on(
+        'mouseover',
+        this.legend.interactive && !this.suppressEvents ? (d, i, n) => this.onHoverHandler(d, n[i], true) : null
+      )
       .on('mouseout', this.legend.interactive && !this.suppressEvents ? () => this.onMouseOutHandler() : null);
   }
 
@@ -2098,12 +2107,12 @@ export class BarChart {
 
   bindInteractivity() {
     this.update
-      .on('click', !this.suppressEvents ? d => this.onClickHandler(d) : null)
-      .on('mouseover', !this.suppressEvents ? d => this.onHoverHandler(d) : null)
+      .on('click', !this.suppressEvents ? (d, i, n) => this.onClickHandler(d, n[i]) : null)
+      .on('mouseover', !this.suppressEvents ? (d, i, n) => this.onHoverHandler(d, n[i]) : null)
       .on('mouseout', !this.suppressEvents ? () => this.onMouseOutHandler() : null);
     this.updatingLabels
-      .on('click', !this.suppressEvents ? d => this.onClickHandler(d) : null)
-      .on('mouseover', !this.suppressEvents ? d => this.onHoverHandler(d) : null)
+      .on('click', !this.suppressEvents ? (d, i, n) => this.onClickHandler(d, n[i]) : null)
+      .on('mouseover', !this.suppressEvents ? (d, i, n) => this.onHoverHandler(d, n[i]) : null)
       .on('mouseout', !this.suppressEvents ? () => this.onMouseOutHandler() : null);
   }
 
@@ -2126,8 +2135,8 @@ export class BarChart {
       .attr('class', 'bar-dataLabel entering') // entering class is used by collision
       .attr('fill', this.textTreatmentHandler)
       .attr('cursor', !this.suppressEvents ? this.cursor : null)
-      .on('click', !this.suppressEvents ? d => this.onClickHandler(d) : null)
-      .on('mouseover', !this.suppressEvents ? d => this.onHoverHandler(d) : null)
+      .on('click', !this.suppressEvents ? (d, i, n) => this.onClickHandler(d, n[i]) : null)
+      .on('mouseover', !this.suppressEvents ? (d, i, n) => this.onHoverHandler(d, n[i]) : null)
       .on('mouseout', !this.suppressEvents ? () => this.onMouseOutHandler() : null);
 
     // placeDataLabels({
@@ -2610,13 +2619,13 @@ export class BarChart {
     this.exitSize = 0;
   }
 
-  onClickHandler(d) {
-    this.clickFunc.emit(d);
+  onClickHandler(d, n) {
+    this.clickEvent.emit({ data: d, target: n });
   }
 
-  onHoverHandler(d, isLegend?) {
+  onHoverHandler(d, n, isLegend?) {
     overrideTitleTooltip(this.chartID, true);
-    this.hoverFunc.emit(d);
+    this.hoverEvent.emit({ data: d, target: n });
     if (this.showTooltip && !isLegend) {
       this.eventsTooltip({ data: d, evt: event, isToShow: true });
     }
@@ -2624,7 +2633,7 @@ export class BarChart {
 
   onMouseOutHandler() {
     overrideTitleTooltip(this.chartID, false);
-    this.mouseOutFunc.emit();
+    this.mouseOutEvent.emit();
     if (this.showTooltip) {
       this.eventsTooltip({ isToShow: false });
     }
@@ -2655,6 +2664,8 @@ export class BarChart {
   }
 
   render() {
+    this.drawStartEvent.emit({ chartID: this.chartID });
+
     // theme hardcoded until we re-enable it
     const theme = 'light';
     // everything between this comment and the third should eventually

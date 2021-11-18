@@ -31,6 +31,7 @@ export class AppParallelPlot {
   @State() cursor: any = 'default';
   @State() dotOpacity: any = true;
   @State() data: any;
+  @State() interactionKeys: any = ['filter'];
   @State() hoverElement: any = '';
   @State() clickElement: any = [
     {
@@ -657,28 +658,26 @@ export class AppParallelPlot {
   componentWillUpdate() {
     // console.log("will update", this.clickElement);
   }
-  onClickFunc(ev) {
-    const d = ev.detail;
-    if (d) {
-      const newClicks = [...this.clickElement];
-      const keys = Object.keys(d);
-      const index = this.clickElement.findIndex(o => {
-        let conditionsMet = 0;
-        keys.forEach(key => {
-          conditionsMet += o[key] === d[key] ? 1 : 0;
-        });
-        return conditionsMet && conditionsMet === keys.length;
+  onClickFunc(d) {
+    let index = -1;
+    this.clickElement.forEach((el, i) => {
+      let keyMatch = [];
+      this.interactionKeys.forEach(k => {
+        el[k] == d.detail.data[k] ? keyMatch.push(true) : keyMatch.push(false);
       });
-      if (index > -1) {
-        newClicks.splice(index, 1);
-      } else {
-        newClicks.push(d);
-      }
-      this.clickElement = newClicks;
+      keyMatch.every(v => v === true) ? (index = i) : null;
+    });
+
+    const newClicks = [...this.clickElement];
+    if (index > -1) {
+      newClicks.splice(index, 1);
+    } else {
+      newClicks.push(d.detail.data);
     }
+    this.clickElement = newClicks;
   }
   onHoverFunc(ev) {
-    this.hoverElement = ev.detail;
+    this.hoverElement = ev.detail.data;
   }
   onMouseOut() {
     this.hoverElement = '';
@@ -911,15 +910,20 @@ export class AppParallelPlot {
           secondaryLines={this.secondaryLines}
           cursor={this.cursor}
           // annotations={this.annotations}
+          interactionKeys={this.interactionKeys}
           clickStyle={this.clickStyle}
           hoverStyle={this.hoverStyle}
           hoverHighlight={this.hoverElement}
           clickHighlight={this.clickElement}
           accessibility={this.accessibility}
           suppressEvents={this.suppressEvents}
-          onClickFunc={d => this.onClickFunc(d)}
-          onHoverFunc={d => this.onHoverFunc(d)}
-          onMouseOutFunc={() => this.onMouseOut()}
+          onClickEvent={d => this.onClickFunc(d)}
+          onHoverEvent={d => this.onHoverFunc(d)}
+          onMouseOutEvent={() => this.onMouseOut()}
+          onInitialLoadEvent={e => e} // console.log('load event', e.detail, e)}
+          onDrawStartEvent={e => e} // console.log('draw start event', e.detail, e)}
+          onDrawEndEvent={e => e} // console.log('draw end event', e.detail, e)}
+          onTransitionEndEvent={e => e} //console.log('transition event', e.detail, e)}
         />
       </div>
     );

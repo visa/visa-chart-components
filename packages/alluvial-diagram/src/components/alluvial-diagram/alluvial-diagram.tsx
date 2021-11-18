@@ -59,8 +59,11 @@ const {
   drawTooltip,
   findTagLevel,
   formatDataLabel,
+  formatStats,
   getColors,
   getPadding,
+  getScopedData,
+  checkHovered,
   initTooltipStyle,
   overrideTitleTooltip,
   scopeDataKeys,
@@ -71,7 +74,9 @@ const {
   sankeyLeft,
   sankeyLinkHorizontal,
   sankeyRight,
-  prepareRenderChange
+  prepareRenderChange,
+  visaColors,
+  validateAccessibilityProps
 } = Utils;
 
 @Component({
@@ -79,9 +84,13 @@ const {
   styleUrl: 'alluvial-diagram.scss'
 })
 export class AlluvialDiagram {
-  @Event() clickFunc: EventEmitter;
-  @Event() hoverFunc: EventEmitter;
-  @Event() mouseOutFunc: EventEmitter;
+  @Event() clickEvent: EventEmitter;
+  @Event() hoverEvent: EventEmitter;
+  @Event() mouseOutEvent: EventEmitter;
+  @Event() initialLoadEvent: EventEmitter;
+  @Event() drawStartEvent: EventEmitter;
+  @Event() drawEndEvent: EventEmitter;
+  @Event() transitionEndEvent: EventEmitter;
 
   // Chart Attributes (1/7)
   @Prop({ mutable: true }) mainTitle: string = AlluvialDiagramDefaultValues.mainTitle;
@@ -196,11 +205,19 @@ export class AlluvialDiagram {
   sourceLinksString: string = 'sourceLinks';
   targetLinksString: string = 'targetLinks';
   groupKeys: any;
+  tableData: any;
+  tableColumns: any;
+  secondaryTableData: any;
+  secondaryTableColumns: any;
+  updated: boolean = true;
+  enterSize: number;
+  exitSize: number;
   shouldSetDimensions: boolean = false;
   shouldUpdateData: boolean = false;
   shouldSetColors: boolean = false;
   shouldSetTagLevels: boolean = false;
   shouldRedrawWrapper: boolean = false;
+  shouldUpdateTableData: boolean = false;
   shouldUpdateDescriptionWrapper: boolean = false;
   shouldSetChartAccessibilityCount: boolean = false;
   shouldSetChartAccessibilityTitle: boolean = false;
@@ -222,41 +239,63 @@ export class AlluvialDiagram {
   shouldDrawInteractionState: boolean = false;
   shouldEnterUpdateExit: boolean = false;
   shouldUpdateNodeGeometries: boolean = false;
+  shouldUpdateNodeStyle: boolean = false;
   shouldUpdateLinkGeometries: boolean = false;
+  shouldUpdateLinkStyle: boolean = false;
   shouldDrawNodeLabels: boolean = false;
+  shouldSetNodeDimensions: boolean = false;
+  shouldCallSankeyGenerator: boolean = false;
+  shouldUpdateAnnotations: boolean = false;
+  shouldValidateIdAccessor: boolean = false;
+  shouldValidateLabelText: boolean = false;
+  shouldValidateLinkFillMode: boolean = false;
+  shouldValidateNodeAlignment: boolean = false;
+  shouldValidateInteractionKeys: boolean = false;
+  shouldValidateLinkGroups: boolean = false;
+  shouldUpdateCursor: boolean = false;
+  shouldBindInteractivity: boolean = false;
+  shouldResetRoot: boolean = false;
+  shouldSetNodeLabelOpacity: boolean = false;
   bitmaps: any;
 
-  @Watch('linkData')
-  linkDataWatcher(_newData, _oldData) {
-    this.shouldSetGlobalSelections = true;
-    this.shouldEnterUpdateExit = true;
-    this.shouldUpdateNodeGeometries = true;
-    this.shouldUpdateLinkGeometries = true;
-    this.shouldDrawNodeLabels = true;
-    // this.shouldDrawInteractionState = true;
-  }
-
   @Watch('nodeData')
-  nodeDataWatcher(_newData, _oldData) {
+  @Watch('linkData')
+  dataWatcher(_newData, _oldData) {
+    this.updated = true;
+    this.shouldUpdateData = true;
+    this.shouldSetColors = true;
+    this.shouldValidateIdAccessor = true;
+    this.shouldSetNodeDimensions = true;
+    this.shouldCallSankeyGenerator = true;
+    this.shouldUpdateTableData = true;
+    this.shouldValidateLinkGroups = true;
+    this.shouldValidateAccessibility = true;
     this.shouldSetGlobalSelections = true;
+    this.shouldSetTestingAttributes = true;
     this.shouldEnterUpdateExit = true;
     this.shouldUpdateNodeGeometries = true;
+    this.shouldUpdateNodeStyle = true;
     this.shouldUpdateLinkGeometries = true;
     this.shouldDrawNodeLabels = true;
-    // this.shouldDrawInteractionState = true;
+    this.shouldUpdateLinkStyle = true;
+    this.shouldDrawInteractionState = true;
+    // this.shouldSetNodeLabelOpacity = true;
+    this.shouldSetGeometryAccessibilityAttributes = true;
+    this.shouldSetGeometryAriaLabels = true;
+    this.shouldBindInteractivity = true;
+    this.shouldUpdateCursor = true;
+    this.shouldUpdateAnnotations = true;
   }
 
   @Watch('uniqueID')
   idWatcher(newID, _oldID) {
     this.chartID = newID || 'alluvial-diagram-' + uuid();
     this.alluvialDiagramEl.id = this.chartID;
+    this.shouldValidateAccessibility = true;
+    this.shouldUpdateDescriptionWrapper = true;
+    this.shouldSetParentSVGAccessibility = true;
+    this.shouldDrawInteractionState = true;
   }
-
-  @Watch('mainTitle')
-  mainTitleWatcher(_newVal, _oldVal) {}
-
-  @Watch('subTitle')
-  subTitleWatcher(_newVal, _oldVal) {}
 
   @Watch('highestHeadingLevel')
   headingWatcher(_newVal, _oldVal) {
@@ -275,143 +314,291 @@ export class AlluvialDiagram {
     this.shouldSetChartAccessibilityStructureNotes = true;
   }
 
+  @Watch('mainTitle')
+  mainTitleWatcher(_newVal, _oldVal) {
+    this.shouldValidateAccessibility = true;
+    this.shouldUpdateDescriptionWrapper = true;
+    this.shouldSetChartAccessibilityTitle = true;
+    this.shouldSetParentSVGAccessibility = true;
+  }
+
+  @Watch('subTitle')
+  subTitleWatcher(_newVal, _oldVal) {
+    this.shouldSetChartAccessibilityTitle = true;
+    this.shouldSetChartAccessibilitySubtitle = true;
+    this.shouldSetParentSVGAccessibility = true;
+  }
+
   @Watch('height')
   @Watch('width')
   @Watch('padding')
   @Watch('margin')
   dimensionWatcher(_newVal, _oldVal) {
     this.shouldSetDimensions = true;
+    this.shouldSetNodeDimensions = true;
+    this.shouldResetRoot = true;
+    this.shouldCallSankeyGenerator = true;
+    this.shouldSetGlobalSelections = true;
+    // this.shouldEnterUpdateExit = true;
     this.shouldUpdateNodeGeometries = true;
+    this.shouldUpdateNodeStyle = true;
     this.shouldUpdateLinkGeometries = true;
+    this.shouldUpdateLinkStyle = true;
     this.shouldDrawNodeLabels = true;
+    this.shouldUpdateAnnotations = true;
   }
 
   @Watch('sourceAccessor')
   sourceAccessorWatcher(_newVal, _oldVal) {
-    this.shouldSetGlobalSelections = true;
-    this.shouldEnterUpdateExit = true;
-    this.shouldDrawInteractionState = true;
-    this.shouldUpdateNodeGeometries = true;
-    this.shouldUpdateLinkGeometries = true;
-    this.shouldDrawNodeLabels = true;
+    console.error(
+      'Change detected in prop sourceAccessor from value ' +
+        _oldVal +
+        ' to value ' +
+        _newVal +
+        '. This prop cannot be changed after component has loaded.'
+    );
+    // this.shouldUpdateData = true;
+    // this.shouldSetNodeDimensions = true;
+    // this.shouldCallSankeyGenerator = true;
+    // this.shouldUpdateTableData = true;
+    // this.shouldSetGlobalSelections = true;
+    // this.shouldEnterUpdateExit = true;
+    // this.shouldUpdateNodeGeometries = true;
+    // this.shouldUpdateNodeStyle = true;
+    // this.shouldUpdateLinkGeometries = true;
+    // this.shouldUpdateLinkStyle = true;
+    // this.shouldDrawInteractionState = true;
+    // this.shouldSetNodeLabelOpacity = true;
+    // this.shouldDrawNodeLabels = true;
+    // this.shouldUpdateAnnotations = true;
+    // this.shouldSetGeometryAriaLabels = true;
+    // if (!(this.interactionKeys && this.interactionKeys.length)) {
+    //   this.shouldValidateInteractionKeys = true;
+    //   this.shouldSetSelectionClass = true;
+    // }
   }
 
   @Watch('targetAccessor')
   targetAccessorWatcher(_newVal, _oldVal) {
-    this.shouldSetGlobalSelections = true;
-    this.shouldEnterUpdateExit = true;
-    this.shouldDrawInteractionState = true;
-    this.shouldUpdateNodeGeometries = true;
-    this.shouldUpdateLinkGeometries = true;
-    this.shouldDrawNodeLabels = true;
+    console.error(
+      'Change detected in prop targetAccessor from value ' +
+        _oldVal +
+        ' to value ' +
+        _newVal +
+        '. This prop cannot be changed after component has loaded.'
+    );
+
+    // this.shouldUpdateData = true;
+    // this.shouldSetNodeDimensions = true;
+    // this.shouldCallSankeyGenerator = true;
+    // this.shouldUpdateTableData = true;
+    // this.shouldSetGlobalSelections = true;
+    // this.shouldEnterUpdateExit = true;
+    // this.shouldUpdateNodeGeometries = true;
+    // this.shouldUpdateNodeStyle = true;
+    // this.shouldUpdateLinkGeometries = true;
+    // this.shouldUpdateLinkStyle = true;
+    // this.shouldDrawInteractionState = true;
+    // this.shouldSetNodeLabelOpacity = true;
+    // this.shouldDrawNodeLabels = true;
+    // this.shouldUpdateAnnotations = true;
+    // this.shouldSetGeometryAriaLabels = true;
+    // if (!(this.interactionKeys && this.interactionKeys.length)) {
+    //   this.shouldValidateInteractionKeys = true;
+    //   this.shouldSetSelectionClass = true;
+    // }
   }
 
   @Watch('valueAccessor')
   valueAccessorWatcher(_newVal, _oldVal) {
+    this.shouldUpdateData = true;
+    this.shouldSetNodeDimensions = true;
+    this.shouldCallSankeyGenerator = true;
+    this.shouldUpdateTableData = true;
     this.shouldSetGlobalSelections = true;
     this.shouldEnterUpdateExit = true;
-    this.shouldDrawInteractionState = true;
     this.shouldUpdateNodeGeometries = true;
+    this.shouldUpdateNodeStyle = true;
     this.shouldUpdateLinkGeometries = true;
+    this.shouldUpdateLinkStyle = true;
+    this.shouldDrawInteractionState = true;
+    this.shouldSetNodeLabelOpacity = true;
     this.shouldDrawNodeLabels = true;
+    this.shouldSetGeometryAriaLabels = true;
   }
 
   @Watch('groupAccessor')
   groupAccessorWatcher(_newVal, _oldVal) {
+    this.shouldUpdateData = true;
+    this.shouldValidateLinkFillMode = true;
+    this.shouldValidateLinkGroups = true;
+    this.shouldSetNodeDimensions = true;
+    this.shouldCallSankeyGenerator = true;
+    this.shouldUpdateTableData = true;
     this.shouldSetGlobalSelections = true;
     this.shouldEnterUpdateExit = true;
-    this.shouldDrawInteractionState = true;
     this.shouldUpdateNodeGeometries = true;
+    this.shouldUpdateNodeStyle = true;
     this.shouldUpdateLinkGeometries = true;
+    this.shouldUpdateLinkStyle = true;
+    this.shouldDrawInteractionState = true;
+    this.shouldSetNodeLabelOpacity = true;
     this.shouldDrawNodeLabels = true;
+    this.shouldSetGeometryAriaLabels = true;
   }
 
   @Watch('nodeIDAccessor')
   nodeIDAccessorWatcher(_newVal, _oldVal) {
-    this.shouldSetGlobalSelections = true;
-    this.shouldEnterUpdateExit = true;
-    this.shouldDrawInteractionState = true;
-    this.shouldUpdateNodeGeometries = true;
-    this.shouldUpdateLinkGeometries = true;
-    this.shouldDrawNodeLabels = true;
+    console.error(
+      'Change detected in prop nodeIDAccessor from value ' +
+        _oldVal +
+        ' to value ' +
+        _newVal +
+        '. This prop cannot be changed after component has loaded.'
+    );
+    // this.shouldUpdateData = true;
+    // this.shouldValidateIdAccessor = true;
+    // this.shouldSetNodeDimensions = true;
+    // this.shouldCallSankeyGenerator = true;
+    // this.shouldUpdateTableData = true;
+    // this.shouldSetGlobalSelections = true;
+    // this.shouldEnterUpdateExit = true;
+    // this.shouldUpdateNodeGeometries = true;
+    // this.shouldUpdateNodeStyle = true;
+    // this.shouldUpdateLinkGeometries = true;
+    // this.shouldUpdateLinkStyle = true;
+    // this.shouldDrawInteractionState = true;
+    // this.shouldSetNodeLabelOpacity = true;
+    // this.shouldDrawNodeLabels = true;
+    // this.shouldUpdateAnnotations = true;
+    // this.shouldSetGeometryAriaLabels = true;
   }
 
   @Watch('nodeConfig')
   nodeConfigWatcher(_newVal, _oldVal) {
-    // const newFillVal = _newVal && _newVal.fill;
-    // const oldFillVal = _oldVal && _oldVal.fill;
-    // const newWidthVal = _newVal && _newVal.width;
-    // const oldWidthVal = _oldVal && _oldVal.width;
-    // const newPaddingVal = _newVal && _newVal.padding;
-    // const oldPaddingVal = _oldVal && _oldVal.padding;
-    // const newAlignmentVal = _newVal && _newVal.alignment;
-    // const oldAlignmentVal = _oldVal && _oldVal.alignment;
-    // const newCompareVal = _newVal && _newVal.compare;
-    // const oldCompareVal = _oldVal && _oldVal.compare;
-    this.shouldEnterUpdateExit = true;
-    // this.shouldDrawInteractionState = true;
-    this.shouldUpdateNodeGeometries = true;
-    this.shouldUpdateLinkGeometries = true;
-    this.shouldDrawNodeLabels = true;
+    const newAlignmentVal = _newVal && _newVal.alignment;
+    const oldAlignmentVal = _oldVal && _oldVal.alignment;
+    const newCompareVal = _newVal && _newVal.compare;
+    const oldCompareVal = _oldVal && _oldVal.compare;
+    const newFillVal = _newVal && _newVal.fill;
+    const oldFillVal = _oldVal && _oldVal.fill;
+    const newWidthVal = _newVal && _newVal.width;
+    const oldWidthVal = _oldVal && _oldVal.width;
+    const newPaddingVal = _newVal && _newVal.padding;
+    const oldPaddingVal = _oldVal && _oldVal.padding;
+    if (newAlignmentVal !== oldAlignmentVal) {
+      this.shouldValidateNodeAlignment = true;
+    }
+    if (
+      newAlignmentVal !== oldAlignmentVal ||
+      newCompareVal !== oldCompareVal ||
+      newWidthVal !== oldWidthVal ||
+      newPaddingVal !== oldPaddingVal
+    ) {
+      this.shouldSetNodeDimensions = true;
+      this.shouldCallSankeyGenerator = true;
+      this.shouldSetGlobalSelections = true;
+      this.shouldDrawInteractionState = true;
+      this.shouldSetGeometryAccessibilityAttributes = true;
+      this.shouldUpdateNodeGeometries = true;
+      this.shouldUpdateLinkGeometries = true;
+      this.shouldDrawNodeLabels = true;
+      this.shouldUpdateAnnotations = true;
+    }
+    if (newFillVal !== oldFillVal) {
+      this.shouldUpdateNodeStyle = true;
+      this.shouldUpdateLinkStyle = true;
+    }
   }
 
   @Watch('linkConfig')
   linkConfigWatcher(_newVal, _oldVal) {
-    this.shouldEnterUpdateExit = true;
-    // this.shouldDrawInteractionState = true;
-    this.shouldUpdateNodeGeometries = true;
-    this.shouldUpdateLinkGeometries = true;
-    this.shouldDrawNodeLabels = true;
-  }
-
-  @Watch('colorPalette')
-  colorPaletteWatcher(_newVal, _oldVal) {
-    // this.shouldDrawInteractionState = true;
+    const newFillModeVal = _newVal && _newVal.fillMode;
+    const oldFillModeVal = _oldVal && _oldVal.fillMode;
+    const newVisibleVal = _newVal && _newVal.visible;
+    const oldVisibleVal = _oldVal && _oldVal.visible;
+    // const newOpacityVal = _newVal && _newVal.opacity;
+    // const oldOpacityVal = _oldVal && _oldVal.opacity;
+    if (newFillModeVal !== oldFillModeVal) {
+      this.shouldValidateLinkFillMode = true;
+      this.shouldSetGlobalSelections = true;
+      this.shouldEnterUpdateExit = true;
+      this.shouldUpdateLinkGeometries = true;
+    }
+    if (newVisibleVal !== oldVisibleVal) {
+      this.shouldSetNodeDimensions = true;
+      this.shouldCallSankeyGenerator = true;
+      this.shouldSetGlobalSelections = true;
+      this.shouldSetNodeLabelOpacity = true;
+      this.shouldUpdateNodeGeometries = true;
+      this.shouldUpdateLinkGeometries = true;
+      this.shouldDrawNodeLabels = true;
+      this.shouldUpdateAnnotations = true;
+    }
+    this.shouldUpdateLinkStyle = true;
+    this.shouldDrawInteractionState = true;
+    this.shouldSetTestingAttributes = true;
+    // if (newOpacityVal !== oldOpacityVal) {
+    // }
   }
 
   @Watch('colors')
-  colorsWatcher(_newVal, _oldVal) {
-    // this.shouldDrawInteractionState = true;
+  @Watch('colorPalette')
+  colorWatcher(_newVal, _oldVal) {
+    this.shouldSetColors = true;
+    this.shouldUpdateNodeStyle = true;
+    this.shouldUpdateLinkStyle = true;
+    this.shouldDrawInteractionState = true;
   }
 
   @Watch('clickStyle')
-  clickStyleWatcher(_newVal, _oldVal) {
-    // this.shouldDrawInteractionState = true;
-  }
-
   @Watch('hoverStyle')
-  hoverStyleWatcher(_newVal, _oldVal) {
-    // this.shouldDrawInteractionState = true;
+  interactionStyleWatcher(_newVal, _oldVal) {
+    this.shouldSetColors = true;
+    this.shouldDrawInteractionState = true;
+    this.shouldSetNodeLabelOpacity = true;
   }
 
   @Watch('cursor')
-  cursorWatcher(_newVal, _oldVal) {}
+  cursorWatcher(_newVal, _oldVal) {
+    this.shouldUpdateCursor = true;
+  }
 
   @Watch('hoverOpacity')
   hoverOpacityWatcher(_newVal, _oldVal) {
-    // this.shouldDrawInteractionState = true;
+    this.shouldDrawInteractionState = true;
+    this.shouldSetNodeLabelOpacity = true;
   }
 
   @Watch('dataLabel')
   dataLabelWatcher(_newVal, _oldVal) {
+    const newVisibleVal = _newVal && _newVal.visible;
+    const oldVisibleVal = _oldVal && _oldVal.visible;
+    const newLabelAccessorVal = _newVal && _newVal.labelAccessor ? _newVal.labelAccessor : false;
+    const oldLabelAccessorVal = _oldVal && _oldVal.labelAccessor ? _oldVal.labelAccessor : false;
+    if (newLabelAccessorVal !== oldLabelAccessorVal) {
+      this.shouldValidateLabelText = true;
+    }
     this.shouldDrawNodeLabels = true;
-    // const newVisibleVal = _newVal && _newVal.visible;
-    // const oldVisibleVal = _oldVal && _oldVal.visible;
-    // if (newVisibleVal !== oldVisibleVal) {
-    //   this.shouldSetLabelOpacity = true;
-    // }
-    this.shouldDrawInteractionState = true;
+    this.shouldUpdateTableData = true;
+    if (newVisibleVal !== oldVisibleVal) {
+      this.shouldSetNodeLabelOpacity = true;
+    }
   }
 
   @Watch('tooltipLabel')
-  tooltipLabelWatcher(_newVal, _oldVal) {}
+  tooltipLabelWatcher(_newVal, _oldVal) {
+    this.shouldUpdateTableData = true;
+  }
 
   @Watch('showTooltip')
-  showTooltipWatcher(_newVal, _oldVal) {}
+  showTooltipWatcher(_newVal, _oldVal) {
+    this.shouldDrawInteractionState = true;
+  }
 
   @Watch('accessibility')
   accessibilityWatcher(_newVal, _oldVal) {
-    // this.shouldValidate = true;
+    this.shouldValidateAccessibility = true;
     const newTitle = _newVal && _newVal.title ? _newVal.title : false;
     const oldTitle = _oldVal && _oldVal.title ? _oldVal.title : false;
     if (newTitle !== oldTitle) {
@@ -484,30 +671,86 @@ export class AlluvialDiagram {
     //   this.shouldUpdateLegend = true;
     //   this.shouldDrawInteractionState = true;
     // }
+    const newKeyNav =
+      _newVal && _newVal.keyboardNavConfig && _newVal.keyboardNavConfig.disabled
+        ? _newVal.keyboardNavConfig.disabled
+        : false;
+    const oldKeyNav =
+      _oldVal && _oldVal.keyboardNavConfig && _oldVal.keyboardNavConfig.disabled
+        ? _oldVal.keyboardNavConfig.disabled
+        : false;
+    const newInterface = _newVal && _newVal.elementsAreInterface ? _newVal.elementsAreInterface : false;
+    const oldInterface = _oldVal && _oldVal.elementsAreInterface ? _oldVal.elementsAreInterface : false;
+    if (newKeyNav !== oldKeyNav || newInterface !== oldInterface) {
+      this.shouldSetGeometryAriaLabels = true;
+      this.shouldSetParentSVGAccessibility = true;
+      this.shouldUpdateDescriptionWrapper = true;
+      this.shouldRedrawWrapper = true;
+      this.shouldSetChartAccessibilityTitle = true;
+      this.shouldSetChartAccessibilitySubtitle = true;
+      this.shouldSetChartAccessibilityLongDescription = true;
+      this.shouldSetChartAccessibilityContext = true;
+      this.shouldSetChartAccessibilityExecutiveSummary = true;
+      this.shouldSetChartAccessibilityPurpose = true;
+      this.shouldSetChartAccessibilityStatisticalNotes = true;
+      this.shouldSetChartAccessibilityStructureNotes = true;
+    }
+    if (newInterface !== oldInterface) {
+      this.shouldSetSelectionClass = true;
+    }
   }
 
   @Watch('annotations')
   annotationsWatcher(_newVal, _oldVal) {
+    this.shouldValidateAccessibility = true;
     this.shouldSetAnnotationAccessibility = true;
+    this.shouldUpdateAnnotations = true;
   }
 
   @Watch('clickHighlight')
   clickWatcher(_newVal, _oldVal) {
     this.shouldDrawInteractionState = true;
+    this.shouldSetNodeLabelOpacity = true;
+    this.shouldSetSelectionClass = true;
   }
 
   @Watch('hoverHighlight')
   hoverWatcher(_newVal, _oldVal) {
     this.shouldDrawInteractionState = true;
+    this.shouldSetNodeLabelOpacity = true;
   }
 
   @Watch('interactionKeys')
   interactionWatcher(_newVal, _oldVal) {
-    // this.shouldDrawInteractionState = true;
+    this.shouldSetNodeDimensions = true;
+    this.shouldCallSankeyGenerator = true;
+    this.shouldValidateInteractionKeys = true;
+    this.shouldDrawInteractionState = true;
+    this.shouldSetNodeLabelOpacity = true;
+    this.shouldSetSelectionClass = true;
+    this.shouldUpdateTableData = true;
+    this.shouldSetGeometryAriaLabels = true;
+    this.shouldBindInteractivity = true;
+    this.shouldUpdateCursor = true;
   }
 
   @Watch('suppressEvents')
   suppressWatcher(_newVal, _oldVal) {
+    this.shouldBindInteractivity = true;
+    this.shouldUpdateCursor = true;
+    this.shouldSetGeometryAriaLabels = true;
+    this.shouldSetParentSVGAccessibility = true;
+    this.shouldUpdateDescriptionWrapper = true;
+    this.shouldValidateAccessibility = true;
+    this.shouldRedrawWrapper = true;
+    this.shouldSetChartAccessibilityTitle = true;
+    this.shouldSetChartAccessibilitySubtitle = true;
+    this.shouldSetChartAccessibilityLongDescription = true;
+    this.shouldSetChartAccessibilityContext = true;
+    this.shouldSetChartAccessibilityExecutiveSummary = true;
+    this.shouldSetChartAccessibilityPurpose = true;
+    this.shouldSetChartAccessibilityStatisticalNotes = true;
+    this.shouldSetChartAccessibilityStructureNotes = true;
     // this.shouldDrawInteractionState = true;
   }
 
@@ -517,24 +760,30 @@ export class AlluvialDiagram {
   }
 
   componentWillLoad() {
+    const chartID = this.uniqueID || 'alluvial-diagram-' + uuid();
+    this.initialLoadEvent.emit({ chartID: chartID });
     // contrary to componentWillUpdate, this method appears safe to use for
     // any calculations we need. Keeping them here reduces future refactor,
     // since componentWillUpdate should eventually mirror this method
     return new Promise(resolve => {
       this.duration = 0;
       this.defaults = true;
-      this.chartID = this.uniqueID || 'alluvial-diagram-' + uuid();
+      this.chartID = chartID;
       this.alluvialDiagramEl.id = this.chartID;
       this.setTagLevels();
-      this.setDimensions();
       this.prepareData();
+      this.setDimensions();
       this.validateIdAccessor();
       this.validateLabelText();
       this.validateLinkFillMode();
       this.validateNodeAlignment();
       this.validateInteractionKeys();
       this.validateLinkGroups();
+      this.shouldValidateAccessibilityProps();
       this.setColors();
+      this.setNodeDimensions();
+      this.callSankeyGenerator();
+      this.setTableData();
       resolve('component will load');
     });
   }
@@ -550,7 +799,9 @@ export class AlluvialDiagram {
 
   componentDidLoad() {
     return new Promise(resolve => {
+      this.shouldValidateAccessibilityProps();
       this.renderRootElements();
+      this.setTooltipInitialStyle();
       this.setChartDescriptionWrapper();
       this.setChartAccessibilityTitle();
       this.setChartAccessibilitySubtitle();
@@ -562,9 +813,6 @@ export class AlluvialDiagram {
       this.setChartAccessibilityStructureNotes();
       this.setParentSVGAccessibility();
       this.reSetRoot();
-      this.setTooltipInitialStyle();
-      this.setNodesDimensions();
-      this.callSankeyGenerator();
       this.setGlobalSelections();
       this.setTestingAttributes();
       this.enterLinkGeometries();
@@ -576,6 +824,7 @@ export class AlluvialDiagram {
       this.enterNodeLabels();
       this.updateNodeLabels();
       this.exitNodeLabels();
+      this.updateLinkStyle();
       this.drawNodeGeometries();
       this.drawLinkGeometries();
       this.setGeometryAccessibilityAttributes();
@@ -583,9 +832,12 @@ export class AlluvialDiagram {
       this.setGroupAccessibilityID();
       this.setChartCountAccessibility();
       this.setSelectedClass();
+      this.updateCursor();
       this.drawNodeLabels();
+      this.bindInteractivity();
       this.drawAnnotations();
       this.setAnnotationAccessibility();
+      this.onChangeHandler();
       this.duration = 750;
       this.defaults = false;
       hideNonessentialGroups(this.root.node(), null);
@@ -596,8 +848,6 @@ export class AlluvialDiagram {
   componentDidUpdate() {
     return new Promise(resolve => {
       this.duration = !this.animationConfig || !this.animationConfig.disabled ? 750 : 0;
-      this.reSetRoot();
-
       if (this.shouldUpdateDescriptionWrapper) {
         this.setChartDescriptionWrapper();
         this.shouldUpdateDescriptionWrapper = false;
@@ -642,13 +892,14 @@ export class AlluvialDiagram {
         this.setParentSVGAccessibility();
         this.shouldSetParentSVGAccessibility = false;
       }
-
-      this.setNodesDimensions();
-      this.callSankeyGenerator();
-      // if (this.shouldSetGlobalSelections) {
-      this.setGlobalSelections();
-      //   this.shouldSetGlobalSelections = false;
-      // }
+      if (this.shouldResetRoot) {
+        this.reSetRoot();
+        this.shouldResetRoot = false;
+      }
+      if (this.shouldSetGlobalSelections) {
+        this.setGlobalSelections();
+        this.shouldSetGlobalSelections = false;
+      }
       if (this.shouldSetTestingAttributes) {
         this.setTestingAttributes();
         this.shouldSetTestingAttributes = false;
@@ -669,9 +920,17 @@ export class AlluvialDiagram {
         this.drawNodeGeometries();
         this.shouldUpdateNodeGeometries = false;
       }
+      if (this.shouldUpdateNodeStyle) {
+        this.updateNodeStyle();
+        this.shouldUpdateNodeStyle = false;
+      }
       if (this.shouldUpdateLinkGeometries) {
         this.drawLinkGeometries();
         this.shouldUpdateLinkGeometries = false;
+      }
+      if (this.shouldUpdateLinkStyle) {
+        this.updateLinkStyle();
+        this.shouldUpdateLinkStyle = false;
       }
       if (this.shouldSetGeometryAccessibilityAttributes) {
         this.setGeometryAccessibilityAttributes();
@@ -685,26 +944,41 @@ export class AlluvialDiagram {
         this.setGroupAccessibilityID();
         this.shouldSetGroupAccessibilityLabel = false;
       }
-      if (this.shouldSetSelectionClass) {
-        this.setSelectedClass();
-        this.shouldSetSelectionClass = false;
-      }
       if (this.shouldDrawNodeLabels) {
         this.drawNodeLabels();
         this.shouldDrawNodeLabels = false;
       }
-      this.drawAnnotations();
       if (this.shouldDrawInteractionState) {
         this.updateInteractionState();
         this.shouldDrawInteractionState = false;
+      }
+      if (this.shouldSetNodeLabelOpacity) {
+        this.setNodeLabelOpacity();
+        this.shouldSetNodeLabelOpacity = false;
+      }
+      if (this.shouldSetSelectionClass) {
+        this.setSelectedClass();
+        this.shouldSetSelectionClass = false;
+      }
+      if (this.shouldUpdateCursor) {
+        this.updateCursor();
+        this.shouldUpdateCursor = false;
+      }
+      if (this.shouldBindInteractivity) {
+        this.bindInteractivity();
+        this.shouldBindInteractivity = false;
+      }
+      if (this.shouldUpdateAnnotations) {
+        this.drawAnnotations();
+        this.shouldUpdateAnnotations = false;
       }
       if (this.shouldSetAnnotationAccessibility) {
         this.setAnnotationAccessibility();
         this.shouldSetAnnotationAccessibility = false;
       }
-
+      this.onChangeHandler();
       resolve('component did update');
-    });
+    }).then(() => this.drawEndEvent.emit({ chartID: this.chartID }));
   }
 
   setDimensions() {
@@ -727,7 +1001,11 @@ export class AlluvialDiagram {
         value: obj[this.valueAccessor],
         data: obj
       };
-      linkObj[this.groupAccessor] = obj[this.groupAccessor];
+
+      if (this.groupAccessor) {
+        linkObj[this.groupAccessor] = obj[this.groupAccessor];
+      }
+
       this.linkList[i] = linkObj;
     });
 
@@ -755,7 +1033,7 @@ export class AlluvialDiagram {
     this.innerLabelAccessor = this.dataLabel.labelAccessor ? this.dataLabel.labelAccessor : 'value';
   }
 
-  // if  there is no nodeData present, use 'id', otherwise use the nodeIDAccessor that is passed
+  // if there is no nodeData present, use 'id', otherwise use the nodeIDAccessor that is passed
   validateIdAccessor() {
     this.innerIDAccessor =
       this.nodeData && this.nodeData.length > 1
@@ -773,8 +1051,8 @@ export class AlluvialDiagram {
         ? 'source'
         : this.linkConfig.fillMode === 'target'
         ? 'target'
-        : this.linkConfig.fillMode === 'path'
-        ? 'path'
+        : this.linkConfig.fillMode === 'link'
+        ? 'link'
         : 'none';
   }
 
@@ -807,8 +1085,73 @@ export class AlluvialDiagram {
     }
   }
 
-  setNodesDimensions() {
-    //controls node width and node padding
+  shouldValidateAccessibilityProps() {
+    if (this.shouldValidateAccessibility && !this.accessibility.disableValidation) {
+      this.shouldValidateAccessibility = false;
+      validateAccessibilityProps(
+        this.chartID,
+        { ...this.accessibility },
+        {
+          annotations: this.annotations,
+          data: this.linkData,
+          uniqueID: this.uniqueID,
+          context: {
+            mainTitle: this.mainTitle,
+            onClickEvent: this.suppressEvents ? undefined : this.clickEvent.emit
+          }
+        }
+      );
+    }
+  }
+
+  setTableData() {
+    // generate scoped and formatted data for data-table component, showing node data
+    const uniqueNodeAccessors = ['nodeIDAccessor', 'valueAccessor'];
+    const nodeAccessors = {
+      singleAccessors: uniqueNodeAccessors,
+      nestedAccessors: [
+        {
+          objectName: 'dataLabel',
+          objectAccessors: ['labelAccessor'],
+          formatAccessors: ['format']
+        }
+      ]
+    };
+
+    const nodeKeys = scopeDataKeys(this, nodeAccessors, 'alluvial-diagram-secondary-table');
+    this.tableData = getScopedData(this.preppedData.nodes, nodeKeys);
+    this.tableColumns = Object.keys(nodeKeys);
+
+    // create secondary table data for link data
+    // remove dataLabel accessor, as we use this in the nodeData table
+    const linkChartAccessors = delete chartAccessors.nestedAccessors[2];
+    const keys = scopeDataKeys(this, linkChartAccessors, 'alluvial-diagram');
+    this.secondaryTableData = this.getScopedLinkData(this.preppedData.links, keys);
+    this.secondaryTableColumns = Object.keys(keys);
+  }
+
+  getScopedLinkData(data, keyMap) {
+    const scopedData = [];
+    data.forEach(dataRecord => {
+      const scopedDataRecord = {};
+      // loop through target fields instead of all data record fields
+      Object.keys(keyMap).forEach(field => {
+        if (field === this.sourceAccessor) {
+          scopedDataRecord[field] = dataRecord.source[this.innerIDAccessor];
+        } else if (field === this.targetAccessor) {
+          scopedDataRecord[field] = dataRecord.target[this.innerIDAccessor];
+        } else {
+          scopedDataRecord[field] =
+            keyMap[field] && dataRecord[field] ? formatStats(dataRecord[field], keyMap[field]) : dataRecord[field];
+        }
+      });
+      scopedData.push(scopedDataRecord);
+    });
+    return scopedData;
+  }
+
+  setNodeDimensions() {
+    // controls node width and node padding
     this.alluvialProperties = sankey(this.nodeConfig.compare, this.linkConfig.visible)
       .nodeId(d => d[this.innerIDAccessor])
       .nodeWidth(this.nodeConfig.width)
@@ -824,7 +1167,6 @@ export class AlluvialDiagram {
         nodes: nodes.map(d => ({ ...d })),
         links: links.map(d => ({ ...d }))
       });
-
     this.preppedData = sankeyData(this.nodeList, this.linkList);
     this.nodeCount = max(this.preppedData.nodes, d => d.layer);
   }
@@ -847,6 +1189,11 @@ export class AlluvialDiagram {
     this.tooltipG = select(this.alluvialDiagramEl).select('.alluvial-tooltip');
   }
 
+  updateCursor() {
+    this.updateLinks.attr('cursor', !this.suppressEvents ? this.cursor : null);
+    // this.updateNodes.attr('cursor', !this.suppressEvents ? this.cursor : null);
+    this.updatingLabels.attr('cursor', !this.suppressEvents && this.dataLabel.visible ? this.cursor : null);
+  }
   // reset graph size based on window size
   reSetRoot() {
     const changeSvg = prepareRenderChange({
@@ -898,7 +1245,7 @@ export class AlluvialDiagram {
       .attr('data-offset-group', 'true');
     this.enterNodes.append('rect').attr('class', 'alluvial-node');
     this.exitNodes = dataBoundToNodes.exit();
-    this.updateNodes = dataBoundToNodes.merge(this.enterNodes); //.selectAll('rect');
+    this.updateNodes = dataBoundToNodes.merge(this.enterNodes);
     this.updateNodes.selectAll('.alluvial-node').data(d => [d]);
 
     this.currentNodeLayers = this.preppedData.nodes;
@@ -950,6 +1297,9 @@ export class AlluvialDiagram {
       this.exitLinks = dataBoundToLinks.exit();
       this.updateLinks = dataBoundToLinks.merge(this.enterLinks).attr('data-offset-element', null);
     }
+
+    this.exitSize = this.exitLinks.size();
+    this.enterSize = this.enterLinks.size();
 
     const dataBoundToLabels = this.labelG.selectAll('text').data(this.preppedData.nodes, d => d[this.innerIDAccessor]);
     this.enteringLabels = dataBoundToLabels.enter().append('text');
@@ -1056,8 +1406,8 @@ export class AlluvialDiagram {
 
     this.enterLinks
       .attr('cursor', !this.suppressEvents ? this.cursor : null)
-      .on('click', !this.suppressEvents ? d => this.onClickHandler(d) : null)
-      .on('mouseover', !this.suppressEvents ? d => this.onHoverHandler(d) : null)
+      .on('click', !this.suppressEvents ? (d, i, n) => this.onClickHandler(d, n[i]) : null)
+      .on('mouseover', !this.suppressEvents ? (d, i, n) => this.onHoverHandler(d, n[i]) : null)
       .on('mouseout', !this.suppressEvents ? () => this.onMouseOutHandler() : null)
       .attr('stroke-dasharray', (d, i, n) => {
         d.linelength = n[i].getTotalLength() - 2;
@@ -1160,18 +1510,6 @@ export class AlluvialDiagram {
     }
 
     this.updateLinks
-      .attr('stroke', d =>
-        this.innerLinkFillMode === 'group'
-          ? this.colorArr[this.groupKeys.indexOf(d[this.groupAccessor])]
-          : this.innerLinkFillMode === 'none'
-          ? this.colorArr[0] || '#E4E4E4'
-          : this.innerLinkFillMode === 'path'
-          ? this.colorArr[d.index]
-          : this.innerLinkFillMode === 'source'
-          ? this.colorArr[d.source.index]
-          : this.colorArr[d.target.index]
-      )
-      .attr('fill', 'none')
       .transition('update')
       .duration(this.duration)
       .ease(easeCircleIn)
@@ -1195,6 +1533,7 @@ export class AlluvialDiagram {
           .attr('d', sankeyLinkHorizontal())
           .attr('stroke-dasharray', '');
 
+        this.updateInteractionState();
         this.updateLinks.each((d, i, n) => {
           const clicked =
             this.clickHighlight &&
@@ -1229,6 +1568,8 @@ export class AlluvialDiagram {
           focusDidExist
           // recursive: true
         });
+        // now we can emit the event that transitions are complete
+        this.transitionEndEvent.emit({ chartID: this.chartID });
       });
   }
 
@@ -1267,6 +1608,30 @@ export class AlluvialDiagram {
       .remove();
   }
 
+  updateLinkStyle() {
+    this.updateLinks
+      .attr('stroke', d =>
+        this.clickHighlight.length > 0 &&
+        checkClicked(d.data, this.clickHighlight, this.innerInteractionKeys) &&
+        this.clickStyle.color
+          ? visaColors[this.clickStyle.color] || this.clickStyle.color
+          : this.hoverHighlight &&
+            checkHovered(d.data, this.hoverHighlight, this.innerInteractionKeys) &&
+            this.hoverStyle.color
+          ? visaColors[this.hoverStyle.color] || this.hoverStyle.color
+          : this.innerLinkFillMode === 'group'
+          ? this.colorArr[this.groupKeys.indexOf(d[this.groupAccessor])]
+          : this.innerLinkFillMode === 'none'
+          ? this.colorArr[0] || '#E4E4E4'
+          : this.innerLinkFillMode === 'link'
+          ? this.colorArr[d.index]
+          : this.innerLinkFillMode === 'source'
+          ? this.colorArr[d.source.index]
+          : this.colorArr[d.target.index]
+      )
+      .attr('fill', 'none');
+  }
+
   enterNodeGeometries() {
     this.enterNodes.interrupt();
 
@@ -1276,6 +1641,7 @@ export class AlluvialDiagram {
 
     this.enterNodes
       .select('.alluvial-node')
+      // .attr('cursor', !this.suppressEvents ? this.cursor : null)
       .attr('fill', (_, i) => (this.nodeConfig.fill ? this.colorArr[i] || this.colorArr[0] : '#E4E4E4'))
       .attr('stroke', '#717171')
       .attr('stroke-width', '1px')
@@ -1351,16 +1717,6 @@ export class AlluvialDiagram {
         return this.parentNode;
       })
       .remove();
-
-    // this.exitNodes.remove();
-
-    // this.exitNodes
-    //   .select('.alluvial-node')
-    //   .transition('exit')
-    //   .ease(easeCircleIn)
-    //   .duration(this.duration)
-    //   // .attr('opacity', 0)
-    //   .attr('height', 0);
   }
 
   drawNodeGeometries() {
@@ -1424,10 +1780,14 @@ export class AlluvialDiagram {
     // }
     // return matchHover ? 1 : this.hoverOpacity;
     // })
-    // each item below should be their own functions when watchers are added
-    // .attr('fill', (_, i) => (this.nodeConfig.fill ? this.colorArr[i] || this.colorArr[0] : '#E4E4E4'))
-    // .attr('stroke', '#717171')
-    // .attr('stroke-width', '1px');
+  }
+
+  updateNodeStyle() {
+    this.updateNodes
+      .select('.alluvial-node')
+      .attr('fill', (_, i) => (this.nodeConfig.fill ? this.colorArr[i] || this.colorArr[0] : '#E4E4E4'));
+    this.updateNodes.select('.alluvial-node').attr('stroke', '#717171');
+    this.updateNodes.select('.alluvial-node').attr('stroke-width', '1px');
   }
 
   enterNodeLabels() {
@@ -1439,6 +1799,7 @@ export class AlluvialDiagram {
 
     this.enteringLabels
       .attr('class', 'alluvial-diagram-dataLabel entering')
+      .attr('cursor', !this.suppressEvents && this.dataLabel.visible ? this.cursor : null)
       .attr('opacity', d => {
         if (this.linkConfig.visible) {
           let matchHover = true;
@@ -1816,41 +2177,12 @@ export class AlluvialDiagram {
     });
   }
 
-  updateInteractionState() {
-    // we created an "opacity" transition namespace in update's transition
-    // we override it here to instantly display opacity state (below)
-    this.removeTemporaryClickedLinks(this.svg.node());
-    this.updateLinks.interrupt('opacity');
+  setNodeLabelOpacity() {
     this.updatingLabels.interrupt('label_opacity');
-    const linkOpacity = this.linkConfig.visible ? this.linkConfig.opacity : 0;
-    const opacity = this.dataLabel.visible ? 1 : 0;
+    const hideOnly = this.dataLabel.placement !== 'auto' && this.dataLabel.collisionHideOnly;
     const addCollisionClass =
       this.dataLabel.visible && (this.dataLabel.placement === 'auto' || this.dataLabel.collisionHideOnly);
-    const hideOnly = this.dataLabel.placement !== 'auto' && this.dataLabel.collisionHideOnly;
-
-    this.updateLinks.attr('stroke-opacity', d => {
-      return checkInteraction(
-        d.data,
-        linkOpacity,
-        this.hoverOpacity,
-        this.hoverHighlight,
-        this.clickHighlight,
-        this.innerInteractionKeys
-        // this.nodeIDAccessor
-      );
-    });
-
-    this.updateLinks.each((d, i, n) => {
-      const clicked =
-        this.clickHighlight &&
-        this.clickHighlight.length > 0 &&
-        checkClicked(d.data, this.clickHighlight, this.innerInteractionKeys);
-      if (clicked) {
-        // this will add a non-interactive duplicate of each clicked link above the existing ones
-        // so that the link visually appears above all other links, but the keyboard nav order does not change
-        this.drawDuplicateClickedLink(n[i], d);
-      }
-    });
+    const opacity = this.dataLabel.visible ? 1 : 0;
 
     this.updatingLabels.attr('opacity', (d, i, n) => {
       const prevOpacity = +select(n[i]).attr('opacity');
@@ -2039,6 +2371,68 @@ export class AlluvialDiagram {
     }
   }
 
+  updateInteractionState() {
+    // we created an "opacity" transition namespace in update's transition
+    // we override it here to instantly display opacity state (below)
+    this.removeTemporaryClickedLinks(this.svg.node());
+    this.updateLinks.interrupt('opacity');
+
+    // we use this.update and this.labelCurrent from setGlobalSelection here
+    // the lifecycle state does not matter (enter/update/exit)
+    // since interaction state can happen at any time
+    const linkOpacity = this.linkConfig.visible ? this.linkConfig.opacity : 0;
+    this.updateLinks
+      .attr('stroke-opacity', d => {
+        return checkInteraction(
+          d.data,
+          linkOpacity,
+          this.hoverOpacity,
+          this.hoverHighlight,
+          this.clickHighlight,
+          this.innerInteractionKeys
+          // this.nodeIDAccessor
+        );
+      })
+      .attr('stroke', d =>
+        this.clickHighlight.length > 0 &&
+        checkClicked(d.data, this.clickHighlight, this.innerInteractionKeys) &&
+        this.clickStyle.color
+          ? visaColors[this.clickStyle.color] || this.clickStyle.color
+          : this.hoverHighlight &&
+            checkHovered(d.data, this.hoverHighlight, this.innerInteractionKeys) &&
+            this.hoverStyle.color
+          ? visaColors[this.hoverStyle.color] || this.hoverStyle.color
+          : this.innerLinkFillMode === 'group'
+          ? this.colorArr[this.groupKeys.indexOf(d[this.groupAccessor])]
+          : this.innerLinkFillMode === 'none'
+          ? this.colorArr[0] || '#E4E4E4'
+          : this.innerLinkFillMode === 'link'
+          ? this.colorArr[d.index]
+          : this.innerLinkFillMode === 'source'
+          ? this.colorArr[d.source.index]
+          : this.colorArr[d.target.index]
+      );
+
+    this.updateLinks.each((d, i, n) => {
+      const clicked =
+        this.clickHighlight &&
+        this.clickHighlight.length > 0 &&
+        checkClicked(d.data, this.clickHighlight, this.innerInteractionKeys);
+      if (clicked) {
+        // this will add a non-interactive duplicate of each clicked link above the existing ones
+        // so that the link visually appears above all other links, but the keyboard nav order does not change
+        this.drawDuplicateClickedLink(n[i], d);
+      }
+    });
+  }
+
+  bindInteractivity() {
+    this.updateLinks
+      .on('click', !this.suppressEvents ? (d, i, n) => this.onClickHandler(d, n[i]) : null)
+      .on('mouseover', !this.suppressEvents ? (d, i, n) => this.onHoverHandler(d, n[i]) : null)
+      .on('mouseout', !this.suppressEvents ? () => this.onMouseOutHandler() : null);
+  }
+
   drawAnnotations() {
     const positionData = this.preppedData;
     const preppedAnnotations = [];
@@ -2112,7 +2506,12 @@ export class AlluvialDiagram {
       chartTag: 'alluvial-diagram',
       uniqueID: this.chartID,
       highestHeadingLevel: this.highestHeadingLevel,
-      redraw: this.shouldRedrawWrapper
+      redraw: this.shouldRedrawWrapper,
+      disableKeyNav:
+        this.suppressEvents &&
+        this.accessibility.elementsAreInterface === false &&
+        this.accessibility.keyboardNavConfig &&
+        this.accessibility.keyboardNavConfig.disabled
     });
     this.shouldRedrawWrapper = false;
   }
@@ -2131,7 +2530,12 @@ export class AlluvialDiagram {
       dataKeys: keys,
       groupAccessor: this.innerIDAccessor,
       groupKeys: ['value'],
-      groupName: 'node'
+      groupName: 'node',
+      disableKeyNav:
+        this.suppressEvents &&
+        this.accessibility.elementsAreInterface === false &&
+        this.accessibility.keyboardNavConfig &&
+        this.accessibility.keyboardNavConfig.disabled
     });
   }
 
@@ -2239,13 +2643,27 @@ export class AlluvialDiagram {
     setAccessAnnotation(this.alluvialDiagramEl, this.annotations);
   }
 
-  onClickHandler(d) {
-    this.clickFunc.emit(d.data);
+  onChangeHandler() {
+    if (this.accessibility && typeof this.accessibility.onChangeFunc === 'function') {
+      const d = {
+        updated: this.updated,
+        added: this.enterSize,
+        removed: this.exitSize
+      };
+      this.accessibility.onChangeFunc(d);
+    }
+    this.updated = false;
+    this.enterSize = 0;
+    this.exitSize = 0;
   }
 
-  onHoverHandler(d) {
+  onClickHandler(d, n) {
+    this.clickEvent.emit({ data: d.data, target: n });
+  }
+
+  onHoverHandler(d, n) {
     overrideTitleTooltip(this.chartID, true);
-    this.hoverFunc.emit(d.data);
+    this.hoverEvent.emit({ data: d.data, target: n });
     if (this.showTooltip) {
       this.eventsTooltip({ data: d, evt: event, isToShow: true });
     }
@@ -2253,7 +2671,7 @@ export class AlluvialDiagram {
 
   onMouseOutHandler() {
     overrideTitleTooltip(this.chartID, false);
-    this.mouseOutFunc.emit();
+    this.mouseOutEvent.emit();
     if (this.showTooltip) {
       this.eventsTooltip({ isToShow: false });
     }
@@ -2283,6 +2701,7 @@ export class AlluvialDiagram {
   }
 
   render() {
+    this.drawStartEvent.emit({ chartID: this.chartID });
     // everything between this comment and the third should eventually
     // be moved into componentWillUpdate (if the stenicl bug is fixed)
     this.init();
@@ -2290,23 +2709,58 @@ export class AlluvialDiagram {
       this.setTagLevels();
       this.shouldSetTagLevels = false;
     }
-    // if (this.shouldSetDimensions) {
-    this.setDimensions();
-    // this.shouldSetDimensions = false;
-    // }
-    // if (this.shouldUpdateData) {
-    this.prepareData();
-    // this.shouldUpdateData = false;
-    // }
-    this.validateIdAccessor();
-    this.validateLabelText();
-    this.validateLinkFillMode();
-    this.validateInteractionKeys();
-    this.validateLinkGroups();
-    // if (this.shouldSetColors) {
-    this.setColors();
-    // this.shouldSetColors = false;
-    // }
+    if (this.shouldUpdateData) {
+      this.prepareData();
+      this.shouldUpdateData = false;
+    }
+    if (this.shouldSetDimensions) {
+      this.setDimensions();
+      this.shouldSetDimensions = false;
+    }
+    if (this.shouldValidateLabelText) {
+      this.validateLabelText();
+      this.shouldValidateLabelText = false;
+    }
+    if (this.shouldValidateLinkFillMode) {
+      this.validateLinkFillMode();
+      this.shouldValidateLinkFillMode = false;
+    }
+    if (this.shouldValidateNodeAlignment) {
+      this.validateNodeAlignment();
+      this.shouldValidateNodeAlignment = false;
+    }
+    if (this.shouldValidateInteractionKeys) {
+      this.validateInteractionKeys();
+      this.shouldValidateInteractionKeys = false;
+    }
+    if (this.shouldValidateLinkGroups) {
+      this.validateLinkGroups();
+      this.shouldValidateLinkGroups = true;
+    }
+    if (this.shouldValidateAccessibility) {
+      this.shouldValidateAccessibilityProps();
+      this.shouldValidateAccessibility = false;
+    }
+    if (this.shouldSetColors) {
+      this.setColors();
+      this.shouldSetColors = false;
+    }
+    if (this.shouldValidateIdAccessor) {
+      this.validateIdAccessor();
+      this.shouldValidateIdAccessor = false;
+    }
+    if (this.shouldSetNodeDimensions) {
+      this.setNodeDimensions();
+      this.shouldSetNodeDimensions = false;
+    }
+    if (this.shouldCallSankeyGenerator) {
+      this.callSankeyGenerator();
+      this.shouldCallSankeyGenerator = false;
+    }
+    if (this.shouldUpdateTableData) {
+      this.setTableData();
+      this.shouldUpdateTableData = false;
+    }
 
     return (
       // <div class="alluvial-diagram">alluvial-diagram</div>;
@@ -2340,16 +2794,18 @@ export class AlluvialDiagram {
             />
             <div class="visa-viz-d3-alluvial-container" />
             <div class="alluvial-tooltip vcl-tooltip" style={{ display: this.showTooltip ? 'block' : 'none' }} />
-            {/* <data-table
+            <data-table
               uniqueID={this.chartID}
               isCompact
               tableColumns={this.tableColumns}
               data={this.tableData}
+              secondaryData={this.secondaryTableData}
+              secondaryTableColumns={this.secondaryTableColumns}
               padding={this.padding}
               margin={this.margin}
               hideDataTable={this.accessibility.hideDataTableButton}
               unitTest={this.unitTest}
-            /> */}
+            />
           </div>
         </div>
         {/* <canvas id="bitmap-render" /> */}

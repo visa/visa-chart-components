@@ -42,15 +42,11 @@
     "@visa/bivariate-mapbox-map": "^5.0.11",
     "@visa/circle-packing": "^5.2.1",
     "@visa/clustered-bar-chart": "^4.3.1",
-    "@visa/clustered-force-layout": "^4.0.9",
     "@visa/dumbbell-plot": "^5.3.1",
-    "@visa/group-charts": "^3.1.16",
     "@visa/heat-map": "^4.3.1",
     "@visa/keyboard-instructions": "^1.1.1",
-    "@visa/level-indicator": "^4.0.9",
     "@visa/line-chart": "^4.3.1",
     "@visa/parallel-plot": "^4.3.1",
-    "@visa/pareto-chart": "^4.0.10",
     "@visa/pie-chart": "^4.2.1",
     "@visa/scatter-plot": "^5.3.1",
     "@visa/stacked-bar-chart": "^4.3.1",
@@ -69,7 +65,8 @@
     "typescript": "^3.3.4000"
   },
   "resolutions": {
-    "minimist": "^1.2.5"
+    "minimist": "^1.2.5",
+    "path-parse": "^1.0.7"
   },
   "jest": {
     "preset": "ts-jest",
