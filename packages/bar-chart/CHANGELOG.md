@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0](https://github.com/visa/visa-chart-components/compare/@visa/bar-chart@4.3.1...@visa/bar-chart@5.0.0) (2021-11-18)
+
+
+### chore
+
+* refactor object emitted on click and hover events in bar-chart ([4e80188](https://github.com/visa/visa-chart-components/commit/4e801885b7fd2810964c4a696e963283e7787e2b))
+
+
+### BREAKING CHANGES
+
+* e.detail now contains two objects, data and target. To access data object, you now need to use e.detail.data. clickFunc, hoverFunc, and mouseOutFunc have been removed and replaced with clickEvent, hoverEvent, and mouseOutEvent, respectively
+
+Co-authored-by: Chris DeMartini <74268675+chris-demartini@users.noreply.github.com>
+
+
+
+
+
 ## [4.3.1](https://github.com/visa/visa-chart-components/compare/@visa/bar-chart@4.3.0...@visa/bar-chart@4.3.1) (2021-10-27)
 
 

@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0](https://github.com/visa/visa-chart-components/compare/@visa/clustered-bar-chart@4.3.1...@visa/clustered-bar-chart@5.0.0) (2021-11-18)
+
+
+### chore
+
+* refactor object emitted on click and hover events in clustered-bar-chart ([e76e1e4](https://github.com/visa/visa-chart-components/commit/e76e1e427ae77cf9be4f35e59cdb9a061c15a285))
+
+
+### BREAKING CHANGES
+
+* e.detail now contains two objects, data and target. To access data object, you now need to use e.detail.data. clickFunc, hoverFunc, and mouseOutFunc have been removed and replaced with clickEvent, hoverEvent, and mouseOutEvent, respectively
+
+
+
+
+
 ## [4.3.1](https://github.com/visa/visa-chart-components/compare/@visa/clustered-bar-chart@4.3.0...@visa/clustered-bar-chart@4.3.1) (2021-10-27)
 
 

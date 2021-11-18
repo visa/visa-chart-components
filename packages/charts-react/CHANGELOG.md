@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.0.0](https://github.com/visa/visa-chart-components/compare/@visa/charts-react@2.2.2...@visa/charts-react@3.0.0) (2021-11-18)
+
+
+### chore
+
+* remove old components, refactor object emitted, bump dependencies ([76d1de4](https://github.com/visa/visa-chart-components/commit/76d1de4d7d3c650bec85db8090c7a2a95a1f0506))
+
+
+### BREAKING CHANGES
+
+* e.detail now contains two objects, data and target. To access data object, you now need to use e.detail.data. clickFunc, hoverFunc, and mouseOutFunc have been removed and replaced with clickEvent, hoverEvent, and mouseOutEvent, respectively.
+* level-indicator, group-charts, pareto-chart and clustered-force-layout non production components have been removed from VCC repo and bundles
+
+
+
+
+
 ## [2.2.2](https://github.com/visa/visa-chart-components/compare/@visa/charts-react@2.2.1...@visa/charts-react@2.2.2) (2021-10-27)
 
 **Note:** Version bump only for package @visa/charts-react

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0](https://github.com/visa/visa-chart-components/compare/@visa/visa-charts-data-table@2.0.10...@visa/visa-charts-data-table@2.1.0) (2021-11-18)
+
+
+### Features
+
+* add secondary data table to alluvial diagram ([4a22da4](https://github.com/visa/visa-chart-components/commit/4a22da4673b63bbc3d6b327daa964e9a24d8cc19))
+
+
+
+
+
 ## [2.0.10](https://github.com/visa/visa-chart-components/compare/@visa/visa-charts-data-table@2.0.9...@visa/visa-charts-data-table@2.0.10) (2021-10-27)
 
 **Note:** Version bump only for package @visa/visa-charts-data-table

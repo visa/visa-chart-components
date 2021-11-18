@@ -1,6 +1,6 @@
 {
   "name": "@visa/dumbbell-plot",
-  "version": "5.3.1",
+  "version": "6.0.0",
   "description": "Visa charts dumbbell plot component",
   "license": "SEE LICENCE IN LICENSE",
   "module": "dist/index.mjs",
@@ -36,9 +36,9 @@
   },
   "dependencies": {
     "@visa/charts-types": "^0.4.0",
-    "@visa/keyboard-instructions": "^1.1.1",
-    "@visa/visa-charts-data-table": "^2.0.10",
-    "@visa/visa-charts-utils": "^4.5.1",
+    "@visa/keyboard-instructions": "^1.1.2",
+    "@visa/visa-charts-data-table": "^2.1.0",
+    "@visa/visa-charts-utils": "^4.5.2",
     "d3-array": "^1.2.4",
     "d3-scale": "^2.2.2",
     "d3-selection": "^1.4.0",
@@ -46,7 +46,7 @@
     "uuid": "7.0.0"
   },
   "devDependencies": {
-    "@visa/visa-charts-utils-dev": "^3.3.10"
+    "@visa/visa-charts-utils-dev": "^3.3.11"
   },
   "jest": {
     "preset": "@stencil/core/testing",

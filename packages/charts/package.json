@@ -1,6 +1,6 @@
 {
   "name": "@visa/charts",
-  "version": "5.2.1",
+  "version": "6.0.0",
   "description": "Collection of visa charts",
   "license": "SEE LICENCE IN LICENSE",
   "module": "dist/index.mjs",
@@ -32,21 +32,21 @@
     "access": "public"
   },
   "dependencies": {
-    "@visa/alluvial-diagram": "^1.2.1",
-    "@visa/bar-chart": "^4.3.1",
-    "@visa/circle-packing": "^5.2.1",
-    "@visa/clustered-bar-chart": "^4.3.1",
-    "@visa/dumbbell-plot": "^5.3.1",
-    "@visa/heat-map": "^4.3.1",
-    "@visa/keyboard-instructions": "^1.1.1",
-    "@visa/line-chart": "^4.3.1",
-    "@visa/parallel-plot": "^4.3.1",
-    "@visa/pie-chart": "^4.2.1",
-    "@visa/scatter-plot": "^5.3.1",
-    "@visa/stacked-bar-chart": "^4.3.1",
-    "@visa/visa-charts-data-table": "^2.0.10",
-    "@visa/visa-charts-utils": "^4.5.1",
-    "@visa/world-map": "^4.3.1"
+    "@visa/alluvial-diagram": "^2.0.0",
+    "@visa/bar-chart": "^5.0.0",
+    "@visa/circle-packing": "^6.0.0",
+    "@visa/clustered-bar-chart": "^5.0.0",
+    "@visa/dumbbell-plot": "^6.0.0",
+    "@visa/heat-map": "^5.0.0",
+    "@visa/keyboard-instructions": "^1.1.2",
+    "@visa/line-chart": "^5.0.0",
+    "@visa/parallel-plot": "^5.0.0",
+    "@visa/pie-chart": "^5.0.0",
+    "@visa/scatter-plot": "^6.0.0",
+    "@visa/stacked-bar-chart": "^5.0.0",
+    "@visa/visa-charts-data-table": "^2.1.0",
+    "@visa/visa-charts-utils": "^4.5.2",
+    "@visa/world-map": "^5.0.0"
   },
   "jest": {
     "transform": {
