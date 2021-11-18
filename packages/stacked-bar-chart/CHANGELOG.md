@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0](https://github.com/visa/visa-chart-components/compare/@visa/stacked-bar-chart@4.3.1...@visa/stacked-bar-chart@5.0.0) (2021-11-18)
+
+
+### chore
+
+* refactor object emitted on click and hover events in pie, scatter, stacked ([2f5e797](https://github.com/visa/visa-chart-components/commit/2f5e797c2cc869733e5979a4c6e050f0cb1821b7))
+
+
+### BREAKING CHANGES
+
+* e.detail now contains two objects, data and target. To access data object, you now need to use e.detail.data. clickFunc, hoverFunc, and mouseOutFunc have been removed and replaced with clickEvent, hoverEvent, and mouseOutEvent, respectively
+
+
+
+
+
 ## [4.3.1](https://github.com/visa/visa-chart-components/compare/@visa/stacked-bar-chart@4.3.0...@visa/stacked-bar-chart@4.3.1) (2021-10-27)
 
 

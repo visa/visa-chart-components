@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0](https://github.com/visa/visa-chart-components/compare/@visa/alluvial-diagram@1.2.1...@visa/alluvial-diagram@2.0.0) (2021-11-18)
+
+
+### chore
+
+* refactor watch lifecycle, object emitted on click and hover events in alluvial-diagram ([1ff29bb](https://github.com/visa/visa-chart-components/commit/1ff29bbca83561341506a472990b67568961a7b7))
+
+
+### BREAKING CHANGES
+
+* The linkConfig.fillMode option 'path' is now renamed to 'link'. Update to this new name in order to maintain fill styling that is applied to each link individually
+* e.detail now contains two objects, data and target. To access data object, you now need to use e.detail.data. clickFunc, hoverFunc, and mouseOutFunc have been removed and replaced with clickEvent, hoverEvent, and mouseOutEvent, respectively
+
+
+
+
+
 ## [1.2.1](https://github.com/visa/visa-chart-components/compare/@visa/alluvial-diagram@1.2.0...@visa/alluvial-diagram@1.2.1) (2021-10-27)
 
 

@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.0.0](https://github.com/visa/visa-chart-components/compare/@visa/charts-angular@2.3.2...@visa/charts-angular@3.0.0) (2021-11-18)
+
+
+### Code Refactoring
+
+* restructure charts-angular, remove old components, refactor object emitted ([23bae4d](https://github.com/visa/visa-chart-components/commit/23bae4d2f798c3e2f9aeda373014654a8655577f))
+
+
+### BREAKING CHANGES
+
+* refactor charts-angular to leverage angular/cli build process
+* e.detail now contains two objects, data and target. To access data object, you now need to use e.detail.data. clickFunc, hoverFunc, and mouseOutFunc have been removed and replaced with clickEvent, hoverEvent, and mouseOutEvent, respectively.
+* level-indicator, group-charts, pareto-chart and clustered-force-layout non production components have been removed from VCC repo and bundles
+
+
+
+
+
 ## [2.3.2](https://github.com/visa/visa-chart-components/compare/@visa/charts-angular@2.3.1...@visa/charts-angular@2.3.2) (2021-10-27)
 
 **Note:** Version bump only for package @visa/charts-angular

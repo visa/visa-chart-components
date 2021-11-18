@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.5.2](https://github.com/visa/visa-chart-components/compare/@visa/visa-charts-utils@4.5.1...@visa/visa-charts-utils@4.5.2) (2021-11-18)
+
+
+### Bug Fixes
+
+* add new event emitter name to accessibility validation ([a84487b](https://github.com/visa/visa-chart-components/commit/a84487b726563de74107d620526ba071350074c3))
+* add secondary table to transform for alluvial data table ([980bf51](https://github.com/visa/visa-chart-components/commit/980bf51e09356c6a513abad391f67483ef6b45b1))
+* bump versions of ua-parser-js and path-parse ([75a85a5](https://github.com/visa/visa-chart-components/commit/75a85a528718122d79e781d3b848ab064c9dc7e5))
+
+
+
+
+
 ## [4.5.1](https://github.com/visa/visa-chart-components/compare/@visa/visa-charts-utils@4.5.0...@visa/visa-charts-utils@4.5.1) (2021-10-27)
 
 
