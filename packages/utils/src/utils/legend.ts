@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -16,6 +16,7 @@ import {
   calculateLuminance,
   visaColorToHex
 } from './colors';
+import { createTextStrokeFilter } from './textures';
 import { checkHovered, checkClicked, checkInteraction } from './interaction';
 import { select } from 'd3-selection';
 import { easeCircleIn } from 'd3-ease';
@@ -102,6 +103,11 @@ export const drawLegend = ({
     'transform',
     `translate(${(offsetLegend ? leftOffset : 0) + symbolMod},${offsetLegend ? 24 : 4})`
   );
+  const filter = createTextStrokeFilter({
+    root: root.node(),
+    id: `${uniqueID}-legend`,
+    color: '#ffffff'
+  });
 
   switch (type) {
     default:
@@ -745,6 +751,7 @@ export const drawLegend = ({
       .attr('stroke', 'none')
       .attr('stroke-width', 0);
   }
+  root.selectAll('text').attr('filter', filter);
   root.attr('data-type', type || 'default');
   root.selectAll('.legend *:first-child').each((_, i, n) => {
     const me = select(n[i]);
