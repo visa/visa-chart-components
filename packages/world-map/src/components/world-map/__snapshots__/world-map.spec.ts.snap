@@ -113,29 +113,42 @@ exports[`<world-map /> rendered-html render should render with minimal props giv
           <g class="legend-padding-wrapper" transform="translate(19,24)">
             <g class="key legend">
               <rect data-base-color="#554f87" data-fill="#f7fcfd" data-stroke="#554f87" data-stroke-width="1" fill="#f7fcfd" height="15" opacity="1" stroke="#554f87" stroke-dasharray="none" stroke-width="1" width="15" x="0" y="0" style="fill: #f7fcfd; stroke: #554f87; stroke-width: 1; stroke-dasharray: none;"></rect>
-              <text class="key-text" dx=".2em" dy="13" opacity="1" x="20" y="0">
+              <text class="key-text" dx=".2em" dy="13" filter="url(#VCL-t-s-f-ffffffsnapshot-test-1-legend)" opacity="1" x="20" y="0">
                 14.2-23.2
               </text>
             </g>
             <g class="key legend">
               <rect data-base-color="#554f87" data-fill="#cebadd" data-stroke="#554f87" data-stroke-width="1" fill="#cebadd" height="15" opacity="1" stroke="#554f87" stroke-dasharray="none" stroke-width="1" width="15" x="40" y="0" style="fill: #cebadd; stroke: #554f87; stroke-width: 1; stroke-dasharray: none;"></rect>
-              <text class="key-text" dx=".2em" dy="13" opacity="1" x="60" y="0">
+              <text class="key-text" dx=".2em" dy="13" filter="url(#VCL-t-s-f-ffffffsnapshot-test-1-legend)" opacity="1" x="60" y="0">
                 23.2-32.1
               </text>
             </g>
             <g class="key legend">
               <rect data-base-color="#554f87" data-fill="#977ebb" data-stroke="#554f87" data-stroke-width="1" fill="#977ebb" height="15" opacity="1" stroke="#554f87" stroke-dasharray="none" stroke-width="1" width="15" x="80" y="0" style="fill: #977ebb; stroke: #554f87; stroke-width: 1; stroke-dasharray: none;"></rect>
-              <text class="key-text" dx=".2em" dy="13" opacity="1" x="100" y="0">
+              <text class="key-text" dx=".2em" dy="13" filter="url(#VCL-t-s-f-ffffffsnapshot-test-1-legend)" opacity="1" x="100" y="0">
                 32.1-41.1
               </text>
             </g>
             <g class="key legend">
               <rect data-base-color="#554f87" data-fill="#554f87" data-stroke="#554f87" data-stroke-width="1" fill="#554f87" height="15" opacity="1" stroke="#554f87" stroke-dasharray="none" stroke-width="1" width="15" x="120" y="0" style="fill: #554f87; stroke: #554f87; stroke-width: 1; stroke-dasharray: none;"></rect>
-              <text class="key-text" dx=".2em" dy="13" opacity="1" x="140" y="0">
+              <text class="key-text" dx=".2em" dy="13" filter="url(#VCL-t-s-f-ffffffsnapshot-test-1-legend)" opacity="1" x="140" y="0">
                 41.1-50
               </text>
             </g>
           </g>
+          <defs>
+            <filter class="VCL-t-s-f-ffffff" id="VCL-t-s-f-ffffffsnapshot-test-1-legend">
+              <feMorphology in="SourceAlpha" operator="dilate" radius="1.5" result="dilatedText"></feMorphology>
+              <feFlood flood-color="#ffffff" flood-opacity="1" result="whiteTextFlood"></feFlood>
+              <feComposite in="whiteTextFlood" in2="dilatedText" operator="in" result="textOutline"></feComposite>
+              <feMerge>
+                <feMergeNode in="textOutline"></feMergeNode>
+                <feMergeNode in="textOutline"></feMergeNode>
+                <feMergeNode in="textOutline"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+              </feMerge>
+            </filter>
+          </defs>
         </svg>
       </div>
       <keyboard-instructions>
@@ -163,7 +176,7 @@ exports[`<world-map /> rendered-html render should render with minimal props giv
         </div>
       </keyboard-instructions>
       <div class="visa-viz-world-map-container" data-testid="chart-container" style="position: relative;">
-        <div aria-label="This is the Map title. This is the Map subtitle.  Navigate into the chart area by pressing ENTER. ID: snapshot-test-1" class="VCL-controller" data-group id="chart-area-snapshot-test-1" role="application" tabindex="0" style="position: absolute; top: 0; left: 0; opacity: 0; pointer-events: none; width: 0px; height: 0px;">
+        <div aria-label="This is the Map title. This is the Map subtitle.  Navigate into the chart area by pressing ENTER." class="VCL-controller" data-group id="chart-area-snapshot-test-1" role="application" tabindex="0" style="position: absolute; top: 0; left: 0; opacity: 0; pointer-events: none; width: 0px; height: 0px;">
           Interactive world-map.
         </div>
         <svg class="vcl-svg" data-testid="root-svg" focusable="false" height="400" role="presentation" tabindex="-1" viewBox="0 0 500 400" width="500" style="overflow: hidden;">

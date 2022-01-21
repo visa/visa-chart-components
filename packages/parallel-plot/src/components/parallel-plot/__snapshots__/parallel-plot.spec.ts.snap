@@ -336,35 +336,48 @@ exports[`<parallel-plot> rendered-html render should render with minimal props[d
           <g class="legend-padding-wrapper" transform="translate(4,4)">
             <g class="legend">
               <line data-stroke="#35495a" data-stroke-width="3" opacity="1" stroke="#35495a" stroke-dasharray="" stroke-width="3" x1="0" x2="28" y1="8" y2="8" style="stroke-width: 3; stroke: #35495a; opacity: 0;"></line>
-              <text class="key-text" dx=".2em" dy="13" opacity="1" x="33" y="0">
+              <text class="key-text" dx=".2em" dy="13" filter="url(#VCL-t-s-f-ffffffparallel-plot-unit-test-legend)" opacity="1" x="33" y="0">
                 North-America
               </text>
             </g>
             <g class="legend">
               <line data-stroke="#6868ba" data-stroke-width="3" opacity="1" stroke="#6868ba" stroke-dasharray="8,2" stroke-width="3" x1="60" x2="88" y1="8" y2="8" style="stroke-width: 3; stroke: #6868ba; stroke-dasharray: 8,2; opacity: 0;"></line>
-              <text class="key-text" dx=".2em" dy="13" opacity="1" x="93" y="0">
+              <text class="key-text" dx=".2em" dy="13" filter="url(#VCL-t-s-f-ffffffparallel-plot-unit-test-legend)" opacity="1" x="93" y="0">
                 Asia
               </text>
             </g>
             <g class="legend">
               <line data-stroke="#576245" data-stroke-width="3" opacity="1" stroke="#576245" stroke-dasharray="8,2,4,2" stroke-width="3" x1="120" x2="146" y1="8" y2="8" style="stroke-width: 3; stroke: #576245; stroke-dasharray: 8,2,4,2; opacity: 0;"></line>
-              <text class="key-text" dx=".2em" dy="13" opacity="1" x="151" y="0">
+              <text class="key-text" dx=".2em" dy="13" filter="url(#VCL-t-s-f-ffffffparallel-plot-unit-test-legend)" opacity="1" x="151" y="0">
                 South-America
               </text>
             </g>
             <g class="legend">
               <line data-stroke="#504644" data-stroke-width="3" opacity="1" stroke="#504644" stroke-dasharray="2,2,8,2,8,2" stroke-width="3" x1="180" x2="208" y1="8" y2="8" style="stroke-width: 3; stroke: #504644; stroke-dasharray: 2,2,8,2,8,2; opacity: 0;"></line>
-              <text class="key-text" dx=".2em" dy="13" opacity="1" x="213" y="0">
+              <text class="key-text" dx=".2em" dy="13" filter="url(#VCL-t-s-f-ffffffparallel-plot-unit-test-legend)" opacity="1" x="213" y="0">
                 Europe
               </text>
             </g>
             <g class="legend">
               <line data-stroke="#b5513d" data-stroke-width="3" opacity="1" stroke="#b5513d" stroke-dasharray="2,2,2,2,8,2" stroke-width="3" x1="240" x2="266" y1="8" y2="8" style="stroke-width: 3; stroke: #b5513d; stroke-dasharray: 2,2,2,2,8,2; opacity: 0;"></line>
-              <text class="key-text" dx=".2em" dy="13" opacity="1" x="271" y="0">
+              <text class="key-text" dx=".2em" dy="13" filter="url(#VCL-t-s-f-ffffffparallel-plot-unit-test-legend)" opacity="1" x="271" y="0">
                 Africa
               </text>
             </g>
           </g>
+          <defs>
+            <filter class="VCL-t-s-f-ffffff" id="VCL-t-s-f-ffffffparallel-plot-unit-test-legend">
+              <feMorphology in="SourceAlpha" operator="dilate" radius="1.5" result="dilatedText"></feMorphology>
+              <feFlood flood-color="#ffffff" flood-opacity="1" result="whiteTextFlood"></feFlood>
+              <feComposite in="whiteTextFlood" in2="dilatedText" operator="in" result="textOutline"></feComposite>
+              <feMerge>
+                <feMergeNode in="textOutline"></feMergeNode>
+                <feMergeNode in="textOutline"></feMergeNode>
+                <feMergeNode in="textOutline"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+              </feMerge>
+            </filter>
+          </defs>
         </svg>
       </div>
       <keyboard-instructions>
@@ -392,7 +405,7 @@ exports[`<parallel-plot> rendered-html render should render with minimal props[d
         </div>
       </keyboard-instructions>
       <div class="visa-viz-d3-parallel-container" data-testid="chart-container" style="position: relative;">
-        <div aria-label="Parallel Plot Title. This is the parallel plot's subtitle.  Navigate into the chart area by pressing ENTER. ID: parallel-plot-unit-test" class="VCL-controller" data-group="region" id="chart-area-parallel-plot-unit-test" role="application" tabindex="0" style="position: absolute; top: 0; left: 0; opacity: 0; pointer-events: none; width: 0px; height: 0px;">
+        <div aria-label="Parallel Plot Title. This is the parallel plot's subtitle.  Navigate into the chart area by pressing ENTER." class="VCL-controller" data-group="region" id="chart-area-parallel-plot-unit-test" role="application" tabindex="0" style="position: absolute; top: 0; left: 0; opacity: 0; pointer-events: none; width: 0px; height: 0px;">
           Interactive parallel-plot.
         </div>
         <svg class="vcl-svg" data-testid="root-svg" focusable="false" height="300" role="presentation" tabindex="-1" viewBox="0 0 500 300" width="500" style="overflow: hidden;">

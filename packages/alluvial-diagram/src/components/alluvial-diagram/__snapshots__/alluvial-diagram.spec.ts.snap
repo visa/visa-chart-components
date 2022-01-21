@@ -117,7 +117,7 @@ exports[`<alluvial-diagram> rendered-html render should render with minimal prop
           </div>
         </keyboard-instructions>
         <div class="visa-viz-d3-alluvial-container" data-testid="chart-container" style="position: relative;">
-          <div aria-label="Alluvial Diagram Title. This is the alluvial diagram's subtitle.  Navigate into the chart area by pressing ENTER. ID: alluvial-diagram-unit-test" class="VCL-controller" data-group="did" id="chart-area-alluvial-diagram-unit-test" role="application" tabindex="0" style="position: absolute; top: 0; left: 0; opacity: 0; pointer-events: none; width: 0px; height: 0px;">
+          <div aria-label="Alluvial Diagram Title. This is the alluvial diagram's subtitle.  Navigate into the chart area by pressing ENTER." class="VCL-controller" data-group="did" id="chart-area-alluvial-diagram-unit-test" role="application" tabindex="0" style="position: absolute; top: 0; left: 0; opacity: 0; pointer-events: none; width: 0px; height: 0px;">
             Interactive alluvial-diagram.
           </div>
           <svg class="vcl-svg" data-testid="root-svg" focusable="false" height="300" role="presentation" tabindex="-1" viewBox="0 0 650 300" width="650" style="overflow: hidden;">
