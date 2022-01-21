@@ -94,7 +94,7 @@ export const setAccessibilityController = ({
   const getRootAriaLabel = () => {
     const titleText = `${title}. `;
     const subtitle = description ? description + '. ' : '';
-    const descText = `${subtitle} Navigate into the chart area by pressing ENTER. ID: ${uniqueID}`;
+    const descText = `${subtitle} Navigate into the chart area by pressing ENTER.`;
     return titleText + descText;
   };
   if (!controller.size()) {
@@ -159,7 +159,7 @@ export const setAccessibilityController = ({
                 .node(),
               true
             );
-            controller.attr('aria-label', `Interactive ${chartTag}. ID: ${uniqueID}`);
+            controller.attr('aria-label', `Interactive ${chartTag}.`);
           }
         : null
     )
