@@ -37,17 +37,13 @@ export const config: Config | any = {
     { type: 'dist' },
     { type: 'www' }
   ],
+  rollupPlugins: { after: [nodePolyfills()] },
   plugins: [
-    nodePolyfills(),
     sass({
       injectGlobalPaths: ['src/scss/objects.scss']
     })
   ],
   commonjs: {
-    namedExports: {
-      'node_modules/mapbox-gl': ['mapbox-gl'],
-      'node_modules/@mapbox/mapbox-gl-draw': ['mapbox-gl-draw']
-    },
     include: [
       '../utils/dist/visa-charts-utils.umd.js',
       'node_modules/@turf/turf/turf.min.js',

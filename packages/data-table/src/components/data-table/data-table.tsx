@@ -209,7 +209,7 @@ export class DataTable {
   }
   // using a similar workaround: https://github.com/Microsoft/TypeScript/issues/10761
   render() {
-    const svgProps = { tabindex: '-1' };
+    const svgProps = { tabindex: -1 };
     const useProps = {
       href: `#visa-viz-view-grid--tiny-${this.uniqueID}`,
       xlinkHref: `#visa-viz-view-grid--tiny-${this.uniqueID}`

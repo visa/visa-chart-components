@@ -147,7 +147,7 @@ export class KeyboardInstructions {
     if (this.disabled) {
       return;
     }
-    const svgProps = { tabindex: '-1' };
+    const svgProps = { tabindex: -1 };
     const useProps = {
       href: `#visa-viz-keyboard-instructions-info--tiny-${this.uniqueID}`,
       xlinkHref: `#visa-viz-keyboard-instructions-info--tiny-${this.uniqueID}`
