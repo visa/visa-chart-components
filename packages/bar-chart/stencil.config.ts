@@ -10,25 +10,36 @@ import { sass } from '@stencil/sass';
 import { reactOutputTarget } from '@stencil/react-output-target';
 import { angularOutputTarget } from '@stencil/angular-output-target';
 
-let excludeSrc = ['**/app-*/*', '**/*.spec*', '**/*.test*', '**/*.e2e*'];
+// exclude nested components from output targets
+const excludeComponents = ['data-table', 'keyboard-instructions'];
 // @ts-ignore
 const dev: boolean = process.argv && process.argv.indexOf('--dev') > -1;
-if (dev) {
-  excludeSrc = [];
-}
 
 export const config: Config | any = {
   namespace: 'bar-chart',
-  excludeSrc,
+  tsconfig: dev ? './tsconfig.dev.json' : './tsconfig.json',
+  buildEs5: 'prod',
+  extras: {
+    cssVarsShim: true,
+    dynamicImportShim: true,
+    safari10: true,
+    shadowDomShim: true,
+    scriptDataOpts: true,
+    appendChildSlotFix: false,
+    cloneNodeFix: false,
+    slotChildNodesFix: true
+  },
   outputTargets: [
     reactOutputTarget({
       componentCorePackage: '@visa/bar-chart',
       loaderDir: 'dist/loader',
-      proxiesFile: '../charts-react/src/components/bar-chart.ts'
+      proxiesFile: '../charts-react/src/components/bar-chart.ts',
+      excludeComponents
     }),
     angularOutputTarget({
       componentCorePackage: '@visa/bar-chart',
-      directivesProxyFile: '../charts-angular/src/lib/directives/bar-chart.ts'
+      directivesProxyFile: '../charts-angular/src/lib/directives/bar-chart.ts',
+      excludeComponents
     }),
     { type: 'dist' },
     { type: 'www' }
