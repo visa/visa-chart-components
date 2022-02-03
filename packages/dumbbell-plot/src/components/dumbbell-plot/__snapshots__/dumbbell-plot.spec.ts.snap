@@ -146,17 +146,30 @@ exports[`<dumbbell-plot> rendered-html render should render with minimal props[d
           <g class="legend-padding-wrapper" transform="translate(60.5,24)">
             <g class="bar legend">
               <rect class="bar-rect" data-base-color="#7c99b1" data-fill="#7c99b1" data-stroke="#35495a" data-stroke-width="1" fill="#7c99b1" height="20" opacity="1" stroke="#35495a" stroke-dasharray="none" stroke-width="1" width="20" x="0" y="0" style="fill: #7c99b1; stroke: #35495a; stroke-width: 1; stroke-dasharray: none;"></rect>
-              <text class="bar-text" dx=".2em" dy="16" opacity="1" x="25" y="0">
+              <text class="bar-text" dx=".2em" dy="16" filter="url(#VCL-t-s-f-ffffffunique-d-plot-legend)" opacity="1" x="25" y="0">
                 CardA
               </text>
             </g>
             <g class="bar legend">
               <rect class="bar-rect" data-base-color="#cacae7" data-fill="#cacae7" data-stroke="#6868ba" data-stroke-width="1" fill="#cacae7" height="20" opacity="1" stroke="#6868ba" stroke-dasharray="none" stroke-width="1" width="20" x="45" y="0" style="fill: #cacae7; stroke: #6868ba; stroke-width: 1; stroke-dasharray: none;"></rect>
-              <text class="bar-text" dx=".2em" dy="16" opacity="1" x="70" y="0">
+              <text class="bar-text" dx=".2em" dy="16" filter="url(#VCL-t-s-f-ffffffunique-d-plot-legend)" opacity="1" x="70" y="0">
                 CardB
               </text>
             </g>
           </g>
+          <defs>
+            <filter class="VCL-t-s-f-ffffff" id="VCL-t-s-f-ffffffunique-d-plot-legend">
+              <feMorphology in="SourceAlpha" operator="dilate" radius="1.5" result="dilatedText"></feMorphology>
+              <feFlood flood-color="#ffffff" flood-opacity="1" result="whiteTextFlood"></feFlood>
+              <feComposite in="whiteTextFlood" in2="dilatedText" operator="in" result="textOutline"></feComposite>
+              <feMerge>
+                <feMergeNode in="textOutline"></feMergeNode>
+                <feMergeNode in="textOutline"></feMergeNode>
+                <feMergeNode in="textOutline"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+              </feMerge>
+            </filter>
+          </defs>
         </svg>
       </div>
       <keyboard-instructions>
@@ -184,7 +197,7 @@ exports[`<dumbbell-plot> rendered-html render should render with minimal props[d
         </div>
       </keyboard-instructions>
       <div class="visa-viz-d3-dumbbell-container" data-testid="chart-container" style="position: relative;">
-        <div aria-label="Dumbbell Plot Title. This is the dumbbell plot's subtitle.  Navigate into the chart area by pressing ENTER. ID: unique-d-plot" class="VCL-controller" id="chart-area-unique-d-plot" role="application" tabindex="0" style="position: absolute; top: 0; left: 0; opacity: 0; pointer-events: none; width: 0px; height: 0px;">
+        <div aria-label="Dumbbell Plot Title. This is the dumbbell plot's subtitle.  Navigate into the chart area by pressing ENTER." class="VCL-controller" id="chart-area-unique-d-plot" role="application" tabindex="0" style="position: absolute; top: 0; left: 0; opacity: 0; pointer-events: none; width: 0px; height: 0px;">
           Interactive dumbbell-plot.
         </div>
         <svg class="vcl-svg" focusable="false" height="300" role="presentation" tabindex="-1" viewBox="0 0 650 300" width="650" style="overflow: hidden;">

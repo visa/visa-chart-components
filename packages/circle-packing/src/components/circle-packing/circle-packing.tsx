@@ -1465,7 +1465,9 @@ export class CirclePacking {
       this.transitionEndEvent.emit({ chartID: this.chartID });
     };
 
-    if (this.duration) {
+    // adding check for changeCircle.size as well to avoid
+    // bug where interactivity stops working if same data is sent to chart twice
+    if (this.duration && changeCircle.size() > 0) {
       changeCircle
         .attrTween('x', (_, i, n) => {
           // we tween over an unused attribute so that it causes no reflow

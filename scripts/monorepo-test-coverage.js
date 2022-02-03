@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2021 Visa, Inc.
+ * Copyright (c) 2021, 2022 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -151,7 +151,9 @@ jsonFiles.forEach(function(file, i) {
         });
       }
     });
-    combinedJSONResults[packageName] = fileContent;
+
+    // we now have to filter out the fake test failure, which is only in place to hack cicd
+    combinedJSONResults[packageName] = fileContent.filter(o => o['ancestorTitles'][0] !== 'fake-test-fail-exit');
     // console.log(file, i, combinedJSONResults);
   } catch (ex) {
     console.log(`Error:: while processing ts file:${file}, exception:${ex}`);
