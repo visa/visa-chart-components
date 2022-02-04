@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.1](https://github.com/visa/visa-chart-components/compare/@visa/charts-angular@3.0.0...@visa/charts-angular@3.0.1) (2022-02-04)
+
+
+### Bug Fixes
+
+* add resoultions to address charts-angular dep issues ([b846aee](https://github.com/visa/visa-chart-components/commit/b846aeef71b3c8dca87744bca7d2422dcf03527a))
+
+
+
+
+
 # [3.0.0](https://github.com/visa/visa-chart-components/compare/@visa/charts-angular@2.3.2...@visa/charts-angular@3.0.0) (2021-11-18)
 
 
