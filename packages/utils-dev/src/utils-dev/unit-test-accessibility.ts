@@ -945,7 +945,7 @@ export const accessibility_controller_initialize = {
     // ASSERT
     const titleText = `${component.mainTitle}. `;
     const subtitle = component.subTitle ? component.subTitle + '. ' : '';
-    const descText = `${subtitle} Navigate into the chart area by pressing ENTER. ID: ${component.uniqueID}`;
+    const descText = `${subtitle} Navigate into the chart area by pressing ENTER.`;
     const ariaLabel = titleText + descText;
 
     const controller = page.doc.querySelector(testSelector);

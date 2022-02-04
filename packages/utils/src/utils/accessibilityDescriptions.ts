@@ -7,8 +7,8 @@
  **/
 import { select } from 'd3-selection';
 const emptyDescriptions = {
-  'vcl-access-title': 'This chart has no title provided.',
-  'vcl-access-subtitle': 'This chart has no subtitle provided.',
+  'vcl-access-title': '', // 'This chart has no title provided.'
+  'vcl-access-subtitle': '', // 'This chart has no subtitle provided.'
   'vcl-access-long-description': '', // 'This chart has no long description provided.',
   'vcl-access-context': '',
   'vcl-access-executive-summary': '', // 'This chart has no executive summary provided.',

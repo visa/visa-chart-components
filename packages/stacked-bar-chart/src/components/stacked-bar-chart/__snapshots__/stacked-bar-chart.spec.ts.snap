@@ -353,23 +353,36 @@ exports[`<stacked-bar-chart> rendered-html render should render with minimal pro
           <g class="legend-padding-wrapper" transform="translate(58,24)">
             <g class="bar legend">
               <rect class="bar-rect" data-base-color="#7c99b1" data-fill="url(#stacked-bar-test_texture_0)" data-stroke="#35495a" data-stroke-width="1" fill="url(#stacked-bar-test_texture_0)" height="20" opacity="1" stroke="#35495a" stroke-dasharray="none" stroke-width="1" width="20" x="0" y="0" style="fill: url(#stacked-bar-test_texture_0); stroke: #35495a; stroke-width: 1; stroke-dasharray: none;"></rect>
-              <text class="bar-text" dx=".2em" dy="16" opacity="1" x="25" y="0">
+              <text class="bar-text" dx=".2em" dy="16" filter="url(#VCL-t-s-f-ffffffstacked-bar-test-legend)" opacity="1" x="25" y="0">
                 A
               </text>
             </g>
             <g class="bar legend">
               <rect class="bar-rect" data-base-color="#cacae7" data-fill="url(#stacked-bar-test_texture_1)" data-stroke="#6868ba" data-stroke-width="1" fill="url(#stacked-bar-test_texture_1)" height="20" opacity="1" stroke="#6868ba" stroke-dasharray="none" stroke-width="1" width="20" x="45" y="0" style="fill: url(#stacked-bar-test_texture_1); stroke: #6868ba; stroke-width: 1; stroke-dasharray: none;"></rect>
-              <text class="bar-text" dx=".2em" dy="16" opacity="1" x="70" y="0">
+              <text class="bar-text" dx=".2em" dy="16" filter="url(#VCL-t-s-f-ffffffstacked-bar-test-legend)" opacity="1" x="70" y="0">
                 B
               </text>
             </g>
             <g class="bar legend">
               <rect class="bar-rect" data-base-color="#abb798" data-fill="url(#stacked-bar-test_texture_2)" data-stroke="#576245" data-stroke-width="1" fill="url(#stacked-bar-test_texture_2)" height="20" opacity="1" stroke="#576245" stroke-dasharray="none" stroke-width="1" width="20" x="90" y="0" style="fill: url(#stacked-bar-test_texture_2); stroke: #576245; stroke-width: 1; stroke-dasharray: none;"></rect>
-              <text class="bar-text" dx=".2em" dy="16" opacity="1" x="115" y="0">
+              <text class="bar-text" dx=".2em" dy="16" filter="url(#VCL-t-s-f-ffffffstacked-bar-test-legend)" opacity="1" x="115" y="0">
                 C
               </text>
             </g>
           </g>
+          <defs>
+            <filter class="VCL-t-s-f-ffffff" id="VCL-t-s-f-ffffffstacked-bar-test-legend">
+              <feMorphology in="SourceAlpha" operator="dilate" radius="1.5" result="dilatedText"></feMorphology>
+              <feFlood flood-color="#ffffff" flood-opacity="1" result="whiteTextFlood"></feFlood>
+              <feComposite in="whiteTextFlood" in2="dilatedText" operator="in" result="textOutline"></feComposite>
+              <feMerge>
+                <feMergeNode in="textOutline"></feMergeNode>
+                <feMergeNode in="textOutline"></feMergeNode>
+                <feMergeNode in="textOutline"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+              </feMerge>
+            </filter>
+          </defs>
         </svg>
       </div>
       <keyboard-instructions>
@@ -397,7 +410,7 @@ exports[`<stacked-bar-chart> rendered-html render should render with minimal pro
         </div>
       </keyboard-instructions>
       <div class="visa-viz-d3-stacked-bar-container" data-testid="chart-container" style="position: relative;">
-        <div aria-label="Stacked Bar Chart Title. This is the stacked bar chart's subtitle.  Navigate into the chart area by pressing ENTER. ID: stacked-bar-test" class="VCL-controller" data-group="year" id="chart-area-stacked-bar-test" role="application" tabindex="0" style="position: absolute; top: 0; left: 0; opacity: 0; pointer-events: none; width: 0px; height: 0px;">
+        <div aria-label="Stacked Bar Chart Title. This is the stacked bar chart's subtitle.  Navigate into the chart area by pressing ENTER." class="VCL-controller" data-group="year" id="chart-area-stacked-bar-test" role="application" tabindex="0" style="position: absolute; top: 0; left: 0; opacity: 0; pointer-events: none; width: 0px; height: 0px;">
           Interactive stacked-bar-chart.
         </div>
         <svg class="vcl-svg" data-testid="root-svg" focusable="false" height="280" role="presentation" tabindex="-1" viewBox="0 0 700 280" width="700" style="overflow: hidden;">
