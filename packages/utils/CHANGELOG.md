@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.6.0](https://github.com/visa/visa-chart-components/compare/@visa/visa-charts-utils@4.5.2...@visa/visa-charts-utils@4.6.0) (2022-02-04)
+
+
+### Bug Fixes
+
+* add background stroke to legend text, makes legend text visible in dark contrast mode ([7ba6565](https://github.com/visa/visa-chart-components/commit/7ba6565d6dc404717203d42baff7ea5817416208))
+
+
+### Features
+
+* remove title and subtitle screen reader descriptions if they don't exist on chart ([f98210b](https://github.com/visa/visa-chart-components/commit/f98210b6f0fba2d2bc4c5277b9a4af4d01bd0d1e))
+* remove uniqueID from VO descriptions of chart ([839adab](https://github.com/visa/visa-chart-components/commit/839adabd3dd3449097f6fe8519f567fccebb32c0))
+
+
+
+
+
 ## [4.5.2](https://github.com/visa/visa-chart-components/compare/@visa/visa-charts-utils@4.5.1...@visa/visa-charts-utils@4.5.2) (2021-11-18)
 
 

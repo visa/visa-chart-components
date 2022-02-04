@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.1](https://github.com/visa/visa-chart-components/compare/@visa/alluvial-diagram@2.0.0...@visa/alluvial-diagram@2.0.1) (2022-02-04)
+
+**Note:** Version bump only for package @visa/alluvial-diagram
+
+
+
+
+
 # [2.0.0](https://github.com/visa/visa-chart-components/compare/@visa/alluvial-diagram@1.2.1...@visa/alluvial-diagram@2.0.0) (2021-11-18)
 
 

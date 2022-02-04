@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.1](https://github.com/visa/visa-chart-components/compare/@visa/bar-chart@5.0.0...@visa/bar-chart@5.0.1) (2022-02-04)
+
+**Note:** Version bump only for package @visa/bar-chart
+
+
+
+
+
 # [5.0.0](https://github.com/visa/visa-chart-components/compare/@visa/bar-chart@4.3.1...@visa/bar-chart@5.0.0) (2021-11-18)
 
 
