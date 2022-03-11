@@ -288,10 +288,10 @@ Object {
 
 Expected: [32m\\"visa-viz-margin-container-g-[7mcustom_unique_id[27m\\"[39m
 Received: [31m\\"visa-viz-margin-container-g-[7malluvial-diagram-unit-test[27m\\"[39m
-    at ./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:6237:31
-    at step (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:165:17)
-    at Object.next (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:96:14)
-    at fulfilled (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:50:24)
+    at call (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:4810:39)
+    at step (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:66:23)
+    at Object.next (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:47:53)
+    at fulfilled (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:37:58)
     at processTicksAndRejections (internal/process/task_queues.js:97:5)",
       ],
       "fullName": "<alluvial-diagram> rendered-html generic test suite uniqueID: custom uniqueID on update",
@@ -666,10 +666,10 @@ Received: [31m\\"visa-viz-margin-container-g-[7malluvial-diagram-unit-test[27
 
 Expected: [32m\\"visa-viz-margin-container-g-[7mcustom_unique_id[27m\\"[39m
 Received: [31m\\"visa-viz-margin-container-g-[7mbar-chart-unit-test[27m\\"[39m
-    at ./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:6237:31
-    at step (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:165:17)
-    at Object.next (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:96:14)
-    at fulfilled (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:50:24)
+    at call (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:4810:39)
+    at step (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:66:23)
+    at Object.next (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:47:53)
+    at fulfilled (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:37:58)
     at processTicksAndRejections (internal/process/task_queues.js:97:5)",
       ],
       "fullName": "<bar-chart> rendered-html generic test suite uniqueID: custom uniqueID on update",
@@ -2821,10 +2821,10 @@ Received: [31m\\"visa-viz-margin-container-g-[7mbar-chart-unit-test[27m\\"[3
 
 Expected: [32m\\"visa-viz-margin-container-g-c[7mustom_unique_id[27m\\"[39m
 Received: [31m\\"visa-viz-margin-container-g-c[7mircle-packing-test[27m\\"[39m
-    at ./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:6237:31
-    at step (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:165:17)
-    at Object.next (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:96:14)
-    at fulfilled (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:50:24)
+    at call (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:4810:39)
+    at step (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:66:23)
+    at Object.next (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:47:53)
+    at fulfilled (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:37:58)
     at processTicksAndRejections (internal/process/task_queues.js:97:5)",
       ],
       "fullName": "<circle-packing> rendered-html generic test suite uniqueID: custom uniqueID on update",
@@ -4007,10 +4007,10 @@ Received: [31m\\"visa-viz-margin-container-g-c[7mircle-packing-test[27m\\"[3
 
 Expected: [32m\\"visa-viz-margin-container-g-cust[7mom_unique_id[27m\\"[39m
 Received: [31m\\"visa-viz-margin-container-g-c[7ml[27must[7mered-bar-test[27m\\"[39m
-    at ./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:6237:31
-    at step (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:165:17)
-    at Object.next (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:96:14)
-    at fulfilled (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:50:24)
+    at call (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:4810:39)
+    at step (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:66:23)
+    at Object.next (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:47:53)
+    at fulfilled (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:37:58)
     at processTicksAndRejections (internal/process/task_queues.js:97:5)",
       ],
       "fullName": "<clustered-bar-chart> rendered-html generic test suite uniqueID: custom uniqueID on update",
@@ -6444,10 +6444,10 @@ Received: [31m\\"visa-viz-margin-container-g-c[7ml[27must[7mered-bar-test[2
 
 Expected: [32m\\"visa-viz-margin-container-g-[7mcustom_unique_id[27m\\"[39m
 Received: [31m\\"visa-viz-margin-container-g-[7munique-d-plot[27m\\"[39m
-    at ./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:6237:31
-    at step (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:165:17)
-    at Object.next (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:96:14)
-    at fulfilled (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:50:24)
+    at call (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:4810:39)
+    at step (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:66:23)
+    at Object.next (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:47:53)
+    at fulfilled (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:37:58)
     at processTicksAndRejections (internal/process/task_queues.js:97:5)",
       ],
       "fullName": "<dumbbell-plot> rendered-html generic test suite uniqueID: custom uniqueID on update",
@@ -8847,10 +8847,10 @@ Received: [31m\\"visa-viz-margin-container-g-[7munique-d-plot[27m\\"[39m
 
 Expected: [32m\\"visa-viz-margin-container-g-[7mcustom_unique_id[27m\\"[39m
 Received: [31m\\"visa-viz-margin-container-g-[7mline-chart-unit-test[27m\\"[39m
-    at ./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:6237:31
-    at step (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:165:17)
-    at Object.next (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:96:14)
-    at fulfilled (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:50:24)
+    at call (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:4810:39)
+    at step (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:66:23)
+    at Object.next (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:47:53)
+    at fulfilled (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:37:58)
     at processTicksAndRejections (internal/process/task_queues.js:97:5)",
       ],
       "fullName": "<line-chart> rendered-html generic test suite uniqueID: custom uniqueID on update",
@@ -8893,12 +8893,12 @@ Received: [31m\\"visa-viz-margin-container-g-[7mline-chart-unit-test[27m\\"[
 
 Expected: [32m\\"exit\\"[39m
 Received: [31m\\"update\\"[39m
-    at ./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:6373:40
+    at forEach (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:4907:52)
     at Array.forEach (<anonymous>)
-    at ./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:6365:22
-    at step (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:165:17)
-    at Object.next (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:96:14)
-    at fulfilled (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:50:24)
+    at call (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:4900:30)
+    at step (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:66:23)
+    at Object.next (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:47:53)
+    at fulfilled (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:37:58)
     at processTicksAndRejections (internal/process/task_queues.js:97:5)",
       ],
       "fullName": "<line-chart> rendered-html generic test suite data: custom data exit on update",
@@ -11341,10 +11341,10 @@ Received: [31m\\"update\\"[39m
 
 Expected: [32m\\"visa-viz-margin-container-g-[7mcustom_unique_id[27m\\"[39m
 Received: [31m\\"visa-viz-margin-container-g-[7mparallel-plot-unit-test[27m\\"[39m
-    at ./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:6237:31
-    at step (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:165:17)
-    at Object.next (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:96:14)
-    at fulfilled (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:50:24)
+    at call (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:4810:39)
+    at step (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:66:23)
+    at Object.next (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:47:53)
+    at fulfilled (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:37:58)
     at processTicksAndRejections (internal/process/task_queues.js:97:5)",
       ],
       "fullName": "<parallel-plot> rendered-html generic test suite uniqueID: custom uniqueID on update",
@@ -13532,6 +13532,1818 @@ Received: [31m\\"visa-viz-margin-container-g-[7mparallel-plot-unit-test[27m\\
       "title": "should have line strokeWidth of 3.5 when passed on update",
     },
   ],
+  "pie-chart": Array [
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "class-logic",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> class-logic should build",
+      "location": null,
+      "status": "passed",
+      "title": "should build",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html should build",
+      "location": null,
+      "status": "passed",
+      "title": "should build",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "render",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html render should render with minimal props[data,oridnalAccessor,valueAccessor] given",
+      "location": null,
+      "status": "passed",
+      "title": "should render with minimal props[data,oridnalAccessor,valueAccessor] given",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html generic test suite height: default height on load",
+      "location": null,
+      "status": "passed",
+      "title": "height: default height on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html generic test suite height: set height on load",
+      "location": null,
+      "status": "passed",
+      "title": "height: set height on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html generic test suite height: set height on update",
+      "location": null,
+      "status": "passed",
+      "title": "height: set height on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html generic test suite width: default width on load",
+      "location": null,
+      "status": "passed",
+      "title": "width: default width on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html generic test suite width: set width on load",
+      "location": null,
+      "status": "passed",
+      "title": "width: set width on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html generic test suite width: set width on update",
+      "location": null,
+      "status": "passed",
+      "title": "width: set width on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html generic test suite mainTitle: default mainTitle on load",
+      "location": null,
+      "status": "passed",
+      "title": "mainTitle: default mainTitle on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html generic test suite mainTitle: set mainTitle on load",
+      "location": null,
+      "status": "passed",
+      "title": "mainTitle: set mainTitle on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html generic test suite mainTitle: set mainTitle on update",
+      "location": null,
+      "status": "passed",
+      "title": "mainTitle: set mainTitle on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html generic test suite subTitle: default subTitle on load",
+      "location": null,
+      "status": "passed",
+      "title": "subTitle: default subTitle on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html generic test suite subTitle: set subTitle on load",
+      "location": null,
+      "status": "passed",
+      "title": "subTitle: set subTitle on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html generic test suite subTitle: set subTitle on update",
+      "location": null,
+      "status": "passed",
+      "title": "subTitle: set subTitle on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html generic test suite margin: default margin on load",
+      "location": null,
+      "status": "passed",
+      "title": "margin: default margin on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html generic test suite margin: custom margin on load",
+      "location": null,
+      "status": "passed",
+      "title": "margin: custom margin on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html generic test suite margin: custom margin on update",
+      "location": null,
+      "status": "passed",
+      "title": "margin: custom margin on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html generic test suite padding: default padding on load",
+      "location": null,
+      "status": "passed",
+      "title": "padding: default padding on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html generic test suite padding: custom padding on load",
+      "location": null,
+      "status": "passed",
+      "title": "padding: custom padding on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html generic test suite padding: custom padding on update",
+      "location": null,
+      "status": "passed",
+      "title": "padding: custom padding on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html generic test suite uniqueID: default uniqueID on load",
+      "location": null,
+      "status": "passed",
+      "title": "uniqueID: default uniqueID on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html generic test suite uniqueID: custom uniqueID on load",
+      "location": null,
+      "status": "passed",
+      "title": "uniqueID: custom uniqueID on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [
+        "Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoEqual[2m([22m[32mexpected[39m[2m) // deep equality[22m
+
+Expected: [32m\\"visa-viz-margin-container-g-[7mcustom_unique_id[27m\\"[39m
+Received: [31m\\"visa-viz-margin-container-g-[7mpie-chart-unit-test[27m\\"[39m
+    at call (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:4810:39)
+    at step (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:66:23)
+    at Object.next (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:47:53)
+    at fulfilled (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:37:58)
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)",
+      ],
+      "fullName": "<pie-chart> rendered-html generic test suite uniqueID: custom uniqueID on update",
+      "location": null,
+      "status": "failed",
+      "title": "uniqueID: custom uniqueID on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html generic test suite accessibility: should print accessibility console warnings and logs when accessibility.disableValidation defaults to false",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: should print accessibility console warnings and logs when accessibility.disableValidation defaults to false",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html generic test suite accessibility: should not print accessibility console warnings and logs when accessibility.disableValidation set to true",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: should not print accessibility console warnings and logs when accessibility.disableValidation set to true",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html generic test suite data: custom data on load",
+      "location": null,
+      "status": "passed",
+      "title": "data: custom data on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html generic test suite data: custom data enter on update",
+      "location": null,
+      "status": "passed",
+      "title": "data: custom data enter on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html generic test suite data: custom data exit on update",
+      "location": null,
+      "status": "passed",
+      "title": "data: custom data exit on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html accessibility generic accessibility test suite accessibility: default instruction elements should exist and have screen reader class",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: default instruction elements should exist and have screen reader class",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html accessibility generic accessibility test suite accessibility: custom instruction elements should exist and have screen reader class on load",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: custom instruction elements should exist and have screen reader class on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html accessibility generic accessibility test suite accessibility: custom instruction elements should exist and have screen reader class on update",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: custom instruction elements should exist and have screen reader class on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html accessibility generic accessibility test suite accessibility: instruction elements should have default html tags",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: instruction elements should have default html tags",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html accessibility generic accessibility test suite accessibility: instruction elements should have h3+ html tags and headings on load",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: instruction elements should have h3+ html tags and headings on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html accessibility generic accessibility test suite accessibility: instruction elements should have div html tags on load",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: instruction elements should have div html tags on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html accessibility generic accessibility test suite accessibility: instruction elements should have h4+ html tags and all headings on update",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: instruction elements should have h4+ html tags and all headings on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html accessibility generic accessibility test suite accessibility: instruction elements should have p html tags on update",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: instruction elements should have p html tags on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html accessibility generic accessibility test suite accessibility: keyboard instruction component renders in default state",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: keyboard instruction component renders in default state",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html accessibility generic accessibility test suite accessibility: keyboard instruction component shows header in focus state",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: keyboard instruction component shows header in focus state",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html accessibility generic accessibility test suite accessibility: keyboard instruction component displays table in click state",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: keyboard instruction component displays table in click state",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html accessibility generic accessibility test suite accessibility: keyboard instruction component displays table in click state with space enabled",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: keyboard instruction component displays table in click state with space enabled",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html accessibility generic accessibility test suite accessibility: attributes should be added to static geometries on load",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: attributes should be added to static geometries on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html accessibility generic accessibility test suite accessibility: attributes should be added to geometries on load",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: attributes should be added to geometries on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html accessibility generic accessibility test suite accessibility: controller div should be created and attributes should be added on load",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: controller div should be created and attributes should be added on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html accessibility generic accessibility test suite accessibility: controller div should be created and static image attributes should be added on load",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: controller div should be created and static image attributes should be added on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [
+        "Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoEqual[2m([22m[32mexpected[39m[2m) // deep equality[22m
+
+Expected: [32m\\"[7m2[27mpx\\"[39m
+Received: [31m\\"[7m14[27mpx\\"[39m
+    at call (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:1504:88)
+    at step (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:66:23)
+    at Object.next (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:47:53)
+    at fulfilled (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:37:58)
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)",
+      ],
+      "fullName": "<pie-chart> rendered-html accessibility generic accessibility test suite accessibility: focus marker style should be applied on focus",
+      "location": null,
+      "status": "failed",
+      "title": "accessibility: focus marker style should be applied on focus",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html accessibility generic accessibility test suite accessibility: focus group style should be applied on focus",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: focus group style should be applied on focus",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: test whether space bar performs click action",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: keyboard nav: test whether space bar performs click action",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: group - escape will exit group",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: keyboard nav: group - escape will exit group",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: sibling - right arrow goes to next",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: keyboard nav: sibling - right arrow goes to next",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: sibling - right arrow goes to first from last",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: keyboard nav: sibling - right arrow goes to first from last",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: sibling - left arrow goes to next",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: keyboard nav: sibling - left arrow goes to next",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: sibling - left arrow loops to last from first",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: keyboard nav: sibling - left arrow loops to last from first",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html accessibility generic accessibility test suite accessibility: instruction elements should contain xAxis description on load if xAxis exists on chart",
+      "location": null,
+      "status": "pending",
+      "title": "accessibility: instruction elements should contain xAxis description on load if xAxis exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html accessibility generic accessibility test suite accessibility: instruction elements should not contain xAxis description on load if xAxis is not visible on chart",
+      "location": null,
+      "status": "pending",
+      "title": "accessibility: instruction elements should not contain xAxis description on load if xAxis is not visible on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html accessibility generic accessibility test suite accessibility: instruction elements should contain xAxis description on update if xAxis exists on chart",
+      "location": null,
+      "status": "pending",
+      "title": "accessibility: instruction elements should contain xAxis description on update if xAxis exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html accessibility generic accessibility test suite accessibility: instruction elements should contain yAxis description on load if yAxis exists on chart",
+      "location": null,
+      "status": "pending",
+      "title": "accessibility: instruction elements should contain yAxis description on load if yAxis exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html accessibility generic accessibility test suite accessibility: instruction elements should not contain yAxis description on load if yAxis is not visible on chart",
+      "location": null,
+      "status": "pending",
+      "title": "accessibility: instruction elements should not contain yAxis description on load if yAxis is not visible on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html accessibility generic accessibility test suite accessibility: instruction elements should contain yAxis description on update if yAxis exists on chart",
+      "location": null,
+      "status": "pending",
+      "title": "accessibility: instruction elements should contain yAxis description on update if yAxis exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html accessibility generic accessibility test suite accessibility: textures are applied by default on load",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: textures are applied by default on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html accessibility generic accessibility test suite accessibility: textures are removed on load",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: textures are removed on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html accessibility generic accessibility test suite accessibility: accessibility textures are removed on update",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: accessibility textures are removed on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html accessibility generic accessibility test suite accessibility: accessibility textures are applied in default order on load",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: accessibility textures are applied in default order on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html accessibility generic accessibility test suite animationConfig: animationConfig disabled is false by default",
+      "location": null,
+      "status": "passed",
+      "title": "animationConfig: animationConfig disabled is false by default",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html accessibility generic accessibility test suite animationConfig: animationConfig disabled is true when passed on load",
+      "location": null,
+      "status": "passed",
+      "title": "animationConfig: animationConfig disabled is true when passed on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html accessibility generic accessibility test suite animationConfig: animationConfig disabled is true when passed on update",
+      "location": null,
+      "status": "passed",
+      "title": "animationConfig: animationConfig disabled is true when passed on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "accessibility",
+        "validation",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html accessibility validation refer to generic results above for accessibility validation tests",
+      "location": null,
+      "status": "passed",
+      "title": "refer to generic results above for accessibility validation tests",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "base",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html base refer to generic results above for base tests",
+      "location": null,
+      "status": "passed",
+      "title": "refer to generic results above for base tests",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "margin & padding",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html margin & padding refer to generic results above for margin & padding tests",
+      "location": null,
+      "status": "passed",
+      "title": "refer to generic results above for margin & padding tests",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "interaction",
+        "pie based interaction tests",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html interaction pie based interaction tests [interaction] cursor: should render default(arrow) pointer on mark when cursor type is default",
+      "location": null,
+      "status": "passed",
+      "title": "[interaction] cursor: should render default(arrow) pointer on mark when cursor type is default",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "interaction",
+        "pie based interaction tests",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html interaction pie based interaction tests [interaction] cursor: should render link pointer on mark when cursor type is pointer on load",
+      "location": null,
+      "status": "passed",
+      "title": "[interaction] cursor: should render link pointer on mark when cursor type is pointer on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "interaction",
+        "pie based interaction tests",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html interaction pie based interaction tests [interaction] cursor: should render link pointer on mark when cursor type is pointer on update",
+      "location": null,
+      "status": "passed",
+      "title": "[interaction] cursor: should render link pointer on mark when cursor type is pointer on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "interaction",
+        "pie based interaction tests",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html interaction pie based interaction tests [interaction] clickStyle: on click the selected mark should be default clickStyle and others should have hoverOpacity",
+      "location": null,
+      "status": "passed",
+      "title": "[interaction] clickStyle: on click the selected mark should be default clickStyle and others should have hoverOpacity",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "interaction",
+        "pie based interaction tests",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html interaction pie based interaction tests [interaction] clickStyle: on click (load) the selected mark should be custom clickStyle and others should have hoverOpacity",
+      "location": null,
+      "status": "passed",
+      "title": "[interaction] clickStyle: on click (load) the selected mark should be custom clickStyle and others should have hoverOpacity",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "interaction",
+        "pie based interaction tests",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html interaction pie based interaction tests [interaction] clickStyle: on click (update) the selected mark should be custom clickStyle and others should have hoverOpacity",
+      "location": null,
+      "status": "passed",
+      "title": "[interaction] clickStyle: on click (update) the selected mark should be custom clickStyle and others should have hoverOpacity",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "interaction",
+        "pie based interaction tests",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html interaction pie based interaction tests [interaction] hoverStyle: on hover the mark should be default hoverStyle and others should have hoverOpacity",
+      "location": null,
+      "status": "passed",
+      "title": "[interaction] hoverStyle: on hover the mark should be default hoverStyle and others should have hoverOpacity",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "interaction",
+        "pie based interaction tests",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html interaction pie based interaction tests [interaction] hoverStyle: on hover (load) the mark should be custom hoverStyle and others should have hoverOpacity",
+      "location": null,
+      "status": "passed",
+      "title": "[interaction] hoverStyle: on hover (load) the mark should be custom hoverStyle and others should have hoverOpacity",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "interaction",
+        "pie based interaction tests",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html interaction pie based interaction tests [interaction] hoverStyle: on hover (update) the mark should be custom hoverStyle and others should have hoverOpacity",
+      "location": null,
+      "status": "passed",
+      "title": "[interaction] hoverStyle: on hover (update) the mark should be custom hoverStyle and others should have hoverOpacity",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "interaction",
+        "clickStyle with interaction keys",
+      ],
+      "failureMessages": Array [
+        "Error: expected attribute radius \\"2.5\\" to equal \\"1.5\\"
+    at forEach (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:5416:43)
+    at Array.forEach (<anonymous>)
+    at call (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:5415:44)
+    at step (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:66:23)
+    at Object.next (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:47:53)
+    at fulfilled (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:37:58)
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)",
+      ],
+      "fullName": "<pie-chart> rendered-html interaction clickStyle with interaction keys [interaction] clickStyle: on click (load) the selected mark should be custom clickStyle and others should have hoverOpacity interactionKey group",
+      "location": null,
+      "status": "failed",
+      "title": "[interaction] clickStyle: on click (load) the selected mark should be custom clickStyle and others should have hoverOpacity interactionKey group",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "interaction",
+        "clickStyle with interaction keys",
+      ],
+      "failureMessages": Array [
+        "Error: expected attribute radius \\"2.5\\" to equal \\"1.5\\"
+    at forEach (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:5565:43)
+    at Array.forEach (<anonymous>)
+    at call (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:5564:44)
+    at step (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:66:23)
+    at Object.next (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:47:53)
+    at fulfilled (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:37:58)
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)",
+      ],
+      "fullName": "<pie-chart> rendered-html interaction clickStyle with interaction keys [interaction] clickStyle: on click (update) the selected mark should be custom clickStyle and others should have hoverOpacity interactionKey group",
+      "location": null,
+      "status": "failed",
+      "title": "[interaction] clickStyle: on click (update) the selected mark should be custom clickStyle and others should have hoverOpacity interactionKey group",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "interaction",
+        "clickStyle with interaction keys",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html interaction clickStyle with interaction keys [interaction] clickStyle: on click (load) the selected mark should be custom clickStyle and others should have hoverOpacity interactionKey value",
+      "location": null,
+      "status": "passed",
+      "title": "[interaction] clickStyle: on click (load) the selected mark should be custom clickStyle and others should have hoverOpacity interactionKey value",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "interaction",
+        "clickStyle with interaction keys",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html interaction clickStyle with interaction keys [interaction] clickStyle: on click (update) the selected mark should be custom clickStyle and others should have hoverOpacity interactionKey value",
+      "location": null,
+      "status": "passed",
+      "title": "[interaction] clickStyle: on click (update) the selected mark should be custom clickStyle and others should have hoverOpacity interactionKey value",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "interaction",
+        "hoverStyle custom with interaction keys",
+      ],
+      "failureMessages": Array [
+        "TypeError: Cannot read property 'childNodes' of null
+    at call (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:5868:84)
+    at step (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:66:23)
+    at Object.next (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:47:53)
+    at fulfilled (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:37:58)
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)",
+      ],
+      "fullName": "<pie-chart> rendered-html interaction hoverStyle custom with interaction keys [interaction] hoverStyle: on hover (load) the mark should be custom hoverStyle and others should have hoverOpacity interactionKey group",
+      "location": null,
+      "status": "failed",
+      "title": "[interaction] hoverStyle: on hover (load) the mark should be custom hoverStyle and others should have hoverOpacity interactionKey group",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "interaction",
+        "hoverStyle custom with interaction keys",
+      ],
+      "failureMessages": Array [
+        "TypeError: Cannot read property 'childNodes' of null
+    at call (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:6031:84)
+    at step (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:66:23)
+    at Object.next (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:47:53)
+    at fulfilled (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:37:58)
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)",
+      ],
+      "fullName": "<pie-chart> rendered-html interaction hoverStyle custom with interaction keys [interaction] hoverStyle: on hover (update) the mark should be custom hoverStyle and others should have hoverOpacity interactionKey group",
+      "location": null,
+      "status": "failed",
+      "title": "[interaction] hoverStyle: on hover (update) the mark should be custom hoverStyle and others should have hoverOpacity interactionKey group",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "interaction",
+        "hoverStyle custom with interaction keys",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html interaction hoverStyle custom with interaction keys [interaction] hoverStyle: on hover (load) the mark should be custom hoverStyle and others should have hoverOpacity interactionKey value",
+      "location": null,
+      "status": "passed",
+      "title": "[interaction] hoverStyle: on hover (load) the mark should be custom hoverStyle and others should have hoverOpacity interactionKey value",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "interaction",
+        "hoverStyle custom with interaction keys",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html interaction hoverStyle custom with interaction keys [interaction] hoverStyle: on hover (update) the mark should be custom hoverStyle and others should have hoverOpacity interactionKey value",
+      "location": null,
+      "status": "passed",
+      "title": "[interaction] hoverStyle: on hover (update) the mark should be custom hoverStyle and others should have hoverOpacity interactionKey value",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "event-emitter",
+        "generic event testing",
+        "pie based events",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html event-emitter generic event testing pie based events [event] suppressEvents: event object should not emit when first mark is clicked and surpress events is true",
+      "location": null,
+      "status": "passed",
+      "title": "[event] suppressEvents: event object should not emit when first mark is clicked and surpress events is true",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "event-emitter",
+        "generic event testing",
+        "pie based events",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html event-emitter generic event testing pie based events [event] clickEvent: event object should emit and contain first data record when first mark is clicked",
+      "location": null,
+      "status": "passed",
+      "title": "[event] clickEvent: event object should emit and contain first data record when first mark is clicked",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "event-emitter",
+        "generic event testing",
+        "pie based events",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html event-emitter generic event testing pie based events [event] hoverEvent: event object should emit and contain first data record when first mark is hovered",
+      "location": null,
+      "status": "passed",
+      "title": "[event] hoverEvent: event object should emit and contain first data record when first mark is hovered",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "event-emitter",
+        "generic event testing",
+        "pie based events",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html event-emitter generic event testing pie based events [event] mouseOutEvent: event object should emit and have undefined data object on mouse out",
+      "location": null,
+      "status": "passed",
+      "title": "[event] mouseOutEvent: event object should emit and have undefined data object on mouse out",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "event-emitter",
+        "generic event testing",
+        "pie based events",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html event-emitter generic event testing pie based events [event] initialLoadEvent: event object should emit and contain uniqueID on initial load",
+      "location": null,
+      "status": "passed",
+      "title": "[event] initialLoadEvent: event object should emit and contain uniqueID on initial load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "event-emitter",
+        "generic event testing",
+        "pie based events",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html event-emitter generic event testing pie based events [event] drawStartEvent: event object should emit and contain uniqueID on initial load",
+      "location": null,
+      "status": "passed",
+      "title": "[event] drawStartEvent: event object should emit and contain uniqueID on initial load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "event-emitter",
+        "generic event testing",
+        "pie based events",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html event-emitter generic event testing pie based events [event] drawEndEvent: event object should emit and contain uniqueID on update",
+      "location": null,
+      "status": "passed",
+      "title": "[event] drawEndEvent: event object should emit and contain uniqueID on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "event-emitter",
+        "generic event testing",
+        "pie based events",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html event-emitter generic event testing pie based events [event] transitionEndEvent: event object should emit and contain uniqueID when transition ends",
+      "location": null,
+      "status": "passed",
+      "title": "[event] transitionEndEvent: event object should emit and contain uniqueID when transition ends",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "data",
+        "uniqueId",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html data uniqueId refer to generic results above for uniqueID tests",
+      "location": null,
+      "status": "passed",
+      "title": "refer to generic results above for uniqueID tests",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "data",
+        "data",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html data data refer to generic results above for data tests",
+      "location": null,
+      "status": "passed",
+      "title": "refer to generic results above for data tests",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "data",
+        "sort",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html data sort should render data in ascending order by default",
+      "location": null,
+      "status": "passed",
+      "title": "should render data in ascending order by default",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "data",
+        "sort",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html data sort should render data in descending order when sortOrder is desc",
+      "location": null,
+      "status": "passed",
+      "title": "should render data in descending order when sortOrder is desc",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "data",
+        "sort",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html data sort should render data in default order when sortOrder is default",
+      "location": null,
+      "status": "passed",
+      "title": "should render data in default order when sortOrder is default",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "labels",
+        "tooltip",
+        "generic tooltip tests",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html labels tooltip generic tooltip tests showTooltip: tooltip should render and have opacity 0 by default on load (before a hover)",
+      "location": null,
+      "status": "passed",
+      "title": "showTooltip: tooltip should render and have opacity 0 by default on load (before a hover)",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "labels",
+        "tooltip",
+        "generic tooltip tests",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html labels tooltip generic tooltip tests showTooltip: tooltip should render and have opacity 1 and be placed on hover",
+      "location": null,
+      "status": "passed",
+      "title": "showTooltip: tooltip should render and have opacity 1 and be placed on hover",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "labels",
+        "tooltip",
+        "generic tooltip tests",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html labels tooltip generic tooltip tests showTooltip: tooltip should not render when event is triggered and showTooltip is false",
+      "location": null,
+      "status": "passed",
+      "title": "showTooltip: tooltip should not render when event is triggered and showTooltip is false",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "labels",
+        "tooltip",
+        "generic tooltip tests",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html labels tooltip generic tooltip tests tooltipLabel: tooltip should render default content on load",
+      "location": null,
+      "status": "passed",
+      "title": "tooltipLabel: tooltip should render default content on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "labels",
+        "tooltip",
+        "generic tooltip tests",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html labels tooltip generic tooltip tests tooltipLabel: tooltip should render custom content on load",
+      "location": null,
+      "status": "passed",
+      "title": "tooltipLabel: tooltip should render custom content on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "labels",
+        "tooltip",
+        "generic tooltip tests",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html labels tooltip generic tooltip tests tooltipLabel: tooltip should render custom content on update",
+      "location": null,
+      "status": "passed",
+      "title": "tooltipLabel: tooltip should render custom content on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "labels",
+        "tooltip",
+        "generic tooltip tests",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html labels tooltip generic tooltip tests tooltipLabel: tooltip should render formatted custom content on load",
+      "location": null,
+      "status": "passed",
+      "title": "tooltipLabel: tooltip should render formatted custom content on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "labels",
+        "tooltip",
+        "generic tooltip tests",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html labels tooltip generic tooltip tests tooltipLabel: tooltip should render formatted custom content on update",
+      "location": null,
+      "status": "passed",
+      "title": "tooltipLabel: tooltip should render formatted custom content on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "labels",
+        "dataLabel",
+        "visible",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html labels dataLabel visible should render dataLabel and dataLabel-note by default",
+      "location": null,
+      "status": "passed",
+      "title": "should render dataLabel and dataLabel-note by default",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "labels",
+        "dataLabel",
+        "visible",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html labels dataLabel visible should not render the pie data and note labels if visible is false",
+      "location": null,
+      "status": "passed",
+      "title": "should not render the pie data and note labels if visible is false",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "labels",
+        "dataLabel",
+        "labelAccessor",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html labels dataLabel labelAccessor should default to the value accessor percentage if default",
+      "location": null,
+      "status": "passed",
+      "title": "should default to the value accessor percentage if default",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "labels",
+        "dataLabel",
+        "labelAccessor",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html labels dataLabel labelAccessor should default to the value accessor if showPercentage false",
+      "location": null,
+      "status": "passed",
+      "title": "should default to the value accessor if showPercentage false",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "labels",
+        "dataLabel",
+        "format",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html labels dataLabel format should format number if passed as prop",
+      "location": null,
+      "status": "passed",
+      "title": "should format number if passed as prop",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "labels",
+        "dataLabel",
+        "placement",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html labels dataLabel placement should place labels outside center of arc by default",
+      "location": null,
+      "status": "passed",
+      "title": "should place labels outside center of arc by default",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "labels",
+        "dataLabel",
+        "placement",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html labels dataLabel placement should place labels on inside of pie arcs if passed",
+      "location": null,
+      "status": "passed",
+      "title": "should place labels on inside of pie arcs if passed",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "labels",
+        "dataLabel",
+        "placement",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html labels dataLabel placement should place labels on edge of pie arcs if passed",
+      "location": null,
+      "status": "passed",
+      "title": "should place labels on edge of pie arcs if passed",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "labels",
+        "dataLabel",
+        "labelOffset",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html labels dataLabel labelOffset should place labels outside center of arc with different offset if passed",
+      "location": null,
+      "status": "passed",
+      "title": "should place labels outside center of arc with different offset if passed",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "reference line",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html reference line should pass referenceLines prop",
+      "location": null,
+      "status": "passed",
+      "title": "should pass referenceLines prop",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "reference line",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html reference line should pass referenceStyle prop",
+      "location": null,
+      "status": "passed",
+      "title": "should pass referenceStyle prop",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "style with textures",
+        "colorPalette",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html style with textures colorPalette should render texture sequential purple by default",
+      "location": null,
+      "status": "passed",
+      "title": "should render texture sequential purple by default",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "style with textures",
+        "colorPalette",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html style with textures colorPalette should load texture single supplement Pink when colorPalette is single_suppPink",
+      "location": null,
+      "status": "passed",
+      "title": "should load texture single supplement Pink when colorPalette is single_suppPink",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "style with textures",
+        "colorPalette",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html style with textures colorPalette should update texture to single supplement Pink when colorPalette is sequential_suppPink",
+      "location": null,
+      "status": "passed",
+      "title": "should update texture to single supplement Pink when colorPalette is sequential_suppPink",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "style with textures",
+        "colorPalette",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html style with textures colorPalette should render categorical textures and color when colorPalette is categorical",
+      "location": null,
+      "status": "passed",
+      "title": "should render categorical textures and color when colorPalette is categorical",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "style with textures",
+        "colors",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html style with textures colors should render colors texture instead of palette when passed",
+      "location": null,
+      "status": "passed",
+      "title": "should render colors texture instead of palette when passed",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "style no textures",
+        "colorPalette",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html style no textures colorPalette should render sequential purple by default",
+      "location": null,
+      "status": "passed",
+      "title": "should render sequential purple by default",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "style no textures",
+        "colorPalette",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html style no textures colorPalette should load single supplement Pink when colorPalette is sequential_suppPink",
+      "location": null,
+      "status": "passed",
+      "title": "should load single supplement Pink when colorPalette is sequential_suppPink",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "style no textures",
+        "colorPalette",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html style no textures colorPalette should update to single supplement Pink when colorPalette is sequential_suppPink",
+      "location": null,
+      "status": "passed",
+      "title": "should update to single supplement Pink when colorPalette is sequential_suppPink",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "style no textures",
+        "colorPalette",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html style no textures colorPalette should render sequential blue when colorPalette is sequential_orange",
+      "location": null,
+      "status": "passed",
+      "title": "should render sequential blue when colorPalette is sequential_orange",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "style no textures",
+        "colorPalette",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html style no textures colorPalette should render categorical color when colorPalette is categorical",
+      "location": null,
+      "status": "passed",
+      "title": "should render categorical color when colorPalette is categorical",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "style no textures",
+        "colors",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html style no textures colors should render colors instead of palette when passed",
+      "location": null,
+      "status": "passed",
+      "title": "should render colors instead of palette when passed",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "style no textures",
+        "cursor",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html style no textures cursor refer to generic interaction results above for cursor tests",
+      "location": null,
+      "status": "passed",
+      "title": "refer to generic interaction results above for cursor tests",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "style other",
+        "innerRatio",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html style other innerRatio should render with innerRatio .7 by default",
+      "location": null,
+      "status": "passed",
+      "title": "should render with innerRatio .7 by default",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "style other",
+        "innerRatio",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html style other innerRatio should render innerRatio of 0 on load",
+      "location": null,
+      "status": "passed",
+      "title": "should render innerRatio of 0 on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "style other",
+        "innerRatio",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html style other innerRatio should render innerRatio of 0.1 on update",
+      "location": null,
+      "status": "pending",
+      "title": "should render innerRatio of 0.1 on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "style other",
+        "showEdgeLine",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html style other showEdgeLine should not render showEdgeLine by default",
+      "location": null,
+      "status": "passed",
+      "title": "should not render showEdgeLine by default",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "style other",
+        "showEdgeLine",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html style other showEdgeLine should render showEdgeLine when passed on load",
+      "location": null,
+      "status": "passed",
+      "title": "should render showEdgeLine when passed on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "style other",
+        "showEdgeLine",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html style other showEdgeLine should render showEdgeLine when passed on update",
+      "location": null,
+      "status": "pending",
+      "title": "should render showEdgeLine when passed on update",
+    },
+  ],
   "scatter-plot": Array [
     Object {
       "ancestorTitles": Array [
@@ -13818,10 +15630,10 @@ Received: [31m\\"visa-viz-margin-container-g-[7mparallel-plot-unit-test[27m\\
 
 Expected: [32m\\"visa-viz-margin-container-g-[7mcustom_unique_id[27m\\"[39m
 Received: [31m\\"visa-viz-margin-container-g-[7mscatter-plot-unit-test[27m\\"[39m
-    at ./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:6237:31
-    at step (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:165:17)
-    at Object.next (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:96:14)
-    at fulfilled (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:50:24)
+    at call (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:4810:39)
+    at step (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:66:23)
+    at Object.next (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:47:53)
+    at fulfilled (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:37:58)
     at processTicksAndRejections (internal/process/task_queues.js:97:5)",
       ],
       "fullName": "<scatter-plot> rendered-html generic test suite uniqueID: custom uniqueID on update",
@@ -16020,10 +17832,10 @@ Received: [31m\\"visa-viz-margin-container-g-[7mscatter-plot-unit-test[27m\\"
 
 Expected: [32m\\"visa-viz-margin-container-g-[7mcustom_unique_id[27m\\"[39m
 Received: [31m\\"visa-viz-margin-container-g-[7mstacked-bar-test[27m\\"[39m
-    at ./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:6237:31
-    at step (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:165:17)
-    at Object.next (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:96:14)
-    at fulfilled (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:50:24)
+    at call (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:4810:39)
+    at step (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:66:23)
+    at Object.next (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:47:53)
+    at fulfilled (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:37:58)
     at processTicksAndRejections (internal/process/task_queues.js:97:5)",
       ],
       "fullName": "<stacked-bar-chart> rendered-html generic test suite uniqueID: custom uniqueID on update",
@@ -18455,10 +20267,20 @@ Received: [31m\\"visa-viz-margin-container-g-[7mstacked-bar-test[27m\\"[39m
         "rendered-html",
         "generic test suite",
       ],
-      "failureMessages": Array [],
+      "failureMessages": Array [
+        "Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoEqual[2m([22m[32mexpected[39m[2m) // deep equality[22m
+
+Expected: [32m\\"visa-viz-margin-container-g-[7mcustom_unique_id[27m\\"[39m
+Received: [31m\\"visa-viz-margin-container-g-[7msnapshot-test-1[27m\\"[39m
+    at call (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:4810:39)
+    at step (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:66:23)
+    at Object.next (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:47:53)
+    at fulfilled (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:37:58)
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)",
+      ],
       "fullName": "<world-map /> rendered-html generic test suite [data] uniqueID: custom uniqueID on update",
       "location": null,
-      "status": "passed",
+      "status": "failed",
       "title": "[data] uniqueID: custom uniqueID on update",
     },
     Object {

@@ -31,6 +31,21 @@
     {
       "type": "node",
       "request": "launch",
+      "name": "Unit Test Pie Chart",
+      "cwd": "${workspaceFolder}/packages/pie-chart",
+      "port": 9229,
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["--inspect-brk"],
+      "program": "${workspaceFolder}/node_modules/.bin/stencil",
+      "args": ["test", "--spec", "--max-workers=1", "${relativeFile}"],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "disableOptimisticBPs": true,
+      "skipFiles": ["${workspaceFolder}/node_modules/**/*.js", "<node_internals>/**/*.js"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
       "name": "Unit Test Clustered Bar Chart",
       "cwd": "${workspaceFolder}/packages/clustered-bar-chart",
       "port": 9229,

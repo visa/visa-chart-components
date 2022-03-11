@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -153,7 +153,7 @@ export class ParallelPlot {
   @Prop({ mutable: true }) secondaryLines: ISecondaryLinesType = ParallelPlotDefaultValues.secondaryLines;
 
   // Interactivity (7/7)
-  @Prop() suppressEvents: boolean = ParallelPlotDefaultValues.suppressEvents;
+  @Prop({ mutable: true }) suppressEvents: boolean = ParallelPlotDefaultValues.suppressEvents;
   @Prop({ mutable: true }) hoverHighlight: object;
   @Prop({ mutable: true }) clickHighlight: object[] = ParallelPlotDefaultValues.clickHighlight;
   @Prop({ mutable: true }) interactionKeys: string[];

@@ -1,7 +1,5 @@
 # @visa/line-chart
 
----
-
 ![An image depicting an example of the default line-chart component](./docs/line-chart-1.png 'Example image of a line chart')
 <br>
 

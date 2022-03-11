@@ -2,6 +2,8 @@
 
 This package wraps [@visa/charts](../charts) web components for use in [R](https://www.r-project.org/), leveraging the [htmlwidgets](https://www.htmlwidgets.org/) R package. You can find visachartR on [CRAN](https://CRAN.R-project.org/package=visachartR), installation steps provided below.
 
+---
+
 ### Installation Steps
 
 - CRAN Version
@@ -12,6 +14,8 @@ This package wraps [@visa/charts](../charts) web components for use in [R](https
   ```
   $ remotes::install_github("visa/visa-chart-components/packages/charts-R")
   ```
+
+---
 
 #### Components with `Ready` status in this bundle
 

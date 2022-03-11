@@ -1,11 +1,14 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2022 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
  *
  **/
 import { Config } from '@stencil/core';
+import { sass } from '@stencil/sass';
+import { reactOutputTarget } from '@stencil/react-output-target';
+import { angularOutputTarget } from '@stencil/angular-output-target';
 
 function external(c = {}) {
   const ext = 'external';
@@ -20,10 +23,39 @@ function external(c = {}) {
 
 export const config: Config | any = {
   namespace: 'charts',
-  outputTargets: [{ type: 'dist' }, { type: 'www' }],
+  buildEs5: 'prod',
+  extras: {
+    cssVarsShim: true,
+    dynamicImportShim: true,
+    safari10: true,
+    shadowDomShim: true,
+    scriptDataOpts: true,
+    appendChildSlotFix: false,
+    cloneNodeFix: false,
+    slotChildNodesFix: true
+  },
+  outputTargets: [
+    reactOutputTarget({
+      componentCorePackage: '@visa/charts',
+      proxiesFile: '../charts-react/src/components/visa-charts.ts',
+      includeDefineCustomElements: true,
+      includePolyfills: true,
+      excludeComponents: ['visa-charts']
+    }),
+    angularOutputTarget({
+      componentCorePackage: '@visa/charts',
+      directivesProxyFile: '../charts-angular/src/lib/directives/visa-charts.ts',
+      excludeComponents: ['visa-charts']
+    }),
+    { type: 'dist' },
+    { type: 'www' }
+  ],
   plugins: [
     external({
       external: ['mapbox-gl']
+    }),
+    sass({
+      injectGlobalPaths: ['scss/objects.scss']
     })
   ],
   commonjs: {

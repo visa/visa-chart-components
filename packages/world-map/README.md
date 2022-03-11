@@ -1,7 +1,5 @@
 # @visa/world-map
 
----
-
 ![An image depicting an example of the default world-map component](./docs/world-map-1.png 'Example image of a world map')
 <br>
 

@@ -1,7 +1,5 @@
 # @visa/stacked-bar-chart
 
----
-
 ![An image depicting an example of the default stacked-bar-chart component](./docs/stacked-bar-chart-1.png 'Example image of a stacked bar chart')
 <br>
 

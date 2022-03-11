@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2022 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -13,19 +13,26 @@ import mapboxgl from 'mapbox-gl';
 
 // tslint:disable-next-line:no-submodule-imports
 import mapboxDraw from '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw';
-import turf from '@turf/turf';
+
+// turf is now available in modules, pull those in specifically instead of all of turf
+import pointsWithinPolygon from '@turf/points-within-polygon';
+import { points, featureCollection } from '@turf/helpers';
+import bbox from '@turf/bbox';
+import simplify from '@turf/simplify';
+import bboxPolygon from '@turf/bbox-polygon';
+
+// d3 imports
 import { select } from 'd3-selection';
 import { scaleQuantile } from 'd3-scale';
 import { extent, range } from 'd3-array';
 import { hsl } from 'd3-color';
 
 import Utils from '@visa/visa-charts-utils';
-const { pointsWithinPolygon, bbox, points, simplify } = turf;
 const { formatDate, formatStats, /*mapButtons,*/ getLicenses } = Utils;
 
 @Component({
   tag: 'bivariate-mapbox-map',
-  styleUrls: ['bivariate-mapbox-map.scss', '../../../node_modules/mapbox-gl/dist/mapbox-gl.css', 'mapbox-gl-draw.css']
+  styleUrl: 'bivariate-mapbox-map.scss'
 })
 export class BivariateMapboxMap implements IBivariateMapboxMapProps {
   @Prop({ mutable: true }) height: any = 600;
@@ -2147,9 +2154,9 @@ export class BivariateMapboxMap implements IBivariateMapboxMapProps {
   processBounds = () => {
     const boxes = [];
     this.fitBounds.forEach(box => {
-      boxes.push(turf.bboxPolygon(box));
+      boxes.push(bboxPolygon(box));
     });
-    const inputBounds = this.buildBounds(turf.featureCollection(boxes));
+    const inputBounds = this.buildBounds(featureCollection(boxes));
     this.resetBounds(boxes.length ? inputBounds : []);
   };
 

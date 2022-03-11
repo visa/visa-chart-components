@@ -1,7 +1,5 @@
 # @visa/scatter-plot
 
----
-
 ![An image depicting an example of the default scatter-plot component](./docs/scatter-plot-1.png 'Example image of a scatter plot')
 <br>
 

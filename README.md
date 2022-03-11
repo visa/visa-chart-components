@@ -149,6 +149,7 @@ You can find license information for all dependencies included in our build [her
 - [numeral.js](http://numeraljs.com/)
 - [node-uuid](https://github.com/uuidjs/uuid)
 - [vega-label](https://github.com/vega/vega-label)
+- [storybook](https://storybook.js.org/)
 
 This project was/is built with tireless efforts from:
 
