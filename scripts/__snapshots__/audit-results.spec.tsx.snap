@@ -41,10 +41,10 @@ Object {
   "bivariate-mapbox-map": Array [
     Object {
       "data": Object {
-        "dependencies": 315,
+        "dependencies": 174,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 315,
+        "totalDependencies": 174,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -58,15 +58,11 @@ Object {
   ],
   "charts": Array [
     Object {
-      "data": "No lockfile found.",
-      "type": "info",
-    },
-    Object {
       "data": Object {
-        "dependencies": 134,
+        "dependencies": 159,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 134,
+        "totalDependencies": 159,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -81,10 +77,10 @@ Object {
   "charts-angular": Array [
     Object {
       "data": Object {
-        "dependencies": 1827,
+        "dependencies": 1341,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 1827,
+        "totalDependencies": 1341,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -99,10 +95,10 @@ Object {
   "charts-react": Array [
     Object {
       "data": Object {
-        "dependencies": 350,
+        "dependencies": 157,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 350,
+        "totalDependencies": 157,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -265,10 +261,10 @@ Object {
   "pie-chart": Array [
     Object {
       "data": Object {
-        "dependencies": 110,
+        "dependencies": 111,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 110,
+        "totalDependencies": 111,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -334,14 +330,31 @@ Object {
       "type": "auditSummary",
     },
   ],
-  "utils": Array [],
+  "utils": Array [
+    Object {
+      "data": Object {
+        "dependencies": 194,
+        "devDependencies": 0,
+        "optionalDependencies": 0,
+        "totalDependencies": 194,
+        "vulnerabilities": Object {
+          "critical": 0,
+          "high": 0,
+          "info": 0,
+          "low": 0,
+          "moderate": 0,
+        },
+      },
+      "type": "auditSummary",
+    },
+  ],
   "utils-dev": Array [
     Object {
       "data": Object {
-        "dependencies": 200,
+        "dependencies": 204,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 200,
+        "totalDependencies": 204,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -356,10 +369,10 @@ Object {
   "visa-chart-components": Array [
     Object {
       "data": Object {
-        "dependencies": 1486,
+        "dependencies": 2428,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 1486,
+        "totalDependencies": 2428,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -374,10 +387,10 @@ Object {
   "world-map": Array [
     Object {
       "data": Object {
-        "dependencies": 128,
+        "dependencies": 122,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 128,
+        "totalDependencies": 122,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
