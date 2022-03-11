@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -964,7 +964,7 @@ export const accessibility_controller_initialize = {
     expect(rootSVG).toEqualAttribute('role', 'presentation');
     expect(rootSVG).toEqualAttribute('focusable', false);
     expect(rootSVG).toEqualAttribute('tabindex', -1);
-    expect(rootSVG).toEqualAttribute('style', 'overflow: hidden;');
+    expect(rootSVG['style'].getPropertyValue('overflow')).toEqual('hidden');
     expect(rootSVG['__on']).toBeTruthy();
     expect(rootSVG['__on'].length).toBeGreaterThanOrEqual(1);
     const focusObject = rootSVG['__on'].find(o => o.type === 'focus');

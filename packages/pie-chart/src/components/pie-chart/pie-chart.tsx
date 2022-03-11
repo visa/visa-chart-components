@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -136,10 +136,14 @@ export class PieChart {
   @Prop() referenceData: object[];
 
   // Interactivity (7/7)
-  @Prop() suppressEvents: boolean = PieChartDefaultValues.suppressEvents;
+  @Prop({ mutable: true }) suppressEvents: boolean = PieChartDefaultValues.suppressEvents;
   @Prop({ mutable: true }) hoverHighlight: object;
   @Prop({ mutable: true }) clickHighlight: object[] = PieChartDefaultValues.clickHighlight;
   @Prop({ mutable: true }) interactionKeys: string[];
+
+  // Testing (8/7)
+  @Prop() unitTest: boolean = false;
+  //  @Prop() debugMode: boolean = false;
 
   @Element()
   pieChartEl: HTMLElement;
@@ -194,6 +198,7 @@ export class PieChart {
   labelsCurrent: any;
   labelG: any;
   tooltipG: any;
+  references: any;
   refLabelG: any;
   refLabelsCurrent: any;
   labelsCurrentNotes: any;
@@ -223,6 +228,7 @@ export class PieChart {
   shouldUpdateReferenceLines: boolean = false;
   shouldValidateInteractionKeys: boolean = false;
   shouldSetGlobalSelections: boolean = false;
+  shouldSetTestingAttributes: boolean = false;
   shouldEnterUpdateExit: boolean = false;
   shouldBindInteractivity: boolean = false;
   shouldSetSelectionClass: boolean = false;
@@ -316,6 +322,7 @@ export class PieChart {
     this.updated = true;
     this.shouldUpdateData = true;
     this.shouldSetGlobalSelections = true;
+    this.shouldSetTestingAttributes = true;
     this.shouldEnterUpdateExit = true;
     this.shouldDrawInteractionState = true;
     this.shouldUpdateTableData = true;
@@ -390,6 +397,7 @@ export class PieChart {
     this.updated = true;
     this.shouldUpdateData = true;
     this.shouldSetGlobalSelections = true;
+    this.shouldSetTestingAttributes = true;
     this.shouldEnterUpdateExit = true;
     this.shouldDrawInteractionState = true;
     this.shouldUpdateTableData = true;
@@ -677,6 +685,11 @@ export class PieChart {
     this.shouldUpdateTableData = true;
   }
 
+  @Watch('unitTest')
+  unitTestWatcher(_newVal, _oldVal) {
+    this.shouldSetTestingAttributes = true;
+  }
+
   componentWillLoad() {
     const chartID = this.uniqueID || 'pie-chart-' + uuid();
     this.initialLoadEvent.emit({ chartID: chartID });
@@ -729,6 +742,7 @@ export class PieChart {
       this.setTextures();
       this.setStrokes();
       this.setGlobalSelections();
+      this.setTestingAttributes();
       this.setColors();
       this.setInnerRatio();
       this.enterGeometries();
@@ -831,6 +845,10 @@ export class PieChart {
       if (this.shouldSetGlobalSelections) {
         this.setGlobalSelections();
         this.shouldSetGlobalSelections = false;
+      }
+      if (this.shouldSetTestingAttributes) {
+        this.setTestingAttributes();
+        this.shouldSetTestingAttributes = false;
       }
       if (this.shouldEnterUpdateExit) {
         this.enterGeometries();
@@ -1066,6 +1084,80 @@ export class PieChart {
     this.innerRatio = this.innerRatio === 0 || this.innerRatio ? this.innerRatio : PieChartDefaultValues.innerRatio;
   }
 
+  setTestingAttributes() {
+    if (this.unitTest) {
+      select(this.pieChartEl)
+        .select('.visa-viz-d3-pie-container')
+        .attr('data-testid', 'chart-container');
+      select(this.pieChartEl)
+        .select('.pie-main-title')
+        .attr('data-testid', 'main-title');
+      select(this.pieChartEl)
+        .select('.pie-sub-title')
+        .attr('data-testid', 'sub-title');
+      this.svg.attr('data-testid', 'root-svg');
+      this.root.attr('data-testid', 'margin-container');
+      this.rootG.attr('data-testid', 'padding-container');
+      // this.legendG.attr('data-testid', 'legend-container'); // pie does not have a legend yet?
+      this.tooltipG.attr('data-testid', 'tooltip-container');
+      this.pieG.attr('data-testid', 'pie-group');
+      this.labelG.attr('data-testid', 'dataLabel-group');
+      this.refLabelG.attr('data-testid', 'refDataLabel-group');
+      this.edgeG.attr('data-testid', 'edgeLine-group');
+      this.rootG.select('.pie-center-title-group').attr('data-testid', 'centerTitle-group');
+      this.svg.select('defs').attr('data-testid', 'pattern-defs');
+
+      this.updatingLabels.attr('data-testid', 'dataLabel').attr('data-id', d => `label-${d[this.ordinalAccessor]}`);
+      this.updatingLabelsNotes
+        .attr('data-testid', 'dataLabel-note')
+        .attr('data-id', d => `label-note-${d[this.ordinalAccessor]}`);
+      this.updatingEdges
+        .attr('data-testid', 'pie-edge-line')
+        .attr('data-id', d => `pie-edge-line-${d[this.ordinalAccessor]}`);
+      this.update.attr('data-testid', 'pie').attr('data-id', d => `pie-${d[this.ordinalAccessor]}`);
+
+      // reference lines do not have global selections
+      this.references.selectAll('.arc-ref').attr('data-testid', 'reference-arc-line');
+      this.updatingRefLabels
+        .attr('data-testid', 'refDataLabel')
+        .attr('data-id', d => `ref-label-${d[this.ordinalAccessor]}`);
+      this.updatingRefLabelsNotes
+        .attr('data-testid', 'refDataLabel-note')
+        .attr('data-id', d => `ref-label-note-${d[this.ordinalAccessor]}`);
+    } else {
+      select(this.pieChartEl)
+        .select('.visa-viz-d3-pie-container')
+        .attr('data-testid', null);
+      select(this.pieChartEl)
+        .select('.pie-main-title')
+        .attr('data-testid', null);
+      select(this.pieChartEl)
+        .select('.pie-sub-title')
+        .attr('data-testid', null);
+      this.svg.attr('data-testid', null);
+      this.root.attr('data-testid', null);
+      this.rootG.attr('data-testid', null);
+      // this.legendG.attr('data-testid', null); //  pie does not have a legend yet?
+      this.tooltipG.attr('data-testid', null);
+      this.pieG.attr('data-testid', null);
+      this.labelG.attr('data-testid', null);
+      this.refLabelG.attr('data-testid', null);
+      this.edgeG.attr('data-testid', null);
+      this.rootG.select('.pie-center-title-group').attr('data-testid', null);
+      this.svg.select('defs').attr('data-testid', null);
+
+      this.updatingLabels.attr('data-testid', null).attr('data-id', null);
+      this.updatingLabelsNotes.attr('data-testid', null).attr('data-id', null);
+      this.updatingEdges.attr('data-testid', null).attr('data-id', null);
+      this.update.attr('data-testid', null).attr('data-id', null);
+
+      // reference lines do not have global selections
+      this.references.selectAll('.arc-ref').attr('data-testid', null);
+      this.updatingRefLabels.attr('data-testid', null).attr('data-id', null);
+      this.updatingRefLabelsNotes.attr('data-testid', null).attr('data-id', null);
+    }
+  }
+
   renderRootElements() {
     this.svg = select(this.pieChartEl)
       .select('.visa-viz-d3-pie-container')
@@ -1088,6 +1180,8 @@ export class PieChart {
     this.edgeG = this.rootG.append('g').attr('class', 'pie-edge-line-group');
 
     this.tooltipG = select(this.pieChartEl).select('.pie-tooltip');
+
+    this.references = this.rootG.append('g').attr('class', 'pie-reference-line-group');
   }
 
   reSetRoot() {
@@ -1618,7 +1712,7 @@ export class PieChart {
   }
 
   drawReferenceLines() {
-    const currentRefPie = this.pieG.selectAll('.arc-ref').data(this.refData);
+    const currentRefPie = this.references.selectAll('.arc-ref').data(this.refData);
     const enterRefPie = currentRefPie
       .enter()
       .append('path')
@@ -1661,6 +1755,7 @@ export class PieChart {
 
     this.updateRefPie
       .attr('opacity', this.referenceStyle.opacity)
+      .attr('stroke-dasharray', this.referenceStyle.dashed)
       .transition('update')
       .duration(this.duration)
       .ease(easeCircleIn)
@@ -2325,6 +2420,7 @@ export class PieChart {
       title: this.accessibility.title || this.mainTitle,
       chartTag: 'pie-chart',
       uniqueID: this.chartID,
+      highestHeadingLevel: this.highestHeadingLevel,
       redraw: this.shouldRedrawWrapper,
       disableKeyNav:
         this.suppressEvents &&
@@ -2594,8 +2690,8 @@ export class PieChart {
     return (
       <div class="o-layout is--vertical">
         <div class="o-layout--chart">
-          <this.topLevel data-testid="main-title">{this.mainTitle}</this.topLevel>
-          <this.bottomLevel class="visa-ui-text--instructions" data-testid="sub-title">
+          <this.topLevel class="pie-main-title vcl-main-title">{this.mainTitle}</this.topLevel>
+          <this.bottomLevel class="visa-ui-text--instructions pie-sub-title vcl-sub-title">
             {this.subTitle}
           </this.bottomLevel>
           <keyboard-instructions
@@ -2623,6 +2719,7 @@ export class PieChart {
             padding={this.padding}
             margin={this.margin}
             hideDataTable={this.accessibility.hideDataTableButton}
+            unitTest={this.unitTest}
           />
         </div>
         {/* <canvas id="bitmap-render" /> */}
