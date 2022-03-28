@@ -159,8 +159,7 @@
   },
   "lint-staged": {
     "*": [
-      "prettier --config ./.prettierrc --write",
-      "git add"
+      "prettier --config ./.prettierrc --write"
     ]
   },
   "jest": {
