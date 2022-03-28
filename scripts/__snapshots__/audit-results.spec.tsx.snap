@@ -369,10 +369,10 @@ Object {
   "visa-chart-components": Array [
     Object {
       "data": Object {
-        "dependencies": 2428,
+        "dependencies": 2390,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 2428,
+        "totalDependencies": 2390,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,

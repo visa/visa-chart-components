@@ -50,6 +50,7 @@
     "typescript": "^3.9.10"
   },
   "resolutions": {
+    "minimist": "^1.2.6",
     "path-parse": "^1.0.7"
   },
   "files": [

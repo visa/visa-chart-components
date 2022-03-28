@@ -68,7 +68,7 @@
     "d3-interpolate": "1.4.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.16.12",
+    "@babel/core": "^7.17.8",
     "@commitlint/cli": "11.0.0",
     "@commitlint/config-conventional": "11.0.0",
     "@stencil/angular-output-target": "0.4.0",
@@ -101,7 +101,7 @@
     "jest-cli": "27.4.5",
     "jest-html-reporter": "3.4.2",
     "lerna": "4.0.0",
-    "lint-staged": "8.1.4",
+    "lint-staged": "^12.3.7",
     "npm-ls-scripts": "0.1.2",
     "npm-run-all": "4.1.5",
     "npmlog": "4.1.2",
@@ -120,6 +120,7 @@
     "glob-parent": "^5.1.2",
     "highlight.js": "^10.4.1",
     "hosted-git-info": "^2.8.9",
+    "minimist": "^1.2.6",
     "node-notifier": "^8.0.1",
     "path-parse": "^1.0.7",
     "prismjs": "^1.27.0",
