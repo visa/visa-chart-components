@@ -59,9 +59,10 @@
     "ls-commit-types": "./node_modules/.bin/conventional-commit-types",
     "oss-delete-changelog": "node ./scripts/delete-changelogs-for-oss.js",
     "storybook": "RENDER_PATH=local start-storybook --port 6006",
-    "build-storybook-gh": "RENDER_PATH=local build-storybook",
+    "build-storybook-gh": "RENDER_PATH=local build-storybook -o storybook",
     "build-storybook": "RENDER_PATH=/storybook/ build-storybook -o storybook --preview-url=/storybook/iframe.html --force-build-preview",
     "build-storybook-simple": "build-storybook",
+    "deploy-storybook-gh": "gh-pages -d storybook",
     "oss-file-copy": "node scripts/oss-move-files.js"
   },
   "dependencies": {
@@ -92,6 +93,7 @@
     "commander": "4.0.1",
     "conventional-commit-types-cli": "1.0.3",
     "es-check": "5.2.0",
+    "gh-pages": "^3.2.3",
     "husky": "1.3.1",
     "inquirer": "7.0.1",
     "istanbul-lib-coverage": "3.2.0",
