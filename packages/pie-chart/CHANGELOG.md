@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.1.0](https://github.com/visa/visa-chart-components/compare/@visa/pie-chart@5.0.1...@visa/pie-chart@5.1.0) (2022-03-29)
+
+
+### Bug Fixes
+
+* bump util, type dependencies, pie-chart tests, unused a11y description fix ([5899037](https://github.com/visa/visa-chart-components/commit/5899037a074a4cec4112a4a8a8d78e598fdcf458))
+
+
+### Features
+
+* major bump of stencil, bump other deps as well, add storybook demo app ([70719eb](https://github.com/visa/visa-chart-components/commit/70719ebc7fa59dc169bcc7fea62b238bcfab6418))
+
+
+
+
+
 ## [5.0.1](https://github.com/visa/visa-chart-components/compare/@visa/pie-chart@5.0.0...@visa/pie-chart@5.0.1) (2022-02-04)
 
 **Note:** Version bump only for package @visa/pie-chart

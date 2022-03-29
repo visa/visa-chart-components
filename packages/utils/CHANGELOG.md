@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.6.1](https://github.com/visa/visa-chart-components/compare/@visa/visa-charts-utils@4.6.0...@visa/visa-charts-utils@4.6.1) (2022-03-29)
+
+
+### Bug Fixes
+
+* alluvial-diagram missing freq in data table fix ([b90ba7f](https://github.com/visa/visa-chart-components/commit/b90ba7f95a0e387f5018381b1de6b34c3dc95f3f))
+* bump dependencies to recent security vuln notices ([8749b9b](https://github.com/visa/visa-chart-components/commit/8749b9b11aeba92ecf39fc36251cdcb8844a7a46))
+* bump util, type dependencies, pie-chart tests, unused a11y description fix ([5899037](https://github.com/visa/visa-chart-components/commit/5899037a074a4cec4112a4a8a8d78e598fdcf458))
+
+
+
+
+
 # [4.6.0](https://github.com/visa/visa-chart-components/compare/@visa/visa-charts-utils@4.5.2...@visa/visa-charts-utils@4.6.0) (2022-02-04)
 
 
