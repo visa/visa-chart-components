@@ -3,11 +3,11 @@
   "version": "5.0.1",
   "description": "heat-map component",
   "license": "SEE LICENCE IN LICENSE",
-  "module": "dist/index.mjs",
-  "main": "dist/index.js",
-  "es2015": "dist/esm/index.mjs.js",
-  "es2017": "dist/esm/index.mjs.js",
-  "jsnext:main": "dist/esm/index.mjs.js",
+  "module": "dist/index.js",
+  "main": "dist/index.cjs.js",
+  "es2015": "dist/esm/index.js",
+  "es2017": "dist/esm/index.js",
+  "jsnext:main": "dist/esm/index.js",
   "unpkg": "dist/heat-map.js",
   "types": "dist/types/components.d.ts",
   "collection": "dist/collection/collection-manifest.json",
@@ -21,7 +21,7 @@
     "start-dev": "stencil build --dev --watch --serve",
     "watch": "chokidar -d=4  '**/*.{tsx,ts,scss}' 'node_modules/@visa/visa-charts-utils/src' -i '/^src/(.*)/*.(d|spec|test|e2e).ts$|dist/(.*)/' -c 'npm run build'",
     "tslint-check": "tslint-config-prettier-check ./tslint.json",
-    "test:es5-check": "es-check es5 'dist/*.js'"
+    "test:es5-check": "es-check es5 'dist/index.cjs.js' 'dist/loader/index.cjs.js'"
   },
   "repository": {
     "type": "git",
@@ -39,9 +39,9 @@
     "@visa/visa-charts-utils": "^4.6.0",
     "d3-array": "^1.2.4",
     "d3-scale": "^2.2.2",
-    "d3-selection": "^1.4.0",
+    "d3-selection": "^1.4.2",
     "d3-transition": "1.1.3",
-    "uuid": "7.0.0"
+    "uuid": "8.3.2"
   },
   "devDependencies": {
     "@visa/visa-charts-utils-dev": "^3.3.12"

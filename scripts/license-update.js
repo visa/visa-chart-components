@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -11,13 +11,14 @@ const fs = require('fs');
 const git = require('simple-git/promise');
 
 const ossFirstCommitDate = '2020-12-10'; // the week of initial release of OSS on GH
-const defaultYearDate = '2021-12-10'; // each year this needs to be set to the new year
+const defaultYearDate = '2022-12-10'; // each year this needs to be set to the new year
 const parentLicenseFile = glob.sync(path.join(__dirname, '..') + '/LICENSE', {});
 const parentLicenseHeaderFile = glob.sync(path.join(__dirname, '..') + '/LICENSE HEADER', {});
 const tsFileExclusions = [
   '/**/*.d.ts', // auto-generated type files
   '/**/*.json', // license header breaks json files
   '/**/__snapshots__/**', // auto-generated testing snapshots
+  '/**/node_modules/**', // ensure node modules is not included
   '/**/charts-angular/src/directives/**', // auto-generated angular directives/components
   '/**/charts-react/src/components/**' // auto-generated react components and utilities
 ];
@@ -41,8 +42,8 @@ const parentHeaderFileContent = fs
 const parentHeaderFileHTMLContent = fs
   .readFileSync(parentLicenseHeaderFile[0])
   .toString()
-  .replace('/**', '<!--/**')
-  .replace('**/', '**/-->')
+  .replace('/**', '<!--')
+  .replace('**/', '-->')
   .split('\n');
 
 const parentHeaderFileRContent = fs
@@ -80,11 +81,13 @@ licenseFiles.forEach(function(file) {
 const tsFiles = [
   ...glob.sync(path.join(__dirname, '..', 'packages/*/src') + '/**/*.ts*', { ignore: tsFileExclusions }), // all ts and tsx files in package/src directories
   ...glob.sync(path.join(__dirname, '..', 'packages/*/src') + '/**/*.js*', { ignore: tsFileExclusions }), // all js and jsx files in package/src directories
+  ...glob.sync(path.join(__dirname, '..', 'packages/*/docs') + '/**/*.js*', { ignore: tsFileExclusions }), // all js and jsx files in package/src directories
   ...glob.sync(path.join(__dirname, '..', 'packages/*') + '/stencil.config.ts', {}), // all stencil config files in pakages
   ...glob.sync(path.join(__dirname, '..', 'packages/*/src') + '/**/*.*ss', {}), // all scss files in package/src directories
   ...glob.sync(path.join(__dirname, '..', 'packages/charts-R/inst/htmlwidgets') + '/**/*.js', {}), // @visa/charts compiled code in charts-R
   ...glob.sync(path.join(__dirname, '..', 'scripts') + '/*.js', {}), // all node scripts in the root
-  ...glob.sync(path.join(__dirname, '..') + '/*.js', {}) // all js config files in the root
+  ...glob.sync(path.join(__dirname, '..') + '/*.js', {}), // all js config files in the root
+  ...glob.sync(path.join(__dirname, '..', '.storybook') + '/**/*.js', { ignore: tsFileExclusions }) // all storybook js files
 ];
 tsFiles.forEach(function(file) {
   try {
@@ -167,7 +170,12 @@ tsFiles.forEach(function(file) {
 });
 
 // now we update html files as they have different comment syntax
-const htmlFiles = glob.sync(path.join(__dirname, '..', 'packages/*/src') + '/**/*.html', {});
+const htmlFiles = [
+  ...glob.sync(path.join(__dirname, '..', 'packages/*/') + '/**/*.html', { ignore: tsFileExclusions }),
+  ...glob.sync(path.join(__dirname, '..', '.storybook') + '/**/*.html', {}),
+  ...glob.sync(path.join(__dirname, '..', 'packages/*/docs') + '/**/*.mdx', { ignore: tsFileExclusions }), // all storybook related mdx files
+  ...glob.sync(path.join(__dirname, '..', 'stories') + '/**/*.mdx', { ignore: tsFileExclusions }) // all storybook related mdx files
+];
 htmlFiles.forEach(function(file) {
   try {
     let lastHeaderLine = 0;
@@ -180,12 +188,12 @@ htmlFiles.forEach(function(file) {
 
     // check if we have written license before (starts with /**)
     headerExists =
-      fileContent[0].trim().substr(0, 7) === '<!--/**' && fileContent[1].trim().substr(0, 11) === '* Copyright';
+      fileContent[0].trim().substr(0, 7) === '<!--' && fileContent[1].trim().substr(0, 11) === '* Copyright';
 
     if (headerExists) {
       // remove existing header
       for (i = 0; i <= fileContent.length; i++) {
-        if (fileContent[i].trim() === '**/-->') {
+        if (fileContent[i].trim() === '-->') {
           lastHeaderLine = i + 1;
           break;
         }

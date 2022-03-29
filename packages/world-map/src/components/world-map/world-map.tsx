@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -12,7 +12,7 @@ import { scalePow, scaleQuantize, scaleOrdinal } from 'd3-scale';
 import { easeCircleIn } from 'd3-ease';
 import { nest } from 'd3-collection';
 import * as geo from 'd3-geo';
-import * as topojson from 'topojson';
+import { feature } from 'topojson-client';
 import worldData from './topodata';
 import worldSmall from './topodata-small';
 import { d3Projections } from './world-map-projections';
@@ -151,7 +151,7 @@ export class WorldMap {
   @Prop({ mutable: true }) hoverHighlight: object;
   @Prop({ mutable: true }) clickHighlight: object[] = WorldMapDefaultValues.clickHighlight;
   @Prop({ mutable: true }) interactionKeys: string[];
-  @Prop() suppressEvents: boolean = WorldMapDefaultValues.suppressEvents;
+  @Prop({ mutable: true }) suppressEvents: boolean = WorldMapDefaultValues.suppressEvents;
 
   // Testing (8/7)
   @Prop() unitTest: boolean = false;
@@ -700,7 +700,10 @@ export class WorldMap {
   idWatcher(_newVal, _oldVal) {
     this.chartID = _newVal || 'world-map-' + uuid();
     this.worldMapEl.id = this.chartID;
-    this.shouldUpdateRootIDs = true;
+    // removed this boolean flip due to watcher issue after stencil upgrade
+    // we will be disabling any update on uniqueID going forward as well
+    // so this is inline with our planned future state for this prop.
+    // this.shouldUpdateRootIDs = true;
     this.shouldValidate = true;
     this.shouldUpdateDescriptionWrapper = true;
     this.shouldSetParentSVGAccessibility = true;
@@ -1538,11 +1541,11 @@ export class WorldMap {
   setMapFeatureQuality() {
     if (this.quality === 'Low' || this.quality === 'low') {
       // first step in drawing paths is to set up the join function
-      this.features = topojson.feature(worldSmall, worldSmall.objects.collection).features;
+      this.features = feature(worldSmall, worldSmall.objects.collection).features;
       this.features.map(feature => (feature.id = feature.properties.ISO_N3)); // add feature id cause it was bugging me
     } else {
       // first step in drawing paths is to set up the join function
-      this.features = topojson.feature(worldData, worldData.objects.collection).features;
+      this.features = feature(worldData, worldData.objects.collection).features;
       this.features.map(feature => (feature.id = feature.properties.ISO_N3)); // add feature id cause it was bugging me
     }
   }

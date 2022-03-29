@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -61,8 +61,8 @@ export const accessorFormats = {
   ]
 };
 export const orderColumns = {
-  'alluvial-diagram': ['sourceAccessor', 'targetAccessor', 'groupAccessor', 'valueAccessor'],
-  'alluvial-diagram-secondary-table': ['nodeIDAccessor', 'labelAccessor', 'valueAccessor'],
+  'alluvial-diagram': ['nodeIDAccessor', 'labelAccessor', 'valueAccessor'],
+  'alluvial-diagram-secondary-table': ['sourceAccessor', 'targetAccessor', 'groupAccessor', 'valueAccessor'],
   'bar-chart': ['ordinalAccessor', 'valueAccessor', 'groupAccessor'],
   'clustered-bar-chart': ['groupAccessor', 'ordinalAccessor', 'valueAccessor'],
   'stacked-bar-chart': ['groupAccessor', 'ordinalAccessor', 'valueAccessor'],
@@ -94,7 +94,7 @@ export const chartAccessors = {
     'parentAccessor',
     'groupAccessor',
     'seriesAccessor',
-    'filterAccessor',
+    // 'nodeIDAccessor',
     'sourceAccessor',
     'targetAccessor'
   ],

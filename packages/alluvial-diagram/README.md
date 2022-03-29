@@ -1,7 +1,5 @@
 # @visa/alluvial-diagram
 
----
-
 ![An image depicting an example of the default alluvial-diagram component](./docs/alluvial-diagram-1.png 'Example image of an alluvial diagram')
 <br>
 

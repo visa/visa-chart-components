@@ -4,7 +4,7 @@
 
 This component is an experimental prototype and undergoing more work. It has not been fully tested to the extent that [core, product-grade Visa Chart Components](../charts) have been. Functionality is likely to change and some or many features may be even be deprecated.
 
-<hr/>
+---
 
 ## Description
 

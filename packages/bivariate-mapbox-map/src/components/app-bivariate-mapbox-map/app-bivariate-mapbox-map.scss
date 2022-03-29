@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -12,7 +12,7 @@
     padding: 3rem 6.25rem;
   }
 
-  button {
+  .button-group button {
     border-radius: 5px;
     padding: 8px;
     margin: 2px;
@@ -74,91 +74,6 @@
     flex: 0 0 66.66%;
     max-width: 66.66%;
     padding: var(--theme-grid-col-padding, 6px 10px);
-  }
-
-  .card {
-    border-radius: 0px;
-  }
-  .card-header {
-    height: 70px;
-  }
-  .card-body {
-    padding: 50px;
-  }
-  .demo-input {
-    width: 100%;
-    justify-content: space-evenly;
-    .demo-input-variables {
-      margin-right: 20px;
-    }
-    button {
-      max-width: 300px;
-      min-width: 75px;
-      width: auto;
-      height: 32.47px;
-    }
-    .dropdown {
-      margin: 20px;
-    }
-    .dropdown-menu {
-      max-height: 200px;
-      overflow-y: scroll;
-      overflow-x: hidden;
-    }
-  }
-  .modal-body {
-    word-wrap: break-word;
-    white-space: pre-line;
-  }
-  h1 {
-    color: #1e237e;
-    font-size: 2.28571rem;
-    font-weight: 300;
-    letter-spacing: 0.01429rem;
-    margin: 1.42857rem 0rem 1.07143rem 0rem;
-    text-transform: capitalize;
-  }
-  h2 {
-    color: #003ea9;
-    font-family: OpenSans, sans-serif;
-    font-size: 1.71429rem;
-    font-weight: 300;
-    letter-spacing: 0.01429rem;
-    margin: 1.21429rem 0rem 0.85714rem 0rem;
-    text-transform: none;
-  }
-  h3 {
-    color: #565656;
-    font-family: OpenSans, sans-serif;
-    font-size: 1.42857rem;
-    font-weight: 700;
-    letter-spacing: 0rem;
-    margin: 0.71429rem 0rem 0.35714rem 0rem;
-    text-transform: none;
-  }
-  h4,
-  h5,
-  h6 {
-    color: #565656;
-    font-family: OpenSans, sans-serif;
-    font-size: 1rem;
-    font-weight: 700;
-    letter-spacing: 0rem;
-    line-height: 1.42857rem;
-  }
-  .visa-ui-text--body {
-    color: #565656;
-    font-family: OpenSans, sans-serif;
-    font-size: 1em;
-    font-weight: 500;
-    line-height: 1.78571rem;
-  }
-  .visa-ui-text--instructions {
-    color: #57587d;
-    font-family: OpenSans, sans-serif;
-    font-size: 1em;
-    font-weight: 500;
-    line-height: 1.57143rem;
   }
   .sparkline {
     display: inline-block;

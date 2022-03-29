@@ -1,0 +1,160 @@
+<!--
+ * Copyright (c) 2022 Visa, Inc.
+ *
+ * This source code is licensed under the MIT license
+ * https://github.com/visa/visa-chart-components/blob/master/LICENSE
+ *
+ -->
+
+import { Meta } from '@storybook/addon-docs';
+import VCC from './assets/vcc2.png';
+
+<Meta title="Introduction" />
+
+<style>{`
+  .sbdocs-wrapper {
+    min-height: unset !important;
+  }
+  
+  .subheading {
+    --mediumdark: '#999999';
+    font-weight: 900;
+    font-size: 13px;
+    color: #777;
+    letter-spacing: 3px;
+    line-height: 24px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    margin-top: 40px;
+  }
+
+  .link-list {
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 10px;
+    max-width: 700px;
+    padding: 0;
+  }
+
+  @media (min-width: 620px) {
+    .link-list {
+      row-gap: 20px;
+      column-gap: 20px;
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media all and (-ms-high-contrast:none) {
+  .link-list {
+      display: -ms-grid;
+      -ms-grid-columns: 1fr 1fr;
+      -ms-grid-rows: 1fr 1fr;
+    }
+  }
+
+  .link-item {
+    display: block;
+    padding: 20px 30px 20px 15px;
+    box-shadow: 0 0 4px #797979;
+    border-radius: 4px;
+    transition: background 150ms ease-out, border 150ms ease-out, transform 150ms ease-out;
+    color: #333333;
+    display: flex;
+    align-items: flex-start;
+    min-height: 100px;
+  }
+
+  .link-item strong {
+    font-weight: 700;
+    display: block;
+    margin-bottom: 10px;
+    font-size: 15px;
+  }
+  
+  .link-item img {
+    height: 40px;
+    width: 40px;
+    margin-right: 15px;
+    flex: none;
+  }
+
+  .link-item span {
+    font-size: 14px;
+    line-height: 22px;
+    font-weight: 400;
+  }
+
+  .intro {
+    display: flex;
+    justify-content: flex-start;
+    padding-bottom: 30px;
+  }
+
+  .intro-text {
+    text-align: left;
+    padding-bottom: 0px;
+    font-size: 20px;
+    font-weight: 300;
+    max-width: 700px;
+  }
+`}</style>
+
+<div className="intro-container">
+  <h1>Visa Chart Components</h1>
+  <div className="intro">
+    <img
+      src={VCC}
+      id="mainImg"
+      width="700"
+      alt="Image of circle packing and clustered bar chart from Visa Chart Components."
+    />
+  </div>
+  <p className="intro-text">
+    Visa Chart Components (VCC) is an accessibility focused, framework agnostic set of data experience design system
+    components for the web, enabling developers to build equal data experiences for everyone, everywhere. VCC is
+    provided under the <a href="https://github.com/visa/visa-chart-components/blob/main/LICENSE">MIT license</a>.
+  </p>
+</div>
+
+<div className="subheading">Built-In Features</div>
+
+<ul className="link-list">
+  <li className="link-item">
+    <span>
+      <strong>Accessibility First</strong>
+      Visa Chart Components are designed to make it easier for developers to deliver accessible data experiences. We leverage{' '}
+      <a href="https://developer.visa.com/pages/accessibility" target="_blank">
+        Visa’s Global Accessibility Requirements
+      </a> to continuously assess and improve the accessibility of our data experience components. We aim to provide developers
+      a powerful toolset which will enable them to meet our own VGAR standards.
+    </span>
+  </li>
+  <li className="link-item">
+    <span>
+      <strong>Framework Agnostic</strong>
+      VCC leverages <a href="https://stenciljs.com/" target="_blank">
+        stencil.js
+      </a>, <a href="https://d3js.org/" target="_blank">
+        d3.js
+      </a> and other open source libraries to build custom web components which can be used in many of the popular web frameworks
+      of today (e.g., React and Angular), and likely those of tomorrow. In short, you can use VCC (almost) anywhere that
+      you can use JavaScript.
+    </span>
+  </li>
+  <li className="link-item">
+    <span>
+      <strong>Opinionated</strong>
+      Our component APIs have been built with a design systems approach tailored to Visa products. This can reduce the burden
+      on the developer to code detailed aspects (e.g., motion design) into each chart. As a result, and by design, there
+      may be less flexibility than other libraries for certain features. VCC is not a low level library in this sense.
+    </span>
+  </li>
+  <li className="link-item">
+    <span>
+      <strong>Unit Tested</strong>
+      Detailed, semi-automated unit testing has been developed to perform robust regression testing across our components.
+      We are constantly working to improve the breadth and depth of our testing coverage in order to help ensure consistent
+      quality across our components.
+    </span>
+  </li>
+</ul>

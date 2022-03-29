@@ -2,6 +2,8 @@
 
 This packages bundles [visa chart components](../../) web components into a single build.
 
+---
+
 ### Installation Steps
 
 - Using npm
@@ -12,6 +14,8 @@ This packages bundles [visa chart components](../../) web components into a sing
   ```
   $ yarn add @visa/charts
   ```
+
+---
 
 #### Components with `Ready` status in this bundle
 

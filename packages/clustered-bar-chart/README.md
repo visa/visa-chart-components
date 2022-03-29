@@ -1,7 +1,5 @@
 # @visa/clustered-bar-chart
 
----
-
 ![An image depicting an example of the default clustered-bar-chart component](./docs/clustered-bar-chart-1.png 'Example image of a clustered bar chart')
 <br>
 

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2021 Visa, Inc.
+ * Copyright (c) 2021, 2022 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -62,7 +62,7 @@ const {
   formatStats,
   getColors,
   getPadding,
-  getScopedData,
+  // getScopedData,
   checkHovered,
   initTooltipStyle,
   overrideTitleTooltip,
@@ -130,7 +130,7 @@ export class AlluvialDiagram {
   @Prop({ mutable: true }) annotations: object[] = AlluvialDiagramDefaultValues.annotations;
 
   // Interactivity (7/7)
-  @Prop() suppressEvents: boolean = AlluvialDiagramDefaultValues.suppressEvents;
+  @Prop({ mutable: true }) suppressEvents: boolean = AlluvialDiagramDefaultValues.suppressEvents;
   @Prop({ mutable: true }) hoverHighlight: object;
   @Prop({ mutable: true }) clickHighlight: object[] = AlluvialDiagramDefaultValues.clickHighlight;
   @Prop({ mutable: true }) interactionKeys: string[];
@@ -204,6 +204,7 @@ export class AlluvialDiagram {
   bottomLevel: string = 'p';
   sourceLinksString: string = 'sourceLinks';
   targetLinksString: string = 'targetLinks';
+  valueString: string = 'value';
   groupKeys: any;
   tableData: any;
   tableColumns: any;
@@ -1030,7 +1031,7 @@ export class AlluvialDiagram {
   validateLabelText() {
     // if label accessor is passed use that, otherwise default to value hardcoded which is the total
     // of valueAccessor at the node level
-    this.innerLabelAccessor = this.dataLabel.labelAccessor ? this.dataLabel.labelAccessor : 'value';
+    this.innerLabelAccessor = this.dataLabel.labelAccessor ? this.dataLabel.labelAccessor : this.valueString;
   }
 
   // if there is no nodeData present, use 'id', otherwise use the nodeIDAccessor that is passed
@@ -1118,31 +1119,39 @@ export class AlluvialDiagram {
       ]
     };
 
-    const nodeKeys = scopeDataKeys(this, nodeAccessors, 'alluvial-diagram-secondary-table');
-    this.tableData = getScopedData(this.preppedData.nodes, nodeKeys);
+    const nodeKeys = scopeDataKeys(this, nodeAccessors, 'alluvial-diagram');
+    this.tableData = this.getScopedTableData(this.preppedData.nodes, nodeKeys);
     this.tableColumns = Object.keys(nodeKeys);
 
     // create secondary table data for link data
     // remove dataLabel accessor, as we use this in the nodeData table
-    const linkChartAccessors = delete chartAccessors.nestedAccessors[2];
-    const keys = scopeDataKeys(this, linkChartAccessors, 'alluvial-diagram');
-    this.secondaryTableData = this.getScopedLinkData(this.preppedData.links, keys);
+    const linkChartAccessors = chartAccessors;
+    delete linkChartAccessors.nestedAccessors[2];
+    const keys = scopeDataKeys(this, linkChartAccessors, 'alluvial-diagram-secondary-table');
+    this.secondaryTableData = this.getScopedTableData(this.preppedData.links, keys);
     this.secondaryTableColumns = Object.keys(keys);
   }
 
-  getScopedLinkData(data, keyMap) {
+  getScopedTableData(data, keyMap) {
     const scopedData = [];
     data.forEach(dataRecord => {
       const scopedDataRecord = {};
-      // loop through target fields instead of all data record fields
+      // links always have data objects, so will always enter this section of the loop
       Object.keys(keyMap).forEach(field => {
-        if (field === this.sourceAccessor) {
-          scopedDataRecord[field] = dataRecord.source[this.innerIDAccessor];
-        } else if (field === this.targetAccessor) {
-          scopedDataRecord[field] = dataRecord.target[this.innerIDAccessor];
-        } else {
+        if ('data' in dataRecord && dataRecord.data[field]) {
           scopedDataRecord[field] =
-            keyMap[field] && dataRecord[field] ? formatStats(dataRecord[field], keyMap[field]) : dataRecord[field];
+            keyMap[field] && dataRecord.data[field]
+              ? formatStats(dataRecord.data[field], keyMap[field])
+              : dataRecord.data[field];
+        } else {
+          if (field === this.valueAccessor) {
+            scopedDataRecord[field] = keyMap[field]
+              ? formatStats(dataRecord[this.valueString], keyMap[field])
+              : dataRecord[this.valueString];
+          } else {
+            scopedDataRecord[field] =
+              keyMap[field] && dataRecord[field] ? formatStats(dataRecord[field], keyMap[field]) : dataRecord[field];
+          }
         }
       });
       scopedData.push(scopedDataRecord);

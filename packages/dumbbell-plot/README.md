@@ -1,7 +1,5 @@
 # @visa/dumbbell-plot
 
----
-
 ![An image depicting an example of the default dumbbell-plot component](./docs/dumbbell-plot-1.png 'Example image of a dumbbell plot')
 <br>
 

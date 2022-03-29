@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -392,6 +392,7 @@ export const generic_padding_default_load = {
     // ARRANGE
     const EXPECTEDMARGIN = { bottom: 10, left: 10, right: 10, top: 10 };
     const EXPECTEDPADDING = testProps['padding'] || { bottom: 100, left: 100, right: 100, top: 100 }; // if default is not sent cause error
+    const PADDINGMODIFIER = testProps['paddingModifier'] || 0;
     const BASEHEIGHT = 600;
     const BASEWIDTH = 600;
     component.height = BASEHEIGHT;
@@ -404,7 +405,10 @@ export const generic_padding_default_load = {
 
     // ASSERT
     const paddingG = page.doc.querySelector(testSelector);
-    expect(paddingG).toEqualAttribute('transform', `translate(${EXPECTEDPADDING.left}, ${EXPECTEDPADDING.top})`);
+    expect(paddingG).toEqualAttribute(
+      'transform',
+      `translate(${EXPECTEDPADDING.left + PADDINGMODIFIER}, ${EXPECTEDPADDING.top + PADDINGMODIFIER})`
+    );
   }
 };
 
@@ -418,6 +422,7 @@ export const generic_padding_custom_load = {
     // ARRANGE
     const EXPECTEDMARGIN = { bottom: 10, left: 10, right: 10, top: 10 };
     const EXPECTEDPADDING = testProps['padding'] || { bottom: 100, left: 100, right: 100, top: 100 }; // if default is not sent cause error
+    const PADDINGMODIFIER = testProps['paddingModifier'] || 0;
     const BASEHEIGHT = 600;
     const BASEWIDTH = 600;
     component.height = BASEHEIGHT;
@@ -431,7 +436,10 @@ export const generic_padding_custom_load = {
 
     // ASSERT
     const paddingG = page.doc.querySelector(testSelector);
-    expect(paddingG).toEqualAttribute('transform', `translate(${EXPECTEDPADDING.left}, ${EXPECTEDPADDING.top})`);
+    expect(paddingG).toEqualAttribute(
+      'transform',
+      `translate(${EXPECTEDPADDING.left + PADDINGMODIFIER}, ${EXPECTEDPADDING.top + PADDINGMODIFIER})`
+    );
   }
 };
 
@@ -445,6 +453,7 @@ export const generic_padding_custom_update = {
     // ARRANGE
     const EXPECTEDMARGIN = { bottom: 10, left: 10, right: 10, top: 10 };
     const EXPECTEDPADDING = testProps['padding'] || { bottom: 100, left: 100, right: 100, top: 100 }; // if default is not sent cause error
+    const PADDINGMODIFIER = testProps['paddingModifier'] || 0;
     const BASEHEIGHT = 600;
     const BASEWIDTH = 600;
     // ARRANGE
@@ -466,7 +475,10 @@ export const generic_padding_custom_update = {
 
     // ASSERT
     const paddingG = page.doc.querySelector(testSelector);
-    expect(paddingG).toEqualAttribute('transform', `translate(${EXPECTEDPADDING.left}, ${EXPECTEDPADDING.top})`);
+    expect(paddingG).toEqualAttribute(
+      'transform',
+      `translate(${EXPECTEDPADDING.left + PADDINGMODIFIER}, ${EXPECTEDPADDING.top + PADDINGMODIFIER})`
+    );
   }
 };
 

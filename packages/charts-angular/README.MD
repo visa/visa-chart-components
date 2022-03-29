@@ -2,6 +2,8 @@
 
 This package bundles [visa chart components](../../) web components and exports them as angular components. We leverage [stencil's angular bindings](https://stenciljs.com/docs/framework-bindings) in the creation of @visa/charts-angular.
 
+---
+
 ### Installation Steps
 
 - Using npm
@@ -12,6 +14,8 @@ This package bundles [visa chart components](../../) web components and exports 
   ```
   $ yarn add @visa/charts-angular
   ```
+
+---
 
 #### Components with `Ready` status in this bundle
 

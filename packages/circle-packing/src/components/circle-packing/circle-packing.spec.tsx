@@ -82,7 +82,7 @@ describe('<circle-packing>', () => {
       component.accessibility = EXPECTEDACCESSIBILITY;
 
       // for circle pack specifically we need
-      jest.useFakeTimers();
+      jest.useFakeTimers('legacy');
     });
 
     afterEach(() => {

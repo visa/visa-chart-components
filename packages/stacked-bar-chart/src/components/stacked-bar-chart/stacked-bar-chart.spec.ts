@@ -399,7 +399,7 @@ describe('<stacked-bar-chart>', () => {
       });
       describe('layout', () => {
         beforeEach(() => {
-          jest.useFakeTimers();
+          jest.useFakeTimers('legacy');
         });
         afterEach(() => {
           jest.clearAllTimers();
@@ -554,7 +554,7 @@ describe('<stacked-bar-chart>', () => {
 
     describe('axes', () => {
       beforeEach(() => {
-        jest.useFakeTimers();
+        jest.useFakeTimers('legacy');
       });
 
       afterEach(() => {
@@ -931,7 +931,7 @@ describe('<stacked-bar-chart>', () => {
 
         it('should render bars in sortOrder asc when passed as true on load', async () => {
           // ARRANGE
-          jest.useFakeTimers();
+          jest.useFakeTimers('legacy');
           component.sortOrder = 'asc';
           const expectedOrder = ['2016', '2018', '2017'];
 
@@ -965,7 +965,7 @@ describe('<stacked-bar-chart>', () => {
         });
         it('should render bars in sortOrder desc when passed as true on update', async () => {
           const expectedOrder = ['2017', '2018', '2016'];
-          jest.useFakeTimers();
+          jest.useFakeTimers('legacy');
 
           // ACT RENDER
           page.root.appendChild(component);
@@ -1007,7 +1007,7 @@ describe('<stacked-bar-chart>', () => {
       // the transitionEndAll is wrapped in a 0ms setTimeout for browser support
       // need to enable jest timers in order to enable code wrapped in the setTimeout(()=>{})
       beforeEach(() => {
-        jest.useFakeTimers();
+        jest.useFakeTimers('legacy');
       });
       afterEach(() => {
         jest.clearAllTimers();
@@ -1808,7 +1808,7 @@ describe('<stacked-bar-chart>', () => {
       );
       beforeEach(() => {
         component.accessibility = { ...component.accessibility, hideTextures: true };
-        jest.useFakeTimers();
+        jest.useFakeTimers('legacy');
       });
       afterEach(() => {
         jest.clearAllTimers();

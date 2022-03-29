@@ -2,6 +2,8 @@
 
 This package bundles [visa chart components](../../) web components and exports them as react components. We leveage [stencil's react bindings](https://stenciljs.com/docs/framework-bindings) in the creation of @visa/charts-react.
 
+---
+
 ### Installation Steps
 
 - Using npm
@@ -12,6 +14,8 @@ This package bundles [visa chart components](../../) web components and exports 
   ```
   $ yarn add @visa/charts-react
   ```
+
+---
 
 #### Components with `Ready` status in this bundle
 
@@ -42,8 +46,7 @@ Step 2: Use component as any other React component
 ```js
 import { BarChart, VisaChartsDataTable } from '@visa/charts-react';
 // OR, depending on your webpack or bundling approach you may need to pull each component directly
-import { BarChart } from '@visa/charts-react/dist/components/bar-chart';
-import { DataTable as VisaChartsDataTable } from '@visa/charts-react/dist/components/visa-charts-data-table';
+import { BarChart, DataTable as VisaChartsDataTable } from '@visa/charts-react/dist/components/visa-charts';
 
 <BarChart
   mainTitle={'BarChart'}

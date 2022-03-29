@@ -4,21 +4,7 @@
   "lib": {
     "entryFile": "src/public-api.ts",
     "umdModuleIds": {
-      "@visa/alluvial-diagram/dist/loader": "visa-alluvial-diagram-loader",
-      "@visa/bar-chart/dist/loader": "visa-bar-chart-loader",
-      "@visa/bivariate-mapbox-map/dist/loader": "visa-bivariate-mapbox-map-loader",
-      "@visa/circle-packing/dist/loader": "visa-circle-packing-loader",
-      "@visa/clustered-bar-chart/dist/loader": "visa-clustered-bar-chart-loader",
-      "@visa/dumbbell-plot/dist/loader": "visa-dumbbell-plot-loader",
-      "@visa/heat-map/dist/loader": "visa-heat-map-loader",
-      "@visa/line-chart/dist/loader": "visa-line-chart-loader",
-      "@visa/parallel-plot/dist/loader": "visa-parallel-plot-loader",
-      "@visa/pie-chart/dist/loader": "visa-pie-chart-loader",
-      "@visa/scatter-plot/dist/loader": "visa-scatter-plot-loader",
-      "@visa/stacked-bar-chart/dist/loader": "visa-stacked-bar-loader",
-      "@visa/visa-charts-data-table/dist/loader": "visa-visa-charts-data-table-loader",
-      "@visa/keyboard-instructions/dist/loader": "visa-keyboard-instructions-loader",
-      "@visa/world-map/dist/loader": "visa-world-map-loader"
+      "@visa/charts/dist/loader": "visa-charts-loader"
     }
   },
   "allowedNonPeerDependencies": ["visa", "angular", "rxjs", "tslib", "zone.js"]

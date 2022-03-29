@@ -1,7 +1,5 @@
 # @visa/keyboard-instructions
 
----
-
 ![An image depicting an example of the default keyboard-instructions component](./docs/keyboard-instructions-1.png 'Example image of a keyboard instructions component')
 <br>
 

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -152,7 +152,7 @@ export class ScatterPlot {
   @Prop({ mutable: true }) referenceLines: object[] = ScatterPlotDefaultValues.referenceLines;
 
   // Interactivity (7/7)
-  @Prop() suppressEvents: boolean = ScatterPlotDefaultValues.suppressEvents;
+  @Prop({ mutable: true }) suppressEvents: boolean = ScatterPlotDefaultValues.suppressEvents;
   @Prop({ mutable: true }) hoverHighlight: object;
   @Prop({ mutable: true }) clickHighlight: object[] = ScatterPlotDefaultValues.clickHighlight;
   @Prop({ mutable: true }) interactionKeys: string[];

@@ -1,7 +1,5 @@
 # @visa/circle-packing
 
----
-
 ![An image depicting an example of the default circle-packing component](./docs/circle-packing-1.png 'Example image of a circle packing')
 <br>
 
