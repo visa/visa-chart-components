@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -27,8 +27,8 @@ export const flushTransitions = (jsDomEle, i?) => {
   });
 
   // mess with timers
-  const now = performance.now;
-  performance.now = () => Infinity;
+  const now = window.performance.now;
+  window.performance.now = () => Infinity;
 
   // run each tween
   tweens.forEach(tween => {
@@ -47,7 +47,7 @@ export const flushTransitions = (jsDomEle, i?) => {
   });
 
   // reset timers when done
-  performance.now = now;
+  window.performance.now = now;
 
   // remove transitions after running them
   jsDomEle['__transition'] = undefined;

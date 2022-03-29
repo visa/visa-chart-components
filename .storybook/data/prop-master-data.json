@@ -1,0 +1,2130 @@
+[
+  {
+    "name": "mainTitle",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "subTitle",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "uniqueID",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "height",
+    "options": {
+      "enabled": true,
+      "min": 250,
+      "max": 500
+    }
+  },
+  {
+    "name": "width",
+    "options": {
+      "enabled": true,
+      "min": 300,
+      "max": 700
+    }
+  },
+  {
+    "name": "layout",
+    "options": [
+      {
+        "id": "vertical",
+        "enabled": true,
+        "description": "bars rendered on the y axis (column chart)"
+      },
+      {
+        "id": "horizontal",
+        "enabled": true,
+        "description": "bars rendered on the x axis"
+      }
+    ]
+  },
+  {
+    "name": "data",
+    "hide": true,
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "linkData",
+    "hide": true,
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "nodeData",
+    "hide": true,
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "ordinalAccessor",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "valueAccessor",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "groupAccessor",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "seriesAccessor",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "clusterAccessor",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "nodeAccessor",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "nodeSizeAccessor",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "parentAccessor",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "sizeAccessor",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "idAccessor",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "xAccessor",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "yAccessor",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "groupAccessor",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "markerAccessor",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "markerNameAccessor",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "joinAccessor",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "joinNameAccessor",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "latitudeAccessor",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "longitudeAccessor",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "sourceAccessor",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "targetAccessor",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "nodeIDAccessor",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "sortOrder",
+    "options": {
+      "default": [
+        {
+          "id": "asc",
+          "enabled": true,
+          "description": "bars sorted in ascending order"
+        },
+        {
+          "id": "desc",
+          "enabled": true,
+          "description": "bars sorted in descending order"
+        },
+        {
+          "id": "clear sort",
+          "enabled": true,
+          "description": "bars sorted as they appear in data"
+        }
+      ],
+      "choices": {
+        "dumbbell-plot": [
+          { "label": "asc", "value": "asc" },
+          { "label": "desc", "value": "desc" },
+          { "label": "diffAsc", "value": "diffAsc" },
+          { "label": "diffDesc", "value": "diffDesc" },
+          { "label": "focusAsc", "value": "focusAsc" },
+          { "label": "focusDesc", "value": "focusDesc" },
+          { "label": "absoluteDiffAsc", "value": "absoluteDiffAsc" },
+          { "label": "absoluteDiffDesc", "value": "absoluteDiffDesc" }
+        ]
+      }
+    }
+  },
+  {
+    "name": "skipTick",
+    "options": {
+      "enabled": true,
+      "min": 1,
+      "max": 5
+    }
+  },
+  {
+    "name": "wrapLabel",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "roundedCorner",
+    "options": {
+      "enabled": true,
+      "min": 0,
+      "max": 10,
+      "step": 0.25
+    }
+  },
+  {
+    "name": "barIntervalRatio",
+    "options": {
+      "enabled": true,
+      "min": 0,
+      "max": 0.5,
+      "step": 0.05
+    }
+  },
+  {
+    "name": "groupIntervalRatio",
+    "options": {
+      "enabled": true,
+      "min": 0,
+      "max": 0.5,
+      "step": 0.05
+    }
+  },
+  {
+    "name": "showTooltip",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "showPercentage",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "showEdgeLine",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "maxValueOverride",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "minValueOverride",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "annotations",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "referenceLines",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "referenceData",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "referenceStyle",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "fitLineStyle",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "strokeWidth",
+    "options": {
+      "enabled": true,
+      "min": 0,
+      "max": 5,
+      "step": 0.5
+    }
+  },
+  {
+    "name": "showDots",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "dotRadius",
+    "options": {
+      "enabled": true,
+      "min": 1,
+      "max": 10
+    }
+  },
+  {
+    "name": "dotOpacity",
+    "options": {
+      "enabled": true,
+      "min": 0,
+      "max": 1,
+      "step": 0.05
+    }
+  },
+  {
+    "name": "centerTitle",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "centerSubTitle",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "xMaxValueOverride",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "xMinValueOverride",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "yMaxValueOverride",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "yMinValueOverride",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "showFitLine",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "colorPalette",
+    "options": {
+      "choices": [
+        { "label": "categorical", "value": "categorical" },
+        { "label": "diverging_RtoB", "value": "diverging_RtoB" },
+        { "label": "diverging_RtoG", "value": "diverging_RtoG" },
+        { "label": "diverging_GtoP", "value": "diverging_GtoP" },
+        { "label": "sequential_grey", "value": "sequential_grey" },
+        { "label": "sequential_secBlue", "value": "sequential_secBlue" },
+        { "label": "sequential_secOrange", "value": "sequential_secOrange" },
+        { "label": "sequential_compBlue", "value": "sequential_compBlue" },
+        { "label": "sequential_compGreen", "value": "sequential_compGreen" },
+        { "label": "sequential_suppPink", "value": "sequential_suppPink" },
+        { "label": "sequential_suppPurple", "value": "sequential_suppPurple" },
+        { "label": "sequential_suppGreen", "value": "sequential_suppGreen" },
+        { "label": "single_blue", "value": "single_blue" },
+        { "label": "single_brown", "value": "single_brown" },
+        { "label": "single_grey", "value": "single_grey" },
+        { "label": "single_categorical_blue", "value": "single_categorical_blue" },
+        { "label": "single_categorical_light_blue", "value": "single_categorical_light_blue" },
+        { "label": "single_categorical_blue_text", "value": "single_categorical_blue_text" },
+        { "label": "single_categorical_purple", "value": "single_categorical_purple" },
+        { "label": "single_categorical_light_purple", "value": "single_categorical_light_purple" },
+        { "label": "single_categorical_purple_text", "value": "single_categorical_purple_text" },
+        { "label": "single_categorical_olive", "value": "single_categorical_olive" },
+        { "label": "single_categorical_light_olive", "value": "single_categorical_light_olive" },
+        { "label": "single_categorical_olive_text", "value": "single_categorical_olive_text" },
+        { "label": "single_categorical_grey", "value": "single_categorical_grey" },
+        { "label": "single_categorical_light_grey", "value": "single_categorical_light_grey" },
+        { "label": "single_categorical_grey_text", "value": "single_categorical_grey_text" },
+        { "label": "single_categorical_rose", "value": "single_categorical_rose" },
+        { "label": "single_categorical_light_rose", "value": "single_categorical_light_rose" },
+        { "label": "single_categorical_rose_text", "value": "single_categorical_rose_text" },
+        { "label": "single_categorical_brown", "value": "single_categorical_brown" },
+        { "label": "single_categorical_light_brown", "value": "single_categorical_light_brown" },
+        { "label": "single_categorical_brown_text", "value": "single_categorical_brown_text" },
+        { "label": "single_secBlue", "value": "single_secBlue" },
+        { "label": "single_compBlue", "value": "single_compBlue" },
+        { "label": "single_compGreen", "value": "single_compGreen" },
+        { "label": "single_suppPink", "value": "single_suppPink" },
+        { "label": "single_suppPurple", "value": "single_suppPurple" },
+        { "label": "single_suppGreen", "value": "single_suppGreen" }
+      ],
+      "enabled": true
+    }
+  },
+  {
+    "name": "quality",
+    "options": {
+      "choices": [{ "label": "High", "value": "High" }, { "label": "Low", "value": "Low" }],
+      "enabled": true
+    }
+  },
+  {
+    "name": "hoverOpacity",
+    "options": {
+      "enabled": true,
+      "min": 0,
+      "max": 1,
+      "step": 0.05
+    }
+  },
+  {
+    "name": "colors",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "interactionKeys",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "drag",
+    "options": {
+      "enabled": false
+    }
+  },
+  {
+    "name": "dotSymbols",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "hoverStyle",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "dataLabel",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "differenceLabel",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "legend",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "secondaryLines",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "seriesLabel",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "padding",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "xAxis",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "yAxis",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "margin",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "enableDblClick",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "clickStyle",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "markerStyle",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "countryStyle",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "interactionKeys",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "suppressEvents",
+    "options": {
+      "enabled": true
+    },
+    "sortOrder": 1
+  },
+  {
+    "name": "clickEvent",
+    "options": {
+      "enabled": false
+    },
+    "sortOrder": 2
+  },
+  {
+    "name": "hoverEvent",
+    "options": {
+      "enabled": false
+    },
+    "sortOrder": 3
+  },
+  {
+    "name": "mouseOutEvent",
+    "options": {
+      "enabled": false
+    },
+    "sortOrder": 4
+  },
+  {
+    "name": "initialLoadEvent",
+    "options": {
+      "enabled": false
+    },
+    "sortOrder": 5
+  },
+  {
+    "name": "drawStartEvent",
+    "options": {
+      "enabled": false
+    },
+    "sortOrder": 6
+  },
+  {
+    "name": "drawEndEvent",
+    "options": {
+      "enabled": false
+    },
+    "sortOrder": 7
+  },
+  {
+    "name": "transitionEndEvent",
+    "options": {
+      "enabled": false
+    },
+    "sortOrder": 8
+  },
+  {
+    "name": "clickHighlight",
+    "hide": true,
+    "options": {
+      "enabled": false
+    }
+  },
+  {
+    "name": "hoverHighlight",
+    "hide": true,
+    "options": {
+      "enabled": false
+    }
+  },
+  {
+    "name": "zoomToNode",
+    "hide": true,
+    "options": {
+      "enabled": false
+    }
+  },
+  {
+    "name": "normalized",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "tooltipLabel",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "focusMarker",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "marker",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "barStyle",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "innerRatio",
+    "options": {
+      "enabled": true,
+      "min": 0,
+      "max": 0.9,
+      "step": 0.05
+    }
+  },
+  {
+    "name": "labelOffset",
+    "options": {
+      "enabled": true,
+      "min": 0,
+      "max": 30
+    }
+  },
+  {
+    "name": "nodeConfig",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "nodeConfig.fill",
+    "options": {
+      "enabled": true,
+      "description": "Toggles whether to categorically color nodes.",
+      "sortOrder": 1
+    }
+  },
+  {
+    "name": "nodeConfig.width",
+    "options": {
+      "enabled": true,
+      "description": "Width in px to set the nodes in the alluvial, leverages d3-sankey's node width.",
+      "min": 1,
+      "max": 25,
+      "step": 0.5,
+      "sortOrder": 2
+    }
+  },
+  {
+    "name": "nodeConfig.padding",
+    "options": {
+      "enabled": true,
+      "description": "Spacing in px to add between nodes vertically, leverages d3-sankey's node padding.",
+      "min": 0,
+      "max": 25,
+      "step": 0.5,
+      "sortOrder": 3
+    }
+  },
+  {
+    "name": "nodeConfig.alignment",
+    "options": {
+      "enabled": true,
+      "description": "Leverages d3-sankey's node alignment functionality, options are 'left', 'right', 'center', or 'justify'.",
+      "control": "Select",
+      "choices": [
+        { "label": "right", "value": "right" },
+        { "label": "left", "value": "left" },
+        { "label": "center", "value": "center" },
+        { "label": "justify", "value": "justify" }
+      ],
+      "sortOrder": 4
+    }
+  },
+  {
+    "name": "nodeConfig.compare",
+    "options": {
+      "enabled": true,
+      "description": "Toggles whether to vertically, bottom align nodes for easier horizontal comparison. The alignment is computed strictly based on node order.",
+      "sortOrder": 5
+    }
+  },
+  {
+    "name": "linkConfig",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "linkConfig.visible",
+    "options": {
+      "enabled": true,
+      "description": "Toggles whether to horizontally space nodes and render links in between them. Passing false will remove links from the view and bring nodes closer together for easier comparison, we suggest also using nodeConfig.compare in this scenario.",
+      "sortOrder": 1
+    }
+  },
+  {
+    "name": "linkConfig.fillMode",
+    "options": {
+      "enabled": true,
+      "description": "Determines how to color links in the alluvial, options are 'group' (requires groupAccessor), 'source', 'target', 'link', or, 'none'.",
+      "control": "Select",
+      "choices": [
+        { "label": "group", "value": "group" },
+        { "label": "source", "value": "source" },
+        { "label": "target", "value": "target" },
+        { "label": "link", "value": "link" },
+        { "label": "none", "value": "none" }
+      ],
+      "sortOrder": 2
+    }
+  },
+  {
+    "name": "linkConfig.opacity",
+    "options": {
+      "enabled": true,
+      "min": 0,
+      "max": 1,
+      "step": 0.05,
+      "description": "Sets opacity of links in the alluvial.",
+      "sortOrder": 3
+    }
+  },
+  {
+    "name": "margin.bottom",
+    "options": {
+      "enabled": true,
+      "min": 0,
+      "max": 150,
+      "sortOrder": 3
+    }
+  },
+  {
+    "name": "margin.top",
+    "options": {
+      "enabled": true,
+      "min": 0,
+      "max": 150,
+      "sortOrder": 1
+    }
+  },
+  {
+    "name": "margin.left",
+    "options": {
+      "enabled": true,
+      "min": 0,
+      "max": 200,
+      "sortOrder": 4
+    }
+  },
+  {
+    "name": "margin.right",
+    "options": {
+      "enabled": true,
+      "min": 0,
+      "max": 200,
+      "sortOrder": 2
+    }
+  },
+  {
+    "name": "padding.bottom",
+    "options": {
+      "enabled": true,
+      "min": 0,
+      "max": 200,
+      "sortOrder": 3
+    }
+  },
+  {
+    "name": "padding.top",
+    "options": {
+      "enabled": true,
+      "min": 0,
+      "max": 200,
+      "sortOrder": 1
+    }
+  },
+  {
+    "name": "padding.left",
+    "options": {
+      "enabled": true,
+      "min": 0,
+      "max": 200,
+      "sortOrder": 4
+    }
+  },
+  {
+    "name": "padding.right",
+    "options": {
+      "enabled": true,
+      "min": 0,
+      "max": 200,
+      "sortOrder": 2
+    }
+  },
+  {
+    "name": "showLabelNote",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "referenceStyle.opacity",
+    "options": {
+      "enabled": true,
+      "min": 0,
+      "max": 1,
+      "step": 0.05,
+      "description": "Sets the opacity of the reference element"
+    }
+  },
+  {
+    "name": "referenceStyle.color",
+    "options": {
+      "enabled": true,
+      "description": "Sets the color of the reference element (may use visa colors or any CSS color input)"
+    }
+  },
+  {
+    "name": "referenceStyle.strokeWidth",
+    "options": {
+      "enabled": true,
+      "min": 0,
+      "max": 5,
+      "step": 0.5,
+      "description": "Sets the stroke width of the reference element"
+    }
+  },
+  {
+    "name": "referenceStyle.dashed",
+    "options": {
+      "enabled": true,
+      "description": "Sets the dash pattern for the reference line (use numbers separated by spaces, EG 3 2)"
+    }
+  },
+  {
+    "name": "fitLineStyle.opacity",
+    "options": {
+      "enabled": true,
+      "min": 0,
+      "max": 1,
+      "step": 0.05,
+      "description": "Sets the opacity of the fit line"
+    }
+  },
+  {
+    "name": "fitLineStyle.color",
+    "options": {
+      "enabled": true,
+      "description": "Sets the color of the fit line (may use visa colors or any CSS color input)"
+    }
+  },
+  {
+    "name": "fitLineStyle.strokeWidth",
+    "options": {
+      "enabled": true,
+      "min": 0,
+      "max": 5,
+      "step": 0.5,
+      "description": "Sets the stroke width of the fit line"
+    }
+  },
+  {
+    "name": "fitLineStyle.dashed",
+    "options": {
+      "enabled": true,
+      "description": "Sets the dash pattern for the fit line (use numbers separated by spaces, EG 3 2)"
+    }
+  },
+  {
+    "name": "hoverStyle.color",
+    "options": {
+      "enabled": true,
+      "description": "Sets the color of the hovered element (requires onHoverEvent to be set)",
+      "sortOrder": 1
+    }
+  },
+  {
+    "name": "hoverStyle.opacity",
+    "options": {
+      "enabled": true,
+      "min": 0,
+      "max": 1,
+      "step": 0.05,
+      "description": "Sets the opacity of the hovered element (requires onHoverEvent to be set)",
+      "sortOrder": 2
+    }
+  },
+  {
+    "name": "hoverStyle.strokeWidth",
+    "options": {
+      "enabled": true,
+      "min": 0,
+      "max": 5,
+      "step": 0.5,
+      "description": "Sets the stroke width of the hovered element (requires onHoverEvent to be set)",
+      "sortOrder": 3
+    }
+  },
+  {
+    "name": "markerStyle.visible",
+    "options": {
+      "enabled": true,
+      "description": "Toggles whether to show markers on map",
+      "sortOrder": 1
+    }
+  },
+  {
+    "name": "markerStyle.fill",
+    "options": {
+      "enabled": true,
+      "description": "Toggles whether to color scale the markers based on valueAccessor (requires markerAccessor)",
+      "sortOrder": 3
+    }
+  },
+  {
+    "name": "markerStyle.blend",
+    "options": {
+      "enabled": true,
+      "description": "Toggles whether to use css blending mode (true = multiply, false = normal)",
+      "sortOrder": 2
+    }
+  },
+  {
+    "name": "markerStyle.radius",
+    "options": {
+      "enabled": true,
+      "description": "Sets the radius of the markers on the map (overwritten by radiusRange)",
+      "sortOrder": 7
+    }
+  },
+  {
+    "name": "markerStyle.radiusRange",
+    "options": {
+      "enabled": true,
+      "description": "Sets the range for the radius scale for the markers on the map (overwrites radius)",
+      "sortOrder": 8
+    }
+  },
+  {
+    "name": "markerStyle.opacity",
+    "options": {
+      "enabled": true,
+      "min": 0,
+      "max": 1,
+      "step": 0.05,
+      "description": "Sets the opacity of the markers on the map",
+      "sortOrder": 4
+    }
+  },
+  {
+    "name": "markerStyle.color",
+    "options": {
+      "enabled": true,
+      "description": "Sets the color of the marker if fill is false",
+      "sortOrder": 5
+    }
+  },
+  {
+    "name": "markerStyle.strokeWidth",
+    "options": {
+      "enabled": true,
+      "min": 0,
+      "max": 5,
+      "step": 0.5,
+      "description": "Sets the stroke width of the markers on the map",
+      "sortOrder": 6
+    }
+  },
+  {
+    "name": "countryStyle.fill",
+    "options": {
+      "enabled": true,
+      "description": "Toggles whether to color scale the countries based on valueAccessor (choropleth), joinAccessor required",
+      "sortOrder": 1
+    }
+  },
+  {
+    "name": "countryStyle.opacity",
+    "options": {
+      "enabled": true,
+      "min": 0,
+      "max": 1,
+      "step": 0.05,
+      "description": "Sets the opacity of the countries on the map",
+      "sortOrder": 2
+    }
+  },
+  {
+    "name": "countryStyle.color",
+    "options": {
+      "enabled": true,
+      "description": "Sets the color of the countries if fill is false",
+      "sortOrder": 3
+    }
+  },
+  {
+    "name": "countryStyle.strokeWidth",
+    "options": {
+      "enabled": true,
+      "min": 0,
+      "max": 5,
+      "step": 0.5,
+      "description": "Sets the stroke width of the countries on the map",
+      "sortOrder": 4
+    }
+  },
+  {
+    "name": "clickStyle.color",
+    "options": {
+      "enabled": true,
+      "description": "Sets the color of the clicked element (requires onClickEvent to be set)",
+      "sortOrder": 2
+    }
+  },
+  {
+    "name": "clickStyle.opacity",
+    "options": {
+      "enabled": true,
+      "min": 0,
+      "max": 1,
+      "step": 0.05,
+      "description": "Sets the opacity of the clicked element (requires onClickEvent to be set)",
+      "sortOrder": 1
+    }
+  },
+  {
+    "name": "clickStyle.strokeWidth",
+    "options": {
+      "enabled": true,
+      "min": 0,
+      "max": 5,
+      "step": 0.5,
+      "description": "Sets the stroke width of the clicked element (requires onClickEvent to be set)",
+      "sortOrder": 4
+    }
+  },
+  {
+    "name": "clickStyle.dashed",
+    "options": {
+      "enabled": true,
+      "description": "Sets the line dash of the clicked element (requires onClickEvent to be set)",
+      "sortOrder": 5
+    }
+  },
+  {
+    "name": "dataLabel.placement",
+    "options": {
+      "enabled": true,
+      "description": "Sets the placement of the data label",
+      "control": "Select",
+      "choices": {
+        "dumbbell-plot": [
+          { "label": "auto", "value": "auto" },
+          { "label": "ends", "value": "ends" },
+          { "label": "top", "value": "top" },
+          { "label": "bottom", "value": "bottom" },
+          { "label": "right", "value": "right" },
+          { "label": "left", "value": "left" }
+        ],
+        "line-chart": [
+          { "label": "auto", "value": "auto" },
+          { "label": "top", "value": "top" },
+          { "label": "bottom", "value": "bottom" }
+        ],
+        "parallel-plot": [
+          { "label": "auto", "value": "auto" },
+          { "label": "top-right", "value": "top-right" },
+          { "label": "bottom-right", "value": "bottom-right" },
+          { "label": "top-left", "value": "top-left" },
+          { "label": "bottom-left", "value": "bottom-left" }
+        ],
+        "stacked-bar-chart-horizontal": [
+          { "label": "auto", "value": "auto" },
+          { "label": "base", "value": "base" },
+          { "label": "middle", "value": "middle" },
+          { "label": "end", "value": "end" }
+        ],
+        "stacked-bar-chart-vertical": [
+          { "label": "auto", "value": "auto" },
+          { "label": "top", "value": "top" },
+          { "label": "middle", "value": "middle" },
+          { "label": "bottom", "value": "bottom" }
+        ],
+        "clustered-bar-chart-horizontal": [
+          { "label": "auto", "value": "auto" },
+          { "label": "right", "value": "right" },
+          { "label": "left", "value": "left" },
+          { "label": "top-right", "value": "top-right" },
+          { "label": "top-left", "value": "top-left" },
+          { "label": "bottom-right", "value": "bottom-right" },
+          { "label": "bottom-left", "value": "bottom-left" }
+        ],
+        "clustered-bar-chart-vertical": [
+          { "label": "auto", "value": "auto" },
+          { "label": "top", "value": "top" },
+          { "label": "bottom", "value": "bottom" }
+        ],
+        "bar-chart-horizontal": [
+          { "label": "auto", "value": "auto" },
+          { "label": "right", "value": "right" },
+          { "label": "left", "value": "left" },
+          { "label": "top-right", "value": "top-right" },
+          { "label": "top-left", "value": "top-left" },
+          { "label": "bottom-right", "value": "bottom-right" },
+          { "label": "bottom-left", "value": "bottom-left" }
+        ],
+        "bar-chart-vertical": [
+          { "label": "auto", "value": "auto" },
+          { "label": "top", "value": "top" },
+          { "label": "bottom", "value": "bottom" }
+        ],
+        "pie-chart": [
+          { "label": "outside", "value": "outside" },
+          { "label": "inside", "value": "inside" },
+          { "label": "edge", "value": "edge" }
+        ],
+        "scatter-plot": [
+          { "label": "auto", "value": "auto" },
+          { "label": "top", "value": "top" },
+          { "label": "bottom", "value": "bottom" },
+          { "label": "right", "value": "right" },
+          { "label": "left", "value": "left" }
+        ],
+        "world-map": [{ "label": "auto", "value": "auto" }, { "label": "bottom", "value": "bottom" }],
+        "circle-packing": [{ "label": "auto", "value": "auto" }, { "label": "center", "value": "center" }],
+        "alluvial-diagram": [
+          { "label": "auto", "value": "auto" },
+          { "label": "outside", "value": "outside" },
+          { "label": "inside", "value": "inside" }
+        ],
+        "default": [
+          { "label": "auto", "value": "auto" },
+          { "label": "top", "value": "top" },
+          { "label": "bottom", "value": "bottom" },
+          { "label": "right", "value": "right" },
+          { "label": "left", "value": "left" }
+        ]
+      },
+      "sortOrder": 4
+    }
+  },
+  {
+    "name": "dataLabel.labelAccessor",
+    "options": {
+      "enabled": true,
+      "description": "Key that determines which property of the data is displayed in the label",
+      "sortOrder": 2
+    }
+  },
+  {
+    "name": "dataLabel.format",
+    "options": {
+      "enabled": true,
+      "description": "Sets numeric formatting for the data label, EG 0,0.0[a]",
+      "sortOrder": 3
+    }
+  },
+  {
+    "name": "dataLabel.visible",
+    "options": {
+      "enabled": true,
+      "description": "Toggles the data label",
+      "sortOrder": 1
+    }
+  },
+  {
+    "name": "dataLabel.collisionHideOnly",
+    "options": {
+      "enabled": false,
+      "description": "Toggles whether the collision algorithm will only hide (vs hide/move) labels",
+      "sortOrder": 5
+    }
+  },
+  {
+    "name": "dataLabel.collisionPlacement",
+    "options": {
+      "enabled": true,
+      "description": "Sets the specified placement of labels for the collision algorithm",
+      "control": "Select",
+      "choices": {
+        "dumbbell-plot": [{ "label": "N/A", "value": "N/A" }],
+        "scatter-plot": [{ "label": "N/A", "value": "N/A" }],
+        "world-map": [{ "label": "N/A", "value": "N/A" }],
+        "bar-chart-horizontal": [
+          { "label": "right", "value": "right" },
+          { "label": "middle", "value": "middle" },
+          { "label": "left", "value": "left" }
+        ],
+        "bar-chart-vertical": [
+          { "label": "top", "value": "top" },
+          { "label": "middle", "value": "middle" },
+          { "label": "bottom", "value": "bottom" }
+        ],
+        "circle-packing": [
+          { "label": "all", "value": "all" },
+          { "label": "centroid", "value": "centroid" },
+          { "label": "top", "value": "top" },
+          { "label": "middle", "value": "middle" },
+          { "label": "bottom", "value": "bottom" },
+          { "label": "right", "value": "right" },
+          { "label": "left", "value": "left" }
+        ],
+        "clustered-bar-chart-horizontal": [
+          { "label": "right", "value": "right" },
+          { "label": "middle", "value": "middle" },
+          { "label": "left", "value": "left" }
+        ],
+        "clustered-bar-chart-vertical": [
+          { "label": "top", "value": "top" },
+          { "label": "middle", "value": "middle" },
+          { "label": "bottom", "value": "bottom" }
+        ],
+        "line-chart": [
+          { "label": "all", "value": "all" },
+          { "label": "top", "value": "top" },
+          { "label": "middle", "value": "middle" },
+          { "label": "bottom", "value": "bottom" },
+          { "label": "right", "value": "right" },
+          { "label": "left", "value": "left" }
+        ],
+        "parallel-plot": [
+          { "label": "all", "value": "all" },
+          { "label": "top", "value": "top" },
+          { "label": "middle", "value": "middle" },
+          { "label": "bottom", "value": "bottom" },
+          { "label": "right", "value": "right" },
+          { "label": "left", "value": "left" }
+        ],
+        "stacked-bar-chart-horizontal": [
+          { "label": "right", "value": "right" },
+          { "label": "middle", "value": "middle" },
+          { "label": "left", "value": "left" }
+        ],
+        "stacked-bar-chart-vertical": [
+          { "label": "top", "value": "top" },
+          { "label": "middle", "value": "middle" },
+          { "label": "bottom", "value": "bottom" }
+        ],
+        "pie-chart": [
+          { "label": "auto", "value": "auto" },
+          { "label": "outside", "value": "outside" },
+          { "label": "inside", "value": "inside" },
+          { "label": "edge", "value": "edge" }
+        ],
+        "alluvial-diagram": [
+          { "label": "all", "value": "all" },
+          { "label": "outside", "value": "outside" },
+          { "label": "inside", "value": "inside" }
+        ],
+        "default": [
+          { "label": "auto", "value": "auto" },
+          { "label": "top", "value": "top" },
+          { "label": "bottom", "value": "bottom" },
+          { "label": "right", "value": "right" },
+          { "label": "left", "value": "left" }
+        ]
+      },
+      "sortOrder": 6
+    }
+  },
+  {
+    "name": "differenceLabel.visible",
+    "options": {
+      "enabled": true,
+      "description": "Toggles the difference label"
+    }
+  },
+  {
+    "name": "differenceLabel.placement",
+    "options": {
+      "enabled": true,
+      "description": "Sets the placement of the difference label",
+      "control": "Select",
+      "choices": [
+        { "label": "auto", "value": "auto" },
+        { "label": "right", "value": "right" },
+        { "label": "left", "value": "left" },
+        { "label": "top", "value": "top" },
+        { "label": "bottom", "value": "bottom" }
+      ]
+    }
+  },
+  {
+    "name": "differenceLabel.calculation",
+    "options": {
+      "enabled": true,
+      "description": "Sets the calculation of the difference label",
+      "control": "Select",
+      "choices": [{ "label": "difference", "value": "difference" }, { "label": "middle", "value": "middle" }]
+    }
+  },
+  {
+    "name": "differenceLabel.format",
+    "options": {
+      "enabled": true,
+      "description": "Sets numeric formatting for the difference label, EG 0,0.0[a]"
+    }
+  },
+  {
+    "name": "differenceLabel.collisionHideOnly",
+    "options": {
+      "enabled": true,
+      "description": "Toggles whether the collision algorithm will only hide (vs hide/move) labels"
+    }
+  },
+  {
+    "name": "xAxis.visible",
+    "options": {
+      "enabled": true,
+      "description": "Toggles the visibility of the x axis"
+    }
+  },
+  {
+    "name": "xAxis.gridVisible",
+    "options": {
+      "enabled": true,
+      "description": "Toggles the visibility of the x axis grid"
+    }
+  },
+  {
+    "name": "xAxis.label",
+    "options": {
+      "enabled": true,
+      "description": "Sets the label for the x axis"
+    }
+  },
+  {
+    "name": "xAxis.placement",
+    "options": {
+      "enabled": true,
+      "description": "Sets the x axis placement as 'top' or 'bottom'"
+    }
+  },
+  {
+    "name": "xAxis.format",
+    "options": {
+      "enabled": true,
+      "description": "Sets the formatting for x axis elements, EG %b, refer to d3-time-format"
+    }
+  },
+  {
+    "name": "xAxis.tickInterval",
+    "options": {
+      "enabled": true,
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "description": "Sets the interval for x axis ticks"
+    }
+  },
+  {
+    "name": "xAxis.unit",
+    "options": {
+      "enabled": true,
+      "description": "Sets the unit of padding for the x axis",
+      "control": "Select",
+      "choices": [
+        { "label": "millisecond", "value": "millisecond" },
+        { "label": "second", "value": "second" },
+        { "label": "minute", "value": "minute" },
+        { "label": "hour", "value": "hour" },
+        { "label": "day", "value": "day" },
+        { "label": "week", "value": "week" },
+        { "label": "month", "value": "month" },
+        { "label": "year", "value": "year" }
+      ]
+    }
+  },
+  {
+    "name": "yAxis.visible",
+    "options": {
+      "enabled": true,
+      "description": "Toggles the visibility of the y axis"
+    }
+  },
+  {
+    "name": "yAxis.gridVisible",
+    "options": {
+      "enabled": true,
+      "description": "Toggles the visibility of the y axis grid"
+    }
+  },
+  {
+    "name": "yAxis.label",
+    "options": {
+      "enabled": true,
+      "description": "Sets the label for the y axis"
+    }
+  },
+  {
+    "name": "yAxis.format",
+    "options": {
+      "enabled": true,
+      "description": "Sets the formatting for y axis elements, EG %b"
+    }
+  },
+  {
+    "name": "yAxis.tickInterval",
+    "options": {
+      "enabled": true,
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "description": "Sets the interval for y axis ticks"
+    }
+  },
+  {
+    "name": "yAxis.unit",
+    "options": {
+      "enabled": true,
+      "description": "Sets the unit of padding for the y axis, EG day, week, month, or year"
+    }
+  },
+  {
+    "name": "yAxis.scales",
+    "options": {
+      "enabled": true,
+      "description": "Sets the type of scales used in y axis",
+      "control": "Select",
+      "choices": [
+        { "label": "preNormalized", "value": "preNormalized" },
+        { "label": "individual", "value": "individual" },
+        { "label": "shared", "value": "shared" }
+      ]
+    }
+  },
+  {
+    "name": "yAxis.onlyTickExtents",
+    "options": {
+      "enabled": true,
+      "description": "Hides yAxis ticks between min/max"
+    }
+  },
+  {
+    "name": "yAxis.placement",
+    "options": {
+      "enabled": true,
+      "description": "Sets the y axis placement as 'left' or 'right'"
+    }
+  },
+  {
+    "name": "legend.visible",
+    "options": {
+      "enabled": true,
+      "description": "Toggles the visibility of the legend",
+      "sortOrder": 1
+    }
+  },
+  {
+    "name": "legend.labels",
+    "options": {
+      "enabled": true,
+      "description": "An array that sets each label in the legend, in order",
+      "control": "TextField",
+      "sortOrder": 4
+    }
+  },
+  {
+    "name": "legend.interactive",
+    "options": {
+      "enabled": true,
+      "description": "Toggles the interactivity of the legend"
+    }
+  },
+  {
+    "name": "legend.type",
+    "options": {
+      "enabled": true,
+      "description": "Changes legend type, EG default, key, gradient",
+      "sortOrder": 2
+    }
+  },
+  {
+    "name": "legend.format",
+    "options": {
+      "enabled": true,
+      "description": "Sets numeric formatting for the data label, EG 0,0",
+      "sortOrder": 3
+    }
+  },
+  {
+    "name": "secondaryLines.keys",
+    "options": {
+      "enabled": true,
+      "description": "Assign keys of secondary lines"
+    }
+  },
+  {
+    "name": "secondaryLines.showDataLabel",
+    "options": {
+      "enabled": true,
+      "description": "Sets the visibility of data labels on secondary lines"
+    }
+  },
+  {
+    "name": "secondaryLines.showSeriesLabel",
+    "options": {
+      "enabled": true,
+      "description": "Sets the visibility of series labels on secondary lines"
+    }
+  },
+  {
+    "name": "secondaryLines.opacity",
+    "options": {
+      "enabled": true,
+      "min": 0,
+      "max": 1,
+      "step": 0.05,
+      "description": "Sets the opacity secondary lines"
+    }
+  },
+  {
+    "name": "seriesLabel.visible",
+    "options": {
+      "enabled": true,
+      "description": "Toggles the visibility of series labels"
+    }
+  },
+  {
+    "name": "seriesLabel.placement",
+    "options": {
+      "enabled": true,
+      "description": "Sets the placement of the series label",
+      "control": "Select",
+      "choices": [
+        { "label": "auto", "value": "auto" },
+        { "label": "right", "value": "right" },
+        { "label": "left", "value": "left" },
+        { "label": "top", "value": "top" },
+        { "label": "bottom", "value": "bottom" }
+      ]
+    }
+  },
+  {
+    "name": "seriesLabel.label",
+    "options": {
+      "enabled": true,
+      "control": "TextField",
+      "description": "An array which determines the labels for each line, in order"
+    }
+  },
+  {
+    "name": "seriesLabel.collisionHideOnly",
+    "options": {
+      "enabled": true,
+      "description": "Toggles whether the collision algorithm will only hide (vs hide/move) labels"
+    }
+  },
+  {
+    "name": "focusMarker.key",
+    "options": {
+      "enabled": true,
+      "description": ""
+    }
+  },
+  {
+    "name": "focusMarker.sizeFromBar",
+    "options": {
+      "enabled": true,
+      "description": "",
+      "min": 0,
+      "max": 50,
+      "step": 0.5
+    }
+  },
+  {
+    "name": "marker.visible",
+    "options": {
+      "enabled": true,
+      "description": "Sets the visibility of dumbbell markers"
+    }
+  },
+  {
+    "name": "marker.type",
+    "options": {
+      "enabled": true,
+      "description": "Sets the shape type of dumbbell markers",
+      "control": "Select",
+      "choices": [
+        { "label": "dot", "value": "dot" },
+        { "label": "stroke", "value": "stroke" },
+        { "label": "arrow", "value": "arrow" }
+      ]
+    }
+  },
+  {
+    "name": "marker.sizeFromBar",
+    "options": {
+      "enabled": true,
+      "description": "Sets the distance between dumbbell and markers",
+      "min": 0,
+      "max": 50,
+      "step": 0.5
+    }
+  },
+  {
+    "name": "barStyle.opacity",
+    "options": {
+      "enabled": true,
+      "description": "Sets the opacity of the dumbbell bar",
+      "min": 0,
+      "max": 1,
+      "step": 0.05
+    }
+  },
+  {
+    "name": "barStyle.width",
+    "options": {
+      "enabled": true,
+      "description": "Sets the width of the dumbbell bar",
+      "min": 0,
+      "max": 50,
+      "step": 0.5
+    }
+  },
+  {
+    "name": "barStyle.colorRule",
+    "options": {
+      "enabled": true,
+      "description": "Sets the rule to color the dumbbell bar (options are 'greateValue', 'focus' or 'default')",
+      "control": "Select",
+      "choices": [
+        { "label": "default", "value": "default" },
+        { "label": "greaterValue", "value": "greaterValue" },
+        { "label": "focus", "value": "focus" }
+      ]
+    }
+  },
+  {
+    "name": "tooltipLabel.labelAccessor",
+    "options": {
+      "enabled": true,
+      "description": "An array that determines which property of the data is displayed in the tooltip",
+      "control": "TextField"
+    }
+  },
+  {
+    "name": "tooltipLabel.labelTitle",
+    "options": {
+      "enabled": true,
+      "description": "Sets the title for each label",
+      "control": "TextField"
+    }
+  },
+  {
+    "name": "tooltipLabel.format",
+    "options": {
+      "enabled": true,
+      "description": "Sets the formatting for the tooltip elements, EG %b",
+      "control": "TextField"
+    }
+  },
+  {
+    "name": "groupLabel",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "xKeyOrder",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "yKeyOrder",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "hideAxisPath",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "colorSteps",
+    "options": {
+      "enabled": true,
+      "min": 1,
+      "max": 9
+    }
+  },
+  {
+    "name": "cursor",
+    "options": [
+      {
+        "id": "default",
+        "enabled": true,
+        "description": "cursor is set to default"
+      },
+      {
+        "id": "pointer",
+        "enabled": true,
+        "description": "cursor is set to pointer"
+      }
+    ]
+  },
+  {
+    "name": "shape",
+    "options": [
+      {
+        "id": "rect",
+        "enabled": true,
+        "description": "bars rendered on the y axis (column chart)"
+      },
+      {
+        "id": "circle",
+        "enabled": true,
+        "description": "bars rendered on the x axis"
+      }
+    ]
+  },
+  {
+    "name": "reverseOrder",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "showZeroLabels",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "showTotalValue",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "showBaselineX",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "showBaselineY",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "showGridlines",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "mapScaleZoom",
+    "options": {
+      "enabled": true,
+      "min": 0.5,
+      "max": 2,
+      "step": 0.05
+    }
+  },
+  {
+    "name": "mapProjection",
+    "options": {
+      "choices": [
+        { "label": "Equal Earth*", "value": "Equal Earth" },
+        { "label": "Gall-Peters*", "value": "Gall-Peters" },
+        { "label": "Natural Earth*", "value": "Natural Earth" },
+        { "label": "Robinson*", "value": "Robinson" },
+        { "label": "Hyper Elliptical*", "value": "Hyper Elliptical" },
+        { "label": "Wagner IV*", "value": "Wagner IV" },
+        { "label": "Aitoff", "value": "Aitoff" },
+        { "label": "Albers", "value": "Albers" },
+        { "label": "Baker", "value": "Baker" },
+        { "label": "Boggs", "value": "Boggs" },
+        { "label": "Bonne", "value": "Bonne" },
+        { "label": "Bromley", "value": "Bromley" },
+        { "label": "Collignon", "value": "Collignon" },
+        { "label": "Craster Parabolic", "value": "Craster Parabolic" },
+        { "label": "Eckert I", "value": "Eckert I" },
+        { "label": "Eckert II", "value": "Eckert II" },
+        { "label": "Eckert III", "value": "Eckert III" },
+        { "label": "Eckert IV", "value": "Eckert IV" },
+        { "label": "Eckert V", "value": "Eckert V" },
+        { "label": "Eckert VI", "value": "Eckert VI" },
+        { "label": "Eisenlohr", "value": "Eisenlohr" },
+        { "label": "Goode Homolosine", "value": "Goode Homolosine" },
+        { "label": "Hammer", "value": "Hammer" },
+        { "label": "Hill", "value": "Hill" },
+        { "label": "Kavrayskiy VII", "value": "Kavrayskiy VII" },
+        { "label": "Lagrange", "value": "Lagrange" },
+        { "label": "Larrivée", "value": "Larrivée" },
+        { "label": "Laskowski", "value": "Laskowski" },
+        { "label": "Loximuthal", "value": "Loximuthal" },
+        { "label": "Mercator", "value": "Mercator" },
+        { "label": "Miller", "value": "Miller" },
+        { "label": "McBryde–Thomas Flat-Polar Parabolic", "value": "McBryde–Thomas Flat-Polar Parabolic" },
+        { "label": "McBryde–Thomas Flat-Polar Quartic", "value": "McBryde–Thomas Flat-Polar Quartic" },
+        { "label": "McBryde–Thomas Flat-Polar Sinusoidal", "value": "McBryde–Thomas Flat-Polar Sinusoidal" },
+        { "label": "Mollweide", "value": "Mollweide" },
+        { "label": "Nell–Hammer", "value": "Nell–Hammer" },
+        { "label": "Polyconic", "value": "Polyconic" },
+        { "label": "Sinusoidal", "value": "Sinusoidal" },
+        { "label": "Sinu-Mollweide", "value": "Sinu-Mollweide" },
+        { "label": "van der Grinten", "value": "van der Grinten" },
+        { "label": "van der Grinten IV", "value": "van der Grinten IV" },
+        { "label": "Wagner VI", "value": "Wagner VI" },
+        { "label": "Wagner VII", "value": "Wagner VII" },
+        { "label": "Winkel Tripel", "value": "Winkel Tripel" }
+      ],
+      "enabled": true
+    }
+  },
+  {
+    "name": "circlePadding",
+    "options": {
+      "enabled": true,
+      "min": 0,
+      "max": 10
+    }
+  },
+  {
+    "name": "dataDepth",
+    "options": {
+      "enabled": true,
+      "min": 0,
+      "max": 10
+    }
+  },
+  {
+    "name": "displayDepth",
+    "options": {
+      "enabled": true,
+      "min": 1,
+      "max": 10
+    }
+  },
+  {
+    "name": "clickLink",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "maxRadius",
+    "options": {
+      "enabled": true,
+      "min": 0,
+      "max": 10
+    }
+  },
+  {
+    "name": "dataDepth",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "accessibility",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "accessibility.longDescription",
+    "options": {
+      "enabled": true,
+      "description": "Use this to add a helpful description of the chart",
+      "sortOrder": 1
+    }
+  },
+  {
+    "name": "accessibility.executiveSummary",
+    "options": {
+      "enabled": true,
+      "description": "Use this to describe the biggest takeaway of the chart",
+      "sortOrder": 2
+    }
+  },
+  {
+    "name": "accessibility.purpose",
+    "options": {
+      "enabled": true,
+      "description": "Use this to describe the purpose of this particular chart",
+      "sortOrder": 3
+    }
+  },
+  {
+    "name": "accessibility.contextExplanation",
+    "options": {
+      "enabled": true,
+      "description": "Use this to explain any controls or content on your page that affect or are affected by this chart",
+      "sortOrder": 4
+    }
+  },
+  {
+    "name": "accessibility.title",
+    "options": {
+      "enabled": true,
+      "description": "Gives the chart an alternate title to be used by screen readers",
+      "sortOrder": 5
+    }
+  },
+  {
+    "name": "accessibility.elementDescriptionAccessor",
+    "options": {
+      "enabled": true,
+      "description": "Optional key used to add an additional description to any element.",
+      "sortOrder": 6
+    }
+  },
+  {
+    "name": "accessibility.statisticalNotes",
+    "options": {
+      "enabled": true,
+      "description": "Use this to provide any statistical explanations that should be described by screen readers",
+      "sortOrder": 7
+    }
+  },
+  {
+    "name": "accessibility.structureNotes",
+    "options": {
+      "enabled": true,
+      "description": "Use this to describe special visual features of the chart, such as sorting, color grouping, etc",
+      "sortOrder": 8
+    }
+  },
+  {
+    "name": "accessibility.includeDataKeyNames",
+    "options": {
+      "enabled": false,
+      "description": "If true, includes data key names in voice over description of each element",
+      "sortOrder": 9
+    }
+  },
+  {
+    "name": "accessibility.hideDataTableButton",
+    "options": {
+      "enabled": false,
+      "description": "If true, hides the data table button (but it is still available to screen reader users)",
+      "sortOrder": 10
+    }
+  },
+  {
+    "name": "accessibility.disableValidation",
+    "hide": true,
+    "options": {
+      "enabled": false,
+      "description": "If true, disables validations for this chart",
+      "sortOrder": 11
+    }
+  },
+  {
+    "name": "accessibility.elementsAreInterface",
+    "options": {
+      "control": "Toggle",
+      "enabled": false,
+      "description": "Defaults to null. Set to true if interacting with the elements in this chart affects your application. Otherwise, must be set to false.",
+      "sortOrder": 12
+    }
+  },
+  {
+    "name": "accessibility.showSmallLabels",
+    "options": {
+      "enabled": false,
+      "description": "Defaults to false. Set to true if you would like to display labels on small elements that are likely to overlap. Note, this could impact accessibility of your graphic.",
+      "sortOrder": 13
+    }
+  },
+  {
+    "name": "accessibility.hideStrokes",
+    "options": {
+      "enabled": false,
+      "description": "Defaults to false. Set to true if you would like to remove automated stroke outlines from the chart, note, this could impact accessibility of your graphic.",
+      "sortOrder": 14
+    }
+  },
+  {
+    "name": "accessibility.hideTextures",
+    "options": {
+      "enabled": false,
+      "description": "Defaults to false. Set to true if you would like to remove textures from the chart, note, this could impact accessibility of your graphic.",
+      "sortOrder": 15
+    }
+  },
+  {
+    "name": "accessibility.showExperimentalTextures",
+    "options": {
+      "enabled": false,
+      "description": "Defaults to false. Set to true if you would like leverage our textures which are still undergoing research and development.",
+      "sortOrder": 16
+    }
+  },
+  {
+    "name": "accessibility.keyboardNavConfig",
+    "options": {
+      "enabled": false,
+      "description": "Defaults disabled property to false. May be set to true if accessibility.elementsAreInterface = false and suppressEvents = true. This will disable keyboard navigation and simplify chart instructions for screen reader users.",
+      "sortOrder": 17
+    }
+  },
+  {
+    "name": "animationConfig",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "animationConfig.disabled",
+    "options": {
+      "enabled": false,
+      "description": "Defaults to false. Disabling may improve performance for charts with significant data changes or for accessibility preferences set by users.",
+      "sortOrder": 17
+    }
+  },
+  {
+    "name": "highestHeadingLevel",
+    "options": {
+      "description": "Defaults to null. Set to true if interacting with the elements in this chart affects your application. Otherwise, must be set to false.",
+      "sortOrder": 6,
+      "control": "Select",
+      "choices": [
+        { "label": "h1", "value": "h1" },
+        { "label": "h2", "value": "h2" },
+        { "label": "h3", "value": "h3" },
+        { "label": "h4", "value": "h4" },
+        { "label": "h5", "value": "h5" },
+        { "label": "h6", "value": "h6" },
+        { "label": "span", "value": "span" },
+        { "label": "div", "value": "div" },
+        { "label": "p", "value": "p" },
+        { "label": "1", "value": "1" },
+        { "label": "2", "value": "2" },
+        { "label": "3", "value": "3" },
+        { "label": "4", "value": "4" },
+        { "label": "5", "value": "5" },
+        { "label": "6", "value": "6" }
+      ]
+    }
+  }
+]

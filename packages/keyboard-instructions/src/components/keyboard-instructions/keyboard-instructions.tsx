@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2021 Visa, Inc.
+ * Copyright (c) 2021, 2022 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -147,7 +147,7 @@ export class KeyboardInstructions {
     if (this.disabled) {
       return;
     }
-    const svgProps = { tabindex: '-1' };
+    const svgProps = { tabindex: -1 };
     const useProps = {
       href: `#visa-viz-keyboard-instructions-info--tiny-${this.uniqueID}`,
       xlinkHref: `#visa-viz-keyboard-instructions-info--tiny-${this.uniqueID}`

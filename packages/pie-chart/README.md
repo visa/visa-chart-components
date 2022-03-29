@@ -1,7 +1,5 @@
 # @visa/pie-chart
 
----
-
 ![An image depicting an example of the default pie-chart component](./docs/pie-chart-1.png 'Example image of a pie chart')
 <br>
 

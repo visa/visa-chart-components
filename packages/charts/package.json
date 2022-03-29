@@ -3,11 +3,11 @@
   "version": "6.0.1",
   "description": "Collection of visa charts",
   "license": "SEE LICENCE IN LICENSE",
-  "module": "dist/index.mjs",
-  "main": "dist/index.js",
-  "es2015": "dist/esm/index.mjs.js",
-  "es2017": "dist/esm/index.mjs.js",
-  "jsnext:main": "dist/esm/index.mjs.js",
+  "module": "dist/index.js",
+  "main": "dist/index.cjs.js",
+  "es2015": "dist/esm/index.js",
+  "es2017": "dist/esm/index.js",
+  "jsnext:main": "dist/esm/index.js",
   "unpkg": "dist/charts.js",
   "types": "dist/types/components.d.ts",
   "collection": "dist/collection/collection-manifest.json",
@@ -20,7 +20,7 @@
     "build": "stencil build",
     "watch": "chokidar -d=20000  \"**/*.tsx\"  \"node_modules/@visa/visa-charts-utils/src\" \"node_modules/@visa/bar-chart/src\" \"node_modules/@visa/line-chart/src\" \"node_modules/@visa/pie-chart/src\" \"node_modules/@visa/scatter-plot/src\" \"node_modules/@visa/circle-packing/src\" \"node_modules/@visa/heat-map/src\" \"node_modules/@visa/clustered-bar-chart/src\" \"node_modules/@visa/stacked-bar-chart/src\" -c \"rm -rf dist && npm run build\"",
     "tslint-check": "tslint-config-prettier-check ./tslint.json",
-    "test:es5-check": "es-check es5 'dist/*.js'"
+    "test:es5-check": "es-check es5 'dist/index.cjs.js' 'dist/loader/index.cjs.js'"
   },
   "repository": {
     "type": "git",
@@ -32,6 +32,22 @@
     "access": "public"
   },
   "dependencies": {
+    "d3-array": "^1.2.4",
+    "d3-collection": "^1.0.7",
+    "d3-color": "1.4.1",
+    "d3-geo": "^1.12.1",
+    "d3-geo-projection": "2.9.0",
+    "d3-hierarchy": "^1.1.9",
+    "d3-scale": "^2.2.2",
+    "d3-selection": "^1.4.2",
+    "d3-shape": "^1.3.7",
+    "d3-time": "^1.1.0",
+    "d3-time-format": "^2.3.0",
+    "d3-transition": "1.1.3",
+    "topojson-client": "3.1.0",
+    "uuid": "8.3.2"
+  },
+  "devDependencies": {
     "@visa/alluvial-diagram": "^2.0.1",
     "@visa/bar-chart": "^5.0.1",
     "@visa/circle-packing": "^6.0.1",
@@ -46,7 +62,8 @@
     "@visa/stacked-bar-chart": "^5.0.1",
     "@visa/visa-charts-data-table": "^2.1.1",
     "@visa/visa-charts-utils": "^4.6.0",
-    "@visa/world-map": "^5.0.1"
+    "@visa/world-map": "^5.0.1",
+    "@visa/charts-types": "^0.4.0"
   },
   "jest": {
     "transform": {

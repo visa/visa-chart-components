@@ -4,9 +4,9 @@
   "description": "A react wrapper built with Stencil's bindings for the visa-charts-lib stencil.js based component library. ",
   "license": "SEE LICENCE IN LICENSE",
   "sideEffects": false,
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/types/index.d.ts",
   "files": [
     "dist/"
   ],
@@ -37,22 +37,7 @@
     "react-dom": "^16.7.0"
   },
   "dependencies": {
-    "@visa/alluvial-diagram": "^2.0.1",
-    "@visa/bar-chart": "^5.0.1",
-    "@visa/bivariate-mapbox-map": "^5.0.13",
-    "@visa/circle-packing": "^6.0.1",
-    "@visa/clustered-bar-chart": "^5.0.1",
-    "@visa/dumbbell-plot": "^6.0.1",
-    "@visa/heat-map": "^5.0.1",
-    "@visa/keyboard-instructions": "^1.1.3",
-    "@visa/line-chart": "^5.0.1",
-    "@visa/parallel-plot": "^5.0.1",
-    "@visa/pie-chart": "^5.0.1",
-    "@visa/scatter-plot": "^6.0.1",
-    "@visa/stacked-bar-chart": "^5.0.1",
-    "@visa/visa-charts-data-table": "^2.1.1",
-    "@visa/visa-charts-utils": "^4.6.0",
-    "@visa/world-map": "^5.0.1"
+    "@visa/charts": "^6.0.1"
   },
   "devDependencies": {
     "@types/node": "^13.7.0",
@@ -62,10 +47,10 @@
     "react-dom": "^16.7.0",
     "rollup": "^1.21.2",
     "rollup-plugin-node-resolve": "^5.2.0",
-    "typescript": "^3.3.4000"
+    "typescript": "^3.9.10"
   },
   "resolutions": {
-    "minimist": "^1.2.5",
+    "minimist": "^1.2.6",
     "path-parse": "^1.0.7"
   },
   "jest": {

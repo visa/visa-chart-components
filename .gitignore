@@ -23,6 +23,10 @@ visa-charts-lib/src/components.d.ts
 packages/charts-angular/**/src/lib/directives/
 packages/charts-react*/src/components/
 
+# charts copied files
+packages/charts/src/components/
+packages/charts/scss/
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
@@ -37,6 +41,7 @@ report.*.json
 dist/
 www/
 build/
+storybook/
 .stencil/
 coverage/
 

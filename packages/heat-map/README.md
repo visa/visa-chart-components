@@ -1,7 +1,5 @@
 # @visa/heat-map
 
----
-
 ![An image depicting an example of the default heat-map component](./docs/heat-map-1.png 'Example image of a heat map')
 <br>
 

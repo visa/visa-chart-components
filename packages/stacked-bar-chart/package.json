@@ -3,11 +3,11 @@
   "version": "5.0.1",
   "description": "visa's stacked-bar-chart component",
   "license": "SEE LICENCE IN LICENSE",
-  "module": "dist/index.mjs",
-  "main": "dist/index.js",
-  "es2015": "dist/esm/index.mjs.js",
-  "es2017": "dist/esm/index.mjs.js",
-  "jsnext:main": "dist/esm/index.mjs.js",
+  "module": "dist/index.js",
+  "main": "dist/index.cjs.js",
+  "es2015": "dist/esm/index.js",
+  "es2017": "dist/esm/index.js",
+  "jsnext:main": "dist/esm/index.js",
   "unpkg": "dist/stacked-bar-chart.js",
   "types": "dist/types/components.d.ts",
   "collection": "dist/collection/collection-manifest.json",
@@ -23,7 +23,7 @@
     "tslint-check": "tslint-config-prettier-check ./tslint.json",
     "test": "stencil test --spec --no-cache --color --coverage --json --outputFile=./coverage/test-report.json",
     "test:watch": "jest -watch",
-    "test:es5-check": "es-check es5 'dist/*.js'",
+    "test:es5-check": "es-check es5 'dist/index.cjs.js' 'dist/loader/index.cjs.js'",
     "update-snapshot": "jest --updateSnapshot --color"
   },
   "repository": {
@@ -43,15 +43,16 @@
     "d3-array": "^1.2.4",
     "d3-collection": "^1.0.7",
     "d3-scale": "^2.2.2",
-    "d3-selection": "^1.4.0",
+    "d3-selection": "^1.4.2",
     "d3-transition": "1.1.3",
-    "uuid": "7.0.0"
+    "uuid": "8.3.2"
   },
   "devDependencies": {
     "@visa/visa-charts-utils-dev": "^3.3.12"
   },
   "jest": {
     "preset": "@stencil/core/testing",
+    "testRunner": "jest-jasmine2",
     "transformIgnorePatterns": [
       "/node_modules/(?!(@visa/charts-types)/)"
     ],

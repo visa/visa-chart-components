@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -7,31 +7,34 @@
  **/
 import { Config } from '@stencil/core';
 import { sass } from '@stencil/sass';
-import { reactOutputTarget } from '@stencil/react-output-target';
-import { angularOutputTarget } from '@stencil/angular-output-target';
 
-let excludeSrc = ['**/app-*/*', '**/*.spec*', '**/*.test*', '**/*.e2e*'];
+// exclude nested components from output targets, their packages will
+// send the components to output targets as needed.
+// const excludeComponents = ['data-table', 'keyboard-instructions'];
 // @ts-ignore
 const dev: boolean = process.argv && process.argv.indexOf('--dev') > -1;
-if (dev) {
-  excludeSrc = [];
-}
 
 export const config: Config | any = {
   namespace: 'heat-map',
-  excludeSrc,
+  tsconfig: dev ? './tsconfig.dev.json' : './tsconfig.json',
+  buildEs5: 'prod',
+  extras: {
+    cssVarsShim: true,
+    dynamicImportShim: true,
+    safari10: true,
+    shadowDomShim: true,
+    scriptDataOpts: true,
+    appendChildSlotFix: false,
+    cloneNodeFix: false,
+    slotChildNodesFix: true
+  },
   outputTargets: [
-    reactOutputTarget({
-      componentCorePackage: '@visa/heat-map',
-      loaderDir: 'dist/loader',
-      proxiesFile: '../charts-react/src/components/heat-map.ts'
-    }),
-    angularOutputTarget({
-      componentCorePackage: '@visa/heat-map',
-      directivesProxyFile: '../charts-angular/src/lib/directives/heat-map.ts'
-    }),
     { type: 'dist' },
-    { type: 'www' }
+    {
+      // we also use this output to copy the source code to our bundle package at @visa/charts
+      type: 'www',
+      copy: [{ src: 'components/heat-map', dest: '../../charts/src/components/heat-map', warn: true }]
+    }
   ],
   plugins: [
     sass({

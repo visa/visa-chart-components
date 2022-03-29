@@ -1,7 +1,5 @@
 # @visa/visa-charts-data-table
 
----
-
 ![An image depicting an example of the default data-table component](./docs/data-table-1.png 'Example image of a data table')
 <br>
 

@@ -1,7 +1,5 @@
 # @visa/parallel-plot
 
----
-
 ![An image depicting an example of the default parallel-plot component](./docs/parallel-plot-1.png 'Example image of a parallel plot')
 <br>
 

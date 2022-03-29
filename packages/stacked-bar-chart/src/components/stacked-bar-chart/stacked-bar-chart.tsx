@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -153,7 +153,7 @@ export class StackedBarChart {
   @Prop({ mutable: true }) referenceLines: object[] = StackedBarChartDefaultValues.referenceLines;
 
   // Interactivity (7/7)
-  @Prop() suppressEvents: boolean = StackedBarChartDefaultValues.suppressEvents;
+  @Prop({ mutable: true }) suppressEvents: boolean = StackedBarChartDefaultValues.suppressEvents;
   @Prop({ mutable: true }) hoverHighlight: object;
   @Prop({ mutable: true }) clickHighlight: object[] = StackedBarChartDefaultValues.clickHighlight;
   @Prop({ mutable: true }) interactionKeys: string[];
@@ -1364,17 +1364,19 @@ export class StackedBarChart {
   }
 
   validateClickHighlight() {
-    // format clickHighlight data row if there is date
-    this.clickHighlight.map(d => {
-      d[this.groupAccessor] =
-        d[this.groupAccessor] instanceof Date
-          ? formatDate({
-              date: d[this.groupAccessor],
-              format: this.layout === 'vertical' ? this.xAxis.format : this.yAxis.format,
-              offsetTimezone: true
-            })
-          : d[this.groupAccessor];
-    });
+    // format clickHighlight data row if there is date and data in clickHighlight
+    if (this.clickHighlight && this.clickHighlight.length > 0) {
+      this.clickHighlight.map(d => {
+        d[this.groupAccessor] =
+          d[this.groupAccessor] instanceof Date
+            ? formatDate({
+                date: d[this.groupAccessor],
+                format: this.layout === 'vertical' ? this.xAxis.format : this.yAxis.format,
+                offsetTimezone: true
+              })
+            : d[this.groupAccessor];
+      });
+    }
   }
 
   setTableData() {

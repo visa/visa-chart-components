@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021 Visa, Inc.
+ * Copyright (c) 2021, 2022 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -29,7 +29,7 @@ export class AppAlluvialDiagram {
   @State() linkConfig: any = {
     visible: this.visibleLinkConfig,
     // fillMode: 'none',
-    fillMode: 'group',
+    fillMode: 'source',
     opacity: 0.6
   };
   @State() nodeConfig: any = {
@@ -39,7 +39,7 @@ export class AppAlluvialDiagram {
     compare: this.compareNodeConfig,
     fill: this.fillNodeConfig
   };
-  @State() interactionKeys: any = ['source'];
+  // @State() interactionKeys: any = ['source'];
   @State() fillState: any = 'new';
   @State() linkVisibilityState: any = true;
   @State() stateTrigger: any = 0;
@@ -60,14 +60,14 @@ export class AppAlluvialDiagram {
   @State() dataLabel: any = {
     visible: true,
     placement: 'auto',
-    // labelAccessor: this.nodeID,
-    format: '',
+    labelAccessor: 'Freq',
+    // format: '0',
     collisionHideOnly: false,
     collisionPlacement: 'inside'
   };
   @State() tooltipLabel: any = {
-    labelAccessor: ['value'],
-    labelTitle: ['value'],
+    labelAccessor: ['Freq'],
+    labelTitle: ['Freq'],
     format: ['0,0[.0][a]']
   };
   @State() clickElement: any = [];
@@ -108,7 +108,6 @@ export class AppAlluvialDiagram {
   ];
   @State() suppressEvents: any = false;
   @State() accessibility: any = {
-    elementDescriptionAccessor: 'note', // see Indonesia above
     longDescription: 'An alluvial diagram which shows the movement of groups between 2018 and 2019.',
     contextExplanation: 'This chart is standalone, and can be manipulated by the preceding buttons.',
     executiveSummary: 'Medium is now the largest category in 2019.',
@@ -116,9 +115,9 @@ export class AppAlluvialDiagram {
     structureNotes:
       'The categories are sorted from high to low, with new at the bottom. Links are used to visualize the population of the group moving between categories year over year.',
     statisticalNotes: 'Count of group members.',
-    onChangeFunc: d => {
-      this.onChangeFunc(d);
-    },
+    // onChangeFunc: d => {
+    //   this.onChangeFunc(d);
+    // },
     hideDataTableButton: false,
     elementsAreInterface: true,
     disableValidation: false
@@ -1193,23 +1192,40 @@ export class AppAlluvialDiagram {
           </button>
           <p>{this.nodeID}</p>
           <alluvial-diagram
-            linkData={this.data1}
+            linkData={[
+              { Hair: 'Black', Eye: 'Brown', Sex: 'Female', Freq: 36, newHair: 'Black -Hair', newEye: 'Brown -Eye' },
+              { Hair: 'Brown', Eye: 'Brown', Sex: 'Female', Freq: 66, newHair: 'Brown -Hair', newEye: 'Brown -Eye' },
+              { Hair: 'Red', Eye: 'Brown', Sex: 'Female', Freq: 16, newHair: 'Red -Hair', newEye: 'Brown -Eye' },
+              { Hair: 'Blond', Eye: 'Brown', Sex: 'Female', Freq: 4, newHair: 'Blond -Hair', newEye: 'Brown -Eye' },
+              { Hair: 'Black', Eye: 'Blue', Sex: 'Female', Freq: 9, newHair: 'Black -Hair', newEye: 'Blue -Eye' },
+              { Hair: 'Brown', Eye: 'Blue', Sex: 'Female', Freq: 34, newHair: 'Brown -Hair', newEye: 'Blue -Eye' },
+              { Hair: 'Red', Eye: 'Blue', Sex: 'Female', Freq: 7, newHair: 'Red -Hair', newEye: 'Blue -Eye' },
+              { Hair: 'Blond', Eye: 'Blue', Sex: 'Female', Freq: 64, newHair: 'Blond -Hair', newEye: 'Blue -Eye' },
+              { Hair: 'Black', Eye: 'Hazel', Sex: 'Female', Freq: 5, newHair: 'Black -Hair', newEye: 'Hazel -Eye' },
+              { Hair: 'Brown', Eye: 'Hazel', Sex: 'Female', Freq: 29, newHair: 'Brown -Hair', newEye: 'Hazel -Eye' },
+              { Hair: 'Red', Eye: 'Hazel', Sex: 'Female', Freq: 7, newHair: 'Red -Hair', newEye: 'Hazel -Eye' },
+              { Hair: 'Blond', Eye: 'Hazel', Sex: 'Female', Freq: 5, newHair: 'Blond -Hair', newEye: 'Hazel -Eye' },
+              { Hair: 'Black', Eye: 'Green', Sex: 'Female', Freq: 2, newHair: 'Black -Hair', newEye: 'Green -Eye' },
+              { Hair: 'Brown', Eye: 'Green', Sex: 'Female', Freq: 14, newHair: 'Brown -Hair', newEye: 'Green -Eye' },
+              { Hair: 'Red', Eye: 'Green', Sex: 'Female', Freq: 7, newHair: 'Red -Hair', newEye: 'Green -Eye' },
+              { Hair: 'Blond', Eye: 'Green', Sex: 'Female', Freq: 8, newHair: 'Blond -Hair', newEye: 'Green -Eye' }
+            ]}
             // nodeData={this.nodeData}
             width={this.width}
             height={450}
             padding={this.padding}
             colors={this.colors}
-            sourceAccessor={this.sourceAccessor}
-            targetAccessor={this.targetAccessor}
-            valueAccessor={this.valueAccessor}
-            groupAccessor={this.groupAccessor}
+            sourceAccessor={'newHair'}
+            targetAccessor={'newEye'}
+            valueAccessor={'Freq'}
+            // groupAccessor={this.groupAccessor}
             // nodeIDAccessor={this.nodeID}
             linkConfig={this.linkConfig}
             nodeConfig={this.nodeConfig}
             mainTitle={''}
             subTitle={''}
             dataLabel={this.dataLabel}
-            interactionKeys={this.interactionKeys}
+            // interactionKeys={this.interactionKeys}
             hoverOpacity={0.2}
             showTooltip={true}
             colorPalette={'categorical'}
