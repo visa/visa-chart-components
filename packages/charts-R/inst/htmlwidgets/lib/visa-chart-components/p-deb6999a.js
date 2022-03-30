@@ -1,0 +1,8 @@
+/**
+ * Copyright (c) 2022 Visa, Inc.
+ *
+ * This source code is licensed under the MIT license
+ * https://github.com/visa/visa-chart-components/blob/master/LICENSE
+ *
+ **/
+import"./p-cbe185fc.js";import{r as n}from"./p-1e7506b0.js";import{o as t,i as r}from"./p-f913f2e2.js";function u(){var e,o,f=t().unknown(void 0),i=f.domain,c=f.range,a=[0,1],h=!1,p=0,s=0,M=.5;function l(){var t=i().length,r=a[1]<a[0],u=a[r-0],f=a[1-r];e=(f-u)/Math.max(1,t-p+2*s),h&&(e=Math.floor(e)),u+=(f-u-e*(t-p))*M,o=e*(1-p),h&&(u=Math.round(u),o=Math.round(o));var l=n(t).map((function(n){return u+e*n}));return c(r?l.reverse():l)}return delete f.unknown,f.domain=function(n){return arguments.length?(i(n),l()):i()},f.range=function(n){return arguments.length?(a=[+n[0],+n[1]],l()):a.slice()},f.rangeRound=function(n){return a=[+n[0],+n[1]],h=!0,l()},f.bandwidth=function(){return o},f.step=function(){return e},f.round=function(n){return arguments.length?(h=!!n,l()):h},f.padding=function(n){return arguments.length?(p=Math.min(1,s=+n),l()):p},f.paddingInner=function(n){return arguments.length?(p=Math.min(1,n),l()):p},f.paddingOuter=function(n){return arguments.length?(s=+n,l()):s},f.align=function(n){return arguments.length?(M=Math.max(0,Math.min(1,n)),l()):M},f.copy=function(){return u(i(),a).round(h).paddingInner(p).paddingOuter(s).align(M)},r.apply(l(),arguments)}function e(n){var t=n.copy;return n.padding=n.paddingOuter,delete n.paddingInner,delete n.paddingOuter,n.copy=function(){return e(t())},n}function o(){return e(u.apply(null,arguments).paddingInner(1))}export{u as b,o as p}

@@ -1,0 +1,8 @@
+/**
+ * Copyright (c) 2022 Visa, Inc.
+ *
+ * This source code is licensed under the MIT license
+ * https://github.com/visa/visa-chart-components/blob/master/LICENSE
+ *
+ **/
+System.register(["./p-f54e8bed.system.js","./p-d7d6beb3.system.js"],(function(n){"use strict";var t,e,i,o;return{setters:[function(n){t=n.c;e=n.p},function(n){i=n.x;o=n.y}],execute:function(){n("l",r);function u(n){this._context=n}u.prototype={areaStart:function(){this._line=0},areaEnd:function(){this._line=NaN},lineStart:function(){this._point=0},lineEnd:function(){if(this._line||this._line!==0&&this._point===1)this._context.closePath();this._line=1-this._line},point:function(n,t){n=+n,t=+t;switch(this._point){case 0:this._point=1;this._line?this._context.lineTo(n,t):this._context.moveTo(n,t);break;case 1:this._point=2;default:this._context.lineTo(n,t);break}}};function l(n){return new u(n)}function r(){var n=i,u=o,r=t(true),c=null,f=l,s=null;function h(t){var i,o=t.length,l,h=false,a;if(c==null)s=f(a=e());for(i=0;i<=o;++i){if(!(i<o&&r(l=t[i],i,t))===h){if(h=!h)s.lineStart();else s.lineEnd()}if(h)s.point(+n(l,i,t),+u(l,i,t))}if(a)return s=null,a+""||null}h.x=function(e){return arguments.length?(n=typeof e==="function"?e:t(+e),h):n};h.y=function(n){return arguments.length?(u=typeof n==="function"?n:t(+n),h):u};h.defined=function(n){return arguments.length?(r=typeof n==="function"?n:t(!!n),h):r};h.curve=function(n){return arguments.length?(f=n,c!=null&&(s=f(c)),h):f};h.context=function(n){return arguments.length?(n==null?c=s=null:s=f(c=n),h):c};return h}}}}));
