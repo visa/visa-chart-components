@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.1.0](https://github.com/visa/visa-chart-components/compare/@visa/scatter-plot@6.0.1...@visa/scatter-plot@6.1.0) (2022-03-29)
+
+
+### Features
+
+* major bump of stencil, bump other deps as well, add storybook demo app ([70719eb](https://github.com/visa/visa-chart-components/commit/70719ebc7fa59dc169bcc7fea62b238bcfab6418))
+
+
+
+
+
 ## [6.0.1](https://github.com/visa/visa-chart-components/compare/@visa/scatter-plot@6.0.0...@visa/scatter-plot@6.0.1) (2022-02-04)
 
 **Note:** Version bump only for package @visa/scatter-plot

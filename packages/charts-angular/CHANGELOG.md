@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.1.0](https://github.com/visa/visa-chart-components/compare/@visa/charts-angular@3.0.1...@visa/charts-angular@3.1.0) (2022-03-29)
+
+
+### Bug Fixes
+
+* bump dependencies to recent security vuln notices ([8749b9b](https://github.com/visa/visa-chart-components/commit/8749b9b11aeba92ecf39fc36251cdcb8844a7a46))
+
+
+### Features
+
+* major bump of stencil, bump other deps as well, add storybook demo app ([70719eb](https://github.com/visa/visa-chart-components/commit/70719ebc7fa59dc169bcc7fea62b238bcfab6418))
+
+
+
+
+
 ## [3.0.1](https://github.com/visa/visa-chart-components/compare/@visa/charts-angular@3.0.0...@visa/charts-angular@3.0.1) (2022-02-04)
 
 

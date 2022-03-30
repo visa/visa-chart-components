@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.1](https://github.com/visa/visa-chart-components/compare/@visa/charts-types@0.4.0...@visa/charts-types@0.4.1) (2022-03-29)
+
+
+### Bug Fixes
+
+* add label collision to update functions across lib, doc and testing updates to support ([83e63dc](https://github.com/visa/visa-chart-components/commit/83e63dc352165a68aee9db4e7175fd241c13f523))
+* bump util, type dependencies, pie-chart tests, unused a11y description fix ([5899037](https://github.com/visa/visa-chart-components/commit/5899037a074a4cec4112a4a8a8d78e598fdcf458))
+
+
+
+
+
 # [0.4.0](https://github.com/visa/visa-chart-components/compare/@visa/charts-types@0.3.2...@visa/charts-types@0.4.0) (2021-08-09)
 
 
