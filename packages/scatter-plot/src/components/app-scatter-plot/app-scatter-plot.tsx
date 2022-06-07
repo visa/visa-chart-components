@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -18,60 +18,150 @@ export class AppScatterPlot {
   @State() hoverElement: any = '';
   @State() xAccessor: any = 'item';
   @State() yAccessor: any = 'value';
+  @State() sizeConfig: any = {
+    sizeAccessor: 'otherValue',
+    dualEncodeColor: true
+  };
   @State() groupAccessor: any = 'group';
   @State() baselineX: any = false;
   @State() baselineY: any = false;
   @State() colors: any = ['#FEFEFF', '#FEFFFE', '#FFFEFE', '#FFFEFF'];
-  @State() colorPalette: string = 'diverging_RtoB';
+  @State() colorPalette: string = 'categorical';
   @State() clickStroke: string = 'green';
   @State() clickStrokeWidth: number = 1.5;
   @State() clickColor: string = '#2e3047';
   @State() hoverStroke: string = 'white';
   @State() hoverStrokeWidth: number = 1;
   @State() hoverColor: string = '#8CD6C2';
-  @State() interactionKeys: any = ['group'];
+  @State() interactionKeys: any = ['item'];
   @State() animations: any = { disabled: false };
-  @State() dataLabel: any = { visible: true, placement: 'auto', labelAccessor: 'value', format: '0.0[a]' };
+  @State() dataLabel: any = { visible: true, placement: 'bottom', labelAccessor: '', format: '$0[.][0]a' };
   @State() accessibility: any = {
     elementsAreInterface: false,
+    includeDataKeyNames: true,
     keyboardNavConfig: { disabled: false }
   };
   @State() suppressEvents: boolean = false;
-  @State() dotSymbols: any = ['cross', 'square', 'diamond', 'circle', 'star'];
+  @State() dotSymbols: any = ['star', 'triangle', 'diamond'];
   @State() padding: any = {
     top: 20,
     left: 60,
     right: 50,
     bottom: 50
   };
-  @State() xAxis: any = { visible: true, gridVisible: false, label: 'Age', format: '0' };
+  @State() xAxis: any = { visible: true, gridVisible: true, label: 'Age', format: '0' };
   @State() yAxis: any = { visible: true, gridVisible: true, label: 'Monthly Spending', format: '$0[a]' };
 
   @State() clickElement: any = [
-    { item: 4, otherItem: 1, group: 'C', value: 22135, otherValue: 111, test: 'B' }
+    // { item: 4, otherItem: 1, group: 'C', value: 22135, otherValue: 111, test: 'B' }
     // { item: 3, otherItem: 8, group: 'A', value: 4004, otherValue: 385, test: 'B' }
   ];
+  // startData: any = [
+  //   { item: 1, otherItem: 234, group: 'A', value: -2700, otherValue: 235, test: 'A' },
+  //   { item: 2, otherItem: 164, group: 'A', value: 1000, otherValue: 1235, test: 'B' },
+  //   { item: -30, otherItem: 84, group: 'A', value: 4004, otherValue: 895, test: 'C' }
+  // ];
   startData: any = [
-    { item: 1, otherItem: 234, group: 'A', value: -2700, otherValue: 235, test: 'A' },
-    { item: 2, otherItem: 164, group: 'A', value: 1000, otherValue: 1235, test: 'B' },
-    { item: -30, otherItem: 84, group: 'A', value: 4004, otherValue: 895, test: 'C' }
+    { item: 5.1, value: 3.5, otherValue: 1.4, petalWidth: 0.2, group: 'setosa' },
+    { item: 4.9, value: 3.0, otherValue: 1.4, petalWidth: 0.2, group: 'setosa' },
+    { item: 4.7, value: 3.2, otherValue: 1.3, petalWidth: 0.2, group: 'setosa' },
+    { item: 4.6, value: 3.1, otherValue: 1.5, petalWidth: 0.2, group: 'setosa' },
+    { item: 5.0, value: 3.6, otherValue: 1.4, petalWidth: 0.2, group: 'setosa' },
+    { item: 5.4, value: 3.9, otherValue: 1.7, petalWidth: 0.4, group: 'setosa' },
+    { item: 4.6, value: 3.4, otherValue: 1.4, petalWidth: 0.3, group: 'setosa' },
+    { item: 5.0, value: 3.4, otherValue: 1.5, petalWidth: 0.2, group: 'setosa' },
+    { item: 4.4, value: 2.9, otherValue: 1.4, petalWidth: 0.2, group: 'setosa' },
+    { item: 4.9, value: 3.1, otherValue: 1.5, petalWidth: 0.1, group: 'setosa' },
+    { item: 5.4, value: 3.7, otherValue: 1.5, petalWidth: 0.2, group: 'setosa' },
+    { item: 4.8, value: 3.4, otherValue: 1.6, petalWidth: 0.2, group: 'setosa' },
+    { item: 4.8, value: 3.0, otherValue: 1.4, petalWidth: 0.1, group: 'setosa' },
+    { item: 4.3, value: 3.0, otherValue: 1.1, petalWidth: 0.1, group: 'setosa' },
+    { item: 5.8, value: 4.0, otherValue: 1.2, petalWidth: 0.2, group: 'setosa' },
+    { item: 5.7, value: 4.4, otherValue: 1.5, petalWidth: 0.4, group: 'setosa' },
+    { item: 5.4, value: 3.9, otherValue: 1.3, petalWidth: 0.4, group: 'setosa' },
+    { item: 4.9, value: 3.6, otherValue: 1.4, petalWidth: 0.1, group: 'setosa' },
+    { item: 4.4, value: 3.0, otherValue: 1.3, petalWidth: 0.2, group: 'setosa' },
+    { item: 5.1, value: 3.4, otherValue: 1.5, petalWidth: 0.2, group: 'setosa' },
+    { item: 5.0, value: 3.5, otherValue: 1.3, petalWidth: 0.3, group: 'setosa' },
+    { item: 4.5, value: 2.3, otherValue: 1.3, petalWidth: 0.3, group: 'setosa' },
+    { item: 4.4, value: 3.2, otherValue: 1.3, petalWidth: 0.2, group: 'setosa' },
+    { item: 5.0, value: 3.5, otherValue: 1.6, petalWidth: 0.6, group: 'setosa' },
+    { item: 5.1, value: 3.8, otherValue: 1.9, petalWidth: 0.4, group: 'setosa' },
+    { item: 4.8, value: 3.0, otherValue: 1.4, petalWidth: 0.3, group: 'setosa' },
+    { item: 5.1, value: 3.8, otherValue: 1.6, petalWidth: 0.2, group: 'setosa' },
+    { item: 4.6, value: 3.2, otherValue: 1.4, petalWidth: 0.2, group: 'setosa' },
+    { item: 5.3, value: 3.7, otherValue: 1.5, petalWidth: 0.2, group: 'setosa' },
+    { item: 5.0, value: 3.3, otherValue: 1.4, petalWidth: 0.2, group: 'setosa' },
+    { item: 7.0, value: 3.2, otherValue: 4.7, petalWidth: 1.4, group: 'versicolor' },
+    { item: 6.4, value: 3.2, otherValue: 4.5, petalWidth: 1.5, group: 'versicolor' },
+    { item: 6.9, value: 3.1, otherValue: 4.9, petalWidth: 1.5, group: 'versicolor' },
+    { item: 5.5, value: 2.3, otherValue: 4.0, petalWidth: 1.3, group: 'versicolor' },
+    { item: 6.5, value: 2.8, otherValue: 4.6, petalWidth: 1.5, group: 'versicolor' },
+    { item: 5.7, value: 2.8, otherValue: 4.5, petalWidth: 1.3, group: 'versicolor' },
+    { item: 6.3, value: 3.3, otherValue: 4.7, petalWidth: 1.6, group: 'versicolor' },
+    { item: 4.9, value: 2.4, otherValue: 3.3, petalWidth: 1.0, group: 'versicolor' },
+    { item: 6.6, value: 2.9, otherValue: 4.6, petalWidth: 1.3, group: 'versicolor' },
+    { item: 5.2, value: 2.7, otherValue: 3.9, petalWidth: 1.4, group: 'versicolor' },
+    { item: 5.0, value: 2.0, otherValue: 3.5, petalWidth: 1.0, group: 'versicolor' },
+    { item: 5.8, value: 2.7, otherValue: 3.9, petalWidth: 1.2, group: 'versicolor' },
+    { item: 6.0, value: 2.7, otherValue: 5.1, petalWidth: 1.6, group: 'versicolor' },
+    { item: 5.4, value: 3.0, otherValue: 4.5, petalWidth: 1.5, group: 'versicolor' },
+    { item: 6.0, value: 3.4, otherValue: 4.5, petalWidth: 1.6, group: 'versicolor' },
+    { item: 6.7, value: 3.1, otherValue: 4.7, petalWidth: 1.5, group: 'versicolor' },
+    { item: 6.3, value: 2.3, otherValue: 4.4, petalWidth: 1.3, group: 'versicolor' },
+    { item: 5.6, value: 3.0, otherValue: 4.1, petalWidth: 1.3, group: 'versicolor' },
+    { item: 5.5, value: 2.5, otherValue: 4.0, petalWidth: 1.3, group: 'versicolor' },
+    { item: 5.5, value: 2.6, otherValue: 4.4, petalWidth: 1.2, group: 'versicolor' },
+    { item: 6.1, value: 3.0, otherValue: 4.6, petalWidth: 1.4, group: 'versicolor' },
+    { item: 5.8, value: 2.6, otherValue: 4.0, petalWidth: 1.2, group: 'versicolor' },
+    { item: 5.0, value: 2.3, otherValue: 3.3, petalWidth: 1.0, group: 'versicolor' },
+    { item: 5.6, value: 2.7, otherValue: 4.2, petalWidth: 1.3, group: 'versicolor' },
+    { item: 5.7, value: 3.0, otherValue: 4.2, petalWidth: 1.2, group: 'versicolor' },
+    { item: 5.7, value: 2.9, otherValue: 4.2, petalWidth: 1.3, group: 'versicolor' },
+    { item: 6.2, value: 2.9, otherValue: 4.3, petalWidth: 1.3, group: 'versicolor' },
+    { item: 5.1, value: 2.5, otherValue: 3.0, petalWidth: 1.1, group: 'versicolor' },
+    { item: 5.7, value: 2.8, otherValue: 4.1, petalWidth: 1.3, group: 'versicolor' }
   ];
   dataStorage: any = [
     this.startData,
     [
-      { item: 1, otherItem: 2, group: 'A', value: 2700, otherValue: 135, test: 'A' },
-      { item: 2, otherItem: 7, group: 'A', value: 1000, otherValue: 35, test: 'B' },
-      { item: 3, otherItem: 8, group: 'A', value: 4004, otherValue: 435, test: 'B' },
-      { item: 4, otherItem: 11, group: 'B', value: 2454, otherValue: 95, test: 'B' },
-      { item: 5, otherItem: 9, group: 'B', value: 2213, otherValue: 175, test: 'B' },
-      { item: 6, otherItem: 4, group: 'B', value: 1114, otherValue: 615, test: 'A' }
+      { item: 1, otherItem: 11, group: 'A', value: 1400, otherValue: 135, test: 'B' },
+      { item: 2, otherItem: 9, group: 'A', value: 1800, otherValue: 35, test: 'B' },
+      { item: 3, otherItem: 4, group: 'A', value: 1000, otherValue: 435, test: 'A' },
+      { item: 4, otherItem: 11, group: 'B', value: 1400, otherValue: 135, test: 'B' },
+      { item: 5, otherItem: 9, group: 'B', value: 1800, otherValue: 35, test: 'B' },
+      { item: 6, otherItem: 4, group: 'B', value: 1000, otherValue: 435, test: 'A' },
+      { item: 7, otherItem: 11, group: 'C', value: 1400, otherValue: 135, test: 'B' },
+      { item: 8, otherItem: 9, group: 'C', value: 1800, otherValue: 35, test: 'B' },
+      { item: 9, otherItem: 4, group: 'C', value: 1000, otherValue: 435, test: 'A' },
+      { item: 10, otherItem: 11, group: 'D', value: 1400, otherValue: 135, test: 'B' },
+      { item: 11, otherItem: 9, group: 'D', value: 1800, otherValue: 35, test: 'B' },
+      { item: 12, otherItem: 4, group: 'D', value: 1000, otherValue: 435, test: 'A' },
+      { item: 13, otherItem: 11, group: 'E', value: 1400, otherValue: 135, test: 'B' },
+      { item: 14, otherItem: 9, group: 'E', value: 1800, otherValue: 35, test: 'B' },
+      { item: 15, otherItem: 4, group: 'E', value: 1000, otherValue: 435, test: 'A' },
+      { item: 1, otherItem: 11, group: 'D', value: 1400, otherValue: 135, test: 'B' },
+      { item: 2, otherItem: 9, group: 'D', value: 1800, otherValue: 35, test: 'B' },
+      { item: 3, otherItem: 4, group: 'D', value: 1000, otherValue: 435, test: 'A' },
+      { item: 4, otherItem: 11, group: 'D', value: 1400, otherValue: 135, test: 'B' },
+      { item: 5, otherItem: 9, group: 'D', value: 1800, otherValue: 35, test: 'B' },
+      { item: 6, otherItem: 4, group: 'D', value: 1000, otherValue: 435, test: 'A' },
+      { item: 7, otherItem: 11, group: 'D', value: 1400, otherValue: 135, test: 'B' },
+      { item: 8, otherItem: 9, group: 'D', value: 1800, otherValue: 35, test: 'B' },
+      { item: 9, otherItem: 4, group: 'D', value: 1000, otherValue: 435, test: 'A' },
+      { item: 10, otherItem: 11, group: 'D', value: 1400, otherValue: 135, test: 'B' },
+      { item: 11, otherItem: 9, group: 'D', value: 1800, otherValue: 35, test: 'B' },
+      { item: 12, otherItem: 4, group: 'D', value: 1000, otherValue: 435, test: 'A' },
+      { item: 13, otherItem: 11, group: 'D', value: 1400, otherValue: 135, test: 'B' },
+      { item: 14, otherItem: 9, group: 'D', value: 1800, otherValue: 35, test: 'B' },
+      { item: 15, otherItem: 4, group: 'D', value: 1000, otherValue: 435, test: 'A' }
     ],
     [
       { item: 1, otherItem: 2, group: 'A', value: 2700, otherValue: 135, test: 'A' },
       { item: 2, otherItem: 7, group: 'A', value: 1000, otherValue: 275, test: 'B' },
       { item: 3, otherItem: 8, group: 'A', value: 4004, otherValue: 385, test: 'B' },
       { item: 4, otherItem: 1, group: 'B', value: 2454, otherValue: 715, test: 'B' },
-      { item: 5, otherItem: 9, group: 'B', value: 22135, otherValue: 363, test: 'B' },
+      { item: 5, otherItem: 9, group: 'B', value: 22135, otherValue: 100, test: 'B' },
       { item: 6, otherItem: 4, group: 'B', value: 11143, otherValue: 621, test: 'A' },
       { item: 7, otherItem: 2, group: 'C', value: 2454, otherValue: 111, test: 'C' },
       { item: 8, otherItem: 7, group: 'C', value: 22135, otherValue: 222, test: 'C' },
@@ -277,7 +367,7 @@ export class AppScatterPlot {
     this.animations = { disabled: !this.animations.disabled };
   }
   render() {
-    console.log('!!!!app re-render');
+    // console.log('!!!!app re-render');
     this.data = this.dataStorage[this.stateTrigger];
     return (
       <div>
@@ -394,26 +484,36 @@ export class AppScatterPlot {
             animationConfig={this.animations}
             // annotations={this.annotations}
             subTitle={'Interaction Style'}
-            height={400}
+            height={600}
             width={800}
             xAxis={this.xAxis}
             yAxis={this.yAxis}
             showTooltip={true}
             // yMinValueOverride={0}
             padding={this.padding}
+            // zMinValueOverride={1}
+            // zMaxValueOverride={50}
+            // margin={{
+            //   top: 30,
+            //   bottom: 50,
+            //   right: 50,
+            //   left: 60
+            // }}
             cursor={'pointer'}
             hoverOpacity={0.5}
-            colors={this.colors}
+            // colors={this.colors}
             colorPalette={this.colorPalette}
             dotSymbols={this.dotSymbols}
             data={this.data}
             xAccessor={this.xAccessor}
             yAccessor={this.yAccessor}
-            dotRadius={25}
-            dotOpacity={1}
+            sizeConfig={this.sizeConfig}
+            // dotRadius={25}
+            // dotOpacity={1}
             showBaselineX={this.baselineX}
             showBaselineY={this.baselineY}
             groupAccessor={this.groupAccessor}
+            // groupAccessor={''}
             legend={{ visible: true, interactive: true }}
             dataLabel={this.dataLabel}
             interactionKeys={this.interactionKeys}

@@ -8,7 +8,8 @@
 import { newSpecPage, SpecPage } from '@stencil/core/testing';
 import { ScatterPlot } from './scatter-plot';
 import { ScatterPlotDefaultValues } from './scatter-plot-default-values';
-import { scaleOrdinal, scaleLinear } from 'd3-scale';
+import { scaleOrdinal, scaleLinear, scaleSqrt, scaleSequentialSqrt } from 'd3-scale';
+import { interpolate } from 'd3-interpolate';
 // we need to bring in our nested components as well, was required to bring in the source vs dist folder to get it to mount
 import { KeyboardInstructions } from '../../../node_modules/@visa/keyboard-instructions/src/components/keyboard-instructions/keyboard-instructions';
 import { DataTable } from '../../../node_modules/@visa/visa-charts-data-table/src/components/data-table/data-table';
@@ -118,6 +119,14 @@ describe('<scatter-plot>', () => {
     });
 
     describe('generic test suite', () => {
+      beforeEach(() => {
+        jest.spyOn(console, 'error').mockImplementation();
+      });
+
+      afterEach(() => {
+        // RESTORE GLOBAL FUNCTION FROM MOCK AFTER TEST
+        jest.spyOn(console, 'error').mockRestore();
+      });
       Object.keys(unitTestGeneric).forEach(test => {
         const innerTestProps = unitTestGeneric[test].testDefault
           ? { [unitTestGeneric[test].prop]: ScatterPlotDefaultValues[unitTestGeneric[test].prop] }
@@ -1866,6 +1875,490 @@ describe('<scatter-plot>', () => {
       });
     });
 
+    describe('markers', () => {
+      describe('dotOpacity', () => {
+        it('should render markers with default (1) dotOpacity by default', async () => {
+          // ARRANGE
+          const EXPECTEDOPACITY = ScatterPlotDefaultValues.dotOpacity;
+
+          // ACT
+          page.root.appendChild(component);
+          await page.waitForChanges();
+
+          // ASSERT
+          const markers = page.doc.querySelectorAll('[data-testid=marker]');
+          await asyncForEach(markers, async marker => {
+            flushTransitions(marker);
+            await page.waitForChanges();
+            expect(marker).toEqualAttribute('opacity', EXPECTEDOPACITY);
+          });
+        });
+        it('should render markers with .5 dotOpacity if passed on load', async () => {
+          // ARRANGE
+          const EXPECTEDOPACITY = 0.5;
+          component.dotOpacity = EXPECTEDOPACITY;
+
+          // ACT
+          page.root.appendChild(component);
+          await page.waitForChanges();
+
+          // ASSERT
+          const markers = page.doc.querySelectorAll('[data-testid=marker]');
+          await asyncForEach(markers, async marker => {
+            flushTransitions(marker);
+            await page.waitForChanges();
+            expect(marker).toEqualAttribute('opacity', EXPECTEDOPACITY);
+          });
+        });
+        it('should render markers with .5 dotOpacity if passed on update', async () => {
+          // ARRANGE
+          const EXPECTEDOPACITY = 0.5;
+
+          // ACT - RENDER
+          page.root.appendChild(component);
+          await page.waitForChanges();
+
+          // ACT - UPDATE
+          component.dotOpacity = EXPECTEDOPACITY;
+          await page.waitForChanges();
+
+          // ASSERT
+          const markers = page.doc.querySelectorAll('[data-testid=marker]');
+          await asyncForEach(markers, async marker => {
+            flushTransitions(marker);
+            await page.waitForChanges();
+            expect(marker).toEqualAttribute('opacity', EXPECTEDOPACITY);
+          });
+        });
+      });
+
+      describe('dotRadius', () => {
+        it('should render markers with default dotRadius by default', async () => {
+          // ARRANGE
+          const EXPECTEDRADIUS = ScatterPlotDefaultValues.dotRadius;
+
+          // ACT
+          page.root.appendChild(component);
+          await page.waitForChanges();
+
+          // ASSERT
+          const markers = page.doc.querySelectorAll('[data-testid=marker]');
+          await asyncForEach(markers, async marker => {
+            flushTransitions(marker);
+            await page.waitForChanges();
+            expect(marker).toEqualAttribute('data-r', EXPECTEDRADIUS);
+          });
+        });
+        it('should render markers with 10 dotRadius if passed on load', async () => {
+          // ARRANGE
+          const EXPECTEDRADIUS = 10;
+          component.dotRadius = EXPECTEDRADIUS;
+
+          // ACT
+          page.root.appendChild(component);
+          await page.waitForChanges();
+
+          // ASSERT
+          const markers = page.doc.querySelectorAll('[data-testid=marker]');
+          await asyncForEach(markers, async marker => {
+            flushTransitions(marker);
+            await page.waitForChanges();
+            expect(marker).toEqualAttribute('data-r', EXPECTEDRADIUS);
+          });
+        });
+        it('should render markers with 10 dotRadius if passed on update', async () => {
+          // ARRANGE
+          const EXPECTEDRADIUS = 10;
+
+          // ACT - RENDER
+          page.root.appendChild(component);
+          await page.waitForChanges();
+
+          // ACT - UPDATE
+          component.dotRadius = EXPECTEDRADIUS;
+          await page.waitForChanges();
+
+          // ASSERT
+          const markers = page.doc.querySelectorAll('[data-testid=marker]');
+          await asyncForEach(markers, async marker => {
+            flushTransitions(marker);
+            await page.waitForChanges();
+            expect(marker).toEqualAttribute('data-r', EXPECTEDRADIUS);
+          });
+        });
+      });
+
+      describe('dotSymbols', () => {
+        it('should render circles by default', async () => {
+          // ARRANGE
+          const EXPECTEDSYMBOL = symbols.circle.general;
+
+          // ACT
+          page.root.appendChild(component);
+          await page.waitForChanges();
+
+          // ASSERT
+          const markers = page.doc.querySelectorAll('[data-testid=marker]');
+          markers.forEach(marker => {
+            expect(marker).toEqualAttribute('d', EXPECTEDSYMBOL);
+          });
+        });
+        it('should render stars if passed on load', async () => {
+          // ARRANGE
+          const EXPECTEDSYMBOL = symbols.star.general;
+          component.dotSymbols = ['star'];
+
+          // ACT
+          page.root.appendChild(component);
+          await page.waitForChanges();
+
+          // ASSERT
+          const markers = page.doc.querySelectorAll('[data-testid=marker]');
+          markers.forEach(marker => {
+            expect(marker).toEqualAttribute('d', EXPECTEDSYMBOL);
+          });
+        });
+        it('should render dots, square, stars, cross  if passed on load', async () => {
+          // ARRANGE
+          const EXPECTEDSYMBOL = {
+            A: symbols.circle.general,
+            B: symbols.square.general,
+            C: symbols.cross.general,
+            D: symbols.star.general
+          };
+          component.dotSymbols = ['circle', 'square', 'cross', 'star'];
+
+          // ACT
+          page.root.appendChild(component);
+          await page.waitForChanges();
+
+          // ASSERT
+          const markers = page.doc.querySelectorAll('[data-testid=marker]');
+          markers.forEach((marker, i) => {
+            expect(marker).toEqualAttribute('d', EXPECTEDSYMBOL[EXPECTEDDATA[i].group]);
+          });
+        });
+        it('should render stars if passed on update', async () => {
+          // ARRANGE
+          const EXPECTEDSYMBOL = symbols.star.general;
+
+          // ACT
+          page.root.appendChild(component);
+          await page.waitForChanges();
+
+          // ACT UPDATE
+          component.dotSymbols = ['star'];
+          await page.waitForChanges();
+
+          // ASSERT - WE ONLY TEST ONE OR A FEW MARKERS HERE TO AVOID CALL TRANSITION END ALL
+          // WHICH FAILS IN JSDOM DUE TO (_, i, n) NOT BEING AVAILABLE
+          const markers = page.doc.querySelectorAll('[data-testid=marker]');
+          await asyncForEach(markers, async marker => {
+            flushTransitions(marker);
+            await page.waitForChanges();
+            expect(marker).toEqualAttribute('d', EXPECTEDSYMBOL);
+          });
+        });
+        it('should render dots, square, stars, cross  if passed on update', async () => {
+          // ARRANGE
+          const EXPECTEDSYMBOL = {
+            A: symbols.circle.general,
+            B: symbols.square.general,
+            C: symbols.cross.general,
+            D: symbols.star.general
+          };
+
+          // ACT
+          page.root.appendChild(component);
+          await page.waitForChanges();
+
+          // ACT UPDATE
+          component.dotSymbols = ['circle', 'square', 'cross', 'star'];
+          await page.waitForChanges();
+
+          // ASSERT - WE ONLY TEST ONE OR A FEW MARKERS HERE TO AVOID CALL TRANSITION END ALL
+          // WHICH FAILS IN JSDOM DUE TO (_, i, n) NOT BEING AVAILABLE
+          const markers = page.doc.querySelectorAll('[data-testid=marker]');
+          await asyncForEach(markers, async (marker, i) => {
+            flushTransitions(marker, i);
+            await page.waitForChanges();
+            expect(marker).toEqualAttribute('d', EXPECTEDSYMBOL[EXPECTEDDATA[i].group]);
+          });
+        });
+      });
+
+      describe('sizeConfig', () => {
+        it('should set sizeConfig.sizeAccessor on load', async () => {
+          // ARRANGE
+          const minSizeOverride = undefined;
+          const maxSizeOverride = undefined;
+          const EXPECTEDSCALE = scaleSqrt()
+            .domain([MINVALUE, MAXVALUE])
+            .range([minSizeOverride || ScatterPlotDefaultValues.dotRadius, maxSizeOverride || (650 + 300) / 2.5 / 10]);
+
+          component.height = 300;
+          component.width = 650;
+          component.margin = { bottom: 0, left: 0, right: 0, top: 0 };
+          component.padding = { bottom: 0, left: 0, right: 0, top: 0 };
+          component.sizeConfig = {
+            sizeAccessor: 'value'
+          };
+
+          // ACT
+          page.root.appendChild(component);
+          await page.waitForChanges();
+
+          // ASSERT
+          const markers = page.doc.querySelectorAll('[data-testid=marker]');
+          await asyncForEach(markers, async (marker, i) => {
+            flushTransitions(marker);
+            await page.waitForChanges();
+            expect(Number(marker.getAttribute('data-r'))).toBeCloseTo(EXPECTEDSCALE(EXPECTEDDATA[i].value), 1);
+          });
+        });
+        it('should set sizeConfig.sizeAccessor on update', async () => {
+          // ARRANGE
+          const minSizeOverride = undefined;
+          const maxSizeOverride = undefined;
+          const EXPECTEDSCALE = scaleSqrt()
+            .domain([MINVALUE, MAXVALUE])
+            .range([minSizeOverride || ScatterPlotDefaultValues.dotRadius, maxSizeOverride || (650 + 300) / 2.5 / 10]);
+
+          component.height = 300;
+          component.width = 650;
+          component.margin = { bottom: 0, left: 0, right: 0, top: 0 };
+          component.padding = { bottom: 0, left: 0, right: 0, top: 0 };
+
+          // ACT
+          page.root.appendChild(component);
+          await page.waitForChanges();
+
+          // ACT UPDATE
+          component.sizeConfig = {
+            sizeAccessor: 'value'
+          };
+          await page.waitForChanges();
+
+          // ASSERT
+          const markers = page.doc.querySelectorAll('[data-testid=marker]');
+          await asyncForEach(markers, async (marker, i) => {
+            flushTransitions(marker);
+            await page.waitForChanges();
+            expect(Number(marker.getAttribute('data-r'))).toBeCloseTo(EXPECTEDSCALE(EXPECTEDDATA[i].value), 1);
+          });
+        });
+        it('should set sizeConfig.dualEncodeColor on load', async () => {
+          // ARRANGE
+          const dotColor = scaleOrdinal()
+            .domain(['A', 'B', 'C', 'D'])
+            .range([
+              visaColors.categorical_light_blue,
+              visaColors.categorical_blue,
+              visaColors.categorical_light_purple,
+              visaColors.categorical_purple
+            ]);
+
+          component.height = 300;
+          component.width = 650;
+          component.margin = { bottom: 0, left: 0, right: 0, top: 0 };
+          component.padding = { bottom: 0, left: 0, right: 0, top: 0 };
+          component.sizeConfig = {
+            sizeAccessor: 'value',
+            dualEncodeColor: true
+          };
+          component.colors = [
+            visaColors.categorical_light_blue,
+            visaColors.categorical_blue,
+            visaColors.categorical_light_purple,
+            visaColors.categorical_purple
+          ];
+
+          // ACT
+          page.root.appendChild(component);
+          await page.waitForChanges();
+
+          // ASSERT
+          const markers = page.doc.querySelectorAll('[data-testid=marker]');
+          await asyncForEach(markers, async (marker, i) => {
+            flushTransitions(marker);
+            await page.waitForChanges();
+            expect(marker).toEqualAttribute(
+              'fill',
+              scaleSequentialSqrt(
+                [Math.max(0, MINVALUE), MAXVALUE],
+                interpolate('#fff', dotColor(EXPECTEDDATA[i].group))
+              )(EXPECTEDDATA[i].value)
+            );
+          });
+        });
+        it('should set sizeConfig.dualEncodeColor on update', async () => {
+          // ARRANGE
+          const dotColor = scaleOrdinal()
+            .domain(['A', 'B', 'C', 'D'])
+            .range([
+              visaColors.categorical_light_blue,
+              visaColors.categorical_blue,
+              visaColors.categorical_light_purple,
+              visaColors.categorical_purple
+            ]);
+
+          component.height = 300;
+          component.width = 650;
+          component.margin = { bottom: 0, left: 0, right: 0, top: 0 };
+          component.padding = { bottom: 0, left: 0, right: 0, top: 0 };
+
+          // ACT
+          page.root.appendChild(component);
+          await page.waitForChanges();
+
+          // ACT UPDATE
+          component.sizeConfig = {
+            sizeAccessor: 'value',
+            dualEncodeColor: true
+          };
+          component.colors = [
+            visaColors.categorical_light_blue,
+            visaColors.categorical_blue,
+            visaColors.categorical_light_purple,
+            visaColors.categorical_purple
+          ];
+          await page.waitForChanges();
+
+          // ASSERT
+          const markers = page.doc.querySelectorAll('[data-testid=marker]');
+          await asyncForEach(markers, async (marker, i) => {
+            flushTransitions(marker);
+            await page.waitForChanges();
+            expect(marker).toEqualAttribute(
+              'fill',
+              scaleSequentialSqrt(
+                [Math.max(0, MINVALUE), MAXVALUE],
+                interpolate('#fff', dotColor(EXPECTEDDATA[i].group))
+              )(EXPECTEDDATA[i].value)
+            );
+          });
+        });
+        it('should set sizeConfig.minValueOverride & sizeConfig.maxValueOverride on load', async () => {
+          // ARRANGE
+          const sizeMin = 100;
+          const sizeMax = 15000;
+          const EXPECTEDSCALE = scaleSqrt()
+            .domain([sizeMin, sizeMax])
+            .range([ScatterPlotDefaultValues.dotRadius, (650 + 300) / 2.5 / 10]);
+
+          component.height = 300;
+          component.width = 650;
+          component.margin = { bottom: 0, left: 0, right: 0, top: 0 };
+          component.padding = { bottom: 0, left: 0, right: 0, top: 0 };
+          component.sizeConfig = {
+            sizeAccessor: 'value',
+            minValueOverride: sizeMin,
+            maxValueOverride: sizeMax
+          };
+
+          // ACT
+          page.root.appendChild(component);
+          await page.waitForChanges();
+
+          // ASSERT
+          const markers = page.doc.querySelectorAll('[data-testid=marker]');
+          await asyncForEach(markers, async (marker, i) => {
+            flushTransitions(marker);
+            await page.waitForChanges();
+            expect(Number(marker.getAttribute('data-r'))).toBeCloseTo(EXPECTEDSCALE(EXPECTEDDATA[i].value), 1);
+          });
+        });
+        it('should set sizeConfig.minValueOverride & sizeConfig.maxValueOverride on update', async () => {
+          // ARRANGE
+          const sizeMin = 0;
+          const sizeMax = 15000;
+          const EXPECTEDSCALE = scaleSqrt()
+            .domain([sizeMin, sizeMax])
+            .range([ScatterPlotDefaultValues.dotRadius, (650 + 300) / 2.5 / 10]);
+
+          component.height = 300;
+          component.width = 650;
+          component.margin = { bottom: 0, left: 0, right: 0, top: 0 };
+          component.padding = { bottom: 0, left: 0, right: 0, top: 0 };
+
+          // ACT
+          page.root.appendChild(component);
+          await page.waitForChanges();
+
+          // ACT UPDATE
+          component.sizeConfig = {
+            sizeAccessor: 'value',
+            minValueOverride: 0,
+            maxValueOverride: 15000
+          };
+          await page.waitForChanges();
+
+          // ASSERT
+          const markers = page.doc.querySelectorAll('[data-testid=marker]');
+          await asyncForEach(markers, async (marker, i) => {
+            flushTransitions(marker);
+            await page.waitForChanges();
+            expect(Number(marker.getAttribute('data-r'))).toBeCloseTo(EXPECTEDSCALE(EXPECTEDDATA[i].value), 0);
+          });
+        });
+        it('should set sizeConfig.minSizeOverride & sizeConfig.maxSizeOverride on load', async () => {
+          // ARRANGE
+          const minSizeOverride = 1;
+          const maxSizeOverride = 20; // to big of a number here will lead to a failure
+          const EXPECTEDSCALE = scaleSqrt()
+            .domain([MINVALUE, MAXVALUE])
+            .range([minSizeOverride, maxSizeOverride]);
+
+          component.height = 300;
+          component.width = 650;
+          component.margin = { bottom: 0, left: 0, right: 0, top: 0 };
+          component.padding = { bottom: 0, left: 0, right: 0, top: 0 };
+          component.sizeConfig = { sizeAccessor: 'value', minSizeOverride, maxSizeOverride };
+
+          // ACT
+          page.root.appendChild(component);
+          await page.waitForChanges();
+
+          // ASSERT
+          const markers = page.doc.querySelectorAll('[data-testid=marker]');
+          await asyncForEach(markers, async (marker, i) => {
+            flushTransitions(marker);
+            await page.waitForChanges();
+            expect(Number(marker.getAttribute('data-r'))).toBeCloseTo(EXPECTEDSCALE(EXPECTEDDATA[i].value), 1);
+          });
+        });
+        it('should set sizeConfig.minSizeOverride & sizeConfig.maxSizeOverride on update', async () => {
+          // ARRANGE
+          const minSizeOverride = 1;
+          const maxSizeOverride = 20;
+          const EXPECTEDSCALE = scaleSqrt()
+            .domain([MINVALUE, MAXVALUE])
+            .range([minSizeOverride, maxSizeOverride]);
+
+          component.height = 300;
+          component.width = 650;
+          component.margin = { bottom: 0, left: 0, right: 0, top: 0 };
+          component.padding = { bottom: 0, left: 0, right: 0, top: 0 };
+
+          // ACT
+          page.root.appendChild(component);
+          await page.waitForChanges();
+
+          // ACT UPDATE
+          component.sizeConfig = { sizeAccessor: 'value', minSizeOverride, maxSizeOverride };
+          await page.waitForChanges();
+
+          // ASSERT
+          const markers = page.doc.querySelectorAll('[data-testid=marker]');
+          await asyncForEach(markers, async (marker, i) => {
+            flushTransitions(marker);
+            await page.waitForChanges();
+            expect(Number(marker.getAttribute('data-r'))).toBeCloseTo(EXPECTEDSCALE(EXPECTEDDATA[i].value), 1);
+          });
+        });
+      });
+    });
+
     describe('style', () => {
       // this doesn't do anything on scatter
       // beforeEach(() => {
@@ -2000,105 +2493,6 @@ describe('<scatter-plot>', () => {
       describe('cursor', () => {
         it('refer to generic interaction results above for cursor tests', () => {
           expect(true).toBeTruthy();
-        });
-      });
-
-      describe('dotSymbols', () => {
-        it('should render circles by default', async () => {
-          // ARRANGE
-          const EXPECTEDSYMBOL = symbols.circle.general;
-
-          // ACT
-          page.root.appendChild(component);
-          await page.waitForChanges();
-
-          // ASSERT
-          const markers = page.doc.querySelectorAll('[data-testid=marker]');
-          markers.forEach(marker => {
-            expect(marker).toEqualAttribute('d', EXPECTEDSYMBOL);
-          });
-        });
-        it('should render stars if passed on load', async () => {
-          // ARRANGE
-          const EXPECTEDSYMBOL = symbols.star.general;
-          component.dotSymbols = ['star'];
-
-          // ACT
-          page.root.appendChild(component);
-          await page.waitForChanges();
-
-          // ASSERT
-          const markers = page.doc.querySelectorAll('[data-testid=marker]');
-          markers.forEach(marker => {
-            expect(marker).toEqualAttribute('d', EXPECTEDSYMBOL);
-          });
-        });
-        it('should render dots, square, stars, cross  if passed on load', async () => {
-          // ARRANGE
-          const EXPECTEDSYMBOL = {
-            A: symbols.circle.general,
-            B: symbols.square.general,
-            C: symbols.cross.general,
-            D: symbols.star.general
-          };
-          component.dotSymbols = ['circle', 'square', 'cross', 'star'];
-
-          // ACT
-          page.root.appendChild(component);
-          await page.waitForChanges();
-
-          // ASSERT
-          const markers = page.doc.querySelectorAll('[data-testid=marker]');
-          markers.forEach((marker, i) => {
-            expect(marker).toEqualAttribute('d', EXPECTEDSYMBOL[EXPECTEDDATA[i].group]);
-          });
-        });
-        it('should render stars if passed on update', async () => {
-          // ARRANGE
-          const EXPECTEDSYMBOL = symbols.star.general;
-
-          // ACT
-          page.root.appendChild(component);
-          await page.waitForChanges();
-
-          // ACT UPDATE
-          component.dotSymbols = ['star'];
-          await page.waitForChanges();
-
-          // ASSERT - WE ONLY TEST ONE OR A FEW MARKERS HERE TO AVOID CALL TRANSITION END ALL
-          // WHICH FAILS IN JSDOM DUE TO (_, i, n) NOT BEING AVAILABLE
-          const markers = page.doc.querySelectorAll('[data-testid=marker]');
-          await asyncForEach(markers, async marker => {
-            flushTransitions(marker);
-            await page.waitForChanges();
-            expect(marker).toEqualAttribute('d', EXPECTEDSYMBOL);
-          });
-        });
-        it('should render dots, square, stars, cross  if passed on update', async () => {
-          // ARRANGE
-          const EXPECTEDSYMBOL = {
-            A: symbols.circle.general,
-            B: symbols.square.general,
-            C: symbols.cross.general,
-            D: symbols.star.general
-          };
-
-          // ACT
-          page.root.appendChild(component);
-          await page.waitForChanges();
-
-          // ACT UPDATE
-          component.dotSymbols = ['circle', 'square', 'cross', 'star'];
-          await page.waitForChanges();
-
-          // ASSERT - WE ONLY TEST ONE OR A FEW MARKERS HERE TO AVOID CALL TRANSITION END ALL
-          // WHICH FAILS IN JSDOM DUE TO (_, i, n) NOT BEING AVAILABLE
-          const markers = page.doc.querySelectorAll('[data-testid=marker]');
-          await asyncForEach(markers, async (marker, i) => {
-            flushTransitions(marker, i);
-            await page.waitForChanges();
-            expect(marker).toEqualAttribute('d', EXPECTEDSYMBOL[EXPECTEDDATA[i].group]);
-          });
         });
       });
     });

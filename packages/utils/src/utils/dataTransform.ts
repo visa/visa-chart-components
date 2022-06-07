@@ -58,6 +58,12 @@ export const accessorFormats = {
       charts: ['scatter-plot'],
       type: 'number'
     }
+  ],
+  sizeAccessor: [
+    {
+      charts: ['scatter-plot'],
+      type: 'number'
+    }
   ]
 };
 export const orderColumns = {
@@ -68,7 +74,7 @@ export const orderColumns = {
   'stacked-bar-chart': ['groupAccessor', 'ordinalAccessor', 'valueAccessor'],
   'line-chart': ['seriesAccessor', 'ordinalAccessor', 'valueAccessor'],
   'pie-chart': ['ordinalAccessor', 'valueAccessor'],
-  'scatter-plot': ['groupAccessor', 'xAccessor', 'yAccessor'],
+  'scatter-plot': ['groupAccessor', 'xAccessor', 'yAccessor', 'sizeAccessor'],
   'heat-map': ['xAccessor', 'yAccessor', 'valueAccessor'],
   'circle-packing': ['clusterAccessor', 'nodeAccessor', 'nodeSizeAccessor', 'idAccessor'],
   'parallel-plot': ['seriesAccessor', 'ordinalAccessor', 'valueAccessor'],
@@ -113,6 +119,10 @@ export const chartAccessors = {
       objectName: 'dataLabel',
       objectAccessors: ['labelAccessor'],
       formatAccessors: ['format']
+    },
+    {
+      objectName: 'sizeConfig',
+      objectAccessors: ['sizeAccessor']
     }
   ]
 };

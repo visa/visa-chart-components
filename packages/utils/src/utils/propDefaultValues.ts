@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -217,6 +217,16 @@ export const tooltipLabel = {
   labelAccessor: [],
   labelTitle: [],
   format: ''
+};
+
+// only leaving empty string in here so it displays in demo app and storybook
+export const sizeConfig = {
+  sizeAccessor: '',
+  minValueOverride: '',
+  maxValueOverride: '',
+  minSizeOverride: '',
+  maxSizeOverride: '',
+  dualEncodeColor: false
 };
 
 export const legend = {

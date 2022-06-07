@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -129,9 +129,10 @@ export interface IScatterPlotProps {
 
   /**
    * @shortDescription Sets the color and opacity of bar during mouse over
-   * @controlName
+   * @controlName TextArea
    * @groupName Style */
   hoverStyle: IHoverStyleType;
+
   /**
    * @shortDescription Sets the styling of a bars when they are selected
    * @controlName TextArea
@@ -141,13 +142,13 @@ export interface IScatterPlotProps {
   /**
    * @shortDescription Sets the radius of data points
    * @controlName Slider
-   * @groupName Style */
+   * @groupName Marker */
   dotRadius: number;
 
   /**
    * @shortDescription Sets the opacity of data points, if present
    * @controlName Slider
-   * @groupName Style */
+   * @groupName Marker */
   dotOpacity: number;
 
   /**
@@ -177,7 +178,7 @@ export interface IScatterPlotProps {
   /**
    * @shortDescription Array to assign symbols with groupAccessor (circle, cross, diamond, square, star, triangle)
    * @controlName TextArea
-   * @groupName Style */
+   * @groupName Marker */
   dotSymbols: string[];
 
   /**
@@ -199,6 +200,12 @@ export interface IScatterPlotProps {
   dataLabel: IDataLabelType;
 
   /**
+   * @shortDescription Controls size, dual color encoding and range of size for marks
+   * @controlName TextArea
+   * @groupName Marker */
+  sizeConfig: ISizeConfigType;
+
+  /**
    * @shortDescription When selected, allows tooltips to be displayed
    * @controlName Toggle
    * @groupName Labels */
@@ -214,7 +221,7 @@ export interface IScatterPlotProps {
    * @shortDescription Overrides the calculated default max value of the x-axis
    * @controlName TextField
    * @groupName Axes */
-  xMaxValueOverride: number | null;
+  xMaxValueOverride: number;
 
   /**
    * @shortDescription Overrides the calculated default min value of the x-axis
@@ -351,6 +358,16 @@ export interface IDataLabelType {
   collisionHideOnly?: boolean;
   collisionPlacement?: string;
 }
+export interface ISizeConfigType {
+  sizeAccessor?: string;
+  minValueOverride?: number;
+  maxValueOverride?: number;
+  minSizeOverride?: number;
+  maxSizeOverride?: number;
+  dualEncodeColor?: boolean;
+  // format?: any;
+}
+
 export interface ITooltipLabelType {
   labelAccessor: string[];
   labelTitle: string[];
