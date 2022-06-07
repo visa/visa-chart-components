@@ -1,5 +1,223 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`<alluvial-diagram> rendered-html accessibility generic accessibility test suite accessibility: keyboard instruction component displays table in click state 1`] = `
+<div class="visa-viz-keyboard-instructions-container" id="visa-viz-keyboard-instructions-container-alluvial-diagram-unit-test">
+  <div>
+    <p>
+      Note: for VoiceOver users (mac), press and hold
+      <kbd>
+        Ctrl
+      </kbd>
+      +
+      <kbd>
+        Shift
+      </kbd>
+      when using the arrow keys for the best navigation experience.
+    </p>
+    <table class="vcc-ki-data-table vcc-ki-keyboard-instructions vcc-ki-state--compact vcc-ki-state--single-select" data-header="header">
+      <thead class="vcc-ki-thead">
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-th" scope="col">
+            Action
+          </th>
+          <th class="vcc-ki-th" scope="col">
+            Result
+          </th>
+        </tr>
+      </thead>
+      <tbody class="vcc-ki-tbody">
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Enter
+            </kbd>
+            on the chart area or a node.
+          </th>
+          <td class="vcc-ki-td">
+            Enter the chart area/drill down a level.
+          </td>
+        </tr>
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Esc
+            </kbd>
+            on a node or link.
+          </th>
+          <td class="vcc-ki-td">
+            Drill up a level.
+          </td>
+        </tr>
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Tab
+            </kbd>
+            at any time.
+          </th>
+          <td class="vcc-ki-td">
+            Exit the chart.
+          </td>
+        </tr>
+        <tr class="vcc-ki-disabled-row vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Space
+            </kbd>
+            is unused.
+          </th>
+          <td class="vcc-ki-td">
+            No effect on this chart.
+          </td>
+        </tr>
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              ←
+            </kbd>
+            /
+            <kbd>
+              →
+            </kbd>
+            on a node or link.
+          </th>
+          <td class="vcc-ki-td">
+            Move among sibling nodes or links.
+          </td>
+        </tr>
+        <tr class="vcc-ki-disabled-row vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              ↑
+            </kbd>
+            /
+            <kbd>
+              ↓
+            </kbd>
+            are unused.
+          </th>
+          <td class="vcc-ki-td">
+            No effect on this chart.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+`;
+
+exports[`<alluvial-diagram> rendered-html accessibility generic accessibility test suite accessibility: keyboard instruction component displays table in click state with space enabled 1`] = `
+<div class="visa-viz-keyboard-instructions-container" id="visa-viz-keyboard-instructions-container-alluvial-diagram-unit-test">
+  <div>
+    <p>
+      Note: for VoiceOver users (mac), press and hold
+      <kbd>
+        Ctrl
+      </kbd>
+      +
+      <kbd>
+        Shift
+      </kbd>
+      when using the arrow keys for the best navigation experience.
+    </p>
+    <table class="vcc-ki-data-table vcc-ki-keyboard-instructions vcc-ki-state--compact vcc-ki-state--single-select" data-header="header">
+      <thead class="vcc-ki-thead">
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-th" scope="col">
+            Action
+          </th>
+          <th class="vcc-ki-th" scope="col">
+            Result
+          </th>
+        </tr>
+      </thead>
+      <tbody class="vcc-ki-tbody">
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Enter
+            </kbd>
+            on the chart area or a node.
+          </th>
+          <td class="vcc-ki-td">
+            Enter the chart area/drill down a level.
+          </td>
+        </tr>
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Esc
+            </kbd>
+            on a node or link.
+          </th>
+          <td class="vcc-ki-td">
+            Drill up a level.
+          </td>
+        </tr>
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Tab
+            </kbd>
+            at any time.
+          </th>
+          <td class="vcc-ki-td">
+            Exit the chart.
+          </td>
+        </tr>
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Space
+            </kbd>
+            on a link.
+          </th>
+          <td class="vcc-ki-td">
+            Select/Deselect a link.
+          </td>
+        </tr>
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              ←
+            </kbd>
+            /
+            <kbd>
+              →
+            </kbd>
+            on a node or link.
+          </th>
+          <td class="vcc-ki-td">
+            Move among sibling nodes or links.
+          </td>
+        </tr>
+        <tr class="vcc-ki-disabled-row vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              ↑
+            </kbd>
+            /
+            <kbd>
+              ↓
+            </kbd>
+            are unused.
+          </th>
+          <td class="vcc-ki-td">
+            No effect on this chart.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+`;
+
+exports[`<alluvial-diagram> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: test whether space bar performs click action 1`] = `<path class="alluvial-link entering vcl-accessibility-focus-source" cursor="default" d="M12,14.848554421768679C268.5,14.848554421768679,268.5,5.247023809523809,525,5.247023809523809" data-id="link-Cat12018-Cat12019" data-role="img" data-testid="link" fill="none" focusable="false" id="chart-unit-test-123457-123457-123457" role="presentation" stroke="#7c99b1" stroke-dasharray="-2 -2" stroke-dashoffset="-2" stroke-opacity="0.3" stroke-width="0.1" tabindex="-1"></path>`;
+
+exports[`<alluvial-diagram> rendered-html event-emitter generic event testing link based events [event] clickEvent: event object should emit and contain first data record when first mark is clicked 1`] = `<path class="alluvial-link entering" cursor="default" d="M12,14.848554421768679C268.5,14.848554421768679,268.5,5.247023809523809,525,5.247023809523809" data-id="link-Cat12018-Cat12019" data-role="img" data-testid="link" fill="none" focusable="false" id="alluvial-diagram-unit-test-123457-123457-123457" role="presentation" stroke="#7c99b1" stroke-dasharray="-2 -2" stroke-dashoffset="0" stroke-opacity="0.3" stroke-width="10.494047619047619" tabindex="-1"></path>`;
+
+exports[`<alluvial-diagram> rendered-html event-emitter generic event testing link based events [event] hoverEvent: event object should emit and contain first data record when first mark is hovered 1`] = `<path class="alluvial-link entering" cursor="default" d="M12,14.848554421768679C268.5,14.848554421768679,268.5,5.247023809523809,525,5.247023809523809" data-id="link-Cat12018-Cat12019" data-role="img" data-testid="link" fill="none" focusable="false" id="alluvial-diagram-unit-test-123457-123457-123457" role="presentation" stroke="#7c99b1" stroke-dasharray="-2 -2" stroke-dashoffset="0" stroke-opacity="0.3" stroke-width="10.494047619047619" tabindex="-1"></path>`;
+
 exports[`<alluvial-diagram> rendered-html generic test suite accessibility: should not print accessibility console warnings and logs when accessibility.disableValidation set to true 1`] = `Array []`;
 
 exports[`<alluvial-diagram> rendered-html generic test suite accessibility: should not print accessibility console warnings and logs when accessibility.disableValidation set to true 2`] = `Array []`;
@@ -97,7 +315,7 @@ exports[`<alluvial-diagram> rendered-html render should render with minimal prop
             <div class="visa-viz-keyboard-instructions-outer-container" style="width: 416px;">
               <div class="vcc-ki-keyboard-instructions-header vcc-ki-minimize">
                 <p class="vcc-ki-keyboard-heading">
-                  Select to View Keyboard Instructions
+                  Display Keyboard Instructions
                 </p>
               </div>
               <div class="visa-viz-keyboard-instructions-button-wrapper">
@@ -124,62 +342,62 @@ exports[`<alluvial-diagram> rendered-html render should render with minimal prop
             <g data-testid="margin-container" id="visa-viz-margin-container-g-alluvial-diagram-unit-test" transform="translate(6.5, 3)">
               <g data-testid="padding-container" id="visa-viz-padding-container-g-alluvial-diagram-unit-test" transform="translate(50, 20)">
                 <g aria-hidden="true" class="alluvial-node-group" focusable="false" role="presentation">
-                  <g class="node-wrapper" data-id="node-Cat1 2018" data-offset-group="true" data-testid="node" id="alluvial-diagram-unit-test-123457-123457-123457">
-                    <rect class="alluvial-node" fill="#E4E4E4" height="29.899319727891154" opacity="0" stroke="#717171" stroke-width="1px" width="12" x="0" y="-2.842170943040401e-14"></rect>
+                  <g class="node-wrapper" data-id="node-Cat12018" data-offset-group="true" data-testid="node" id="alluvial-diagram-unit-test-123457-123457-123457">
+                    <rect class="alluvial-node" fill="#E4E4E4" height="29.899319727891154" opacity="0" stroke="#818181" stroke-width="1px" width="12" x="0" y="-2.842170943040401e-14"></rect>
                   </g>
-                  <g class="node-wrapper" data-id="node-Cat2 2018" data-offset-group="true" data-testid="node" id="alluvial-diagram-unit-test-123457-123457-123457">
-                    <rect class="alluvial-node" fill="#E4E4E4" height="59.22687074829936" opacity="0" stroke="#717171" stroke-width="1px" width="12" x="0" y="49.899319727891125"></rect>
+                  <g class="node-wrapper" data-id="node-Cat22018" data-offset-group="true" data-testid="node" id="alluvial-diagram-unit-test-123457-123457-123457">
+                    <rect class="alluvial-node" fill="#E4E4E4" height="59.22687074829936" opacity="0" stroke="#818181" stroke-width="1px" width="12" x="0" y="49.899319727891125"></rect>
                   </g>
-                  <g class="node-wrapper" data-id="node-Cat3 2018" data-offset-group="true" data-testid="node" id="alluvial-diagram-unit-test-123457-123457-123457">
-                    <rect class="alluvial-node" fill="#E4E4E4" height="25.67729591836735" opacity="0" stroke="#717171" stroke-width="1px" width="12" x="0" y="129.1261904761905"></rect>
+                  <g class="node-wrapper" data-id="node-Cat32018" data-offset-group="true" data-testid="node" id="alluvial-diagram-unit-test-123457-123457-123457">
+                    <rect class="alluvial-node" fill="#E4E4E4" height="25.67729591836735" opacity="0" stroke="#818181" stroke-width="1px" width="12" x="0" y="129.1261904761905"></rect>
                   </g>
-                  <g class="node-wrapper" data-id="node-CatNew 2018" data-offset-group="true" data-testid="node" id="alluvial-diagram-unit-test-123457-123457-123457">
-                    <rect class="alluvial-node" fill="#E4E4E4" height="49.19651360544216" opacity="0" stroke="#717171" stroke-width="1px" width="12" x="0" y="174.80348639455784"></rect>
+                  <g class="node-wrapper" data-id="node-CatNew2018" data-offset-group="true" data-testid="node" id="alluvial-diagram-unit-test-123457-123457-123457">
+                    <rect class="alluvial-node" fill="#E4E4E4" height="49.19651360544216" opacity="0" stroke="#818181" stroke-width="1px" width="12" x="0" y="174.80348639455784"></rect>
                   </g>
-                  <g class="node-wrapper" data-id="node-Cat1 2019" data-offset-group="true" data-testid="node" id="alluvial-diagram-unit-test-123457-123457-123457">
-                    <rect class="alluvial-node" fill="#E4E4E4" height="24.875425170068013" opacity="0" stroke="#717171" stroke-width="1px" width="12" x="525" y="0"></rect>
+                  <g class="node-wrapper" data-id="node-Cat12019" data-offset-group="true" data-testid="node" id="alluvial-diagram-unit-test-123457-123457-123457">
+                    <rect class="alluvial-node" fill="#E4E4E4" height="24.875425170068013" opacity="0" stroke="#818181" stroke-width="1px" width="12" x="525" y="0"></rect>
                   </g>
-                  <g class="node-wrapper" data-id="node-Cat2 2019" data-offset-group="true" data-testid="node" id="alluvial-diagram-unit-test-123457-123457-123457">
-                    <rect class="alluvial-node" fill="#E4E4E4" height="83.24812925170062" opacity="0" stroke="#717171" stroke-width="1px" width="12" x="525" y="44.87542517006801"></rect>
+                  <g class="node-wrapper" data-id="node-Cat22019" data-offset-group="true" data-testid="node" id="alluvial-diagram-unit-test-123457-123457-123457">
+                    <rect class="alluvial-node" fill="#E4E4E4" height="83.24812925170062" opacity="0" stroke="#818181" stroke-width="1px" width="12" x="525" y="44.87542517006801"></rect>
                   </g>
-                  <g class="node-wrapper" data-id="node-Cat3 2019" data-offset-group="true" data-testid="node" id="alluvial-diagram-unit-test-123457-123457-123457">
-                    <rect class="alluvial-node" fill="#E4E4E4" height="55.876445578231255" opacity="0" stroke="#717171" stroke-width="1px" width="12" x="525" y="148.12355442176863"></rect>
+                  <g class="node-wrapper" data-id="node-Cat32019" data-offset-group="true" data-testid="node" id="alluvial-diagram-unit-test-123457-123457-123457">
+                    <rect class="alluvial-node" fill="#E4E4E4" height="55.876445578231255" opacity="0" stroke="#818181" stroke-width="1px" width="12" x="525" y="148.12355442176863"></rect>
                   </g>
                 </g>
                 <g aria-hidden="true" class="alluvial-link-group" focusable="false" role="presentation">
-                  <path class="alluvial-link entering" cursor="default" d="M12,14.848554421768679C268.5,14.848554421768679,268.5,5.247023809523809,525,5.247023809523809" data-id="link-Cat1 2018-Cat1 2019" data-role="img" data-testid="link" fill="none" focusable="false" id="alluvial-diagram-unit-test-123457-123457-123457" role="presentation" stroke="#7c99b1" stroke-dasharray="-2 -2" stroke-dashoffset="-2" stroke-opacity="0.3" stroke-width="0.1" tabindex="-1"></path>
-                  <path class="alluvial-link entering" cursor="default" d="M12,4.80076530612242C268.5,4.80076530612242,268.5,49.67619047619046,525,49.67619047619046" data-id="link-Cat1 2018-Cat2 2019" data-role="img" data-testid="link" fill="none" focusable="false" id="alluvial-diagram-unit-test-123457-123457-123457" role="presentation" stroke="#7c99b1" stroke-dasharray="-2 -2" stroke-dashoffset="-2" stroke-opacity="0.3" stroke-width="0.1" tabindex="-1"></path>
-                  <path class="alluvial-link entering" cursor="default" d="M12,24.997448979591805C268.5,24.997448979591805,268.5,153.02542517006796,525,153.02542517006796" data-id="link-Cat1 2018-Cat3 2019" data-role="img" data-testid="link" fill="none" focusable="false" id="alluvial-diagram-unit-test-123457-123457-123457" role="presentation" stroke="#7c99b1" stroke-dasharray="-2 -2" stroke-dashoffset="-2" stroke-opacity="0.3" stroke-width="0.1" tabindex="-1"></path>
-                  <path class="alluvial-link entering" cursor="default" d="M12,95.80293367346935C268.5,95.80293367346935,268.5,12.078613945578232,525,12.078613945578232" data-id="link-Cat2 2018-Cat1 2019" data-role="img" data-testid="link" fill="none" focusable="false" id="alluvial-diagram-unit-test-123457-123457-123457" role="presentation" stroke="#7c99b1" stroke-dasharray="-2 -2" stroke-dashoffset="-2" stroke-opacity="0.3" stroke-width="0.1" tabindex="-1"></path>
-                  <path class="alluvial-link entering" cursor="default" d="M12,72.05884353741493C268.5,72.05884353741493,268.5,76.63647959183672,525,76.63647959183672" data-id="link-Cat2 2018-Cat2 2019" data-role="img" data-testid="link" fill="none" focusable="false" id="alluvial-diagram-unit-test-123457-123457-123457" role="presentation" stroke="#7c99b1" stroke-dasharray="-2 -2" stroke-dashoffset="-2" stroke-opacity="0.3" stroke-width="0.1" tabindex="-1"></path>
-                  <path class="alluvial-link entering" cursor="default" d="M12,103.25684523809521C268.5,103.25684523809521,268.5,163.7966411564625,525,163.7966411564625" data-id="link-Cat2 2018-Cat3 2019" data-role="img" data-testid="link" fill="none" focusable="false" id="alluvial-diagram-unit-test-123457-123457-123457" role="presentation" stroke="#7c99b1" stroke-dasharray="-2 -2" stroke-dashoffset="-2" stroke-opacity="0.3" stroke-width="0.1" tabindex="-1"></path>
-                  <path class="alluvial-link entering" cursor="default" d="M12,133.19481292517008C268.5,133.19481292517008,268.5,24.75688775510204,525,24.75688775510204" data-id="link-Cat3 2018-Cat1 2019" data-role="img" data-testid="link" fill="none" focusable="false" id="alluvial-diagram-unit-test-123457-123457-123457" role="presentation" stroke="#7c99b1" stroke-dasharray="-2 -2" stroke-dashoffset="-2" stroke-opacity="0.3" stroke-width="0.1" tabindex="-1"></path>
-                  <path class="alluvial-link entering" cursor="default" d="M12,131.1012329931973C268.5,131.1012329931973,268.5,126.14851190476189,525,126.14851190476189" data-id="link-Cat3 2018-Cat2 2019" data-role="img" data-testid="link" fill="none" focusable="false" id="alluvial-diagram-unit-test-123457-123457-123457" role="presentation" stroke="#7c99b1" stroke-dasharray="-2 -2" stroke-dashoffset="-2" stroke-opacity="0.3" stroke-width="0.1" tabindex="-1"></path>
-                  <path class="alluvial-link entering" cursor="default" d="M12,144.05841836734695C268.5,144.05841836734695,268.5,193.25493197278902,525,193.25493197278902" data-id="link-Cat3 2018-Cat3 2019" data-role="img" data-testid="link" fill="none" focusable="false" id="alluvial-diagram-unit-test-123457-123457-123457" role="presentation" stroke="#7c99b1" stroke-dasharray="-2 -2" stroke-dashoffset="-2" stroke-opacity="0.3" stroke-width="0.1" tabindex="-1"></path>
-                  <path class="alluvial-link entering" cursor="default" d="M12,205.668537414966C268.5,205.668537414966,268.5,19.150765306122448,525,19.150765306122448" data-id="link-CatNew 2018-Cat1 2019" data-role="img" data-testid="link" fill="none" focusable="false" id="alluvial-diagram-unit-test-123457-123457-123457" role="presentation" stroke="#7c99b1" stroke-dasharray="-2 -2" stroke-dashoffset="-2" stroke-opacity="0.3" stroke-width="0.1" tabindex="-1"></path>
-                  <path class="alluvial-link entering" cursor="default" d="M12,187.4922193877551C268.5,187.4922193877551,268.5,111.48473639455781,525,111.48473639455781" data-id="link-CatNew 2018-Cat2 2019" data-role="img" data-testid="link" fill="none" focusable="false" id="alluvial-diagram-unit-test-123457-123457-123457" role="presentation" stroke="#7c99b1" stroke-dasharray="-2 -2" stroke-dashoffset="-2" stroke-opacity="0.3" stroke-width="0.1" tabindex="-1"></path>
-                  <path class="alluvial-link entering" cursor="default" d="M12,217.5780612244898C268.5,217.5780612244898,268.5,176.08792517006793,525,176.08792517006793" data-id="link-CatNew 2018-Cat3 2019" data-role="img" data-testid="link" fill="none" focusable="false" id="alluvial-diagram-unit-test-123457-123457-123457" role="presentation" stroke="#7c99b1" stroke-dasharray="-2 -2" stroke-dashoffset="-2" stroke-opacity="0.3" stroke-width="0.1" tabindex="-1"></path>
+                  <path class="alluvial-link entering" cursor="default" d="M12,14.848554421768679C268.5,14.848554421768679,268.5,5.247023809523809,525,5.247023809523809" data-id="link-Cat12018-Cat12019" data-role="img" data-testid="link" fill="none" focusable="false" id="alluvial-diagram-unit-test-123457-123457-123457" role="presentation" stroke="#7c99b1" stroke-dasharray="-2 -2" stroke-dashoffset="-2" stroke-opacity="0.3" stroke-width="0.1" tabindex="-1"></path>
+                  <path class="alluvial-link entering" cursor="default" d="M12,4.80076530612242C268.5,4.80076530612242,268.5,49.67619047619046,525,49.67619047619046" data-id="link-Cat12018-Cat22019" data-role="img" data-testid="link" fill="none" focusable="false" id="alluvial-diagram-unit-test-123457-123457-123457" role="presentation" stroke="#7c99b1" stroke-dasharray="-2 -2" stroke-dashoffset="-2" stroke-opacity="0.3" stroke-width="0.1" tabindex="-1"></path>
+                  <path class="alluvial-link entering" cursor="default" d="M12,24.997448979591805C268.5,24.997448979591805,268.5,153.02542517006796,525,153.02542517006796" data-id="link-Cat12018-Cat32019" data-role="img" data-testid="link" fill="none" focusable="false" id="alluvial-diagram-unit-test-123457-123457-123457" role="presentation" stroke="#7c99b1" stroke-dasharray="-2 -2" stroke-dashoffset="-2" stroke-opacity="0.3" stroke-width="0.1" tabindex="-1"></path>
+                  <path class="alluvial-link entering" cursor="default" d="M12,95.80293367346935C268.5,95.80293367346935,268.5,12.078613945578232,525,12.078613945578232" data-id="link-Cat22018-Cat12019" data-role="img" data-testid="link" fill="none" focusable="false" id="alluvial-diagram-unit-test-123457-123457-123457" role="presentation" stroke="#7c99b1" stroke-dasharray="-2 -2" stroke-dashoffset="-2" stroke-opacity="0.3" stroke-width="0.1" tabindex="-1"></path>
+                  <path class="alluvial-link entering" cursor="default" d="M12,72.05884353741493C268.5,72.05884353741493,268.5,76.63647959183672,525,76.63647959183672" data-id="link-Cat22018-Cat22019" data-role="img" data-testid="link" fill="none" focusable="false" id="alluvial-diagram-unit-test-123457-123457-123457" role="presentation" stroke="#7c99b1" stroke-dasharray="-2 -2" stroke-dashoffset="-2" stroke-opacity="0.3" stroke-width="0.1" tabindex="-1"></path>
+                  <path class="alluvial-link entering" cursor="default" d="M12,103.25684523809521C268.5,103.25684523809521,268.5,163.7966411564625,525,163.7966411564625" data-id="link-Cat22018-Cat32019" data-role="img" data-testid="link" fill="none" focusable="false" id="alluvial-diagram-unit-test-123457-123457-123457" role="presentation" stroke="#7c99b1" stroke-dasharray="-2 -2" stroke-dashoffset="-2" stroke-opacity="0.3" stroke-width="0.1" tabindex="-1"></path>
+                  <path class="alluvial-link entering" cursor="default" d="M12,133.19481292517008C268.5,133.19481292517008,268.5,24.75688775510204,525,24.75688775510204" data-id="link-Cat32018-Cat12019" data-role="img" data-testid="link" fill="none" focusable="false" id="alluvial-diagram-unit-test-123457-123457-123457" role="presentation" stroke="#7c99b1" stroke-dasharray="-2 -2" stroke-dashoffset="-2" stroke-opacity="0.3" stroke-width="0.1" tabindex="-1"></path>
+                  <path class="alluvial-link entering" cursor="default" d="M12,131.1012329931973C268.5,131.1012329931973,268.5,126.14851190476189,525,126.14851190476189" data-id="link-Cat32018-Cat22019" data-role="img" data-testid="link" fill="none" focusable="false" id="alluvial-diagram-unit-test-123457-123457-123457" role="presentation" stroke="#7c99b1" stroke-dasharray="-2 -2" stroke-dashoffset="-2" stroke-opacity="0.3" stroke-width="0.1" tabindex="-1"></path>
+                  <path class="alluvial-link entering" cursor="default" d="M12,144.05841836734695C268.5,144.05841836734695,268.5,193.25493197278902,525,193.25493197278902" data-id="link-Cat32018-Cat32019" data-role="img" data-testid="link" fill="none" focusable="false" id="alluvial-diagram-unit-test-123457-123457-123457" role="presentation" stroke="#7c99b1" stroke-dasharray="-2 -2" stroke-dashoffset="-2" stroke-opacity="0.3" stroke-width="0.1" tabindex="-1"></path>
+                  <path class="alluvial-link entering" cursor="default" d="M12,205.668537414966C268.5,205.668537414966,268.5,19.150765306122448,525,19.150765306122448" data-id="link-CatNew2018-Cat12019" data-role="img" data-testid="link" fill="none" focusable="false" id="alluvial-diagram-unit-test-123457-123457-123457" role="presentation" stroke="#7c99b1" stroke-dasharray="-2 -2" stroke-dashoffset="-2" stroke-opacity="0.3" stroke-width="0.1" tabindex="-1"></path>
+                  <path class="alluvial-link entering" cursor="default" d="M12,187.4922193877551C268.5,187.4922193877551,268.5,111.48473639455781,525,111.48473639455781" data-id="link-CatNew2018-Cat22019" data-role="img" data-testid="link" fill="none" focusable="false" id="alluvial-diagram-unit-test-123457-123457-123457" role="presentation" stroke="#7c99b1" stroke-dasharray="-2 -2" stroke-dashoffset="-2" stroke-opacity="0.3" stroke-width="0.1" tabindex="-1"></path>
+                  <path class="alluvial-link entering" cursor="default" d="M12,217.5780612244898C268.5,217.5780612244898,268.5,176.08792517006793,525,176.08792517006793" data-id="link-CatNew2018-Cat32019" data-role="img" data-testid="link" fill="none" focusable="false" id="alluvial-diagram-unit-test-123457-123457-123457" role="presentation" stroke="#7c99b1" stroke-dasharray="-2 -2" stroke-dashoffset="-2" stroke-opacity="0.3" stroke-width="0.1" tabindex="-1"></path>
                 </g>
                 <g aria-hidden="true" class="alluvial-dataLabel-group" focusable="false" role="presentation">
-                  <text class="alluvial-diagram-dataLabel" cursor="default" data-id="dataLabel-Cat1 2018" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="12" data-y="14.949659863945548" dx="0.5em" dy="0.4em" filter="url(#VCL-t-s-f-ffffffalluvial-diagram-unit-test)" opacity="1" text-anchor="start" x="12" y="14.949659863945548">
+                  <text class="alluvial-diagram-dataLabel" cursor="default" data-id="dataLabel-Cat12018" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="12" data-y="14.949659863945548" dx="0.5em" dy="0.4em" filter="url(#VCL-t-s-f-ffffffalluvial-diagram-unit-test)" opacity="1" text-anchor="start" x="12" y="14.949659863945548">
                     8.6k
                   </text>
-                  <text class="alluvial-diagram-dataLabel" cursor="default" data-id="dataLabel-Cat2 2018" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="12" data-y="79.51275510204081" dx="0.5em" dy="0.4em" filter="url(#VCL-t-s-f-ffffffalluvial-diagram-unit-test)" opacity="1" text-anchor="start" x="12" y="79.51275510204081">
+                  <text class="alluvial-diagram-dataLabel" cursor="default" data-id="dataLabel-Cat22018" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="12" data-y="79.51275510204081" dx="0.5em" dy="0.4em" filter="url(#VCL-t-s-f-ffffffalluvial-diagram-unit-test)" opacity="1" text-anchor="start" x="12" y="79.51275510204081">
                     17k
                   </text>
-                  <text class="alluvial-diagram-dataLabel" cursor="default" data-id="dataLabel-Cat3 2018" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="12" data-y="141.96483843537416" dx="0.5em" dy="0.4em" filter="url(#VCL-t-s-f-ffffffalluvial-diagram-unit-test)" opacity="1" text-anchor="start" x="12" y="141.96483843537416">
+                  <text class="alluvial-diagram-dataLabel" cursor="default" data-id="dataLabel-Cat32018" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="12" data-y="141.96483843537416" dx="0.5em" dy="0.4em" filter="url(#VCL-t-s-f-ffffffalluvial-diagram-unit-test)" opacity="1" text-anchor="start" x="12" y="141.96483843537416">
                     7.4k
                   </text>
-                  <text class="alluvial-diagram-dataLabel" cursor="default" data-id="dataLabel-CatNew 2018" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="12" data-y="199.4017431972789" dx="0.5em" dy="0.4em" filter="url(#VCL-t-s-f-ffffffalluvial-diagram-unit-test)" opacity="1" text-anchor="start" x="12" y="199.4017431972789">
+                  <text class="alluvial-diagram-dataLabel" cursor="default" data-id="dataLabel-CatNew2018" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="12" data-y="199.4017431972789" dx="0.5em" dy="0.4em" filter="url(#VCL-t-s-f-ffffffalluvial-diagram-unit-test)" opacity="1" text-anchor="start" x="12" y="199.4017431972789">
                     14.1k
                   </text>
-                  <text class="alluvial-diagram-dataLabel" cursor="default" data-id="dataLabel-Cat1 2019" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="525" data-y="12.437712585034006" dx="-0.5em" dy="0.4em" filter="url(#VCL-t-s-f-ffffffalluvial-diagram-unit-test)" opacity="1" text-anchor="end" x="525" y="12.437712585034006">
+                  <text class="alluvial-diagram-dataLabel" cursor="default" data-id="dataLabel-Cat12019" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="525" data-y="12.437712585034006" dx="-0.5em" dy="0.4em" filter="url(#VCL-t-s-f-ffffffalluvial-diagram-unit-test)" opacity="1" text-anchor="end" x="525" y="12.437712585034006">
                     7.1k
                   </text>
-                  <text class="alluvial-diagram-dataLabel" cursor="default" data-id="dataLabel-Cat2 2019" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="525" data-y="86.49948979591832" dx="-0.5em" dy="0.4em" filter="url(#VCL-t-s-f-ffffffalluvial-diagram-unit-test)" opacity="1" text-anchor="end" x="525" y="86.49948979591832">
+                  <text class="alluvial-diagram-dataLabel" cursor="default" data-id="dataLabel-Cat22019" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="525" data-y="86.49948979591832" dx="-0.5em" dy="0.4em" filter="url(#VCL-t-s-f-ffffffalluvial-diagram-unit-test)" opacity="1" text-anchor="end" x="525" y="86.49948979591832">
                     23.9k
                   </text>
-                  <text class="alluvial-diagram-dataLabel" cursor="default" data-id="dataLabel-Cat3 2019" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="525" data-y="176.06177721088426" dx="-0.5em" dy="0.4em" filter="url(#VCL-t-s-f-ffffffalluvial-diagram-unit-test)" opacity="1" text-anchor="end" x="525" y="176.06177721088426">
+                  <text class="alluvial-diagram-dataLabel" cursor="default" data-id="dataLabel-Cat32019" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="525" data-y="176.06177721088426" dx="-0.5em" dy="0.4em" filter="url(#VCL-t-s-f-ffffffalluvial-diagram-unit-test)" opacity="1" text-anchor="end" x="525" y="176.06177721088426">
                     16k
                   </text>
                 </g>
@@ -187,7 +405,7 @@ exports[`<alluvial-diagram> rendered-html render should render with minimal prop
                 <g aria-hidden="true" class="editable vcl-annotation-group" data-testid="editable-annotation-group" focusable="false" role="presentation"></g>
               </g>
             </g>
-            <defs>
+            <defs data-testid="pattern-defs">
               <filter class="vcl-inversion-filter" color-interpolation-filters="sRGB" id="inversion-alluvial-diagram-unit-test">
                 <feColorMatrix in="SourceGraphic" type="matrix" values="-1 0 0 0 1 
         0 -1 0 0 1 
@@ -209,7 +427,7 @@ exports[`<alluvial-diagram> rendered-html render should render with minimal prop
             </defs>
           </svg>
         </div>
-        <div class="alluvial-tooltip vcl-tooltip" data-testid="tooltip-container" style="display: block; position: absolute; padding: 0.5rem; opacity: 0; background-color: #ffffff; font-size: 14px; font-weight: 400; color: #222222; border: 1px solid #565656; border-radius: 3px; pointer-events: none; min-width: 80px; max-width: 300px;">
+        <div class="alluvial-tooltip vcl-tooltip" data-testid="tooltip-container" style="display: block; position: absolute; padding: 0.5rem; opacity: 0; background-color: #ffffff; font-size: 14px; font-weight: 400; color: #222222; border: 1px solid #565656; border-radius: 3px; pointer-events: none; min-width: 80px; max-width: 300px; z-index: 10;">
           <p style="margin: 0;"></p>
         </div>
         <data-table>

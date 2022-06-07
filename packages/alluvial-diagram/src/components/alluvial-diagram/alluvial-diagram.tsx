@@ -61,6 +61,7 @@ const {
   formatDataLabel,
   formatStats,
   getColors,
+  getContrastingStroke,
   getPadding,
   // getScopedData,
   checkHovered,
@@ -290,12 +291,19 @@ export class AlluvialDiagram {
 
   @Watch('uniqueID')
   idWatcher(newID, _oldID) {
-    this.chartID = newID || 'alluvial-diagram-' + uuid();
-    this.alluvialDiagramEl.id = this.chartID;
-    this.shouldValidateAccessibility = true;
-    this.shouldUpdateDescriptionWrapper = true;
-    this.shouldSetParentSVGAccessibility = true;
-    this.shouldDrawInteractionState = true;
+    console.error(
+      'Change detected in prop uniqueID from value ' +
+        _oldID +
+        ' to value ' +
+        newID +
+        '. This prop cannot be changed after component has loaded.'
+    );
+    // this.chartID = newID || 'alluvial-diagram-' + uuid();
+    // this.alluvialDiagramEl.id = this.chartID;
+    // this.shouldValidateAccessibility = true;
+    // this.shouldUpdateDescriptionWrapper = true;
+    // this.shouldSetParentSVGAccessibility = true;
+    // this.shouldDrawInteractionState = true;
   }
 
   @Watch('highestHeadingLevel')
@@ -1334,6 +1342,7 @@ export class AlluvialDiagram {
       this.tooltipG.attr('data-testid', 'tooltip-container');
 
       // add test attributes to nodes
+      // note that nodes are each wrapped in their own G, which is what this grabs
       this.updateNodes.attr('data-testid', 'node').attr('data-id', d => `node-${d[this.innerIDAccessor]}`);
 
       // add test attributes to links
@@ -1349,7 +1358,7 @@ export class AlluvialDiagram {
       // add test attributes to labels
       this.updatingLabels.attr('data-testid', 'dataLabel').attr('data-id', d => `dataLabel-${d[this.innerIDAccessor]}`);
 
-      // this.svg.select('defs').attr('data-testid', 'pattern-defs');
+      this.svg.select('defs').attr('data-testid', 'pattern-defs');
     } else {
       select(this.alluvialDiagramEl)
         .select('.visa-viz-d3-alluvial-container')
@@ -1378,7 +1387,7 @@ export class AlluvialDiagram {
       // add test attributes to labels
       this.updatingLabels.attr('data-testid', null).attr('data-id', null);
 
-      // this.svg.select('defs').attr('data-testid', null);
+      this.svg.select('defs').attr('data-testid', null);
     }
   }
 
@@ -1652,7 +1661,9 @@ export class AlluvialDiagram {
       .select('.alluvial-node')
       // .attr('cursor', !this.suppressEvents ? this.cursor : null)
       .attr('fill', (_, i) => (this.nodeConfig.fill ? this.colorArr[i] || this.colorArr[0] : '#E4E4E4'))
-      .attr('stroke', '#717171')
+      .attr('stroke', (_, i) =>
+        getContrastingStroke(this.nodeConfig.fill ? this.colorArr[i] || this.colorArr[0] : '#E4E4E4')
+      )
       .attr('stroke-width', '1px')
       .attr('x', d => d.x0)
       .attr('y', d => d.y0)
@@ -1795,7 +1806,11 @@ export class AlluvialDiagram {
     this.updateNodes
       .select('.alluvial-node')
       .attr('fill', (_, i) => (this.nodeConfig.fill ? this.colorArr[i] || this.colorArr[0] : '#E4E4E4'));
-    this.updateNodes.select('.alluvial-node').attr('stroke', '#717171');
+    this.updateNodes
+      .select('.alluvial-node')
+      .attr('stroke', (_, i) =>
+        getContrastingStroke(this.nodeConfig.fill ? this.colorArr[i] || this.colorArr[0] : '#E4E4E4')
+      );
     this.updateNodes.select('.alluvial-node').attr('stroke-width', '1px');
   }
 
@@ -2674,7 +2689,7 @@ export class AlluvialDiagram {
     overrideTitleTooltip(this.chartID, true);
     this.hoverEvent.emit({ data: d.data, target: n });
     if (this.showTooltip) {
-      this.eventsTooltip({ data: d, evt: event, isToShow: true });
+      this.eventsTooltip({ data: d.data, evt: event, isToShow: true });
     }
   }
 
@@ -2700,10 +2715,9 @@ export class AlluvialDiagram {
       isToShow,
       tooltipLabel: this.tooltipLabel,
       groupAccessor: this.groupAccessor,
-      // sourceAccessor: this.sourceAccessor,
-      // targetAccessor: this.targetAccessor,
+      xAccessor: this.sourceAccessor, // map source to x for default tooltip logic
+      yAccessor: this.targetAccessor, // map source to y for default tooltip logic
       valueAccessor: this.valueAccessor,
-      // labelAccessor: this.labelAccessor,
       ordinalAccessor: this.innerIDAccessor,
       chartType: 'alluvial-diagram'
     });
