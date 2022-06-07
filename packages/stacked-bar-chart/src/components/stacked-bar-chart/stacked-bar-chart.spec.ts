@@ -116,6 +116,13 @@ describe('<stacked-bar-chart>', () => {
     });
 
     describe('generic test suite', () => {
+      beforeEach(() => {
+        jest.spyOn(console, 'error').mockImplementation();
+      });
+
+      afterEach(() => {
+        jest.spyOn(console, 'error').mockRestore();
+      });
       Object.keys(unitTestGeneric).forEach(test => {
         const innerTestProps = unitTestGeneric[test].testDefault
           ? { [unitTestGeneric[test].prop]: StackedBarChartDefaultValues[unitTestGeneric[test].prop] }
