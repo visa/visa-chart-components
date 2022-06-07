@@ -44,5 +44,8 @@ export const config: Config | any = {
 
   commonjs: {
     include: ['../utils/dist/visa-charts-utils.umd.js']
+  },
+  testing: {
+    reporters: ['default', '../../node_modules/jest-html-reporter']
   }
 };

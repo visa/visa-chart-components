@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -152,6 +152,10 @@ export class HeatMap {
   @Prop({ mutable: true }) interactionKeys: string[];
   @Prop({ mutable: true }) suppressEvents: boolean = HeatMapDefaultValues.suppressEvents;
 
+  // Testing (8/7)
+  @Prop() unitTest: boolean = false;
+  //  @Prop() debugMode: boolean = false;
+
   // Element
   @Element()
   heatMapEl: HTMLElement;
@@ -164,7 +168,6 @@ export class HeatMap {
   row: any;
   labelG: any;
   labels: any;
-  references: any;
   defaults: boolean;
   current: any;
   enter: any;
@@ -221,6 +224,7 @@ export class HeatMap {
   shouldUpdateXAxis: boolean = false;
   shouldUpdateYAxis: boolean = false;
   shouldSetGlobalSelections: boolean = false;
+  shouldSetTestingAttributes: boolean = false;
   shouldEnterUpdateExit: boolean = false;
   shouldUpdateGeometries: boolean = false;
   shouldSetSelectionClass: boolean = false;
@@ -263,6 +267,7 @@ export class HeatMap {
     this.shouldUpdateData = true;
     this.shouldSetColors = true;
     this.shouldSetGlobalSelections = true;
+    this.shouldSetTestingAttributes = true;
     this.shouldUpdateScales = true;
     this.shouldEnterUpdateExit = true;
     this.shouldUpdateTableData = true;
@@ -285,15 +290,22 @@ export class HeatMap {
 
   @Watch('uniqueID')
   idWatcher(newID, _oldID) {
-    this.chartID = newID;
-    this.heatMapEl.id = this.chartID;
-    this.shouldValidate = true;
-    this.shouldUpdateDescriptionWrapper = true;
-    this.shouldSetParentSVGAccessibility = true;
-    this.shouldUpdateLegend = true;
-    this.shouldSetTextures = true;
-    this.shouldDrawInteractionState = true;
-    this.shouldSetStrokes = true;
+    console.error(
+      'Change detected in prop uniqueID from value ' +
+        _oldID +
+        ' to value ' +
+        newID +
+        '. This prop cannot be changed after component has loaded.'
+    );
+    // this.chartID = newID;
+    // this.heatMapEl.id = this.chartID;
+    // this.shouldValidate = true;
+    // this.shouldUpdateDescriptionWrapper = true;
+    // this.shouldSetParentSVGAccessibility = true;
+    // this.shouldUpdateLegend = true;
+    // this.shouldSetTextures = true;
+    // this.shouldDrawInteractionState = true;
+    // this.shouldSetStrokes = true;
   }
 
   @Watch('highestHeadingLevel')
@@ -419,6 +431,7 @@ export class HeatMap {
     this.shouldUpdateData = true;
     this.shouldUpdateScales = true;
     this.shouldSetGlobalSelections = true;
+    this.shouldSetTestingAttributes = true;
     this.shouldDrawInteractionState = true;
     this.shouldUpdateTableData = true;
     this.shouldUpdateGeometries = true;
@@ -438,6 +451,7 @@ export class HeatMap {
     this.shouldUpdateData = true;
     this.shouldUpdateScales = true;
     this.shouldSetGlobalSelections = true;
+    this.shouldSetTestingAttributes = true;
     this.shouldDrawInteractionState = true;
     this.shouldUpdateTableData = true;
     this.shouldUpdateGeometries = true;
@@ -771,6 +785,11 @@ export class HeatMap {
     this.shouldSetGeometryAriaLabels = true;
   }
 
+  @Watch('unitTest')
+  unitTestWatcher(_newVal, _oldVal) {
+    this.shouldSetTestingAttributes = true;
+  }
+
   componentWillLoad() {
     const chartID = this.uniqueID || 'heat-map-' + uuid();
     this.initialLoadEvent.emit({ chartID: chartID });
@@ -823,6 +842,7 @@ export class HeatMap {
       this.setTextures();
       this.setStrokes();
       this.setGlobalSelections();
+      this.setTestingAttributes();
       this.enterGeometries();
       this.updateGeometries();
       this.exitGeometries();
@@ -917,6 +937,10 @@ export class HeatMap {
       if (this.shouldSetGlobalSelections) {
         this.setGlobalSelections();
         this.shouldSetGlobalSelections = false;
+      }
+      if (this.shouldSetTestingAttributes) {
+        this.setTestingAttributes();
+        this.shouldSetTestingAttributes = false;
       }
       if (this.shouldEnterUpdateExit) {
         this.enterGeometries();
@@ -1425,6 +1449,58 @@ export class HeatMap {
     this.updateLabels = dataBoundToLabels.merge(this.enterLabels);
   }
 
+  setTestingAttributes() {
+    if (this.unitTest) {
+      select(this.heatMapEl)
+        .select('.visa-viz-d3-heat-map-container')
+        .attr('data-testid', 'chart-container');
+      select(this.heatMapEl)
+        .select('.heat-main-title')
+        .attr('data-testid', 'main-title');
+      select(this.heatMapEl)
+        .select('.heat-sub-title')
+        .attr('data-testid', 'sub-title');
+      this.svg.attr('data-testid', 'root-svg');
+      this.root.attr('data-testid', 'margin-container');
+      this.rootG.attr('data-testid', 'padding-container');
+      this.legendG.attr('data-testid', 'legend-container');
+      this.tooltipG.attr('data-testid', 'tooltip-container');
+      this.map.attr('data-testid', 'map-group');
+      this.labelG.attr('data-testid', 'dataLabel-group');
+      this.svg.select('defs').attr('data-testid', 'pattern-defs');
+
+      this.updateRowWrappers.attr('data-testid', 'map-row').attr('data-id', d => `row-${d.key}`);
+      this.updateLabels
+        .attr('data-testid', 'dataLabel')
+        .attr('data-id', d => `label-${d[this.xAccessor]}-${d[this.yAccessor]}`);
+      this.update
+        .attr('data-testid', 'marker')
+        .attr('data-id', d => `marker-${d[this.xAccessor]}-${d[this.yAccessor]}`);
+    } else {
+      select(this.heatMapEl)
+        .select('.visa-viz-d3-heat-map-container')
+        .attr('data-testid', null);
+      select(this.heatMapEl)
+        .select('.heat-main-title')
+        .attr('data-testid', null);
+      select(this.heatMapEl)
+        .select('.heat-sub-title')
+        .attr('data-testid', null);
+      this.svg.attr('data-testid', null);
+      this.root.attr('data-testid', null);
+      this.rootG.attr('data-testid', null);
+      this.legendG.attr('data-testid', null);
+      this.tooltipG.attr('data-testid', null);
+      this.map.attr('data-testid', null);
+      this.labelG.attr('data-testid', null);
+      this.svg.select('defs').attr('data-testid', null);
+
+      this.updateRowWrappers.attr('data-testid', null).attr('data-id', null);
+      this.updateLabels.attr('data-testid', null).attr('data-id', null);
+      this.update.attr('data-testid', null).attr('data-id', null);
+    }
+  }
+
   // draw heat map
   enterGeometries() {
     this.enter.interrupt();
@@ -1432,7 +1508,6 @@ export class HeatMap {
     this.enterRowWrappers
       .attr('class', 'row')
       .classed('entering', true)
-      .attr('cursor', !this.suppressEvents ? this.cursor : null)
       .each((_, i, n) => {
         // we bind accessible interactivity and semantics here (role, tabindex, etc)
         initializeElementAccess(n[i]);
@@ -1440,6 +1515,7 @@ export class HeatMap {
 
     this.enter
       .attr('class', 'grid')
+      .attr('cursor', !this.suppressEvents ? this.cursor : null)
       .each((_d, i, n) => {
         initializeElementAccess(n[i]);
       })
@@ -1868,12 +1944,9 @@ export class HeatMap {
       .on('mouseout', !this.suppressEvents ? () => this.onMouseOutHandler() : null);
 
     this.updateLabels
-      .on('click', this.dataLabel.visible && !this.suppressEvents ? (d, i, n) => this.onClickHandler(d, n[i]) : null)
-      .on(
-        'mouseover',
-        this.dataLabel.visible && !this.suppressEvents ? (d, i, n) => this.onHoverHandler(d, n[i]) : null
-      )
-      .on('mouseout', this.dataLabel.visible && !this.suppressEvents ? () => this.onMouseOutHandler() : null);
+      .on('click', !this.suppressEvents ? (d, i, n) => this.onClickHandler(d, n[i]) : null)
+      .on('mouseover', !this.suppressEvents ? (d, i, n) => this.onHoverHandler(d, n[i]) : null)
+      .on('mouseout', !this.suppressEvents ? () => this.onMouseOutHandler() : null);
   }
 
   enterDataLabels() {
@@ -1884,12 +1957,9 @@ export class HeatMap {
       .attr('opacity', 0)
       .attr('fill', this.textTreatmentHandler)
       .attr('cursor', !this.suppressEvents ? this.cursor : null)
-      .on('click', this.dataLabel.visible && !this.suppressEvents ? (d, i, n) => this.onClickHandler(d, n[i]) : null)
-      .on(
-        'mouseover',
-        this.dataLabel.visible && !this.suppressEvents ? (d, i, n) => this.onHoverHandler(d, n[i]) : null
-      )
-      .on('mouseout', this.dataLabel.visible && !this.suppressEvents ? () => this.onMouseOutHandler() : null);
+      .on('click', !this.suppressEvents ? (d, i, n) => this.onClickHandler(d, n[i]) : null)
+      .on('mouseover', !this.suppressEvents ? (d, i, n) => this.onHoverHandler(d, n[i]) : null)
+      .on('mouseout', !this.suppressEvents ? () => this.onMouseOutHandler() : null);
 
     placeDataLabels({
       root: this.enterLabels,
@@ -2266,8 +2336,8 @@ export class HeatMap {
     return (
       <div class={`o-layout`}>
         <div class="o-layout--chart">
-          <this.topLevel data-testid="main-title">{this.mainTitle}</this.topLevel>
-          <this.bottomLevel class="visa-ui-text--instructions" data-testid="sub-title">
+          <this.topLevel class="heat-main-title vcl-main-title">{this.mainTitle}</this.topLevel>
+          <this.bottomLevel class="visa-ui-text--instructions heat-sub-title vcl-sub-title">
             {this.subTitle}
           </this.bottomLevel>
           <div class="heat-map-legend vcl-legend" style={{ display: this.legend.visible ? 'block' : 'none' }} />
@@ -2296,6 +2366,7 @@ export class HeatMap {
             padding={this.padding}
             margin={this.margin}
             hideDataTable={this.accessibility.hideDataTableButton}
+            unitTest={this.unitTest}
           />
         </div>
       </div>
