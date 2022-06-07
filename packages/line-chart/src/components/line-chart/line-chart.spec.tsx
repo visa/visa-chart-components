@@ -161,6 +161,14 @@ describe('<line-chart>', () => {
     });
 
     describe('generic test suite', () => {
+      beforeEach(() => {
+        jest.spyOn(console, 'error').mockImplementation();
+      });
+
+      afterEach(() => {
+        // RESTORE GLOBAL FUNCTION FROM MOCK AFTER TEST
+        jest.spyOn(console, 'error').mockRestore();
+      });
       Object.keys(unitTestGeneric).forEach(test => {
         const innerTestProps = unitTestGeneric[test].testDefault
           ? { [unitTestGeneric[test].prop]: LineChartDefaultValues[unitTestGeneric[test].prop] }
