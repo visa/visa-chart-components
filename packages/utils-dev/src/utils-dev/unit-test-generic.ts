@@ -533,8 +533,10 @@ export const generic_uniqueID_custom_update = {
   testProps: { uniqueID: 'custom_unique_id' },
   testSelector: 'component-name',
   testFunc: async (component: any, page: SpecPage, testProps: object, testSelector: string) => {
-    // ARRANGE
+    // PRE-ARRANGE TEST STAGING
+    const ORIGINALUNIQUEID = component.uniqueID;
     const EXPECTEDUNIQUEID = testProps['uniqueID'] || 'custom_unique_id';
+    const expectedErrorMessage = `Change detected in prop uniqueID from value ${ORIGINALUNIQUEID} to value ${EXPECTEDUNIQUEID}. This prop cannot be changed after component has loaded.`;
 
     // ACT RENDER
     page.root.appendChild(component);
@@ -545,13 +547,7 @@ export const generic_uniqueID_custom_update = {
     await page.waitForChanges();
 
     // ASSERT
-    const element = page.doc.querySelector(testSelector);
-    const margin = element.querySelector('[data-testid=margin-container]');
-    const padding = element.querySelector('[data-testid=padding-container]');
-
-    expect(element.id).toEqual(EXPECTEDUNIQUEID);
-    expect(margin.id).toEqual(`visa-viz-margin-container-g-${EXPECTEDUNIQUEID}`);
-    expect(padding.id).toEqual(`visa-viz-padding-container-g-${EXPECTEDUNIQUEID}`);
+    expect(console.error).toHaveBeenCalledWith(expect.stringContaining(expectedErrorMessage));
   }
 };
 

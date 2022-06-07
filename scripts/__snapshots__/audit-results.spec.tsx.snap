@@ -5,10 +5,10 @@ Object {
   "alluvial-diagram": Array [
     Object {
       "data": Object {
-        "dependencies": 111,
+        "dependencies": 109,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 111,
+        "totalDependencies": 109,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -23,10 +23,10 @@ Object {
   "bar-chart": Array [
     Object {
       "data": Object {
-        "dependencies": 110,
+        "dependencies": 108,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 110,
+        "totalDependencies": 108,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -41,10 +41,10 @@ Object {
   "bivariate-mapbox-map": Array [
     Object {
       "data": Object {
-        "dependencies": 174,
+        "dependencies": 172,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 174,
+        "totalDependencies": 172,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -59,10 +59,10 @@ Object {
   "charts": Array [
     Object {
       "data": Object {
-        "dependencies": 159,
+        "dependencies": 142,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 159,
+        "totalDependencies": 142,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -77,15 +77,71 @@ Object {
   "charts-angular": Array [
     Object {
       "data": Object {
-        "dependencies": 1341,
+        "advisory": Object {
+          "access": "public",
+          "created": "2022-05-27T00:01:08.000Z",
+          "cves": Array [
+            "CVE-2021-4231",
+          ],
+          "cvss": Object {
+            "score": 3.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:N/I:L/A:N",
+          },
+          "cwe": Array [
+            "CWE-79",
+          ],
+          "deleted": null,
+          "findings": Array [
+            Object {
+              "paths": Array [
+                "codelyzer>@angular/core",
+              ],
+              "version": "9.0.0",
+            },
+          ],
+          "found_by": null,
+          "github_advisory_id": "GHSA-c75v-2vq8-878f",
+          "id": 1070446,
+          "metadata": null,
+          "module_name": "@angular/core",
+          "npm_advisory_id": null,
+          "overview": "A vulnerability was found in Angular up to 11.0.4/11.1.0-next.2. It has been classified as problematic. Affected is the handling of comments. The manipulation leads to cross site scripting. It is possible to launch the attack remotely but it might require an authentication first. Upgrading to version 11.0.5 and 11.1.0-next.3 is able to address this issue. The name of the patch is ba8da742e3b243e8f43d4c63aa842b44e14f2b09. It is recommended to upgrade the affected component.",
+          "patched_versions": ">=11.0.5",
+          "recommendation": "Upgrade to version 11.0.5 or later",
+          "references": "- https://nvd.nist.gov/vuln/detail/CVE-2021-4231
+- https://github.com/angular/angular/issues/40136
+- https://github.com/angular/angular/commit/ba8da742e3b243e8f43d4c63aa842b44e14f2b09
+- https://security.snyk.io/vuln/SNYK-JS-ANGULARCORE-1070902
+- https://vuldb.com/?id.181356
+- https://github.com/advisories/GHSA-c75v-2vq8-878f",
+          "reported_by": null,
+          "severity": "low",
+          "title": "Cross site scripting in Angular",
+          "updated": "2022-06-02T18:58:53.000Z",
+          "url": "https://github.com/advisories/GHSA-c75v-2vq8-878f",
+          "vulnerable_versions": "<11.0.5",
+        },
+        "resolution": Object {
+          "bundled": false,
+          "dev": false,
+          "id": 1070446,
+          "optional": false,
+          "path": "codelyzer>@angular/core",
+        },
+      },
+      "type": "auditAdvisory",
+    },
+    Object {
+      "data": Object {
+        "dependencies": 1246,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 1341,
+        "totalDependencies": 1246,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
           "info": 0,
-          "low": 0,
+          "low": 1,
           "moderate": 0,
         },
       },
@@ -95,10 +151,10 @@ Object {
   "charts-react": Array [
     Object {
       "data": Object {
-        "dependencies": 157,
+        "dependencies": 55,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 157,
+        "totalDependencies": 55,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -113,10 +169,10 @@ Object {
   "circle-packing": Array [
     Object {
       "data": Object {
-        "dependencies": 111,
+        "dependencies": 109,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 111,
+        "totalDependencies": 109,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -131,10 +187,10 @@ Object {
   "clustered-bar-chart": Array [
     Object {
       "data": Object {
-        "dependencies": 111,
+        "dependencies": 109,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 111,
+        "totalDependencies": 109,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -149,10 +205,10 @@ Object {
   "data-table": Array [
     Object {
       "data": Object {
-        "dependencies": 104,
+        "dependencies": 102,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 104,
+        "totalDependencies": 102,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -167,10 +223,10 @@ Object {
   "dumbbell-plot": Array [
     Object {
       "data": Object {
-        "dependencies": 110,
+        "dependencies": 108,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 110,
+        "totalDependencies": 108,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -185,10 +241,10 @@ Object {
   "heat-map": Array [
     Object {
       "data": Object {
-        "dependencies": 110,
+        "dependencies": 108,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 110,
+        "totalDependencies": 108,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -207,10 +263,10 @@ Object {
     },
     Object {
       "data": Object {
-        "dependencies": 102,
+        "dependencies": 100,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 102,
+        "totalDependencies": 100,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -225,10 +281,10 @@ Object {
   "line-chart": Array [
     Object {
       "data": Object {
-        "dependencies": 114,
+        "dependencies": 112,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 114,
+        "totalDependencies": 112,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -243,10 +299,10 @@ Object {
   "parallel-plot": Array [
     Object {
       "data": Object {
-        "dependencies": 113,
+        "dependencies": 111,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 113,
+        "totalDependencies": 111,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -261,10 +317,10 @@ Object {
   "pie-chart": Array [
     Object {
       "data": Object {
-        "dependencies": 111,
+        "dependencies": 109,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 111,
+        "totalDependencies": 109,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -279,10 +335,10 @@ Object {
   "scatter-plot": Array [
     Object {
       "data": Object {
-        "dependencies": 111,
+        "dependencies": 109,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 111,
+        "totalDependencies": 109,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -297,10 +353,10 @@ Object {
   "stacked-bar-chart": Array [
     Object {
       "data": Object {
-        "dependencies": 111,
+        "dependencies": 109,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 111,
+        "totalDependencies": 109,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -351,10 +407,10 @@ Object {
   "utils-dev": Array [
     Object {
       "data": Object {
-        "dependencies": 204,
+        "dependencies": 203,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 204,
+        "totalDependencies": 203,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
@@ -387,10 +443,10 @@ Object {
   "world-map": Array [
     Object {
       "data": Object {
-        "dependencies": 122,
+        "dependencies": 120,
         "devDependencies": 0,
         "optionalDependencies": 0,
-        "totalDependencies": 122,
+        "totalDependencies": 120,
         "vulnerabilities": Object {
           "critical": 0,
           "high": 0,
