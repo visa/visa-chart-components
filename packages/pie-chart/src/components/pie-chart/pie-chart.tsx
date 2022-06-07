@@ -342,15 +342,22 @@ export class PieChart {
 
   @Watch('uniqueID')
   idWatcher(newVal, _oldVal) {
-    this.chartID = newVal || 'pie-chart-' + uuid();
-    this.pieChartEl.id = this.chartID;
-    this.shouldValidate = true;
-    this.shouldUpdateDescriptionWrapper = true;
-    this.shouldSetParentSVGAccessibility = true;
-    this.shouldSetTextures = true;
-    this.shouldCheckLabelColor = true;
-    this.shouldDrawInteractionState = true;
-    this.shouldSetStrokes = true;
+    console.error(
+      'Change detected in prop uniqueID from value ' +
+        _oldVal +
+        ' to value ' +
+        newVal +
+        '. This prop cannot be changed after component has loaded.'
+    );
+    // this.chartID = newVal || 'pie-chart-' + uuid();
+    // this.pieChartEl.id = this.chartID;
+    // this.shouldValidate = true;
+    // this.shouldUpdateDescriptionWrapper = true;
+    // this.shouldSetParentSVGAccessibility = true;
+    // this.shouldSetTextures = true;
+    // this.shouldCheckLabelColor = true;
+    // this.shouldDrawInteractionState = true;
+    // this.shouldSetStrokes = true;
   }
 
   @Watch('ordinalAccessor')
@@ -1279,11 +1286,11 @@ export class PieChart {
       .attr('fill', (d, i) => {
         return this.clickHighlight &&
           this.clickHighlight.length > 0 &&
-          checkClicked(d, this.clickHighlight, this.innerInteractionKeys) &&
+          checkClicked(d.data, this.clickHighlight, this.innerInteractionKeys) &&
           this.clickStyle.color
           ? visaColors[this.clickStyle.color] || this.clickStyle.color
           : this.hoverHighlight &&
-            checkHovered(d, this.hoverHighlight, this.innerInteractionKeys) &&
+            checkHovered(d.data, this.hoverHighlight, this.innerInteractionKeys) &&
             this.hoverStyle.color
           ? visaColors[this.hoverStyle.color] || this.hoverStyle.color
           : this.preppedData.length === 2 && i === 1
@@ -1295,8 +1302,8 @@ export class PieChart {
           const clicked =
             this.clickHighlight &&
             this.clickHighlight.length > 0 &&
-            checkClicked(d, this.clickHighlight, this.innerInteractionKeys);
-          const hovered = this.hoverHighlight && checkHovered(d, this.hoverHighlight, this.innerInteractionKeys);
+            checkClicked(d.data, this.clickHighlight, this.innerInteractionKeys);
+          const hovered = this.hoverHighlight && checkHovered(d.data, this.hoverHighlight, this.innerInteractionKeys);
           const baseColor = this.preparedColors[i];
           const state = clicked ? 'click' : hovered && !select(n[i]).classed('geometryIsMoving') ? 'hover' : 'rest';
           const color =
@@ -1485,11 +1492,11 @@ export class PieChart {
     const bgColor =
       this.clickHighlight &&
       this.clickHighlight.length > 0 &&
-      checkClicked(d, this.clickHighlight, this.innerInteractionKeys) &&
+      checkClicked(d.data, this.clickHighlight, this.innerInteractionKeys) &&
       this.clickStyle.color
         ? visaColors[this.clickStyle.color] || this.clickStyle.color
         : this.hoverHighlight &&
-          checkHovered(d, this.hoverHighlight, this.innerInteractionKeys) &&
+          checkHovered(d.data, this.hoverHighlight, this.innerInteractionKeys) &&
           this.hoverStyle.color
         ? visaColors[this.hoverStyle.color] || this.hoverStyle.color
         : this.preparedColors[i];
@@ -1700,11 +1707,11 @@ export class PieChart {
   setSelectedClass() {
     this.update
       .classed('highlight', d => {
-        const selected = checkInteraction(d, true, false, '', this.clickHighlight, this.innerInteractionKeys);
+        const selected = checkInteraction(d.data, true, false, '', this.clickHighlight, this.innerInteractionKeys);
         return this.clickHighlight && this.clickHighlight.length ? selected : false;
       })
       .each((d, i, n) => {
-        let selected = checkInteraction(d, true, false, '', this.clickHighlight, this.innerInteractionKeys);
+        let selected = checkInteraction(d.data, true, false, '', this.clickHighlight, this.innerInteractionKeys);
         selected = this.clickHighlight && this.clickHighlight.length ? selected : false;
         const selectable = this.accessibility.elementsAreInterface;
         setElementInteractionAccessState(n[i], selected, selectable);
