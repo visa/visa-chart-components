@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -411,14 +411,21 @@ export class DumbbellPlot {
 
   @Watch('uniqueID')
   idWatcher(newID, _oldID) {
-    this.chartID = newID || 'dumbbell-plot-' + uuid();
-    this.dumbbellPlotEl.id = this.chartID;
-    this.shouldValidate = true;
-    this.shouldUpdateDescriptionWrapper = true;
-    this.shouldSetParentSVGAccessibility = true;
-    this.shouldUpdateLegend = true;
-    this.shouldAddStrokeUnder = true;
-    this.shouldUpdateMarkerIDs = true;
+    console.error(
+      'Change detected in prop uniqueID from value ' +
+        _oldID +
+        ' to value ' +
+        newID +
+        '. This prop cannot be changed after component has loaded.'
+    );
+    // this.chartID = newID || 'dumbbell-plot-' + uuid();
+    // this.dumbbellPlotEl.id = this.chartID;
+    // this.shouldValidate = true;
+    // this.shouldUpdateDescriptionWrapper = true;
+    // this.shouldSetParentSVGAccessibility = true;
+    // this.shouldUpdateLegend = true;
+    // this.shouldAddStrokeUnder = true;
+    // this.shouldUpdateMarkerIDs = true;
   }
 
   @Watch('highestHeadingLevel')
@@ -1952,6 +1959,7 @@ export class DumbbellPlot {
       select(this.dumbbellPlotEl)
         .select('.dumbbell-sub-title')
         .attr('data-testid', 'sub-title');
+      this.svg.attr('data-testid', 'root-svg');
       this.root.attr('data-testid', 'margin-container');
       this.rootG.attr('data-testid', 'padding-container');
       this.legendG.attr('data-testid', 'legend-container');
@@ -1978,6 +1986,7 @@ export class DumbbellPlot {
       select(this.dumbbellPlotEl)
         .select('.dumbbell-sub-title')
         .attr('data-testid', null);
+      this.svg.attr('data-testid', null);
       this.root.attr('data-testid', null);
       this.rootG.attr('data-testid', null);
       this.legendG.attr('data-testid', null);
