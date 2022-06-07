@@ -28,11 +28,16 @@ export default [
 	// `file` and `format` for each target)
 	{
 		input: 'src/index.ts',
-		external: [],
 		plugins: [
 			// typescript2(),
 			typescript(), // so Rollup can convert TypeScript to JavaScript
 		],
+		// suppress unresolved imports as we definitely have those covered
+		onwarn: function(warning, warn) {
+			// console.log('checking', warning); // can you this to find codes
+			if (warning.code === 'UNRESOLVED_IMPORT') return
+			warn(warning)
+		},		
 		output: [
 			{ file: pkg.main, format: 'cjs' },
 			{ file: pkg.module, format: 'es' }
