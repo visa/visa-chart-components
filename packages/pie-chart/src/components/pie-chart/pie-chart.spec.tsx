@@ -108,6 +108,14 @@ describe('<pie-chart>', () => {
     });
 
     describe('generic test suite', () => {
+      beforeEach(() => {
+        jest.spyOn(console, 'error').mockImplementation();
+      });
+
+      afterEach(() => {
+        // RESTORE GLOBAL FUNCTION FROM MOCK AFTER TEST
+        jest.spyOn(console, 'error').mockRestore();
+      });
       Object.keys(unitTestGeneric).forEach(test => {
         if (unitTestGeneric[test].prop !== 'data') {
           const paddingModifier = unitTestGeneric[test].testProps.padding

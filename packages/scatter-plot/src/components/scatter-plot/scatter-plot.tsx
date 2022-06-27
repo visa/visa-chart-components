@@ -9,7 +9,8 @@ import { Component, Element, Prop, Watch, h, Event, EventEmitter } from '@stenci
 
 import { select, event } from 'd3-selection';
 import { max, min } from 'd3-array';
-import { scaleLinear, scaleOrdinal } from 'd3-scale';
+import { scaleLinear, scaleOrdinal, scaleSqrt, scaleSequentialSqrt } from 'd3-scale';
+import { interpolate } from 'd3-interpolate';
 import { easeCircleIn } from 'd3-ease';
 import { nest } from 'd3-collection';
 import 'd3-transition';
@@ -113,6 +114,7 @@ export class ScatterPlot {
   @Prop() uniqueID: string;
   @Prop({ mutable: true }) xAccessor: string = ScatterPlotDefaultValues.xAccessor;
   @Prop({ mutable: true }) yAccessor: string = ScatterPlotDefaultValues.yAccessor;
+  @Prop({ mutable: true }) sizeConfig: any = ScatterPlotDefaultValues.sizeConfig;
   @Prop({ mutable: true }) groupAccessor: string = ScatterPlotDefaultValues.groupAccessor;
 
   // Axis (3/7)
@@ -176,6 +178,8 @@ export class ScatterPlot {
   colorArr: any;
   x: any;
   y: any;
+  size: any;
+  shapeArea: any;
   nest: any;
   symbol: any;
   innerHeight: number;
@@ -186,6 +190,8 @@ export class ScatterPlot {
   xMax: any;
   yMin: any;
   yMax: any;
+  sizeMin: any;
+  sizeMax: any;
   defaults: boolean;
   current: any;
   enterPointWrappers: any;
@@ -218,6 +224,7 @@ export class ScatterPlot {
   rawColors: any;
   textColorArr: any;
   innerInteractionKeys: string[];
+  groupInteraction: boolean;
   shouldUpdateAnnotations: boolean = false;
   shouldResetRoot: boolean = false;
   shouldUpdateTableData: boolean = false;
@@ -317,14 +324,21 @@ export class ScatterPlot {
 
   @Watch('uniqueID')
   idWatcher(newID, _oldID) {
-    this.chartID = newID || 'scatter-plot-' + uuid();
-    this.scatterChartEl.id = this.chartID;
-    this.shouldValidate = true;
-    this.shouldUpdateDescriptionWrapper = true;
-    this.shouldSetParentSVGAccessibility = true;
-    this.shouldUpdateLegend = true;
-    this.shouldSetStrokes = true;
-    this.shouldAddStrokeUnder = true;
+    console.error(
+      'Change detected in prop uniqueID from value ' +
+        _oldID +
+        ' to value ' +
+        newID +
+        '. This prop cannot be changed after component has loaded.'
+    );
+    // this.chartID = newID || 'scatter-plot-' + uuid();
+    // this.scatterChartEl.id = this.chartID;
+    // this.shouldValidate = true;
+    // this.shouldUpdateDescriptionWrapper = true;
+    // this.shouldSetParentSVGAccessibility = true;
+    // this.shouldUpdateLegend = true;
+    // this.shouldSetStrokes = true;
+    // this.shouldAddStrokeUnder = true;
   }
 
   @Watch('highestHeadingLevel')
@@ -419,10 +433,26 @@ export class ScatterPlot {
     this.shouldSetGeometryAriaLabels = true;
   }
 
+  @Watch('sizeConfig')
+  sizeConfigWatcher(_newVal, _oldVal) {
+    this.shouldUpdateTableData = true;
+    this.shouldUpdateScales = true;
+    this.shouldUpdateGeometries = true;
+    this.shouldDrawInteractionState = true;
+    this.shouldSetLabelOpacity = true;
+    this.shouldUpdateLabels = true;
+    this.shouldDrawFitLine = true;
+    this.shouldUpdateReferenceLines = true;
+    this.shouldUpdateAnnotations = true;
+    this.shouldSetGeometryAriaLabels = true;
+    this.shouldValidateDataLabelAccessor = true;
+  }
+
   @Watch('groupAccessor')
   groupAccessorWatcher(_newVal, _oldVal) {
     this.shouldUpdateData = true;
     this.shouldSetColors = true;
+    this.shouldSetPointOpacity = true;
     this.shouldValidateHoverStyle = true;
     this.shouldValidateClickStyle = true;
     this.shouldUpdateScales = true;
@@ -510,6 +540,7 @@ export class ScatterPlot {
 
   @Watch('hoverStyle')
   hoverStyleWatcher(_newVal, _oldVal) {
+    this.shouldSetColors = true;
     this.shouldSetPointOpacity = true;
     this.shouldDrawInteractionState = true;
     this.shouldSetLabelOpacity = true;
@@ -518,6 +549,7 @@ export class ScatterPlot {
 
   @Watch('clickStyle')
   clickStyleWatcher(_newVal, _oldVal) {
+    this.shouldSetColors = true;
     this.shouldSetPointOpacity = true;
     this.shouldDrawInteractionState = true;
     this.shouldSetLabelOpacity = true;
@@ -762,6 +794,8 @@ export class ScatterPlot {
     this.shouldSetSelectionClass = true;
     this.shouldUpdateTableData = true;
     this.shouldSetGeometryAriaLabels = true;
+    this.shouldBindInteractivity = true;
+    this.shouldUpdateLegendInteractivity = true;
   }
 
   @Watch('unitTest')
@@ -1090,10 +1124,17 @@ export class ScatterPlot {
         : this.groupAccessor
         ? [this.groupAccessor]
         : [this.xAccessor, this.yAccessor];
+
+    this.groupInteraction =
+      this.innerInteractionKeys.length === 1 && this.innerInteractionKeys[0] === this.groupAccessor;
   }
 
   validateDataLabelAccessor() {
-    this.innerLabelAccessor = this.dataLabel.labelAccessor ? this.dataLabel.labelAccessor : this.yAccessor;
+    this.innerLabelAccessor = this.dataLabel.labelAccessor
+      ? this.dataLabel.labelAccessor
+      : this.sizeConfig.sizeAccessor
+      ? this.sizeConfig.sizeAccessor
+      : this.yAccessor;
   }
 
   setTableData() {
@@ -1155,11 +1196,24 @@ export class ScatterPlot {
     const xMaxValue = max(this.data, d => parseFloat(d[this.xAccessor]));
     const yMinValue = min(this.data, d => parseFloat(d[this.yAccessor]));
     const yMaxValue = max(this.data, d => parseFloat(d[this.yAccessor]));
+    const zMinValue = min(this.data, d => parseFloat(d[this.sizeConfig.sizeAccessor]));
+    const zMaxValue = max(this.data, d => parseFloat(d[this.sizeConfig.sizeAccessor]));
 
     this.xMin = this.xMinValueOverride === 0 ? 0 : this.xMinValueOverride || xMinValue - (xMaxValue - xMinValue) * 0.1;
     this.xMax = this.xMaxValueOverride === 0 ? 0 : this.xMaxValueOverride || xMaxValue + (xMaxValue - xMinValue) * 0.1;
     this.yMin = this.yMinValueOverride === 0 ? 0 : this.yMinValueOverride || yMinValue - (yMaxValue - yMinValue) * 0.1;
     this.yMax = this.yMaxValueOverride === 0 ? 0 : this.yMaxValueOverride || yMaxValue + (yMaxValue - yMinValue) * 0.1;
+
+    // for size we need to check
+    // 1. if sizeConfig is falsy we need to check for 0 as that is also falsy, but a valid value
+    // 2. if we have a valid value (truthy or 0) then if it is smaller than the data use it, otherwise use the data
+    // 3. we use some simple math to calc 10% of the range below the min
+    const sizeMinTruthy = this.sizeConfig.minValueOverride || this.sizeConfig.minValueOverride === 0;
+    const sizeMaxTruthy = this.sizeConfig.maxValueOverride || this.sizeConfig.maxValueOverride === 0;
+    this.sizeMin =
+      sizeMinTruthy && this.sizeConfig.minValueOverride < zMinValue ? this.sizeConfig.minValueOverride : zMinValue;
+    this.sizeMax =
+      sizeMaxTruthy && this.sizeConfig.maxValueOverride > zMaxValue ? this.sizeConfig.maxValueOverride : zMaxValue; // zMaxValue + (zMaxValue - zMinValue) * 0.1; // for the size scale we don't need a buffer like we do for axes
 
     const keys = [];
     this.nest.map(param => {
@@ -1176,6 +1230,11 @@ export class ScatterPlot {
       this.yMin = Math.min(0, this.yMin);
     }
 
+    if (this.sizeMax === this.sizeMin) {
+      this.sizeMax = Math.max(0, this.sizeMax);
+      this.sizeMin = Math.min(0, this.sizeMin);
+    }
+
     this.x = scaleLinear()
       .domain([this.xMin, this.xMax])
       .range([0, this.innerPaddedWidth]);
@@ -1184,9 +1243,51 @@ export class ScatterPlot {
       .domain([this.yMin, this.yMax])
       .range([this.innerPaddedHeight, 0]);
 
+    // for the range() of this scale we default to dotRadius for minimum
+    // and scale up based on the dimenions of the chart, unless of course
+    // size overrides are sent, then we will respect those as provided
+    this.size = scaleSqrt()
+      .domain([this.sizeMin, this.sizeMax])
+      .range([
+        this.sizeConfig.minSizeOverride || this.sizeConfig.minSizeOverride === 0
+          ? this.sizeConfig.minSizeOverride
+          : ScatterPlotDefaultValues.dotRadius,
+        this.sizeConfig.maxSizeOverride || this.sizeConfig.maxSizeOverride === 0
+          ? this.sizeConfig.maxSizeOverride
+          : (this.innerPaddedWidth + this.innerPaddedHeight) / 2.5 / 10
+      ]);
+
     this.symbol = scaleOrdinal()
       .domain(keys)
       .range(this.dotSymbols);
+
+    this.shapeArea = {};
+    keys.forEach(key => {
+      let path_arr = [];
+      let shape = symbols[this.symbol(key)].general;
+      shape.split(/[A-Z]/g).forEach(j => {
+        if (j.split(',').length === 2) {
+          path_arr.push(j.split(','));
+        }
+      });
+      let xs = [];
+      let ys = [];
+      path_arr.forEach((j, k) => {
+        if (path_arr[k + 1]) {
+          xs.push(parseFloat(j[0]) * parseFloat(path_arr[k + 1][1]));
+          ys.push(parseFloat(j[1]) * parseFloat(path_arr[k + 1][0]));
+        } else {
+          xs.push(parseFloat(j[0]) * parseFloat(path_arr[0][1]));
+          ys.push(parseFloat(j[1]) * parseFloat(path_arr[0][0]));
+        }
+      });
+      let z = (xs.reduce((a, b) => a + b) - ys.reduce((a, b) => a + b)) / 2;
+      this.shapeArea[key] = {
+        shape: this.symbol(key),
+        area: z,
+        toCircle: Math.PI / z
+      };
+    });
 
     this.dotColor = scaleOrdinal()
       .domain(keys)
@@ -1288,8 +1389,17 @@ export class ScatterPlot {
       ? visaColors[this.innerHoverStyle.color] ||
         this.innerHoverStyle.color ||
         (this.groupAccessor ? this.dotColor(d[this.groupAccessor]) : this.rawColors[0])
-      : this.groupAccessor
+      : this.groupAccessor && this.sizeConfig.dualEncodeColor
+      ? scaleSequentialSqrt(
+          [Math.max(0, this.sizeMin), this.sizeMax],
+          interpolate('#fff', this.dotColor(d[this.groupAccessor]))
+        )(d[this.sizeConfig.sizeAccessor]) || this.dotColor(d[this.groupAccessor])
+      : this.groupAccessor && this.sizeConfig && !this.sizeConfig.dualEncodeColor
       ? this.dotColor(d[this.groupAccessor])
+      : !this.groupAccessor && this.sizeConfig.dualEncodeColor
+      ? scaleSequentialSqrt([Math.max(0, this.sizeMin), this.sizeMax], interpolate('#fff', this.rawColors[0]))(
+          d[this.sizeConfig.sizeAccessor]
+        ) || this.rawColors[0]
       : this.rawColors[0];
     if (!this.accessibility.hideStrokes) {
       const strokeWidth =
@@ -1297,12 +1407,30 @@ export class ScatterPlot {
           ? parseFloat(this.innerClickStyle.strokeWidth) || 1
           : hovered
           ? parseFloat(this.innerHoverStyle.strokeWidth) || 1
-          : 1) / (this.dotRadius || 1);
+          : 1) /
+        (this.size(
+          d[this.sizeConfig.sizeAccessor] * this.shapeArea[this.groupAccessor ? d[this.groupAccessor] : '']['toCircle']
+        ) ||
+          this.dotRadius ||
+          1);
 
       select(n[i]).attr('stroke-width', strokeWidth);
 
-      color = this.strokes[baseColor.toLowerCase()];
+      // we need to handle the following scenarios for stroke now
+      // 1. clicked - use baseColor.toLowerCase()
+      // 2. hovered - use baseColor.toLowerCase()
+      // 3. groupAccessor - use this.dotColor(d[this.groupAccessor]).toLowerCase()
+      // 4. no groupAccessor - use this.rawColors[0].toLowerCase()
+      // strokes object was created with lowercase hex codes, so need to ensure lower case
+      color = this.strokes[
+        clicked || hovered
+          ? baseColor.toLowerCase()
+          : this.groupAccessor
+          ? this.dotColor(d[this.groupAccessor]).toLowerCase()
+          : this.rawColors[0].toLowerCase()
+      ];
     }
+
     select(n[i]).attr('fill', baseColor);
     return color;
   };
@@ -1437,6 +1565,13 @@ export class ScatterPlot {
     this.enterPointWrappers
       .attr('class', 'series-point-group')
       .attr('cursor', !this.suppressEvents ? this.cursor : null)
+      .on(
+        'mouseover',
+        this.groupInteraction && !this.suppressEvents
+          ? (d, i, n) => this.onHoverHandler(d.values ? d.values[0] : d, n[i], true)
+          : null
+      )
+      .on('mouseout', this.groupInteraction && !this.suppressEvents ? () => this.onMouseOutHandler() : null)
       .each((_, i, n) => {
         initializeElementAccess(n[i]);
       });
@@ -1536,13 +1671,29 @@ export class ScatterPlot {
         const me = select(n[i]);
         const xChange = +me.attr('data-x') !== this.x(d[this.xAccessor]);
         const yChange = +me.attr('data-y') !== this.y(d[this.yAccessor]);
-        const rChange = +me.attr('data-r') !== this.dotRadius;
+        const rChange =
+          +me.attr('data-r') !==
+            this.size(
+              d[this.sizeConfig.sizeAccessor] *
+                this.shapeArea[this.groupAccessor ? d[this.groupAccessor] : '']['toCircle']
+            ) ||
+          this.dotRadius ||
+          1;
         if (xChange || yChange || rChange) {
           me.attr('filter', null);
           me.classed('moving', true);
         }
       })
-      .attr('data-r', this.dotRadius)
+      .attr('data-r', d => {
+        return (
+          this.size(
+            d[this.sizeConfig.sizeAccessor] *
+              this.shapeArea[this.groupAccessor ? d[this.groupAccessor] : '']['toCircle']
+          ) ||
+          this.dotRadius ||
+          1
+        );
+      })
       .attr('data-x', d => this.x(d[this.xAccessor]))
       .attr('data-y', d => this.y(d[this.yAccessor]))
       .attr('data-translate-x', this.padding.left + this.margin.left)
@@ -1559,7 +1710,18 @@ export class ScatterPlot {
       .attr(
         'transform',
         d =>
-          'translate(' + this.x(d[this.xAccessor]) + ',' + this.y(d[this.yAccessor]) + ') scale(' + this.dotRadius + ')'
+          'translate(' +
+          this.x(d[this.xAccessor]) +
+          ',' +
+          this.y(d[this.yAccessor]) +
+          ') scale(' +
+          (this.size(
+            d[this.sizeConfig.sizeAccessor] *
+              this.shapeArea[this.groupAccessor ? d[this.groupAccessor] : '']['toCircle']
+          ) ||
+            this.dotRadius ||
+            1) +
+          ')'
       )
       .call(transitionEndAll, () => {
         setTimeout(() => {
@@ -1592,7 +1754,18 @@ export class ScatterPlot {
       .attr(
         'transform',
         d =>
-          'translate(' + this.x(d[this.xAccessor]) + ',' + this.y(d[this.yAccessor]) + ') scale(' + this.dotRadius + ')'
+          'translate(' +
+          this.x(d[this.xAccessor]) +
+          ',' +
+          this.y(d[this.yAccessor]) +
+          ') scale(' +
+          (this.size(
+            d[this.sizeConfig.sizeAccessor] *
+              this.shapeArea[this.groupAccessor ? d[this.groupAccessor] : '']['toCircle']
+          ) ||
+            this.dotRadius ||
+            1) +
+          ')'
       )
       .call(transitionEndAll, () => {
         // we must make sure if geometries move, that our focus indicator does too
@@ -1781,6 +1954,14 @@ export class ScatterPlot {
   }
 
   bindInteractivity() {
+    this.enterPointWrappers
+      .on(
+        'mouseover',
+        this.groupInteraction && !this.suppressEvents
+          ? (d, i, n) => this.onHoverHandler(d.values ? d.values[0] : d, n[i], true)
+          : null
+      )
+      .on('mouseout', this.groupInteraction && !this.suppressEvents ? () => this.onMouseOutHandler() : null);
     this.updatePoints
       .on('click', !this.suppressEvents ? (d, i, n) => this.onClickHandler(d, n[i]) : null)
       .on('mouseover', !this.suppressEvents ? (d, i, n) => this.onHoverHandler(d, n[i]) : null)
@@ -1825,8 +2006,12 @@ export class ScatterPlot {
       root: this.enterLabels,
       xScale: this.x,
       yScale: this.y,
+      sizeScale: this.size,
       ordinalAccessor: this.xAccessor,
       valueAccessor: this.yAccessor,
+      groupAccessor: this.groupAccessor,
+      sizeAccessor: this.sizeConfig.sizeAccessor,
+      shapeArea: this.shapeArea,
       placement: this.dataLabel.placement,
       chartType: 'scatter',
       labelOffset: this.dotRadius
@@ -1948,8 +2133,12 @@ export class ScatterPlot {
       root: labelSettingUpdate,
       xScale: this.x,
       yScale: this.y,
+      sizeScale: this.size,
       ordinalAccessor: this.xAccessor,
       valueAccessor: this.yAccessor,
+      groupAccessor: this.groupAccessor,
+      sizeAccessor: this.sizeConfig.sizeAccessor,
+      shapeArea: this.shapeArea,
       placement: this.dataLabel.placement,
       chartType: 'scatter',
       labelOffset: this.dotRadius + this.dotRadius * 0.25,
@@ -2090,8 +2279,12 @@ export class ScatterPlot {
           root: labelsAdded,
           xScale: this.x,
           yScale: this.y,
+          sizeScale: this.size,
           ordinalAccessor: this.xAccessor,
           valueAccessor: this.yAccessor,
+          groupAccessor: this.groupAccessor,
+          sizeAccessor: this.sizeConfig.sizeAccessor,
+          shapeArea: this.shapeArea,
           placement: this.dataLabel.placement,
           chartType: 'scatter',
           labelOffset: this.dotRadius + this.dotRadius * 0.25,

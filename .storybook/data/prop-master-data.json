@@ -510,6 +510,12 @@
     }
   },
   {
+    "name": "sizeConfig",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
     "name": "differenceLabel",
     "options": {
       "enabled": true
@@ -1347,6 +1353,70 @@
         ]
       },
       "sortOrder": 6
+    }
+  },
+  {
+    "name": "sizeConfig.sizeAccessor",
+    "options": {
+      "enabled": true,
+      "description": "Key which determines the value used to size each mark",
+      "sortOrder": 1
+    }
+  },
+  {
+    "name": "sizeConfig.dualEncodeColor",
+    "options": {
+      "enabled": true,
+      "description": "Enables dual color encoding to aid in data comprehension of size scale.",
+      "sortOrder": 2
+    }
+  },
+  {
+    "name": "sizeConfig.minValueOverride",
+    "options": {
+      "enabled": true,
+      "description": "Overrides the calculated default min value for the mark size scale domain",
+      "control": "TextField",
+      "sortOrder": 3
+    }
+  },
+  {
+    "name": "sizeConfig.maxValueOverride",
+    "options": {
+      "enabled": true,
+      "description": "Overrides the calculated default max value for the mark size scale domain",
+      "control": "TextField",
+      "sortOrder": 4
+    }
+  },
+  {
+    "name": "sizeConfig.minSizeOverride",
+    "options": {
+      "enabled": true,
+      "min": 0,
+      "max": 10,
+      "step": 0.5,
+      "description": "Overrides the calculated default min size for the mark size scale range",
+      "sortOrder": 5
+    }
+  },
+  {
+    "name": "sizeConfig.maxSizeOverride",
+    "options": {
+      "enabled": true,
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "description": "Overrides the calculated default max size for the mark size scale range",
+      "sortOrder": 6
+    }
+  },
+  {
+    "name": "sizeConfig.format",
+    "options": {
+      "enabled": false,
+      "description": "Sets numeric formatting for the size value, EG 0,0.0[a]",
+      "sortOrder": 7
     }
   },
   {

@@ -698,19 +698,26 @@ export class WorldMap {
 
   @Watch('uniqueID')
   idWatcher(_newVal, _oldVal) {
-    this.chartID = _newVal || 'world-map-' + uuid();
-    this.worldMapEl.id = this.chartID;
+    console.error(
+      'Change detected in prop uniqueID from value ' +
+        _oldVal +
+        ' to value ' +
+        _newVal +
+        '. This prop cannot be changed after component has loaded.'
+    );
+    // this.chartID = _newVal || 'world-map-' + uuid();
+    // this.worldMapEl.id = this.chartID;
     // removed this boolean flip due to watcher issue after stencil upgrade
     // we will be disabling any update on uniqueID going forward as well
     // so this is inline with our planned future state for this prop.
     // this.shouldUpdateRootIDs = true;
-    this.shouldValidate = true;
-    this.shouldUpdateDescriptionWrapper = true;
-    this.shouldSetParentSVGAccessibility = true;
-    this.shouldUpdateLegend = true;
-    this.shouldSetTextures = true;
-    this.shouldDrawInteractionState = true;
-    this.shouldSetStrokes = true;
+    // this.shouldValidate = true;
+    // this.shouldUpdateDescriptionWrapper = true;
+    // this.shouldSetParentSVGAccessibility = true;
+    // this.shouldUpdateLegend = true;
+    // this.shouldSetTextures = true;
+    // this.shouldDrawInteractionState = true;
+    // this.shouldSetStrokes = true;
   }
 
   @Watch('suppressEvents')

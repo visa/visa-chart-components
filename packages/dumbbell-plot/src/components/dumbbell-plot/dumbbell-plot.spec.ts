@@ -23,6 +23,7 @@ const { formatStats, getColors, roundTo, getContrastingStroke, getAccessibleStro
 const {
   asyncForEach,
   flushTransitions,
+  unitTestAccessibility,
   unitTestAxis,
   unitTestGeneric,
   unitTestEvent,
@@ -45,30 +46,30 @@ describe('<dumbbell-plot>', () => {
 
     // START:minimal props need to be passed to component
     const EXPECTEDDATA = [
-      { date: new Date('2016-01-01T00:00:00.000Z'), category: 'CardA', value: 7670994739 },
-      { date: new Date('2016-02-01T00:00:00.000Z'), category: 'CardA', value: 7628909842 },
-      { date: new Date('2016-03-01T00:00:00.000Z'), category: 'CardA', value: 8358837379 },
-      { date: new Date('2016-04-01T00:00:00.000Z'), category: 'CardA', value: 8334842966 },
-      { date: new Date('2016-05-01T00:00:00.000Z'), category: 'CardA', value: 8588600035 },
-      { date: new Date('2016-06-01T00:00:00.000Z'), category: 'CardA', value: 8484192554 },
-      { date: new Date('2016-07-01T00:00:00.000Z'), category: 'CardA', value: 8778636197 },
-      { date: new Date('2016-08-01T00:00:00.000Z'), category: 'CardA', value: 8811163096 },
-      { date: new Date('2016-09-01T00:00:00.000Z'), category: 'CardA', value: 8462148898 },
-      { date: new Date('2016-10-01T00:00:00.000Z'), category: 'CardA', value: 9051933407 },
-      { date: new Date('2016-11-01T00:00:00.000Z'), category: 'CardA', value: 8872849978 },
-      { date: new Date('2016-12-01T00:00:00.000Z'), category: 'CardA', value: 9709829820 },
-      { date: new Date('2016-01-01T00:00:00.000Z'), category: 'CardB', value: 6570994739 },
-      { date: new Date('2016-02-01T00:00:00.000Z'), category: 'CardB', value: 4628909842 },
-      { date: new Date('2016-03-01T00:00:00.000Z'), category: 'CardB', value: 4358837379 },
-      { date: new Date('2016-04-01T00:00:00.000Z'), category: 'CardB', value: 5534842966 },
-      { date: new Date('2016-05-01T00:00:00.000Z'), category: 'CardB', value: 4388600035 },
-      { date: new Date('2016-06-01T00:00:00.000Z'), category: 'CardB', value: 3484192554 },
-      { date: new Date('2016-07-01T00:00:00.000Z'), category: 'CardB', value: 3578636197 },
-      { date: new Date('2016-08-01T00:00:00.000Z'), category: 'CardB', value: 6411163096 },
-      { date: new Date('2016-09-01T00:00:00.000Z'), category: 'CardB', value: 5262148898 },
-      { date: new Date('2016-10-01T00:00:00.000Z'), category: 'CardB', value: 4651933407 },
-      { date: new Date('2016-11-01T00:00:00.000Z'), category: 'CardB', value: 6772849978 },
-      { date: new Date('2016-12-01T00:00:00.000Z'), category: 'CardB', value: 5609829820 }
+      { date: 'Jan-2016', category: 'CatA', value: 7670994739 },
+      { date: 'Feb-2016', category: 'CatA', value: 7628909842 },
+      { date: 'Mar-2016', category: 'CatA', value: 8358837379 },
+      { date: 'Apr-2016', category: 'CatA', value: 8334842966 },
+      { date: 'May-2016', category: 'CatA', value: 8588600035 },
+      { date: 'Jun-2016', category: 'CatA', value: 8484192554 },
+      { date: 'Jul-2016', category: 'CatA', value: 8778636197 },
+      { date: 'Aug-2016', category: 'CatA', value: 8811163096 },
+      { date: 'Sep-2016', category: 'CatA', value: 8462148898 },
+      { date: 'Oct-2016', category: 'CatA', value: 9051933407 },
+      { date: 'Nov-2016', category: 'CatA', value: 8872849978 },
+      { date: 'Dec-2016', category: 'CatA', value: 9709829820 },
+      { date: 'Jan-2016', category: 'CatB', value: 6570994739 },
+      { date: 'Feb-2016', category: 'CatB', value: 4628909842 },
+      { date: 'Mar-2016', category: 'CatB', value: 4358837379 },
+      { date: 'Apr-2016', category: 'CatB', value: 5534842966 },
+      { date: 'May-2016', category: 'CatB', value: 4388600035 },
+      { date: 'Jun-2016', category: 'CatB', value: 3484192554 },
+      { date: 'Jul-2016', category: 'CatB', value: 3578636197 },
+      { date: 'Aug-2016', category: 'CatB', value: 6411163096 },
+      { date: 'Sep-2016', category: 'CatB', value: 5262148898 },
+      { date: 'Oct-2016', category: 'CatB', value: 4651933407 },
+      { date: 'Nov-2016', category: 'CatB', value: 6772849978 },
+      { date: 'Dec-2016', category: 'CatB', value: 5609829820 }
     ];
     const EXPECTEDORDINALACCESSOR = 'date';
     const EXPECTEDSERIESACCESSOR = 'category';
@@ -81,14 +82,14 @@ describe('<dumbbell-plot>', () => {
 
     // EXTRA DATA TO ENABLE LAYOUT CHANGES
     const LAYOUTDATA = [
-      { region: 'North America', category: 'CardA', value: MINVALUE },
-      { region: 'CEMEA', category: 'CardA', value: 7628909842 },
-      { region: 'South America', category: 'CardA', value: 8334842966 },
-      { region: 'Asia and Pacific', category: 'CardA', value: MAXVALUE },
-      { region: 'North America', category: 'CardB', value: 7570994739 },
-      { region: 'CEMEA', category: 'CardB', value: 4628909842 },
-      { region: 'South America', category: 'CardB', value: 5534842966 },
-      { region: 'Asia and Pacific', category: 'CardB', value: 4388600035 }
+      { region: 'North America', category: 'CatA', value: MINVALUE },
+      { region: 'CEMEA', category: 'CatA', value: 7628909842 },
+      { region: 'South America', category: 'CatA', value: 8334842966 },
+      { region: 'Asia and Pacific', category: 'CatA', value: MAXVALUE },
+      { region: 'North America', category: 'CatB', value: 7570994739 },
+      { region: 'CEMEA', category: 'CatB', value: 4628909842 },
+      { region: 'South America', category: 'CatB', value: 5534842966 },
+      { region: 'Asia and Pacific', category: 'CatB', value: 4388600035 }
     ];
     // END:minimal props need to be passed to component
 
@@ -136,6 +137,13 @@ describe('<dumbbell-plot>', () => {
     });
 
     describe('generic test suite', () => {
+      beforeEach(() => {
+        jest.spyOn(console, 'error').mockImplementation();
+      });
+
+      afterEach(() => {
+        jest.spyOn(console, 'error').mockRestore();
+      });
       Object.keys(unitTestGeneric).forEach(test => {
         if (unitTestGeneric[test].prop !== 'data') {
           const innerTestProps = unitTestGeneric[test].testDefault
@@ -164,16 +172,12 @@ describe('<dumbbell-plot>', () => {
         let counter = 0;
         elements.forEach(element => {
           counter = counter + 2;
-          const mappedCardAData = element['__data__'].values.find(o => o.category === 'CardA'); // tslint:disable-line: no-string-literal
-          const mappedCardBData = element['__data__'].values.find(o => o.category === 'CardB'); // tslint:disable-line: no-string-literal
-          const expectedMonthCardAData = EXPECTEDDATA.find(
-            o => o.date === mappedCardAData.date && o.category === 'CardA'
-          );
-          const expectedMonthCardBData = EXPECTEDDATA.find(
-            o => o.date === mappedCardBData.date && o.category === 'CardB'
-          );
-          expect(mappedCardAData).toEqual(expectedMonthCardAData);
-          expect(mappedCardBData).toEqual(expectedMonthCardBData);
+          const mappedCatAData = element['__data__'].values.find(o => o.category === 'CatA'); // tslint:disable-line: no-string-literal
+          const mappedCatBData = element['__data__'].values.find(o => o.category === 'CatB'); // tslint:disable-line: no-string-literal
+          const expectedMonthCatAData = EXPECTEDDATA.find(o => o.date === mappedCatAData.date && o.category === 'CatA');
+          const expectedMonthCatBData = EXPECTEDDATA.find(o => o.date === mappedCatBData.date && o.category === 'CatB');
+          expect(mappedCatAData).toEqual(expectedMonthCatAData);
+          expect(mappedCatBData).toEqual(expectedMonthCatBData);
         });
         expect(counter).toEqual(24);
       });
@@ -196,16 +200,12 @@ describe('<dumbbell-plot>', () => {
         let counter = 0;
         elements.forEach(element => {
           counter = counter + 2;
-          const mappedCardAData = element['__data__'].values.find(o => o.category === 'CardA'); // tslint:disable-line: no-string-literal
-          const mappedCardBData = element['__data__'].values.find(o => o.category === 'CardB'); // tslint:disable-line: no-string-literal
-          const expectedMonthCardAData = EXPECTEDDATA.find(
-            o => o.date === mappedCardAData.date && o.category === 'CardA'
-          );
-          const expectedMonthCardBData = EXPECTEDDATA.find(
-            o => o.date === mappedCardBData.date && o.category === 'CardB'
-          );
-          expect(mappedCardAData).toEqual(expectedMonthCardAData);
-          expect(mappedCardBData).toEqual(expectedMonthCardBData);
+          const mappedCatAData = element['__data__'].values.find(o => o.category === 'CatA'); // tslint:disable-line: no-string-literal
+          const mappedCatBData = element['__data__'].values.find(o => o.category === 'CatB'); // tslint:disable-line: no-string-literal
+          const expectedMonthCatAData = EXPECTEDDATA.find(o => o.date === mappedCatAData.date && o.category === 'CatA');
+          const expectedMonthCatBData = EXPECTEDDATA.find(o => o.date === mappedCatBData.date && o.category === 'CatB');
+          expect(mappedCatAData).toEqual(expectedMonthCatAData);
+          expect(mappedCatBData).toEqual(expectedMonthCatBData);
         });
         expect(counter).toEqual(24);
       });
@@ -225,17 +225,17 @@ describe('<dumbbell-plot>', () => {
         // ASSERT
         const elements = page.doc.querySelectorAll('[data-testid=line]');
         elements.forEach((element, i) => {
-          if (element['__data__'].key === 'Thu Dec 31 2015 16:00:00 GMT-0800 (Pacific Standard Time)') {
-            const mappedCardAData = element['__data__'].values.find(o => o.category === 'CardA'); // tslint:disable-line: no-string-literal
-            const mappedCardBData = element['__data__'].values.find(o => o.category === 'CardB'); // tslint:disable-line: no-string-literal
-            const expectedMonthCardAData = EXPECTEDDATA.find(
-              o => o.date === mappedCardAData.date && o.category === 'CardA'
+          if (element['__data__'].key === 'Jan-2016') {
+            const mappedCatAData = element['__data__'].values.find(o => o.category === 'CatA'); // tslint:disable-line: no-string-literal
+            const mappedCatBData = element['__data__'].values.find(o => o.category === 'CatB'); // tslint:disable-line: no-string-literal
+            const expectedMonthCatAData = EXPECTEDDATA.find(
+              o => o.date === mappedCatAData.date && o.category === 'CatA'
             );
-            const expectedMonthCardBData = EXPECTEDDATA.find(
-              o => o.date === mappedCardBData.date && o.category === 'CardB'
+            const expectedMonthCatBData = EXPECTEDDATA.find(
+              o => o.date === mappedCatBData.date && o.category === 'CatB'
             );
-            expect(mappedCardAData).toEqual(expectedMonthCardAData);
-            expect(mappedCardBData).toEqual(expectedMonthCardBData);
+            expect(mappedCatAData).toEqual(expectedMonthCatAData);
+            expect(mappedCatBData).toEqual(expectedMonthCatBData);
           } else {
             const lastTransitionKey = Object.keys(element['__transition'])[ // tslint:disable-line: no-string-literal
               Object.keys(element['__transition']).length - 1 // tslint:disable-line: no-string-literal
@@ -248,6 +248,219 @@ describe('<dumbbell-plot>', () => {
     });
 
     describe('accessibility', () => {
+      describe('generic accessibility test suite', () => {
+        // PROBABLY WANT TO CREATE SEPARATE TEST FOR ENTER EXIT? LEAVING THOSE COMMENTED OUT FOR NOW
+        // WHAT ABOUT GROUP SIBLING NAVIGATION?
+        const accessibilityTestMarks = {
+          // accessibility_keyboard_nav_group_enter_entry: {
+          //   name: 'keyboard nav: group - enter will enter group',
+          //   testSelector: '[data-testid=bar-group]',
+          //   nextTestSelector: '[data-testid=bar][data-id=bar-Apr-17]',
+          //   keyDownObject: { key: 'Enter', code: 'Enter', keyCode: 13 }
+          // },
+          accessibility_keyboard_nav_group_esc_exit: {
+            name: 'keyboard nav: group - escape will exit group',
+            testSelector: '[data-testid=line][data-id=line-Jan-2016]',
+            nextTestSelector: '[data-testid=dumbbell-group]',
+            keyDownObject: { key: 'Escape', code: 'Escape', keyCode: 27 },
+            testProps: {
+              selectorAriaLabel:
+                'category CatA. value 7.7b. category CatB. value 6.6b. Difference 1.1b. Dumbbell 1 of 12.',
+              nextSelectorAriaLabel: 'Dumbbell group which contains 12 interactive dumbbells.',
+              accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true }
+            }
+          },
+          accessibility_keyboard_nav_right_arrow: {
+            name: 'keyboard nav: sibling - right arrow goes to next',
+            testSelector: '[data-testid=line][data-id=line-Jan-2016]',
+            nextTestSelector: '[data-testid=line][data-id=line-Feb-2016]',
+            keyDownObject: { key: 'ArrowRight', code: 'ArrowRight', keyCode: 39 },
+            testProps: {
+              selectorAriaLabel:
+                'category CatA. value 7.7b. category CatB. value 6.6b. Difference 1.1b. Dumbbell 1 of 12.',
+              nextSelectorAriaLabel:
+                'category CatA. value 7.6b. category CatB. value 4.6b. Difference 3b. Dumbbell 2 of 12.',
+              accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true }
+            }
+          },
+          accessibility_keyboard_nav_right_arrow_loop: {
+            name: 'keyboard nav: sibling - right arrow goes to first from last',
+            testSelector: '[data-testid=line][data-id=line-Dec-2016]',
+            nextTestSelector: '[data-testid=line][data-id=line-Jan-2016]',
+            keyDownObject: { key: 'ArrowRight', code: 'ArrowRight', keyCode: 39 },
+            testProps: {
+              selectorAriaLabel:
+                'category CatA. value 9.7b. category CatB. value 5.6b. Difference 4.1b. Dumbbell 12 of 12.',
+              nextSelectorAriaLabel:
+                'category CatA. value 7.7b. category CatB. value 6.6b. Difference 1.1b. Dumbbell 1 of 12.',
+              accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true }
+            }
+          },
+          accessibility_keyboard_nav_left_arrow_sibling: {
+            name: 'keyboard nav: sibling - left arrow goes to next',
+            testSelector: '[data-testid=line][data-id=line-Feb-2016]',
+            nextTestSelector: '[data-testid=line][data-id=line-Jan-2016]',
+            keyDownObject: { key: 'ArrowLeft', code: 'ArrowLeft', keyCode: 37 },
+            testProps: {
+              selectorAriaLabel:
+                'category CatA. value 7.6b. category CatB. value 4.6b. Difference 3b. Dumbbell 2 of 12.',
+              nextSelectorAriaLabel:
+                'category CatA. value 7.7b. category CatB. value 6.6b. Difference 1.1b. Dumbbell 1 of 12.',
+              accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true }
+            }
+          },
+          accessibility_keyboard_nav_left_arrow_loop: {
+            name: 'keyboard nav: sibling - left arrow loops to last from first',
+            testSelector: '[data-testid=line][data-id=line-Jan-2016]',
+            nextTestSelector: '[data-testid=line][data-id=line-Dec-2016]',
+            keyDownObject: { key: 'ArrowLeft', code: 'ArrowLeft', keyCode: 37 },
+            testProps: {
+              selectorAriaLabel: 'CatA 7.7b. CatB 6.6b. Difference 1.1b. Dumbbell 1 of 12.',
+              nextSelectorAriaLabel: 'CatA 9.7b. CatB 5.6b. Difference 4.1b. Dumbbell 12 of 12.'
+            }
+          }
+        };
+        Object.keys(unitTestAccessibility).forEach(test => {
+          const tempTestProps = unitTestAccessibility[test].testDefault
+            ? { [unitTestAccessibility[test].prop]: DumbbellPlotDefaultValues[unitTestAccessibility[test].prop] }
+            : unitTestAccessibility[test].testProps;
+          const innerTestProps = {
+            ...tempTestProps,
+            geometryType: 'Dumbbell',
+            // we will need to udpate the below when we enable the dumbbell focus indicator test
+            geometryPlacementAttributes: ['x', 'y', 'height', 'width'],
+            geometryAdjustmentValues: [
+              { f: 'x', b: 7, w: 3, s: -1 },
+              { f: 'y', b: 7, w: 3, s: -1 },
+              { f: 'height', b: 7 * 2, w: 3 * 2, s: 1 },
+              { f: 'width', b: 7 * 2, w: 3 * 2, s: 1 }
+            ],
+            annotations:
+              unitTestAccessibility[test].prop === 'annotations'
+                ? [
+                    {
+                      note: {
+                        label: "May's volume is here.",
+                        bgPadding: 20,
+                        title: 'The month of may',
+                        align: 'middle',
+                        wrap: 210
+                      },
+                      accessibilityDescription: 'This annotation is a callout to May, which is for testing purposes.',
+                      data: { month: 'May-17', value: 6042320, cat: 'A' },
+                      dy: '-20%',
+                      color: 'pri_blue'
+                    },
+                    {
+                      note: {
+                        label: "June's volume is here.",
+                        bgPadding: 20,
+                        title: 'The month of june',
+                        align: 'middle',
+                        wrap: 210
+                      },
+                      data: { month: 'Jun-17', value: 3234002, cat: 'A' },
+                      dy: '-20%',
+                      color: 'pri_blue'
+                    }
+                  ]
+                : []
+          };
+          const innerTestSelector =
+            unitTestAccessibility[test].testSelector === 'component-name'
+              ? 'dumbbell-plot'
+              : unitTestAccessibility[test].testSelector === '[data-testid=controller]'
+              ? '.VCL-controller'
+              : unitTestAccessibility[test].testSelector === '[data-testid=svg]'
+              ? '[data-testid=root-svg]'
+              : unitTestAccessibility[test].testSelector === '[data-testid=padding]'
+              ? '[data-testid=padding-container]'
+              : unitTestAccessibility[test].testSelector === '[data-testid=mark]'
+              ? '[data-testid=line]'
+              : unitTestAccessibility[test].testSelector === '[data-testid=group]'
+              ? '[data-testid=dumbbell-group]'
+              : unitTestAccessibility[test].testSelector === '[data-id=mark-id]'
+              ? accessibilityTestMarks[test]
+                ? accessibilityTestMarks[test].testSelector
+                : '[data-testid=line][data-id=line-Jan-2016]'
+              : unitTestAccessibility[test].testSelector;
+          const innerNextTestSelector =
+            unitTestAccessibility[test].nextTestSelector === '[data-testid=svg]'
+              ? '[data-testid=root-svg]'
+              : unitTestAccessibility[test].nextTestSelector === '[data-id=mark-id]'
+              ? accessibilityTestMarks[test]
+                ? accessibilityTestMarks[test].nextTestSelector
+                : '[data-testid=line][data-id=line-Feb-2016]'
+              : unitTestAccessibility[test].nextTestSelector;
+          if (test === 'accessibility_keyboard_nav_generic_test') {
+            // run keyboard nav test for each scenario above
+            // skipping these by default as the target.focus() code in accessibilityController breaks them
+            Object.keys(accessibilityTestMarks).forEach(keyboardTest => {
+              it(`${unitTestAccessibility[test].prop}: ${accessibilityTestMarks[keyboardTest].name}`, () =>
+                unitTestAccessibility[test].testFunc(
+                  component,
+                  page,
+                  accessibilityTestMarks[keyboardTest].testProps
+                    ? { ...innerTestProps, ...accessibilityTestMarks[keyboardTest].testProps }
+                    : innerTestProps,
+                  accessibilityTestMarks[keyboardTest].testSelector,
+                  accessibilityTestMarks[keyboardTest].nextTestSelector,
+                  accessibilityTestMarks[keyboardTest].keyDownObject
+                ));
+            });
+            // } else if (
+            //   // these accessibility tests need a group accessor for bar-chart
+            //   test === 'accessibility_categorical_textures_created_by_default' ||
+            //   test === 'accessibility_group_aria_label_add_update' ||
+            //   test === 'accessibility_group_aria_label_remove_update'
+            // ) {
+            //   it(`${unitTestAccessibility[test].prop}: ${unitTestAccessibility[test].name}`, () =>
+            //     unitTestAccessibility[test].testFunc(
+            //       component,
+            //       page,
+            //       { ...innerTestProps, groupAccessor: 'cat' },
+            //       innerTestSelector,
+            //       innerNextTestSelector
+            //     ));
+            //   // update this test to check out just one of them
+            // skipping a few tests that we have not finished adjusting for dumbbell yet.
+          } else if (
+            test === 'accessibility_focus_marker_style' ||
+            test === 'accessibility_textures_on_by_default' ||
+            test === 'accessibility_categorical_textures_created_by_default'
+          ) {
+            it.skip(`${unitTestAccessibility[test].prop}: ${unitTestAccessibility[test].name}`, () =>
+              unitTestAccessibility[test].testFunc(
+                component,
+                page,
+                innerTestProps,
+                innerTestSelector,
+                innerNextTestSelector
+              ));
+            // skipping these by default as the target.focus() code in accessibilityController breaks them
+          } else if (test === 'accessibility_focus_marker_style') {
+            it.skip(`${unitTestAccessibility[test].prop}: ${unitTestAccessibility[test].name}`, () =>
+              unitTestAccessibility[test].testFunc(
+                component,
+                page,
+                innerTestProps,
+                innerTestSelector,
+                innerNextTestSelector
+              ));
+          } else {
+            // these tests can just be run straight away
+            it(`${unitTestAccessibility[test].prop}: ${unitTestAccessibility[test].name}`, () =>
+              unitTestAccessibility[test].testFunc(
+                component,
+                page,
+                innerTestProps,
+                innerTestSelector,
+                innerNextTestSelector
+              ));
+          }
+        });
+      });
+
       describe('validation', () => {
         it('refer to generic results above for accessibility validation tests', () => {
           expect(true).toBeTruthy();
@@ -347,8 +560,36 @@ describe('<dumbbell-plot>', () => {
           });
         });
 
+        // removed the date from the raw data so skipping this one
         it('should render chart vertically when layout prop is horizontal and oridnal access is a date', async () => {
-          // ARRANGE
+          const DATAWITHDATE = [
+            { date: new Date('2016-01-01T00:00:00.000Z'), category: 'CatA', value: 7670994739 },
+            { date: new Date('2016-02-01T00:00:00.000Z'), category: 'CatA', value: 7628909842 },
+            { date: new Date('2016-03-01T00:00:00.000Z'), category: 'CatA', value: 8358837379 },
+            { date: new Date('2016-04-01T00:00:00.000Z'), category: 'CatA', value: 8334842966 },
+            { date: new Date('2016-05-01T00:00:00.000Z'), category: 'CatA', value: 8588600035 },
+            { date: new Date('2016-06-01T00:00:00.000Z'), category: 'CatA', value: 8484192554 },
+            { date: new Date('2016-07-01T00:00:00.000Z'), category: 'CatA', value: 8778636197 },
+            { date: new Date('2016-08-01T00:00:00.000Z'), category: 'CatA', value: 8811163096 },
+            { date: new Date('2016-09-01T00:00:00.000Z'), category: 'CatA', value: 8462148898 },
+            { date: new Date('2016-10-01T00:00:00.000Z'), category: 'CatA', value: 9051933407 },
+            { date: new Date('2016-11-01T00:00:00.000Z'), category: 'CatA', value: 8872849978 },
+            { date: new Date('2016-12-01T00:00:00.000Z'), category: 'CatA', value: 9709829820 },
+            { date: new Date('2016-01-01T00:00:00.000Z'), category: 'CatB', value: 6570994739 },
+            { date: new Date('2016-02-01T00:00:00.000Z'), category: 'CatB', value: 4628909842 },
+            { date: new Date('2016-03-01T00:00:00.000Z'), category: 'CatB', value: 4358837379 },
+            { date: new Date('2016-04-01T00:00:00.000Z'), category: 'CatB', value: 5534842966 },
+            { date: new Date('2016-05-01T00:00:00.000Z'), category: 'CatB', value: 4388600035 },
+            { date: new Date('2016-06-01T00:00:00.000Z'), category: 'CatB', value: 3484192554 },
+            { date: new Date('2016-07-01T00:00:00.000Z'), category: 'CatB', value: 3578636197 },
+            { date: new Date('2016-08-01T00:00:00.000Z'), category: 'CatB', value: 6411163096 },
+            { date: new Date('2016-09-01T00:00:00.000Z'), category: 'CatB', value: 5262148898 },
+            { date: new Date('2016-10-01T00:00:00.000Z'), category: 'CatB', value: 4651933407 },
+            { date: new Date('2016-11-01T00:00:00.000Z'), category: 'CatB', value: 6772849978 },
+            { date: new Date('2016-12-01T00:00:00.000Z'), category: 'CatB', value: 5609829820 }
+          ];
+          // ARRANGE -- need to pass data with date in it for this one
+          component.data = DATAWITHDATE;
           component.width = 500;
           component.height = 500;
           component.margin = { bottom: 0, left: 0, right: 0, top: 0 };
@@ -363,7 +604,7 @@ describe('<dumbbell-plot>', () => {
           const lines = page.doc.querySelectorAll('[data-testid=line]');
           lines.forEach(line => {
             flushTransitions(line);
-            const expectedDataRecords = EXPECTEDDATA.filter(
+            const expectedDataRecords = DATAWITHDATE.filter(
               o => o.date.getTime() === new Date(line['__data__'].key).getTime()
             ); // tslint:disable-line: no-string-literal
             expect(roundTo(parseFloat(line.getAttribute('data-centerX1')), 4)).toEqual(
@@ -483,9 +724,7 @@ describe('<dumbbell-plot>', () => {
           const lines = page.doc.querySelectorAll('[data-testid=line]');
           lines.forEach(line => {
             flushTransitions(line);
-            const expectedDataRecords = EXPECTEDDATA.filter(
-              o => o.date.getTime() === new Date(line['__data__'].key).getTime()
-            ); // tslint:disable-line: no-string-literal
+            const expectedDataRecords = EXPECTEDDATA.filter(o => o.date === line['__data__'].key); // tslint:disable-line: no-string-literal
             expect(roundTo(parseFloat(line.getAttribute('data-centerY1')), 4)).toEqual(
               roundTo(EXPECTEDLINEARSCALE(expectedDataRecords[0].value), 4)
             );
@@ -513,9 +752,7 @@ describe('<dumbbell-plot>', () => {
           const lines = page.doc.querySelectorAll('[data-testid=line]');
           lines.forEach(line => {
             flushTransitions(line);
-            const expectedDataRecords = EXPECTEDDATA.filter(
-              o => o.date.getTime() === new Date(line['__data__'].key).getTime()
-            ); // tslint:disable-line: no-string-literal
+            const expectedDataRecords = EXPECTEDDATA.filter(o => o.date === line['__data__'].key); // tslint:disable-line: no-string-literal
             expect(roundTo(parseFloat(line.getAttribute('data-centerY1')), 4)).toEqual(
               roundTo(EXPECTEDLINEARSCALE(expectedDataRecords[0].value), 4)
             );
@@ -545,9 +782,7 @@ describe('<dumbbell-plot>', () => {
           const lines = page.doc.querySelectorAll('[data-testid=line]');
           lines.forEach(line => {
             flushTransitions(line);
-            const expectedDataRecords = EXPECTEDDATA.filter(
-              o => o.date.getTime() === new Date(line['__data__'].key).getTime()
-            ); // tslint:disable-line: no-string-literal
+            const expectedDataRecords = EXPECTEDDATA.filter(o => o.date === line['__data__'].key); // tslint:disable-line: no-string-literal
             expect(roundTo(parseFloat(line.getAttribute('data-centerY1')), 4)).toEqual(
               roundTo(EXPECTEDLINEARSCALE(expectedDataRecords[0].value), 4)
             );
@@ -575,9 +810,7 @@ describe('<dumbbell-plot>', () => {
           const lines = page.doc.querySelectorAll('[data-testid=line]');
           lines.forEach(line => {
             flushTransitions(line);
-            const expectedDataRecords = EXPECTEDDATA.filter(
-              o => o.date.getTime() === new Date(line['__data__'].key).getTime()
-            ); // tslint:disable-line: no-string-literal
+            const expectedDataRecords = EXPECTEDDATA.filter(o => o.date === line['__data__'].key); // tslint:disable-line: no-string-literal
             expect(roundTo(parseFloat(line.getAttribute('data-centerY1')), 4)).toEqual(
               roundTo(EXPECTEDLINEARSCALE(expectedDataRecords[0].value), 4)
             );
@@ -687,6 +920,32 @@ describe('<dumbbell-plot>', () => {
       });
 
       describe('generic axis tests', () => {
+        const DATAWITHDATE = [
+          { date: new Date('2016-01-01T00:00:00.000Z'), category: 'CatA', value: 7670994739 },
+          { date: new Date('2016-02-01T00:00:00.000Z'), category: 'CatA', value: 7628909842 },
+          { date: new Date('2016-03-01T00:00:00.000Z'), category: 'CatA', value: 8358837379 },
+          { date: new Date('2016-04-01T00:00:00.000Z'), category: 'CatA', value: 8334842966 },
+          { date: new Date('2016-05-01T00:00:00.000Z'), category: 'CatA', value: 8588600035 },
+          { date: new Date('2016-06-01T00:00:00.000Z'), category: 'CatA', value: 8484192554 },
+          { date: new Date('2016-07-01T00:00:00.000Z'), category: 'CatA', value: 8778636197 },
+          { date: new Date('2016-08-01T00:00:00.000Z'), category: 'CatA', value: 8811163096 },
+          { date: new Date('2016-09-01T00:00:00.000Z'), category: 'CatA', value: 8462148898 },
+          { date: new Date('2016-10-01T00:00:00.000Z'), category: 'CatA', value: 9051933407 },
+          { date: new Date('2016-11-01T00:00:00.000Z'), category: 'CatA', value: 8872849978 },
+          { date: new Date('2016-12-01T00:00:00.000Z'), category: 'CatA', value: 9709829820 },
+          { date: new Date('2016-01-01T00:00:00.000Z'), category: 'CatB', value: 6570994739 },
+          { date: new Date('2016-02-01T00:00:00.000Z'), category: 'CatB', value: 4628909842 },
+          { date: new Date('2016-03-01T00:00:00.000Z'), category: 'CatB', value: 4358837379 },
+          { date: new Date('2016-04-01T00:00:00.000Z'), category: 'CatB', value: 5534842966 },
+          { date: new Date('2016-05-01T00:00:00.000Z'), category: 'CatB', value: 4388600035 },
+          { date: new Date('2016-06-01T00:00:00.000Z'), category: 'CatB', value: 3484192554 },
+          { date: new Date('2016-07-01T00:00:00.000Z'), category: 'CatB', value: 3578636197 },
+          { date: new Date('2016-08-01T00:00:00.000Z'), category: 'CatB', value: 6411163096 },
+          { date: new Date('2016-09-01T00:00:00.000Z'), category: 'CatB', value: 5262148898 },
+          { date: new Date('2016-10-01T00:00:00.000Z'), category: 'CatB', value: 4651933407 },
+          { date: new Date('2016-11-01T00:00:00.000Z'), category: 'CatB', value: 6772849978 },
+          { date: new Date('2016-12-01T00:00:00.000Z'), category: 'CatB', value: 5609829820 }
+        ];
         Object.keys(unitTestAxis).forEach(test => {
           const monthTicks1 = [
             'Jan 16',
@@ -733,8 +992,10 @@ describe('<dumbbell-plot>', () => {
 
           const innerTestProps = unitTestAxis[test].testDefault
             ? { [unitTestAxis[test].prop]: DumbbellPlotDefaultValues[unitTestAxis[test].prop] }
-            : unitTestAxis[test].prop === 'data'
-            ? { data: EXPECTEDDATA }
+            : unitTestAxis[test].prop === 'xAxis.format' ||
+              unitTestAxis[test].prop === 'xAxis.tickInterval' ||
+              unitTestAxis[test].prop === 'xAxis.unit'
+            ? { data: DATAWITHDATE }
             : unitTestAxis[test].testProps;
           const innerTestSelector =
             unitTestAxis[test].testSelector === 'component-name' ? 'dumbbell-plot' : unitTestAxis[test].testSelector;
@@ -748,8 +1009,8 @@ describe('<dumbbell-plot>', () => {
       const commonInteractionProps = { data: LAYOUTDATA, ordinalAccessor: 'region', seriesAccessor: 'category' };
       describe('data label based interaction tests', () => {
         const innerTestProps = commonInteractionProps;
-        const innerTestSelector = '[data-testid=dataLabel][data-id="label-North America-CardA"]';
-        const innerNegTestSelector = '[data-testid=dataLabel][data-id=label-CEMEA-CardA]';
+        const innerTestSelector = '[data-testid=dataLabel][data-id="label-North America-CatA"]';
+        const innerNegTestSelector = '[data-testid=dataLabel][data-id=label-CEMEA-CatA]';
         Object.keys(unitTestInteraction).forEach(test => {
           if (unitTestInteraction[test].prop === 'cursor') {
             it(`[${unitTestInteraction[test].group}] ${unitTestInteraction[test].prop}: ${
@@ -770,8 +1031,8 @@ describe('<dumbbell-plot>', () => {
       describe('clickStyle with interaction keys', () => {
         const testLoad = 'interaction_clickStyle_custom_load';
         const testUpdate = 'interaction_clickStyle_custom_update';
-        const innerTestSelector = '[data-testid=dataLabel][data-id="label-North America-CardA"]';
-        const innerNegTestSelector = '[data-testid=dataLabel][data-id=label-CEMEA-CardB]';
+        const innerTestSelector = '[data-testid=dataLabel][data-id="label-North America-CatA"]';
+        const innerNegTestSelector = '[data-testid=dataLabel][data-id=label-CEMEA-CatB]';
         const CUSTOMCLICKSTYLE = {
           color: visaColors.comp_green,
           stroke: outlineColor(visaColors.comp_green),
@@ -820,8 +1081,8 @@ describe('<dumbbell-plot>', () => {
             component,
             page,
             newInnerTestProps,
-            '[data-testid=dataLabel][data-id="label-North America-CardA"]',
-            '[data-testid=dataLabel][data-id=label-CEMEA-CardA]'
+            '[data-testid=dataLabel][data-id="label-North America-CatA"]',
+            '[data-testid=dataLabel][data-id=label-CEMEA-CatA]'
           ));
 
         it(`[${unitTestInteraction[testUpdate].group}] ${unitTestInteraction[testUpdate].prop}: ${
@@ -831,8 +1092,8 @@ describe('<dumbbell-plot>', () => {
             component,
             page,
             newInnerTestProps,
-            '[data-testid=dataLabel][data-id="label-North America-CardA"]',
-            '[data-testid=dataLabel][data-id=label-CEMEA-CardA]'
+            '[data-testid=dataLabel][data-id="label-North America-CatA"]',
+            '[data-testid=dataLabel][data-id=label-CEMEA-CatA]'
           ));
       });
       describe('hoverStyle custom with interaction keys', () => {
@@ -927,7 +1188,7 @@ describe('<dumbbell-plot>', () => {
                 transitionEndAllSelector: '[data-testid=line]'
               }
             };
-            const innerTestSelector = '[data-testid=dataLabel][data-id="label-North America-CardA"]';
+            const innerTestSelector = '[data-testid=dataLabel][data-id="label-North America-CatA"]';
 
             it(`[${unitTestEvent[test].group}] ${unitTestEvent[test].prop}: ${unitTestEvent[test].name}`, () =>
               unitTestEvent[test].testFunc(component, page, innerTestProps, innerTestSelector, LAYOUTDATA[0]));
@@ -954,14 +1215,14 @@ describe('<dumbbell-plot>', () => {
           // ARRANGE
           const EXPECTEDSORTORDER = 'asc';
           const EXPECTEDDATAASC = [
-            { region: 'North America', category: 'CardA', value: MINVALUE },
-            { region: 'South America', category: 'CardA', value: 8334842966 },
-            { region: 'CEMEA', category: 'CardA', value: 7628909842 },
-            { region: 'Asia and Pacific', category: 'CardA', value: MAXVALUE },
-            { region: 'North America', category: 'CardB', value: 7570994739 },
-            { region: 'South America', category: 'CardB', value: 5534842966 },
-            { region: 'CEMEA', category: 'CardB', value: 4628909842 },
-            { region: 'Asia and Pacific', category: 'CardB', value: 4388600035 }
+            { region: 'North America', category: 'CatA', value: MINVALUE },
+            { region: 'South America', category: 'CatA', value: 8334842966 },
+            { region: 'CEMEA', category: 'CatA', value: 7628909842 },
+            { region: 'Asia and Pacific', category: 'CatA', value: MAXVALUE },
+            { region: 'North America', category: 'CatB', value: 7570994739 },
+            { region: 'South America', category: 'CatB', value: 5534842966 },
+            { region: 'CEMEA', category: 'CatB', value: 4628909842 },
+            { region: 'Asia and Pacific', category: 'CatB', value: 4388600035 }
           ];
           component.sortOrder = EXPECTEDSORTORDER;
           Object.keys(commonInteractionProps).forEach(commonProp => {
@@ -984,17 +1245,17 @@ describe('<dumbbell-plot>', () => {
           // ARRANGE
           const EXPECTEDSORTORDER = 'focusAsc';
           const EXPECTEDDATAASC = [
-            { region: 'North America', category: 'CardA', value: MINVALUE },
-            { region: 'CEMEA', category: 'CardA', value: 7628909842 },
-            { region: 'South America', category: 'CardA', value: 8334842966 },
-            { region: 'Asia and Pacific', category: 'CardA', value: MAXVALUE },
-            { region: 'North America', category: 'CardB', value: 7570994739 },
-            { region: 'CEMEA', category: 'CardB', value: 4628909842 },
-            { region: 'South America', category: 'CardB', value: 5534842966 },
-            { region: 'Asia and Pacific', category: 'CardB', value: 4388600035 }
+            { region: 'North America', category: 'CatA', value: MINVALUE },
+            { region: 'CEMEA', category: 'CatA', value: 7628909842 },
+            { region: 'South America', category: 'CatA', value: 8334842966 },
+            { region: 'Asia and Pacific', category: 'CatA', value: MAXVALUE },
+            { region: 'North America', category: 'CatB', value: 7570994739 },
+            { region: 'CEMEA', category: 'CatB', value: 4628909842 },
+            { region: 'South America', category: 'CatB', value: 5534842966 },
+            { region: 'Asia and Pacific', category: 'CatB', value: 4388600035 }
           ];
           component.sortOrder = EXPECTEDSORTORDER;
-          component.focusMarker = { key: 'CardA', sizeFromBar: 0.75 };
+          component.focusMarker = { key: 'CatA', sizeFromBar: 0.75 };
           Object.keys(commonInteractionProps).forEach(commonProp => {
             component[commonProp] = commonInteractionProps[commonProp];
           });
@@ -1015,14 +1276,14 @@ describe('<dumbbell-plot>', () => {
           // ARRANGE
           const EXPECTEDSORTORDER = 'absoluteDiffAsc';
           const EXPECTEDDATAASC = [
-            { region: 'South America', category: 'CardA', value: 8334842966 },
-            { region: 'CEMEA', category: 'CardA', value: 7628909842 },
-            { region: 'North America', category: 'CardA', value: MINVALUE },
-            { region: 'Asia and Pacific', category: 'CardA', value: MAXVALUE },
-            { region: 'South America', category: 'CardB', value: 5534842966 },
-            { region: 'CEMEA', category: 'CardB', value: 4628909842 },
-            { region: 'North America', category: 'CardB', value: 7570994739 },
-            { region: 'Asia and Pacific', category: 'CardB', value: 4388600035 }
+            { region: 'South America', category: 'CatA', value: 8334842966 },
+            { region: 'CEMEA', category: 'CatA', value: 7628909842 },
+            { region: 'North America', category: 'CatA', value: MINVALUE },
+            { region: 'Asia and Pacific', category: 'CatA', value: MAXVALUE },
+            { region: 'South America', category: 'CatB', value: 5534842966 },
+            { region: 'CEMEA', category: 'CatB', value: 4628909842 },
+            { region: 'North America', category: 'CatB', value: 7570994739 },
+            { region: 'Asia and Pacific', category: 'CatB', value: 4388600035 }
           ];
           component.sortOrder = EXPECTEDSORTORDER;
           Object.keys(commonInteractionProps).forEach(commonProp => {
@@ -1045,14 +1306,14 @@ describe('<dumbbell-plot>', () => {
           // ARRANGE
           const EXPECTEDSORTORDER = 'desc';
           const EXPECTEDDATADESC = [
-            { region: 'Asia and Pacific', category: 'CardA', value: MAXVALUE },
-            { region: 'CEMEA', category: 'CardA', value: 7628909842 },
-            { region: 'South America', category: 'CardA', value: 8334842966 },
-            { region: 'North America', category: 'CardA', value: MINVALUE },
-            { region: 'Asia and Pacific', category: 'CardB', value: 4388600035 },
-            { region: 'CEMEA', category: 'CardB', value: 4628909842 },
-            { region: 'South America', category: 'CardB', value: 5534842966 },
-            { region: 'North America', category: 'CardB', value: 7570994739 }
+            { region: 'Asia and Pacific', category: 'CatA', value: MAXVALUE },
+            { region: 'CEMEA', category: 'CatA', value: 7628909842 },
+            { region: 'South America', category: 'CatA', value: 8334842966 },
+            { region: 'North America', category: 'CatA', value: MINVALUE },
+            { region: 'Asia and Pacific', category: 'CatB', value: 4388600035 },
+            { region: 'CEMEA', category: 'CatB', value: 4628909842 },
+            { region: 'South America', category: 'CatB', value: 5534842966 },
+            { region: 'North America', category: 'CatB', value: 7570994739 }
           ];
           component.sortOrder = EXPECTEDSORTORDER;
           Object.keys(commonInteractionProps).forEach(commonProp => {
@@ -1075,17 +1336,17 @@ describe('<dumbbell-plot>', () => {
           // ARRANGE
           const EXPECTEDSORTORDER = 'focusDesc';
           const EXPECTEDDATADESC = [
-            { region: 'Asia and Pacific', category: 'CardA', value: MAXVALUE },
-            { region: 'South America', category: 'CardA', value: 8334842966 },
-            { region: 'CEMEA', category: 'CardA', value: 7628909842 },
-            { region: 'North America', category: 'CardA', value: MINVALUE },
-            { region: 'Asia and Pacific', category: 'CardB', value: 4388600035 },
-            { region: 'South America', category: 'CardB', value: 5534842966 },
-            { region: 'CEMEA', category: 'CardB', value: 4628909842 },
-            { region: 'North America', category: 'CardB', value: 7570994739 }
+            { region: 'Asia and Pacific', category: 'CatA', value: MAXVALUE },
+            { region: 'South America', category: 'CatA', value: 8334842966 },
+            { region: 'CEMEA', category: 'CatA', value: 7628909842 },
+            { region: 'North America', category: 'CatA', value: MINVALUE },
+            { region: 'Asia and Pacific', category: 'CatB', value: 4388600035 },
+            { region: 'South America', category: 'CatB', value: 5534842966 },
+            { region: 'CEMEA', category: 'CatB', value: 4628909842 },
+            { region: 'North America', category: 'CatB', value: 7570994739 }
           ];
           component.sortOrder = EXPECTEDSORTORDER;
-          component.focusMarker = { key: 'CardA', sizeFromBar: 0.75 };
+          component.focusMarker = { key: 'CatA', sizeFromBar: 0.75 };
           Object.keys(commonInteractionProps).forEach(commonProp => {
             component[commonProp] = commonInteractionProps[commonProp];
           });
@@ -1106,17 +1367,17 @@ describe('<dumbbell-plot>', () => {
           // ARRANGE
           const EXPECTEDSORTORDER = 'absoluteDiffDesc';
           const EXPECTEDDATADESC = [
-            { region: 'Asia and Pacific', category: 'CardA', value: MAXVALUE },
-            { region: 'North America', category: 'CardA', value: MINVALUE },
-            { region: 'CEMEA', category: 'CardA', value: 7628909842 },
-            { region: 'South America', category: 'CardA', value: 8334842966 },
-            { region: 'Asia and Pacific', category: 'CardB', value: 4388600035 },
-            { region: 'North America', category: 'CardB', value: 7570994739 },
-            { region: 'CEMEA', category: 'CardB', value: 4628909842 },
-            { region: 'South America', category: 'CardB', value: 5534842966 }
+            { region: 'Asia and Pacific', category: 'CatA', value: MAXVALUE },
+            { region: 'North America', category: 'CatA', value: MINVALUE },
+            { region: 'CEMEA', category: 'CatA', value: 7628909842 },
+            { region: 'South America', category: 'CatA', value: 8334842966 },
+            { region: 'Asia and Pacific', category: 'CatB', value: 4388600035 },
+            { region: 'North America', category: 'CatB', value: 7570994739 },
+            { region: 'CEMEA', category: 'CatB', value: 4628909842 },
+            { region: 'South America', category: 'CatB', value: 5534842966 }
           ];
           component.sortOrder = EXPECTEDSORTORDER;
-          component.focusMarker = { key: 'CardA', sizeFromBar: 0.75 };
+          component.focusMarker = { key: 'CatA', sizeFromBar: 0.75 };
           Object.keys(commonInteractionProps).forEach(commonProp => {
             component[commonProp] = commonInteractionProps[commonProp];
           });
@@ -1183,7 +1444,7 @@ describe('<dumbbell-plot>', () => {
         });
         it('bar color should be focus if set on load', async () => {
           // ARRANGE
-          component.focusMarker = { key: 'CardB', sizeFromBar: 4 };
+          component.focusMarker = { key: 'CatB', sizeFromBar: 4 };
           component.barStyle = { width: 1, opacity: 1, colorRule: 'focus' };
           // ACT
           page.root.appendChild(component);
@@ -1220,7 +1481,7 @@ describe('<dumbbell-plot>', () => {
           await page.waitForChanges();
 
           // ACT UPDATE
-          component.focusMarker = { key: 'CardA', sizeFromBar: 4 };
+          component.focusMarker = { key: 'CatA', sizeFromBar: 4 };
           component.barStyle = { width: 1, opacity: 1, colorRule: 'focus' };
           await page.waitForChanges();
 
@@ -1340,7 +1601,7 @@ describe('<dumbbell-plot>', () => {
         };
         describe('generic tooltip tests', () => {
           Object.keys(unitTestTooltip).forEach(test => {
-            const innerTestSelector = '[data-testid=dataLabel][data-id="label-North America-CardA"]';
+            const innerTestSelector = '[data-testid=dataLabel][data-id="label-North America-CatA"]';
             const innerTooltipProps = {
               tooltip_tooltipLabel_custom_load: tooltip1,
               tooltip_tooltipLabel_custom_update: tooltip1,
@@ -1348,7 +1609,7 @@ describe('<dumbbell-plot>', () => {
               tooltip_tooltipLabel_custom_format_update: tooltip2
             };
             const innerTooltipContent = {
-              tooltip_tooltipLabel_default: '<p style="margin: 0;"><b>North America</b><br/>CardA:<b>3.5b</b></p>',
+              tooltip_tooltipLabel_default: '<p style="margin: 0;"><b>North America</b><br/>CatA:<b>3.5b</b></p>',
               tooltip_tooltipLabel_custom_load: '<p style="margin: 0;">Testing123:<b>North America</b><br></p>',
               tooltip_tooltipLabel_custom_update: '<p style="margin: 0;">Testing123:<b>North America</b><br></p>',
               tooltip_tooltipLabel_custom_format_load:
@@ -1435,7 +1696,7 @@ describe('<dumbbell-plot>', () => {
             await page.waitForChanges();
 
             // ASSERT
-            const dataLabel = page.doc.querySelector('[data-testid=dataLabel][data-id="label-North America-CardA"]');
+            const dataLabel = page.doc.querySelector('[data-testid=dataLabel][data-id="label-North America-CatA"]');
             const expectedLabelValue = formatStats(LAYOUTDATA[0].value, '0[.][0]a'); // tslint:disable-line: no-string-literal
             expect(dataLabel).toEqualText(expectedLabelValue);
           });
@@ -1458,7 +1719,7 @@ describe('<dumbbell-plot>', () => {
             await page.waitForChanges();
 
             // ASSERT
-            const dataLabel = page.doc.querySelector('[data-testid=dataLabel][data-id="label-North America-CardA"]');
+            const dataLabel = page.doc.querySelector('[data-testid=dataLabel][data-id="label-North America-CatA"]');
             const expectedLabelValue = formatStats(LAYOUTDATA[0]['random'], '0[.][0][0]%'); // tslint:disable-line: no-string-literal
             expect(dataLabel).toEqualText(expectedLabelValue);
           });
@@ -1484,7 +1745,7 @@ describe('<dumbbell-plot>', () => {
             await page.waitForChanges();
 
             // ASSERT
-            const dataLabel = page.doc.querySelector('[data-testid=dataLabel][data-id="label-North America-CardA"]');
+            const dataLabel = page.doc.querySelector('[data-testid=dataLabel][data-id="label-North America-CatA"]');
             const expectedLabelValue = formatStats(LAYOUTDATA[0]['random'], '0[.][0][0]%'); // tslint:disable-line: no-string-literal
             flushTransitions(dataLabel);
             await page.waitForChanges();
@@ -1748,12 +2009,8 @@ describe('<dumbbell-plot>', () => {
             await page.waitForChanges();
 
             // ASSERT
-            const label = page.doc.querySelector(
-              '[data-id="difference-label-Thu Dec 31 2015 16:00:00 GMT-0800 (Pacific Standard Time)"]'
-            );
-            const line = page.doc.querySelector(
-              '[data-id="line-Thu Dec 31 2015 16:00:00 GMT-0800 (Pacific Standard Time)"]'
-            );
+            const label = page.doc.querySelector('[data-id="difference-label-Jan-2016"]');
+            const line = page.doc.querySelector('[data-id="line-Jan-2016"]');
             const labelPlacement = roundTo(
               parseFloat(line.getAttribute('data-centerY1')) +
                 (parseFloat(line.getAttribute('data-centerY2')) - parseFloat(line.getAttribute('data-centerY1'))) / 2,
@@ -1778,12 +2035,8 @@ describe('<dumbbell-plot>', () => {
             await page.waitForChanges();
 
             // ASSERT
-            const label = page.doc.querySelector(
-              '[data-id="difference-label-Thu Dec 31 2015 16:00:00 GMT-0800 (Pacific Standard Time)"]'
-            );
-            const line = page.doc.querySelector(
-              '[data-id="line-Thu Dec 31 2015 16:00:00 GMT-0800 (Pacific Standard Time)"]'
-            );
+            const label = page.doc.querySelector('[data-id="difference-label-Jan-2016"]');
+            const line = page.doc.querySelector('[data-id="line-Jan-2016"]');
             flushTransitions(label);
             flushTransitions(line);
             await page.waitForChanges();
@@ -1812,12 +2065,8 @@ describe('<dumbbell-plot>', () => {
             await page.waitForChanges();
 
             // ASSERT
-            const label = page.doc.querySelector(
-              '[data-id="difference-label-Thu Dec 31 2015 16:00:00 GMT-0800 (Pacific Standard Time)"]'
-            );
-            const line = page.doc.querySelector(
-              '[data-id="line-Thu Dec 31 2015 16:00:00 GMT-0800 (Pacific Standard Time)"]'
-            );
+            const label = page.doc.querySelector('[data-id="difference-label-Jan-2016"]');
+            const line = page.doc.querySelector('[data-id="line-Jan-2016"]');
             flushTransitions(label);
             flushTransitions(line);
             await page.waitForChanges();
@@ -2167,7 +2416,7 @@ describe('<dumbbell-plot>', () => {
 
             // ASSERT
             const label = page.doc.querySelector('[data-testid=series-label]');
-            expect(label).toEqualText('CardA');
+            expect(label).toEqualText('CatA');
           });
           it('should use values of label prop when passed on load', async () => {
             component.seriesLabel = {
@@ -2347,7 +2596,7 @@ describe('<dumbbell-plot>', () => {
         describe('labels', () => {
           it('should be equal to data values by default', async () => {
             // ARRANGE
-            const EXPECTEDLABELS = ['CardA', 'CardB'];
+            const EXPECTEDLABELS = ['CatA', 'CatB'];
 
             // ACT
             page.root.appendChild(component);
@@ -2587,7 +2836,7 @@ describe('<dumbbell-plot>', () => {
           });
           it('focusMarker key should be applied if valid and passed on load', async () => {
             component.focusMarker = {
-              key: 'CardA',
+              key: 'CatA',
               sizeFromBar: 12
             };
 
@@ -2608,7 +2857,7 @@ describe('<dumbbell-plot>', () => {
 
             // ACT UPDATE
             component.focusMarker = {
-              key: 'CardB',
+              key: 'CatB',
               sizeFromBar: 12
             };
             await page.waitForChanges();
@@ -2624,7 +2873,7 @@ describe('<dumbbell-plot>', () => {
         describe.skip('sizeFromBar', () => {
           it('focusMarker sizeFromBar should be 12 (default) when focus marker is passed on load', async () => {
             component.focusMarker = {
-              key: 'CardB',
+              key: 'CatB',
               sizeFromBar: 12
             };
 
@@ -2657,7 +2906,7 @@ describe('<dumbbell-plot>', () => {
               visible: true
             };
             component.focusMarker = {
-              key: 'CardA',
+              key: 'CatA',
               sizeFromBar: 15
             };
             await page.waitForChanges();

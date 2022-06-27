@@ -13,6 +13,11 @@ export default [
 			file: pkg.browser,
 			format: 'umd'
 		},
+		// suppress circular dependency warnings from d3
+		onwarn: function(warning, warn) {
+			if (warning.code === 'CIRCULAR_DEPENDENCY') return
+			warn(warning)
+		},
 		plugins: [
 			resolve(),
 			commonjs({
@@ -38,9 +43,23 @@ export default [
 		input: 'src/index.ts',
 		external: [],
 		plugins: [
+			resolve(),
+			commonjs({
+				include:['./node_modules/yup/lib/index.js',
+						'./node_modules/synchronous-promise/index.js',
+						'./node_modules/property-expr/index.js',
+						'node_modules/toposort/index.js',
+						'node_modules/ua-parser-js/src/ua-parser.js'
+						]
+			}),  // so Rollup can convert `ms` to an ES module			
 			// typescript2(),
 			typescript(), // so Rollup can convert TypeScript to JavaScript
 		],
+		// suppress circular dependency warnings from d3
+		onwarn: function(warning, warn) {
+			if (warning.code === 'CIRCULAR_DEPENDENCY') return
+			warn(warning)
+		},
 		output: [
 			{ file: pkg.main, format: 'cjs' },
 			{ file: pkg.module, format: 'es' }

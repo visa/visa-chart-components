@@ -390,7 +390,7 @@ exports[`<clustered-bar-chart> rendered-html render should render with minimal p
           <div class="visa-viz-keyboard-instructions-outer-container" style="width: 416px;">
             <div class="vcc-ki-keyboard-instructions-header vcc-ki-minimize">
               <p class="vcc-ki-keyboard-heading">
-                Select to View Keyboard Instructions
+                Display Keyboard Instructions
               </p>
             </div>
             <div class="visa-viz-keyboard-instructions-button-wrapper">
@@ -885,7 +885,7 @@ exports[`<clustered-bar-chart> rendered-html render should render with minimal p
           </defs>
         </svg>
       </div>
-      <div class="clustered-bar-tooltip vcl-tooltip" data-testid="tooltip-container" style="display: block; position: absolute; padding: 0.5rem; opacity: 0; background-color: #ffffff; font-size: 14px; font-weight: 400; color: #222222; border: 1px solid #565656; border-radius: 3px; pointer-events: none; min-width: 80px; max-width: 300px;">
+      <div class="clustered-bar-tooltip vcl-tooltip" data-testid="tooltip-container" style="display: block; position: absolute; padding: 0.5rem; opacity: 0; background-color: #ffffff; font-size: 14px; font-weight: 400; color: #222222; border: 1px solid #565656; border-radius: 3px; pointer-events: none; min-width: 80px; max-width: 300px; z-index: 10;">
         <p style="margin: 0;"></p>
       </div>
       <data-table>

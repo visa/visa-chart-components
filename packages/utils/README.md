@@ -521,6 +521,7 @@ Example annotation prop sent to a chart:
   {...props}
   annotations = [
     {
+      // see d3-svg-annotation for the main api available from that library
       "note": {
         "label": "Social Media Intern returned to college",
         "bgPadding": 20,
@@ -528,11 +529,27 @@ Example annotation prop sent to a chart:
         "align": "middle",
         "wrap": 130
       },
+
       /*
         devs must explain where they are on a chart for users who cannot see
         this text is exposed to screen reader users in addition to note text
       */
       "accessibilityDescription": "There has been a drop in tweet activity due to staff change in Q3.",
+
+      /*
+        OR, devs must identify the annotation as decorative, this can be useful when leveraging
+        annotations for additional lines, labels, etc. which are already described elsewhere in
+        the chart. If your annotation describes something on the chart, this should not be used.
+      */
+      "accessibilityDecorationOnly": true,
+
+      /*
+        devs can take advantage of VCCs label collision (via vega-label) for annotations
+        currently we only support hiding annotations if they collide, this behavior
+        can be enabled by passing collisionHideOnly with a value of true
+      */
+      "collisionHideOnly": true,
+
       /*
         data objects can be passed in directly and will use the chart's scale
         if any other props are passed for x/y, those will override this object
@@ -541,17 +558,46 @@ Example annotation prop sent to a chart:
         "label": "Q3",
         "value": 2125
       },
+
       // if a value is wrapped in array brackets, it will use the chart's scale
       "y": [2600],
+
+      // parseAsDates is an add-on function provided by VCC that allows you to place
+      // annotation elements on a date scale, specify the axis ("x" or "y") or accessor key when defining
+      // "parseAsDates":["date"] // accepts "x" or "xAccessor" which is "date" in this example
+
+      // we can also pass an array of two values in order to calculate the diff between them
+      // this is an example of calculating the difference of dates (assuming parseAsDates is sent)
+      // "x": ["2016-02-01, 2016-01-01],
+
       // percentages may also be passed, in string format
       "x": "62%",
+
       // when no bracket or % is used, numbers result in actual pixel space
       "dy": -85,
+
+      // these additional placement options are available via the resolveValue function in the annotations.ts util
+      // they are available and can be used on the following annotation attributes
+      // annotation.x/y
+      // annotation.dx/dy
+      // annotation.subject.x1/x2/y1/y2/width/height
+      // annotation.connector.points
+      // here is an example of passing to connector points (assuming parseAsDates["x"] is also sent)
+      // "connector": { ...
+        // "points": [
+              // [["2016-02-01","2016-01-01"],[98765,4321]],
+              // [["2016-03-01","2016-01-01"],[98765,4321]],
+              // ...
+        // ]
+      //}
+
+      // types relate to those provided out of the box by d3-svg-annotation
       "type": "annotationCallout",
       "connector": {
         "end": "dot",
         "endScale": 3
       },
+
       // visa-charts colors can be passed in and will be used
       "color": "oss_dark_grey"
   ]

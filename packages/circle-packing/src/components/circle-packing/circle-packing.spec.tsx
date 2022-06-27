@@ -118,6 +118,14 @@ describe('<circle-packing>', () => {
     // for data we need to do d.data.data for circle packing vs just using __data__
     // need to investigate this in the browser once we are able to connect the debugger again
     describe('generic test suite', () => {
+      beforeEach(() => {
+        jest.spyOn(console, 'error').mockImplementation();
+      });
+
+      afterEach(() => {
+        // RESTORE GLOBAL FUNCTION FROM MOCK AFTER TEST
+        jest.spyOn(console, 'error').mockRestore();
+      });
       Object.keys(unitTestGeneric).forEach(test => {
         const marginModifier = unitTestGeneric[test].testProps.margin
           ? unitTestGeneric[test].testDefault
