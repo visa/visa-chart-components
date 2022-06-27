@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.2.0](https://github.com/visa/visa-chart-components/compare/@visa/scatter-plot@6.1.0...@visa/scatter-plot@6.2.0) (2022-06-27)
+
+
+### Features
+
+* enable size accessor in scatter-plot, remove uniqueID update, update tests ([f08c69a](https://github.com/visa/visa-chart-components/commit/f08c69ab8b1ab65881db46e55837c2a4f6995bb9))
+
+
+
+
+
 # [6.1.0](https://github.com/visa/visa-chart-components/compare/@visa/scatter-plot@6.0.1...@visa/scatter-plot@6.1.0) (2022-03-29)
 
 

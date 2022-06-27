@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.2](https://github.com/visa/visa-chart-components/compare/@visa/charts-types@0.4.1...@visa/charts-types@0.4.2) (2022-06-27)
+
+
+### Bug Fixes
+
+* add ISizeConfigType to prop-types ([7f9824a](https://github.com/visa/visa-chart-components/commit/7f9824a14a8ea6e3460b4c01565b43e7232eb49f))
+
+
+
+
+
 ## [0.4.1](https://github.com/visa/visa-chart-components/compare/@visa/charts-types@0.4.0...@visa/charts-types@0.4.1) (2022-03-29)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.1.1](https://github.com/visa/visa-chart-components/compare/@visa/bar-chart@5.1.0...@visa/bar-chart@5.1.1) (2022-06-27)
+
+
+### Bug Fixes
+
+* update scales for bar and clustered to address all negative values bug, remove uniqueID update ([7a4f03a](https://github.com/visa/visa-chart-components/commit/7a4f03a71014db551b5273940af6624bf5f01225))
+
+
+
+
+
 # [5.1.0](https://github.com/visa/visa-chart-components/compare/@visa/bar-chart@5.0.1...@visa/bar-chart@5.1.0) (2022-03-29)
 
 

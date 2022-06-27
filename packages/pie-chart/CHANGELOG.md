@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.1.1](https://github.com/visa/visa-chart-components/compare/@visa/pie-chart@5.1.0...@visa/pie-chart@5.1.1) (2022-06-27)
+
+
+### Bug Fixes
+
+* remove uniqueID update, pie-chart and interaction util to fix bug with nested data objects ([1cea07b](https://github.com/visa/visa-chart-components/commit/1cea07be1936f2c39d9b636d47a4fe59d147bb62))
+
+
+
+
+
 # [5.1.0](https://github.com/visa/visa-chart-components/compare/@visa/pie-chart@5.0.1...@visa/pie-chart@5.1.0) (2022-03-29)
 
 

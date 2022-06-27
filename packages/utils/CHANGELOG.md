@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.7.0](https://github.com/visa/visa-chart-components/compare/@visa/visa-charts-utils@4.6.1...@visa/visa-charts-utils@4.7.0) (2022-06-27)
+
+
+### Bug Fixes
+
+* add alluvial default to tooltip, add z-index of 10 to style ([f4d7eea](https://github.com/visa/visa-chart-components/commit/f4d7eea78a6c9dbb5b8243f8a1520258108c4ae8))
+* remove uniqueID update, pie-chart and interaction util to fix bug with nested data objects ([1cea07b](https://github.com/visa/visa-chart-components/commit/1cea07be1936f2c39d9b636d47a4fe59d147bb62))
+
+
+### Features
+
+* add annotation.accessibilityDecorationOnly to a11y descr util, update annotation readme with more detail ([ecb9606](https://github.com/visa/visa-chart-components/commit/ecb9606976bdc172feb196b1ab33c008a00b2392))
+* enable size accessor in scatter-plot, remove uniqueID update, update tests ([f08c69a](https://github.com/visa/visa-chart-components/commit/f08c69ab8b1ab65881db46e55837c2a4f6995bb9))
+
+
+
+
+
 ## [4.6.1](https://github.com/visa/visa-chart-components/compare/@visa/visa-charts-utils@4.6.0...@visa/visa-charts-utils@4.6.1) (2022-03-29)
 
 

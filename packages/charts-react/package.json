@@ -1,6 +1,6 @@
 {
   "name": "@visa/charts-react",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "A react wrapper built with Stencil's bindings for the visa-charts-lib stencil.js based component library. ",
   "license": "SEE LICENCE IN LICENSE",
   "sideEffects": false,
@@ -37,7 +37,7 @@
     "react-dom": "^16.7.0"
   },
   "dependencies": {
-    "@visa/charts": "^6.1.0"
+    "@visa/charts": "^6.1.1"
   },
   "devDependencies": {
     "@types/node": "^13.7.0",
