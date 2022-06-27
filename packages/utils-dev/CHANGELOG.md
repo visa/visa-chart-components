@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.3.14](https://github.com/visa/visa-chart-components/compare/@visa/visa-charts-utils-dev@3.3.13...@visa/visa-charts-utils-dev@3.3.14) (2022-06-27)
+
+**Note:** Version bump only for package @visa/visa-charts-utils-dev
+
+
+
+
+
 ## [3.3.13](https://github.com/visa/visa-chart-components/compare/@visa/visa-charts-utils-dev@3.3.12...@visa/visa-charts-utils-dev@3.3.13) (2022-03-29)
 
 

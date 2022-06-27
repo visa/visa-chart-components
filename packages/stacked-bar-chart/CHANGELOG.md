@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.1.1](https://github.com/visa/visa-chart-components/compare/@visa/stacked-bar-chart@5.1.0...@visa/stacked-bar-chart@5.1.1) (2022-06-27)
+
+
+### Bug Fixes
+
+* remove uniqueID update, circle pack, stacked and world-map ([cf6a904](https://github.com/visa/visa-chart-components/commit/cf6a904591b8d845358fff1e8f79ed0c8d767747))
+
+
+
+
+
 # [5.1.0](https://github.com/visa/visa-chart-components/compare/@visa/stacked-bar-chart@5.0.1...@visa/stacked-bar-chart@5.1.0) (2022-03-29)
 
 

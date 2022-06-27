@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.1.1](https://github.com/visa/visa-chart-components/compare/@visa/heat-map@5.1.0...@visa/heat-map@5.1.1) (2022-06-27)
+
+
+### Bug Fixes
+
+* add unit testing to heat-map, remove uniqueID update ([c499ee6](https://github.com/visa/visa-chart-components/commit/c499ee66b904a3654683dd87707ebe9fa2e25df0))
+
+
+
+
+
 # [5.1.0](https://github.com/visa/visa-chart-components/compare/@visa/heat-map@5.0.1...@visa/heat-map@5.1.0) (2022-03-29)
 
 

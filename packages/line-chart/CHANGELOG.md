@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.1.1](https://github.com/visa/visa-chart-components/compare/@visa/line-chart@5.1.0...@visa/line-chart@5.1.1) (2022-06-27)
+
+
+### Bug Fixes
+
+* remove uniqueID update, enable series highlight on group keynav ([b66d972](https://github.com/visa/visa-chart-components/commit/b66d972564907139860bc7b81fc2d35232c0d6fc))
+
+
+
+
+
 # [5.1.0](https://github.com/visa/visa-chart-components/compare/@visa/line-chart@5.0.1...@visa/line-chart@5.1.0) (2022-03-29)
 
 

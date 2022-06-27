@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.1](https://github.com/visa/visa-chart-components/compare/@visa/dumbbell-plot@6.1.0...@visa/dumbbell-plot@6.1.1) (2022-06-27)
+
+
+### Bug Fixes
+
+* augment a11y unit testing for dumbbell, remove uniqueID update ([7195acd](https://github.com/visa/visa-chart-components/commit/7195acd9a4700621e3b9b6a325b63ea3b00bc921))
+
+
+
+
+
 # [6.1.0](https://github.com/visa/visa-chart-components/compare/@visa/dumbbell-plot@6.0.1...@visa/dumbbell-plot@6.1.0) (2022-03-29)
 
 

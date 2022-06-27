@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.1](https://github.com/visa/visa-chart-components/compare/@visa/alluvial-diagram@2.1.0...@visa/alluvial-diagram@2.1.1) (2022-06-27)
+
+
+### Bug Fixes
+
+* augment unit testing for alluvial, remove uniqueID update, fix contrasting stroke on node and tooltip accessors ([59b0896](https://github.com/visa/visa-chart-components/commit/59b0896756782527801bb7e5c30d9ff6114fc6cd))
+
+
+
+
+
 # [2.1.0](https://github.com/visa/visa-chart-components/compare/@visa/alluvial-diagram@2.0.1...@visa/alluvial-diagram@2.1.0) (2022-03-29)
 
 

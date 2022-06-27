@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.1](https://github.com/visa/visa-chart-components/compare/@visa/keyboard-instructions@1.2.0...@visa/keyboard-instructions@1.2.1) (2022-06-27)
+
+
+### Bug Fixes
+
+* simplify and synchronize ki button aria and visual label ([13f4099](https://github.com/visa/visa-chart-components/commit/13f4099b1f84757086c830169fa7ce9aa9108962))
+
+
+
+
+
 # [1.2.0](https://github.com/visa/visa-chart-components/compare/@visa/keyboard-instructions@1.1.3...@visa/keyboard-instructions@1.2.0) (2022-03-29)
 
 
