@@ -499,16 +499,23 @@ export class CirclePacking {
 
   @Watch('uniqueID')
   idWatcher(newID, _oldID) {
-    this.chartID = newID || 'circle-pack-' + uuid();
-    this.circlePackingEl.id = this.chartID;
-    this.shouldValidate = true;
-    this.shouldUpdateDescriptionWrapper = true;
-    this.shouldSetParentSVGAccessibility = true;
-    this.shouldSetTextures = true;
-    this.shouldDrawInteractionState = true;
-    this.shouldSetStrokes = true;
-    this.shouldSetTextStrokes = true;
-    this.shouldSetIDs = true;
+    console.error(
+      'Change detected in prop uniqueID from value ' +
+        _oldID +
+        ' to value ' +
+        newID +
+        '. This prop cannot be changed after component has loaded.'
+    );
+    // this.chartID = newID || 'circle-pack-' + uuid();
+    // this.circlePackingEl.id = this.chartID;
+    // this.shouldValidate = true;
+    // this.shouldUpdateDescriptionWrapper = true;
+    // this.shouldSetParentSVGAccessibility = true;
+    // this.shouldSetTextures = true;
+    // this.shouldDrawInteractionState = true;
+    // this.shouldSetStrokes = true;
+    // this.shouldSetTextStrokes = true;
+    // this.shouldSetIDs = true;
   }
 
   @Watch('suppressEvents')

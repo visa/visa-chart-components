@@ -445,28 +445,32 @@ export const setAccessAnnotation = (rootEle: any, annotations: any) => {
     }
     annotations.forEach(annotation => {
       let count = false;
-      if (annotation.note) {
-        if (annotation.note.title) {
-          count = true;
-          parent
-            .insert(level1, instructionsHeading)
-            .attr('class', 'screen-reader-info vcl-access-annotation')
-            .text(annotation.note.title || 'Annotation ' + i);
+      if (annotation.accessibilityDecorationOnly) {
+        count = false;
+      } else {
+        if (annotation.note) {
+          if (annotation.note.title) {
+            count = true;
+            parent
+              .insert(level1, instructionsHeading)
+              .attr('class', 'screen-reader-info vcl-access-annotation')
+              .text(annotation.note.title || 'Annotation ' + i);
+          }
+          if (annotation.note.label) {
+            count = true;
+            parent
+              .insert(level2, instructionsHeading)
+              .attr('class', 'screen-reader-info vcl-access-annotation')
+              .text(annotation.note.label);
+          }
         }
-        if (annotation.note.label) {
+        if (annotation.accessibilityDescription) {
           count = true;
           parent
             .insert(level2, instructionsHeading)
             .attr('class', 'screen-reader-info vcl-access-annotation')
-            .text(annotation.note.label);
+            .text(annotation.accessibilityDescription);
         }
-      }
-      if (annotation.accessibilityDescription) {
-        count = true;
-        parent
-          .insert(level2, instructionsHeading)
-          .attr('class', 'screen-reader-info vcl-access-annotation')
-          .text(annotation.accessibilityDescription);
       }
       if (count) {
         i++;

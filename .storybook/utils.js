@@ -92,7 +92,7 @@ const categories = {
   Links: ['linkConfig'],
   Map: ['mapProjection', 'quality', 'mapScaleZoom', 'showGridlines'],
   Margin: ['margin'],
-  Marker: ['marker', 'focusMarker', 'markerStyle'],
+  Marker: ['marker', 'focusMarker', 'markerStyle', 'sizeConfig', 'dotRadius', 'dotOpacity', 'dotSymbols', 'showDots'],
   Nodes: ['nodeConfig'],
   'Reference Line': ['referenceLines', 'referenceStyle', 'referenceData', 'fitLineStyle', 'showFitLine'],
   Padding: ['padding', 'circlePadding'],
@@ -104,17 +104,13 @@ const categories = {
     'clickStyle',
     'hoverOpacity',
     'hoverStyle',
-    'dotSymbols',
-    'showDots',
     'roundedCorner',
     'barStyle',
     'colorSteps',
     'strokeWidth',
     'shape',
     'innerRatio',
-    'showEdgeLine',
-    'dotRadius',
-    'dotOpacity'
+    'showEdgeLine'
   ]
 };
 

@@ -40311,7 +40311,7 @@
           },
           "children": [
             {
-              "id": 1504,
+              "id": 1505,
               "name": "accessibility",
               "kind": 1024,
               "kindString": "Property",
@@ -40323,7 +40323,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-default-values.ts",
-                  "line": 33,
+                  "line": 34,
                   "character": 31
                 }
               ],
@@ -40334,7 +40334,7 @@
               "defaultValue": "propDefaultValues.accessibility"
             },
             {
-              "id": 1505,
+              "id": 1506,
               "name": "animationConfig",
               "kind": 1024,
               "kindString": "Property",
@@ -40346,7 +40346,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-default-values.ts",
-                  "line": 34,
+                  "line": 35,
                   "character": 33
                 }
               ],
@@ -40357,7 +40357,7 @@
               "defaultValue": "propDefaultValues.animationConfig"
             },
             {
-              "id": 1529,
+              "id": 1530,
               "name": "annotations",
               "kind": 1024,
               "kindString": "Property",
@@ -40369,7 +40369,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-default-values.ts",
-                  "line": 64,
+                  "line": 65,
                   "character": 29
                 }
               ],
@@ -40380,7 +40380,7 @@
               "defaultValue": "propDefaultValues.annotations"
             },
             {
-              "id": 1531,
+              "id": 1532,
               "name": "clickHighlight",
               "kind": 1024,
               "kindString": "Property",
@@ -40392,7 +40392,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-default-values.ts",
-                  "line": 67,
+                  "line": 68,
                   "character": 32
                 }
               ],
@@ -40403,7 +40403,7 @@
               "defaultValue": "propDefaultValues.clickHighlight"
             },
             {
-              "id": 1522,
+              "id": 1523,
               "name": "clickStyle",
               "kind": 1024,
               "kindString": "Property",
@@ -40415,7 +40415,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-default-values.ts",
-                  "line": 55,
+                  "line": 56,
                   "character": 28
                 }
               ],
@@ -40426,7 +40426,7 @@
               "defaultValue": "propDefaultValues.symbolClickStyle"
             },
             {
-              "id": 1512,
+              "id": 1513,
               "name": "colorPalette",
               "kind": 1024,
               "kindString": "Property",
@@ -40438,7 +40438,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-default-values.ts",
-                  "line": 43,
+                  "line": 44,
                   "character": 30
                 }
               ],
@@ -40449,7 +40449,7 @@
               "defaultValue": "propDefaultValues.colorPaletteCategorical"
             },
             {
-              "id": 1519,
+              "id": 1520,
               "name": "cursor",
               "kind": 1024,
               "kindString": "Property",
@@ -40461,7 +40461,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-default-values.ts",
-                  "line": 52,
+                  "line": 53,
                   "character": 24
                 }
               ],
@@ -40472,7 +40472,7 @@
               "defaultValue": "propDefaultValues.cursor"
             },
             {
-              "id": 1523,
+              "id": 1524,
               "name": "dataLabel",
               "kind": 1024,
               "kindString": "Property",
@@ -40484,7 +40484,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-default-values.ts",
-                  "line": 57,
+                  "line": 58,
                   "character": 27
                 }
               ],
@@ -40495,54 +40495,8 @@
               "defaultValue": "propDefaultValues.dataLabel"
             },
             {
-              "id": 1514,
-              "name": "dotOpacity",
-              "kind": 1024,
-              "kindString": "Property",
-              "flags": {
-                "isStatic": true,
-                "isExported": true,
-                "isReadonly": true
-              },
-              "sources": [
-                {
-                  "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-default-values.ts",
-                  "line": 45,
-                  "character": 28
-                }
-              ],
-              "type": {
-                "type": "intrinsic",
-                "name": "any"
-              },
-              "defaultValue": "propDefaultValues.dotOpacity"
-            },
-            {
-              "id": 1513,
-              "name": "dotRadius",
-              "kind": 1024,
-              "kindString": "Property",
-              "flags": {
-                "isStatic": true,
-                "isExported": true,
-                "isReadonly": true
-              },
-              "sources": [
-                {
-                  "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-default-values.ts",
-                  "line": 44,
-                  "character": 27
-                }
-              ],
-              "type": {
-                "type": "intrinsic",
-                "name": "any"
-              },
-              "defaultValue": "propDefaultValues.dotRadius6"
-            },
-            {
               "id": 1515,
-              "name": "dotSymbols",
+              "name": "dotOpacity",
               "kind": 1024,
               "kindString": "Property",
               "flags": {
@@ -40561,10 +40515,56 @@
                 "type": "intrinsic",
                 "name": "any"
               },
+              "defaultValue": "propDefaultValues.dotOpacity"
+            },
+            {
+              "id": 1514,
+              "name": "dotRadius",
+              "kind": 1024,
+              "kindString": "Property",
+              "flags": {
+                "isStatic": true,
+                "isExported": true,
+                "isReadonly": true
+              },
+              "sources": [
+                {
+                  "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-default-values.ts",
+                  "line": 45,
+                  "character": 27
+                }
+              ],
+              "type": {
+                "type": "intrinsic",
+                "name": "any"
+              },
+              "defaultValue": "propDefaultValues.dotRadius6"
+            },
+            {
+              "id": 1516,
+              "name": "dotSymbols",
+              "kind": 1024,
+              "kindString": "Property",
+              "flags": {
+                "isStatic": true,
+                "isExported": true,
+                "isReadonly": true
+              },
+              "sources": [
+                {
+                  "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-default-values.ts",
+                  "line": 47,
+                  "character": 28
+                }
+              ],
+              "type": {
+                "type": "intrinsic",
+                "name": "any"
+              },
               "defaultValue": "propDefaultValues.dotSymbols"
             },
             {
-              "id": 1518,
+              "id": 1519,
               "name": "fitLineStyle",
               "kind": 1024,
               "kindString": "Property",
@@ -40576,7 +40576,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-default-values.ts",
-                  "line": 50,
+                  "line": 51,
                   "character": 30
                 }
               ],
@@ -40633,7 +40633,7 @@
               "defaultValue": "300"
             },
             {
-              "id": 1506,
+              "id": 1507,
               "name": "highestHeadingLevel",
               "kind": 1024,
               "kindString": "Property",
@@ -40645,7 +40645,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-default-values.ts",
-                  "line": 35,
+                  "line": 36,
                   "character": 37
                 }
               ],
@@ -40656,7 +40656,7 @@
               "defaultValue": "propDefaultValues.highestHeadingLevel"
             },
             {
-              "id": 1530,
+              "id": 1531,
               "name": "hoverHighlight",
               "kind": 1024,
               "kindString": "Property",
@@ -40668,7 +40668,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-default-values.ts",
-                  "line": 66,
+                  "line": 67,
                   "character": 32
                 }
               ],
@@ -40678,7 +40678,7 @@
               }
             },
             {
-              "id": 1520,
+              "id": 1521,
               "name": "hoverOpacity",
               "kind": 1024,
               "kindString": "Property",
@@ -40690,7 +40690,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-default-values.ts",
-                  "line": 53,
+                  "line": 54,
                   "character": 30
                 }
               ],
@@ -40701,7 +40701,7 @@
               "defaultValue": "propDefaultValues.hoverOpacity"
             },
             {
-              "id": 1521,
+              "id": 1522,
               "name": "hoverStyle",
               "kind": 1024,
               "kindString": "Property",
@@ -40713,7 +40713,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-default-values.ts",
-                  "line": 54,
+                  "line": 55,
                   "character": 28
                 }
               ],
@@ -40724,7 +40724,7 @@
               "defaultValue": "propDefaultValues.symbolHoverStyle"
             },
             {
-              "id": 1524,
+              "id": 1525,
               "name": "legend",
               "kind": 1024,
               "kindString": "Property",
@@ -40736,7 +40736,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-default-values.ts",
-                  "line": 58,
+                  "line": 59,
                   "character": 24
                 }
               ],
@@ -40770,7 +40770,7 @@
               "defaultValue": "\"Scatter Plot Title\""
             },
             {
-              "id": 1528,
+              "id": 1529,
               "name": "referenceLines",
               "kind": 1024,
               "kindString": "Property",
@@ -40782,7 +40782,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-default-values.ts",
-                  "line": 63,
+                  "line": 64,
                   "character": 32
                 }
               ],
@@ -40793,7 +40793,7 @@
               "defaultValue": "propDefaultValues.referenceLines"
             },
             {
-              "id": 1516,
+              "id": 1517,
               "name": "referenceStyle",
               "kind": 1024,
               "kindString": "Property",
@@ -40805,7 +40805,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-default-values.ts",
-                  "line": 48,
+                  "line": 49,
                   "character": 32
                 }
               ],
@@ -40816,31 +40816,8 @@
               "defaultValue": "propDefaultValues.referenceStyle"
             },
             {
-              "id": 1510,
-              "name": "showBaselineX",
-              "kind": 1024,
-              "kindString": "Property",
-              "flags": {
-                "isStatic": true,
-                "isExported": true,
-                "isReadonly": true
-              },
-              "sources": [
-                {
-                  "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-default-values.ts",
-                  "line": 40,
-                  "character": 31
-                }
-              ],
-              "type": {
-                "type": "intrinsic",
-                "name": "any"
-              },
-              "defaultValue": "propDefaultValues.showBaselineTrue"
-            },
-            {
               "id": 1511,
-              "name": "showBaselineY",
+              "name": "showBaselineX",
               "kind": 1024,
               "kindString": "Property",
               "flags": {
@@ -40859,10 +40836,33 @@
                 "type": "intrinsic",
                 "name": "any"
               },
+              "defaultValue": "propDefaultValues.showBaselineTrue"
+            },
+            {
+              "id": 1512,
+              "name": "showBaselineY",
+              "kind": 1024,
+              "kindString": "Property",
+              "flags": {
+                "isStatic": true,
+                "isExported": true,
+                "isReadonly": true
+              },
+              "sources": [
+                {
+                  "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-default-values.ts",
+                  "line": 42,
+                  "character": 31
+                }
+              ],
+              "type": {
+                "type": "intrinsic",
+                "name": "any"
+              },
               "defaultValue": "propDefaultValues.showBaselineFalse"
             },
             {
-              "id": 1517,
+              "id": 1518,
               "name": "showFitLine",
               "kind": 1024,
               "kindString": "Property",
@@ -40874,7 +40874,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-default-values.ts",
-                  "line": 49,
+                  "line": 50,
                   "character": 29
                 }
               ],
@@ -40885,7 +40885,7 @@
               "defaultValue": "propDefaultValues.showFitLine"
             },
             {
-              "id": 1526,
+              "id": 1527,
               "name": "showTooltip",
               "kind": 1024,
               "kindString": "Property",
@@ -40897,7 +40897,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-default-values.ts",
-                  "line": 61,
+                  "line": 62,
                   "character": 29
                 }
               ],
@@ -40908,7 +40908,30 @@
               "defaultValue": "propDefaultValues.showTooltip"
             },
             {
-              "id": 1507,
+              "id": 1504,
+              "name": "sizeConfig",
+              "kind": 1024,
+              "kindString": "Property",
+              "flags": {
+                "isStatic": true,
+                "isExported": true,
+                "isReadonly": true
+              },
+              "sources": [
+                {
+                  "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-default-values.ts",
+                  "line": 33,
+                  "character": 28
+                }
+              ],
+              "type": {
+                "type": "intrinsic",
+                "name": "any"
+              },
+              "defaultValue": "propDefaultValues.sizeConfig"
+            },
+            {
+              "id": 1508,
               "name": "sortOrder",
               "kind": 1024,
               "kindString": "Property",
@@ -40920,7 +40943,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-default-values.ts",
-                  "line": 36,
+                  "line": 37,
                   "character": 27
                 }
               ],
@@ -40954,7 +40977,7 @@
               "defaultValue": "\"This is the scatter plot's subtitle\""
             },
             {
-              "id": 1527,
+              "id": 1528,
               "name": "suppressEvents",
               "kind": 1024,
               "kindString": "Property",
@@ -40966,7 +40989,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-default-values.ts",
-                  "line": 62,
+                  "line": 63,
                   "character": 32
                 }
               ],
@@ -40977,7 +41000,7 @@
               "defaultValue": "propDefaultValues.suppressEvents"
             },
             {
-              "id": 1525,
+              "id": 1526,
               "name": "tooltipLabel",
               "kind": 1024,
               "kindString": "Property",
@@ -40989,7 +41012,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-default-values.ts",
-                  "line": 59,
+                  "line": 60,
                   "character": 30
                 }
               ],
@@ -41046,7 +41069,7 @@
               "defaultValue": "\"metric\""
             },
             {
-              "id": 1508,
+              "id": 1509,
               "name": "xAxis",
               "kind": 1024,
               "kindString": "Property",
@@ -41058,7 +41081,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-default-values.ts",
-                  "line": 37,
+                  "line": 38,
                   "character": 23
                 }
               ],
@@ -41092,7 +41115,7 @@
               "defaultValue": "\"value\""
             },
             {
-              "id": 1509,
+              "id": 1510,
               "name": "yAxis",
               "kind": 1024,
               "kindString": "Property",
@@ -41104,7 +41127,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-default-values.ts",
-                  "line": 39,
+                  "line": 40,
                   "character": 23
                 }
               ],
@@ -41350,41 +41373,42 @@
               "title": "Properties",
               "kind": 1024,
               "children": [
-                1504,
                 1505,
-                1529,
-                1531,
-                1522,
-                1512,
-                1519,
-                1523,
-                1514,
-                1513,
-                1515,
-                1518,
-                1503,
-                1489,
                 1506,
                 1530,
+                1532,
+                1523,
+                1513,
                 1520,
-                1521,
                 1524,
-                1487,
-                1528,
+                1515,
+                1514,
                 1516,
-                1510,
-                1511,
-                1517,
-                1526,
+                1519,
+                1503,
+                1489,
                 1507,
-                1488,
-                1527,
+                1531,
+                1521,
+                1522,
                 1525,
+                1487,
+                1529,
+                1517,
+                1511,
+                1512,
+                1518,
+                1527,
+                1504,
+                1508,
+                1488,
+                1528,
+                1526,
                 1490,
                 1501,
-                1508,
+                1509,
                 1502,
-                1509
+                1510
               ]
             },
             {
@@ -41402,7 +41426,7 @@
           ]
         },
         {
-          "id": 1532,
+          "id": 1533,
           "name": "propDefaultValues",
           "kind": 32,
           "kindString": "Variable",
@@ -41429,7 +41453,7 @@
         {
           "title": "Variables",
           "kind": 32,
-          "children": [1532]
+          "children": [1533]
         }
       ],
       "sources": [
@@ -41441,7 +41465,7 @@
       ]
     },
     {
-      "id": 1533,
+      "id": 1534,
       "name": "\"scatter-plot/src/components/scatter-plot/scatter-plot-props\"",
       "kind": 1,
       "kindString": "Module",
@@ -41451,7 +41475,7 @@
       "originalName": "/visa-chart-components/packages/scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
       "children": [
         {
-          "id": 1626,
+          "id": 1635,
           "name": "IAccessibilityType",
           "kind": 256,
           "kindString": "Interface",
@@ -41460,7 +41484,7 @@
           },
           "children": [
             {
-              "id": 1630,
+              "id": 1639,
               "name": "contextExplanation",
               "kind": 1024,
               "kindString": "Property",
@@ -41471,7 +41495,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 374,
+                  "line": 391,
                   "character": 20
                 }
               ],
@@ -41481,7 +41505,7 @@
               }
             },
             {
-              "id": 1637,
+              "id": 1646,
               "name": "disableValidation",
               "kind": 1024,
               "kindString": "Property",
@@ -41492,7 +41516,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 381,
+                  "line": 398,
                   "character": 19
                 }
               ],
@@ -41502,7 +41526,7 @@
               }
             },
             {
-              "id": 1632,
+              "id": 1641,
               "name": "elementDescriptionAccessor",
               "kind": 1024,
               "kindString": "Property",
@@ -41513,7 +41537,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 376,
+                  "line": 393,
                   "character": 28
                 }
               ],
@@ -41523,7 +41547,7 @@
               }
             },
             {
-              "id": 1638,
+              "id": 1647,
               "name": "elementsAreInterface",
               "kind": 1024,
               "kindString": "Property",
@@ -41534,7 +41558,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 382,
+                  "line": 399,
                   "character": 22
                 }
               ],
@@ -41544,7 +41568,7 @@
               }
             },
             {
-              "id": 1628,
+              "id": 1637,
               "name": "executiveSummary",
               "kind": 1024,
               "kindString": "Property",
@@ -41555,7 +41579,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 372,
+                  "line": 389,
                   "character": 18
                 }
               ],
@@ -41565,7 +41589,7 @@
               }
             },
             {
-              "id": 1636,
+              "id": 1645,
               "name": "hideDataTableButton",
               "kind": 1024,
               "kindString": "Property",
@@ -41576,7 +41600,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 380,
+                  "line": 397,
                   "character": 21
                 }
               ],
@@ -41586,7 +41610,7 @@
               }
             },
             {
-              "id": 1641,
+              "id": 1650,
               "name": "hideStrokes",
               "kind": 1024,
               "kindString": "Property",
@@ -41597,7 +41621,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 385,
+                  "line": 402,
                   "character": 13
                 }
               ],
@@ -41607,7 +41631,7 @@
               }
             },
             {
-              "id": 1640,
+              "id": 1649,
               "name": "hideTextures",
               "kind": 1024,
               "kindString": "Property",
@@ -41618,7 +41642,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 384,
+                  "line": 401,
                   "character": 14
                 }
               ],
@@ -41628,7 +41652,7 @@
               }
             },
             {
-              "id": 1635,
+              "id": 1644,
               "name": "includeDataKeyNames",
               "kind": 1024,
               "kindString": "Property",
@@ -41639,7 +41663,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 379,
+                  "line": 396,
                   "character": 21
                 }
               ],
@@ -41649,7 +41673,7 @@
               }
             },
             {
-              "id": 1644,
+              "id": 1653,
               "name": "keyboardNavConfig",
               "kind": 1024,
               "kindString": "Property",
@@ -41660,18 +41684,18 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 388,
+                  "line": 405,
                   "character": 19
                 }
               ],
               "type": {
                 "type": "reference",
-                "id": 1647,
+                "id": 1656,
                 "name": "IKeyConfig"
               }
             },
             {
-              "id": 1627,
+              "id": 1636,
               "name": "longDescription",
               "kind": 1024,
               "kindString": "Property",
@@ -41682,7 +41706,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 371,
+                  "line": 388,
                   "character": 17
                 }
               ],
@@ -41692,7 +41716,7 @@
               }
             },
             {
-              "id": 1639,
+              "id": 1648,
               "name": "onChangeFunc",
               "kind": 1024,
               "kindString": "Property",
@@ -41703,7 +41727,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 383,
+                  "line": 400,
                   "character": 14
                 }
               ],
@@ -41713,7 +41737,7 @@
               }
             },
             {
-              "id": 1629,
+              "id": 1638,
               "name": "purpose",
               "kind": 1024,
               "kindString": "Property",
@@ -41724,7 +41748,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 373,
+                  "line": 390,
                   "character": 9
                 }
               ],
@@ -41734,7 +41758,7 @@
               }
             },
             {
-              "id": 1643,
+              "id": 1652,
               "name": "showExperimentalTextures",
               "kind": 1024,
               "kindString": "Property",
@@ -41745,7 +41769,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 387,
+                  "line": 404,
                   "character": 26
                 }
               ],
@@ -41755,7 +41779,7 @@
               }
             },
             {
-              "id": 1642,
+              "id": 1651,
               "name": "showSmallLabels",
               "kind": 1024,
               "kindString": "Property",
@@ -41766,7 +41790,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 386,
+                  "line": 403,
                   "character": 17
                 }
               ],
@@ -41776,7 +41800,7 @@
               }
             },
             {
-              "id": 1633,
+              "id": 1642,
               "name": "statisticalNotes",
               "kind": 1024,
               "kindString": "Property",
@@ -41787,7 +41811,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 377,
+                  "line": 394,
                   "character": 18
                 }
               ],
@@ -41797,7 +41821,7 @@
               }
             },
             {
-              "id": 1634,
+              "id": 1643,
               "name": "structureNotes",
               "kind": 1024,
               "kindString": "Property",
@@ -41808,7 +41832,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 378,
+                  "line": 395,
                   "character": 16
                 }
               ],
@@ -41818,7 +41842,7 @@
               }
             },
             {
-              "id": 1631,
+              "id": 1640,
               "name": "title",
               "kind": 1024,
               "kindString": "Property",
@@ -41829,7 +41853,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 375,
+                  "line": 392,
                   "character": 7
                 }
               ],
@@ -41844,37 +41868,37 @@
               "title": "Properties",
               "kind": 1024,
               "children": [
-                1630,
-                1637,
-                1632,
-                1638,
-                1628,
-                1636,
-                1641,
-                1640,
-                1635,
-                1644,
-                1627,
                 1639,
-                1629,
-                1643,
+                1646,
+                1641,
+                1647,
+                1637,
+                1645,
+                1650,
+                1649,
+                1644,
+                1653,
+                1636,
+                1648,
+                1638,
+                1652,
+                1651,
                 1642,
-                1633,
-                1634,
-                1631
+                1643,
+                1640
               ]
             }
           ],
           "sources": [
             {
               "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-              "line": 370,
+              "line": 387,
               "character": 35
             }
           ]
         },
         {
-          "id": 1645,
+          "id": 1654,
           "name": "IAnimationConfig",
           "kind": 256,
           "kindString": "Interface",
@@ -41883,7 +41907,7 @@
           },
           "children": [
             {
-              "id": 1646,
+              "id": 1655,
               "name": "disabled",
               "kind": 1024,
               "kindString": "Property",
@@ -41894,7 +41918,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 391,
+                  "line": 408,
                   "character": 10
                 }
               ],
@@ -41908,19 +41932,19 @@
             {
               "title": "Properties",
               "kind": 1024,
-              "children": [1646]
+              "children": [1655]
             }
           ],
           "sources": [
             {
               "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-              "line": 390,
+              "line": 407,
               "character": 33
             }
           ]
         },
         {
-          "id": 1586,
+          "id": 1588,
           "name": "IAxisType",
           "kind": 256,
           "kindString": "Interface",
@@ -41929,7 +41953,7 @@
           },
           "children": [
             {
-              "id": 1590,
+              "id": 1592,
               "name": "format",
               "kind": 1024,
               "kindString": "Property",
@@ -41940,7 +41964,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 320,
+                  "line": 327,
                   "character": 8
                 }
               ],
@@ -41950,7 +41974,7 @@
               }
             },
             {
-              "id": 1588,
+              "id": 1590,
               "name": "gridVisible",
               "kind": 1024,
               "kindString": "Property",
@@ -41961,7 +41985,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 318,
+                  "line": 325,
                   "character": 13
                 }
               ],
@@ -41971,7 +41995,7 @@
               }
             },
             {
-              "id": 1589,
+              "id": 1591,
               "name": "label",
               "kind": 1024,
               "kindString": "Property",
@@ -41982,7 +42006,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 319,
+                  "line": 326,
                   "character": 7
                 }
               ],
@@ -41992,7 +42016,7 @@
               }
             },
             {
-              "id": 1592,
+              "id": 1594,
               "name": "placement",
               "kind": 1024,
               "kindString": "Property",
@@ -42003,7 +42027,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 322,
+                  "line": 329,
                   "character": 11
                 }
               ],
@@ -42013,7 +42037,7 @@
               }
             },
             {
-              "id": 1591,
+              "id": 1593,
               "name": "tickInterval",
               "kind": 1024,
               "kindString": "Property",
@@ -42024,7 +42048,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 321,
+                  "line": 328,
                   "character": 14
                 }
               ],
@@ -42034,7 +42058,7 @@
               }
             },
             {
-              "id": 1587,
+              "id": 1589,
               "name": "visible",
               "kind": 1024,
               "kindString": "Property",
@@ -42044,7 +42068,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 317,
+                  "line": 324,
                   "character": 9
                 }
               ],
@@ -42058,19 +42082,19 @@
             {
               "title": "Properties",
               "kind": 1024,
-              "children": [1590, 1588, 1589, 1592, 1591, 1587]
+              "children": [1592, 1590, 1591, 1594, 1593, 1589]
             }
           ],
           "sources": [
             {
               "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-              "line": 316,
+              "line": 323,
               "character": 26
             }
           ]
         },
         {
-          "id": 1593,
+          "id": 1595,
           "name": "IBoxModelType",
           "kind": 256,
           "kindString": "Interface",
@@ -42079,7 +42103,7 @@
           },
           "children": [
             {
-              "id": 1595,
+              "id": 1597,
               "name": "bottom",
               "kind": 1024,
               "kindString": "Property",
@@ -42089,7 +42113,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 327,
+                  "line": 334,
                   "character": 8
                 }
               ],
@@ -42099,7 +42123,7 @@
               }
             },
             {
-              "id": 1597,
+              "id": 1599,
               "name": "left",
               "kind": 1024,
               "kindString": "Property",
@@ -42109,7 +42133,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 329,
+                  "line": 336,
                   "character": 6
                 }
               ],
@@ -42119,7 +42143,7 @@
               }
             },
             {
-              "id": 1596,
+              "id": 1598,
               "name": "right",
               "kind": 1024,
               "kindString": "Property",
@@ -42129,7 +42153,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 328,
+                  "line": 335,
                   "character": 7
                 }
               ],
@@ -42139,7 +42163,7 @@
               }
             },
             {
-              "id": 1594,
+              "id": 1596,
               "name": "top",
               "kind": 1024,
               "kindString": "Property",
@@ -42149,7 +42173,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 326,
+                  "line": 333,
                   "character": 5
                 }
               ],
@@ -42163,19 +42187,19 @@
             {
               "title": "Properties",
               "kind": 1024,
-              "children": [1595, 1597, 1596, 1594]
+              "children": [1597, 1599, 1598, 1596]
             }
           ],
           "sources": [
             {
               "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-              "line": 325,
+              "line": 332,
               "character": 30
             }
           ]
         },
         {
-          "id": 1623,
+          "id": 1632,
           "name": "IClickStyleType",
           "kind": 256,
           "kindString": "Interface",
@@ -42184,7 +42208,7 @@
           },
           "children": [
             {
-              "id": 1624,
+              "id": 1633,
               "name": "color",
               "kind": 1024,
               "kindString": "Property",
@@ -42195,7 +42219,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 366,
+                  "line": 383,
                   "character": 7
                 }
               ],
@@ -42205,7 +42229,7 @@
               }
             },
             {
-              "id": 1625,
+              "id": 1634,
               "name": "strokeWidth",
               "kind": 1024,
               "kindString": "Property",
@@ -42216,7 +42240,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 367,
+                  "line": 384,
                   "character": 13
                 }
               ],
@@ -42230,19 +42254,19 @@
             {
               "title": "Properties",
               "kind": 1024,
-              "children": [1624, 1625]
+              "children": [1633, 1634]
             }
           ],
           "sources": [
             {
               "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-              "line": 365,
+              "line": 382,
               "character": 32
             }
           ]
         },
         {
-          "id": 1609,
+          "id": 1611,
           "name": "IDataLabelType",
           "kind": 256,
           "kindString": "Interface",
@@ -42251,7 +42275,7 @@
           },
           "children": [
             {
-              "id": 1614,
+              "id": 1616,
               "name": "collisionHideOnly",
               "kind": 1024,
               "kindString": "Property",
@@ -42262,7 +42286,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 351,
+                  "line": 358,
                   "character": 19
                 }
               ],
@@ -42272,7 +42296,7 @@
               }
             },
             {
-              "id": 1615,
+              "id": 1617,
               "name": "collisionPlacement",
               "kind": 1024,
               "kindString": "Property",
@@ -42283,7 +42307,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 352,
+                  "line": 359,
                   "character": 20
                 }
               ],
@@ -42293,7 +42317,7 @@
               }
             },
             {
-              "id": 1613,
+              "id": 1615,
               "name": "format",
               "kind": 1024,
               "kindString": "Property",
@@ -42304,7 +42328,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 350,
+                  "line": 357,
                   "character": 8
                 }
               ],
@@ -42314,7 +42338,7 @@
               }
             },
             {
-              "id": 1612,
+              "id": 1614,
               "name": "labelAccessor",
               "kind": 1024,
               "kindString": "Property",
@@ -42325,7 +42349,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 349,
+                  "line": 356,
                   "character": 15
                 }
               ],
@@ -42335,7 +42359,7 @@
               }
             },
             {
-              "id": 1611,
+              "id": 1613,
               "name": "placement",
               "kind": 1024,
               "kindString": "Property",
@@ -42346,7 +42370,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 348,
+                  "line": 355,
                   "character": 11
                 }
               ],
@@ -42356,7 +42380,7 @@
               }
             },
             {
-              "id": 1610,
+              "id": 1612,
               "name": "visible",
               "kind": 1024,
               "kindString": "Property",
@@ -42366,7 +42390,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 347,
+                  "line": 354,
                   "character": 9
                 }
               ],
@@ -42380,19 +42404,19 @@
             {
               "title": "Properties",
               "kind": 1024,
-              "children": [1614, 1615, 1613, 1612, 1611, 1610]
+              "children": [1616, 1617, 1615, 1614, 1613, 1612]
             }
           ],
           "sources": [
             {
               "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-              "line": 346,
+              "line": 353,
               "character": 31
             }
           ]
         },
         {
-          "id": 1620,
+          "id": 1629,
           "name": "IHoverStyleType",
           "kind": 256,
           "kindString": "Interface",
@@ -42401,7 +42425,7 @@
           },
           "children": [
             {
-              "id": 1621,
+              "id": 1630,
               "name": "color",
               "kind": 1024,
               "kindString": "Property",
@@ -42412,7 +42436,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 361,
+                  "line": 378,
                   "character": 7
                 }
               ],
@@ -42422,7 +42446,7 @@
               }
             },
             {
-              "id": 1622,
+              "id": 1631,
               "name": "strokeWidth",
               "kind": 1024,
               "kindString": "Property",
@@ -42433,7 +42457,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 362,
+                  "line": 379,
                   "character": 13
                 }
               ],
@@ -42447,19 +42471,19 @@
             {
               "title": "Properties",
               "kind": 1024,
-              "children": [1621, 1622]
+              "children": [1630, 1631]
             }
           ],
           "sources": [
             {
               "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-              "line": 360,
+              "line": 377,
               "character": 32
             }
           ]
         },
         {
-          "id": 1647,
+          "id": 1656,
           "name": "IKeyConfig",
           "kind": 256,
           "kindString": "Interface",
@@ -42468,7 +42492,7 @@
           },
           "children": [
             {
-              "id": 1648,
+              "id": 1657,
               "name": "disabled",
               "kind": 1024,
               "kindString": "Property",
@@ -42479,7 +42503,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 394,
+                  "line": 411,
                   "character": 10
                 }
               ],
@@ -42493,19 +42517,19 @@
             {
               "title": "Properties",
               "kind": 1024,
-              "children": [1648]
+              "children": [1657]
             }
           ],
           "sources": [
             {
               "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-              "line": 393,
+              "line": 410,
               "character": 27
             }
           ]
         },
         {
-          "id": 1598,
+          "id": 1600,
           "name": "ILegendType",
           "kind": 256,
           "kindString": "Interface",
@@ -42514,7 +42538,7 @@
           },
           "children": [
             {
-              "id": 1602,
+              "id": 1604,
               "name": "format",
               "kind": 1024,
               "kindString": "Property",
@@ -42525,7 +42549,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 336,
+                  "line": 343,
                   "character": 8
                 }
               ],
@@ -42535,7 +42559,7 @@
               }
             },
             {
-              "id": 1601,
+              "id": 1603,
               "name": "interactive",
               "kind": 1024,
               "kindString": "Property",
@@ -42546,7 +42570,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 335,
+                  "line": 342,
                   "character": 13
                 }
               ],
@@ -42556,7 +42580,7 @@
               }
             },
             {
-              "id": 1600,
+              "id": 1602,
               "name": "labels",
               "kind": 1024,
               "kindString": "Property",
@@ -42567,7 +42591,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 334,
+                  "line": 341,
                   "character": 8
                 }
               ],
@@ -42580,7 +42604,7 @@
               }
             },
             {
-              "id": 1603,
+              "id": 1605,
               "name": "type",
               "kind": 1024,
               "kindString": "Property",
@@ -42591,7 +42615,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 337,
+                  "line": 344,
                   "character": 6
                 }
               ],
@@ -42601,7 +42625,7 @@
               }
             },
             {
-              "id": 1599,
+              "id": 1601,
               "name": "visible",
               "kind": 1024,
               "kindString": "Property",
@@ -42611,7 +42635,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 333,
+                  "line": 340,
                   "character": 9
                 }
               ],
@@ -42625,19 +42649,19 @@
             {
               "title": "Properties",
               "kind": 1024,
-              "children": [1602, 1601, 1600, 1603, 1599]
+              "children": [1604, 1603, 1602, 1605, 1601]
             }
           ],
           "sources": [
             {
               "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-              "line": 332,
+              "line": 339,
               "character": 28
             }
           ]
         },
         {
-          "id": 1604,
+          "id": 1606,
           "name": "IReferenceStyleType",
           "kind": 256,
           "kindString": "Interface",
@@ -42646,7 +42670,7 @@
           },
           "children": [
             {
-              "id": 1605,
+              "id": 1607,
               "name": "color",
               "kind": 1024,
               "kindString": "Property",
@@ -42656,7 +42680,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 341,
+                  "line": 348,
                   "character": 7
                 }
               ],
@@ -42666,7 +42690,7 @@
               }
             },
             {
-              "id": 1608,
+              "id": 1610,
               "name": "dashed",
               "kind": 1024,
               "kindString": "Property",
@@ -42676,7 +42700,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 344,
+                  "line": 351,
                   "character": 8
                 }
               ],
@@ -42686,7 +42710,7 @@
               }
             },
             {
-              "id": 1607,
+              "id": 1609,
               "name": "opacity",
               "kind": 1024,
               "kindString": "Property",
@@ -42696,7 +42720,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 343,
+                  "line": 350,
                   "character": 9
                 }
               ],
@@ -42706,7 +42730,7 @@
               }
             },
             {
-              "id": 1606,
+              "id": 1608,
               "name": "strokeWidth",
               "kind": 1024,
               "kindString": "Property",
@@ -42716,7 +42740,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 342,
+                  "line": 349,
                   "character": 13
                 }
               ],
@@ -42730,19 +42754,19 @@
             {
               "title": "Properties",
               "kind": 1024,
-              "children": [1605, 1608, 1607, 1606]
+              "children": [1607, 1610, 1609, 1608]
             }
           ],
           "sources": [
             {
               "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-              "line": 340,
+              "line": 347,
               "character": 36
             }
           ]
         },
         {
-          "id": 1534,
+          "id": 1535,
           "name": "IScatterPlotProps",
           "kind": 256,
           "kindString": "Interface",
@@ -42755,7 +42779,7 @@
           },
           "children": [
             {
-              "id": 1540,
+              "id": 1541,
               "name": "accessibility",
               "kind": 1024,
               "kindString": "Property",
@@ -42787,12 +42811,12 @@
               ],
               "type": {
                 "type": "reference",
-                "id": 1626,
+                "id": 1635,
                 "name": "IAccessibilityType"
               }
             },
             {
-              "id": 1541,
+              "id": 1542,
               "name": "animationConfig",
               "kind": 1024,
               "kindString": "Property",
@@ -42824,12 +42848,12 @@
               ],
               "type": {
                 "type": "reference",
-                "id": 1645,
+                "id": 1654,
                 "name": "IAnimationConfig"
               }
             },
             {
-              "id": 1546,
+              "id": 1547,
               "name": "annotations",
               "kind": 1024,
               "kindString": "Property",
@@ -42868,7 +42892,7 @@
               }
             },
             {
-              "id": 1577,
+              "id": 1579,
               "name": "clickEvent",
               "kind": 1024,
               "kindString": "Property",
@@ -42894,7 +42918,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 265,
+                  "line": 272,
                   "character": 12
                 }
               ],
@@ -42904,7 +42928,7 @@
               }
             },
             {
-              "id": 1585,
+              "id": 1587,
               "name": "clickHighlight",
               "kind": 1024,
               "kindString": "Property",
@@ -42930,7 +42954,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 313,
+                  "line": 320,
                   "character": 16
                 }
               ],
@@ -42943,7 +42967,7 @@
               }
             },
             {
-              "id": 1556,
+              "id": 1557,
               "name": "clickStyle",
               "kind": 1024,
               "kindString": "Property",
@@ -42969,18 +42993,18 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 139,
+                  "line": 140,
                   "character": 12
                 }
               ],
               "type": {
                 "type": "reference",
-                "id": 1623,
+                "id": 1632,
                 "name": "IClickStyleType"
               }
             },
             {
-              "id": 1553,
+              "id": 1554,
               "name": "colorPalette",
               "kind": 1024,
               "kindString": "Property",
@@ -43016,7 +43040,7 @@
               }
             },
             {
-              "id": 1554,
+              "id": 1555,
               "name": "colors",
               "kind": 1024,
               "kindString": "Property",
@@ -43055,7 +43079,7 @@
               }
             },
             {
-              "id": 1565,
+              "id": 1566,
               "name": "cursor",
               "kind": 1024,
               "kindString": "Property",
@@ -43081,7 +43105,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 193,
+                  "line": 194,
                   "character": 8
                 }
               ],
@@ -43091,7 +43115,7 @@
               }
             },
             {
-              "id": 1544,
+              "id": 1545,
               "name": "data",
               "kind": 1024,
               "kindString": "Property",
@@ -43130,7 +43154,7 @@
               }
             },
             {
-              "id": 1566,
+              "id": 1567,
               "name": "dataLabel",
               "kind": 1024,
               "kindString": "Property",
@@ -43156,18 +43180,18 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 199,
+                  "line": 200,
                   "character": 11
                 }
               ],
               "type": {
                 "type": "reference",
-                "id": 1609,
+                "id": 1611,
                 "name": "IDataLabelType"
               }
             },
             {
-              "id": 1558,
+              "id": 1559,
               "name": "dotOpacity",
               "kind": 1024,
               "kindString": "Property",
@@ -43186,14 +43210,14 @@
                   },
                   {
                     "tag": "groupname",
-                    "text": "Style"
+                    "text": "Marker"
                   }
                 ]
               },
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 151,
+                  "line": 152,
                   "character": 12
                 }
               ],
@@ -43203,7 +43227,7 @@
               }
             },
             {
-              "id": 1557,
+              "id": 1558,
               "name": "dotRadius",
               "kind": 1024,
               "kindString": "Property",
@@ -43222,14 +43246,14 @@
                   },
                   {
                     "tag": "groupname",
-                    "text": "Style"
+                    "text": "Marker"
                   }
                 ]
               },
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 145,
+                  "line": 146,
                   "character": 11
                 }
               ],
@@ -43239,7 +43263,7 @@
               }
             },
             {
-              "id": 1563,
+              "id": 1564,
               "name": "dotSymbols",
               "kind": 1024,
               "kindString": "Property",
@@ -43258,14 +43282,14 @@
                   },
                   {
                     "tag": "groupname",
-                    "text": "Style"
+                    "text": "Marker"
                   }
                 ]
               },
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 181,
+                  "line": 182,
                   "character": 12
                 }
               ],
@@ -43278,7 +43302,7 @@
               }
             },
             {
-              "id": 1582,
+              "id": 1584,
               "name": "drawEndEvent",
               "kind": 1024,
               "kindString": "Property",
@@ -43304,7 +43328,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 295,
+                  "line": 302,
                   "character": 14
                 }
               ],
@@ -43314,7 +43338,7 @@
               }
             },
             {
-              "id": 1581,
+              "id": 1583,
               "name": "drawStartEvent",
               "kind": 1024,
               "kindString": "Property",
@@ -43340,7 +43364,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 289,
+                  "line": 296,
                   "character": 16
                 }
               ],
@@ -43350,7 +43374,7 @@
               }
             },
             {
-              "id": 1560,
+              "id": 1561,
               "name": "fitLineStyle",
               "kind": 1024,
               "kindString": "Property",
@@ -43376,18 +43400,18 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 163,
+                  "line": 164,
                   "character": 14
                 }
               ],
               "type": {
                 "type": "reference",
-                "id": 1604,
+                "id": 1606,
                 "name": "IReferenceStyleType"
               }
             },
             {
-              "id": 1549,
+              "id": 1550,
               "name": "groupAccessor",
               "kind": 1024,
               "kindString": "Property",
@@ -43423,7 +43447,7 @@
               }
             },
             {
-              "id": 1538,
+              "id": 1539,
               "name": "height",
               "kind": 1024,
               "kindString": "Property",
@@ -43459,7 +43483,7 @@
               }
             },
             {
-              "id": 1535,
+              "id": 1536,
               "name": "highestHeadingLevel",
               "kind": 1024,
               "kindString": "Property",
@@ -43508,7 +43532,7 @@
               }
             },
             {
-              "id": 1578,
+              "id": 1580,
               "name": "hoverEvent",
               "kind": 1024,
               "kindString": "Property",
@@ -43534,7 +43558,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 271,
+                  "line": 278,
                   "character": 12
                 }
               ],
@@ -43544,7 +43568,7 @@
               }
             },
             {
-              "id": 1584,
+              "id": 1586,
               "name": "hoverHighlight",
               "kind": 1024,
               "kindString": "Property",
@@ -43570,7 +43594,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 307,
+                  "line": 314,
                   "character": 16
                 }
               ],
@@ -43580,7 +43604,7 @@
               }
             },
             {
-              "id": 1564,
+              "id": 1565,
               "name": "hoverOpacity",
               "kind": 1024,
               "kindString": "Property",
@@ -43606,7 +43630,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 187,
+                  "line": 188,
                   "character": 14
                 }
               ],
@@ -43616,7 +43640,7 @@
               }
             },
             {
-              "id": 1555,
+              "id": 1556,
               "name": "hoverStyle",
               "kind": 1024,
               "kindString": "Property",
@@ -43631,7 +43655,7 @@
                   },
                   {
                     "tag": "controlname",
-                    "text": ""
+                    "text": "TextArea"
                   },
                   {
                     "tag": "groupname",
@@ -43648,12 +43672,12 @@
               ],
               "type": {
                 "type": "reference",
-                "id": 1620,
+                "id": 1629,
                 "name": "IHoverStyleType"
               }
             },
             {
-              "id": 1580,
+              "id": 1582,
               "name": "initialLoadEvent",
               "kind": 1024,
               "kindString": "Property",
@@ -43679,7 +43703,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 283,
+                  "line": 290,
                   "character": 18
                 }
               ],
@@ -43689,7 +43713,7 @@
               }
             },
             {
-              "id": 1575,
+              "id": 1577,
               "name": "interactionKeys",
               "kind": 1024,
               "kindString": "Property",
@@ -43715,7 +43739,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 253,
+                  "line": 260,
                   "character": 17
                 }
               ],
@@ -43728,7 +43752,7 @@
               }
             },
             {
-              "id": 1552,
+              "id": 1553,
               "name": "legend",
               "kind": 1024,
               "kindString": "Property",
@@ -43760,12 +43784,12 @@
               ],
               "type": {
                 "type": "reference",
-                "id": 1598,
+                "id": 1600,
                 "name": "ILegendType"
               }
             },
             {
-              "id": 1536,
+              "id": 1537,
               "name": "mainTitle",
               "kind": 1024,
               "kindString": "Property",
@@ -43801,7 +43825,7 @@
               }
             },
             {
-              "id": 1542,
+              "id": 1543,
               "name": "margin",
               "kind": 1024,
               "kindString": "Property",
@@ -43833,12 +43857,12 @@
               ],
               "type": {
                 "type": "reference",
-                "id": 1593,
+                "id": 1595,
                 "name": "IBoxModelType"
               }
             },
             {
-              "id": 1579,
+              "id": 1581,
               "name": "mouseOutEvent",
               "kind": 1024,
               "kindString": "Property",
@@ -43864,7 +43888,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 277,
+                  "line": 284,
                   "character": 15
                 }
               ],
@@ -43874,7 +43898,7 @@
               }
             },
             {
-              "id": 1543,
+              "id": 1544,
               "name": "padding",
               "kind": 1024,
               "kindString": "Property",
@@ -43906,12 +43930,12 @@
               ],
               "type": {
                 "type": "reference",
-                "id": 1593,
+                "id": 1595,
                 "name": "IBoxModelType"
               }
             },
             {
-              "id": 1574,
+              "id": 1576,
               "name": "referenceLines",
               "kind": 1024,
               "kindString": "Property",
@@ -43937,7 +43961,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 247,
+                  "line": 254,
                   "character": 16
                 }
               ],
@@ -43950,7 +43974,7 @@
               }
             },
             {
-              "id": 1559,
+              "id": 1560,
               "name": "referenceStyle",
               "kind": 1024,
               "kindString": "Property",
@@ -43976,18 +44000,18 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 157,
+                  "line": 158,
                   "character": 16
                 }
               ],
               "type": {
                 "type": "reference",
-                "id": 1604,
+                "id": 1606,
                 "name": "IReferenceStyleType"
               }
             },
             {
-              "id": 1561,
+              "id": 1562,
               "name": "showBaselineX",
               "kind": 1024,
               "kindString": "Property",
@@ -44013,7 +44037,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 169,
+                  "line": 170,
                   "character": 15
                 }
               ],
@@ -44023,7 +44047,7 @@
               }
             },
             {
-              "id": 1562,
+              "id": 1563,
               "name": "showBaselineY",
               "kind": 1024,
               "kindString": "Property",
@@ -44049,7 +44073,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 175,
+                  "line": 176,
                   "character": 15
                 }
               ],
@@ -44059,7 +44083,7 @@
               }
             },
             {
-              "id": 1573,
+              "id": 1575,
               "name": "showFitLine",
               "kind": 1024,
               "kindString": "Property",
@@ -44085,7 +44109,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 241,
+                  "line": 248,
                   "character": 13
                 }
               ],
@@ -44095,7 +44119,7 @@
               }
             },
             {
-              "id": 1567,
+              "id": 1569,
               "name": "showTooltip",
               "kind": 1024,
               "kindString": "Property",
@@ -44121,7 +44145,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 205,
+                  "line": 212,
                   "character": 13
                 }
               ],
@@ -44131,7 +44155,44 @@
               }
             },
             {
-              "id": 1537,
+              "id": 1568,
+              "name": "sizeConfig",
+              "kind": 1024,
+              "kindString": "Property",
+              "flags": {
+                "isExported": true
+              },
+              "comment": {
+                "tags": [
+                  {
+                    "tag": "shortdescription",
+                    "text": "Controls size, dual color encoding and range of size for marks"
+                  },
+                  {
+                    "tag": "controlname",
+                    "text": "TextArea"
+                  },
+                  {
+                    "tag": "groupname",
+                    "text": "Marker"
+                  }
+                ]
+              },
+              "sources": [
+                {
+                  "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
+                  "line": 206,
+                  "character": 12
+                }
+              ],
+              "type": {
+                "type": "reference",
+                "id": 1618,
+                "name": "ISizeConfigType"
+              }
+            },
+            {
+              "id": 1538,
               "name": "subTitle",
               "kind": 1024,
               "kindString": "Property",
@@ -44167,7 +44228,7 @@
               }
             },
             {
-              "id": 1576,
+              "id": 1578,
               "name": "suppressEvents",
               "kind": 1024,
               "kindString": "Property",
@@ -44193,7 +44254,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 259,
+                  "line": 266,
                   "character": 16
                 }
               ],
@@ -44203,7 +44264,7 @@
               }
             },
             {
-              "id": 1568,
+              "id": 1570,
               "name": "tooltipLabel",
               "kind": 1024,
               "kindString": "Property",
@@ -44229,18 +44290,18 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 211,
+                  "line": 218,
                   "character": 14
                 }
               ],
               "type": {
                 "type": "reference",
-                "id": 1616,
+                "id": 1625,
                 "name": "ITooltipLabelType"
               }
             },
             {
-              "id": 1583,
+              "id": 1585,
               "name": "transitionEndEvent",
               "kind": 1024,
               "kindString": "Property",
@@ -44266,7 +44327,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 301,
+                  "line": 308,
                   "character": 20
                 }
               ],
@@ -44276,7 +44337,7 @@
               }
             },
             {
-              "id": 1545,
+              "id": 1546,
               "name": "uniqueID",
               "kind": 1024,
               "kindString": "Property",
@@ -44312,7 +44373,7 @@
               }
             },
             {
-              "id": 1539,
+              "id": 1540,
               "name": "width",
               "kind": 1024,
               "kindString": "Property",
@@ -44348,7 +44409,7 @@
               }
             },
             {
-              "id": 1547,
+              "id": 1548,
               "name": "xAccessor",
               "kind": 1024,
               "kindString": "Property",
@@ -44384,7 +44445,7 @@
               }
             },
             {
-              "id": 1550,
+              "id": 1551,
               "name": "xAxis",
               "kind": 1024,
               "kindString": "Property",
@@ -44416,12 +44477,12 @@
               ],
               "type": {
                 "type": "reference",
-                "id": 1586,
+                "id": 1588,
                 "name": "IAxisType"
               }
             },
             {
-              "id": 1569,
+              "id": 1571,
               "name": "xMaxValueOverride",
               "kind": 1024,
               "kindString": "Property",
@@ -44447,26 +44508,17 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 217,
+                  "line": 224,
                   "character": 19
                 }
               ],
               "type": {
-                "type": "union",
-                "types": [
-                  {
-                    "type": "intrinsic",
-                    "name": "number"
-                  },
-                  {
-                    "type": "intrinsic",
-                    "name": "null"
-                  }
-                ]
+                "type": "intrinsic",
+                "name": "number"
               }
             },
             {
-              "id": 1570,
+              "id": 1572,
               "name": "xMinValueOverride",
               "kind": 1024,
               "kindString": "Property",
@@ -44492,7 +44544,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 223,
+                  "line": 230,
                   "character": 19
                 }
               ],
@@ -44502,7 +44554,7 @@
               }
             },
             {
-              "id": 1548,
+              "id": 1549,
               "name": "yAccessor",
               "kind": 1024,
               "kindString": "Property",
@@ -44538,7 +44590,7 @@
               }
             },
             {
-              "id": 1551,
+              "id": 1552,
               "name": "yAxis",
               "kind": 1024,
               "kindString": "Property",
@@ -44570,12 +44622,12 @@
               ],
               "type": {
                 "type": "reference",
-                "id": 1586,
+                "id": 1588,
                 "name": "IAxisType"
               }
             },
             {
-              "id": 1571,
+              "id": 1573,
               "name": "yMaxValueOverride",
               "kind": 1024,
               "kindString": "Property",
@@ -44601,7 +44653,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 229,
+                  "line": 236,
                   "character": 19
                 }
               ],
@@ -44611,7 +44663,7 @@
               }
             },
             {
-              "id": 1572,
+              "id": 1574,
               "name": "yMinValueOverride",
               "kind": 1024,
               "kindString": "Property",
@@ -44637,7 +44689,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 235,
+                  "line": 242,
                   "character": 19
                 }
               ],
@@ -44652,57 +44704,58 @@
               "title": "Properties",
               "kind": 1024,
               "children": [
-                1540,
                 1541,
-                1546,
-                1577,
-                1585,
-                1556,
-                1553,
-                1554,
-                1565,
-                1544,
-                1566,
-                1558,
-                1557,
-                1563,
-                1582,
-                1581,
-                1560,
-                1549,
-                1538,
-                1535,
-                1578,
-                1584,
-                1564,
-                1555,
-                1580,
-                1575,
-                1552,
-                1536,
                 1542,
-                1579,
-                1543,
-                1574,
-                1559,
-                1561,
-                1562,
-                1573,
-                1567,
-                1537,
-                1576,
-                1568,
-                1583,
-                1545,
-                1539,
                 1547,
+                1579,
+                1587,
+                1557,
+                1554,
+                1555,
+                1566,
+                1545,
+                1567,
+                1559,
+                1558,
+                1564,
+                1584,
+                1583,
+                1561,
                 1550,
+                1539,
+                1536,
+                1580,
+                1586,
+                1565,
+                1556,
+                1582,
+                1577,
+                1553,
+                1537,
+                1543,
+                1581,
+                1544,
+                1576,
+                1560,
+                1562,
+                1563,
+                1575,
                 1569,
+                1568,
+                1538,
+                1578,
                 1570,
+                1585,
+                1546,
+                1540,
                 1548,
                 1551,
                 1571,
-                1572
+                1572,
+                1549,
+                1552,
+                1573,
+                1574
               ]
             }
           ],
@@ -44715,7 +44768,158 @@
           ]
         },
         {
-          "id": 1616,
+          "id": 1618,
+          "name": "ISizeConfigType",
+          "kind": 256,
+          "kindString": "Interface",
+          "flags": {
+            "isExported": true
+          },
+          "children": [
+            {
+              "id": 1624,
+              "name": "dualEncodeColor",
+              "kind": 1024,
+              "kindString": "Property",
+              "flags": {
+                "isExported": true,
+                "isOptional": true
+              },
+              "sources": [
+                {
+                  "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
+                  "line": 367,
+                  "character": 17
+                }
+              ],
+              "type": {
+                "type": "intrinsic",
+                "name": "boolean"
+              }
+            },
+            {
+              "id": 1623,
+              "name": "maxSizeOverride",
+              "kind": 1024,
+              "kindString": "Property",
+              "flags": {
+                "isExported": true,
+                "isOptional": true
+              },
+              "sources": [
+                {
+                  "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
+                  "line": 366,
+                  "character": 17
+                }
+              ],
+              "type": {
+                "type": "intrinsic",
+                "name": "number"
+              }
+            },
+            {
+              "id": 1621,
+              "name": "maxValueOverride",
+              "kind": 1024,
+              "kindString": "Property",
+              "flags": {
+                "isExported": true,
+                "isOptional": true
+              },
+              "sources": [
+                {
+                  "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
+                  "line": 364,
+                  "character": 18
+                }
+              ],
+              "type": {
+                "type": "intrinsic",
+                "name": "number"
+              }
+            },
+            {
+              "id": 1622,
+              "name": "minSizeOverride",
+              "kind": 1024,
+              "kindString": "Property",
+              "flags": {
+                "isExported": true,
+                "isOptional": true
+              },
+              "sources": [
+                {
+                  "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
+                  "line": 365,
+                  "character": 17
+                }
+              ],
+              "type": {
+                "type": "intrinsic",
+                "name": "number"
+              }
+            },
+            {
+              "id": 1620,
+              "name": "minValueOverride",
+              "kind": 1024,
+              "kindString": "Property",
+              "flags": {
+                "isExported": true,
+                "isOptional": true
+              },
+              "sources": [
+                {
+                  "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
+                  "line": 363,
+                  "character": 18
+                }
+              ],
+              "type": {
+                "type": "intrinsic",
+                "name": "number"
+              }
+            },
+            {
+              "id": 1619,
+              "name": "sizeAccessor",
+              "kind": 1024,
+              "kindString": "Property",
+              "flags": {
+                "isExported": true,
+                "isOptional": true
+              },
+              "sources": [
+                {
+                  "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
+                  "line": 362,
+                  "character": 14
+                }
+              ],
+              "type": {
+                "type": "intrinsic",
+                "name": "string"
+              }
+            }
+          ],
+          "groups": [
+            {
+              "title": "Properties",
+              "kind": 1024,
+              "children": [1624, 1623, 1621, 1622, 1620, 1619]
+            }
+          ],
+          "sources": [
+            {
+              "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
+              "line": 361,
+              "character": 32
+            }
+          ]
+        },
+        {
+          "id": 1625,
           "name": "ITooltipLabelType",
           "kind": 256,
           "kindString": "Interface",
@@ -44724,7 +44928,7 @@
           },
           "children": [
             {
-              "id": 1619,
+              "id": 1628,
               "name": "format",
               "kind": 1024,
               "kindString": "Property",
@@ -44734,7 +44938,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 357,
+                  "line": 374,
                   "character": 8
                 }
               ],
@@ -44756,7 +44960,7 @@
               }
             },
             {
-              "id": 1617,
+              "id": 1626,
               "name": "labelAccessor",
               "kind": 1024,
               "kindString": "Property",
@@ -44766,7 +44970,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 355,
+                  "line": 372,
                   "character": 15
                 }
               ],
@@ -44779,7 +44983,7 @@
               }
             },
             {
-              "id": 1618,
+              "id": 1627,
               "name": "labelTitle",
               "kind": 1024,
               "kindString": "Property",
@@ -44789,7 +44993,7 @@
               "sources": [
                 {
                   "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-                  "line": 356,
+                  "line": 373,
                   "character": 12
                 }
               ],
@@ -44806,13 +45010,13 @@
             {
               "title": "Properties",
               "kind": 1024,
-              "children": [1619, 1617, 1618]
+              "children": [1628, 1626, 1627]
             }
           ],
           "sources": [
             {
               "fileName": "scatter-plot/src/components/scatter-plot/scatter-plot-props.ts",
-              "line": 354,
+              "line": 371,
               "character": 34
             }
           ]
@@ -44822,7 +45026,7 @@
         {
           "title": "Interfaces",
           "kind": 256,
-          "children": [1626, 1645, 1586, 1593, 1623, 1609, 1620, 1647, 1598, 1604, 1534, 1616]
+          "children": [1635, 1654, 1588, 1595, 1632, 1611, 1629, 1656, 1600, 1606, 1535, 1618, 1625]
         }
       ],
       "sources": [
@@ -44834,7 +45038,7 @@
       ]
     },
     {
-      "id": 1649,
+      "id": 1658,
       "name": "\"stacked-bar-chart/src/components/stacked-bar-chart/stacked-bar-chart-default-values\"",
       "kind": 1,
       "kindString": "Module",
@@ -44844,7 +45048,7 @@
       "originalName": "/visa-chart-components/packages/stacked-bar-chart/src/components/stacked-bar-chart/stacked-bar-chart-default-values.ts",
       "children": [
         {
-          "id": 1650,
+          "id": 1659,
           "name": "StackedBarChartDefaultValues",
           "kind": 128,
           "kindString": "Class",
@@ -44853,7 +45057,7 @@
           },
           "children": [
             {
-              "id": 1672,
+              "id": 1681,
               "name": "accessibility",
               "kind": 1024,
               "kindString": "Property",
@@ -44876,7 +45080,7 @@
               "defaultValue": "propDefaultValues.accessibility"
             },
             {
-              "id": 1673,
+              "id": 1682,
               "name": "animationConfig",
               "kind": 1024,
               "kindString": "Property",
@@ -44899,7 +45103,7 @@
               "defaultValue": "propDefaultValues.animationConfig"
             },
             {
-              "id": 1693,
+              "id": 1702,
               "name": "annotations",
               "kind": 1024,
               "kindString": "Property",
@@ -44922,7 +45126,7 @@
               "defaultValue": "propDefaultValues.annotations"
             },
             {
-              "id": 1685,
+              "id": 1694,
               "name": "barIntervalRatio",
               "kind": 1024,
               "kindString": "Property",
@@ -44945,7 +45149,7 @@
               "defaultValue": "propDefaultValues.barIntervalRatio"
             },
             {
-              "id": 1695,
+              "id": 1704,
               "name": "clickHighlight",
               "kind": 1024,
               "kindString": "Property",
@@ -44968,7 +45172,7 @@
               "defaultValue": "propDefaultValues.clickHighlight"
             },
             {
-              "id": 1681,
+              "id": 1690,
               "name": "clickStyle",
               "kind": 1024,
               "kindString": "Property",
@@ -44991,7 +45195,7 @@
               "defaultValue": "propDefaultValues.clickStyle"
             },
             {
-              "id": 1679,
+              "id": 1688,
               "name": "colorPalette",
               "kind": 1024,
               "kindString": "Property",
@@ -45014,7 +45218,7 @@
               "defaultValue": "propDefaultValues.colorPaletteCategorical"
             },
             {
-              "id": 1683,
+              "id": 1692,
               "name": "cursor",
               "kind": 1024,
               "kindString": "Property",
@@ -45037,7 +45241,7 @@
               "defaultValue": "propDefaultValues.cursor"
             },
             {
-              "id": 1687,
+              "id": 1696,
               "name": "dataLabel",
               "kind": 1024,
               "kindString": "Property",
@@ -45060,7 +45264,7 @@
               "defaultValue": "propDefaultValues.dataLabelMiddle"
             },
             {
-              "id": 1670,
+              "id": 1679,
               "name": "groupAccessor",
               "kind": 1024,
               "kindString": "Property",
@@ -45083,7 +45287,7 @@
               "defaultValue": "\"item\""
             },
             {
-              "id": 1653,
+              "id": 1662,
               "name": "height",
               "kind": 1024,
               "kindString": "Property",
@@ -45106,7 +45310,7 @@
               "defaultValue": "280"
             },
             {
-              "id": 1674,
+              "id": 1683,
               "name": "highestHeadingLevel",
               "kind": 1024,
               "kindString": "Property",
@@ -45129,7 +45333,7 @@
               "defaultValue": "propDefaultValues.highestHeadingLevel"
             },
             {
-              "id": 1694,
+              "id": 1703,
               "name": "hoverHighlight",
               "kind": 1024,
               "kindString": "Property",
@@ -45151,7 +45355,7 @@
               }
             },
             {
-              "id": 1686,
+              "id": 1695,
               "name": "hoverOpacity",
               "kind": 1024,
               "kindString": "Property",
@@ -45174,7 +45378,7 @@
               "defaultValue": "propDefaultValues.hoverOpacity"
             },
             {
-              "id": 1680,
+              "id": 1689,
               "name": "hoverStyle",
               "kind": 1024,
               "kindString": "Property",
@@ -45197,7 +45401,7 @@
               "defaultValue": "propDefaultValues.hoverStyle"
             },
             {
-              "id": 1671,
+              "id": 1680,
               "name": "layout",
               "kind": 1024,
               "kindString": "Property",
@@ -45220,7 +45424,7 @@
               "defaultValue": "propDefaultValues.layout"
             },
             {
-              "id": 1688,
+              "id": 1697,
               "name": "legend",
               "kind": 1024,
               "kindString": "Property",
@@ -45243,7 +45447,7 @@
               "defaultValue": "propDefaultValues.categoryLegend"
             },
             {
-              "id": 1651,
+              "id": 1660,
               "name": "mainTitle",
               "kind": 1024,
               "kindString": "Property",
@@ -45266,7 +45470,7 @@
               "defaultValue": "\"Stacked Bar Chart Title\""
             },
             {
-              "id": 1665,
+              "id": 1674,
               "name": "normalized",
               "kind": 1024,
               "kindString": "Property",
@@ -45289,7 +45493,7 @@
               "defaultValue": "false"
             },
             {
-              "id": 1668,
+              "id": 1677,
               "name": "ordinalAccessor",
               "kind": 1024,
               "kindString": "Property",
@@ -45312,7 +45516,7 @@
               "defaultValue": "\"label\""
             },
             {
-              "id": 1692,
+              "id": 1701,
               "name": "referenceLines",
               "kind": 1024,
               "kindString": "Property",
@@ -45335,7 +45539,7 @@
               "defaultValue": "propDefaultValues.referenceLines"
             },
             {
-              "id": 1682,
+              "id": 1691,
               "name": "referenceStyle",
               "kind": 1024,
               "kindString": "Property",
@@ -45358,7 +45562,7 @@
               "defaultValue": "propDefaultValues.referenceStyle"
             },
             {
-              "id": 1684,
+              "id": 1693,
               "name": "roundedCorner",
               "kind": 1024,
               "kindString": "Property",
@@ -45381,7 +45585,7 @@
               "defaultValue": "propDefaultValues.roundedCorner"
             },
             {
-              "id": 1690,
+              "id": 1699,
               "name": "showTooltip",
               "kind": 1024,
               "kindString": "Property",
@@ -45404,7 +45608,7 @@
               "defaultValue": "propDefaultValues.showTooltip"
             },
             {
-              "id": 1666,
+              "id": 1675,
               "name": "showTotalValue",
               "kind": 1024,
               "kindString": "Property",
@@ -45427,7 +45631,7 @@
               "defaultValue": "true"
             },
             {
-              "id": 1667,
+              "id": 1676,
               "name": "showZeroLabels",
               "kind": 1024,
               "kindString": "Property",
@@ -45450,7 +45654,7 @@
               "defaultValue": "false"
             },
             {
-              "id": 1675,
+              "id": 1684,
               "name": "sortOrder",
               "kind": 1024,
               "kindString": "Property",
@@ -45473,7 +45677,7 @@
               "defaultValue": "propDefaultValues.sortOrder"
             },
             {
-              "id": 1652,
+              "id": 1661,
               "name": "subTitle",
               "kind": 1024,
               "kindString": "Property",
@@ -45496,7 +45700,7 @@
               "defaultValue": "\"This is the stacked bar chart's subtitle\""
             },
             {
-              "id": 1691,
+              "id": 1700,
               "name": "suppressEvents",
               "kind": 1024,
               "kindString": "Property",
@@ -45519,7 +45723,7 @@
               "defaultValue": "propDefaultValues.suppressEvents"
             },
             {
-              "id": 1689,
+              "id": 1698,
               "name": "tooltipLabel",
               "kind": 1024,
               "kindString": "Property",
@@ -45542,7 +45746,7 @@
               "defaultValue": "propDefaultValues.tooltipLabel"
             },
             {
-              "id": 1669,
+              "id": 1678,
               "name": "valueAccessor",
               "kind": 1024,
               "kindString": "Property",
@@ -45565,7 +45769,7 @@
               "defaultValue": "\"value\""
             },
             {
-              "id": 1654,
+              "id": 1663,
               "name": "width",
               "kind": 1024,
               "kindString": "Property",
@@ -45588,7 +45792,7 @@
               "defaultValue": "700"
             },
             {
-              "id": 1678,
+              "id": 1687,
               "name": "wrapLabel",
               "kind": 1024,
               "kindString": "Property",
@@ -45611,7 +45815,7 @@
               "defaultValue": "propDefaultValues.wrapLabel"
             },
             {
-              "id": 1676,
+              "id": 1685,
               "name": "xAxis",
               "kind": 1024,
               "kindString": "Property",
@@ -45634,7 +45838,7 @@
               "defaultValue": "propDefaultValues.xAxis"
             },
             {
-              "id": 1677,
+              "id": 1686,
               "name": "yAxis",
               "kind": 1024,
               "kindString": "Property",
@@ -45657,7 +45861,7 @@
               "defaultValue": "propDefaultValues.yAxis"
             },
             {
-              "id": 1655,
+              "id": 1664,
               "name": "margin",
               "kind": 2097152,
               "kindString": "Object literal",
@@ -45668,7 +45872,7 @@
               },
               "children": [
                 {
-                  "id": 1657,
+                  "id": 1666,
                   "name": "bottom",
                   "kind": 32,
                   "kindString": "Variable",
@@ -45689,7 +45893,7 @@
                   "defaultValue": "400 * 0.01"
                 },
                 {
-                  "id": 1659,
+                  "id": 1668,
                   "name": "left",
                   "kind": 32,
                   "kindString": "Variable",
@@ -45710,7 +45914,7 @@
                   "defaultValue": "400 * 0.01"
                 },
                 {
-                  "id": 1658,
+                  "id": 1667,
                   "name": "right",
                   "kind": 32,
                   "kindString": "Variable",
@@ -45731,7 +45935,7 @@
                   "defaultValue": "400 * 0.01"
                 },
                 {
-                  "id": 1656,
+                  "id": 1665,
                   "name": "top",
                   "kind": 32,
                   "kindString": "Variable",
@@ -45756,7 +45960,7 @@
                 {
                   "title": "Variables",
                   "kind": 32,
-                  "children": [1657, 1659, 1658, 1656]
+                  "children": [1666, 1668, 1667, 1665]
                 }
               ],
               "sources": [
@@ -45772,7 +45976,7 @@
               }
             },
             {
-              "id": 1660,
+              "id": 1669,
               "name": "padding",
               "kind": 2097152,
               "kindString": "Object literal",
@@ -45783,7 +45987,7 @@
               },
               "children": [
                 {
-                  "id": 1662,
+                  "id": 1671,
                   "name": "bottom",
                   "kind": 32,
                   "kindString": "Variable",
@@ -45804,7 +46008,7 @@
                   "defaultValue": "50"
                 },
                 {
-                  "id": 1664,
+                  "id": 1673,
                   "name": "left",
                   "kind": 32,
                   "kindString": "Variable",
@@ -45825,7 +46029,7 @@
                   "defaultValue": "50"
                 },
                 {
-                  "id": 1663,
+                  "id": 1672,
                   "name": "right",
                   "kind": 32,
                   "kindString": "Variable",
@@ -45846,7 +46050,7 @@
                   "defaultValue": "50"
                 },
                 {
-                  "id": 1661,
+                  "id": 1670,
                   "name": "top",
                   "kind": 32,
                   "kindString": "Variable",
@@ -45871,7 +46075,7 @@
                 {
                   "title": "Variables",
                   "kind": 32,
-                  "children": [1662, 1664, 1663, 1661]
+                  "children": [1671, 1673, 1672, 1670]
                 }
               ],
               "sources": [
@@ -45892,47 +46096,47 @@
               "title": "Properties",
               "kind": 1024,
               "children": [
-                1672,
-                1673,
-                1693,
-                1685,
-                1695,
                 1681,
-                1679,
-                1683,
-                1687,
-                1670,
-                1653,
-                1674,
-                1694,
-                1686,
-                1680,
-                1671,
-                1688,
-                1651,
-                1665,
-                1668,
-                1692,
                 1682,
-                1684,
+                1702,
+                1694,
+                1704,
                 1690,
-                1666,
-                1667,
-                1675,
-                1652,
-                1691,
+                1688,
+                1692,
+                1696,
+                1679,
+                1662,
+                1683,
+                1703,
+                1695,
                 1689,
-                1669,
-                1654,
-                1678,
+                1680,
+                1697,
+                1660,
+                1674,
+                1677,
+                1701,
+                1691,
+                1693,
+                1699,
+                1675,
                 1676,
-                1677
+                1684,
+                1661,
+                1700,
+                1698,
+                1678,
+                1663,
+                1687,
+                1685,
+                1686
               ]
             },
             {
               "title": "Object literals",
               "kind": 2097152,
-              "children": [1655, 1660]
+              "children": [1664, 1669]
             }
           ],
           "sources": [
@@ -45944,7 +46148,7 @@
           ]
         },
         {
-          "id": 1696,
+          "id": 1705,
           "name": "propDefaultValues",
           "kind": 32,
           "kindString": "Variable",
@@ -45966,12 +46170,12 @@
         {
           "title": "Classes",
           "kind": 128,
-          "children": [1650]
+          "children": [1659]
         },
         {
           "title": "Variables",
           "kind": 32,
-          "children": [1696]
+          "children": [1705]
         }
       ],
       "sources": [
@@ -45983,7 +46187,7 @@
       ]
     },
     {
-      "id": 1697,
+      "id": 1706,
       "name": "\"stacked-bar-chart/src/components/stacked-bar-chart/stacked-bar-chart-props\"",
       "kind": 1,
       "kindString": "Module",
@@ -45993,7 +46197,7 @@
       "originalName": "/visa-chart-components/packages/stacked-bar-chart/src/components/stacked-bar-chart/stacked-bar-chart-props.ts",
       "children": [
         {
-          "id": 1780,
+          "id": 1789,
           "name": "IAccessibilityType",
           "kind": 256,
           "kindString": "Interface",
@@ -46002,7 +46206,7 @@
           },
           "children": [
             {
-              "id": 1784,
+              "id": 1793,
               "name": "contextExplanation",
               "kind": 1024,
               "kindString": "Property",
@@ -46023,7 +46227,7 @@
               }
             },
             {
-              "id": 1791,
+              "id": 1800,
               "name": "disableValidation",
               "kind": 1024,
               "kindString": "Property",
@@ -46044,7 +46248,7 @@
               }
             },
             {
-              "id": 1786,
+              "id": 1795,
               "name": "elementDescriptionAccessor",
               "kind": 1024,
               "kindString": "Property",
@@ -46065,7 +46269,7 @@
               }
             },
             {
-              "id": 1792,
+              "id": 1801,
               "name": "elementsAreInterface",
               "kind": 1024,
               "kindString": "Property",
@@ -46086,7 +46290,7 @@
               }
             },
             {
-              "id": 1782,
+              "id": 1791,
               "name": "executiveSummary",
               "kind": 1024,
               "kindString": "Property",
@@ -46107,7 +46311,7 @@
               }
             },
             {
-              "id": 1790,
+              "id": 1799,
               "name": "hideDataTableButton",
               "kind": 1024,
               "kindString": "Property",
@@ -46128,7 +46332,7 @@
               }
             },
             {
-              "id": 1795,
+              "id": 1804,
               "name": "hideStrokes",
               "kind": 1024,
               "kindString": "Property",
@@ -46149,7 +46353,7 @@
               }
             },
             {
-              "id": 1794,
+              "id": 1803,
               "name": "hideTextures",
               "kind": 1024,
               "kindString": "Property",
@@ -46170,7 +46374,7 @@
               }
             },
             {
-              "id": 1789,
+              "id": 1798,
               "name": "includeDataKeyNames",
               "kind": 1024,
               "kindString": "Property",
@@ -46191,7 +46395,7 @@
               }
             },
             {
-              "id": 1798,
+              "id": 1807,
               "name": "keyboardNavConfig",
               "kind": 1024,
               "kindString": "Property",
@@ -46208,12 +46412,12 @@
               ],
               "type": {
                 "type": "reference",
-                "id": 1801,
+                "id": 1810,
                 "name": "IKeyConfig"
               }
             },
             {
-              "id": 1781,
+              "id": 1790,
               "name": "longDescription",
               "kind": 1024,
               "kindString": "Property",
@@ -46234,7 +46438,7 @@
               }
             },
             {
-              "id": 1793,
+              "id": 1802,
               "name": "onChangeFunc",
               "kind": 1024,
               "kindString": "Property",
@@ -46255,7 +46459,7 @@
               }
             },
             {
-              "id": 1783,
+              "id": 1792,
               "name": "purpose",
               "kind": 1024,
               "kindString": "Property",
@@ -46276,7 +46480,7 @@
               }
             },
             {
-              "id": 1797,
+              "id": 1806,
               "name": "showExperimentalTextures",
               "kind": 1024,
               "kindString": "Property",
@@ -46297,7 +46501,7 @@
               }
             },
             {
-              "id": 1796,
+              "id": 1805,
               "name": "showSmallLabels",
               "kind": 1024,
               "kindString": "Property",
@@ -46318,7 +46522,7 @@
               }
             },
             {
-              "id": 1787,
+              "id": 1796,
               "name": "statisticalNotes",
               "kind": 1024,
               "kindString": "Property",
@@ -46339,7 +46543,7 @@
               }
             },
             {
-              "id": 1788,
+              "id": 1797,
               "name": "structureNotes",
               "kind": 1024,
               "kindString": "Property",
@@ -46360,7 +46564,7 @@
               }
             },
             {
-              "id": 1785,
+              "id": 1794,
               "name": "title",
               "kind": 1024,
               "kindString": "Property",
@@ -46386,24 +46590,24 @@
               "title": "Properties",
               "kind": 1024,
               "children": [
-                1784,
-                1791,
-                1786,
-                1792,
-                1782,
-                1790,
-                1795,
-                1794,
-                1789,
-                1798,
-                1781,
                 1793,
-                1783,
-                1797,
+                1800,
+                1795,
+                1801,
+                1791,
+                1799,
+                1804,
+                1803,
+                1798,
+                1807,
+                1790,
+                1802,
+                1792,
+                1806,
+                1805,
                 1796,
-                1787,
-                1788,
-                1785
+                1797,
+                1794
               ]
             }
           ],
@@ -46416,7 +46620,7 @@
           ]
         },
         {
-          "id": 1799,
+          "id": 1808,
           "name": "IAnimationConfig",
           "kind": 256,
           "kindString": "Interface",
@@ -46425,7 +46629,7 @@
           },
           "children": [
             {
-              "id": 1800,
+              "id": 1809,
               "name": "disabled",
               "kind": 1024,
               "kindString": "Property",
@@ -46450,7 +46654,7 @@
             {
               "title": "Properties",
               "kind": 1024,
-              "children": [1800]
+              "children": [1809]
             }
           ],
           "sources": [
@@ -46462,7 +46666,7 @@
           ]
         },
         {
-          "id": 1762,
+          "id": 1771,
           "name": "IAxisType",
           "kind": 256,
           "kindString": "Interface",
@@ -46471,7 +46675,7 @@
           },
           "children": [
             {
-              "id": 1766,
+              "id": 1775,
               "name": "format",
               "kind": 1024,
               "kindString": "Property",
@@ -46492,7 +46696,7 @@
               }
             },
             {
-              "id": 1764,
+              "id": 1773,
               "name": "gridVisible",
               "kind": 1024,
               "kindString": "Property",
@@ -46513,7 +46717,7 @@
               }
             },
             {
-              "id": 1765,
+              "id": 1774,
               "name": "label",
               "kind": 1024,
               "kindString": "Property",
@@ -46534,7 +46738,7 @@
               }
             },
             {
-              "id": 1768,
+              "id": 1777,
               "name": "placement",
               "kind": 1024,
               "kindString": "Property",
@@ -46555,7 +46759,7 @@
               }
             },
             {
-              "id": 1767,
+              "id": 1776,
               "name": "tickInterval",
               "kind": 1024,
               "kindString": "Property",
@@ -46576,7 +46780,7 @@
               }
             },
             {
-              "id": 1763,
+              "id": 1772,
               "name": "visible",
               "kind": 1024,
               "kindString": "Property",
@@ -46600,7 +46804,7 @@
             {
               "title": "Properties",
               "kind": 1024,
-              "children": [1766, 1764, 1765, 1768, 1767, 1763]
+              "children": [1775, 1773, 1774, 1777, 1776, 1772]
             }
           ],
           "sources": [
@@ -46612,7 +46816,7 @@
           ]
         },
         {
-          "id": 1769,
+          "id": 1778,
           "name": "IBoxModelType",
           "kind": 256,
           "kindString": "Interface",
@@ -46621,7 +46825,7 @@
           },
           "children": [
             {
-              "id": 1771,
+              "id": 1780,
               "name": "bottom",
               "kind": 1024,
               "kindString": "Property",
@@ -46641,7 +46845,7 @@
               }
             },
             {
-              "id": 1773,
+              "id": 1782,
               "name": "left",
               "kind": 1024,
               "kindString": "Property",
@@ -46661,7 +46865,7 @@
               }
             },
             {
-              "id": 1772,
+              "id": 1781,
               "name": "right",
               "kind": 1024,
               "kindString": "Property",
@@ -46681,7 +46885,7 @@
               }
             },
             {
-              "id": 1770,
+              "id": 1779,
               "name": "top",
               "kind": 1024,
               "kindString": "Property",
@@ -46705,7 +46909,7 @@
             {
               "title": "Properties",
               "kind": 1024,
-              "children": [1771, 1773, 1772, 1770]
+              "children": [1780, 1782, 1781, 1779]
             }
           ],
           "sources": [
@@ -46717,7 +46921,7 @@
           ]
         },
         {
-          "id": 1777,
+          "id": 1786,
           "name": "IClickStyleType",
           "kind": 256,
           "kindString": "Interface",
@@ -46726,7 +46930,7 @@
           },
           "children": [
             {
-              "id": 1778,
+              "id": 1787,
               "name": "color",
               "kind": 1024,
               "kindString": "Property",
@@ -46747,7 +46951,7 @@
               }
             },
             {
-              "id": 1779,
+              "id": 1788,
               "name": "strokeWidth",
               "kind": 1024,
               "kindString": "Property",
@@ -46781,7 +46985,7 @@
             {
               "title": "Properties",
               "kind": 1024,
-              "children": [1778, 1779]
+              "children": [1787, 1788]
             }
           ],
           "sources": [
@@ -46793,7 +46997,7 @@
           ]
         },
         {
-          "id": 1749,
+          "id": 1758,
           "name": "IDataLabelType",
           "kind": 256,
           "kindString": "Interface",
@@ -46802,7 +47006,7 @@
           },
           "children": [
             {
-              "id": 1754,
+              "id": 1763,
               "name": "collisionHideOnly",
               "kind": 1024,
               "kindString": "Property",
@@ -46823,7 +47027,7 @@
               }
             },
             {
-              "id": 1755,
+              "id": 1764,
               "name": "collisionPlacement",
               "kind": 1024,
               "kindString": "Property",
@@ -46844,7 +47048,7 @@
               }
             },
             {
-              "id": 1753,
+              "id": 1762,
               "name": "format",
               "kind": 1024,
               "kindString": "Property",
@@ -46865,7 +47069,7 @@
               }
             },
             {
-              "id": 1752,
+              "id": 1761,
               "name": "labelAccessor",
               "kind": 1024,
               "kindString": "Property",
@@ -46886,7 +47090,7 @@
               }
             },
             {
-              "id": 1751,
+              "id": 1760,
               "name": "placement",
               "kind": 1024,
               "kindString": "Property",
@@ -46907,7 +47111,7 @@
               }
             },
             {
-              "id": 1750,
+              "id": 1759,
               "name": "visible",
               "kind": 1024,
               "kindString": "Property",
@@ -46931,7 +47135,7 @@
             {
               "title": "Properties",
               "kind": 1024,
-              "children": [1754, 1755, 1753, 1752, 1751, 1750]
+              "children": [1763, 1764, 1762, 1761, 1760, 1759]
             }
           ],
           "sources": [
@@ -46943,7 +47147,7 @@
           ]
         },
         {
-          "id": 1774,
+          "id": 1783,
           "name": "IHoverStyleType",
           "kind": 256,
           "kindString": "Interface",
@@ -46952,7 +47156,7 @@
           },
           "children": [
             {
-              "id": 1775,
+              "id": 1784,
               "name": "color",
               "kind": 1024,
               "kindString": "Property",
@@ -46973,7 +47177,7 @@
               }
             },
             {
-              "id": 1776,
+              "id": 1785,
               "name": "strokeWidth",
               "kind": 1024,
               "kindString": "Property",
@@ -47007,7 +47211,7 @@
             {
               "title": "Properties",
               "kind": 1024,
-              "children": [1775, 1776]
+              "children": [1784, 1785]
             }
           ],
           "sources": [
@@ -47019,7 +47223,7 @@
           ]
         },
         {
-          "id": 1801,
+          "id": 1810,
           "name": "IKeyConfig",
           "kind": 256,
           "kindString": "Interface",
@@ -47028,7 +47232,7 @@
           },
           "children": [
             {
-              "id": 1802,
+              "id": 1811,
               "name": "disabled",
               "kind": 1024,
               "kindString": "Property",
@@ -47053,7 +47257,7 @@
             {
               "title": "Properties",
               "kind": 1024,
-              "children": [1802]
+              "children": [1811]
             }
           ],
           "sources": [
@@ -47065,7 +47269,7 @@
           ]
         },
         {
-          "id": 1756,
+          "id": 1765,
           "name": "ILegendType",
           "kind": 256,
           "kindString": "Interface",
@@ -47074,7 +47278,7 @@
           },
           "children": [
             {
-              "id": 1760,
+              "id": 1769,
               "name": "format",
               "kind": 1024,
               "kindString": "Property",
@@ -47095,7 +47299,7 @@
               }
             },
             {
-              "id": 1759,
+              "id": 1768,
               "name": "interactive",
               "kind": 1024,
               "kindString": "Property",
@@ -47116,7 +47320,7 @@
               }
             },
             {
-              "id": 1758,
+              "id": 1767,
               "name": "labels",
               "kind": 1024,
               "kindString": "Property",
@@ -47140,7 +47344,7 @@
               }
             },
             {
-              "id": 1761,
+              "id": 1770,
               "name": "type",
               "kind": 1024,
               "kindString": "Property",
@@ -47161,7 +47365,7 @@
               }
             },
             {
-              "id": 1757,
+              "id": 1766,
               "name": "visible",
               "kind": 1024,
               "kindString": "Property",
@@ -47185,7 +47389,7 @@
             {
               "title": "Properties",
               "kind": 1024,
-              "children": [1760, 1759, 1758, 1761, 1757]
+              "children": [1769, 1768, 1767, 1770, 1766]
             }
           ],
           "sources": [
@@ -47197,7 +47401,7 @@
           ]
         },
         {
-          "id": 1803,
+          "id": 1812,
           "name": "IReferenceStyleType",
           "kind": 256,
           "kindString": "Interface",
@@ -47206,7 +47410,7 @@
           },
           "children": [
             {
-              "id": 1804,
+              "id": 1813,
               "name": "color",
               "kind": 1024,
               "kindString": "Property",
@@ -47226,7 +47430,7 @@
               }
             },
             {
-              "id": 1807,
+              "id": 1816,
               "name": "dashed",
               "kind": 1024,
               "kindString": "Property",
@@ -47246,7 +47450,7 @@
               }
             },
             {
-              "id": 1806,
+              "id": 1815,
               "name": "opacity",
               "kind": 1024,
               "kindString": "Property",
@@ -47266,7 +47470,7 @@
               }
             },
             {
-              "id": 1805,
+              "id": 1814,
               "name": "strokeWidth",
               "kind": 1024,
               "kindString": "Property",
@@ -47299,7 +47503,7 @@
             {
               "title": "Properties",
               "kind": 1024,
-              "children": [1804, 1807, 1806, 1805]
+              "children": [1813, 1816, 1815, 1814]
             }
           ],
           "sources": [
@@ -47311,7 +47515,7 @@
           ]
         },
         {
-          "id": 1698,
+          "id": 1707,
           "name": "IStackedBarChartProps",
           "kind": 256,
           "kindString": "Interface",
@@ -47324,7 +47528,7 @@
           },
           "children": [
             {
-              "id": 1728,
+              "id": 1737,
               "name": "accessibility",
               "kind": 1024,
               "kindString": "Property",
@@ -47356,12 +47560,12 @@
               ],
               "type": {
                 "type": "reference",
-                "id": 1780,
+                "id": 1789,
                 "name": "IAccessibilityType"
               }
             },
             {
-              "id": 1729,
+              "id": 1738,
               "name": "animationConfig",
               "kind": 1024,
               "kindString": "Property",
@@ -47393,12 +47597,12 @@
               ],
               "type": {
                 "type": "reference",
-                "id": 1799,
+                "id": 1808,
                 "name": "IAnimationConfig"
               }
             },
             {
-              "id": 1709,
+              "id": 1718,
               "name": "annotations",
               "kind": 1024,
               "kindString": "Property",
@@ -47437,7 +47641,7 @@
               }
             },
             {
-              "id": 1722,
+              "id": 1731,
               "name": "barIntervalRatio",
               "kind": 1024,
               "kindString": "Property",
@@ -47473,7 +47677,7 @@
               }
             },
             {
-              "id": 1740,
+              "id": 1749,
               "name": "clickEvent",
               "kind": 1024,
               "kindString": "Property",
@@ -47509,7 +47713,7 @@
               }
             },
             {
-              "id": 1748,
+              "id": 1757,
               "name": "clickHighlight",
               "kind": 1024,
               "kindString": "Property",
@@ -47548,7 +47752,7 @@
               }
             },
             {
-              "id": 1726,
+              "id": 1735,
               "name": "clickStyle",
               "kind": 1024,
               "kindString": "Property",
@@ -47580,12 +47784,12 @@
               ],
               "type": {
                 "type": "reference",
-                "id": 1777,
+                "id": 1786,
                 "name": "IClickStyleType"
               }
             },
             {
-              "id": 1724,
+              "id": 1733,
               "name": "colorPalette",
               "kind": 1024,
               "kindString": "Property",
@@ -47621,7 +47825,7 @@
               }
             },
             {
-              "id": 1719,
+              "id": 1728,
               "name": "colors",
               "kind": 1024,
               "kindString": "Property",
@@ -47660,7 +47864,7 @@
               }
             },
             {
-              "id": 1720,
+              "id": 1729,
               "name": "cursor",
               "kind": 1024,
               "kindString": "Property",
@@ -47696,7 +47900,7 @@
               }
             },
             {
-              "id": 1707,
+              "id": 1716,
               "name": "data",
               "kind": 1024,
               "kindString": "Property",
@@ -47735,7 +47939,7 @@
               }
             },
             {
-              "id": 1730,
+              "id": 1739,
               "name": "dataLabel",
               "kind": 1024,
               "kindString": "Property",
@@ -47767,12 +47971,12 @@
               ],
               "type": {
                 "type": "reference",
-                "id": 1749,
+                "id": 1758,
                 "name": "IDataLabelType"
               }
             },
             {
-              "id": 1745,
+              "id": 1754,
               "name": "drawEndEvent",
               "kind": 1024,
               "kindString": "Property",
@@ -47808,7 +48012,7 @@
               }
             },
             {
-              "id": 1744,
+              "id": 1753,
               "name": "drawStartEvent",
               "kind": 1024,
               "kindString": "Property",
@@ -47844,7 +48048,7 @@
               }
             },
             {
-              "id": 1712,
+              "id": 1721,
               "name": "groupAccessor",
               "kind": 1024,
               "kindString": "Property",
@@ -47880,7 +48084,7 @@
               }
             },
             {
-              "id": 1703,
+              "id": 1712,
               "name": "height",
               "kind": 1024,
               "kindString": "Property",
@@ -47916,7 +48120,7 @@
               }
             },
             {
-              "id": 1699,
+              "id": 1708,
               "name": "highestHeadingLevel",
               "kind": 1024,
               "kindString": "Property",
@@ -47965,7 +48169,7 @@
               }
             },
             {
-              "id": 1741,
+              "id": 1750,
               "name": "hoverEvent",
               "kind": 1024,
               "kindString": "Property",
@@ -48001,7 +48205,7 @@
               }
             },
             {
-              "id": 1747,
+              "id": 1756,
               "name": "hoverHighlight",
               "kind": 1024,
               "kindString": "Property",
@@ -48037,7 +48241,7 @@
               }
             },
             {
-              "id": 1723,
+              "id": 1732,
               "name": "hoverOpacity",
               "kind": 1024,
               "kindString": "Property",
@@ -48073,7 +48277,7 @@
               }
             },
             {
-              "id": 1725,
+              "id": 1734,
               "name": "hoverStyle",
               "kind": 1024,
               "kindString": "Property",
@@ -48105,12 +48309,12 @@
               ],
               "type": {
                 "type": "reference",
-                "id": 1774,
+                "id": 1783,
                 "name": "IHoverStyleType"
               }
             },
             {
-              "id": 1743,
+              "id": 1752,
               "name": "initialLoadEvent",
               "kind": 1024,
               "kindString": "Property",
@@ -48146,7 +48350,7 @@
               }
             },
             {
-              "id": 1738,
+              "id": 1747,
               "name": "interactionKeys",
               "kind": 1024,
               "kindString": "Property",
@@ -48185,7 +48389,7 @@
               }
             },
             {
-              "id": 1702,
+              "id": 1711,
               "name": "layout",
               "kind": 1024,
               "kindString": "Property",
@@ -48221,7 +48425,7 @@
               }
             },
             {
-              "id": 1717,
+              "id": 1726,
               "name": "legend",
               "kind": 1024,
               "kindString": "Property",
@@ -48253,12 +48457,12 @@
               ],
               "type": {
                 "type": "reference",
-                "id": 1756,
+                "id": 1765,
                 "name": "ILegendType"
               }
             },
             {
-              "id": 1700,
+              "id": 1709,
               "name": "mainTitle",
               "kind": 1024,
               "kindString": "Property",
@@ -48294,7 +48498,7 @@
               }
             },
             {
-              "id": 1705,
+              "id": 1714,
               "name": "margin",
               "kind": 1024,
               "kindString": "Property",
@@ -48326,12 +48530,12 @@
               ],
               "type": {
                 "type": "reference",
-                "id": 1769,
+                "id": 1778,
                 "name": "IBoxModelType"
               }
             },
             {
-              "id": 1735,
+              "id": 1744,
               "name": "maxValueOverride",
               "kind": 1024,
               "kindString": "Property",
@@ -48367,7 +48571,7 @@
               }
             },
             {
-              "id": 1736,
+              "id": 1745,
               "name": "minValueOverride",
               "kind": 1024,
               "kindString": "Property",
@@ -48403,7 +48607,7 @@
               }
             },
             {
-              "id": 1742,
+              "id": 1751,
               "name": "mouseOutEvent",
               "kind": 1024,
               "kindString": "Property",
@@ -48439,7 +48643,7 @@
               }
             },
             {
-              "id": 1718,
+              "id": 1727,
               "name": "normalized",
               "kind": 1024,
               "kindString": "Property",
@@ -48475,7 +48679,7 @@
               }
             },
             {
-              "id": 1710,
+              "id": 1719,
               "name": "ordinalAccessor",
               "kind": 1024,
               "kindString": "Property",
@@ -48511,7 +48715,7 @@
               }
             },
             {
-              "id": 1706,
+              "id": 1715,
               "name": "padding",
               "kind": 1024,
               "kindString": "Property",
@@ -48543,12 +48747,12 @@
               ],
               "type": {
                 "type": "reference",
-                "id": 1769,
+                "id": 1778,
                 "name": "IBoxModelType"
               }
             },
             {
-              "id": 1737,
+              "id": 1746,
               "name": "referenceLines",
               "kind": 1024,
               "kindString": "Property",
@@ -48587,7 +48791,7 @@
               }
             },
             {
-              "id": 1727,
+              "id": 1736,
               "name": "referenceStyle",
               "kind": 1024,
               "kindString": "Property",
@@ -48619,12 +48823,12 @@
               ],
               "type": {
                 "type": "reference",
-                "id": 1803,
+                "id": 1812,
                 "name": "IReferenceStyleType"
               }
             },
             {
-              "id": 1721,
+              "id": 1730,
               "name": "roundedCorner",
               "kind": 1024,
               "kindString": "Property",
@@ -48660,7 +48864,7 @@
               }
             },
             {
-              "id": 1732,
+              "id": 1741,
               "name": "showTooltip",
               "kind": 1024,
               "kindString": "Property",
@@ -48696,7 +48900,7 @@
               }
             },
             {
-              "id": 1734,
+              "id": 1743,
               "name": "showTotalValue",
               "kind": 1024,
               "kindString": "Property",
@@ -48732,7 +48936,7 @@
               }
             },
             {
-              "id": 1731,
+              "id": 1740,
               "name": "showZeroLabels",
               "kind": 1024,
               "kindString": "Property",
@@ -48772,7 +48976,7 @@
               }
             },
             {
-              "id": 1713,
+              "id": 1722,
               "name": "sortOrder",
               "kind": 1024,
               "kindString": "Property",
@@ -48808,7 +49012,7 @@
               }
             },
             {
-              "id": 1701,
+              "id": 1710,
               "name": "subTitle",
               "kind": 1024,
               "kindString": "Property",
@@ -48844,7 +49048,7 @@
               }
             },
             {
-              "id": 1739,
+              "id": 1748,
               "name": "suppressEvents",
               "kind": 1024,
               "kindString": "Property",
@@ -48880,7 +49084,7 @@
               }
             },
             {
-              "id": 1733,
+              "id": 1742,
               "name": "tooltipLabel",
               "kind": 1024,
               "kindString": "Property",
@@ -48912,12 +49116,12 @@
               ],
               "type": {
                 "type": "reference",
-                "id": 1808,
+                "id": 1817,
                 "name": "ITooltipLabelType"
               }
             },
             {
-              "id": 1746,
+              "id": 1755,
               "name": "transitionEndEvent",
               "kind": 1024,
               "kindString": "Property",
@@ -48953,7 +49157,7 @@
               }
             },
             {
-              "id": 1708,
+              "id": 1717,
               "name": "uniqueID",
               "kind": 1024,
               "kindString": "Property",
@@ -48989,7 +49193,7 @@
               }
             },
             {
-              "id": 1711,
+              "id": 1720,
               "name": "valueAccessor",
               "kind": 1024,
               "kindString": "Property",
@@ -49025,7 +49229,7 @@
               }
             },
             {
-              "id": 1704,
+              "id": 1713,
               "name": "width",
               "kind": 1024,
               "kindString": "Property",
@@ -49061,7 +49265,7 @@
               }
             },
             {
-              "id": 1716,
+              "id": 1725,
               "name": "wrapLabel",
               "kind": 1024,
               "kindString": "Property",
@@ -49097,7 +49301,7 @@
               }
             },
             {
-              "id": 1714,
+              "id": 1723,
               "name": "xAxis",
               "kind": 1024,
               "kindString": "Property",
@@ -49129,12 +49333,12 @@
               ],
               "type": {
                 "type": "reference",
-                "id": 1762,
+                "id": 1771,
                 "name": "IAxisType"
               }
             },
             {
-              "id": 1715,
+              "id": 1724,
               "name": "yAxis",
               "kind": 1024,
               "kindString": "Property",
@@ -49166,7 +49370,7 @@
               ],
               "type": {
                 "type": "reference",
-                "id": 1762,
+                "id": 1771,
                 "name": "IAxisType"
               }
             }
@@ -49176,56 +49380,56 @@
               "title": "Properties",
               "kind": 1024,
               "children": [
+                1737,
+                1738,
+                1718,
+                1731,
+                1749,
+                1757,
+                1735,
+                1733,
                 1728,
                 1729,
-                1709,
-                1722,
-                1740,
-                1748,
-                1726,
-                1724,
-                1719,
-                1720,
-                1707,
-                1730,
-                1745,
-                1744,
-                1712,
-                1703,
-                1699,
-                1741,
-                1747,
-                1723,
-                1725,
-                1743,
-                1738,
-                1702,
-                1717,
-                1700,
-                1705,
-                1735,
-                1736,
-                1742,
-                1718,
-                1710,
-                1706,
-                1737,
-                1727,
+                1716,
+                1739,
+                1754,
+                1753,
                 1721,
+                1712,
+                1708,
+                1750,
+                1756,
                 1732,
                 1734,
-                1731,
-                1713,
-                1701,
-                1739,
-                1733,
-                1746,
-                1708,
+                1752,
+                1747,
                 1711,
-                1704,
-                1716,
+                1726,
+                1709,
                 1714,
-                1715
+                1744,
+                1745,
+                1751,
+                1727,
+                1719,
+                1715,
+                1746,
+                1736,
+                1730,
+                1741,
+                1743,
+                1740,
+                1722,
+                1710,
+                1748,
+                1742,
+                1755,
+                1717,
+                1720,
+                1713,
+                1725,
+                1723,
+                1724
               ]
             }
           ],
@@ -49238,7 +49442,7 @@
           ]
         },
         {
-          "id": 1808,
+          "id": 1817,
           "name": "ITooltipLabelType",
           "kind": 256,
           "kindString": "Interface",
@@ -49247,7 +49451,7 @@
           },
           "children": [
             {
-              "id": 1811,
+              "id": 1820,
               "name": "format",
               "kind": 1024,
               "kindString": "Property",
@@ -49279,7 +49483,7 @@
               }
             },
             {
-              "id": 1809,
+              "id": 1818,
               "name": "labelAccessor",
               "kind": 1024,
               "kindString": "Property",
@@ -49302,7 +49506,7 @@
               }
             },
             {
-              "id": 1810,
+              "id": 1819,
               "name": "labelTitle",
               "kind": 1024,
               "kindString": "Property",
@@ -49329,7 +49533,7 @@
             {
               "title": "Properties",
               "kind": 1024,
-              "children": [1811, 1809, 1810]
+              "children": [1820, 1818, 1819]
             }
           ],
           "sources": [
@@ -49345,7 +49549,7 @@
         {
           "title": "Interfaces",
           "kind": 256,
-          "children": [1780, 1799, 1762, 1769, 1777, 1749, 1774, 1801, 1756, 1803, 1698, 1808]
+          "children": [1789, 1808, 1771, 1778, 1786, 1758, 1783, 1810, 1765, 1812, 1707, 1817]
         }
       ],
       "sources": [
@@ -49357,7 +49561,7 @@
       ]
     },
     {
-      "id": 1812,
+      "id": 1821,
       "name": "\"world-map/src/components/world-map/world-map-default-values\"",
       "kind": 1,
       "kindString": "Module",
@@ -49367,7 +49571,7 @@
       "originalName": "/visa-chart-components/packages/world-map/src/components/world-map/world-map-default-values.ts",
       "children": [
         {
-          "id": 1813,
+          "id": 1822,
           "name": "WorldMapDefaultValues",
           "kind": 128,
           "kindString": "Class",
@@ -49376,7 +49580,7 @@
           },
           "children": [
             {
-              "id": 1840,
+              "id": 1849,
               "name": "accessibility",
               "kind": 1024,
               "kindString": "Property",
@@ -49399,7 +49603,7 @@
               "defaultValue": "propDefaultValues.accessibility"
             },
             {
-              "id": 1841,
+              "id": 1850,
               "name": "animationConfig",
               "kind": 1024,
               "kindString": "Property",
@@ -49422,7 +49626,7 @@
               "defaultValue": "propDefaultValues.animationConfig"
             },
             {
-              "id": 1869,
+              "id": 1878,
               "name": "annotations",
               "kind": 1024,
               "kindString": "Property",
@@ -49445,7 +49649,7 @@
               "defaultValue": "propDefaultValues.annotations"
             },
             {
-              "id": 1871,
+              "id": 1880,
               "name": "clickHighlight",
               "kind": 1024,
               "kindString": "Property",
@@ -49468,7 +49672,7 @@
               "defaultValue": "propDefaultValues.clickHighlight"
             },
             {
-              "id": 1863,
+              "id": 1872,
               "name": "clickStyle",
               "kind": 1024,
               "kindString": "Property",
@@ -49491,7 +49695,7 @@
               "defaultValue": "propDefaultValues.clickStyle"
             },
             {
-              "id": 1844,
+              "id": 1853,
               "name": "colorPalette",
               "kind": 1024,
               "kindString": "Property",
@@ -49514,7 +49718,7 @@
               "defaultValue": "propDefaultValues.colorPaletteSequential"
             },
             {
-              "id": 1845,
+              "id": 1854,
               "name": "colorSteps",
               "kind": 1024,
               "kindString": "Property",
@@ -49537,7 +49741,7 @@
               "defaultValue": "propDefaultValues.colorSteps4"
             },
             {
-              "id": 1864,
+              "id": 1873,
               "name": "cursor",
               "kind": 1024,
               "kindString": "Property",
@@ -49560,7 +49764,7 @@
               "defaultValue": "propDefaultValues.cursor"
             },
             {
-              "id": 1866,
+              "id": 1875,
               "name": "dataLabel",
               "kind": 1024,
               "kindString": "Property",
@@ -49583,7 +49787,7 @@
               "defaultValue": "propDefaultValues.hiddenDataLabel"
             },
             {
-              "id": 1839,
+              "id": 1848,
               "name": "groupAccessor",
               "kind": 1024,
               "kindString": "Property",
@@ -49606,7 +49810,7 @@
               "defaultValue": "\"\""
             },
             {
-              "id": 1817,
+              "id": 1826,
               "name": "height",
               "kind": 1024,
               "kindString": "Property",
@@ -49629,7 +49833,7 @@
               "defaultValue": "400"
             },
             {
-              "id": 1814,
+              "id": 1823,
               "name": "highestHeadingLevel",
               "kind": 1024,
               "kindString": "Property",
@@ -49652,7 +49856,7 @@
               "defaultValue": "propDefaultValues.highestHeadingLevel"
             },
             {
-              "id": 1870,
+              "id": 1879,
               "name": "hoverHighlight",
               "kind": 1024,
               "kindString": "Property",
@@ -49674,7 +49878,7 @@
               }
             },
             {
-              "id": 1847,
+              "id": 1856,
               "name": "hoverOpacity",
               "kind": 1024,
               "kindString": "Property",
@@ -49697,7 +49901,7 @@
               "defaultValue": "propDefaultValues.hoverOpacity"
             },
             {
-              "id": 1862,
+              "id": 1871,
               "name": "hoverStyle",
               "kind": 1024,
               "kindString": "Property",
@@ -49720,7 +49924,7 @@
               "defaultValue": "propDefaultValues.hoverStyle"
             },
             {
-              "id": 1834,
+              "id": 1843,
               "name": "joinAccessor",
               "kind": 1024,
               "kindString": "Property",
@@ -49743,7 +49947,7 @@
               "defaultValue": "\"countryCode\""
             },
             {
-              "id": 1835,
+              "id": 1844,
               "name": "joinNameAccessor",
               "kind": 1024,
               "kindString": "Property",
@@ -49766,7 +49970,7 @@
               "defaultValue": "\"countryName\""
             },
             {
-              "id": 1837,
+              "id": 1846,
               "name": "latitudeAccessor",
               "kind": 1024,
               "kindString": "Property",
@@ -49789,7 +49993,7 @@
               "defaultValue": "\"\""
             },
             {
-              "id": 1867,
+              "id": 1876,
               "name": "legend",
               "kind": 1024,
               "kindString": "Property",
@@ -49812,7 +50016,7 @@
               "defaultValue": "propDefaultValues.keyLegend"
             },
             {
-              "id": 1838,
+              "id": 1847,
               "name": "longitudeAccessor",
               "kind": 1024,
               "kindString": "Property",
@@ -49835,7 +50039,7 @@
               "defaultValue": "\"\""
             },
             {
-              "id": 1815,
+              "id": 1824,
               "name": "mainTitle",
               "kind": 1024,
               "kindString": "Property",
@@ -49858,7 +50062,7 @@
               "defaultValue": "\"This is the Map title\""
             },
             {
-              "id": 1829,
+              "id": 1838,
               "name": "mapProjection",
               "kind": 1024,
               "kindString": "Property",
@@ -49881,7 +50085,7 @@
               "defaultValue": "\"Equal Earth\""
             },
             {
-              "id": 1830,
+              "id": 1839,
               "name": "mapScaleZoom",
               "kind": 1024,
               "kindString": "Property",
@@ -49904,7 +50108,7 @@
               "defaultValue": "1.25"
             },
             {
-              "id": 1832,
+              "id": 1841,
               "name": "markerAccessor",
               "kind": 1024,
               "kindString": "Property",
@@ -49927,7 +50131,7 @@
               "defaultValue": "\"\""
             },
             {
-              "id": 1833,
+              "id": 1842,
               "name": "markerNameAccessor",
               "kind": 1024,
               "kindString": "Property",
@@ -49950,7 +50154,7 @@
               "defaultValue": "\"\""
             },
             {
-              "id": 1831,
+              "id": 1840,
               "name": "quality",
               "kind": 1024,
               "kindString": "Property",
@@ -49973,7 +50177,7 @@
               "defaultValue": "\"High\""
             },
             {
-              "id": 1842,
+              "id": 1851,
               "name": "showGridLines",
               "kind": 1024,
               "kindString": "Property",
@@ -49996,7 +50200,7 @@
               "defaultValue": "false"
             },
             {
-              "id": 1846,
+              "id": 1855,
               "name": "showTooltip",
               "kind": 1024,
               "kindString": "Property",
@@ -50019,7 +50223,7 @@
               "defaultValue": "propDefaultValues.showTooltip"
             },
             {
-              "id": 1843,
+              "id": 1852,
               "name": "sortOrder",
               "kind": 1024,
               "kindString": "Property",
@@ -50042,7 +50246,7 @@
               "defaultValue": "propDefaultValues.sortOrder"
             },
             {
-              "id": 1816,
+              "id": 1825,
               "name": "subTitle",
               "kind": 1024,
               "kindString": "Property",
@@ -50065,7 +50269,7 @@
               "defaultValue": "\"This is the Map subtitle\""
             },
             {
-              "id": 1865,
+              "id": 1874,
               "name": "suppressEvents",
               "kind": 1024,
               "kindString": "Property",
@@ -50088,7 +50292,7 @@
               "defaultValue": "propDefaultValues.suppressEvents"
             },
             {
-              "id": 1868,
+              "id": 1877,
               "name": "tooltipLabel",
               "kind": 1024,
               "kindString": "Property",
@@ -50111,7 +50315,7 @@
               "defaultValue": "propDefaultValues.tooltipLabel"
             },
             {
-              "id": 1836,
+              "id": 1845,
               "name": "valueAccessor",
               "kind": 1024,
               "kindString": "Property",
@@ -50134,7 +50338,7 @@
               "defaultValue": "\"value\""
             },
             {
-              "id": 1818,
+              "id": 1827,
               "name": "width",
               "kind": 1024,
               "kindString": "Property",
@@ -50157,7 +50361,7 @@
               "defaultValue": "500"
             },
             {
-              "id": 1857,
+              "id": 1866,
               "name": "countryStyle",
               "kind": 2097152,
               "kindString": "Object literal",
@@ -50168,7 +50372,7 @@
               },
               "children": [
                 {
-                  "id": 1860,
+                  "id": 1869,
                   "name": "color",
                   "kind": 32,
                   "kindString": "Variable",
@@ -50189,7 +50393,7 @@
                   "defaultValue": "\"base_grey\""
                 },
                 {
-                  "id": 1858,
+                  "id": 1867,
                   "name": "fill",
                   "kind": 32,
                   "kindString": "Variable",
@@ -50210,7 +50414,7 @@
                   "defaultValue": "true"
                 },
                 {
-                  "id": 1859,
+                  "id": 1868,
                   "name": "opacity",
                   "kind": 32,
                   "kindString": "Variable",
@@ -50231,7 +50435,7 @@
                   "defaultValue": "0.8"
                 },
                 {
-                  "id": 1861,
+                  "id": 1870,
                   "name": "strokeWidth",
                   "kind": 32,
                   "kindString": "Variable",
@@ -50256,7 +50460,7 @@
                 {
                   "title": "Variables",
                   "kind": 32,
-                  "children": [1860, 1858, 1859, 1861]
+                  "children": [1869, 1867, 1868, 1870]
                 }
               ],
               "sources": [
@@ -50272,7 +50476,7 @@
               }
             },
             {
-              "id": 1819,
+              "id": 1828,
               "name": "margin",
               "kind": 2097152,
               "kindString": "Object literal",
@@ -50283,7 +50487,7 @@
               },
               "children": [
                 {
-                  "id": 1821,
+                  "id": 1830,
                   "name": "bottom",
                   "kind": 32,
                   "kindString": "Variable",
@@ -50304,7 +50508,7 @@
                   "defaultValue": "400 * 0.02"
                 },
                 {
-                  "id": 1823,
+                  "id": 1832,
                   "name": "left",
                   "kind": 32,
                   "kindString": "Variable",
@@ -50325,7 +50529,7 @@
                   "defaultValue": "500 * 0.02"
                 },
                 {
-                  "id": 1822,
+                  "id": 1831,
                   "name": "right",
                   "kind": 32,
                   "kindString": "Variable",
@@ -50346,7 +50550,7 @@
                   "defaultValue": "500 * 0.02"
                 },
                 {
-                  "id": 1820,
+                  "id": 1829,
                   "name": "top",
                   "kind": 32,
                   "kindString": "Variable",
@@ -50371,7 +50575,7 @@
                 {
                   "title": "Variables",
                   "kind": 32,
-                  "children": [1821, 1823, 1822, 1820]
+                  "children": [1830, 1832, 1831, 1829]
                 }
               ],
               "sources": [
@@ -50387,7 +50591,7 @@
               }
             },
             {
-              "id": 1848,
+              "id": 1857,
               "name": "markerStyle",
               "kind": 2097152,
               "kindString": "Object literal",
@@ -50398,7 +50602,7 @@
               },
               "children": [
                 {
-                  "id": 1850,
+                  "id": 1859,
                   "name": "blend",
                   "kind": 32,
                   "kindString": "Variable",
@@ -50419,7 +50623,7 @@
                   "defaultValue": "false"
                 },
                 {
-                  "id": 1855,
+                  "id": 1864,
                   "name": "color",
                   "kind": 32,
                   "kindString": "Variable",
@@ -50440,7 +50644,7 @@
                   "defaultValue": "\"base_grey\""
                 },
                 {
-                  "id": 1851,
+                  "id": 1860,
                   "name": "fill",
                   "kind": 32,
                   "kindString": "Variable",
@@ -50461,7 +50665,7 @@
                   "defaultValue": "true"
                 },
                 {
-                  "id": 1854,
+                  "id": 1863,
                   "name": "opacity",
                   "kind": 32,
                   "kindString": "Variable",
@@ -50482,7 +50686,7 @@
                   "defaultValue": "1"
                 },
                 {
-                  "id": 1852,
+                  "id": 1861,
                   "name": "radius",
                   "kind": 32,
                   "kindString": "Variable",
@@ -50503,7 +50707,7 @@
                   "defaultValue": "5"
                 },
                 {
-                  "id": 1853,
+                  "id": 1862,
                   "name": "radiusRange",
                   "kind": 32,
                   "kindString": "Variable",
@@ -50524,7 +50728,7 @@
                   "defaultValue": "\"\""
                 },
                 {
-                  "id": 1856,
+                  "id": 1865,
                   "name": "strokeWidth",
                   "kind": 32,
                   "kindString": "Variable",
@@ -50545,7 +50749,7 @@
                   "defaultValue": "1"
                 },
                 {
-                  "id": 1849,
+                  "id": 1858,
                   "name": "visible",
                   "kind": 32,
                   "kindString": "Variable",
@@ -50570,7 +50774,7 @@
                 {
                   "title": "Variables",
                   "kind": 32,
-                  "children": [1850, 1855, 1851, 1854, 1852, 1853, 1856, 1849]
+                  "children": [1859, 1864, 1860, 1863, 1861, 1862, 1865, 1858]
                 }
               ],
               "sources": [
@@ -50586,7 +50790,7 @@
               }
             },
             {
-              "id": 1824,
+              "id": 1833,
               "name": "padding",
               "kind": 2097152,
               "kindString": "Object literal",
@@ -50597,7 +50801,7 @@
               },
               "children": [
                 {
-                  "id": 1826,
+                  "id": 1835,
                   "name": "bottom",
                   "kind": 32,
                   "kindString": "Variable",
@@ -50618,7 +50822,7 @@
                   "defaultValue": "400 * 0.02"
                 },
                 {
-                  "id": 1828,
+                  "id": 1837,
                   "name": "left",
                   "kind": 32,
                   "kindString": "Variable",
@@ -50639,7 +50843,7 @@
                   "defaultValue": "500 * 0.01"
                 },
                 {
-                  "id": 1827,
+                  "id": 1836,
                   "name": "right",
                   "kind": 32,
                   "kindString": "Variable",
@@ -50660,7 +50864,7 @@
                   "defaultValue": "500 * 0.01"
                 },
                 {
-                  "id": 1825,
+                  "id": 1834,
                   "name": "top",
                   "kind": 32,
                   "kindString": "Variable",
@@ -50685,7 +50889,7 @@
                 {
                   "title": "Variables",
                   "kind": 32,
-                  "children": [1826, 1828, 1827, 1825]
+                  "children": [1835, 1837, 1836, 1834]
                 }
               ],
               "sources": [
@@ -50706,46 +50910,46 @@
               "title": "Properties",
               "kind": 1024,
               "children": [
-                1840,
-                1841,
-                1869,
+                1849,
+                1850,
+                1878,
+                1880,
+                1872,
+                1853,
+                1854,
+                1873,
+                1875,
+                1848,
+                1826,
+                1823,
+                1879,
+                1856,
                 1871,
-                1863,
-                1844,
-                1845,
-                1864,
-                1866,
-                1839,
-                1817,
-                1814,
-                1870,
-                1847,
-                1862,
-                1834,
-                1835,
-                1837,
-                1867,
-                1838,
-                1815,
-                1829,
-                1830,
-                1832,
-                1833,
-                1831,
-                1842,
-                1846,
                 1843,
-                1816,
-                1865,
-                1868,
-                1836,
-                1818
+                1844,
+                1846,
+                1876,
+                1847,
+                1824,
+                1838,
+                1839,
+                1841,
+                1842,
+                1840,
+                1851,
+                1855,
+                1852,
+                1825,
+                1874,
+                1877,
+                1845,
+                1827
               ]
             },
             {
               "title": "Object literals",
               "kind": 2097152,
-              "children": [1857, 1819, 1848, 1824]
+              "children": [1866, 1828, 1857, 1833]
             }
           ],
           "sources": [
@@ -50757,7 +50961,7 @@
           ]
         },
         {
-          "id": 1872,
+          "id": 1881,
           "name": "propDefaultValues",
           "kind": 32,
           "kindString": "Variable",
@@ -50779,12 +50983,12 @@
         {
           "title": "Classes",
           "kind": 128,
-          "children": [1813]
+          "children": [1822]
         },
         {
           "title": "Variables",
           "kind": 32,
-          "children": [1872]
+          "children": [1881]
         }
       ],
       "sources": [
@@ -50796,7 +51000,7 @@
       ]
     },
     {
-      "id": 1873,
+      "id": 1882,
       "name": "\"world-map/src/components/world-map/world-map-props\"",
       "kind": 1,
       "kindString": "Module",
@@ -50806,7 +51010,7 @@
       "originalName": "/visa-chart-components/packages/world-map/src/components/world-map/world-map-props.ts",
       "children": [
         {
-          "id": 1970,
+          "id": 1979,
           "name": "IAccessibilityType",
           "kind": 256,
           "kindString": "Interface",
@@ -50815,7 +51019,7 @@
           },
           "children": [
             {
-              "id": 1974,
+              "id": 1983,
               "name": "contextExplanation",
               "kind": 1024,
               "kindString": "Property",
@@ -50836,7 +51040,7 @@
               }
             },
             {
-              "id": 1981,
+              "id": 1990,
               "name": "disableValidation",
               "kind": 1024,
               "kindString": "Property",
@@ -50857,7 +51061,7 @@
               }
             },
             {
-              "id": 1976,
+              "id": 1985,
               "name": "elementDescriptionAccessor",
               "kind": 1024,
               "kindString": "Property",
@@ -50878,7 +51082,7 @@
               }
             },
             {
-              "id": 1982,
+              "id": 1991,
               "name": "elementsAreInterface",
               "kind": 1024,
               "kindString": "Property",
@@ -50899,7 +51103,7 @@
               }
             },
             {
-              "id": 1972,
+              "id": 1981,
               "name": "executiveSummary",
               "kind": 1024,
               "kindString": "Property",
@@ -50920,7 +51124,7 @@
               }
             },
             {
-              "id": 1980,
+              "id": 1989,
               "name": "hideDataTableButton",
               "kind": 1024,
               "kindString": "Property",
@@ -50941,7 +51145,7 @@
               }
             },
             {
-              "id": 1985,
+              "id": 1994,
               "name": "hideStrokes",
               "kind": 1024,
               "kindString": "Property",
@@ -50962,7 +51166,7 @@
               }
             },
             {
-              "id": 1984,
+              "id": 1993,
               "name": "hideTextures",
               "kind": 1024,
               "kindString": "Property",
@@ -50983,7 +51187,7 @@
               }
             },
             {
-              "id": 1979,
+              "id": 1988,
               "name": "includeDataKeyNames",
               "kind": 1024,
               "kindString": "Property",
@@ -51004,7 +51208,7 @@
               }
             },
             {
-              "id": 1988,
+              "id": 1997,
               "name": "keyboardNavConfig",
               "kind": 1024,
               "kindString": "Property",
@@ -51021,12 +51225,12 @@
               ],
               "type": {
                 "type": "reference",
-                "id": 1991,
+                "id": 2000,
                 "name": "IKeyConfig"
               }
             },
             {
-              "id": 1971,
+              "id": 1980,
               "name": "longDescription",
               "kind": 1024,
               "kindString": "Property",
@@ -51047,7 +51251,7 @@
               }
             },
             {
-              "id": 1983,
+              "id": 1992,
               "name": "onChangeFunc",
               "kind": 1024,
               "kindString": "Property",
@@ -51068,7 +51272,7 @@
               }
             },
             {
-              "id": 1973,
+              "id": 1982,
               "name": "purpose",
               "kind": 1024,
               "kindString": "Property",
@@ -51089,7 +51293,7 @@
               }
             },
             {
-              "id": 1987,
+              "id": 1996,
               "name": "showExperimentalTextures",
               "kind": 1024,
               "kindString": "Property",
@@ -51110,7 +51314,7 @@
               }
             },
             {
-              "id": 1986,
+              "id": 1995,
               "name": "showSmallLabels",
               "kind": 1024,
               "kindString": "Property",
@@ -51131,7 +51335,7 @@
               }
             },
             {
-              "id": 1977,
+              "id": 1986,
               "name": "statisticalNotes",
               "kind": 1024,
               "kindString": "Property",
@@ -51152,7 +51356,7 @@
               }
             },
             {
-              "id": 1978,
+              "id": 1987,
               "name": "structureNotes",
               "kind": 1024,
               "kindString": "Property",
@@ -51173,7 +51377,7 @@
               }
             },
             {
-              "id": 1975,
+              "id": 1984,
               "name": "title",
               "kind": 1024,
               "kindString": "Property",
@@ -51199,24 +51403,24 @@
               "title": "Properties",
               "kind": 1024,
               "children": [
-                1974,
-                1981,
-                1976,
-                1982,
-                1972,
-                1980,
-                1985,
-                1984,
-                1979,
-                1988,
-                1971,
                 1983,
-                1973,
-                1987,
+                1990,
+                1985,
+                1991,
+                1981,
+                1989,
+                1994,
+                1993,
+                1988,
+                1997,
+                1980,
+                1992,
+                1982,
+                1996,
+                1995,
                 1986,
-                1977,
-                1978,
-                1975
+                1987,
+                1984
               ]
             }
           ],
@@ -51229,7 +51433,7 @@
           ]
         },
         {
-          "id": 1989,
+          "id": 1998,
           "name": "IAnimationConfig",
           "kind": 256,
           "kindString": "Interface",
@@ -51238,7 +51442,7 @@
           },
           "children": [
             {
-              "id": 1990,
+              "id": 1999,
               "name": "disabled",
               "kind": 1024,
               "kindString": "Property",
@@ -51263,7 +51467,7 @@
             {
               "title": "Properties",
               "kind": 1024,
-              "children": [1990]
+              "children": [1999]
             }
           ],
           "sources": [
@@ -51275,7 +51479,7 @@
           ]
         },
         {
-          "id": 1933,
+          "id": 1942,
           "name": "IBoxModelType",
           "kind": 256,
           "kindString": "Interface",
@@ -51284,7 +51488,7 @@
           },
           "children": [
             {
-              "id": 1935,
+              "id": 1944,
               "name": "bottom",
               "kind": 1024,
               "kindString": "Property",
@@ -51304,7 +51508,7 @@
               }
             },
             {
-              "id": 1937,
+              "id": 1946,
               "name": "left",
               "kind": 1024,
               "kindString": "Property",
@@ -51324,7 +51528,7 @@
               }
             },
             {
-              "id": 1936,
+              "id": 1945,
               "name": "right",
               "kind": 1024,
               "kindString": "Property",
@@ -51344,7 +51548,7 @@
               }
             },
             {
-              "id": 1934,
+              "id": 1943,
               "name": "top",
               "kind": 1024,
               "kindString": "Property",
@@ -51368,7 +51572,7 @@
             {
               "title": "Properties",
               "kind": 1024,
-              "children": [1935, 1937, 1936, 1934]
+              "children": [1944, 1946, 1945, 1943]
             }
           ],
           "sources": [
@@ -51380,7 +51584,7 @@
           ]
         },
         {
-          "id": 1961,
+          "id": 1970,
           "name": "IClickStyleType",
           "kind": 256,
           "kindString": "Interface",
@@ -51389,7 +51593,7 @@
           },
           "children": [
             {
-              "id": 1962,
+              "id": 1971,
               "name": "color",
               "kind": 1024,
               "kindString": "Property",
@@ -51410,7 +51614,7 @@
               }
             },
             {
-              "id": 1963,
+              "id": 1972,
               "name": "opacity",
               "kind": 1024,
               "kindString": "Property",
@@ -51431,7 +51635,7 @@
               }
             },
             {
-              "id": 1965,
+              "id": 1974,
               "name": "showLabels",
               "kind": 1024,
               "kindString": "Property",
@@ -51452,7 +51656,7 @@
               }
             },
             {
-              "id": 1964,
+              "id": 1973,
               "name": "strokeWidth",
               "kind": 1024,
               "kindString": "Property",
@@ -51477,7 +51681,7 @@
             {
               "title": "Properties",
               "kind": 1024,
-              "children": [1962, 1963, 1965, 1964]
+              "children": [1971, 1972, 1974, 1973]
             }
           ],
           "sources": [
@@ -51489,7 +51693,7 @@
           ]
         },
         {
-          "id": 1953,
+          "id": 1962,
           "name": "ICountryStyleType",
           "kind": 256,
           "kindString": "Interface",
@@ -51498,7 +51702,7 @@
           },
           "children": [
             {
-              "id": 1956,
+              "id": 1965,
               "name": "color",
               "kind": 1024,
               "kindString": "Property",
@@ -51519,7 +51723,7 @@
               }
             },
             {
-              "id": 1954,
+              "id": 1963,
               "name": "fill",
               "kind": 1024,
               "kindString": "Property",
@@ -51539,7 +51743,7 @@
               }
             },
             {
-              "id": 1955,
+              "id": 1964,
               "name": "opacity",
               "kind": 1024,
               "kindString": "Property",
@@ -51560,7 +51764,7 @@
               }
             },
             {
-              "id": 1957,
+              "id": 1966,
               "name": "strokeWidth",
               "kind": 1024,
               "kindString": "Property",
@@ -51585,7 +51789,7 @@
             {
               "title": "Properties",
               "kind": 1024,
-              "children": [1956, 1954, 1955, 1957]
+              "children": [1965, 1963, 1964, 1966]
             }
           ],
           "sources": [
@@ -51597,7 +51801,7 @@
           ]
         },
         {
-          "id": 1926,
+          "id": 1935,
           "name": "IDataLabelType",
           "kind": 256,
           "kindString": "Interface",
@@ -51606,7 +51810,7 @@
           },
           "children": [
             {
-              "id": 1931,
+              "id": 1940,
               "name": "collisionHideOnly",
               "kind": 1024,
               "kindString": "Property",
@@ -51627,7 +51831,7 @@
               }
             },
             {
-              "id": 1932,
+              "id": 1941,
               "name": "collisionPlacement",
               "kind": 1024,
               "kindString": "Property",
@@ -51648,7 +51852,7 @@
               }
             },
             {
-              "id": 1930,
+              "id": 1939,
               "name": "format",
               "kind": 1024,
               "kindString": "Property",
@@ -51669,7 +51873,7 @@
               }
             },
             {
-              "id": 1929,
+              "id": 1938,
               "name": "labelAccessor",
               "kind": 1024,
               "kindString": "Property",
@@ -51690,7 +51894,7 @@
               }
             },
             {
-              "id": 1928,
+              "id": 1937,
               "name": "placement",
               "kind": 1024,
               "kindString": "Property",
@@ -51711,7 +51915,7 @@
               }
             },
             {
-              "id": 1927,
+              "id": 1936,
               "name": "visible",
               "kind": 1024,
               "kindString": "Property",
@@ -51735,7 +51939,7 @@
             {
               "title": "Properties",
               "kind": 1024,
-              "children": [1931, 1932, 1930, 1929, 1928, 1927]
+              "children": [1940, 1941, 1939, 1938, 1937, 1936]
             }
           ],
           "sources": [
@@ -51747,7 +51951,7 @@
           ]
         },
         {
-          "id": 1958,
+          "id": 1967,
           "name": "IHoverStyleType",
           "kind": 256,
           "kindString": "Interface",
@@ -51756,7 +51960,7 @@
           },
           "children": [
             {
-              "id": 1959,
+              "id": 1968,
               "name": "color",
               "kind": 1024,
               "kindString": "Property",
@@ -51777,7 +51981,7 @@
               }
             },
             {
-              "id": 1960,
+              "id": 1969,
               "name": "strokeWidth",
               "kind": 1024,
               "kindString": "Property",
@@ -51802,7 +52006,7 @@
             {
               "title": "Properties",
               "kind": 1024,
-              "children": [1959, 1960]
+              "children": [1968, 1969]
             }
           ],
           "sources": [
@@ -51814,7 +52018,7 @@
           ]
         },
         {
-          "id": 1991,
+          "id": 2000,
           "name": "IKeyConfig",
           "kind": 256,
           "kindString": "Interface",
@@ -51823,7 +52027,7 @@
           },
           "children": [
             {
-              "id": 1992,
+              "id": 2001,
               "name": "disabled",
               "kind": 1024,
               "kindString": "Property",
@@ -51848,7 +52052,7 @@
             {
               "title": "Properties",
               "kind": 1024,
-              "children": [1992]
+              "children": [2001]
             }
           ],
           "sources": [
@@ -51860,7 +52064,7 @@
           ]
         },
         {
-          "id": 1938,
+          "id": 1947,
           "name": "ILegendType",
           "kind": 256,
           "kindString": "Interface",
@@ -51869,7 +52073,7 @@
           },
           "children": [
             {
-              "id": 1942,
+              "id": 1951,
               "name": "format",
               "kind": 1024,
               "kindString": "Property",
@@ -51890,7 +52094,7 @@
               }
             },
             {
-              "id": 1940,
+              "id": 1949,
               "name": "interactive",
               "kind": 1024,
               "kindString": "Property",
@@ -51911,7 +52115,7 @@
               }
             },
             {
-              "id": 1943,
+              "id": 1952,
               "name": "labels",
               "kind": 1024,
               "kindString": "Property",
@@ -51944,7 +52148,7 @@
               }
             },
             {
-              "id": 1941,
+              "id": 1950,
               "name": "type",
               "kind": 1024,
               "kindString": "Property",
@@ -51965,7 +52169,7 @@
               }
             },
             {
-              "id": 1939,
+              "id": 1948,
               "name": "visible",
               "kind": 1024,
               "kindString": "Property",
@@ -51989,7 +52193,7 @@
             {
               "title": "Properties",
               "kind": 1024,
-              "children": [1942, 1940, 1943, 1941, 1939]
+              "children": [1951, 1949, 1952, 1950, 1948]
             }
           ],
           "sources": [
@@ -52001,7 +52205,7 @@
           ]
         },
         {
-          "id": 1944,
+          "id": 1953,
           "name": "IMarkerStyleType",
           "kind": 256,
           "kindString": "Interface",
@@ -52010,7 +52214,7 @@
           },
           "children": [
             {
-              "id": 1947,
+              "id": 1956,
               "name": "blend",
               "kind": 1024,
               "kindString": "Property",
@@ -52031,7 +52235,7 @@
               }
             },
             {
-              "id": 1951,
+              "id": 1960,
               "name": "color",
               "kind": 1024,
               "kindString": "Property",
@@ -52052,7 +52256,7 @@
               }
             },
             {
-              "id": 1946,
+              "id": 1955,
               "name": "fill",
               "kind": 1024,
               "kindString": "Property",
@@ -52073,7 +52277,7 @@
               }
             },
             {
-              "id": 1950,
+              "id": 1959,
               "name": "opacity",
               "kind": 1024,
               "kindString": "Property",
@@ -52094,7 +52298,7 @@
               }
             },
             {
-              "id": 1948,
+              "id": 1957,
               "name": "radius",
               "kind": 1024,
               "kindString": "Property",
@@ -52115,7 +52319,7 @@
               }
             },
             {
-              "id": 1949,
+              "id": 1958,
               "name": "radiusRange",
               "kind": 1024,
               "kindString": "Property",
@@ -52148,7 +52352,7 @@
               }
             },
             {
-              "id": 1952,
+              "id": 1961,
               "name": "strokeWidth",
               "kind": 1024,
               "kindString": "Property",
@@ -52169,7 +52373,7 @@
               }
             },
             {
-              "id": 1945,
+              "id": 1954,
               "name": "visible",
               "kind": 1024,
               "kindString": "Property",
@@ -52193,7 +52397,7 @@
             {
               "title": "Properties",
               "kind": 1024,
-              "children": [1947, 1951, 1946, 1950, 1948, 1949, 1952, 1945]
+              "children": [1956, 1960, 1955, 1959, 1957, 1958, 1961, 1954]
             }
           ],
           "sources": [
@@ -52205,7 +52409,7 @@
           ]
         },
         {
-          "id": 1966,
+          "id": 1975,
           "name": "ITooltipLabelType",
           "kind": 256,
           "kindString": "Interface",
@@ -52214,7 +52418,7 @@
           },
           "children": [
             {
-              "id": 1969,
+              "id": 1978,
               "name": "format",
               "kind": 1024,
               "kindString": "Property",
@@ -52246,7 +52450,7 @@
               }
             },
             {
-              "id": 1967,
+              "id": 1976,
               "name": "labelAccessor",
               "kind": 1024,
               "kindString": "Property",
@@ -52269,7 +52473,7 @@
               }
             },
             {
-              "id": 1968,
+              "id": 1977,
               "name": "labelTitle",
               "kind": 1024,
               "kindString": "Property",
@@ -52297,7 +52501,7 @@
             {
               "title": "Properties",
               "kind": 1024,
-              "children": [1969, 1967, 1968]
+              "children": [1978, 1976, 1977]
             }
           ],
           "sources": [
@@ -52309,7 +52513,7 @@
           ]
         },
         {
-          "id": 1874,
+          "id": 1883,
           "name": "IWorldMapProps",
           "kind": 256,
           "kindString": "Interface",
@@ -52322,7 +52526,7 @@
           },
           "children": [
             {
-              "id": 1909,
+              "id": 1918,
               "name": "accessibility",
               "kind": 1024,
               "kindString": "Property",
@@ -52354,12 +52558,12 @@
               ],
               "type": {
                 "type": "reference",
-                "id": 1970,
+                "id": 1979,
                 "name": "IAccessibilityType"
               }
             },
             {
-              "id": 1910,
+              "id": 1919,
               "name": "animationConfig",
               "kind": 1024,
               "kindString": "Property",
@@ -52391,12 +52595,12 @@
               ],
               "type": {
                 "type": "reference",
-                "id": 1989,
+                "id": 1998,
                 "name": "IAnimationConfig"
               }
             },
             {
-              "id": 1884,
+              "id": 1893,
               "name": "annotations",
               "kind": 1024,
               "kindString": "Property",
@@ -52435,7 +52639,7 @@
               }
             },
             {
-              "id": 1917,
+              "id": 1926,
               "name": "clickEvent",
               "kind": 1024,
               "kindString": "Property",
@@ -52471,7 +52675,7 @@
               }
             },
             {
-              "id": 1925,
+              "id": 1934,
               "name": "clickHighlight",
               "kind": 1024,
               "kindString": "Property",
@@ -52510,7 +52714,7 @@
               }
             },
             {
-              "id": 1905,
+              "id": 1914,
               "name": "clickStyle",
               "kind": 1024,
               "kindString": "Property",
@@ -52542,12 +52746,12 @@
               ],
               "type": {
                 "type": "reference",
-                "id": 1961,
+                "id": 1970,
                 "name": "IClickStyleType"
               }
             },
             {
-              "id": 1898,
+              "id": 1907,
               "name": "colorPalette",
               "kind": 1024,
               "kindString": "Property",
@@ -52583,7 +52787,7 @@
               }
             },
             {
-              "id": 1901,
+              "id": 1910,
               "name": "colorSteps",
               "kind": 1024,
               "kindString": "Property",
@@ -52619,7 +52823,7 @@
               }
             },
             {
-              "id": 1900,
+              "id": 1909,
               "name": "colors",
               "kind": 1024,
               "kindString": "Property",
@@ -52658,7 +52862,7 @@
               }
             },
             {
-              "id": 1903,
+              "id": 1912,
               "name": "countryStyle",
               "kind": 1024,
               "kindString": "Property",
@@ -52690,12 +52894,12 @@
               ],
               "type": {
                 "type": "reference",
-                "id": 1953,
+                "id": 1962,
                 "name": "ICountryStyleType"
               }
             },
             {
-              "id": 1907,
+              "id": 1916,
               "name": "cursor",
               "kind": 1024,
               "kindString": "Property",
@@ -52731,7 +52935,7 @@
               }
             },
             {
-              "id": 1882,
+              "id": 1891,
               "name": "data",
               "kind": 1024,
               "kindString": "Property",
@@ -52770,7 +52974,7 @@
               }
             },
             {
-              "id": 1911,
+              "id": 1920,
               "name": "dataLabel",
               "kind": 1024,
               "kindString": "Property",
@@ -52802,12 +53006,12 @@
               ],
               "type": {
                 "type": "reference",
-                "id": 1926,
+                "id": 1935,
                 "name": "IDataLabelType"
               }
             },
             {
-              "id": 1922,
+              "id": 1931,
               "name": "drawEndEvent",
               "kind": 1024,
               "kindString": "Property",
@@ -52843,7 +53047,7 @@
               }
             },
             {
-              "id": 1921,
+              "id": 1930,
               "name": "drawStartEvent",
               "kind": 1024,
               "kindString": "Property",
@@ -52879,7 +53083,7 @@
               }
             },
             {
-              "id": 1895,
+              "id": 1904,
               "name": "groupAccessor",
               "kind": 1024,
               "kindString": "Property",
@@ -52915,7 +53119,7 @@
               }
             },
             {
-              "id": 1878,
+              "id": 1887,
               "name": "height",
               "kind": 1024,
               "kindString": "Property",
@@ -52955,7 +53159,7 @@
               }
             },
             {
-              "id": 1875,
+              "id": 1884,
               "name": "highestHeadingLevel",
               "kind": 1024,
               "kindString": "Property",
@@ -53004,7 +53208,7 @@
               }
             },
             {
-              "id": 1918,
+              "id": 1927,
               "name": "hoverEvent",
               "kind": 1024,
               "kindString": "Property",
@@ -53040,7 +53244,7 @@
               }
             },
             {
-              "id": 1924,
+              "id": 1933,
               "name": "hoverHighlight",
               "kind": 1024,
               "kindString": "Property",
@@ -53076,7 +53280,7 @@
               }
             },
             {
-              "id": 1906,
+              "id": 1915,
               "name": "hoverOpacity",
               "kind": 1024,
               "kindString": "Property",
@@ -53112,7 +53316,7 @@
               }
             },
             {
-              "id": 1904,
+              "id": 1913,
               "name": "hoverStyle",
               "kind": 1024,
               "kindString": "Property",
@@ -53144,12 +53348,12 @@
               ],
               "type": {
                 "type": "reference",
-                "id": 1958,
+                "id": 1967,
                 "name": "IHoverStyleType"
               }
             },
             {
-              "id": 1920,
+              "id": 1929,
               "name": "initialLoadEvent",
               "kind": 1024,
               "kindString": "Property",
@@ -53185,7 +53389,7 @@
               }
             },
             {
-              "id": 1914,
+              "id": 1923,
               "name": "interactionKeys",
               "kind": 1024,
               "kindString": "Property",
@@ -53224,7 +53428,7 @@
               }
             },
             {
-              "id": 1887,
+              "id": 1896,
               "name": "joinAccessor",
               "kind": 1024,
               "kindString": "Property",
@@ -53264,7 +53468,7 @@
               }
             },
             {
-              "id": 1888,
+              "id": 1897,
               "name": "joinNameAccessor",
               "kind": 1024,
               "kindString": "Property",
@@ -53304,7 +53508,7 @@
               }
             },
             {
-              "id": 1890,
+              "id": 1899,
               "name": "latitudeAccessor",
               "kind": 1024,
               "kindString": "Property",
@@ -53344,7 +53548,7 @@
               }
             },
             {
-              "id": 1908,
+              "id": 1917,
               "name": "legend",
               "kind": 1024,
               "kindString": "Property",
@@ -53376,12 +53580,12 @@
               ],
               "type": {
                 "type": "reference",
-                "id": 1938,
+                "id": 1947,
                 "name": "ILegendType"
               }
             },
             {
-              "id": 1891,
+              "id": 1900,
               "name": "longitudeAccessor",
               "kind": 1024,
               "kindString": "Property",
@@ -53421,7 +53625,7 @@
               }
             },
             {
-              "id": 1876,
+              "id": 1885,
               "name": "mainTitle",
               "kind": 1024,
               "kindString": "Property",
@@ -53461,7 +53665,7 @@
               }
             },
             {
-              "id": 1896,
+              "id": 1905,
               "name": "mapProjection",
               "kind": 1024,
               "kindString": "Property",
@@ -53501,7 +53705,7 @@
               }
             },
             {
-              "id": 1897,
+              "id": 1906,
               "name": "mapScaleZoom",
               "kind": 1024,
               "kindString": "Property",
@@ -53541,7 +53745,7 @@
               }
             },
             {
-              "id": 1880,
+              "id": 1889,
               "name": "margin",
               "kind": 1024,
               "kindString": "Property",
@@ -53573,12 +53777,12 @@
               ],
               "type": {
                 "type": "reference",
-                "id": 1933,
+                "id": 1942,
                 "name": "IBoxModelType"
               }
             },
             {
-              "id": 1885,
+              "id": 1894,
               "name": "markerAccessor",
               "kind": 1024,
               "kindString": "Property",
@@ -53618,7 +53822,7 @@
               }
             },
             {
-              "id": 1886,
+              "id": 1895,
               "name": "markerNameAccessor",
               "kind": 1024,
               "kindString": "Property",
@@ -53658,7 +53862,7 @@
               }
             },
             {
-              "id": 1902,
+              "id": 1911,
               "name": "markerStyle",
               "kind": 1024,
               "kindString": "Property",
@@ -53690,12 +53894,12 @@
               ],
               "type": {
                 "type": "reference",
-                "id": 1944,
+                "id": 1953,
                 "name": "IMarkerStyleType"
               }
             },
             {
-              "id": 1894,
+              "id": 1903,
               "name": "maxValueOverride",
               "kind": 1024,
               "kindString": "Property",
@@ -53735,7 +53939,7 @@
               }
             },
             {
-              "id": 1893,
+              "id": 1902,
               "name": "minValueOverride",
               "kind": 1024,
               "kindString": "Property",
@@ -53775,7 +53979,7 @@
               }
             },
             {
-              "id": 1919,
+              "id": 1928,
               "name": "mouseOutEvent",
               "kind": 1024,
               "kindString": "Property",
@@ -53811,7 +54015,7 @@
               }
             },
             {
-              "id": 1881,
+              "id": 1890,
               "name": "padding",
               "kind": 1024,
               "kindString": "Property",
@@ -53843,12 +54047,12 @@
               ],
               "type": {
                 "type": "reference",
-                "id": 1933,
+                "id": 1942,
                 "name": "IBoxModelType"
               }
             },
             {
-              "id": 1899,
+              "id": 1908,
               "name": "quality",
               "kind": 1024,
               "kindString": "Property",
@@ -53884,7 +54088,7 @@
               }
             },
             {
-              "id": 1915,
+              "id": 1924,
               "name": "showGridlines",
               "kind": 1024,
               "kindString": "Property",
@@ -53920,7 +54124,7 @@
               }
             },
             {
-              "id": 1912,
+              "id": 1921,
               "name": "showTooltip",
               "kind": 1024,
               "kindString": "Property",
@@ -53956,7 +54160,7 @@
               }
             },
             {
-              "id": 1892,
+              "id": 1901,
               "name": "sortOrder",
               "kind": 1024,
               "kindString": "Property",
@@ -53996,7 +54200,7 @@
               }
             },
             {
-              "id": 1877,
+              "id": 1886,
               "name": "subTitle",
               "kind": 1024,
               "kindString": "Property",
@@ -54036,7 +54240,7 @@
               }
             },
             {
-              "id": 1916,
+              "id": 1925,
               "name": "suppressEvents",
               "kind": 1024,
               "kindString": "Property",
@@ -54072,7 +54276,7 @@
               }
             },
             {
-              "id": 1913,
+              "id": 1922,
               "name": "tooltipLabel",
               "kind": 1024,
               "kindString": "Property",
@@ -54104,12 +54308,12 @@
               ],
               "type": {
                 "type": "reference",
-                "id": 1966,
+                "id": 1975,
                 "name": "ITooltipLabelType"
               }
             },
             {
-              "id": 1923,
+              "id": 1932,
               "name": "transitionEndEvent",
               "kind": 1024,
               "kindString": "Property",
@@ -54145,7 +54349,7 @@
               }
             },
             {
-              "id": 1883,
+              "id": 1892,
               "name": "uniqueID",
               "kind": 1024,
               "kindString": "Property",
@@ -54181,7 +54385,7 @@
               }
             },
             {
-              "id": 1889,
+              "id": 1898,
               "name": "valueAccessor",
               "kind": 1024,
               "kindString": "Property",
@@ -54221,7 +54425,7 @@
               }
             },
             {
-              "id": 1879,
+              "id": 1888,
               "name": "width",
               "kind": 1024,
               "kindString": "Property",
@@ -54266,57 +54470,57 @@
               "title": "Properties",
               "kind": 1024,
               "children": [
-                1909,
-                1910,
-                1884,
-                1917,
-                1925,
-                1905,
-                1898,
-                1901,
-                1900,
-                1903,
-                1907,
-                1882,
-                1911,
-                1922,
-                1921,
-                1895,
-                1878,
-                1875,
                 1918,
-                1924,
-                1906,
-                1904,
-                1920,
+                1919,
+                1893,
+                1926,
+                1934,
                 1914,
-                1887,
-                1888,
-                1890,
-                1908,
+                1907,
+                1910,
+                1909,
+                1912,
+                1916,
                 1891,
-                1876,
+                1920,
+                1931,
+                1930,
+                1904,
+                1887,
+                1884,
+                1927,
+                1933,
+                1915,
+                1913,
+                1929,
+                1923,
                 1896,
                 1897,
-                1880,
-                1885,
-                1886,
-                1902,
-                1894,
-                1893,
-                1919,
-                1881,
                 1899,
-                1915,
-                1912,
-                1892,
-                1877,
-                1916,
-                1913,
-                1923,
-                1883,
+                1917,
+                1900,
+                1885,
+                1905,
+                1906,
                 1889,
-                1879
+                1894,
+                1895,
+                1911,
+                1903,
+                1902,
+                1928,
+                1890,
+                1908,
+                1924,
+                1921,
+                1901,
+                1886,
+                1925,
+                1922,
+                1932,
+                1892,
+                1898,
+                1888
               ]
             }
           ],
@@ -54333,7 +54537,7 @@
         {
           "title": "Interfaces",
           "kind": 256,
-          "children": [1970, 1989, 1933, 1961, 1953, 1926, 1958, 1991, 1938, 1944, 1966, 1874]
+          "children": [1979, 1998, 1942, 1970, 1962, 1935, 1967, 2000, 1947, 1953, 1975, 1883]
         }
       ],
       "sources": [
@@ -54375,11 +54579,11 @@
         1346,
         1389,
         1485,
-        1533,
-        1649,
-        1697,
-        1812,
-        1873
+        1534,
+        1658,
+        1706,
+        1821,
+        1882
       ]
     }
   ]

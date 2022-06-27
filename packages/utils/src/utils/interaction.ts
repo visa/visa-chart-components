@@ -5,7 +5,6 @@
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
  *
  **/
-import { visaColors } from './colors';
 import { createMultiStrokeFilter } from './textures';
 const defaultHoverStrokeWidth = 2;
 const defaultClickStrokeWidth = 2;
@@ -26,14 +25,17 @@ export function checkInteraction(d, default_op, hover_op, hoverHighlight, clickH
 }
 
 export function checkHovered(d, hoverHighlight, interactionKeys) {
+  // here we check for sub data objects, this will help catch time when data might be nested
+  // in d for charts like pie chart and circle packing
+  const datum = d && d.data && d.data.data ? d.data.data : d && d.data ? d.data : d ? d : {};
   let matchHover = 0;
   if (hoverHighlight) {
     interactionKeys.map(key => {
-      if (hoverHighlight[key] instanceof Date && d[key] instanceof Date) {
-        if (hoverHighlight[key].getTime() === d[key].getTime()) {
+      if (hoverHighlight[key] instanceof Date && datum[key] instanceof Date) {
+        if (hoverHighlight[key].getTime() === datum[key].getTime()) {
           matchHover++;
         }
-      } else if (hoverHighlight[key] === d[key]) {
+      } else if (hoverHighlight[key] === datum[key]) {
         matchHover++;
       }
     });
@@ -44,6 +46,9 @@ export function checkHovered(d, hoverHighlight, interactionKeys) {
 export function checkClicked(d, clickHighlight, interactionKeys) {
   // first set flag to false by default
   let clickedCheck = false;
+  // here we check for sub data objects, this will help catch time when data might be nested
+  // in d for charts like pie chart and circle packing
+  const datum = d && d.data && d.data.data ? d.data.data : d && d.data ? d.data : d ? d : {};
 
   // if we have clickHighlight and it has length then we need to check it
   if (clickHighlight && clickHighlight.length) {
@@ -53,11 +58,11 @@ export function checkClicked(d, clickHighlight, interactionKeys) {
       let matchedClick = 0;
       // now we need to check each key in interactionKeys, if we have a match with data increment matchedClick
       interactionKeys.map(key => {
-        if (clickHighlight[i][key] instanceof Date && d[key] instanceof Date) {
-          if (clickHighlight[i][key].getTime() === d[key].getTime()) {
+        if (clickHighlight[i][key] instanceof Date && datum[key] instanceof Date) {
+          if (clickHighlight[i][key].getTime() === datum[key].getTime()) {
             matchedClick++;
           }
-        } else if (clickHighlight[i][key] === d[key]) {
+        } else if (clickHighlight[i][key] === datum[key]) {
           matchedClick++;
         }
       });

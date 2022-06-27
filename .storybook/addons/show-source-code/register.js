@@ -42,7 +42,10 @@ const Panel = () => {
     if ([1, 2].includes(n)) src = `this.props = {`;
     else if (n === 3) src = `<${storyID}`;
     Object.keys(args).forEach((i, j) => {
-      if (!new RegExp('^on|Event$').test(i) && (args[i].length || Object.keys(args[i]).length)) {
+      if (
+        !new RegExp('^on|Event$').test(i) &&
+        (args[i].length || Object.keys(args[i]).length || ['number', 'boolean'].includes(typeof args[i]))
+      ) {
         if (typeof args[i] === 'string') {
           src += `\n${'\t'.repeat(1)}${i.length > 1 ? `${i}${n === 3 ? '={' : ': '}` : ''}"${args[i]
             .toLocaleString()
@@ -122,30 +125,30 @@ const Panel = () => {
                       });
                       src += `\n${'\t'.repeat(4)}${!isNaN(c) ? '}' : args[i][l][a][c].length > 0 ? ']' : '}'}`;
                     }
-                    if (d !== Object.keys(args[i][l][a]).length - 1) {
+                    if (n !== 3 && d !== Object.keys(args[i][l][a]).length - 1) {
                       src += `,`;
                     }
                   });
                   src += `\n${'\t'.repeat(3)}${!isNaN(a) ? '}' : args[i][l][a].length > 0 ? ']' : '}'}`;
                 }
-                if (b !== Object.keys(args[i][l]).length - 1) {
+                if (n !== 3 && b !== Object.keys(args[i][l]).length - 1) {
                   src += `,`;
                 }
               });
               src += `\n${'\t'.repeat(2)}${!isNaN(l) ? '}' : ']'}`;
             }
-            if (m !== Object.keys(args[i]).length - 1) {
+            if (n !== 3 && m !== Object.keys(args[i]).length - 1) {
               src += `,`;
             }
           });
           src += `\n${'\t'.repeat(1)}${args[i].length > 0 ? ']' : '}'}${n === 3 ? '}' : ''}`;
         }
-        if (j !== Object.keys(args).length - 1) {
+        if (n !== 3 && j !== Object.keys(args).length - 1) {
           src += `,`;
         }
       }
     });
-    src = src.slice(0, -1);
+    src = src.slice(-1) === ',' ? src.slice(0, -1) : src;
     if (n === 1) {
       src += `\n}\n\n`;
       src += `<${storyID.charAt(0).toUpperCase() +
@@ -199,7 +202,7 @@ const Panel = () => {
         src4 += `\n${'\t'.repeat(depth + 1)}${i.length > 1 ? `${i}=` : ''}'${args[key][i]
           .toLocaleString()
           .replace(/'/g, "\\'")}'`;
-      } else if (typeof args[key][i] === 'number') {
+      } else if (typeof args[key][i] === 'number' || args[key][i] === null) {
         src4 += `\n${'\t'.repeat(depth + 1)}${i}=${args[key][i]}`;
       } else if (typeof args[key][i] === 'boolean') {
         src4 += `\n${'\t'.repeat(depth + 1)}${i}=${args[key][i].toLocaleString().toUpperCase()}`;
@@ -210,7 +213,7 @@ const Panel = () => {
             src4 += `\n${'\t'.repeat(depth + 2)}${l.length > 1 ? `${l}=` : ''}'${args[key][i][l]
               .toLocaleString()
               .replace(/'/g, "\\'")}'`;
-          } else if (typeof args[key][i][l] === 'number') {
+          } else if (typeof args[key][i][l] === 'number' || args[key][i][l] === null) {
             src4 += `\n${'\t'.repeat(depth + 2)}${l}=${args[key][i][l]}`;
           } else if (typeof args[key][i][l] === 'boolean') {
             src4 += `\n${'\t'.repeat(depth + 2)}${l}=${args[key][i][l].toLocaleString().toUpperCase()}`;
@@ -273,7 +276,10 @@ const Panel = () => {
   src4 += `accessibility = accessibility,\n\t\tprops = list(`;
   let len_r = 0;
   Object.keys(args).forEach(i => {
-    if (!new RegExp(exclusions).test(i) && (args[i].length || Object.keys(args[i]).length)) {
+    if (
+      (!new RegExp(exclusions).test(i) && (args[i].length || Object.keys(args[i]).length)) ||
+      ['number', 'boolean'].includes(typeof args[i])
+    ) {
       len_r += 1;
       if (typeof args[i] === 'object') {
         listify(i, 3);

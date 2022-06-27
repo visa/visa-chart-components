@@ -753,16 +753,24 @@ export class BarChart {
 
   @Watch('uniqueID')
   idWatcher(newVal, _oldVal) {
-    this.chartID = newVal || 'bar-chart-' + uuid();
-    this.barChartEl.id = this.chartID;
-    this.shouldValidate = true;
-    this.shouldUpdateDescriptionWrapper = true;
-    this.shouldSetParentSVGAccessibility = true;
-    this.shouldUpdateLegend = true;
-    this.shouldSetTextures = true;
-    this.shouldCheckLabelColor = true;
-    this.shouldDrawInteractionState = true;
-    this.shouldSetStrokes = true;
+    console.error(
+      'Change detected in prop uniqueID from value ' +
+        _oldVal +
+        ' to value ' +
+        newVal +
+        '. This prop cannot be changed after component has loaded.'
+    );
+    // we have removed the ability to change this prop post load
+    // this.chartID = newVal || 'bar-chart-' + uuid();
+    // this.barChartEl.id = this.chartID;
+    // this.shouldValidate = true;
+    // this.shouldUpdateDescriptionWrapper = true;
+    // this.shouldSetParentSVGAccessibility = true;
+    // this.shouldUpdateLegend = true;
+    // this.shouldSetTextures = true;
+    // this.shouldCheckLabelColor = true;
+    // this.shouldDrawInteractionState = true;
+    // this.shouldSetStrokes = true;
   }
 
   @Watch('suppressEvents')
@@ -1294,13 +1302,19 @@ export class BarChart {
 
   prepareScales() {
     // scale band based on layout of chart
-    const minBarValue = this.minValueOverride
-      ? this.minValueOverride
-      : min(this.preppedData, d => d[this.valueAccessor]);
+    const minBarValue =
+      this.minValueOverride && this.minValueOverride < min(this.preppedData, d => d[this.valueAccessor])
+        ? this.minValueOverride
+        : min(this.preppedData, d => d[this.valueAccessor]);
+
+    const maxBarValue =
+      this.maxValueOverride && this.maxValueOverride > max(this.preppedData, d => d[this.valueAccessor])
+        ? this.maxValueOverride
+        : max(this.preppedData, d => d[this.valueAccessor]);
 
     if (this.layout === 'vertical') {
       this.y = scaleLinear()
-        .domain([Math.min(0, minBarValue), this.maxValueOverride || max(this.preppedData, d => d[this.valueAccessor])])
+        .domain([Math.min(0, minBarValue), Math.max(0, maxBarValue)])
         .range([this.innerPaddedHeight, 0]);
       this.x = scaleBand()
         .domain(this.preppedData.map(d => d[this.ordinalAccessor]))
@@ -1308,7 +1322,7 @@ export class BarChart {
         .padding(this.barIntervalRatio);
     } else if (this.layout === 'horizontal') {
       this.x = scaleLinear()
-        .domain([Math.min(0, minBarValue), this.maxValueOverride || max(this.preppedData, d => d[this.valueAccessor])])
+        .domain([Math.min(0, minBarValue), Math.max(0, maxBarValue)])
         .range([0, this.innerPaddedWidth]);
 
       this.y = scaleBand()

@@ -33,6 +33,7 @@ module.exports = {
       }
     },
     '@storybook/addon-notes',
+    '@storybook/addon-actions',
     './addons/improve-a11y/register',
     './addons/show-source-code/register'
   ],

@@ -1,5 +1,219 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`<dumbbell-plot> rendered-html accessibility generic accessibility test suite accessibility: keyboard instruction component displays table in click state 1`] = `
+<div class="visa-viz-keyboard-instructions-container" id="visa-viz-keyboard-instructions-container-unique-d-plot">
+  <div>
+    <p>
+      Note: for VoiceOver users (mac), press and hold
+      <kbd>
+        Ctrl
+      </kbd>
+      +
+      <kbd>
+        Shift
+      </kbd>
+      when using the arrow keys for the best navigation experience.
+    </p>
+    <table class="vcc-ki-data-table vcc-ki-keyboard-instructions vcc-ki-state--compact vcc-ki-state--single-select" data-header="header">
+      <thead class="vcc-ki-thead">
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-th" scope="col">
+            Action
+          </th>
+          <th class="vcc-ki-th" scope="col">
+            Result
+          </th>
+        </tr>
+      </thead>
+      <tbody class="vcc-ki-tbody">
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Enter
+            </kbd>
+            on the chart area or a group.
+          </th>
+          <td class="vcc-ki-td">
+            Enter the chart area/drill down a level.
+          </td>
+        </tr>
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Esc
+            </kbd>
+            on a group or dumbbell.
+          </th>
+          <td class="vcc-ki-td">
+            Drill up a level.
+          </td>
+        </tr>
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Tab
+            </kbd>
+            at any time.
+          </th>
+          <td class="vcc-ki-td">
+            Exit the chart.
+          </td>
+        </tr>
+        <tr class="vcc-ki-disabled-row vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Space
+            </kbd>
+            is unused.
+          </th>
+          <td class="vcc-ki-td">
+            No effect on this chart.
+          </td>
+        </tr>
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              ←
+            </kbd>
+            /
+            <kbd>
+              →
+            </kbd>
+            on a group or dumbbell.
+          </th>
+          <td class="vcc-ki-td">
+            Move among sibling groups or dumbbells.
+          </td>
+        </tr>
+        <tr class="vcc-ki-disabled-row vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              ↑
+            </kbd>
+            /
+            <kbd>
+              ↓
+            </kbd>
+            are unused.
+          </th>
+          <td class="vcc-ki-td">
+            No effect on this chart.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+`;
+
+exports[`<dumbbell-plot> rendered-html accessibility generic accessibility test suite accessibility: keyboard instruction component displays table in click state with space enabled 1`] = `
+<div class="visa-viz-keyboard-instructions-container" id="visa-viz-keyboard-instructions-container-unique-d-plot">
+  <div>
+    <p>
+      Note: for VoiceOver users (mac), press and hold
+      <kbd>
+        Ctrl
+      </kbd>
+      +
+      <kbd>
+        Shift
+      </kbd>
+      when using the arrow keys for the best navigation experience.
+    </p>
+    <table class="vcc-ki-data-table vcc-ki-keyboard-instructions vcc-ki-state--compact vcc-ki-state--single-select" data-header="header">
+      <thead class="vcc-ki-thead">
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-th" scope="col">
+            Action
+          </th>
+          <th class="vcc-ki-th" scope="col">
+            Result
+          </th>
+        </tr>
+      </thead>
+      <tbody class="vcc-ki-tbody">
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Enter
+            </kbd>
+            on the chart area or a group.
+          </th>
+          <td class="vcc-ki-td">
+            Enter the chart area/drill down a level.
+          </td>
+        </tr>
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Esc
+            </kbd>
+            on a group or dumbbell.
+          </th>
+          <td class="vcc-ki-td">
+            Drill up a level.
+          </td>
+        </tr>
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Tab
+            </kbd>
+            at any time.
+          </th>
+          <td class="vcc-ki-td">
+            Exit the chart.
+          </td>
+        </tr>
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Space
+            </kbd>
+            on a dumbbell.
+          </th>
+          <td class="vcc-ki-td">
+            Select/Deselect a dumbbell.
+          </td>
+        </tr>
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              ←
+            </kbd>
+            /
+            <kbd>
+              →
+            </kbd>
+            on a group or dumbbell.
+          </th>
+          <td class="vcc-ki-td">
+            Move among sibling groups or dumbbells.
+          </td>
+        </tr>
+        <tr class="vcc-ki-disabled-row vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              ↑
+            </kbd>
+            /
+            <kbd>
+              ↓
+            </kbd>
+            are unused.
+          </th>
+          <td class="vcc-ki-td">
+            No effect on this chart.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+`;
+
+exports[`<dumbbell-plot> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: test whether space bar performs click action 1`] = `<path class="dumbbell-plot moving vcl-accessibility-focus-source" cursor="default" d="M 22.375 82.27423135146653 L 22.375 82.27523135146653 L 22.375 82.27523135146653 L 22.375 112.7200602806407 L 22.375 112.7200602806407 L 22.375 112.7200602806407 L 22.375 82.27523135146653 L 22.375 82.27523135146653 L 22.375 82.27523135146653 L 22.375 112.7200602806407 L 22.375 112.7200602806407 L 22.375 112.7210602806407" data-barSize="1" data-centerX1="22.375" data-centerX2="22.375" data-centerY1="82.27523135146653" data-centerY2="112.7200602806407" data-d="M 22.375 82.27423135146653 L 22.375 82.27523135146653 L 22.875 82.27523135146653 L 22.875 112.7200602806407 L 22.375 112.7200602806407 L 21.875 112.7200602806407 L 21.875 82.27523135146653 L 22.375 82.27523135146653 L 22.875 82.27523135146653 L 22.875 112.7200602806407 L 22.375 112.7200602806407 L 22.375 112.7210602806407" data-id="line-Jan-2016" data-role="img" data-testid="line" data-translate-x="56.5" data-translate-y="23" fill="#abb798" fill-opacity="1" focusable="false" id="chart-unit-test-123457-123457-123457" marker-end="url(#marker-unique-d-plot1dot8cacae711)" marker-start="url(#marker-unique-d-plot0dot87c99b111)" opacity="1" role="presentation" stroke="#576245" stroke-opacity="1" tabindex="-1"></path>`;
+
 exports[`<dumbbell-plot> rendered-html annotations should pass annotation prop 1`] = `
 Array [
   <g aria-hidden="true" class="vcl-annotation-group" data-testid="annotation-group" focusable="false" role="presentation">
@@ -24,13 +238,13 @@ Array [
 `;
 
 exports[`<dumbbell-plot> rendered-html event-emitter generic event testing label based events [event] clickEvent: event object should emit and contain first data record when first mark is clicked 1`] = `
-<text class="dumbbell-dataLabel transitioning" cursor="default" data-id="label-North America-CardA" data-offset="8" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="67.125" data-y="NaN" dx="0.0em" dy="0.9em" fill="#587893" opacity="1" text-anchor="middle" x="67.125" y="206.15384615384613">
+<text class="dumbbell-dataLabel transitioning" cursor="default" data-id="label-North America-CatA" data-offset="8" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="67.125" data-y="NaN" dx="0.0em" dy="0.9em" fill="#587893" opacity="1" text-anchor="middle" x="67.125" y="206.15384615384613">
   3.5b
 </text>
 `;
 
 exports[`<dumbbell-plot> rendered-html event-emitter generic event testing label based events [event] hoverEvent: event object should emit and contain first data record when first mark is hovered 1`] = `
-<text class="dumbbell-dataLabel transitioning" cursor="default" data-id="label-North America-CardA" data-offset="8" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="67.125" data-y="NaN" dx="0.0em" dy="0.9em" fill="#587893" opacity="1" text-anchor="middle" x="67.125" y="206.15384615384613">
+<text class="dumbbell-dataLabel transitioning" cursor="default" data-id="label-North America-CatA" data-offset="8" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="67.125" data-y="NaN" dx="0.0em" dy="0.9em" fill="#587893" opacity="1" text-anchor="middle" x="67.125" y="206.15384615384613">
   3.5b
 </text>
 `;
@@ -127,7 +341,7 @@ exports[`<dumbbell-plot> rendered-html render should render with minimal props[d
         This is a dumbbell-plot with 12 dumbbells.
       </p>
       <p class="screen-reader-info vcl-access-xAxis">
-        The chart has a horizontal X Axis, titled X Axis with a range that starts with Jan 16 and ends with Dec 16.
+        The chart has a horizontal X Axis, titled X Axis with a range that starts with Jan-2016 and ends with Dec-2016.
       </p>
       <p class="screen-reader-info vcl-access-yAxis">
         The chart has a vertical Y axis, titled Y Axis with a range that starts with 3b and ends with 10b.
@@ -147,13 +361,13 @@ exports[`<dumbbell-plot> rendered-html render should render with minimal props[d
             <g class="bar legend">
               <rect class="bar-rect" data-base-color="#7c99b1" data-fill="#7c99b1" data-stroke="#35495a" data-stroke-width="1" fill="#7c99b1" height="20" opacity="1" stroke="#35495a" stroke-dasharray="none" stroke-width="1" width="20" x="0" y="0" style="fill: #7c99b1; stroke: #35495a; stroke-width: 1; stroke-dasharray: none;"></rect>
               <text class="bar-text" dx=".2em" dy="16" filter="url(#VCL-t-s-f-ffffffunique-d-plot-legend)" opacity="1" x="25" y="0">
-                CardA
+                CatA
               </text>
             </g>
             <g class="bar legend">
               <rect class="bar-rect" data-base-color="#cacae7" data-fill="#cacae7" data-stroke="#6868ba" data-stroke-width="1" fill="#cacae7" height="20" opacity="1" stroke="#6868ba" stroke-dasharray="none" stroke-width="1" width="20" x="45" y="0" style="fill: #cacae7; stroke: #6868ba; stroke-width: 1; stroke-dasharray: none;"></rect>
               <text class="bar-text" dx=".2em" dy="16" filter="url(#VCL-t-s-f-ffffffunique-d-plot-legend)" opacity="1" x="70" y="0">
-                CardB
+                CatB
               </text>
             </g>
           </g>
@@ -177,7 +391,7 @@ exports[`<dumbbell-plot> rendered-html render should render with minimal props[d
           <div class="visa-viz-keyboard-instructions-outer-container" style="width: 416px;">
             <div class="vcc-ki-keyboard-instructions-header vcc-ki-minimize">
               <p class="vcc-ki-keyboard-heading">
-                Select to View Keyboard Instructions
+                Display Keyboard Instructions
               </p>
             </div>
             <div class="visa-viz-keyboard-instructions-button-wrapper">
@@ -200,7 +414,7 @@ exports[`<dumbbell-plot> rendered-html render should render with minimal props[d
         <div aria-label="Dumbbell Plot Title. This is the dumbbell plot's subtitle.  Navigate into the chart area by pressing ENTER." class="VCL-controller" id="chart-area-unique-d-plot" role="application" tabindex="0" style="position: absolute; top: 0; left: 0; opacity: 0; pointer-events: none; width: 0px; height: 0px;">
           Interactive dumbbell-plot.
         </div>
-        <svg class="vcl-svg" focusable="false" height="300" role="presentation" tabindex="-1" viewBox="0 0 650 300" width="650" style="overflow: hidden;">
+        <svg class="vcl-svg" data-testid="root-svg" focusable="false" height="300" role="presentation" tabindex="-1" viewBox="0 0 650 300" width="650" style="overflow: hidden;">
           <g data-testid="margin-container" id="visa-viz-margin-container-g-unique-d-plot" transform="translate(6.5, 3)">
             <g data-testid="padding-container" id="visa-viz-padding-container-g-unique-d-plot" transform="translate(50, 20)">
               <defs aria-hidden="true" focusable="false" role="presentation">
@@ -244,7 +458,7 @@ exports[`<dumbbell-plot> rendered-html render should render with minimal props[d
                 </filter>
               </defs>
               <g aria-hidden="true" class="baseline-group" data-testid="baseline-group" focusable="false" role="presentation">
-                <g class="axis-mark axis-mark-y" data-testid="y-axis-mark" fill="none" font-family="sans-serif" font-size="10" opacity="0" text-anchor="end" transform="">
+                <g class="axis left y" data-testid="y-axis" fill="none" font-family="sans-serif" font-size="10" opacity="0" text-anchor="end">
                   <path class="domain" d="M0.5,224.5V0.5" stroke="currentColor"></path>
                   <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0,212.0549002223097)">
                     <line data-testid="axis-tick-line" stroke="currentColor" x2="0"></line>
@@ -279,53 +493,54 @@ exports[`<dumbbell-plot> rendered-html render should render with minimal props[d
                     <text data-testid="axis-tick-text" dy="0.32em" fill="currentColor" x="-10"></text>
                   </g>
                 </g>
+                <text class="axis-label left y" data-testid="y-axis-label" dy="1em" transform="rotate(-90)" x="-112" y="-50"></text>
                 <g class="axis-mark axis-mark-x" data-testid="x-axis-mark" fill="none" font-family="sans-serif" font-size="10" opacity="0" text-anchor="middle" transform="translate(0, 294.5862518473301)">
                   <path class="domain" d="M0.5,0.5H537.5" stroke="currentColor"></path>
-                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(41.7379746835443,0)">
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(22.875,0)">
                     <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
                     <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
                   </g>
-                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(83.88227848101266,0)">
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(67.625,0)">
                     <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
                     <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
                   </g>
-                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(123.30759493670885,0)">
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(112.375,0)">
                     <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
                     <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
                   </g>
-                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(165.39525316455698,0)">
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(157.125,0)">
                     <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
                     <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
                   </g>
-                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(206.18006329113925,0)">
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(201.875,0)">
                     <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
                     <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
                   </g>
-                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(248.3243670886076,0)">
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(246.625,0)">
                     <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
                     <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
                   </g>
-                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(289.1091772151899,0)">
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(291.375,0)">
                     <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
                     <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
                   </g>
-                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(331.2534810126582,0)">
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(336.125,0)">
                     <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
                     <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
                   </g>
-                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(373.39778481012655,0)">
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(380.875,0)">
                     <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
                     <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
                   </g>
-                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(414.1825949367089,0)">
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(425.625,0)">
                     <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
                     <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
                   </g>
-                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(456.32689873417723,0)">
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(470.375,0)">
                     <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
                     <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
                   </g>
-                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(497.16835443037974,0)">
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(515.125,0)">
                     <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
                     <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
                   </g>
@@ -334,51 +549,51 @@ exports[`<dumbbell-plot> rendered-html render should render with minimal props[d
               <g aria-hidden="true" class="gridline-group" focusable="false" role="presentation">
                 <g class="bottom grid" data-testid="grid-bottom" fill="none" font-family="sans-serif" font-size="10" opacity="0" text-anchor="middle">
                   <path class="domain" d="M0.5,224V0.5H537.5V224" stroke="currentColor"></path>
-                  <g class="tick" opacity="1" transform="translate(41.7379746835443,0)">
+                  <g class="tick" opacity="1" transform="translate(22.875,0)">
                     <line stroke="currentColor" y2="224"></line>
                     <text dy="0.71em" fill="currentColor" y="227"></text>
                   </g>
-                  <g class="tick" opacity="1" transform="translate(83.88227848101266,0)">
+                  <g class="tick" opacity="1" transform="translate(67.625,0)">
                     <line stroke="currentColor" y2="224"></line>
                     <text dy="0.71em" fill="currentColor" y="227"></text>
                   </g>
-                  <g class="tick" opacity="1" transform="translate(123.30759493670885,0)">
+                  <g class="tick" opacity="1" transform="translate(112.375,0)">
                     <line stroke="currentColor" y2="224"></line>
                     <text dy="0.71em" fill="currentColor" y="227"></text>
                   </g>
-                  <g class="tick" opacity="1" transform="translate(165.39525316455698,0)">
+                  <g class="tick" opacity="1" transform="translate(157.125,0)">
                     <line stroke="currentColor" y2="224"></line>
                     <text dy="0.71em" fill="currentColor" y="227"></text>
                   </g>
-                  <g class="tick" opacity="1" transform="translate(206.18006329113925,0)">
+                  <g class="tick" opacity="1" transform="translate(201.875,0)">
                     <line stroke="currentColor" y2="224"></line>
                     <text dy="0.71em" fill="currentColor" y="227"></text>
                   </g>
-                  <g class="tick" opacity="1" transform="translate(248.3243670886076,0)">
+                  <g class="tick" opacity="1" transform="translate(246.625,0)">
                     <line stroke="currentColor" y2="224"></line>
                     <text dy="0.71em" fill="currentColor" y="227"></text>
                   </g>
-                  <g class="tick" opacity="1" transform="translate(289.1091772151899,0)">
+                  <g class="tick" opacity="1" transform="translate(291.375,0)">
                     <line stroke="currentColor" y2="224"></line>
                     <text dy="0.71em" fill="currentColor" y="227"></text>
                   </g>
-                  <g class="tick" opacity="1" transform="translate(331.2534810126582,0)">
+                  <g class="tick" opacity="1" transform="translate(336.125,0)">
                     <line stroke="currentColor" y2="224"></line>
                     <text dy="0.71em" fill="currentColor" y="227"></text>
                   </g>
-                  <g class="tick" opacity="1" transform="translate(373.39778481012655,0)">
+                  <g class="tick" opacity="1" transform="translate(380.875,0)">
                     <line stroke="currentColor" y2="224"></line>
                     <text dy="0.71em" fill="currentColor" y="227"></text>
                   </g>
-                  <g class="tick" opacity="1" transform="translate(414.1825949367089,0)">
+                  <g class="tick" opacity="1" transform="translate(425.625,0)">
                     <line stroke="currentColor" y2="224"></line>
                     <text dy="0.71em" fill="currentColor" y="227"></text>
                   </g>
-                  <g class="tick" opacity="1" transform="translate(456.32689873417723,0)">
+                  <g class="tick" opacity="1" transform="translate(470.375,0)">
                     <line stroke="currentColor" y2="224"></line>
                     <text dy="0.71em" fill="currentColor" y="227"></text>
                   </g>
-                  <g class="tick" opacity="1" transform="translate(497.16835443037974,0)">
+                  <g class="tick" opacity="1" transform="translate(515.125,0)">
                     <line stroke="currentColor" y2="224"></line>
                     <text dy="0.71em" fill="currentColor" y="227"></text>
                   </g>
@@ -420,159 +635,159 @@ exports[`<dumbbell-plot> rendered-html render should render with minimal props[d
                 </g>
               </g>
               <g class="dumbbell-group" data-testid="dumbbell-group" filter="url(#VCL-t-s-f-ffffffunique-d-plot)" focusable="false" id="unique-d-plot-123457-123457-123457" role="presentation" tabindex="-1">
-                <path class="dumbbell-plot moving" cursor="default" d="M 40.78481012658228 82.27423135146653 L 40.78481012658228 82.27523135146653 L 40.78481012658228 82.27523135146653 L 40.78481012658228 112.7200602806407 L 40.78481012658228 112.7200602806407 L 40.78481012658228 112.7200602806407 L 40.78481012658228 82.27523135146653 L 40.78481012658228 82.27523135146653 L 40.78481012658228 82.27523135146653 L 40.78481012658228 112.7200602806407 L 40.78481012658228 112.7200602806407 L 40.78481012658228 112.7210602806407" data-barSize="1" data-centerX1="40.78481012658228" data-centerX2="40.78481012658228" data-centerY1="82.27523135146653" data-centerY2="112.7200602806407" data-d="M 40.78481012658228 82.27423135146653 L 40.78481012658228 82.27523135146653 L 41.28481012658228 82.27523135146653 L 41.28481012658228 112.7200602806407 L 40.78481012658228 112.7200602806407 L 40.28481012658228 112.7200602806407 L 40.28481012658228 82.27523135146653 L 40.78481012658228 82.27523135146653 L 41.28481012658228 82.27523135146653 L 41.28481012658228 112.7200602806407 L 40.78481012658228 112.7200602806407 L 40.78481012658228 112.7210602806407" data-id="line-Thu Dec 31 2015 16:00:00 GMT-0800 (Pacific Standard Time)" data-role="img" data-testid="line" data-translate-x="56.5" data-translate-y="23" fill="#abb798" fill-opacity="1" focusable="false" id="unique-d-plot-123457-123457-123457" marker-end="url(#marker-unique-d-plot1dot8cacae711)" marker-start="url(#marker-unique-d-plot0dot87c99b111)" opacity="1" role="presentation" stroke="#576245" stroke-opacity="1" tabindex="-1"></path>
-                <path class="dumbbell-plot moving" cursor="default" d="M 82.92911392405063 83.43901997843645 L 82.92911392405063 83.44001997843645 L 82.92911392405063 83.44001997843645 L 82.92911392405063 166.47137160345687 L 82.92911392405063 166.47137160345687 L 82.92911392405063 166.47137160345687 L 82.92911392405063 83.44001997843645 L 82.92911392405063 83.44001997843645 L 82.92911392405063 83.44001997843645 L 82.92911392405063 166.47137160345687 L 82.92911392405063 166.47137160345687 L 82.92911392405063 166.47237160345688" data-barSize="1" data-centerX1="82.92911392405063" data-centerX2="82.92911392405063" data-centerY1="83.44001997843645" data-centerY2="166.47137160345687" data-d="M 82.92911392405063 83.43901997843645 L 82.92911392405063 83.44001997843645 L 83.42911392405063 83.44001997843645 L 83.42911392405063 166.47137160345687 L 82.92911392405063 166.47137160345687 L 82.42911392405063 166.47137160345687 L 82.42911392405063 83.44001997843645 L 82.92911392405063 83.44001997843645 L 83.42911392405063 83.44001997843645 L 83.42911392405063 166.47137160345687 L 82.92911392405063 166.47137160345687 L 82.92911392405063 166.47237160345688" data-id="line-Sun Jan 31 2016 16:00:00 GMT-0800 (Pacific Standard Time)" data-role="img" data-testid="line" data-translate-x="56.5" data-translate-y="23" fill="#abb798" fill-opacity="1" focusable="false" id="unique-d-plot-123457-123457-123457" marker-end="url(#marker-unique-d-plot1dot8cacae711)" marker-start="url(#marker-unique-d-plot0dot87c99b111)" opacity="1" role="presentation" stroke="#576245" stroke-opacity="1" tabindex="-1"></path>
-                <path class="dumbbell-plot moving" cursor="default" d="M 122.35443037974683 63.2367299832924 L 122.35443037974683 63.2377299832924 L 122.35443037974683 63.2377299832924 L 122.35443037974683 173.94619881665298 L 122.35443037974683 173.94619881665298 L 122.35443037974683 173.94619881665298 L 122.35443037974683 63.2377299832924 L 122.35443037974683 63.2377299832924 L 122.35443037974683 63.2377299832924 L 122.35443037974683 173.94619881665298 L 122.35443037974683 173.94619881665298 L 122.35443037974683 173.94719881665299" data-barSize="1" data-centerX1="122.35443037974683" data-centerX2="122.35443037974683" data-centerY1="63.2377299832924" data-centerY2="173.94619881665298" data-d="M 122.35443037974683 63.2367299832924 L 122.35443037974683 63.2377299832924 L 122.85443037974683 63.2377299832924 L 122.85443037974683 173.94619881665298 L 122.35443037974683 173.94619881665298 L 121.85443037974683 173.94619881665298 L 121.85443037974683 63.2377299832924 L 122.35443037974683 63.2377299832924 L 122.85443037974683 63.2377299832924 L 122.85443037974683 173.94619881665298 L 122.35443037974683 173.94619881665298 L 122.35443037974683 173.94719881665299" data-id="line-Mon Feb 29 2016 16:00:00 GMT-0800 (Pacific Standard Time)" data-role="img" data-testid="line" data-translate-x="56.5" data-translate-y="23" fill="#abb798" fill-opacity="1" focusable="false" id="unique-d-plot-123457-123457-123457" marker-end="url(#marker-unique-d-plot1dot8cacae711)" marker-start="url(#marker-unique-d-plot0dot87c99b111)" opacity="1" role="presentation" stroke="#576245" stroke-opacity="1" tabindex="-1"></path>
-                <path class="dumbbell-plot moving" cursor="default" d="M 164.4987341772152 63.90082616423873 L 164.4987341772152 63.90182616423873 L 164.4987341772152 63.90182616423873 L 164.4987341772152 141.3977543475911 L 164.4987341772152 141.3977543475911 L 164.4987341772152 141.3977543475911 L 164.4987341772152 63.90182616423873 L 164.4987341772152 63.90182616423873 L 164.4987341772152 63.90182616423873 L 164.4987341772152 141.3977543475911 L 164.4987341772152 141.3977543475911 L 164.4987341772152 141.3987543475911" data-barSize="1" data-centerX1="164.4987341772152" data-centerX2="164.4987341772152" data-centerY1="63.90182616423873" data-centerY2="141.3977543475911" data-d="M 164.4987341772152 63.90082616423873 L 164.4987341772152 63.90182616423873 L 164.9987341772152 63.90182616423873 L 164.9987341772152 141.3977543475911 L 164.4987341772152 141.3977543475911 L 163.9987341772152 141.3977543475911 L 163.9987341772152 63.90182616423873 L 164.4987341772152 63.90182616423873 L 164.9987341772152 63.90182616423873 L 164.9987341772152 141.3977543475911 L 164.4987341772152 141.3977543475911 L 164.4987341772152 141.3987543475911" data-id="line-Thu Mar 31 2016 17:00:00 GMT-0700 (Pacific Daylight Time)" data-role="img" data-testid="line" data-translate-x="56.5" data-translate-y="23" fill="#abb798" fill-opacity="1" focusable="false" id="unique-d-plot-123457-123457-123457" marker-end="url(#marker-unique-d-plot1dot8cacae711)" marker-start="url(#marker-unique-d-plot0dot87c99b111)" opacity="1" role="presentation" stroke="#576245" stroke-opacity="1" tabindex="-1"></path>
-                <path class="dumbbell-plot moving" cursor="default" d="M 205.28354430379747 56.87756202308088 L 205.28354430379747 56.878562023080875 L 205.28354430379747 56.878562023080875 L 205.28354430379747 173.12245429810946 L 205.28354430379747 173.12245429810946 L 205.28354430379747 173.12245429810946 L 205.28354430379747 56.878562023080875 L 205.28354430379747 56.878562023080875 L 205.28354430379747 56.878562023080875 L 205.28354430379747 173.12245429810946 L 205.28354430379747 173.12245429810946 L 205.28354430379747 173.12345429810946" data-barSize="1" data-centerX1="205.28354430379747" data-centerX2="205.28354430379747" data-centerY1="56.878562023080875" data-centerY2="173.12245429810946" data-d="M 205.28354430379747 56.87756202308088 L 205.28354430379747 56.878562023080875 L 205.78354430379747 56.878562023080875 L 205.78354430379747 173.12245429810946 L 205.28354430379747 173.12245429810946 L 204.78354430379747 173.12245429810946 L 204.78354430379747 56.878562023080875 L 205.28354430379747 56.878562023080875 L 205.78354430379747 56.878562023080875 L 205.78354430379747 173.12245429810946 L 205.28354430379747 173.12245429810946 L 205.28354430379747 173.12345429810946" data-id="line-Sat Apr 30 2016 17:00:00 GMT-0700 (Pacific Daylight Time)" data-role="img" data-testid="line" data-translate-x="56.5" data-translate-y="23" fill="#abb798" fill-opacity="1" focusable="false" id="unique-d-plot-123457-123457-123457" marker-end="url(#marker-unique-d-plot1dot8cacae711)" marker-start="url(#marker-unique-d-plot0dot87c99b111)" opacity="1" role="presentation" stroke="#576245" stroke-opacity="1" tabindex="-1"></path>
-                <path class="dumbbell-plot moving" cursor="default" d="M 247.42784810126582 59.76726011214541 L 247.42784810126582 59.768260112145406 L 247.42784810126582 59.768260112145406 L 247.42784810126582 198.15384615384613 L 247.42784810126582 198.15384615384613 L 247.42784810126582 198.15384615384613 L 247.42784810126582 59.768260112145406 L 247.42784810126582 59.768260112145406 L 247.42784810126582 59.768260112145406 L 247.42784810126582 198.15384615384613 L 247.42784810126582 198.15384615384613 L 247.42784810126582 198.15484615384614" data-barSize="1" data-centerX1="247.42784810126582" data-centerX2="247.42784810126582" data-centerY1="59.768260112145406" data-centerY2="198.15384615384613" data-d="M 247.42784810126582 59.76726011214541 L 247.42784810126582 59.768260112145406 L 247.92784810126582 59.768260112145406 L 247.92784810126582 198.15384615384613 L 247.42784810126582 198.15384615384613 L 246.92784810126582 198.15384615384613 L 246.92784810126582 59.768260112145406 L 247.42784810126582 59.768260112145406 L 247.92784810126582 59.768260112145406 L 247.92784810126582 198.15384615384613 L 247.42784810126582 198.15384615384613 L 247.42784810126582 198.15484615384614" data-id="line-Tue May 31 2016 17:00:00 GMT-0700 (Pacific Daylight Time)" data-role="img" data-testid="line" data-translate-x="56.5" data-translate-y="23" fill="#abb798" fill-opacity="1" focusable="false" id="unique-d-plot-123457-123457-123457" marker-end="url(#marker-unique-d-plot1dot8cacae711)" marker-start="url(#marker-unique-d-plot0dot87c99b111)" opacity="1" role="presentation" stroke="#576245" stroke-opacity="1" tabindex="-1"></path>
-                <path class="dumbbell-plot moving" cursor="default" d="M 288.21265822784807 51.61790889358376 L 288.21265822784807 51.61890889358376 L 288.21265822784807 51.61890889358376 L 288.21265822784807 195.53991837695253 L 288.21265822784807 195.53991837695253 L 288.21265822784807 195.53991837695253 L 288.21265822784807 51.61890889358376 L 288.21265822784807 51.61890889358376 L 288.21265822784807 51.61890889358376 L 288.21265822784807 195.53991837695253 L 288.21265822784807 195.53991837695253 L 288.21265822784807 195.54091837695253" data-barSize="1" data-centerX1="288.21265822784807" data-centerX2="288.21265822784807" data-centerY1="51.61890889358376" data-centerY2="195.53991837695253" data-d="M 288.21265822784807 51.61790889358376 L 288.21265822784807 51.61890889358376 L 288.71265822784807 51.61890889358376 L 288.71265822784807 195.53991837695253 L 288.21265822784807 195.53991837695253 L 287.71265822784807 195.53991837695253 L 287.71265822784807 51.61890889358376 L 288.21265822784807 51.61890889358376 L 288.71265822784807 51.61890889358376 L 288.71265822784807 195.53991837695253 L 288.21265822784807 195.53991837695253 L 288.21265822784807 195.54091837695253" data-id="line-Thu Jun 30 2016 17:00:00 GMT-0700 (Pacific Daylight Time)" data-role="img" data-testid="line" data-translate-x="56.5" data-translate-y="23" fill="#abb798" fill-opacity="1" focusable="false" id="unique-d-plot-123457-123457-123457" marker-end="url(#marker-unique-d-plot1dot8cacae711)" marker-start="url(#marker-unique-d-plot0dot87c99b111)" opacity="1" role="presentation" stroke="#576245" stroke-opacity="1" tabindex="-1"></path>
-                <path class="dumbbell-plot moving" cursor="default" d="M 330.3569620253164 50.71765809753691 L 330.3569620253164 50.71865809753691 L 330.3569620253164 50.71865809753691 L 330.3569620253164 117.14373939755325 L 330.3569620253164 117.14373939755325 L 330.3569620253164 117.14373939755325 L 330.3569620253164 50.71865809753691 L 330.3569620253164 50.71865809753691 L 330.3569620253164 50.71865809753691 L 330.3569620253164 117.14373939755325 L 330.3569620253164 117.14373939755325 L 330.3569620253164 117.14473939755325" data-barSize="1" data-centerX1="330.3569620253164" data-centerX2="330.3569620253164" data-centerY1="50.71865809753691" data-centerY2="117.14373939755325" data-d="M 330.3569620253164 50.71765809753691 L 330.3569620253164 50.71865809753691 L 330.8569620253164 50.71865809753691 L 330.8569620253164 117.14373939755325 L 330.3569620253164 117.14373939755325 L 329.8569620253164 117.14373939755325 L 329.8569620253164 50.71865809753691 L 330.3569620253164 50.71865809753691 L 330.8569620253164 50.71865809753691 L 330.8569620253164 117.14373939755325 L 330.3569620253164 117.14373939755325 L 330.3569620253164 117.14473939755325" data-id="line-Sun Jul 31 2016 17:00:00 GMT-0700 (Pacific Daylight Time)" data-role="img" data-testid="line" data-translate-x="56.5" data-translate-y="23" fill="#abb798" fill-opacity="1" focusable="false" id="unique-d-plot-123457-123457-123457" marker-end="url(#marker-unique-d-plot1dot8cacae711)" marker-start="url(#marker-unique-d-plot0dot87c99b111)" opacity="1" role="presentation" stroke="#576245" stroke-opacity="1" tabindex="-1"></path>
-                <path class="dumbbell-plot moving" cursor="default" d="M 372.50126582278483 60.377364962957735 L 372.50126582278483 60.37836496295773 L 372.50126582278483 60.37836496295773 L 372.50126582278483 148.9451400296462 L 372.50126582278483 148.9451400296462 L 372.50126582278483 148.9451400296462 L 372.50126582278483 60.37836496295773 L 372.50126582278483 60.37836496295773 L 372.50126582278483 60.37836496295773 L 372.50126582278483 148.9451400296462 L 372.50126582278483 148.9451400296462 L 372.50126582278483 148.94614002964622" data-barSize="1" data-centerX1="372.50126582278483" data-centerX2="372.50126582278483" data-centerY1="60.37836496295773" data-centerY2="148.9451400296462" data-d="M 372.50126582278483 60.377364962957735 L 372.50126582278483 60.37836496295773 L 373.00126582278483 60.37836496295773 L 373.00126582278483 148.9451400296462 L 372.50126582278483 148.9451400296462 L 372.00126582278483 148.9451400296462 L 372.00126582278483 60.37836496295773 L 372.50126582278483 60.37836496295773 L 373.00126582278483 60.37836496295773 L 373.00126582278483 148.9451400296462 L 372.50126582278483 148.9451400296462 L 372.50126582278483 148.94614002964622" data-id="line-Wed Aug 31 2016 17:00:00 GMT-0700 (Pacific Daylight Time)" data-role="img" data-testid="line" data-translate-x="56.5" data-translate-y="23" fill="#abb798" fill-opacity="1" focusable="false" id="unique-d-plot-123457-123457-123457" marker-end="url(#marker-unique-d-plot1dot8cacae711)" marker-start="url(#marker-unique-d-plot0dot87c99b111)" opacity="1" role="presentation" stroke="#576245" stroke-opacity="1" tabindex="-1"></path>
-                <path class="dumbbell-plot moving" cursor="default" d="M 413.2860759493671 44.05382997970141 L 413.2860759493671 44.05482997970141 L 413.2860759493671 44.05482997970141 L 413.2860759493671 165.83414569639802 L 413.2860759493671 165.83414569639802 L 413.2860759493671 165.83414569639802 L 413.2860759493671 44.05482997970141 L 413.2860759493671 44.05482997970141 L 413.2860759493671 44.05482997970141 L 413.2860759493671 165.83414569639802 L 413.2860759493671 165.83414569639802 L 413.2860759493671 165.83514569639803" data-barSize="1" data-centerX1="413.2860759493671" data-centerX2="413.2860759493671" data-centerY1="44.05482997970141" data-centerY2="165.83414569639802" data-d="M 413.2860759493671 44.05382997970141 L 413.2860759493671 44.05482997970141 L 413.7860759493671 44.05482997970141 L 413.7860759493671 165.83414569639802 L 413.2860759493671 165.83414569639802 L 412.7860759493671 165.83414569639802 L 412.7860759493671 44.05482997970141 L 413.2860759493671 44.05482997970141 L 413.7860759493671 44.05482997970141 L 413.7860759493671 165.83414569639802 L 413.2860759493671 165.83414569639802 L 413.2860759493671 165.83514569639803" data-id="line-Fri Sep 30 2016 17:00:00 GMT-0700 (Pacific Daylight Time)" data-role="img" data-testid="line" data-translate-x="56.5" data-translate-y="23" fill="#abb798" fill-opacity="1" focusable="false" id="unique-d-plot-123457-123457-123457" marker-end="url(#marker-unique-d-plot1dot8cacae711)" marker-start="url(#marker-unique-d-plot0dot87c99b111)" opacity="1" role="presentation" stroke="#576245" stroke-opacity="1" tabindex="-1"></path>
-                <path class="dumbbell-plot moving" cursor="default" d="M 455.4303797468354 49.01034303420586 L 455.4303797468354 49.01134303420586 L 455.4303797468354 49.01134303420586 L 455.4303797468354 107.13328917172018 L 455.4303797468354 107.13328917172018 L 455.4303797468354 107.13328917172018 L 455.4303797468354 49.01134303420586 L 455.4303797468354 49.01134303420586 L 455.4303797468354 49.01134303420586 L 455.4303797468354 107.13328917172018 L 455.4303797468354 107.13328917172018 L 455.4303797468354 107.13428917172018" data-barSize="1" data-centerX1="455.4303797468354" data-centerX2="455.4303797468354" data-centerY1="49.01134303420586" data-centerY2="107.13328917172018" data-d="M 455.4303797468354 49.01034303420586 L 455.4303797468354 49.01134303420586 L 455.9303797468354 49.01134303420586 L 455.9303797468354 107.13328917172018 L 455.4303797468354 107.13328917172018 L 454.9303797468354 107.13328917172018 L 454.9303797468354 49.01134303420586 L 455.4303797468354 49.01134303420586 L 455.9303797468354 49.01134303420586 L 455.9303797468354 107.13328917172018 L 455.4303797468354 107.13328917172018 L 455.4303797468354 107.13428917172018" data-id="line-Mon Oct 31 2016 17:00:00 GMT-0700 (Pacific Daylight Time)" data-role="img" data-testid="line" data-translate-x="56.5" data-translate-y="23" fill="#abb798" fill-opacity="1" focusable="false" id="unique-d-plot-123457-123457-123457" marker-end="url(#marker-unique-d-plot1dot8cacae711)" marker-start="url(#marker-unique-d-plot0dot87c99b111)" opacity="1" role="presentation" stroke="#576245" stroke-opacity="1" tabindex="-1"></path>
-                <path class="dumbbell-plot moving" cursor="default" d="M 496.2151898734177 25.845153846153828 L 496.2151898734177 25.84615384615383 L 496.2151898734177 25.84615384615383 L 496.2151898734177 139.32233440034844 L 496.2151898734177 139.32233440034844 L 496.2151898734177 139.32233440034844 L 496.2151898734177 25.84615384615383 L 496.2151898734177 25.84615384615383 L 496.2151898734177 25.84615384615383 L 496.2151898734177 139.32233440034844 L 496.2151898734177 139.32233440034844 L 496.2151898734177 139.32333440034844" data-barSize="1" data-centerX1="496.2151898734177" data-centerX2="496.2151898734177" data-centerY1="25.84615384615383" data-centerY2="139.32233440034844" data-d="M 496.2151898734177 25.845153846153828 L 496.2151898734177 25.84615384615383 L 496.7151898734177 25.84615384615383 L 496.7151898734177 139.32233440034844 L 496.2151898734177 139.32233440034844 L 495.7151898734177 139.32233440034844 L 495.7151898734177 25.84615384615383 L 496.2151898734177 25.84615384615383 L 496.7151898734177 25.84615384615383 L 496.7151898734177 139.32233440034844 L 496.2151898734177 139.32233440034844 L 496.2151898734177 139.32333440034844" data-id="line-Wed Nov 30 2016 16:00:00 GMT-0800 (Pacific Standard Time)" data-role="img" data-testid="line" data-translate-x="56.5" data-translate-y="23" fill="#abb798" fill-opacity="1" focusable="false" id="unique-d-plot-123457-123457-123457" marker-end="url(#marker-unique-d-plot1dot8cacae711)" marker-start="url(#marker-unique-d-plot0dot87c99b111)" opacity="1" role="presentation" stroke="#576245" stroke-opacity="1" tabindex="-1"></path>
+                <path class="dumbbell-plot moving" cursor="default" d="M 22.375 82.27423135146653 L 22.375 82.27523135146653 L 22.375 82.27523135146653 L 22.375 112.7200602806407 L 22.375 112.7200602806407 L 22.375 112.7200602806407 L 22.375 82.27523135146653 L 22.375 82.27523135146653 L 22.375 82.27523135146653 L 22.375 112.7200602806407 L 22.375 112.7200602806407 L 22.375 112.7210602806407" data-barSize="1" data-centerX1="22.375" data-centerX2="22.375" data-centerY1="82.27523135146653" data-centerY2="112.7200602806407" data-d="M 22.375 82.27423135146653 L 22.375 82.27523135146653 L 22.875 82.27523135146653 L 22.875 112.7200602806407 L 22.375 112.7200602806407 L 21.875 112.7200602806407 L 21.875 82.27523135146653 L 22.375 82.27523135146653 L 22.875 82.27523135146653 L 22.875 112.7200602806407 L 22.375 112.7200602806407 L 22.375 112.7210602806407" data-id="line-Jan-2016" data-role="img" data-testid="line" data-translate-x="56.5" data-translate-y="23" fill="#abb798" fill-opacity="1" focusable="false" id="unique-d-plot-123457-123457-123457" marker-end="url(#marker-unique-d-plot1dot8cacae711)" marker-start="url(#marker-unique-d-plot0dot87c99b111)" opacity="1" role="presentation" stroke="#576245" stroke-opacity="1" tabindex="-1"></path>
+                <path class="dumbbell-plot moving" cursor="default" d="M 67.125 83.43901997843645 L 67.125 83.44001997843645 L 67.125 83.44001997843645 L 67.125 166.47137160345687 L 67.125 166.47137160345687 L 67.125 166.47137160345687 L 67.125 83.44001997843645 L 67.125 83.44001997843645 L 67.125 83.44001997843645 L 67.125 166.47137160345687 L 67.125 166.47137160345687 L 67.125 166.47237160345688" data-barSize="1" data-centerX1="67.125" data-centerX2="67.125" data-centerY1="83.44001997843645" data-centerY2="166.47137160345687" data-d="M 67.125 83.43901997843645 L 67.125 83.44001997843645 L 67.625 83.44001997843645 L 67.625 166.47137160345687 L 67.125 166.47137160345687 L 66.625 166.47137160345687 L 66.625 83.44001997843645 L 67.125 83.44001997843645 L 67.625 83.44001997843645 L 67.625 166.47137160345687 L 67.125 166.47137160345687 L 67.125 166.47237160345688" data-id="line-Feb-2016" data-role="img" data-testid="line" data-translate-x="56.5" data-translate-y="23" fill="#abb798" fill-opacity="1" focusable="false" id="unique-d-plot-123457-123457-123457" marker-end="url(#marker-unique-d-plot1dot8cacae711)" marker-start="url(#marker-unique-d-plot0dot87c99b111)" opacity="1" role="presentation" stroke="#576245" stroke-opacity="1" tabindex="-1"></path>
+                <path class="dumbbell-plot moving" cursor="default" d="M 111.875 63.2367299832924 L 111.875 63.2377299832924 L 111.875 63.2377299832924 L 111.875 173.94619881665298 L 111.875 173.94619881665298 L 111.875 173.94619881665298 L 111.875 63.2377299832924 L 111.875 63.2377299832924 L 111.875 63.2377299832924 L 111.875 173.94619881665298 L 111.875 173.94619881665298 L 111.875 173.94719881665299" data-barSize="1" data-centerX1="111.875" data-centerX2="111.875" data-centerY1="63.2377299832924" data-centerY2="173.94619881665298" data-d="M 111.875 63.2367299832924 L 111.875 63.2377299832924 L 112.375 63.2377299832924 L 112.375 173.94619881665298 L 111.875 173.94619881665298 L 111.375 173.94619881665298 L 111.375 63.2377299832924 L 111.875 63.2377299832924 L 112.375 63.2377299832924 L 112.375 173.94619881665298 L 111.875 173.94619881665298 L 111.875 173.94719881665299" data-id="line-Mar-2016" data-role="img" data-testid="line" data-translate-x="56.5" data-translate-y="23" fill="#abb798" fill-opacity="1" focusable="false" id="unique-d-plot-123457-123457-123457" marker-end="url(#marker-unique-d-plot1dot8cacae711)" marker-start="url(#marker-unique-d-plot0dot87c99b111)" opacity="1" role="presentation" stroke="#576245" stroke-opacity="1" tabindex="-1"></path>
+                <path class="dumbbell-plot moving" cursor="default" d="M 156.625 63.90082616423873 L 156.625 63.90182616423873 L 156.625 63.90182616423873 L 156.625 141.3977543475911 L 156.625 141.3977543475911 L 156.625 141.3977543475911 L 156.625 63.90182616423873 L 156.625 63.90182616423873 L 156.625 63.90182616423873 L 156.625 141.3977543475911 L 156.625 141.3977543475911 L 156.625 141.3987543475911" data-barSize="1" data-centerX1="156.625" data-centerX2="156.625" data-centerY1="63.90182616423873" data-centerY2="141.3977543475911" data-d="M 156.625 63.90082616423873 L 156.625 63.90182616423873 L 157.125 63.90182616423873 L 157.125 141.3977543475911 L 156.625 141.3977543475911 L 156.125 141.3977543475911 L 156.125 63.90182616423873 L 156.625 63.90182616423873 L 157.125 63.90182616423873 L 157.125 141.3977543475911 L 156.625 141.3977543475911 L 156.625 141.3987543475911" data-id="line-Apr-2016" data-role="img" data-testid="line" data-translate-x="56.5" data-translate-y="23" fill="#abb798" fill-opacity="1" focusable="false" id="unique-d-plot-123457-123457-123457" marker-end="url(#marker-unique-d-plot1dot8cacae711)" marker-start="url(#marker-unique-d-plot0dot87c99b111)" opacity="1" role="presentation" stroke="#576245" stroke-opacity="1" tabindex="-1"></path>
+                <path class="dumbbell-plot moving" cursor="default" d="M 201.375 56.87756202308088 L 201.375 56.878562023080875 L 201.375 56.878562023080875 L 201.375 173.12245429810946 L 201.375 173.12245429810946 L 201.375 173.12245429810946 L 201.375 56.878562023080875 L 201.375 56.878562023080875 L 201.375 56.878562023080875 L 201.375 173.12245429810946 L 201.375 173.12245429810946 L 201.375 173.12345429810946" data-barSize="1" data-centerX1="201.375" data-centerX2="201.375" data-centerY1="56.878562023080875" data-centerY2="173.12245429810946" data-d="M 201.375 56.87756202308088 L 201.375 56.878562023080875 L 201.875 56.878562023080875 L 201.875 173.12245429810946 L 201.375 173.12245429810946 L 200.875 173.12245429810946 L 200.875 56.878562023080875 L 201.375 56.878562023080875 L 201.875 56.878562023080875 L 201.875 173.12245429810946 L 201.375 173.12245429810946 L 201.375 173.12345429810946" data-id="line-May-2016" data-role="img" data-testid="line" data-translate-x="56.5" data-translate-y="23" fill="#abb798" fill-opacity="1" focusable="false" id="unique-d-plot-123457-123457-123457" marker-end="url(#marker-unique-d-plot1dot8cacae711)" marker-start="url(#marker-unique-d-plot0dot87c99b111)" opacity="1" role="presentation" stroke="#576245" stroke-opacity="1" tabindex="-1"></path>
+                <path class="dumbbell-plot moving" cursor="default" d="M 246.125 59.76726011214541 L 246.125 59.768260112145406 L 246.125 59.768260112145406 L 246.125 198.15384615384613 L 246.125 198.15384615384613 L 246.125 198.15384615384613 L 246.125 59.768260112145406 L 246.125 59.768260112145406 L 246.125 59.768260112145406 L 246.125 198.15384615384613 L 246.125 198.15384615384613 L 246.125 198.15484615384614" data-barSize="1" data-centerX1="246.125" data-centerX2="246.125" data-centerY1="59.768260112145406" data-centerY2="198.15384615384613" data-d="M 246.125 59.76726011214541 L 246.125 59.768260112145406 L 246.625 59.768260112145406 L 246.625 198.15384615384613 L 246.125 198.15384615384613 L 245.625 198.15384615384613 L 245.625 59.768260112145406 L 246.125 59.768260112145406 L 246.625 59.768260112145406 L 246.625 198.15384615384613 L 246.125 198.15384615384613 L 246.125 198.15484615384614" data-id="line-Jun-2016" data-role="img" data-testid="line" data-translate-x="56.5" data-translate-y="23" fill="#abb798" fill-opacity="1" focusable="false" id="unique-d-plot-123457-123457-123457" marker-end="url(#marker-unique-d-plot1dot8cacae711)" marker-start="url(#marker-unique-d-plot0dot87c99b111)" opacity="1" role="presentation" stroke="#576245" stroke-opacity="1" tabindex="-1"></path>
+                <path class="dumbbell-plot moving" cursor="default" d="M 290.875 51.61790889358376 L 290.875 51.61890889358376 L 290.875 51.61890889358376 L 290.875 195.53991837695253 L 290.875 195.53991837695253 L 290.875 195.53991837695253 L 290.875 51.61890889358376 L 290.875 51.61890889358376 L 290.875 51.61890889358376 L 290.875 195.53991837695253 L 290.875 195.53991837695253 L 290.875 195.54091837695253" data-barSize="1" data-centerX1="290.875" data-centerX2="290.875" data-centerY1="51.61890889358376" data-centerY2="195.53991837695253" data-d="M 290.875 51.61790889358376 L 290.875 51.61890889358376 L 291.375 51.61890889358376 L 291.375 195.53991837695253 L 290.875 195.53991837695253 L 290.375 195.53991837695253 L 290.375 51.61890889358376 L 290.875 51.61890889358376 L 291.375 51.61890889358376 L 291.375 195.53991837695253 L 290.875 195.53991837695253 L 290.875 195.54091837695253" data-id="line-Jul-2016" data-role="img" data-testid="line" data-translate-x="56.5" data-translate-y="23" fill="#abb798" fill-opacity="1" focusable="false" id="unique-d-plot-123457-123457-123457" marker-end="url(#marker-unique-d-plot1dot8cacae711)" marker-start="url(#marker-unique-d-plot0dot87c99b111)" opacity="1" role="presentation" stroke="#576245" stroke-opacity="1" tabindex="-1"></path>
+                <path class="dumbbell-plot moving" cursor="default" d="M 335.625 50.71765809753691 L 335.625 50.71865809753691 L 335.625 50.71865809753691 L 335.625 117.14373939755325 L 335.625 117.14373939755325 L 335.625 117.14373939755325 L 335.625 50.71865809753691 L 335.625 50.71865809753691 L 335.625 50.71865809753691 L 335.625 117.14373939755325 L 335.625 117.14373939755325 L 335.625 117.14473939755325" data-barSize="1" data-centerX1="335.625" data-centerX2="335.625" data-centerY1="50.71865809753691" data-centerY2="117.14373939755325" data-d="M 335.625 50.71765809753691 L 335.625 50.71865809753691 L 336.125 50.71865809753691 L 336.125 117.14373939755325 L 335.625 117.14373939755325 L 335.125 117.14373939755325 L 335.125 50.71865809753691 L 335.625 50.71865809753691 L 336.125 50.71865809753691 L 336.125 117.14373939755325 L 335.625 117.14373939755325 L 335.625 117.14473939755325" data-id="line-Aug-2016" data-role="img" data-testid="line" data-translate-x="56.5" data-translate-y="23" fill="#abb798" fill-opacity="1" focusable="false" id="unique-d-plot-123457-123457-123457" marker-end="url(#marker-unique-d-plot1dot8cacae711)" marker-start="url(#marker-unique-d-plot0dot87c99b111)" opacity="1" role="presentation" stroke="#576245" stroke-opacity="1" tabindex="-1"></path>
+                <path class="dumbbell-plot moving" cursor="default" d="M 380.375 60.377364962957735 L 380.375 60.37836496295773 L 380.375 60.37836496295773 L 380.375 148.9451400296462 L 380.375 148.9451400296462 L 380.375 148.9451400296462 L 380.375 60.37836496295773 L 380.375 60.37836496295773 L 380.375 60.37836496295773 L 380.375 148.9451400296462 L 380.375 148.9451400296462 L 380.375 148.94614002964622" data-barSize="1" data-centerX1="380.375" data-centerX2="380.375" data-centerY1="60.37836496295773" data-centerY2="148.9451400296462" data-d="M 380.375 60.377364962957735 L 380.375 60.37836496295773 L 380.875 60.37836496295773 L 380.875 148.9451400296462 L 380.375 148.9451400296462 L 379.875 148.9451400296462 L 379.875 60.37836496295773 L 380.375 60.37836496295773 L 380.875 60.37836496295773 L 380.875 148.9451400296462 L 380.375 148.9451400296462 L 380.375 148.94614002964622" data-id="line-Sep-2016" data-role="img" data-testid="line" data-translate-x="56.5" data-translate-y="23" fill="#abb798" fill-opacity="1" focusable="false" id="unique-d-plot-123457-123457-123457" marker-end="url(#marker-unique-d-plot1dot8cacae711)" marker-start="url(#marker-unique-d-plot0dot87c99b111)" opacity="1" role="presentation" stroke="#576245" stroke-opacity="1" tabindex="-1"></path>
+                <path class="dumbbell-plot moving" cursor="default" d="M 425.125 44.05382997970141 L 425.125 44.05482997970141 L 425.125 44.05482997970141 L 425.125 165.83414569639802 L 425.125 165.83414569639802 L 425.125 165.83414569639802 L 425.125 44.05482997970141 L 425.125 44.05482997970141 L 425.125 44.05482997970141 L 425.125 165.83414569639802 L 425.125 165.83414569639802 L 425.125 165.83514569639803" data-barSize="1" data-centerX1="425.125" data-centerX2="425.125" data-centerY1="44.05482997970141" data-centerY2="165.83414569639802" data-d="M 425.125 44.05382997970141 L 425.125 44.05482997970141 L 425.625 44.05482997970141 L 425.625 165.83414569639802 L 425.125 165.83414569639802 L 424.625 165.83414569639802 L 424.625 44.05482997970141 L 425.125 44.05482997970141 L 425.625 44.05482997970141 L 425.625 165.83414569639802 L 425.125 165.83414569639802 L 425.125 165.83514569639803" data-id="line-Oct-2016" data-role="img" data-testid="line" data-translate-x="56.5" data-translate-y="23" fill="#abb798" fill-opacity="1" focusable="false" id="unique-d-plot-123457-123457-123457" marker-end="url(#marker-unique-d-plot1dot8cacae711)" marker-start="url(#marker-unique-d-plot0dot87c99b111)" opacity="1" role="presentation" stroke="#576245" stroke-opacity="1" tabindex="-1"></path>
+                <path class="dumbbell-plot moving" cursor="default" d="M 469.875 49.01034303420586 L 469.875 49.01134303420586 L 469.875 49.01134303420586 L 469.875 107.13328917172018 L 469.875 107.13328917172018 L 469.875 107.13328917172018 L 469.875 49.01134303420586 L 469.875 49.01134303420586 L 469.875 49.01134303420586 L 469.875 107.13328917172018 L 469.875 107.13328917172018 L 469.875 107.13428917172018" data-barSize="1" data-centerX1="469.875" data-centerX2="469.875" data-centerY1="49.01134303420586" data-centerY2="107.13328917172018" data-d="M 469.875 49.01034303420586 L 469.875 49.01134303420586 L 470.375 49.01134303420586 L 470.375 107.13328917172018 L 469.875 107.13328917172018 L 469.375 107.13328917172018 L 469.375 49.01134303420586 L 469.875 49.01134303420586 L 470.375 49.01134303420586 L 470.375 107.13328917172018 L 469.875 107.13328917172018 L 469.875 107.13428917172018" data-id="line-Nov-2016" data-role="img" data-testid="line" data-translate-x="56.5" data-translate-y="23" fill="#abb798" fill-opacity="1" focusable="false" id="unique-d-plot-123457-123457-123457" marker-end="url(#marker-unique-d-plot1dot8cacae711)" marker-start="url(#marker-unique-d-plot0dot87c99b111)" opacity="1" role="presentation" stroke="#576245" stroke-opacity="1" tabindex="-1"></path>
+                <path class="dumbbell-plot moving" cursor="default" d="M 514.625 25.845153846153828 L 514.625 25.84615384615383 L 514.625 25.84615384615383 L 514.625 139.32233440034844 L 514.625 139.32233440034844 L 514.625 139.32233440034844 L 514.625 25.84615384615383 L 514.625 25.84615384615383 L 514.625 25.84615384615383 L 514.625 139.32233440034844 L 514.625 139.32233440034844 L 514.625 139.32333440034844" data-barSize="1" data-centerX1="514.625" data-centerX2="514.625" data-centerY1="25.84615384615383" data-centerY2="139.32233440034844" data-d="M 514.625 25.845153846153828 L 514.625 25.84615384615383 L 515.125 25.84615384615383 L 515.125 139.32233440034844 L 514.625 139.32233440034844 L 514.125 139.32233440034844 L 514.125 25.84615384615383 L 514.625 25.84615384615383 L 515.125 25.84615384615383 L 515.125 139.32233440034844 L 514.625 139.32233440034844 L 514.625 139.32333440034844" data-id="line-Dec-2016" data-role="img" data-testid="line" data-translate-x="56.5" data-translate-y="23" fill="#abb798" fill-opacity="1" focusable="false" id="unique-d-plot-123457-123457-123457" marker-end="url(#marker-unique-d-plot1dot8cacae711)" marker-start="url(#marker-unique-d-plot0dot87c99b111)" opacity="1" role="presentation" stroke="#576245" stroke-opacity="1" tabindex="-1"></path>
               </g>
               <g aria-hidden="true" class="dumbbell-series-wrapper" focusable="false" role="presentation">
                 <text class="dumbbell-series-label" data-testid="series-label" data-text-anchor="start" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="537" data-y="NaN" dx="0.1em" dy="0.3em" fill="#587893" filter="url(#VCL-t-s-f-ffffffunique-d-plot)" opacity="1" text-anchor="start" x="537" y="25.84615384615383">
-                  CardA
+                  CatA
                 </text>
                 <text class="dumbbell-series-label" data-testid="series-label" data-text-anchor="start" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="537" data-y="NaN" dx="0.1em" dy="0.3em" fill="#6b6bbc" filter="url(#VCL-t-s-f-ffffffunique-d-plot)" opacity="1" text-anchor="start" x="537" y="139.32233440034844">
-                  CardB
+                  CatB
                 </text>
               </g>
               <g aria-hidden="true" class="dumbbell-diff-label-wrapper" filter="url(#VCL-t-s-f-ffffffunique-d-plot)" focusable="false" role="presentation">
-                <text class="dumbbell-diff-label" cursor="default" data-id="difference-label-Thu Dec 31 2015 16:00:00 GMT-0800 (Pacific Standard Time)" data-testid="difference-label" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="40.78481012658228" data-y="97.49764581605359" dx="-4.5" dy="0.3em" fill="#6c7a55" opacity="0" text-anchor="end" x="40.78481012658228" y="97.49764581605359">
+                <text class="dumbbell-diff-label" cursor="default" data-id="difference-label-Jan-2016" data-testid="difference-label" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="22.375" data-y="97.49764581605359" dx="-4.5" dy="0.3em" fill="#6c7a55" opacity="0" text-anchor="end" x="22.375" y="97.49764581605359">
                   1.1b
                 </text>
-                <text class="dumbbell-diff-label" cursor="default" data-id="difference-label-Sun Jan 31 2016 16:00:00 GMT-0800 (Pacific Standard Time)" data-testid="difference-label" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="82.92911392405063" data-y="124.95569579094663" dx="-4.5" dy="0.3em" fill="#6c7a55" opacity="0" text-anchor="end" x="82.92911392405063" y="124.95569579094663">
+                <text class="dumbbell-diff-label" cursor="default" data-id="difference-label-Feb-2016" data-testid="difference-label" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="67.125" data-y="124.95569579094663" dx="-4.5" dy="0.3em" fill="#6c7a55" opacity="0" text-anchor="end" x="67.125" y="124.95569579094663">
                   3b
                 </text>
-                <text class="dumbbell-diff-label" cursor="default" data-id="difference-label-Mon Feb 29 2016 16:00:00 GMT-0800 (Pacific Standard Time)" data-testid="difference-label" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="122.35443037974683" data-y="118.59196439997268" dx="-4.5" dy="0.3em" fill="#6c7a55" opacity="0" text-anchor="end" x="122.35443037974683" y="118.59196439997268">
+                <text class="dumbbell-diff-label" cursor="default" data-id="difference-label-Mar-2016" data-testid="difference-label" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="111.875" data-y="118.59196439997268" dx="-4.5" dy="0.3em" fill="#6c7a55" opacity="0" text-anchor="end" x="111.875" y="118.59196439997268">
                   4b
                 </text>
-                <text class="dumbbell-diff-label" cursor="default" data-id="difference-label-Thu Mar 31 2016 17:00:00 GMT-0700 (Pacific Daylight Time)" data-testid="difference-label" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="164.4987341772152" data-y="102.64979025591494" dx="-4.5" dy="0.3em" fill="#6c7a55" opacity="0" text-anchor="end" x="164.4987341772152" y="102.64979025591494">
+                <text class="dumbbell-diff-label" cursor="default" data-id="difference-label-Apr-2016" data-testid="difference-label" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="156.625" data-y="102.64979025591494" dx="-4.5" dy="0.3em" fill="#6c7a55" opacity="0" text-anchor="end" x="156.625" y="102.64979025591494">
                   2.8b
                 </text>
-                <text class="dumbbell-diff-label" cursor="default" data-id="difference-label-Sat Apr 30 2016 17:00:00 GMT-0700 (Pacific Daylight Time)" data-testid="difference-label" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="205.28354430379747" data-y="115.00050816059516" dx="-4.5" dy="0.3em" fill="#6c7a55" opacity="0" text-anchor="end" x="205.28354430379747" y="115.00050816059516">
+                <text class="dumbbell-diff-label" cursor="default" data-id="difference-label-May-2016" data-testid="difference-label" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="201.375" data-y="115.00050816059516" dx="-4.5" dy="0.3em" fill="#6c7a55" opacity="0" text-anchor="end" x="201.375" y="115.00050816059516">
                   4.2b
                 </text>
-                <text class="dumbbell-diff-label" cursor="default" data-id="difference-label-Tue May 31 2016 17:00:00 GMT-0700 (Pacific Daylight Time)" data-testid="difference-label" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="247.42784810126582" data-y="128.96105313299577" dx="-4.5" dy="0.3em" fill="#6c7a55" opacity="0" text-anchor="end" x="247.42784810126582" y="128.96105313299577">
+                <text class="dumbbell-diff-label" cursor="default" data-id="difference-label-Jun-2016" data-testid="difference-label" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="246.125" data-y="128.96105313299577" dx="-4.5" dy="0.3em" fill="#6c7a55" opacity="0" text-anchor="end" x="246.125" y="128.96105313299577">
                   5b
                 </text>
-                <text class="dumbbell-diff-label" cursor="default" data-id="difference-label-Thu Jun 30 2016 17:00:00 GMT-0700 (Pacific Daylight Time)" data-testid="difference-label" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="288.21265822784807" data-y="123.57941363526811" dx="-4.5" dy="0.3em" fill="#6c7a55" opacity="0" text-anchor="end" x="288.21265822784807" y="123.57941363526811">
+                <text class="dumbbell-diff-label" cursor="default" data-id="difference-label-Jul-2016" data-testid="difference-label" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="290.875" data-y="123.57941363526811" dx="-4.5" dy="0.3em" fill="#6c7a55" opacity="0" text-anchor="end" x="290.875" y="123.57941363526811">
                   5.2b
                 </text>
-                <text class="dumbbell-diff-label" cursor="default" data-id="difference-label-Sun Jul 31 2016 17:00:00 GMT-0700 (Pacific Daylight Time)" data-testid="difference-label" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="330.3569620253164" data-y="83.93119874754508" dx="-4.5" dy="0.3em" fill="#6c7a55" opacity="0" text-anchor="end" x="330.3569620253164" y="83.93119874754508">
+                <text class="dumbbell-diff-label" cursor="default" data-id="difference-label-Aug-2016" data-testid="difference-label" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="335.625" data-y="83.93119874754508" dx="-4.5" dy="0.3em" fill="#6c7a55" opacity="0" text-anchor="end" x="335.625" y="83.93119874754508">
                   2.4b
                 </text>
-                <text class="dumbbell-diff-label" cursor="default" data-id="difference-label-Wed Aug 31 2016 17:00:00 GMT-0700 (Pacific Daylight Time)" data-testid="difference-label" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="372.50126582278483" data-y="104.66175249630199" dx="-4.5" dy="0.3em" fill="#6c7a55" opacity="0" text-anchor="end" x="372.50126582278483" y="104.66175249630199">
+                <text class="dumbbell-diff-label" cursor="default" data-id="difference-label-Sep-2016" data-testid="difference-label" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="380.375" data-y="104.66175249630199" dx="-4.5" dy="0.3em" fill="#6c7a55" opacity="0" text-anchor="end" x="380.375" y="104.66175249630199">
                   3.2b
                 </text>
-                <text class="dumbbell-diff-label" cursor="default" data-id="difference-label-Fri Sep 30 2016 17:00:00 GMT-0700 (Pacific Daylight Time)" data-testid="difference-label" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="413.2860759493671" data-y="104.94448783804972" dx="-4.5" dy="0.3em" fill="#6c7a55" opacity="0" text-anchor="end" x="413.2860759493671" y="104.94448783804972">
+                <text class="dumbbell-diff-label" cursor="default" data-id="difference-label-Oct-2016" data-testid="difference-label" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="425.125" data-y="104.94448783804972" dx="-4.5" dy="0.3em" fill="#6c7a55" opacity="0" text-anchor="end" x="425.125" y="104.94448783804972">
                   4.4b
                 </text>
-                <text class="dumbbell-diff-label" cursor="default" data-id="difference-label-Mon Oct 31 2016 17:00:00 GMT-0700 (Pacific Daylight Time)" data-testid="difference-label" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="455.4303797468354" data-y="78.07231610296301" dx="-4.5" dy="0.3em" fill="#6c7a55" opacity="0" text-anchor="end" x="455.4303797468354" y="78.07231610296301">
+                <text class="dumbbell-diff-label" cursor="default" data-id="difference-label-Nov-2016" data-testid="difference-label" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="469.875" data-y="78.07231610296301" dx="-4.5" dy="0.3em" fill="#6c7a55" opacity="0" text-anchor="end" x="469.875" y="78.07231610296301">
                   2.1b
                 </text>
-                <text class="dumbbell-diff-label" cursor="default" data-id="difference-label-Wed Nov 30 2016 16:00:00 GMT-0800 (Pacific Standard Time)" data-testid="difference-label" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="496.2151898734177" data-y="82.58424412325114" dx="-4.5" dy="0.3em" fill="#6c7a55" opacity="0" text-anchor="end" x="496.2151898734177" y="82.58424412325114">
+                <text class="dumbbell-diff-label" cursor="default" data-id="difference-label-Dec-2016" data-testid="difference-label" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="514.625" data-y="82.58424412325114" dx="-4.5" dy="0.3em" fill="#6c7a55" opacity="0" text-anchor="end" x="514.625" y="82.58424412325114">
                   4.1b
                 </text>
               </g>
               <g aria-hidden="true" class="dumbbell-dataLabel-group" filter="url(#VCL-t-s-f-ffffffunique-d-plot)" focusable="false" role="presentation">
                 <g class="dumbbell-label-wrapper" data-testid="dataLabel-wrapper" fill="#587893" opacity="1">
-                  <text class="dumbbell-dataLabel transitioning" cursor="default" data-id="label-Thu Dec 31 2015 16:00:00 GMT-0800 (Pacific Standard Time)-CardA" data-offset="-8" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="40.78481012658228" data-y="NaN" dx="0.0em" dy="-0.3em" fill="#587893" opacity="1" text-anchor="middle" x="40.78481012658228" y="74.27523135146653">
+                  <text class="dumbbell-dataLabel transitioning" cursor="default" data-id="label-Jan-2016-CatA" data-offset="-8" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="22.375" data-y="NaN" dx="0.0em" dy="-0.3em" fill="#587893" opacity="1" text-anchor="middle" x="22.375" y="74.27523135146653">
                     7.7b
                   </text>
-                  <text class="dumbbell-dataLabel transitioning" cursor="default" data-id="label-Thu Dec 31 2015 16:00:00 GMT-0800 (Pacific Standard Time)-CardB" data-offset="8" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="40.78481012658228" data-y="NaN" dx="0.0em" dy="0.9em" fill="#6b6bbc" opacity="1" text-anchor="middle" x="40.78481012658228" y="120.7200602806407">
+                  <text class="dumbbell-dataLabel transitioning" cursor="default" data-id="label-Jan-2016-CatB" data-offset="8" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="22.375" data-y="NaN" dx="0.0em" dy="0.9em" fill="#6b6bbc" opacity="1" text-anchor="middle" x="22.375" y="120.7200602806407">
                     6.6b
                   </text>
                 </g>
                 <g class="dumbbell-label-wrapper" data-testid="dataLabel-wrapper" fill="#6b6bbc" opacity="1">
-                  <text class="dumbbell-dataLabel transitioning" cursor="default" data-id="label-Sun Jan 31 2016 16:00:00 GMT-0800 (Pacific Standard Time)-CardA" data-offset="-8" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="82.92911392405063" data-y="NaN" dx="0.0em" dy="-0.3em" fill="#587893" opacity="1" text-anchor="middle" x="82.92911392405063" y="75.44001997843645">
+                  <text class="dumbbell-dataLabel transitioning" cursor="default" data-id="label-Feb-2016-CatA" data-offset="-8" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="67.125" data-y="NaN" dx="0.0em" dy="-0.3em" fill="#587893" opacity="1" text-anchor="middle" x="67.125" y="75.44001997843645">
                     7.6b
                   </text>
-                  <text class="dumbbell-dataLabel transitioning" cursor="default" data-id="label-Sun Jan 31 2016 16:00:00 GMT-0800 (Pacific Standard Time)-CardB" data-offset="8" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="82.92911392405063" data-y="NaN" dx="0.0em" dy="0.9em" fill="#6b6bbc" opacity="1" text-anchor="middle" x="82.92911392405063" y="174.47137160345687">
+                  <text class="dumbbell-dataLabel transitioning" cursor="default" data-id="label-Feb-2016-CatB" data-offset="8" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="67.125" data-y="NaN" dx="0.0em" dy="0.9em" fill="#6b6bbc" opacity="1" text-anchor="middle" x="67.125" y="174.47137160345687">
                     4.6b
                   </text>
                 </g>
                 <g class="dumbbell-label-wrapper" data-testid="dataLabel-wrapper" fill="#6c7a55" opacity="1">
-                  <text class="dumbbell-dataLabel transitioning" cursor="default" data-id="label-Mon Feb 29 2016 16:00:00 GMT-0800 (Pacific Standard Time)-CardA" data-offset="-8" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="122.35443037974683" data-y="NaN" dx="0.0em" dy="-0.3em" fill="#587893" opacity="1" text-anchor="middle" x="122.35443037974683" y="55.2377299832924">
+                  <text class="dumbbell-dataLabel transitioning" cursor="default" data-id="label-Mar-2016-CatA" data-offset="-8" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="111.875" data-y="NaN" dx="0.0em" dy="-0.3em" fill="#587893" opacity="1" text-anchor="middle" x="111.875" y="55.2377299832924">
                     8.4b
                   </text>
-                  <text class="dumbbell-dataLabel transitioning" cursor="default" data-id="label-Mon Feb 29 2016 16:00:00 GMT-0800 (Pacific Standard Time)-CardB" data-offset="8" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="122.35443037974683" data-y="NaN" dx="0.0em" dy="0.9em" fill="#6b6bbc" opacity="1" text-anchor="middle" x="122.35443037974683" y="181.94619881665298">
+                  <text class="dumbbell-dataLabel transitioning" cursor="default" data-id="label-Mar-2016-CatB" data-offset="8" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="111.875" data-y="NaN" dx="0.0em" dy="0.9em" fill="#6b6bbc" opacity="1" text-anchor="middle" x="111.875" y="181.94619881665298">
                     4.4b
                   </text>
                 </g>
                 <g class="dumbbell-label-wrapper" data-testid="dataLabel-wrapper" fill="#587893" opacity="1">
-                  <text class="dumbbell-dataLabel transitioning" cursor="default" data-id="label-Thu Mar 31 2016 17:00:00 GMT-0700 (Pacific Daylight Time)-CardA" data-offset="-8" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="164.4987341772152" data-y="NaN" dx="0.0em" dy="-0.3em" fill="#587893" opacity="1" text-anchor="middle" x="164.4987341772152" y="55.90182616423873">
+                  <text class="dumbbell-dataLabel transitioning" cursor="default" data-id="label-Apr-2016-CatA" data-offset="-8" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="156.625" data-y="NaN" dx="0.0em" dy="-0.3em" fill="#587893" opacity="1" text-anchor="middle" x="156.625" y="55.90182616423873">
                     8.3b
                   </text>
-                  <text class="dumbbell-dataLabel transitioning" cursor="default" data-id="label-Thu Mar 31 2016 17:00:00 GMT-0700 (Pacific Daylight Time)-CardB" data-offset="8" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="164.4987341772152" data-y="NaN" dx="0.0em" dy="0.9em" fill="#6b6bbc" opacity="1" text-anchor="middle" x="164.4987341772152" y="149.3977543475911">
+                  <text class="dumbbell-dataLabel transitioning" cursor="default" data-id="label-Apr-2016-CatB" data-offset="8" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="156.625" data-y="NaN" dx="0.0em" dy="0.9em" fill="#6b6bbc" opacity="1" text-anchor="middle" x="156.625" y="149.3977543475911">
                     5.5b
                   </text>
                 </g>
                 <g class="dumbbell-label-wrapper" data-testid="dataLabel-wrapper" fill="#587893" opacity="1">
-                  <text class="dumbbell-dataLabel transitioning" cursor="default" data-id="label-Sat Apr 30 2016 17:00:00 GMT-0700 (Pacific Daylight Time)-CardA" data-offset="-8" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="205.28354430379747" data-y="NaN" dx="0.0em" dy="-0.3em" fill="#587893" opacity="1" text-anchor="middle" x="205.28354430379747" y="48.878562023080875">
+                  <text class="dumbbell-dataLabel transitioning" cursor="default" data-id="label-May-2016-CatA" data-offset="-8" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="201.375" data-y="NaN" dx="0.0em" dy="-0.3em" fill="#587893" opacity="1" text-anchor="middle" x="201.375" y="48.878562023080875">
                     8.6b
                   </text>
-                  <text class="dumbbell-dataLabel transitioning" cursor="default" data-id="label-Sat Apr 30 2016 17:00:00 GMT-0700 (Pacific Daylight Time)-CardB" data-offset="8" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="205.28354430379747" data-y="NaN" dx="0.0em" dy="0.9em" fill="#6b6bbc" opacity="1" text-anchor="middle" x="205.28354430379747" y="181.12245429810946">
+                  <text class="dumbbell-dataLabel transitioning" cursor="default" data-id="label-May-2016-CatB" data-offset="8" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="201.375" data-y="NaN" dx="0.0em" dy="0.9em" fill="#6b6bbc" opacity="1" text-anchor="middle" x="201.375" y="181.12245429810946">
                     4.4b
                   </text>
                 </g>
                 <g class="dumbbell-label-wrapper" data-testid="dataLabel-wrapper" fill="#587893" opacity="1">
-                  <text class="dumbbell-dataLabel transitioning" cursor="default" data-id="label-Tue May 31 2016 17:00:00 GMT-0700 (Pacific Daylight Time)-CardA" data-offset="-8" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="247.42784810126582" data-y="NaN" dx="0.0em" dy="-0.3em" fill="#587893" opacity="1" text-anchor="middle" x="247.42784810126582" y="51.768260112145406">
+                  <text class="dumbbell-dataLabel transitioning" cursor="default" data-id="label-Jun-2016-CatA" data-offset="-8" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="246.125" data-y="NaN" dx="0.0em" dy="-0.3em" fill="#587893" opacity="1" text-anchor="middle" x="246.125" y="51.768260112145406">
                     8.5b
                   </text>
-                  <text class="dumbbell-dataLabel transitioning" cursor="default" data-id="label-Tue May 31 2016 17:00:00 GMT-0700 (Pacific Daylight Time)-CardB" data-offset="8" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="247.42784810126582" data-y="NaN" dx="0.0em" dy="0.9em" fill="#6b6bbc" opacity="1" text-anchor="middle" x="247.42784810126582" y="206.15384615384613">
+                  <text class="dumbbell-dataLabel transitioning" cursor="default" data-id="label-Jun-2016-CatB" data-offset="8" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="246.125" data-y="NaN" dx="0.0em" dy="0.9em" fill="#6b6bbc" opacity="1" text-anchor="middle" x="246.125" y="206.15384615384613">
                     3.5b
                   </text>
                 </g>
                 <g class="dumbbell-label-wrapper" data-testid="dataLabel-wrapper" fill="#587893" opacity="1">
-                  <text class="dumbbell-dataLabel transitioning" cursor="default" data-id="label-Thu Jun 30 2016 17:00:00 GMT-0700 (Pacific Daylight Time)-CardA" data-offset="-8" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="288.21265822784807" data-y="NaN" dx="0.0em" dy="-0.3em" fill="#587893" opacity="1" text-anchor="middle" x="288.21265822784807" y="43.61890889358376">
+                  <text class="dumbbell-dataLabel transitioning" cursor="default" data-id="label-Jul-2016-CatA" data-offset="-8" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="290.875" data-y="NaN" dx="0.0em" dy="-0.3em" fill="#587893" opacity="1" text-anchor="middle" x="290.875" y="43.61890889358376">
                     8.8b
                   </text>
-                  <text class="dumbbell-dataLabel transitioning" cursor="default" data-id="label-Thu Jun 30 2016 17:00:00 GMT-0700 (Pacific Daylight Time)-CardB" data-offset="8" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="288.21265822784807" data-y="NaN" dx="0.0em" dy="0.9em" fill="#6b6bbc" opacity="1" text-anchor="middle" x="288.21265822784807" y="203.53991837695253">
+                  <text class="dumbbell-dataLabel transitioning" cursor="default" data-id="label-Jul-2016-CatB" data-offset="8" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="290.875" data-y="NaN" dx="0.0em" dy="0.9em" fill="#6b6bbc" opacity="1" text-anchor="middle" x="290.875" y="203.53991837695253">
                     3.6b
                   </text>
                 </g>
                 <g class="dumbbell-label-wrapper" data-testid="dataLabel-wrapper" fill="#587893" opacity="1">
-                  <text class="dumbbell-dataLabel transitioning" cursor="default" data-id="label-Sun Jul 31 2016 17:00:00 GMT-0700 (Pacific Daylight Time)-CardA" data-offset="-8" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="330.3569620253164" data-y="NaN" dx="0.0em" dy="-0.3em" fill="#587893" opacity="1" text-anchor="middle" x="330.3569620253164" y="42.71865809753691">
+                  <text class="dumbbell-dataLabel transitioning" cursor="default" data-id="label-Aug-2016-CatA" data-offset="-8" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="335.625" data-y="NaN" dx="0.0em" dy="-0.3em" fill="#587893" opacity="1" text-anchor="middle" x="335.625" y="42.71865809753691">
                     8.8b
                   </text>
-                  <text class="dumbbell-dataLabel transitioning" cursor="default" data-id="label-Sun Jul 31 2016 17:00:00 GMT-0700 (Pacific Daylight Time)-CardB" data-offset="8" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="330.3569620253164" data-y="NaN" dx="0.0em" dy="0.9em" fill="#6b6bbc" opacity="1" text-anchor="middle" x="330.3569620253164" y="125.14373939755325">
+                  <text class="dumbbell-dataLabel transitioning" cursor="default" data-id="label-Aug-2016-CatB" data-offset="8" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="335.625" data-y="NaN" dx="0.0em" dy="0.9em" fill="#6b6bbc" opacity="1" text-anchor="middle" x="335.625" y="125.14373939755325">
                     6.4b
                   </text>
                 </g>
                 <g class="dumbbell-label-wrapper" data-testid="dataLabel-wrapper" fill="#587893" opacity="1">
-                  <text class="dumbbell-dataLabel transitioning" cursor="default" data-id="label-Wed Aug 31 2016 17:00:00 GMT-0700 (Pacific Daylight Time)-CardA" data-offset="-8" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="372.50126582278483" data-y="NaN" dx="0.0em" dy="-0.3em" fill="#587893" opacity="1" text-anchor="middle" x="372.50126582278483" y="52.37836496295773">
+                  <text class="dumbbell-dataLabel transitioning" cursor="default" data-id="label-Sep-2016-CatA" data-offset="-8" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="380.375" data-y="NaN" dx="0.0em" dy="-0.3em" fill="#587893" opacity="1" text-anchor="middle" x="380.375" y="52.37836496295773">
                     8.5b
                   </text>
-                  <text class="dumbbell-dataLabel transitioning" cursor="default" data-id="label-Wed Aug 31 2016 17:00:00 GMT-0700 (Pacific Daylight Time)-CardB" data-offset="8" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="372.50126582278483" data-y="NaN" dx="0.0em" dy="0.9em" fill="#6b6bbc" opacity="1" text-anchor="middle" x="372.50126582278483" y="156.9451400296462">
+                  <text class="dumbbell-dataLabel transitioning" cursor="default" data-id="label-Sep-2016-CatB" data-offset="8" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="380.375" data-y="NaN" dx="0.0em" dy="0.9em" fill="#6b6bbc" opacity="1" text-anchor="middle" x="380.375" y="156.9451400296462">
                     5.3b
                   </text>
                 </g>
                 <g class="dumbbell-label-wrapper" data-testid="dataLabel-wrapper" fill="#587893" opacity="1">
-                  <text class="dumbbell-dataLabel transitioning" cursor="default" data-id="label-Fri Sep 30 2016 17:00:00 GMT-0700 (Pacific Daylight Time)-CardA" data-offset="-8" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="413.2860759493671" data-y="NaN" dx="0.0em" dy="-0.3em" fill="#587893" opacity="1" text-anchor="middle" x="413.2860759493671" y="36.05482997970141">
+                  <text class="dumbbell-dataLabel transitioning" cursor="default" data-id="label-Oct-2016-CatA" data-offset="-8" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="425.125" data-y="NaN" dx="0.0em" dy="-0.3em" fill="#587893" opacity="1" text-anchor="middle" x="425.125" y="36.05482997970141">
                     9.1b
                   </text>
-                  <text class="dumbbell-dataLabel transitioning" cursor="default" data-id="label-Fri Sep 30 2016 17:00:00 GMT-0700 (Pacific Daylight Time)-CardB" data-offset="8" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="413.2860759493671" data-y="NaN" dx="0.0em" dy="0.9em" fill="#6b6bbc" opacity="1" text-anchor="middle" x="413.2860759493671" y="173.83414569639802">
+                  <text class="dumbbell-dataLabel transitioning" cursor="default" data-id="label-Oct-2016-CatB" data-offset="8" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="425.125" data-y="NaN" dx="0.0em" dy="0.9em" fill="#6b6bbc" opacity="1" text-anchor="middle" x="425.125" y="173.83414569639802">
                     4.7b
                   </text>
                 </g>
                 <g class="dumbbell-label-wrapper" data-testid="dataLabel-wrapper" fill="#587893" opacity="1">
-                  <text class="dumbbell-dataLabel transitioning" cursor="default" data-id="label-Mon Oct 31 2016 17:00:00 GMT-0700 (Pacific Daylight Time)-CardA" data-offset="-8" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="455.4303797468354" data-y="NaN" dx="0.0em" dy="-0.3em" fill="#587893" opacity="1" text-anchor="middle" x="455.4303797468354" y="41.01134303420586">
+                  <text class="dumbbell-dataLabel transitioning" cursor="default" data-id="label-Nov-2016-CatA" data-offset="-8" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="469.875" data-y="NaN" dx="0.0em" dy="-0.3em" fill="#587893" opacity="1" text-anchor="middle" x="469.875" y="41.01134303420586">
                     8.9b
                   </text>
-                  <text class="dumbbell-dataLabel transitioning" cursor="default" data-id="label-Mon Oct 31 2016 17:00:00 GMT-0700 (Pacific Daylight Time)-CardB" data-offset="8" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="455.4303797468354" data-y="NaN" dx="0.0em" dy="0.9em" fill="#6b6bbc" opacity="1" text-anchor="middle" x="455.4303797468354" y="115.13328917172018">
+                  <text class="dumbbell-dataLabel transitioning" cursor="default" data-id="label-Nov-2016-CatB" data-offset="8" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="469.875" data-y="NaN" dx="0.0em" dy="0.9em" fill="#6b6bbc" opacity="1" text-anchor="middle" x="469.875" y="115.13328917172018">
                     6.8b
                   </text>
                 </g>
                 <g class="dumbbell-label-wrapper" data-testid="dataLabel-wrapper" fill="#587893" opacity="1">
-                  <text class="dumbbell-dataLabel transitioning" cursor="default" data-id="label-Wed Nov 30 2016 16:00:00 GMT-0800 (Pacific Standard Time)-CardA" data-offset="-8" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="496.2151898734177" data-y="NaN" dx="0.0em" dy="-0.3em" fill="#587893" opacity="1" text-anchor="middle" x="496.2151898734177" y="17.84615384615383">
+                  <text class="dumbbell-dataLabel transitioning" cursor="default" data-id="label-Dec-2016-CatA" data-offset="-8" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="514.625" data-y="NaN" dx="0.0em" dy="-0.3em" fill="#587893" opacity="1" text-anchor="middle" x="514.625" y="17.84615384615383">
                     9.7b
                   </text>
-                  <text class="dumbbell-dataLabel transitioning" cursor="default" data-id="label-Wed Nov 30 2016 16:00:00 GMT-0800 (Pacific Standard Time)-CardB" data-offset="8" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="496.2151898734177" data-y="NaN" dx="0.0em" dy="0.9em" fill="#6b6bbc" opacity="1" text-anchor="middle" x="496.2151898734177" y="147.32233440034844">
+                  <text class="dumbbell-dataLabel transitioning" cursor="default" data-id="label-Dec-2016-CatB" data-offset="8" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="514.625" data-y="NaN" dx="0.0em" dy="0.9em" fill="#6b6bbc" opacity="1" text-anchor="middle" x="514.625" y="147.32233440034844">
                     5.6b
                   </text>
                 </g>
@@ -582,99 +797,99 @@ exports[`<dumbbell-plot> rendered-html render should render with minimal props[d
               <g aria-hidden="true" class="editable vcl-annotation-group" data-testid="editable-annotation-group" focusable="false" role="presentation"></g>
               <g aria-hidden="true" class="axis bottom x" data-testid="x-axis" fill="none" focusable="false" font-family="sans-serif" font-size="10" opacity="1" role="presentation" text-anchor="middle" transform="translate(0, 224)">
                 <path class="domain" d="M0.5,0.5H537.5" stroke="currentColor"></path>
-                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(41.7379746835443,0)">
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(22.875,0)">
                   <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
                   <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10">
                     <tspan data-testid="axis-tick-text-tspan" dy="0.71em" x="0" y="10">
-                      Jan 16
+                      Jan-2016
                     </tspan>
                   </text>
                 </g>
-                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(83.88227848101266,0)">
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(67.625,0)">
                   <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
                   <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10">
                     <tspan data-testid="axis-tick-text-tspan" dy="0.71em" x="0" y="10">
-                      Feb 16
+                      Feb-2016
                     </tspan>
                   </text>
                 </g>
-                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(123.30759493670885,0)">
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(112.375,0)">
                   <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
                   <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10">
                     <tspan data-testid="axis-tick-text-tspan" dy="0.71em" x="0" y="10">
-                      Mar 16
+                      Mar-2016
                     </tspan>
                   </text>
                 </g>
-                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(165.39525316455698,0)">
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(157.125,0)">
                   <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
                   <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10">
                     <tspan data-testid="axis-tick-text-tspan" dy="0.71em" x="0" y="10">
-                      Apr 16
+                      Apr-2016
                     </tspan>
                   </text>
                 </g>
-                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(206.18006329113925,0)">
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(201.875,0)">
                   <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
                   <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10">
                     <tspan data-testid="axis-tick-text-tspan" dy="0.71em" x="0" y="10">
-                      May 16
+                      May-2016
                     </tspan>
                   </text>
                 </g>
-                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(248.3243670886076,0)">
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(246.625,0)">
                   <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
                   <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10">
                     <tspan data-testid="axis-tick-text-tspan" dy="0.71em" x="0" y="10">
-                      Jun 16
+                      Jun-2016
                     </tspan>
                   </text>
                 </g>
-                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(289.1091772151899,0)">
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(291.375,0)">
                   <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
                   <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10">
                     <tspan data-testid="axis-tick-text-tspan" dy="0.71em" x="0" y="10">
-                      Jul 16
+                      Jul-2016
                     </tspan>
                   </text>
                 </g>
-                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(331.2534810126582,0)">
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(336.125,0)">
                   <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
                   <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10">
                     <tspan data-testid="axis-tick-text-tspan" dy="0.71em" x="0" y="10">
-                      Aug 16
+                      Aug-2016
                     </tspan>
                   </text>
                 </g>
-                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(373.39778481012655,0)">
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(380.875,0)">
                   <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
                   <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10">
                     <tspan data-testid="axis-tick-text-tspan" dy="0.71em" x="0" y="10">
-                      Sep 16
+                      Sep-2016
                     </tspan>
                   </text>
                 </g>
-                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(414.1825949367089,0)">
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(425.625,0)">
                   <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
                   <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10">
                     <tspan data-testid="axis-tick-text-tspan" dy="0.71em" x="0" y="10">
-                      Oct 16
+                      Oct-2016
                     </tspan>
                   </text>
                 </g>
-                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(456.32689873417723,0)">
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(470.375,0)">
                   <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
                   <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10">
                     <tspan data-testid="axis-tick-text-tspan" dy="0.71em" x="0" y="10">
-                      Nov 16
+                      Nov-2016
                     </tspan>
                   </text>
                 </g>
-                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(497.16835443037974,0)">
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(515.125,0)">
                   <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
                   <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10">
                     <tspan data-testid="axis-tick-text-tspan" dy="0.71em" x="0" y="10">
-                      Dec 16
+                      Dec-2016
                     </tspan>
                   </text>
                 </g>
@@ -756,7 +971,7 @@ exports[`<dumbbell-plot> rendered-html render should render with minimal props[d
           </g>
         </svg>
       </div>
-      <div class="dumbbell-tooltip vcl-tooltip" data-testid="tooltip-container" style="display: block; position: absolute; padding: 0.5rem; opacity: 0; background-color: #ffffff; font-size: 14px; font-weight: 400; color: #222222; border: 1px solid #565656; border-radius: 3px; pointer-events: none; min-width: 80px; max-width: 300px;">
+      <div class="dumbbell-tooltip vcl-tooltip" data-testid="tooltip-container" style="display: block; position: absolute; padding: 0.5rem; opacity: 0; background-color: #ffffff; font-size: 14px; font-weight: 400; color: #222222; border: 1px solid #565656; border-radius: 3px; pointer-events: none; min-width: 80px; max-width: 300px; z-index: 10;">
         <p style="margin: 0;"></p>
       </div>
       <data-table>

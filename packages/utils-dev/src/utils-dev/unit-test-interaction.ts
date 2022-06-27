@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -166,7 +166,9 @@ export const interaction_clickStyle_default_load = {
     negTestSelector: string
   ) => {
     let useFilter = true;
+    let skipStrokeTest = false;
     let fillStrokeOpacity = false;
+    let strokeOpacity = false;
     let applyFlushTransitions = true;
     let runJestTimers = false;
     let customRadiusModifier = [0, 0, 0, 0, 0];
@@ -175,8 +177,12 @@ export const interaction_clickStyle_default_load = {
       Object.keys(testProps).forEach(testProp => {
         if (testProp === 'useFilter') {
           useFilter = testProps[testProp];
+        } else if (testProp === 'skipStrokeTest') {
+          skipStrokeTest = testProps[testProp];
         } else if (testProp === 'fillStrokeOpacity') {
           fillStrokeOpacity = testProps[testProp];
+        } else if (testProp === 'strokeOpacity') {
+          strokeOpacity = testProps[testProp];
         } else if (testProp === 'applyFlushTransitions') {
           applyFlushTransitions = testProps[testProp];
         } else if (testProp === 'customRadiusModifier') {
@@ -190,7 +196,7 @@ export const interaction_clickStyle_default_load = {
         }
       });
     }
-    component.clickHighlight = [component.data[0]];
+    component.clickHighlight = component.data ? [component.data[0]] : [component.linkData[0]];
     const expectedMorphRadius = [
       1 + customRadiusModifier[0],
       0 + customRadiusModifier[1],
@@ -274,10 +280,14 @@ export const interaction_clickStyle_default_load = {
       expect(selectedMarkFilterPrimaryColorFlood).toEqualAttribute('flood-color', expectedStrokeColor);
     } else {
       // STROKE WIDTH TESTS
-      expect(selectedMark).toEqualAttribute(
-        'stroke-width',
-        component.tagName.toLowerCase() === 'scatter-plot' ? expectedScatterStrokeWidth : DEFAULTCLICKSTYLE.strokeWidth
-      );
+      if (!skipStrokeTest) {
+        expect(selectedMark).toEqualAttribute(
+          'stroke-width',
+          component.tagName.toLowerCase() === 'scatter-plot'
+            ? expectedScatterStrokeWidth
+            : DEFAULTCLICKSTYLE.strokeWidth
+        );
+      }
 
       // STROKE COLOR TEST
       expect(selectedMark).toEqualAttribute('stroke', expectedStrokeColor);
@@ -286,6 +296,8 @@ export const interaction_clickStyle_default_load = {
     // HOVER OPACITY TEST
     if (fillStrokeOpacity) {
       expect(notSelectedMark).toEqualAttribute('fill-opacity', DEFAULTHOVEROPACITY);
+      expect(notSelectedMark).toEqualAttribute('stroke-opacity', DEFAULTHOVEROPACITY);
+    } else if (strokeOpacity) {
       expect(notSelectedMark).toEqualAttribute('stroke-opacity', DEFAULTHOVEROPACITY);
     } else {
       expect(notSelectedMark).toEqualAttribute('opacity', DEFAULTHOVEROPACITY);
@@ -314,7 +326,9 @@ export const interaction_clickStyle_custom_load = {
     const EXPECTEDCLICKSTYLE = testProps['clickStyle'] ? testProps['clickStyle'] : CUSTOMCLICKSTYLE;
     const EXPECTEDHOVEROPACITY = testProps['hoverOpacity'] ? testProps['hoverOpacity'] : CUSTOMHOVEROPACITY;
     let useFilter = true;
+    let skipStrokeTest = false;
     let fillStrokeOpacity = false;
+    let strokeOpacity = false;
     let applyFlushTransitions = true;
     let customRadiusModifier = [0, 0, 0, 0, 0];
     let transitionEndAllSelector;
@@ -323,8 +337,12 @@ export const interaction_clickStyle_custom_load = {
       Object.keys(testProps).forEach(testProp => {
         if (testProp === 'useFilter') {
           useFilter = testProps[testProp];
+        } else if (testProp === 'skipStrokeTest') {
+          skipStrokeTest = testProps[testProp];
         } else if (testProp === 'fillStrokeOpacity') {
           fillStrokeOpacity = testProps[testProp];
+        } else if (testProp === 'strokeOpacity') {
+          strokeOpacity = testProps[testProp];
         } else if (testProp === 'applyFlushTransitions') {
           applyFlushTransitions = testProps[testProp];
         } else if (testProp === 'customRadiusModifier') {
@@ -338,7 +356,7 @@ export const interaction_clickStyle_custom_load = {
         }
       });
     }
-    component.clickHighlight = [component.data[0]];
+    component.clickHighlight = component.data ? [component.data[0]] : [component.linkData[0]];
     component.clickStyle = EXPECTEDCLICKSTYLE;
     component.hoverOpacity = EXPECTEDHOVEROPACITY;
     const expectedMorphRadius = [
@@ -379,7 +397,8 @@ export const interaction_clickStyle_custom_load = {
     }
 
     // FIGURE OUT WHAT COLOR THEY ARE AND DETERMINE EXPECTED STROKE USING OUR UTIL
-    const expectedStrokeColor = getAccessibleStrokes(EXPECTEDCLICKSTYLE.color)[0];
+    const expectedStrokeColor =
+      !useFilter && skipStrokeTest ? EXPECTEDCLICKSTYLE.color : getAccessibleStrokes(EXPECTEDCLICKSTYLE.color)[0];
     const expectedScatterStrokeWidth = EXPECTEDCLICKSTYLE.strokeWidth / component.dotRadius;
 
     // DETERMINE WHICH TYPE OF TEST WE ARE DOING (TEXTURE BASED FILTER OR NOT)
@@ -407,10 +426,14 @@ export const interaction_clickStyle_custom_load = {
       expect(selectedMark).toEqualAttribute('fill', EXPECTEDCLICKSTYLE.color);
     } else {
       // STROKE WIDTH TESTS
-      expect(selectedMark).toEqualAttribute(
-        'stroke-width',
-        component.tagName.toLowerCase() === 'scatter-plot' ? expectedScatterStrokeWidth : EXPECTEDCLICKSTYLE.strokeWidth
-      );
+      if (!skipStrokeTest) {
+        expect(selectedMark).toEqualAttribute(
+          'stroke-width',
+          component.tagName.toLowerCase() === 'scatter-plot'
+            ? expectedScatterStrokeWidth
+            : EXPECTEDCLICKSTYLE.strokeWidth
+        );
+      }
 
       // STROKE COLOR TEST
       expect(selectedMark).toEqualAttribute('stroke', expectedStrokeColor);
@@ -424,6 +447,8 @@ export const interaction_clickStyle_custom_load = {
     // HOVER OPACITY TEST
     if (fillStrokeOpacity) {
       expect(notSelectedMark).toEqualAttribute('fill-opacity', EXPECTEDHOVEROPACITY);
+      expect(notSelectedMark).toEqualAttribute('stroke-opacity', EXPECTEDHOVEROPACITY);
+    } else if (strokeOpacity) {
       expect(notSelectedMark).toEqualAttribute('stroke-opacity', EXPECTEDHOVEROPACITY);
     } else {
       expect(notSelectedMark).toEqualAttribute('opacity', EXPECTEDHOVEROPACITY);
@@ -452,7 +477,9 @@ export const interaction_clickStyle_custom_update = {
     const EXPECTEDCLICKSTYLE = testProps['clickStyle'] ? testProps['clickStyle'] : CUSTOMCLICKSTYLE;
     const EXPECTEDHOVEROPACITY = testProps['hoverOpacity'] ? testProps['hoverOpacity'] : CUSTOMHOVEROPACITY;
     let useFilter = true;
+    let skipStrokeTest = false;
     let fillStrokeOpacity = false;
+    let strokeOpacity = false;
     let applyFlushTransitions = true;
     let runJestTimers = false;
     let customRadiusModifier = [0, 0, 0, 0, 0];
@@ -461,8 +488,12 @@ export const interaction_clickStyle_custom_update = {
       Object.keys(testProps).forEach(testProp => {
         if (testProp === 'useFilter') {
           useFilter = testProps[testProp];
+        } else if (testProp === 'skipStrokeTest') {
+          skipStrokeTest = testProps[testProp];
         } else if (testProp === 'fillStrokeOpacity') {
           fillStrokeOpacity = testProps[testProp];
+        } else if (testProp === 'strokeOpacity') {
+          strokeOpacity = testProps[testProp];
         } else if (testProp === 'applyFlushTransitions') {
           applyFlushTransitions = testProps[testProp];
         } else if (testProp === 'runJestTimers') {
@@ -512,7 +543,7 @@ export const interaction_clickStyle_custom_update = {
     }
 
     // ACT UPDATE
-    component.clickHighlight = [component.data[0]];
+    component.clickHighlight = component.data ? [component.data[0]] : [component.linkData[0]];
     await page.waitForChanges();
 
     // ASSERT
@@ -524,7 +555,8 @@ export const interaction_clickStyle_custom_update = {
     }
 
     // FIGURE OUT WHAT COLOR THEY ARE AND DETERMINE EXPECTED STROKE USING OUR UTIL
-    const expectedStrokeColor = getAccessibleStrokes(EXPECTEDCLICKSTYLE.color)[0];
+    const expectedStrokeColor =
+      !useFilter && skipStrokeTest ? EXPECTEDCLICKSTYLE.color : getAccessibleStrokes(EXPECTEDCLICKSTYLE.color)[0];
     const expectedScatterStrokeWidth = EXPECTEDCLICKSTYLE.strokeWidth / component.dotRadius;
 
     // DETERMINE WHICH TYPE OF TEST WE ARE DOING (TEXTURE BASED FILTER OR NOT)
@@ -552,10 +584,14 @@ export const interaction_clickStyle_custom_update = {
       expect(selectedMark).toEqualAttribute('fill', EXPECTEDCLICKSTYLE.color);
     } else {
       // STROKE WIDTH TESTS
-      expect(selectedMark).toEqualAttribute(
-        'stroke-width',
-        component.tagName.toLowerCase() === 'scatter-plot' ? expectedScatterStrokeWidth : EXPECTEDCLICKSTYLE.strokeWidth
-      );
+      if (!skipStrokeTest) {
+        expect(selectedMark).toEqualAttribute(
+          'stroke-width',
+          component.tagName.toLowerCase() === 'scatter-plot'
+            ? expectedScatterStrokeWidth
+            : EXPECTEDCLICKSTYLE.strokeWidth
+        );
+      }
 
       // STROKE COLOR TEST
       expect(selectedMark).toEqualAttribute('stroke', expectedStrokeColor);
@@ -573,6 +609,8 @@ export const interaction_clickStyle_custom_update = {
     // HOVER OPACITY TEST
     if (fillStrokeOpacity) {
       expect(notSelectedMark).toEqualAttribute('fill-opacity', EXPECTEDHOVEROPACITY);
+      expect(notSelectedMark).toEqualAttribute('stroke-opacity', EXPECTEDHOVEROPACITY);
+    } else if (strokeOpacity) {
       expect(notSelectedMark).toEqualAttribute('stroke-opacity', EXPECTEDHOVEROPACITY);
     } else {
       expect(notSelectedMark).toEqualAttribute('opacity', EXPECTEDHOVEROPACITY);
@@ -598,7 +636,9 @@ export const interaction_hoverStyle_default_load = {
     negTestSelector: string
   ) => {
     let useFilter = true;
+    let skipStrokeTest = false;
     let fillStrokeOpacity = false;
+    let strokeOpacity = false;
     let applyFlushTransitions = true;
     let customRadiusModifier = [0, 0, 0, 0, 0];
     let transitionEndAllSelector;
@@ -607,8 +647,12 @@ export const interaction_hoverStyle_default_load = {
       Object.keys(testProps).forEach(testProp => {
         if (testProp === 'useFilter') {
           useFilter = testProps[testProp];
+        } else if (testProp === 'skipStrokeTest') {
+          skipStrokeTest = testProps[testProp];
         } else if (testProp === 'fillStrokeOpacity') {
           fillStrokeOpacity = testProps[testProp];
+        } else if (testProp === 'strokeOpacity') {
+          strokeOpacity = testProps[testProp];
         } else if (testProp === 'applyFlushTransitions') {
           applyFlushTransitions = testProps[testProp];
         } else if (testProp === 'customRadiusModifier') {
@@ -622,7 +666,7 @@ export const interaction_hoverStyle_default_load = {
         }
       });
     }
-    component.hoverHighlight = component.data[0];
+    component.hoverHighlight = component.data ? component.data[0] : component.linkData[0];
     const expectedMorphRadius = [
       1 + customRadiusModifier[0],
       0 + customRadiusModifier[1],
@@ -725,10 +769,14 @@ export const interaction_hoverStyle_default_load = {
       );
     } else {
       // STROKE WIDTH TESTS
-      expect(selectedMark).toEqualAttribute(
-        'stroke-width',
-        component.tagName.toLowerCase() === 'scatter-plot' ? expectedScatterStrokeWidth : DEFAULTCLICKSTYLE.strokeWidth
-      );
+      if (!skipStrokeTest) {
+        expect(selectedMark).toEqualAttribute(
+          'stroke-width',
+          component.tagName.toLowerCase() === 'scatter-plot'
+            ? expectedScatterStrokeWidth
+            : DEFAULTCLICKSTYLE.strokeWidth
+        );
+      }
 
       // STROKE COLOR TEST
       expect(selectedMark).toEqualAttribute('stroke', expectedStrokeColor);
@@ -739,6 +787,8 @@ export const interaction_hoverStyle_default_load = {
     // HOVER OPACITY TEST
     if (fillStrokeOpacity) {
       expect(notSelectedMark).toEqualAttribute('fill-opacity', DEFAULTHOVEROPACITY);
+      expect(notSelectedMark).toEqualAttribute('stroke-opacity', DEFAULTHOVEROPACITY);
+    } else if (strokeOpacity) {
       expect(notSelectedMark).toEqualAttribute('stroke-opacity', DEFAULTHOVEROPACITY);
     } else {
       expect(notSelectedMark).toEqualAttribute('opacity', DEFAULTHOVEROPACITY);
@@ -767,7 +817,9 @@ export const interaction_hoverStyle_custom_load = {
     const EXPECTEDHOVERSTYLE = testProps['hoverStyle'] ? testProps['hoverStyle'] : CUSTOMCLICKSTYLE;
     const EXPECTEDHOVEROPACITY = testProps['hoverOpacity'] ? testProps['hoverOpacity'] : CUSTOMHOVEROPACITY;
     let useFilter = true;
+    let skipStrokeTest = false;
     let fillStrokeOpacity = false;
+    let strokeOpacity = false;
     let applyFlushTransitions = true;
     let customRadiusModifier = [0, 0, 0, 0, 0];
     let transitionEndAllSelector;
@@ -776,8 +828,12 @@ export const interaction_hoverStyle_custom_load = {
       Object.keys(testProps).forEach(testProp => {
         if (testProp === 'useFilter') {
           useFilter = testProps[testProp];
+        } else if (testProp === 'skipStrokeTest') {
+          skipStrokeTest = testProps[testProp];
         } else if (testProp === 'fillStrokeOpacity') {
           fillStrokeOpacity = testProps[testProp];
+        } else if (testProp === 'strokeOpacity') {
+          strokeOpacity = testProps[testProp];
         } else if (testProp === 'applyFlushTransitions') {
           applyFlushTransitions = testProps[testProp];
         } else if (testProp === 'customRadiusModifier') {
@@ -791,7 +847,7 @@ export const interaction_hoverStyle_custom_load = {
         }
       });
     }
-    component.hoverHighlight = component.data[0];
+    component.hoverHighlight = component.data ? component.data[0] : component.linkData[0];
     component.hoverStyle = EXPECTEDHOVERSTYLE;
     component.hoverOpacity = EXPECTEDHOVEROPACITY;
     const expectedMorphRadius = [
@@ -832,7 +888,8 @@ export const interaction_hoverStyle_custom_load = {
     }
 
     // FIGURE OUT WHAT COLOR THEY ARE AND DETERMINE EXPECTED STROKE USING OUR UTIL
-    const expectedStrokeColor = getAccessibleStrokes(EXPECTEDHOVERSTYLE.color)[0];
+    const expectedStrokeColor =
+      !useFilter && skipStrokeTest ? EXPECTEDHOVERSTYLE.color : getAccessibleStrokes(EXPECTEDHOVERSTYLE.color)[0];
     const expectedScatterStrokeWidth = EXPECTEDHOVERSTYLE.strokeWidth / component.dotRadius;
 
     // DETERMINE WHICH TYPE OF TEST WE ARE DOING (TEXTURE BASED FILTER OR NOT)
@@ -878,10 +935,14 @@ export const interaction_hoverStyle_custom_load = {
       );
     } else {
       // STROKE WIDTH TESTS
-      expect(selectedMark).toEqualAttribute(
-        'stroke-width',
-        component.tagName.toLowerCase() === 'scatter-plot' ? expectedScatterStrokeWidth : EXPECTEDHOVERSTYLE.strokeWidth
-      );
+      if (!skipStrokeTest) {
+        expect(selectedMark).toEqualAttribute(
+          'stroke-width',
+          component.tagName.toLowerCase() === 'scatter-plot'
+            ? expectedScatterStrokeWidth
+            : EXPECTEDHOVERSTYLE.strokeWidth
+        );
+      }
 
       // STROKE COLOR TEST
       expect(selectedMark).toEqualAttribute('stroke', expectedStrokeColor);
@@ -894,6 +955,8 @@ export const interaction_hoverStyle_custom_load = {
     // HOVER OPACITY TEST
     if (fillStrokeOpacity) {
       expect(notSelectedMark).toEqualAttribute('fill-opacity', EXPECTEDHOVEROPACITY);
+      expect(notSelectedMark).toEqualAttribute('stroke-opacity', EXPECTEDHOVEROPACITY);
+    } else if (strokeOpacity) {
       expect(notSelectedMark).toEqualAttribute('stroke-opacity', EXPECTEDHOVEROPACITY);
     } else {
       expect(notSelectedMark).toEqualAttribute('opacity', EXPECTEDHOVEROPACITY);
@@ -922,7 +985,9 @@ export const interaction_hoverStyle_custom_update = {
     const EXPECTEDHOVERSTYLE = testProps['hoverStyle'] ? testProps['hoverStyle'] : CUSTOMCLICKSTYLE;
     const EXPECTEDHOVEROPACITY = testProps['hoverOpacity'] ? testProps['hoverOpacity'] : CUSTOMHOVEROPACITY;
     let useFilter = true;
+    let skipStrokeTest = false;
     let fillStrokeOpacity = false;
+    let strokeOpacity = false;
     let applyFlushTransitions = true;
     let customRadiusModifier = [0, 0, 0, 0, 0];
     let transitionEndAllSelector;
@@ -931,8 +996,12 @@ export const interaction_hoverStyle_custom_update = {
       Object.keys(testProps).forEach(testProp => {
         if (testProp === 'useFilter') {
           useFilter = testProps[testProp];
+        } else if (testProp === 'skipStrokeTest') {
+          skipStrokeTest = testProps[testProp];
         } else if (testProp === 'fillStrokeOpacity') {
           fillStrokeOpacity = testProps[testProp];
+        } else if (testProp === 'strokeOpacity') {
+          strokeOpacity = testProps[testProp];
         } else if (testProp === 'applyFlushTransitions') {
           applyFlushTransitions = testProps[testProp];
         } else if (testProp === 'customRadiusModifier') {
@@ -968,7 +1037,7 @@ export const interaction_hoverStyle_custom_update = {
     }
 
     // ACT UPDATE
-    component.hoverHighlight = component.data[0];
+    component.hoverHighlight = component.data ? component.data[0] : component.linkData[0];
     await page.waitForChanges();
 
     // ASSERT
@@ -994,7 +1063,8 @@ export const interaction_hoverStyle_custom_update = {
     }
 
     // FIGURE OUT WHAT COLOR THEY ARE AND DETERMINE EXPECTED STROKE USING OUR UTIL
-    const expectedStrokeColor = getAccessibleStrokes(EXPECTEDHOVERSTYLE.color)[0];
+    const expectedStrokeColor =
+      !useFilter && skipStrokeTest ? EXPECTEDHOVERSTYLE.color : getAccessibleStrokes(EXPECTEDHOVERSTYLE.color)[0];
     const expectedScatterStrokeWidth = EXPECTEDHOVERSTYLE.strokeWidth / component.dotRadius;
 
     // DETERMINE WHICH TYPE OF TEST WE ARE DOING (TEXTURE BASED FILTER OR NOT)
@@ -1040,10 +1110,14 @@ export const interaction_hoverStyle_custom_update = {
       );
     } else {
       // STROKE WIDTH TESTS
-      expect(selectedMark).toEqualAttribute(
-        'stroke-width',
-        component.tagName.toLowerCase() === 'scatter-plot' ? expectedScatterStrokeWidth : EXPECTEDHOVERSTYLE.strokeWidth
-      );
+      if (!skipStrokeTest) {
+        expect(selectedMark).toEqualAttribute(
+          'stroke-width',
+          component.tagName.toLowerCase() === 'scatter-plot'
+            ? expectedScatterStrokeWidth
+            : EXPECTEDHOVERSTYLE.strokeWidth
+        );
+      }
 
       // STROKE COLOR TEST
       expect(selectedMark).toEqualAttribute('stroke', expectedStrokeColor);
@@ -1060,6 +1134,8 @@ export const interaction_hoverStyle_custom_update = {
     // HOVER OPACITY TEST
     if (fillStrokeOpacity) {
       expect(notSelectedMark).toEqualAttribute('fill-opacity', EXPECTEDHOVEROPACITY);
+      expect(notSelectedMark).toEqualAttribute('stroke-opacity', EXPECTEDHOVEROPACITY);
+    } else if (strokeOpacity) {
       expect(notSelectedMark).toEqualAttribute('stroke-opacity', EXPECTEDHOVEROPACITY);
     } else {
       expect(notSelectedMark).toEqualAttribute('opacity', EXPECTEDHOVEROPACITY);

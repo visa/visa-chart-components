@@ -1239,20 +1239,20 @@
     "height": 325,
     "width": 650,
     "data": [
-      { "num": 20, "group": "Group A", "value": 2700 },
-      { "num": 22, "group": "Group A", "value": 1000 },
-      { "num": 33, "group": "Group A", "value": 4004 },
-      { "num": 42, "group": "Group B", "value": 2454 },
-      { "num": 51, "group": "Group B", "value": 2135 },
-      { "num": 36, "group": "Group B", "value": 1114 },
-      { "num": 27, "group": "Group C", "value": 3845 },
-      { "num": 35, "group": "Group C", "value": 2823 },
-      { "num": 49, "group": "Group C", "value": 1666 },
-      { "num": 60, "group": "Group C", "value": 1421 },
-      { "num": 21, "group": "Group D", "value": 8845 },
-      { "num": 36, "group": "Group D", "value": 6865 },
-      { "num": 45, "group": "Group D", "value": 6154 },
-      { "num": 53, "group": "Group D", "value": 4109 }
+      { "num": 20, "group": "Group A", "value": 2700, "count": 273 },
+      { "num": 22, "group": "Group A", "value": 1000, "count": 45 },
+      { "num": 33, "group": "Group A", "value": 4004, "count": 522 },
+      { "num": 42, "group": "Group B", "value": 2454, "count": 364 },
+      { "num": 51, "group": "Group B", "value": 2135, "count": 102 },
+      { "num": 36, "group": "Group B", "value": 1114, "count": 201 },
+      { "num": 27, "group": "Group C", "value": 3845, "count": 99 },
+      { "num": 35, "group": "Group C", "value": 2823, "count": 413 },
+      { "num": 49, "group": "Group C", "value": 1666, "count": 67 },
+      { "num": 60, "group": "Group C", "value": 1421, "count": 316 },
+      { "num": 21, "group": "Group D", "value": 8845, "count": 245 },
+      { "num": 36, "group": "Group D", "value": 6865, "count": 512 },
+      { "num": 45, "group": "Group D", "value": 6154, "count": 556 },
+      { "num": 53, "group": "Group D", "value": 4109, "count": 189 }
     ],
     "clickEvent": true,
     "hoverEvent": true,
@@ -1277,11 +1277,21 @@
       "labelAccessor": "value",
       "format": "0,0.0[a]"
     },
-    "dotRadius": 6,
+    "sizeConfig": {
+      "sizeAccessor": "count",
+      "dualEncodeColor": true,
+      "minSizeOverride": 3,
+      "maxSizeOverride": 15
+    },
     "dotSymbols": ["circle", "square", "cross", "star"],
     "interactionKeys": ["group"],
     "cursor": "pointer",
-    "showTooltip": false,
+    "showTooltip": true,
+    "tooltipLabel": {
+      "labelAccessor": ["group", "num", "value", "count"],
+      "labelTitle": ["Group", "Number", "Value", "Count"],
+      "format": ["", "0.0a", "$0.0a", "0a"]
+    },
     "legend": { "visible": true, "labels": ["A", "B", "C", "D"] },
     "showBaselineX": false
   },

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -7,6 +7,7 @@
  **/
 import { formatStats } from './formatStats';
 import { select } from 'd3-selection';
+import { scaleSqrt } from 'd3-scale';
 import { symbolCircle, symbolCross, symbolSquare, symbolStar, symbolTriangle, symbolDiamond } from 'd3-shape';
 import { resolveLabelCollision } from './collisionDetection';
 
@@ -21,8 +22,12 @@ export const placeDataLabels = ({
   root,
   xScale,
   yScale,
+  sizeScale,
   ordinalAccessor,
   valueAccessor,
+  groupAccessor,
+  sizeAccessor,
+  shapeArea,
   placement,
   layout,
   labelOffset,
@@ -34,8 +39,12 @@ export const placeDataLabels = ({
   root?: any;
   xScale?: any;
   yScale?: any;
+  sizeScale?: any;
   ordinalAccessor?: any;
   valueAccessor?: any;
+  groupAccessor?: any;
+  sizeAccessor?: any;
+  shapeArea?: any;
   placement?: any;
   layout?: any;
   labelOffset?: any;
@@ -367,6 +376,12 @@ export const placeDataLabels = ({
         break;
     }
   } else if (chartType === 'scatter') {
+    let offsetScale = scaleSqrt()
+      .domain([sizeScale.domain()[0], sizeScale.domain()[1]])
+      .range([1, 4]);
+    let shape = d => shapeArea[groupAccessor ? d[groupAccessor] : '']['shape'];
+    let shapeOffset = d =>
+      sizeScale(d[sizeAccessor] * shapeArea[groupAccessor ? d[groupAccessor] : '']['toCircle']) || labelOffset;
     switch (placement) {
       case 'auto':
         xPlacement = d => xScale(d[ordinalAccessor]);
@@ -382,27 +397,36 @@ export const placeDataLabels = ({
         break;
       case 'top':
         xPlacement = d => xScale(d[ordinalAccessor]);
-        yPlacement = d => yScale(d[valueAccessor]) - labelOffset;
-        offset2 = '-0.35em';
+        yPlacement = d => yScale(d[valueAccessor]) - shapeOffset(d);
+        offset2 = d =>
+          ['diamond', 'triangle', 'star'].includes(shape(d)) && sizeAccessor
+            ? `${-1 * (0.35 + 0.35 * offsetScale(d[sizeAccessor]))}em`
+            : '-0.35em';
+
         textAnchor = 'middle';
         break;
       case 'bottom':
         xPlacement = d => xScale(d[ordinalAccessor]);
-        yPlacement = d => yScale(d[valueAccessor]) + labelOffset;
-        offset2 = '1.1em';
+        yPlacement = d => yScale(d[valueAccessor]) + shapeOffset(d);
+        offset2 = d =>
+          shape(d) === 'diamond' && sizeAccessor
+            ? `${0.75 + 0.5 * offsetScale(d[sizeAccessor])}em`
+            : shape(d) === 'triangle' && sizeAccessor
+            ? `${1.1 - 0.2 * offsetScale(d[sizeAccessor])}em`
+            : '1.1em';
         textAnchor = 'middle';
         break;
       case 'left':
-        xPlacement = d => xScale(d[ordinalAccessor]) - labelOffset;
+        xPlacement = d => xScale(d[ordinalAccessor]) - shapeOffset(d);
         yPlacement = d => yScale(d[valueAccessor]);
-        offset = '-.4em';
+        offset = d => (shape(d) === 'diamond' && sizeAccessor ? '-.2em' : '-.4em');
         offset2 = '0.3em';
         textAnchor = 'end';
         break;
       case 'right':
-        xPlacement = d => xScale(d[ordinalAccessor]) + labelOffset;
+        xPlacement = d => xScale(d[ordinalAccessor]) + shapeOffset(d);
         yPlacement = d => yScale(d[valueAccessor]);
-        offset = '.35em';
+        offset = d => (shape(d) === 'diamond' && sizeAccessor ? '.125em' : '.35em');
         offset2 = '0.3em';
         textAnchor = 'start';
         break;

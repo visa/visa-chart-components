@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -19,6 +19,16 @@ export interface IDataLabelType {
   format?: any;
   collisionHideOnly?: boolean;
   collisionPlacement?: string;
+}
+
+export interface ISizeConfigType {
+  sizeAccessor?: string;
+  minValueOverride?: string | number;
+  maxValueOverride?: string | number;
+  minSizeOverride?: string | number;
+  maxSizeOverride?: string | number;
+  dualEncodeColor?: boolean;
+  // format?: any;
 }
 
 export interface IAxisType {

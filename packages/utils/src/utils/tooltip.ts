@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -22,8 +22,8 @@ const buildTooltipContent = ({
   layout,
   ordinalAccessor,
   valueAccessor,
-  xAccessor, // equivalent to joinNameAccessor / markerNameAccessor in map
-  yAccessor, // equivalent to joinAccessor / markerAccessor in map
+  xAccessor, // equivalent to joinNameAccessor / markerNameAccessor in map and sourceAccessor in alluvial
+  yAccessor, // equivalent to joinAccessor / markerAccessor in map and targetAccessor in alluvial
   groupAccessor, // equivalent to seriesAccessor in line, dumbbell, parallel
   diffLabelDetails,
   normalized,
@@ -245,11 +245,11 @@ const buildTooltipContent = ({
     // alluvial-diagram
     else if (chartType === 'alluvial-diagram') {
       defaultLabel = `
-      <b>${capitalized(data['source'][ordinalAccessor])}</b> to <b>${capitalized(
-        data['target'][ordinalAccessor]
-      )} </b><br/>
+      <b>${capitalized(data[xAccessor])}</b> to <b>${capitalized(data[yAccessor])} </b><br/>
       ${capitalized(valueAccessor) + ':'}
-      <b>${dataLabel && dataLabel.format ? formatStats(data['value'], dataLabel.format) : data['value']}</b>`;
+      <b>${
+        dataLabel && dataLabel.format ? formatStats(data[valueAccessor], dataLabel.format) : data[valueAccessor]
+      }</b>`;
     }
 
     return defaultLabel;
@@ -281,7 +281,8 @@ export const initTooltipStyle = root => {
     .style('border-radius', '3px')
     .style('pointer-events', 'none')
     .style('min-width', '80px')
-    .style('max-width', '300px');
+    .style('max-width', '300px')
+    .style('z-index', 10);
 
   root.append('p').style('margin', 0);
 };
@@ -298,9 +299,9 @@ export const drawTooltip = ({
   layout,
   ordinalAccessor,
   valueAccessor,
-  xAccessor, // equivalent to joinNameAccessor / markerNameAccessor in map
-  yAccessor, // equivalent to joinAccessor / markerAccessor in map
-  groupAccessor, // equivalent to seriesAccessor in line, dumbbell, parallel
+  xAccessor, // equivalent to joinNameAccessor / markerNameAccessor in map and sourceAccessor in alluvial
+  yAccessor, // equivalent to joinAccessor / markerAccessor in map and targetAccessor in alluvial
+  groupAccessor, // equivalent to seriesAccessor in line, dumbbell, parallel,
   diffLabelDetails,
   normalized,
   chartType
@@ -334,8 +335,8 @@ export const drawTooltip = ({
       layout,
       ordinalAccessor,
       valueAccessor,
-      xAccessor, // equivalent to joinNameAccessor / markerNameAccessor in map
-      yAccessor, // equivalent to joinAccessor / markerAccessor in map
+      xAccessor, // equivalent to joinNameAccessor / markerNameAccessor in map and sourceAccessor in alluvial
+      yAccessor, // equivalent to joinAccessor / markerAccessor in map and targetAccessor in alluvial
       groupAccessor, // equivalent to seriesAccessor in line, dumbbell, parallel
       diffLabelDetails,
       normalized,

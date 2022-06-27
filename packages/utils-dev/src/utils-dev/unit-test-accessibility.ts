@@ -20,6 +20,22 @@ const mockBBox = {
   height: 100,
   width: 100
 };
+const mockSVGPoint = {
+  x: 10,
+  y: 10,
+  matrixTransform: () => mockSVGPoint
+};
+
+const mockScreenCTM = {
+  a: 1,
+  b: 0,
+  c: 0,
+  d: 1,
+  e: 120,
+  f: 202.984375,
+  inverse: () => mockScreenCTM
+};
+
 // event polyfills => https://gist.github.com/hagi4u/1f344430ab764dabaa4f73e5a943ff93
 // const mockStopPropagation = () => { this.cancelBubble = true };
 // const mockPreventDefault = () => { this.returnValue = false };
@@ -560,7 +576,7 @@ export const accessibility_keyboard_instructions_default = {
     testSelector: string,
     nextTestSelector: string
   ) => {
-    const defaultHeaderText = 'Select to View Keyboard Instructions';
+    const defaultHeaderText = 'Display Keyboard Instructions';
 
     // if we have any testProps apply them
     if (Object.keys(testProps).length) {
@@ -615,7 +631,7 @@ export const accessibility_keyboard_instructions_focus_state = {
     testSelector: string,
     nextTestSelector: string
   ) => {
-    const defaultHeaderText = 'Select to View Keyboard Instructions';
+    const defaultHeaderText = 'Display Keyboard Instructions';
 
     // if we have any testProps apply them
     if (Object.keys(testProps).length) {
@@ -1501,6 +1517,7 @@ export const accessibility_focus_marker_style = {
   name: 'focus marker style should be applied on focus',
   testProps: {},
   testSelector: '[data-id=mark-id]',
+  nextTestSelector: '[data-id=mark-id]',
   testFunc: async (
     component: any,
     page: SpecPage,
@@ -1531,11 +1548,19 @@ export const accessibility_focus_marker_style = {
 
     // ACT FOCUS
     const markerToFocus = page.root.querySelector(testSelector);
+    const nextMarker = page.root.querySelector(nextTestSelector);
     const markerToFocusParent = markerToFocus.parentNode;
 
     // need to mock bbox on the element and parent g
+    markerToFocus['createSVGPoint'] = () => mockSVGPoint;
+    markerToFocus['getScreenCTM'] = () => mockScreenCTM;
     markerToFocus['getBBox'] = () => mockBBox;
     markerToFocusParent['getBBox'] = () => mockBBox;
+
+    // need to mock additional functions for dumbbell plot testing
+    nextMarker['createSVGPoint'] = () => mockSVGPoint;
+    nextMarker['getScreenCTM'] = () => mockScreenCTM;
+    nextMarker['getBBox'] = () => mockBBox;
 
     // now that bbox is mocked we can fire event
     markerToFocus.dispatchEvent(mockFocusEvent);
@@ -1660,7 +1685,12 @@ export const accessibility_keyboard_selection_test = {
     nextTestSelector: string
   ) => {
     // ARRANGE
-    const expectedData = testProps && testProps['expectedData'] ? testProps['expectedData'] : component.data[0];
+    const expectedData =
+      testProps && testProps['expectedData']
+        ? testProps['expectedData']
+        : component.data
+        ? component.data[0]
+        : component.linkData[0];
     const keyDownObject = { key: 'Space', code: 'Space', keyCode: 32 };
     const _callback = jest.fn();
     const mockKeyboardEvent = new KeyboardEvent('keydown', { ...keyDownObject });
@@ -1681,6 +1711,7 @@ export const accessibility_keyboard_selection_test = {
 
     // ASSERT GROUP MARKER AND THEN ENABLE SVG OWNER ON ITS PARENT
     const markerToClick = page.root.querySelector(testSelector);
+    const nextMarker = page.root.querySelector(nextTestSelector);
     const markerGroup = markerToClick.parentElement;
     Object.defineProperty(markerToClick, 'ownerSVGElement', {
       get: () => ownerSVG,
@@ -1695,8 +1726,17 @@ export const accessibility_keyboard_selection_test = {
       set: () => {} // tslint:disable-line: no-empty
     });
 
+    // Add fake createSVGPoint() and getScreenCTM() to handle polyfill for dumbbell
+    ownerSVG['createSVGPoint'] = () => mockSVGPoint;
+    ownerSVG['getScreenCTM'] = () => mockScreenCTM;
+    markerToClick['createSVGPoint'] = () => mockSVGPoint;
+    markerToClick['getScreenCTM'] = () => mockScreenCTM;
+    nextMarker['createSVGPoint'] = () => mockSVGPoint;
+    nextMarker['getScreenCTM'] = () => mockScreenCTM;
+
     // Add fake BBOX to elements before dispatching events
     markerToClick['getBBox'] = () => mockBBox;
+    nextMarker['getBBox'] = () => mockBBox;
     markerGroup['getBBox'] = () => mockBBox;
 
     // ACT CLICK ON ELEMENT TO POPULATE THE CONTROLLER
@@ -1747,6 +1787,8 @@ export const accessibility_keyboard_nav_generic_test = {
     let geometryPlacementAttributes;
     let selectorAriaLabel;
     let nextSelectorAriaLabel;
+    let groupMarkerOverrideSelector;
+    // let flushMarkSelector;
 
     // if we have any testProps apply them
     if (Object.keys(testProps).length) {
@@ -1757,6 +1799,10 @@ export const accessibility_keyboard_nav_generic_test = {
           selectorAriaLabel = testProps[testProp];
         } else if (testProp === 'nextSelectorAriaLabel') {
           nextSelectorAriaLabel = testProps[testProp];
+        } else if (testProp === 'groupMarkerOverrideSelector') {
+          groupMarkerOverrideSelector = testProps[testProp];
+          // } else if (testProp === 'flushMarkSelector') {
+          //   flushMarkSelector = testProps[testProp];
         } else {
           component[testProp] = testProps[testProp];
         }
@@ -1768,12 +1814,24 @@ export const accessibility_keyboard_nav_generic_test = {
     page.root.appendChild(component);
     await page.waitForChanges();
 
+    // DO NOT THINK WE NEED THIS
+    // FLUSH ANY OOB TRANSITIONS ON ELEMENTS
+    // if ( flushMarkSelector ) {
+    //   const marks = page.root.querySelectorAll(flushMarkSelector);
+    //   await asyncForEach(marks, async mark => {
+    //     flushTransitions(mark);
+    //     await page.waitForChanges();
+    //   });
+    // }
+
     // SELECT THE BAR GROUP AND MOCK THE OWNER SVG ELEMENT SINCE JSDOM DOESN'T HAVE THIS
     const ownerSVG = page.root.querySelector('[data-testid=chart-container] svg');
 
     // ASSERT GROUP MARKER AND THEN ENABLE SVG OWNER ON ITS PARENT
     const markerToFocus = page.root.querySelector(testSelector);
-    const markerGroup = markerToFocus.parentElement;
+    const markerGroup = groupMarkerOverrideSelector
+      ? page.root.querySelector(groupMarkerOverrideSelector)
+      : markerToFocus.parentElement;
     Object.defineProperty(markerToFocus, 'ownerSVGElement', {
       get: () => ownerSVG,
       set: () => {} // tslint:disable-line: no-empty
@@ -1787,9 +1845,22 @@ export const accessibility_keyboard_nav_generic_test = {
       set: () => {} // tslint:disable-line: no-empty
     });
 
+    // Add fake createSVGPoint() to handle polyfill for dumbbell
+    ownerSVG['createSVGPoint'] = () => mockSVGPoint;
+    ownerSVG['getScreenCTM'] = () => mockScreenCTM;
+    markerToFocus['createSVGPoint'] = () => mockSVGPoint;
+    markerToFocus['getScreenCTM'] = () => mockScreenCTM;
+
     // Add fake BBOX to elements before dispatching events
     markerToFocus['getBBox'] = () => mockBBox;
     markerGroup['getBBox'] = () => mockBBox;
+
+    // polyfill marker receiving focus as well
+    const markerReceiveFocus = page.root.querySelector(nextTestSelector);
+    // polyfill dumbbell functions for finding maker index
+    markerReceiveFocus['createSVGPoint'] = () => mockSVGPoint;
+    markerReceiveFocus['getScreenCTM'] = () => mockScreenCTM;
+    markerReceiveFocus['getBBox'] = () => mockBBox;
 
     // ACT CLICK ON ELEMENT TO POPULATE THE CONTROLLER
     markerToFocus.dispatchEvent(mockFocusEvent);
@@ -1815,9 +1886,10 @@ export const accessibility_keyboard_nav_generic_test = {
     await page.waitForChanges();
 
     // NOW THAT WE ARE FOCUSED MOCK .focus() on mark to receive focus
-    const markerReceiveFocus = page.root.querySelector(nextTestSelector);
+    // const markerReceiveFocus = page.root.querySelector(nextTestSelector);
     const newFocusedFigure = controllerContainer.querySelector('.VCL-controller-focused');
     const markerReceiveFocusChildrenCount = (markerReceiveFocus.childNodes || []).length;
+    // polyfill focus and getBBOx for the group level
     markerReceiveFocus['focus'] = () => markerReceiveFocus.dispatchEvent(mockFocusEvent);
     markerGroup['getBBox'] = () => mockBBox;
 
@@ -1850,7 +1922,11 @@ export const accessibility_keyboard_nav_generic_test = {
         expect(clonedMarker).toEqualAttribute(attr, markerReceiveFocus.getAttribute(attr));
       });
     } else {
-      const focusMarkers = markerReceiveFocus.parentNode.querySelectorAll('.vcl-accessibility-focus-highlight');
+      const focusMarkers =
+        markerReceiveFocus.parentNode['getAttribute']('tabindex') === null ||
+        markerReceiveFocus.parentNode['classList'].conatins('offset-target')
+          ? markerReceiveFocus.parentNode.parentNode.querySelectorAll('.vcl-accessibility-focus-highlight')
+          : markerReceiveFocus.parentNode.querySelectorAll('.vcl-accessibility-focus-highlight');
       expect(focusMarkers).toBeTruthy();
       expect(focusMarkers.length).toEqual(3);
     }
@@ -1993,7 +2069,9 @@ export const accessibility_xaxis_description_added_on_update = {
 
     // ASSERT
     const xAxisAccessibilityDescriptionContainer = page.doc.querySelector(testSelector);
-    const xAxisTicks = page.doc.querySelectorAll('[data-testid=x-axis] [data-testid=axis-tick-text]');
+    const xAxisTicks = page.doc.querySelectorAll(
+      '[data-testid=padding-container] > [data-testid=x-axis] [data-testid=axis-tick-text]'
+    );
 
     // we are going to use the existing axis to mock the description
     const firstTickText = xAxisTicks[0].textContent;
@@ -2037,7 +2115,9 @@ export const accessibility_yaxis_description_set_on_load = {
 
     // ACT
     const yAxisAccessibilityDescriptionContainer = page.doc.querySelector(testSelector);
-    const yAxisTicks = page.doc.querySelectorAll('[data-testid=y-axis] [data-testid=axis-tick-text]');
+    const yAxisTicks = page.doc.querySelectorAll(
+      '[data-testid=padding-container] > [data-testid=y-axis] [data-testid=axis-tick-text]'
+    );
 
     // we are going to use the existing axis to mock the description
     const firstTickText = yAxisTicks[0].textContent;
@@ -2205,6 +2285,19 @@ export const accessibility_textures_off_on_load = {
     testSelector: string,
     nextTestSelector: string
   ) => {
+    let testStroke;
+
+    // if we have any testProps apply them
+    if (Object.keys(testProps).length) {
+      Object.keys(testProps).forEach(testProp => {
+        if (testProp === 'testStroke') {
+          testStroke = testProps[testProp];
+        } else {
+          component[testProp] = testProps[testProp];
+        }
+      });
+    }
+
     // ARRANGE
     component.accessibility = { ...component.accessibility, hideTextures: true };
     component.colorPalette = 'single_ossBlue';
@@ -2221,8 +2314,9 @@ export const accessibility_textures_off_on_load = {
     await page.waitForChanges();
 
     // ASSERT
+    const attributeToTest = testStroke ? 'stroke' : 'fill';
     const marker = page.doc.querySelector(testSelector);
-    expect(marker).toEqualAttribute('fill', visaColors.oss_blue);
+    expect(marker).toEqualAttribute(attributeToTest, visaColors.oss_blue);
   }
 };
 
@@ -2239,6 +2333,19 @@ export const accessibility_textures_off_on_update = {
     testSelector: string,
     nextTestSelector: string
   ) => {
+    let testStroke;
+
+    // if we have any testProps apply them
+    if (Object.keys(testProps).length) {
+      Object.keys(testProps).forEach(testProp => {
+        if (testProp === 'testStroke') {
+          testStroke = testProps[testProp];
+        } else {
+          component[testProp] = testProps[testProp];
+        }
+      });
+    }
+
     // ARRANGE
     component.colorPalette = 'single_ossBlue';
 
@@ -2258,8 +2365,9 @@ export const accessibility_textures_off_on_update = {
     await page.waitForChanges();
 
     // ASSERT
+    const attributeToTest = testStroke ? 'stroke' : 'fill';
     const marker = page.doc.querySelector(testSelector);
-    expect(marker).toEqualAttribute('fill', visaColors.oss_blue);
+    expect(marker).toEqualAttribute(attributeToTest, visaColors.oss_blue);
   }
 };
 

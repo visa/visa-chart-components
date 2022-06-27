@@ -33,6 +33,7 @@
         <li><a href="#fit-line-props">Fit Line Props</a></li>
         <li><a href="#label-props">Label Props</a></li>
         <li><a href="#margin-and-padding-props">Margin & Padding Props</a></li>
+        <li><a href="#marker-props">Marker Props</a></li>
         <li><a href="#style-props">Style Props</a></li>
         <li><a href="#reference-line-props">Reference Line Props</a></li>
       </ul>
@@ -367,15 +368,37 @@ const mouseOutHandler = evt => {
 <br>
 <br>
 
+### <a name="marker-props" href="#marker-props">#</a> Marker Props [<>](./src/components/scatter-plot/scatter-plot.tsx 'Source')
+
+| Name         | Type                 | Default Value(s)                        | Description                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| ------------ | -------------------- | --------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `sizeConfig` | object (custom type) | [ISizeType](../types/src/prop-types.ts) | Manages settings for the chart's data driven marker size, _see object definition below_. Mark size is calculated using a square-root based scale, ensuring the surface area of the mark is proportional to the value. The chart dimensions determine the default range in size of the marks, further maintaining proportionality. Mark area is consistent across spectrum of dotSymbols array, i.e., marks are sized by area, independent of shape. |
+| `dotOpacity` | number               | 1                                       | Sets the opacity of data points.                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| `dotRadius`  | number               | 6                                       | Sets the radius of data points, if visible. _Overridden by `sizeConfig`_                                                                                                                                                                                                                                                                                                                                                                            |
+| `dotSymbols` | string[]             | ['circle']                              | Array of symbol types that are assigned in order using groupAccessor. Accepts 'circle', 'cross', 'diamond', 'square', 'star', and 'triangle'.                                                                                                                                                                                                                                                                                                       |
+
+<br>
+
+#### ISizeType Definition
+
+| Name (xAxis./yAxis.) | Type    | Default Value(s) | Description                                                               |
+| -------------------- | ------- | ---------------- | ------------------------------------------------------------------------- |
+| `sizeAccessor`       | string  | ''               | Key which determines the value used to size each mark                     |
+| `minValueOverride`   | number  | ''               | Overrides the calculated default min value for the mark size scale domain |
+| `maxValueOverride`   | number  | ''               | Overrides the calculated default max value for the mark size scale domain |
+| `minSizeOverride`    | number  | ''               | Overrides the calculated default min size for the mark size scale range   |
+| `maxSizeOverride`    | number  | ''               | Overrides the calculated default max size for the mark size scale range   |
+| `dualEncodeColor`    | boolean | false            | Enables dual color encoding to aid in data comprehension of size scale.   |
+
+<br>
+<br>
+
 ### <a name="style-props" href="#style-props">#</a> Style Props [<>](./src/components/scatter-plot/scatter-plot.tsx 'Source')
 
 | Name           | Type     | Default Value(s) | Description                                                                                                                                    |
 | -------------- | -------- | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
 | `colorPalette` | string   | 'single_blue'    | Included color palettes can be found in our [color utility](../utils#colors). Overridden by colors.                                            |
 | `colors`       | string[] | `undefined`      | Accepts array of color strings or color values to customize colors beyond our palettes. Overridden by groupAccessor, colors assigned in order. |
-| `dotOpacity`   | number   | 1                | Sets the opacity of data points.                                                                                                               |
-| `dotRadius`    | number   | 6                | Sets the radius of data points, if visible.                                                                                                    |
-| `dotSymbols`   | string[] | ['circle']       | Array of symbol types that are assigned in order using groupAccessor. Accepts 'circle', 'cross', 'diamond', 'square', 'star', and 'triangle'.  |
 
 <br>
 <br>

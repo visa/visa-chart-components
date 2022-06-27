@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2022 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -115,7 +115,7 @@ export const xaxis_visible_default = {
   group: 'axes',
   name: 'axis should be visible by default',
   testProps: {},
-  testSelector: '[data-testid=x-axis]',
+  testSelector: '[data-testid=padding-container] > [data-testid=x-axis]',
   testFunc: async (component: any, page: SpecPage, testProps: object, testSelector: string, expectedOutput: any) => {
     // ARRANGE
     // if we have any testProps apply them
@@ -142,7 +142,7 @@ export const yaxis_visible_default = {
   group: 'axes',
   name: 'axis should be visible by default',
   testProps: {},
-  testSelector: '[data-testid=y-axis]',
+  testSelector: '[data-testid=padding-container] > [data-testid=y-axis]',
   testFunc: async (component: any, page: SpecPage, testProps: object, testSelector: string, expectedOutput: any) => {
     // ARRANGE
     // if we have any testProps apply them
@@ -169,7 +169,7 @@ export const xaxis_visible_false_load = {
   group: 'axes',
   name: 'axis should not be visible when passed on load',
   testProps: {},
-  testSelector: '[data-testid=x-axis]',
+  testSelector: '[data-testid=padding-container] > [data-testid=x-axis]',
   testFunc: async (component: any, page: SpecPage, testProps: object, testSelector: string, expectedOutput: any) => {
     // ARRANGE
     component.xAxis = { visible: false };
@@ -197,7 +197,7 @@ export const yaxis_visible_false_load = {
   group: 'axes',
   name: 'axis should not be visible when passed on load',
   testProps: {},
-  testSelector: '[data-testid=y-axis]',
+  testSelector: '[data-testid=padding-container] > [data-testid=y-axis]',
   testFunc: async (component: any, page: SpecPage, testProps: object, testSelector: string, expectedOutput: any) => {
     // ARRANGE
     component.yAxis = { visible: false };
@@ -225,7 +225,7 @@ export const xaxis_visible_false_update = {
   group: 'axes',
   name: 'axis should not be visible when passed on update',
   testProps: {},
-  testSelector: '[data-testid=x-axis]',
+  testSelector: '[data-testid=padding-container] > [data-testid=x-axis]',
   testFunc: async (component: any, page: SpecPage, testProps: object, testSelector: string, expectedOutput: any) => {
     // ARRANGE
     // if we have any testProps apply them
@@ -256,7 +256,7 @@ export const yaxis_visible_false_update = {
   group: 'axes',
   name: 'axis should not be visible when passed on update',
   testProps: {},
-  testSelector: '[data-testid=y-axis]',
+  testSelector: '[data-testid=padding-container] > [data-testid=y-axis]',
   testFunc: async (component: any, page: SpecPage, testProps: object, testSelector: string, expectedOutput: any) => {
     // ARRANGE
     // if we have any testProps apply them
@@ -486,7 +486,7 @@ export const xaxis_label_default = {
   group: 'axes',
   name: 'axis label should be X Axis by default',
   testProps: {},
-  testSelector: '[data-testid=x-axis-label]',
+  testSelector: '[data-testid=padding-container] > [data-testid=x-axis-label]',
   testFunc: async (component: any, page: SpecPage, testProps: object, testSelector: string, expectedOutput: any) => {
     // ARRANGE
     // if we have any testProps apply them
@@ -511,7 +511,7 @@ export const yaxis_label_default = {
   group: 'axes',
   name: 'axis label should be Y Axis by default',
   testProps: {},
-  testSelector: '[data-testid=y-axis-label]',
+  testSelector: '[data-testid=padding-container] > [data-testid=y-axis-label]',
   testFunc: async (component: any, page: SpecPage, testProps: object, testSelector: string, expectedOutput: any) => {
     // ARRANGE
     // if we have any testProps apply them
@@ -536,7 +536,7 @@ export const xaxis_label_load = {
   group: 'axes',
   name: 'axis label should be passed on load',
   testProps: {},
-  testSelector: '[data-testid=x-axis-label]',
+  testSelector: '[data-testid=padding-container] > [data-testid=x-axis-label]',
   testFunc: async (component: any, page: SpecPage, testProps: object, testSelector: string, expectedOutput: any) => {
     // ARRANGE
     component.xAxis = {
@@ -570,7 +570,7 @@ export const yaxis_label_load = {
   group: 'axes',
   name: 'axis label should be passed on load',
   testProps: {},
-  testSelector: '[data-testid=y-axis-label]',
+  testSelector: '[data-testid=padding-container] > [data-testid=y-axis-label]',
   testFunc: async (component: any, page: SpecPage, testProps: object, testSelector: string, expectedOutput: any) => {
     // ARRANGE
     component.yAxis = {
@@ -603,7 +603,7 @@ export const xaxis_label_update = {
   group: 'axes',
   name: 'axis label should be passed on update',
   testProps: {},
-  testSelector: '[data-testid=x-axis-label]',
+  testSelector: '[data-testid=padding-container] > [data-testid=x-axis-label]',
   testFunc: async (component: any, page: SpecPage, testProps: object, testSelector: string, expectedOutput: any) => {
     // ARRANGE
     // if we have any testProps apply them
@@ -639,7 +639,7 @@ export const yaxis_label_update = {
   group: 'axes',
   name: 'axis label should be passed on update',
   testProps: {},
-  testSelector: '[data-testid=y-axis-label]',
+  testSelector: '[data-testid=padding-container] > [data-testid=y-axis-label]',
   testFunc: async (component: any, page: SpecPage, testProps: object, testSelector: string, expectedOutput: any) => {
     // ARRANGE
     // if we have any testProps apply them
@@ -674,7 +674,7 @@ export const xaxis_format_default = {
   group: 'axes',
   name: 'axis date format should be %b %y by default',
   testProps: {},
-  testSelector: '[data-testid=x-axis] [data-testid=axis-tick-text]',
+  testSelector: '[data-testid=padding-container] > [data-testid=x-axis] [data-testid=axis-tick-text]',
   testFunc: async (component: any, page: SpecPage, testProps: object, testSelector: string, expectedOutput: any) => {
     // ARRANGE
     const EXPECTEDTICKS = expectedOutput || [
@@ -716,7 +716,7 @@ export const yaxis_format_default = {
   group: 'axes',
   name: 'axis number format should be 0[.][0][0]a by default',
   testProps: {},
-  testSelector: '[data-testid=y-axis] [data-testid=axis-tick-text]',
+  testSelector: '[data-testid=padding-container] > [data-testid=y-axis] [data-testid=axis-tick-text]',
   testFunc: async (component: any, page: SpecPage, testProps: object, testSelector: string, expectedOutput: any) => {
     // ARRANGE
     const EXPECTEDTICKS = expectedOutput || ['3b', '4b', '5b', '6b', '7b', '8b', '9b', '10b'];
@@ -744,7 +744,7 @@ export const xaxis_format_load = {
   group: 'axes',
   name: 'axis date format should be %b %Y when passed on load',
   testProps: {},
-  testSelector: '[data-testid=x-axis] [data-testid=axis-tick-text]',
+  testSelector: '[data-testid=padding-container] > [data-testid=x-axis] [data-testid=axis-tick-text]',
   testFunc: async (component: any, page: SpecPage, testProps: object, testSelector: string, expectedOutput: any) => {
     // ARRANGE
     const EXPECTEDTICKS = expectedOutput || [
@@ -794,7 +794,7 @@ export const yaxis_format_load = {
   group: 'axes',
   name: 'axis number format should be $0[.][0]a when passed on load',
   testProps: {},
-  testSelector: '[data-testid=y-axis] [data-testid=axis-tick-text]',
+  testSelector: '[data-testid=padding-container] > [data-testid=y-axis] [data-testid=axis-tick-text]',
   testFunc: async (component: any, page: SpecPage, testProps: object, testSelector: string, expectedOutput: any) => {
     // ARRANGE
     component.yAxis = {
@@ -829,7 +829,7 @@ export const xaxis_format_update = {
   group: 'axes',
   name: 'axis date format should be %b %Y when passed on update',
   testProps: {},
-  testSelector: '[data-testid=x-axis] [data-testid=axis-tick-text]',
+  testSelector: '[data-testid=padding-container] > [data-testid=x-axis] [data-testid=axis-tick-text]',
   testFunc: async (component: any, page: SpecPage, testProps: object, testSelector: string, expectedOutput: any) => {
     // ARRANGE
     const EXPECTEDTICKS = expectedOutput || [
@@ -882,7 +882,7 @@ export const yaxis_format_update = {
   group: 'axes',
   name: 'axis number format should be $0[.][0]a when passed on update',
   testProps: {},
-  testSelector: '[data-testid=y-axis] [data-testid=axis-tick-text]',
+  testSelector: '[data-testid=padding-container] > [data-testid=y-axis] [data-testid=axis-tick-text]',
   testFunc: async (component: any, page: SpecPage, testProps: object, testSelector: string, expectedOutput: any) => {
     // ARRANGE
     const EXPECTEDTICKS = expectedOutput || ['$3b', '$4b', '$5b', '$6b', '$7b', '$8b', '$9b', '$10b'];
@@ -920,7 +920,7 @@ export const xaxis_tickInterval_load = {
   group: 'axes',
   name: 'axis tick interval should be 2 when passed on load',
   testProps: {},
-  testSelector: '[data-testid=x-axis] [data-testid=axis-tick-text]',
+  testSelector: '[data-testid=padding-container] > [data-testid=x-axis] [data-testid=axis-tick-text]',
   testFunc: async (component: any, page: SpecPage, testProps: object, testSelector: string, expectedOutput: any) => {
     // ARRANGE
     const EXPECTEDTICKS = expectedOutput || [
@@ -970,7 +970,7 @@ export const yaxis_tickInterval_load = {
   group: 'axes',
   name: 'axis tick interval should be 2 when passed on load',
   testProps: {},
-  testSelector: '[data-testid=y-axis] [data-testid=axis-tick-text]',
+  testSelector: '[data-testid=padding-container] > [data-testid=y-axis] [data-testid=axis-tick-text]',
   testFunc: async (component: any, page: SpecPage, testProps: object, testSelector: string, expectedOutput: any) => {
     // ARRANGE
     component.yAxis = {
@@ -1005,7 +1005,7 @@ export const xaxis_tickInterval_update = {
   group: 'axes',
   name: 'axis tick interval should be 2 when passed on load',
   testProps: {},
-  testSelector: '[data-testid=x-axis] [data-testid=axis-tick-text]',
+  testSelector: '[data-testid=padding-container] > [data-testid=x-axis] [data-testid=axis-tick-text]',
   testFunc: async (component: any, page: SpecPage, testProps: object, testSelector: string, expectedOutput: any) => {
     // ARRANGE
     const EXPECTEDTICKS = expectedOutput || [
@@ -1058,7 +1058,7 @@ export const yaxis_tickInterval_update = {
   group: 'axes',
   name: 'axis tick interval should be 2 when passed on update',
   testProps: {},
-  testSelector: '[data-testid=y-axis] [data-testid=axis-tick-text]',
+  testSelector: '[data-testid=padding-container] > [data-testid=y-axis] [data-testid=axis-tick-text]',
   testFunc: async (component: any, page: SpecPage, testProps: object, testSelector: string, expectedOutput: any) => {
     // ARRANGE
     const EXPECTEDTICKS = expectedOutput || ['$3b', '$4b', '$5b', '$6b', '$7b', '$8b', '$9b', '$10b'];
@@ -1096,9 +1096,15 @@ export const xaxis_unit_load = {
   group: 'axes',
   name: 'axis date format should be unit millisecond when passed on load',
   testProps: {},
-  testSelector: '[data-testid=x-axis] [data-testid=axis-tick]',
+  testSelector: '[data-testid=padding-container] > [data-testid=x-axis] [data-testid=axis-tick]',
   testFunc: async (component: any, page: SpecPage, testProps: object, testSelector: string, expectedOutput: any) => {
     // ARRANGE
+    // if we have any testProps apply them
+    if (Object.keys(testProps).length) {
+      Object.keys(testProps).forEach(testProp => {
+        component[testProp] = testProps[testProp];
+      });
+    }
     component.xAxis = {
       visible: true,
       gridVisible: true,

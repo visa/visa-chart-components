@@ -377,14 +377,21 @@ export class ParallelPlot {
 
   @Watch('uniqueID')
   idWatcher(newID, _oldID) {
-    this.chartID = newID;
-    this.parallelChartEl.id = this.chartID;
-    this.shouldValidate = true;
-    this.shouldUpdateDescriptionWrapper = true;
-    this.shouldSetParentSVGAccessibility = true;
-    this.shouldUpdateLegend = true;
-    this.shouldUpdateLegend = true;
-    this.shouldAddStrokeUnder = true;
+    console.error(
+      'Change detected in prop uniqueID from value ' +
+        _oldID +
+        ' to value ' +
+        newID +
+        '. This prop cannot be changed after component has loaded.'
+    );
+    // this.chartID = newID;
+    // this.parallelChartEl.id = this.chartID;
+    // this.shouldValidate = true;
+    // this.shouldUpdateDescriptionWrapper = true;
+    // this.shouldSetParentSVGAccessibility = true;
+    // this.shouldUpdateLegend = true;
+    // this.shouldUpdateLegend = true;
+    // this.shouldAddStrokeUnder = true;
   }
 
   @Watch('highestHeadingLevel')
@@ -1973,6 +1980,18 @@ export class ParallelPlot {
       .attr('class', 'parallel-dot-wrapper')
       .attr('opacity', 0)
       .attr('fill', (_, i) => this.rawColors[i] || this.rawColors[0])
+      // bind interactivity for keyboard nav if series interactivity is enabled
+      .on(
+        'mouseover',
+        !this.suppressEvents && this.seriesInteraction
+          ? (d, i, n) => {
+              if (d.values) {
+                this.onSeriesHoverHandler(d.values[0], n[i]);
+              }
+            }
+          : null
+      )
+      .on('mouseout', !this.suppressEvents ? () => this.onMouseOutHandler() : null)
       .each((_, i, n) => {
         // we bind accessible interactivity and semantics here (role, tabindex, etc)
         initializeElementAccess(n[i]);
@@ -3163,6 +3182,23 @@ export class ParallelPlot {
     this.updateDots
       .on('click', !this.suppressEvents ? (d, i, n) => this.onClickHandler(d, n[i]) : null)
       .on('mouseover', !this.suppressEvents ? (d, i, n) => this.onHoverHandler(d, n[i]) : null)
+      .on('mouseout', !this.suppressEvents ? () => this.onMouseOutHandler() : null);
+
+    // we bind the G for keyboard interactivity
+    // this does not effect mouse, but enables keyboard series selection to
+    // tap into series interactivity, if enabled
+    this.dotG
+      .selectAll('.parallel-dot-wrapper')
+      .on(
+        'mouseover',
+        !this.suppressEvents && this.seriesInteraction
+          ? (d, i, n) => {
+              if (d.values) {
+                this.onSeriesHoverHandler(d.values[0], n[i]);
+              }
+            }
+          : null
+      )
       .on('mouseout', !this.suppressEvents ? () => this.onMouseOutHandler() : null);
 
     this.seriesLabelUpdate

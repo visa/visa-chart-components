@@ -322,16 +322,23 @@ export class StackedBarChart {
 
   @Watch('uniqueID')
   idWatcher(newID, _oldID) {
-    this.chartID = newID;
-    this.stackedBarChartEl.id = this.chartID;
-    this.shouldValidate = true;
-    this.shouldUpdateDescriptionWrapper = true;
-    this.shouldSetParentSVGAccessibility = true;
-    this.shouldUpdateLegend = true;
-    this.shouldSetTextures = true;
-    this.shouldCheckLabelColor = true;
-    this.shouldDrawInteractionState = true;
-    this.shouldSetStrokes = true;
+    console.error(
+      'Change detected in prop uniqueID from value ' +
+        _oldID +
+        ' to value ' +
+        newID +
+        '. This prop cannot be changed after component has loaded.'
+    );
+    // this.chartID = newID;
+    // this.stackedBarChartEl.id = this.chartID;
+    // this.shouldValidate = true;
+    // this.shouldUpdateDescriptionWrapper = true;
+    // this.shouldSetParentSVGAccessibility = true;
+    // this.shouldUpdateLegend = true;
+    // this.shouldSetTextures = true;
+    // this.shouldCheckLabelColor = true;
+    // this.shouldDrawInteractionState = true;
+    // this.shouldSetStrokes = true;
   }
 
   @Watch('highestHeadingLevel')

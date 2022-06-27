@@ -172,7 +172,7 @@ export class KeyboardInstructions {
             }
           >
             <p class="vcc-ki-keyboard-heading">
-              {this.showInstructions ? 'Keyboard Instructions' : 'Select to View Keyboard Instructions'}
+              {this.showInstructions ? 'Keyboard Instructions' : 'Display Keyboard Instructions'}
             </p>
           </div>
           <div class="visa-viz-keyboard-instructions-button-wrapper">

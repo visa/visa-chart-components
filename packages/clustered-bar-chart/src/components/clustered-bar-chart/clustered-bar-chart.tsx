@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -315,14 +315,21 @@ export class ClusteredBarChart {
 
   @Watch('uniqueID')
   idWatcher(newID, _oldID) {
-    this.chartID = newID || 'clustered-bar-chart-' + uuid();
-    this.clusteredBarChartEl.id = this.chartID;
-    this.shouldValidate = true;
-    this.shouldUpdateDescriptionWrapper = true;
-    this.shouldSetParentSVGAccessibility = true;
-    this.shouldDrawInteractionState = true;
-    this.shouldUpdateLegend = true;
-    this.shouldSetStrokes = true;
+    console.error(
+      'Change detected in prop uniqueID from value ' +
+        _oldID +
+        ' to value ' +
+        newID +
+        '. This prop cannot be changed after component has loaded.'
+    );
+    // this.chartID = newID || 'clustered-bar-chart-' + uuid();
+    // this.clusteredBarChartEl.id = this.chartID;
+    // this.shouldValidate = true;
+    // this.shouldUpdateDescriptionWrapper = true;
+    // this.shouldSetParentSVGAccessibility = true;
+    // this.shouldDrawInteractionState = true;
+    // this.shouldUpdateLegend = true;
+    // this.shouldSetStrokes = true;
   }
 
   @Watch('highestHeadingLevel')
@@ -1194,10 +1201,15 @@ export class ClusteredBarChart {
         ? this.minValueOverride
         : min(this.data, d => d[this.valueAccessor]);
 
+    const maxBarValue =
+      this.maxValueOverride && this.maxValueOverride > max(this.data, d => d[this.valueAccessor])
+        ? this.maxValueOverride
+        : max(this.data, d => d[this.valueAccessor]);
+
     // scale band based on layout of chart
     if (this.layout === 'vertical') {
       this.y = scaleLinear()
-        .domain([Math.min(0, minBarValue), this.maxValueOverride || max(this.data, d => d[this.valueAccessor])])
+        .domain([Math.min(0, minBarValue), Math.max(0, maxBarValue)])
         .range([this.innerPaddedHeight, 0]);
 
       this.x0 = scaleBand()
@@ -1211,7 +1223,7 @@ export class ClusteredBarChart {
         .padding(this.barIntervalRatio);
     } else if (this.layout === 'horizontal') {
       this.x = scaleLinear()
-        .domain([Math.min(0, minBarValue), this.maxValueOverride || max(this.data, d => d[this.valueAccessor])])
+        .domain([Math.min(0, minBarValue), Math.max(0, maxBarValue)])
         .range([0, this.innerPaddedWidth]);
 
       this.y0 = scaleBand()
