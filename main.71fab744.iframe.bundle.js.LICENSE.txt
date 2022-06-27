@@ -1,4 +1,0 @@
-/**
- * Checks if an event is supported in the current execution environment.
- * @license Modernizr 3.0.0pre (Custom Build) | MIT
- */
