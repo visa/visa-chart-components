@@ -1,0 +1,72 @@
+[
+  {
+    "num": 20,
+    "group": "Group A",
+    "value": 2700
+  },
+  {
+    "num": 22,
+    "group": "Group A",
+    "value": 1000
+  },
+  {
+    "num": 33,
+    "group": "Group A",
+    "value": 4004
+  },
+  {
+    "num": 42,
+    "group": "Group B",
+    "value": 2454
+  },
+  {
+    "num": 51,
+    "group": "Group B",
+    "value": 2135
+  },
+  {
+    "num": 36,
+    "group": "Group B",
+    "value": 1114
+  },
+  {
+    "num": 27,
+    "group": "Group C",
+    "value": 3845
+  },
+  {
+    "num": 35,
+    "group": "Group C",
+    "value": 2823
+  },
+  {
+    "num": 49,
+    "group": "Group C",
+    "value": 1666
+  },
+  {
+    "num": 60,
+    "group": "Group C",
+    "value": 1421
+  },
+  {
+    "num": 21,
+    "group": "Group D",
+    "value": 8845
+  },
+  {
+    "num": 36,
+    "group": "Group D",
+    "value": 6865
+  },
+  {
+    "num": 45,
+    "group": "Group D",
+    "value": 6154
+  },
+  {
+    "num": 53,
+    "group": "Group D",
+    "value": 4109
+  }
+]

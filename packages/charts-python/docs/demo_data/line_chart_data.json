@@ -1,0 +1,62 @@
+[
+  {
+    "date": "2016-01-01",
+    "category": "Group A",
+    "value": 7670994739
+  },
+  {
+    "date": "2016-02-01",
+    "category": "Group A",
+    "value": 7628909842
+  },
+  {
+    "date": "2016-03-01",
+    "category": "Group A",
+    "value": 8358837379
+  },
+  {
+    "date": "2016-04-01",
+    "category": "Group A",
+    "value": 8334842966
+  },
+  {
+    "date": "2016-05-01",
+    "category": "Group A",
+    "value": 8588600035
+  },
+  {
+    "date": "2016-06-01",
+    "category": "Group A",
+    "value": 8484192554
+  },
+  {
+    "date": "2016-01-01",
+    "category": "Group B",
+    "value": 6570994739
+  },
+  {
+    "date": "2016-02-01",
+    "category": "Group B",
+    "value": 4628909842
+  },
+  {
+    "date": "2016-03-01",
+    "category": "Group B",
+    "value": 4358837379
+  },
+  {
+    "date": "2016-04-01",
+    "category": "Group B",
+    "value": 5534842966
+  },
+  {
+    "date": "2016-05-01",
+    "category": "Group B",
+    "value": 4388600035
+  },
+  {
+    "date": "2016-06-01",
+    "category": "Group B",
+    "value": 3484192554
+  }
+]
