@@ -30,3 +30,9 @@
 **/DESCRIPTION
 **/*.Rbuildignore
 **/htmlwidgets/lib
+**/*.ipynb
+**/*.py
+**/*.in
+**/*.toml
+**/*.cfg
+**/makefile

@@ -238,6 +238,36 @@ function run() {
       order: 7
     }),
 
+    ipy: createTask({
+      name: `Install and Build charts-python package`,
+      defaultValue: false,
+      option: '--ipy',
+      command: () => {
+        spawn(`npm -C ./packages/charts-python/js run build-js-install-python`);
+      },
+      order: 91
+    }),
+
+    spy: createTask({
+      name: `Run jupyter notebook on local charts-python instance`,
+      defaultValue: false,
+      option: '--spy',
+      command: () => {
+        spawn(`npm -C ./packages/charts-python/js run run-notebook`);
+      },
+      order: 92
+    }),
+
+    lpy: createTask({
+      name: `Run jupyter lab on local charts-python instance`,
+      defaultValue: false,
+      option: '--lpy',
+      command: () => {
+        spawn(`npm -C ./packages/charts-python/js run run-lab`);
+      },
+      order: 93
+    }),
+
     a: createTask({
       name: `audit ${chalk.gray('(yarn audit ALL components, or a specific component)')}`,
       defaultValue: false,
