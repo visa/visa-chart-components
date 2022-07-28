@@ -43,6 +43,7 @@
     "@types/node": "^13.7.0",
     "@types/react": "^16.7.6",
     "@types/react-dom": "^16.0.9",
+    "@visa/charts-types": "^0.4.2",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "rollup": "^1.21.2",

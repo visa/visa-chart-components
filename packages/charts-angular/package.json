@@ -48,6 +48,7 @@
     "@angular/compiler-cli": "12.2.16",
     "@types/jasmine": "~3.6.0",
     "@types/node": "^12.11.1",
+    "@visa/charts-types": "^0.4.2",
     "codelyzer": "^6.0.0",
     "es-check": "5.2.0",
     "jasmine-core": "~3.6.0",

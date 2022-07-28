@@ -1,0 +1,86 @@
+[
+  {
+    "group": "Remained",
+    "source": "High 2018",
+    "target": "High 2019",
+    "otherValue": 20,
+    "value": 3010
+  },
+  {
+    "group": "Decreased",
+    "source": "High 2018",
+    "target": "Medium 2019",
+    "otherValue": 20,
+    "value": 2754
+  },
+  {
+    "group": "Decreased",
+    "source": "High 2018",
+    "target": "Low 2019",
+    "otherValue": 20,
+    "value": 2812
+  },
+  {
+    "group": "Increased",
+    "source": "Medium 2018",
+    "target": "High 2019",
+    "otherValue": 20,
+    "value": 909
+  },
+  {
+    "group": "Remained",
+    "source": "Medium 2018",
+    "target": "Medium 2019",
+    "otherValue": 20,
+    "value": 12712
+  },
+  {
+    "group": "Decreased",
+    "source": "Medium 2018",
+    "target": "Low 2019",
+    "otherValue": 20,
+    "value": 3367
+  },
+  {
+    "group": "Increased",
+    "source": "Low 2018",
+    "target": "High 2019",
+    "otherValue": 20,
+    "value": 68
+  },
+  {
+    "group": "Increased",
+    "source": "Low 2018",
+    "target": "Medium 2019",
+    "otherValue": 20,
+    "value": 1133
+  },
+  {
+    "group": "Remained",
+    "source": "Low 2018",
+    "target": "Low 2019",
+    "otherValue": 20,
+    "value": 6164
+  },
+  {
+    "group": "New",
+    "source": "New in 2018",
+    "target": "High 2019",
+    "otherValue": 20,
+    "value": 3148
+  },
+  {
+    "group": "New",
+    "source": "New in 2018",
+    "target": "Medium 2019",
+    "otherValue": 20,
+    "value": 7279
+  },
+  {
+    "group": "New",
+    "source": "New in 2018",
+    "target": "Low 2019",
+    "otherValue": 20,
+    "value": 3684
+  }
+]

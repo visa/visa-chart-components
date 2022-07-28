@@ -41,29 +41,52 @@ const Panel = () => {
   function formatter(args, n, src) {
     if ([1, 2].includes(n)) src = `this.props = {`;
     else if (n === 3) src = `<${storyID}`;
+    else if (n === 5)
+      src += `import pyvisacharts as vcc\n\nvcc.${storyID
+        .split('-')[0]
+        .charAt(0)
+        .toUpperCase() +
+        storyID.split('-')[0].substring(1) +
+        storyID
+          .split('-')[1]
+          .charAt(0)
+          .toUpperCase() +
+        storyID.split('-')[1].substring(1) +
+        (storyID.split('-').length === 3
+          ? storyID
+              .split('-')[2]
+              .charAt(0)
+              .toUpperCase() + storyID.split('-')[2].substring(1)
+          : '')}(`;
     Object.keys(args).forEach((i, j) => {
       if (
         !new RegExp('^on|Event$').test(i) &&
         (args[i].length || Object.keys(args[i]).length || ['number', 'boolean'].includes(typeof args[i]))
       ) {
         if (typeof args[i] === 'string') {
-          src += `\n${'\t'.repeat(1)}${i.length > 1 ? `${i}${n === 3 ? '={' : ': '}` : ''}"${args[i]
+          src += `\n${'\t'.repeat(1)}${i.length > 1 ? `${i}${n === 3 ? '={' : n === 5 ? '=' : ': '}` : ''}"${args[i]
             .toLocaleString()
             .replace(/'/g, "\\'")}"${n === 3 ? '}' : ''}`;
         } else if (typeof args[i] === 'number') {
-          src += `\n${'\t'.repeat(1)}${i}${n === 3 ? '={' : ': '}${args[i]}${n === 3 ? '}' : ''}`;
+          src += `\n${'\t'.repeat(1)}${i}${n === 3 ? '={' : n === 5 ? '=' : ': '}${args[i]}${n === 3 ? '}' : ''}`;
         } else if (typeof args[i] === 'boolean') {
-          src += `\n${'\t'.repeat(1)}${i}${n === 3 ? '={' : ': '}${args[i].toLocaleString()}${n === 3 ? '}' : ''}`;
+          src += `\n${'\t'.repeat(1)}${i}${n === 3 ? '={' : n === 5 ? '=' : ': '}${args[i].toLocaleString()}${
+            n === 3 ? '}' : ''
+          }`;
         } else if (args[i] === null) {
           src += `\n${'\t'.repeat(1)}"${i}": null`;
         } else if (typeof args[i] === 'object') {
           src += `\n${'\t'.repeat(1)}${
-            args[i].length > 0 && n !== 3
+            args[i].length > 0 && ![3, 5].includes(n)
               ? `${i}: [`
-              : [undefined, 0].includes(args[i].length) && n !== 3
+              : [undefined, 0].includes(args[i].length) && ![3, 5].includes(n)
               ? `${i}: {`
               : args[i].length > 0 && n === 3
               ? `${i}={[`
+              : args[i].length > 0 && n === 5
+              ? `${i}=[`
+              : [undefined, 0].includes(args[i].length) && n === 5
+              ? `${i}={`
               : `${i}={{`
           }`;
           Object.keys(args[i]).forEach((l, m) => {
@@ -74,7 +97,14 @@ const Panel = () => {
             } else if (typeof args[i][l] === 'number') {
               src += `\n${'\t'.repeat(2)}"${l}": ${args[i][l]}`;
             } else if (typeof args[i][l] === 'boolean') {
-              src += `\n${'\t'.repeat(2)}"${l}": ${args[i][l].toLocaleString()}`;
+              src += `\n${'\t'.repeat(2)}"${l}": ${
+                n == 5
+                  ? args[i][l]
+                      .toLocaleString()
+                      .charAt(0)
+                      .toUpperCase() + args[i][l].toLocaleString().slice(1)
+                  : args[i][l].toLocaleString()
+              }`;
             } else if (args[i][l] === null) {
               src += `\n${'\t'.repeat(2)}"${l}": null`;
             } else if (typeof args[i][l] === 'object') {
@@ -87,7 +117,14 @@ const Panel = () => {
                 } else if (typeof args[i][l][a] === 'number') {
                   src += `\n${'\t'.repeat(3)}"${a}": ${args[i][l][a]}`;
                 } else if (typeof args[i][l][a] === 'boolean') {
-                  src += `\n${'\t'.repeat(3)}"${a}": ${args[i][l][a].toLocaleString()}`;
+                  src += `\n${'\t'.repeat(3)}"${a}": ${
+                    n === 5
+                      ? args[i][l][a]
+                          .toLocaleString()
+                          .charAt(0)
+                          .toUpperCase() + args[i][l][a].toLocaleString().slice(1)
+                      : args[i][l][a].toLocaleString()
+                  }`;
                 } else if (args[i][l][a] === null) {
                   src += `\n${'\t'.repeat(3)}"${a}": null`;
                 } else if (typeof args[i][l][a] === 'object' && args[i][l][a] !== null) {
@@ -102,7 +139,14 @@ const Panel = () => {
                     } else if (typeof args[i][l][a][c] === 'number') {
                       src += `\n${'\t'.repeat(4)}${c.length > 0 && isNaN(c) ? `${c}: ` : ''}${args[i][l][a][c]}`;
                     } else if (typeof args[i][l][a][c] === 'boolean') {
-                      src += `\n${'\t'.repeat(4)}${c}: ${args[i][l][a][c].toLocaleString()}`;
+                      src += `\n${'\t'.repeat(4)}${c}: ${
+                        n === 5
+                          ? args[i][l][a][c]
+                              .toLocaleString()
+                              .charAt(0)
+                              .toUpperCase() + args[i][l][a][c].toLocaleString().slice(1)
+                          : args[i][l][a][c].toLocaleString()
+                      }`;
                     } else if (args[i][l][a][cancelIdleCallback] === null) {
                       src += `\n${'\t'.repeat(4)}"${c}": null`;
                     } else if (typeof args[i][l][a][c] === 'object') {
@@ -117,7 +161,14 @@ const Panel = () => {
                         } else if (typeof args[i][l][a][c][e] === 'number') {
                           src += `\n${'\t'.repeat(5)}${e}: ${args[i][l][a][c][e]}`;
                         } else if (typeof args[i][l][a][c][e] === 'boolean') {
-                          src += `\n${'\t'.repeat(5)}${e}: ${args[i][l][a][c][e].toLocaleString()}`;
+                          src += `\n${'\t'.repeat(5)}${e}: ${
+                            n === 5
+                              ? args[i][l][a][c][e]
+                                  .toLocaleString()
+                                  .charAt(0)
+                                  .toUpperCase() + args[i][l][a][c][e].toLocaleString().slice(1)
+                              : args[i][l][a][c][e].toLocaleString()
+                          }`;
                         }
                         if (f !== Object.keys(args[i][l][a][c]).length - 1) {
                           src += `,`;
@@ -296,6 +347,155 @@ const Panel = () => {
     src4 += `\n\t\t)\n\t)`;
   }
 
+  let src5 = '';
+  let pyArgs = {};
+  let configArgs = {};
+  Object.keys(args).forEach((i, j) => {
+    if (
+      [
+        'data',
+        'linkData',
+        'nodeData',
+        'ordinalAccessor',
+        'valueAccessor',
+        'groupAccessor',
+        'seriesAccessor',
+        'xAccessor',
+        'yAccessor',
+        'nodeAccessor',
+        'parentAccessor',
+        'sizeAccessor',
+        'joinAccessor',
+        'joinNameAccessor',
+        'markerAccessor',
+        'markerNameAccessor',
+        'latitudeAccessor',
+        'longitudeAccessor',
+        'sourceAccessor',
+        'targetAccessor',
+        'nodeIDAccessor',
+        'mainTitle',
+        'subTitle',
+        'accessibility'
+      ].includes(i)
+    ) {
+      pyArgs[i] = args[i];
+    } else {
+      if (
+        !new RegExp('^on|Event$').test(i) &&
+        (args[i].length || Object.keys(args[i]).length || ['number', 'boolean'].includes(typeof args[i]))
+      ) {
+        configArgs[i] = args[i];
+      }
+    }
+  });
+  src5 += formatter(pyArgs, 5, src5);
+  if (Object.keys(configArgs).length) {
+    src5 += `,\n\tconfig={`;
+    Object.keys(configArgs).forEach((l, m) => {
+      if (typeof configArgs[l] === 'string') {
+        src5 += `\n${'\t'.repeat(2)}${l.length > 1 ? `"${l}": ` : ''}"${configArgs[l]
+          .toLocaleString()
+          .replace(/'/g, "\\'")}"`;
+      } else if (typeof configArgs[l] === 'number') {
+        src5 += `\n${'\t'.repeat(2)}"${l}": ${configArgs[l]}`;
+      } else if (typeof configArgs[l] === 'boolean') {
+        src5 += `\n${'\t'.repeat(2)}"${l}": ${configArgs[l]
+          .toLocaleString()
+          .charAt(0)
+          .toUpperCase() + configArgs[l].toLocaleString().slice(1)}`;
+      } else if (configArgs[l] === null) {
+        src5 += `\n${'\t'.repeat(2)}"${l}": null`;
+      } else if (typeof configArgs[l] === 'object') {
+        src5 += `\n${'\t'.repeat(2)}${configArgs[l].length > 0 ? '"' + l + '": [' : '"' + l + '": {'}`;
+        Object.keys(configArgs[l]).forEach((a, b) => {
+          if (typeof configArgs[l][a] === 'string') {
+            src5 += `\n${'\t'.repeat(3)}${a.length > 0 && isNaN(a) ? `"${a}": ` : ''}"${configArgs[l][a]
+              .toLocaleString()
+              .replace(/'/g, "\\'")}"`;
+          } else if (typeof configArgs[l][a] === 'number') {
+            src5 += `\n${'\t'.repeat(3)}"${a}": ${configArgs[l][a]}`;
+          } else if (typeof configArgs[l][a] === 'boolean') {
+            src5 += `\n${'\t'.repeat(3)}"${a}": ${configArgs[l][a]
+              .toLocaleString()
+              .charAt(0)
+              .toUpperCase() +
+              configArgs[l][a]
+                .toLocaleString()
+                .toLocaleString()
+                .slice(1)}`;
+          } else if (configArgs[l][a] === null) {
+            src5 += `\n${'\t'.repeat(3)}"${a}": null`;
+          } else if (typeof configArgs[l][a] === 'object' && configArgs[l][a] !== null) {
+            src5 += `\n${'\t'.repeat(3)}${
+              !isNaN(a) ? '{' : configArgs[l][a].length > 0 ? '"' + a + '": [' : '"' + a + '": {'
+            }`;
+            console.log(configArgs[l][a]);
+            Object.keys(configArgs[l][a]).forEach((c, d) => {
+              if (typeof configArgs[l][a][c] === 'string') {
+                src5 += `\n${'\t'.repeat(4)}${c.length > 0 && isNaN(c) ? `"${c}": ` : ''}"${configArgs[l][a][c]
+                  .toLocaleString()
+                  .replace(/'/g, "\\'")}"`;
+              } else if (typeof configArgs[l][a][c] === 'number') {
+                src5 += `\n${'\t'.repeat(4)}${c.length > 0 && isNaN(c) ? `"${c}": ` : ''}${configArgs[l][a][c]}`;
+              } else if (typeof configArgs[l][a][c] === 'boolean') {
+                src5 += `\n${'\t'.repeat(4)}${c}: ${configArgs[l][a][c]
+                  .toLocaleString()
+                  .charAt(0)
+                  .toUpperCase() +
+                  configArgs[l][a][c]
+                    .toLocaleString()
+                    .toLocaleString()
+                    .slice(1)}`;
+              } else if (configArgs[l][a][cancelIdleCallback] === null) {
+                src5 += `\n${'\t'.repeat(4)}"${c}": null`;
+              } else if (typeof configArgs[l][a][c] === 'object') {
+                src5 += `\n${'\t'.repeat(4)}${
+                  !isNaN(c) ? '{' : configArgs[l][a][c].length > 0 ? '"' + c + '": [' : '"' + c + '": {'
+                }`;
+                Object.keys(configArgs[l][a][c]).forEach((e, f) => {
+                  if (typeof configArgs[l][a][c][e] === 'string') {
+                    src5 += `\n${'\t'.repeat(5)}${e.length > 0 && isNaN(e) ? `${e}: ` : ''}'${configArgs[l][a][c][e]
+                      .toLocaleString()
+                      .replace(/'/g, "\\'")}'`;
+                  } else if (typeof configArgs[l][a][c][e] === 'number') {
+                    src5 += `\n${'\t'.repeat(5)}${e}: ${configArgs[l][a][c][e]}`;
+                  } else if (typeof configArgs[l][a][c][e] === 'boolean') {
+                    src5 += `\n${'\t'.repeat(5)}${e}: ${configArgs[l][a][c][e]
+                      .toLocaleString()
+                      .charAt(0)
+                      .toUpperCase() +
+                      configArgs[l][a][c][e]
+                        .toLocaleString()
+                        .toLocaleString()
+                        .slice(1)}`;
+                  }
+                  if (f !== Object.keys(configArgs[l][a][c]).length - 1) {
+                    src5 += `,`;
+                  }
+                });
+                src5 += `\n${'\t'.repeat(4)}${!isNaN(c) ? '}' : configArgs[l][a][c].length > 0 ? ']' : '}'}`;
+              }
+              if (d !== Object.keys(configArgs[l][a]).length - 1) {
+                src5 += `,`;
+              }
+            });
+            src5 += `\n${'\t'.repeat(3)}${!isNaN(a) ? '}' : configArgs[l][a].length > 0 ? ']' : '}'}`;
+          }
+          if (b !== Object.keys(configArgs[l]).length - 1) {
+            src5 += `,`;
+          }
+        });
+        src5 += `\n${'\t'.repeat(2)}${configArgs[l].length > 0 ? ']' : '}'}`;
+      }
+      if (m !== Object.keys(configArgs).length - 1) {
+        src5 += `,`;
+      }
+    });
+    src5 += `\n${'\t'.repeat(1)}${configArgs.length > 0 ? ']' : '}'}${''}`;
+    src5 += `\n)`;
+  }
+
   const [source, setSource] = useState(1);
 
   function selectSource(idx) {
@@ -315,6 +515,7 @@ const Panel = () => {
           <button onClick={() => selectSource(2)}>Angular</button>
           <button onClick={() => selectSource(3)}>Web Component</button>
           <button onClick={() => selectSource(4)}>R</button>
+          <button onClick={() => selectSource(5)}>Python</button>
         </ul>
         {source === 1 ? (
           <Source code={src1} language="" format={false} />
@@ -322,8 +523,10 @@ const Panel = () => {
           <Source code={src2} language="" format={false} />
         ) : source === 3 ? (
           <Source code={src3} language="" format={false} />
-        ) : (
+        ) : source === 4 ? (
           <Source code={src4} language="" format={false} />
+        ) : (
+          <Source code={src5} language="" format={false} />
         )}
       </PanelInner>
     </PanelWrapper>

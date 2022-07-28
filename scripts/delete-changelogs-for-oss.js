@@ -10,7 +10,8 @@ const glob = require('glob');
 const fs = require('fs');
 
 const changelogFiles = [
-  ...glob.sync(path.join(__dirname, '..', 'packages') + '/*/CHANGELOG.md', {}), // package level results
+  ...glob.sync(path.join(__dirname, '..', 'packages') + '/**/CHANGELOG.md', {}), // (nested) package level results
+  ...glob.sync(path.join(__dirname, '..', 'packages') + '/*/NEWS.md', {}), // charts-R changelog
   ...glob.sync(path.join(__dirname, '..') + '/CHANGELOG.md', {}) // root results
 ];
 changelogFiles.forEach(function(file, i) {

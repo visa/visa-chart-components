@@ -1,0 +1,146 @@
+[
+  {
+    "ID": 0,
+    "Name": "USA",
+    "Random Rate": 50,
+    "Country Code": "840"
+  },
+  {
+    "ID": 1,
+    "Name": "Angola",
+    "Random Rate": 14.2,
+    "Country Code": "024"
+  },
+  {
+    "ID": 5,
+    "Name": "Zambia",
+    "Random Rate": 41.5,
+    "Country Code": "894"
+  },
+  {
+    "ID": 12,
+    "Name": "Afghanistan",
+    "Random Rate": 37.9,
+    "Country Code": "004"
+  },
+  {
+    "ID": 25,
+    "Name": "Zimbabwe",
+    "Random Rate": 34.2,
+    "Country Code": "716"
+  },
+  {
+    "ID": 35,
+    "Name": "Rwanda",
+    "Random Rate": 30.7,
+    "Country Code": "646"
+  },
+  {
+    "ID": 58,
+    "Name": "Jordan",
+    "Random Rate": 23.9,
+    "Country Code": "400"
+  },
+  {
+    "ID": 78,
+    "Name": "South Region 5",
+    "Random Rate": 20.2,
+    "Country Code": "710"
+  },
+  {
+    "ID": 87,
+    "Name": "India",
+    "Random Rate": 19,
+    "Country Code": "356"
+  },
+  {
+    "ID": 94,
+    "Name": "Group 1",
+    "Random Rate": 18.3,
+    "Country Code": "484"
+  },
+  {
+    "ID": 103,
+    "Name": "Peru",
+    "Random Rate": 17.8,
+    "Country Code": "604"
+  },
+  {
+    "ID": 110,
+    "Name": "Argentina",
+    "Random Rate": 16.7,
+    "Country Code": "032"
+  },
+  {
+    "ID": 133,
+    "Name": "Greenland",
+    "Random Rate": 14.4,
+    "Country Code": "304"
+  },
+  {
+    "ID": 136,
+    "Name": "Brazil",
+    "Random Rate": 14.1,
+    "Country Code": "076"
+  },
+  {
+    "ID": 137,
+    "Name": "Ireland",
+    "Random Rate": 14.1,
+    "Country Code": "372"
+  },
+  {
+    "ID": 141,
+    "Name": "Iceland",
+    "Random Rate": 13.7,
+    "Country Code": "352"
+  },
+  {
+    "ID": 150,
+    "Name": "New Zealand",
+    "Random Rate": 13.2,
+    "Country Code": "554"
+  },
+  {
+    "ID": 164,
+    "Name": "Norway",
+    "Random Rate": 12.2,
+    "Country Code": "578"
+  },
+  {
+    "ID": 167,
+    "Name": "Sweden",
+    "Random Rate": 12.1,
+    "Country Code": "752"
+  },
+  {
+    "ID": 187,
+    "Name": "Switzerland",
+    "Random Rate": 10.5,
+    "Country Code": "756"
+  },
+  {
+    "ID": 190,
+    "Name": "Group 3",
+    "Random Rate": 10.3,
+    "Country Code": "124"
+  },
+  {
+    "ID": 204,
+    "Name": "Spain",
+    "Random Rate": 9.2,
+    "Country Code": "724"
+  },
+  {
+    "ID": 222,
+    "Name": "Puerto Rico",
+    "Random Rate": 8.1,
+    "Country Code": "630"
+  },
+  {
+    "ID": 223,
+    "Name": "Japan",
+    "Random Rate": 7.7,
+    "Country Code": "392"
+  }
+]

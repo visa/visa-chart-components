@@ -48,6 +48,7 @@ export const config: Config | any = {
       excludeComponents: ['visa-charts']
     }),
     { type: 'dist' },
+    { type: 'dist-custom-elements', externalRuntime: false },
     { type: 'www' }
   ],
   plugins: [

@@ -5528,7 +5528,7 @@ Object {
       "failureMessages": Array [],
       "fullName": "<clustered-bar-chart> rendered-html generic test suite data: custom data exit on update",
       "location": null,
-      "status": "passed",
+      "status": "pending",
       "title": "data: custom data exit on update",
     },
     Object {
@@ -6160,7 +6160,7 @@ Object {
       "failureMessages": Array [],
       "fullName": "<clustered-bar-chart> rendered-html annotations should pass annotation prop",
       "location": null,
-      "status": "passed",
+      "status": "pending",
       "title": "should pass annotation prop",
     },
     Object {
@@ -7405,7 +7405,7 @@ Object {
       ],
       "failureMessages": Array [
         "Error: expected textContent \\"$15\\" to equal \\"15\\"
-    at Object.<anonymous> (./packages/clustered-bar-chart/src/components/clustered-bar-chart/clustered-bar-chart.spec.ts:1505:33)
+    at Object.<anonymous> (./packages/clustered-bar-chart/src/components/clustered-bar-chart/clustered-bar-chart.spec.ts:1514:33)
     at processTicksAndRejections (internal/process/task_queues.js:95:5)",
       ],
       "fullName": "<clustered-bar-chart> rendered-html labels legend format should format number if passed as prop",
@@ -11435,7 +11435,7 @@ Object {
       "failureMessages": Array [],
       "fullName": "<heat-map> rendered-html annotations should pass annotation prop",
       "location": null,
-      "status": "passed",
+      "status": "pending",
       "title": "should pass annotation prop",
     },
     Object {
@@ -12360,7 +12360,7 @@ Object {
       ],
       "failureMessages": Array [
         "Error: expected textContent \\"$15\\" to equal \\"15\\"
-    at Object.<anonymous> (./packages/heat-map/src/components/heat-map/heat-map.spec.ts:1500:35)
+    at Object.<anonymous> (./packages/heat-map/src/components/heat-map/heat-map.spec.ts:1499:35)
     at processTicksAndRejections (internal/process/task_queues.js:95:5)",
       ],
       "fullName": "<heat-map> rendered-html labels dataLabel legend format should format number if passed as prop",
@@ -12834,10 +12834,10 @@ Object {
         "generic test suite",
       ],
       "failureMessages": Array [
-        "Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoEqual[2m([22m[32mexpected[39m[2m) // deep equality[22m
+        "Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoContain[2m([22m[32mexpected[39m[2m) // indexOf[22m
 
-Expected: [32m\\"exit\\"[39m
-Received: [31m\\"update\\"[39m
+Expected substring: [32m\\"exit\\"[39m
+Received string:    [31m\\"update\\"[39m
     at forEach (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:4991:52)
     at Array.forEach (<anonymous>)
     at call (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:4984:30)
@@ -22570,7 +22570,7 @@ Received: [31m\\"[7m14[27mpx\\"[39m
       "failureMessages": Array [],
       "fullName": "<stacked-bar-chart> rendered-html annotations should pass annotation prop",
       "location": null,
-      "status": "passed",
+      "status": "pending",
       "title": "should pass annotation prop",
     },
     Object {
@@ -23818,7 +23818,7 @@ Received: [31m\\"[7m14[27mpx\\"[39m
       ],
       "failureMessages": Array [
         "Error: expected textContent \\"$15\\" to equal \\"15\\"
-    at Object.<anonymous> (./packages/stacked-bar-chart/src/components/stacked-bar-chart/stacked-bar-chart.spec.ts:1547:33)
+    at Object.<anonymous> (./packages/stacked-bar-chart/src/components/stacked-bar-chart/stacked-bar-chart.spec.ts:1548:33)
     at processTicksAndRejections (internal/process/task_queues.js:95:5)",
       ],
       "fullName": "<stacked-bar-chart> rendered-html labels legend format should format number if passed as prop",

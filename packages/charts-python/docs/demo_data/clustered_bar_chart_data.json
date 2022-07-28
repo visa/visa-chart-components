@@ -1,0 +1,52 @@
+[
+  {
+    "year": "2016",
+    "item": "A",
+    "value": -30
+  },
+  {
+    "year": "2017",
+    "item": "A",
+    "value": 15
+  },
+  {
+    "year": "2018",
+    "item": "A",
+    "value": 4
+  },
+  {
+    "year": "2019",
+    "item": "A",
+    "value": 73
+  },
+  {
+    "year": "2020",
+    "item": "A",
+    "value": 64
+  },
+  {
+    "year": "2016",
+    "item": "B",
+    "value": -5
+  },
+  {
+    "year": "2017",
+    "item": "B",
+    "value": 23
+  },
+  {
+    "year": "2018",
+    "item": "B",
+    "value": 6
+  },
+  {
+    "year": "2019",
+    "item": "B",
+    "value": 21
+  },
+  {
+    "year": "2020",
+    "item": "B",
+    "value": 57
+  }
+]

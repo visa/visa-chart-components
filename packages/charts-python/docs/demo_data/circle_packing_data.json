@@ -1,0 +1,67 @@
+[
+  {
+    "Type": "Parent Group",
+    "Country": "",
+    "value": 10
+  },
+  {
+    "Type": "Group 1",
+    "Country": "Parent Group",
+    "value": 73
+  },
+  {
+    "Type": "Group 2",
+    "Country": "Parent Group",
+    "value": 15
+  },
+  {
+    "Type": "Group 3",
+    "Country": "Parent Group",
+    "value": 4
+  },
+  {
+    "Type": "A",
+    "Country": "Group 1",
+    "value": 64
+  },
+  {
+    "Type": "B",
+    "Country": "Group 1",
+    "value": 35
+  },
+  {
+    "Type": "C",
+    "Country": "Group 2",
+    "value": 23
+  },
+  {
+    "Type": "D",
+    "Country": "Group 3",
+    "value": 16
+  },
+  {
+    "Type": "E",
+    "Country": "Group 1",
+    "value": 25
+  },
+  {
+    "Type": "F",
+    "Country": "Group 2",
+    "value": 23
+  },
+  {
+    "Type": "G",
+    "Country": "Group 2",
+    "value": 6
+  },
+  {
+    "Type": "H",
+    "Country": "Group 3",
+    "value": 36
+  },
+  {
+    "Type": "I",
+    "Country": "Group 2",
+    "value": 10
+  }
+]
