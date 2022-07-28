@@ -33,6 +33,7 @@
     "d3"
   ],
   "scripts": {
+    "audit": "yarn audit --json --level low > yarn-audit.json",
     "clean": "rimraf dist/ && rimraf ../pyvisacharts/labextension/ && rimraf ../pyvisacharts/nbextension",
     "build-js-install-python": "yarn clean && yarn build && yarn pip-install && yarn prep-notebook1 && yarn prep-notebook2",
     "pip-install": "cd ../ && pip install -e . && cd ./js",
@@ -57,6 +58,9 @@
   "dependencies": {
     "@jupyter-widgets/base": "^1.1 || ^2 || ^3 || ^4",
     "@visa/charts": "6.1.1"
+  },
+  "resolutions": {
+    "got": "^11.8.5"
   },
   "jupyterlab": {
     "extension": "lib/labplugin",

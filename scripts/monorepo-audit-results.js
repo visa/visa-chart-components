@@ -14,6 +14,7 @@ const coverageDir = './coverage';
 const combinedAuditResultsJSONFile = path.join(coverageDir, '/yarn-audit-report.json');
 const jsonFiles = [
   ...glob.sync(path.join(__dirname, '..', 'packages') + '/*/yarn-audit.json', {}), // package level results
+  ...glob.sync(path.join(__dirname, '..', 'packages') + '/*/js/yarn-audit.json', {}), // package level results for python
   ...glob.sync(path.join(__dirname, '..') + '/yarn-audit.json', {}) // root results
 ];
 let combinedJSONResults = {};
