@@ -1,6 +1,6 @@
 Package: visachartR
-Version: 2.1.1
-Date: 2022-06-27
+Version: 2.1.2
+Date: 2022-07-28
 Title: Wrapper for 'Visa Chart Components'
 Description: Provides a set of wrapper functions for 'Visa Chart Components'.
   'Visa Chart Components' <https://github.com/visa/visa-chart-components> is an accessibility focused,
