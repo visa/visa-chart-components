@@ -3,7 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://www.conventionalcommits.org/) for commit guidelines.
 
-# [2.1.1](https://github.com/visa/visa-chart-components/compare/@visa/charts@6.1.0...@visa/charts@6.1.1) (2022-06-27)
+# [2.1.2](https://github.com/visa/visa-chart-components/compare/@visa/charts@6.1.1...@visa/charts@6.2.0) (2022-07-28)
+
+### Features
+
+- add custom elements bundle output target to @visa/charts ([c5c3911](https://github.com/visa/visa-chart-components/commit/c5c391120141b409819d6ef93cffdc1a53bcc14b))
+
+## [2.1.1](https://github.com/visa/visa-chart-components/compare/@visa/charts@6.1.0...@visa/charts@6.1.1) (2022-06-27)
 
 **Note:** Version bump only for package @visa/charts
 
