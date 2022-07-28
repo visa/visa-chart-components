@@ -1,0 +1,75 @@
+{
+  "name": "@visa/charts-python",
+  "version": "0.2.5",
+  "description": "A Custom Jupyter Widget Library for Visa Chart Components",
+  "license": "SEE LICENCE IN LICENSE",
+  "author": "Visa Data Experience Team",
+  "main": "lib/index.js",
+  "files": [
+    "lib/**/*.js",
+    "dist/*.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/visa/visa-chart-components.git",
+    "directory": "/packages/charts-python"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "keywords": [
+    "jupyter",
+    "widgets",
+    "ipython",
+    "ipywidgets",
+    "jupyterlab-extension",
+    "visa",
+    "charts",
+    "visualization",
+    "viz",
+    "accessibility",
+    "a11y",
+    "d3"
+  ],
+  "scripts": {
+    "audit": "yarn audit --json --level low > yarn-audit.json",
+    "clean": "rimraf dist/ && rimraf ../pyvisacharts/labextension/ && rimraf ../pyvisacharts/nbextension",
+    "build-js-install-python": "yarn clean && yarn build && yarn pip-install && yarn prep-notebook1 && yarn prep-notebook2",
+    "pip-install": "cd ../ && pip install -e . && cd ./js",
+    "prep-notebook1": "cd ../ && jupyter nbextension install --py --symlink --overwrite --sys-prefix pyvisacharts && cd ./js",
+    "prep-notebook2": "cd ../ && jupyter nbextension enable --py --sys-prefix pyvisacharts && cd ./js",
+    "prepublish-dontrun": "yarn run clean && yarn run build:prod",
+    "build:dev": "webpack --mode=development && yarn run build:labextension:dev",
+    "build": "webpack --mode=production && yarn run build:labextension",
+    "build:labextension": "jupyter labextension build .",
+    "build:labextension:dev": "jupyter labextension build --development True .",
+    "run-notebook": "cd ../docs && jupyter notebook 'VCC Demo Notebook.ipynb'",
+    "run-lab": "cd ../docs && jupyter lab 'VCC Demo Notebook.ipynb'",
+    "watch": "webpack --watch --mode=development",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "@jupyterlab/builder": "^3.0.0",
+    "@visa/charts-types": "^0.4.2",
+    "rimraf": "^2.6.1",
+    "webpack": "^5"
+  },
+  "dependencies": {
+    "@jupyter-widgets/base": "^1.1 || ^2 || ^3 || ^4",
+    "@visa/charts": "6.1.1"
+  },
+  "resolutions": {
+    "got": "^11.8.5"
+  },
+  "jupyterlab": {
+    "extension": "lib/labplugin",
+    "outputDir": "../pyvisacharts/labextension",
+    "sharedPackages": {
+      "@jupyter-widgets/base": {
+        "bundled": false,
+        "singleton": true
+      }
+    }
+  }
+}

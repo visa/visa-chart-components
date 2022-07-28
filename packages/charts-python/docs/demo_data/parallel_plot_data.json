@@ -1,0 +1,62 @@
+[
+  {
+    "group": "Metric 1",
+    "filter": "all",
+    "amount": 0.69
+  },
+  {
+    "group": "Metric 2",
+    "filter": "all",
+    "amount": 0.28
+  },
+  {
+    "group": "Metric 3",
+    "filter": "all",
+    "amount": 0.31
+  },
+  {
+    "group": "Metric 4",
+    "filter": "all",
+    "amount": 0.51
+  },
+  {
+    "group": "Metric 1",
+    "filter": "group 1",
+    "amount": 0.29
+  },
+  {
+    "group": "Metric 2",
+    "filter": "group 1",
+    "amount": 0.18
+  },
+  {
+    "group": "Metric 3",
+    "filter": "group 1",
+    "amount": 0.71
+  },
+  {
+    "group": "Metric 4",
+    "filter": "group 1",
+    "amount": 0.31
+  },
+  {
+    "group": "Metric 1",
+    "filter": "group 2",
+    "amount": 0.82
+  },
+  {
+    "group": "Metric 2",
+    "filter": "group 2",
+    "amount": 0.9
+  },
+  {
+    "group": "Metric 3",
+    "filter": "group 2",
+    "amount": 0.26
+  },
+  {
+    "group": "Metric 4",
+    "filter": "group 2",
+    "amount": 0.65
+  }
+]

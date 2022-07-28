@@ -1,0 +1,146 @@
+[
+  {
+    "date": "2016-01-01",
+    "category": "Group A",
+    "value": 120,
+    "count": 420
+  },
+  {
+    "date": "2016-02-01",
+    "category": "Group A",
+    "value": 121,
+    "count": 439
+  },
+  {
+    "date": "2016-03-01",
+    "category": "Group A",
+    "value": 119,
+    "count": 402
+  },
+  {
+    "date": "2016-04-01",
+    "category": "Group A",
+    "value": 114,
+    "count": 434
+  },
+  {
+    "date": "2016-05-01",
+    "category": "Group A",
+    "value": 102,
+    "count": 395
+  },
+  {
+    "date": "2016-06-01",
+    "category": "Group A",
+    "value": 112,
+    "count": 393
+  },
+  {
+    "date": "2016-07-01",
+    "category": "Group A",
+    "value": 130,
+    "count": 445
+  },
+  {
+    "date": "2016-08-01",
+    "category": "Group A",
+    "value": 124,
+    "count": 456
+  },
+  {
+    "date": "2016-09-01",
+    "category": "Group A",
+    "value": 119,
+    "count": 355
+  },
+  {
+    "date": "2016-10-01",
+    "category": "Group A",
+    "value": 106,
+    "count": 464
+  },
+  {
+    "date": "2016-11-01",
+    "category": "Group A",
+    "value": 123,
+    "count": 486
+  },
+  {
+    "date": "2016-12-01",
+    "category": "Group A",
+    "value": 133,
+    "count": 491
+  },
+  {
+    "date": "2016-01-01",
+    "category": "Group B",
+    "value": 89,
+    "count": 342
+  },
+  {
+    "date": "2016-02-01",
+    "category": "Group B",
+    "value": 93,
+    "count": 434
+  },
+  {
+    "date": "2016-03-01",
+    "category": "Group B",
+    "value": 82,
+    "count": 378
+  },
+  {
+    "date": "2016-04-01",
+    "category": "Group B",
+    "value": 92,
+    "count": 323
+  },
+  {
+    "date": "2016-05-01",
+    "category": "Group B",
+    "value": 90,
+    "count": 434
+  },
+  {
+    "date": "2016-06-01",
+    "category": "Group B",
+    "value": 85,
+    "count": 376
+  },
+  {
+    "date": "2016-07-01",
+    "category": "Group B",
+    "value": 88,
+    "count": 404
+  },
+  {
+    "date": "2016-08-01",
+    "category": "Group B",
+    "value": 84,
+    "count": 355
+  },
+  {
+    "date": "2016-09-01",
+    "category": "Group B",
+    "value": 90,
+    "count": 432
+  },
+  {
+    "date": "2016-10-01",
+    "category": "Group B",
+    "value": 80,
+    "count": 455
+  },
+  {
+    "date": "2016-11-01",
+    "category": "Group B",
+    "value": 92,
+    "count": 445
+  },
+  {
+    "date": "2016-12-01",
+    "category": "Group B",
+    "value": 97,
+    "count": 321
+  }
+]

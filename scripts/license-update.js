@@ -85,6 +85,7 @@ const tsFiles = [
   ...glob.sync(path.join(__dirname, '..', 'packages/*') + '/stencil.config.ts', {}), // all stencil config files in pakages
   ...glob.sync(path.join(__dirname, '..', 'packages/*/src') + '/**/*.*ss', {}), // all scss files in package/src directories
   ...glob.sync(path.join(__dirname, '..', 'packages/charts-R/inst/htmlwidgets') + '/**/*.js', {}), // @visa/charts compiled code in charts-R
+  ...glob.sync(path.join(__dirname, '..', 'packages/charts-python/js') + '/**/*.js', { ignore: tsFileExclusions }),
   ...glob.sync(path.join(__dirname, '..', 'scripts') + '/*.js', {}), // all node scripts in the root
   ...glob.sync(path.join(__dirname, '..') + '/*.js', {}), // all js config files in the root
   ...glob.sync(path.join(__dirname, '..', '.storybook') + '/**/*.js', { ignore: tsFileExclusions }) // all storybook js files
@@ -240,10 +241,11 @@ htmlFiles.forEach(function(file) {
   }
 });
 
-// now we update R files as they have different comment syntax
+// now we update R, py files as they have different comment syntax
 const rFiles = [
   ...glob.sync(path.join(__dirname, '..', 'packages/charts-R') + '/**/*.R', {}),
-  ...glob.sync(path.join(__dirname, '..', 'packages/charts-R') + '/**/*.yaml', {})
+  ...glob.sync(path.join(__dirname, '..', 'packages/charts-R') + '/**/*.yaml', {}),
+  ...glob.sync(path.join(__dirname, '..', 'packages/charts-python') + '/**/*.py', {})
 ];
 
 rFiles.forEach(function(file) {
@@ -306,6 +308,6 @@ rFiles.forEach(function(file) {
         );
       });
   } catch (ex) {
-    console.log(`Error:: while processing ts file:${file}, exception:${ex}`);
+    console.log(`Error:: while processing R, py file:${file}, exception:${ex}`);
   }
 });

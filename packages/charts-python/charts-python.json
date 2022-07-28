@@ -1,0 +1,5 @@
+{
+  "load_extensions": {
+    "@visa/charts-python/extension": true
+  }
+}

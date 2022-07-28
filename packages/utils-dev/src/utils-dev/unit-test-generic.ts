@@ -628,7 +628,7 @@ export const generic_data_custom_update_exit = {
       } else {
         const lastTransitionKey = Object.keys(element['__transition'])[Object.keys(element['__transition']).length - 1]; // tslint:disable-line: no-string-literal
         const transitionName = element['__transition'][lastTransitionKey].name; // tslint:disable-line: no-string-literal
-        expect(transitionName).toEqual('exit');
+        expect(transitionName).toContain('exit'); // some transitions may be exit_nnn and others may just be exit
       }
     });
   }

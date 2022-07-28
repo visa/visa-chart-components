@@ -1,0 +1,22 @@
+[
+  {
+    "item": "Q1",
+    "group": "A",
+    "value": 1125
+  },
+  {
+    "item": "Q2",
+    "group": "A",
+    "value": 3725
+  },
+  {
+    "item": "Q3",
+    "group": "B",
+    "value": 2125
+  },
+  {
+    "item": "Q4",
+    "group": "B",
+    "value": 4125
+  }
+]
