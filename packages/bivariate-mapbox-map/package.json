@@ -1,6 +1,6 @@
 {
   "name": "@visa/bivariate-mapbox-map",
-  "version": "5.1.1",
+  "version": "5.1.2",
   "description": "a custom mapbox implementation to render a bivariate map of the US (msa and zip level)",
   "license": "SEE LICENCE IN LICENSE",
   "module": "dist/index.js",
@@ -40,7 +40,7 @@
     "@turf/points-within-polygon": "^6.5.0",
     "@turf/simplify": "^6.5.0",
     "@visa/charts-types": "^0.4.2",
-    "@visa/visa-charts-utils": "^4.7.0",
+    "@visa/visa-charts-utils": "^4.7.1",
     "d3-array": "^1.2.4",
     "d3-color": "^1.4.1",
     "d3-scale": "^2.2.2",
@@ -50,8 +50,8 @@
   },
   "devDependencies": {
     "@types/mapbox-gl": "^1.12.8",
-    "@visa/scatter-plot": "^6.2.0",
-    "@visa/visa-charts-utils-dev": "^3.3.14",
+    "@visa/scatter-plot": "^6.2.1",
+    "@visa/visa-charts-utils-dev": "^3.3.15",
     "core-js": "^3.20.3",
     "rollup-plugin-node-polyfills": "0.2.1"
   },

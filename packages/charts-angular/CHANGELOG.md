@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.2](https://github.com/visa/visa-chart-components/compare/@visa/charts-angular@3.1.1...@visa/charts-angular@3.1.2) (2022-07-28)
+
+
+### Bug Fixes
+
+* add charts-types as a dev dependency to bundles ([213fbb8](https://github.com/visa/visa-chart-components/commit/213fbb8dff8f55c64ee3d1a28e3d0017de76f374))
+
+
+
+
+
 ## [3.1.1](https://github.com/visa/visa-chart-components/compare/@visa/charts-angular@3.1.0...@visa/charts-angular@3.1.1) (2022-06-27)
 
 **Note:** Version bump only for package @visa/charts-angular
