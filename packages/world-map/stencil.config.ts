@@ -16,7 +16,7 @@ const dev: boolean = process.argv && process.argv.indexOf('--dev') > -1;
 
 export const config: Config | any = {
   namespace: 'world-map',
-  tsconfig: dev ? './tsconfig.dev.json' : './tsconfig.json',
+  tsconfig: dev ? './tsconfig.dev.json' : './tsconfig.prod.json',
   buildEs5: 'prod',
   extras: {
     cssVarsShim: true,
