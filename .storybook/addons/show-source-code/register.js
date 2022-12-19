@@ -176,19 +176,19 @@ const Panel = () => {
                       });
                       src += `\n${'\t'.repeat(4)}${!isNaN(c) ? '}' : args[i][l][a][c].length > 0 ? ']' : '}'}`;
                     }
-                    if (n !== 3 && d !== Object.keys(args[i][l][a]).length - 1) {
+                    if (d !== Object.keys(args[i][l][a]).length - 1) {
                       src += `,`;
                     }
                   });
                   src += `\n${'\t'.repeat(3)}${!isNaN(a) ? '}' : args[i][l][a].length > 0 ? ']' : '}'}`;
                 }
-                if (n !== 3 && b !== Object.keys(args[i][l]).length - 1) {
+                if (b !== Object.keys(args[i][l]).length - 1) {
                   src += `,`;
                 }
               });
               src += `\n${'\t'.repeat(2)}${!isNaN(l) ? '}' : ']'}`;
             }
-            if (n !== 3 && m !== Object.keys(args[i]).length - 1) {
+            if (m !== Object.keys(args[i]).length - 1) {
               src += `,`;
             }
           });
@@ -430,7 +430,7 @@ const Panel = () => {
             src5 += `\n${'\t'.repeat(3)}${
               !isNaN(a) ? '{' : configArgs[l][a].length > 0 ? '"' + a + '": [' : '"' + a + '": {'
             }`;
-            console.log(configArgs[l][a]);
+            // console.log(configArgs[l][a]);
             Object.keys(configArgs[l][a]).forEach((c, d) => {
               if (typeof configArgs[l][a][c] === 'string') {
                 src5 += `\n${'\t'.repeat(4)}${c.length > 0 && isNaN(c) ? `"${c}": ` : ''}"${configArgs[l][a][c]

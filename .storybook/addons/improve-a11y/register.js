@@ -27,7 +27,7 @@ const handleKeyDown = e => {
     e.target.click();
     // if "link to canvas" clicked, re-add tabindex to nav tabs
     if (new RegExp('#storybook-preview-wrapper|^/?path=/story/').test(e.target.getAttribute('href'))) {
-      console.log('tabindex reset!');
+      // console.log('tabindex reset!');
       setTimeout(() => {
         Array.from(document.querySelectorAll('.os-content div div div > a'))
           .slice(-3)
