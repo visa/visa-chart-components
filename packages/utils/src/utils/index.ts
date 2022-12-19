@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -27,7 +27,14 @@ import { getLicenses } from './license';
 
 import { formatDataLabel, placeDataLabels, getDataSymbol } from './dataLabel';
 
-import { formatStats, roundTo } from './formatStats';
+import {
+  formatStats,
+  roundTo,
+  setNumeralLocale,
+  registerNumeralFormat,
+  registerNumeralLocale,
+  getNumeralInstance
+} from './formatStats';
 
 import { formatDate } from './formatDate';
 
@@ -206,6 +213,10 @@ export {
   equalizePath,
   formatDataLabel,
   formatStats,
+  setNumeralLocale,
+  registerNumeralFormat,
+  registerNumeralLocale,
+  getNumeralInstance,
   formatDate,
   getColors,
   getLicenses,
