@@ -2,6 +2,7 @@
   "packages": ["packages/*", "packages/charts-python/js"],
   "version": "independent",
   "npmClient": "yarn",
+  "useNx": false,
   "command": {
     "version": {
       "message": "chore(release): publish",
