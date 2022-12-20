@@ -10,7 +10,7 @@ import { SpecPage } from '@stencil/core/testing';
 import { asyncForEach, flushTransitions, getTransitionDurations } from './unit-test-utils';
 import Utils from '@visa/visa-charts-utils';
 
-const { formatStats, visaColors, getTexture, getContrastingStroke, getColors } = Utils;
+const { formatStats, visaColors, getTexture, getContrastingStroke, getColors, roundTo } = Utils;
 
 const mockFocusEvent = new Event('focus');
 const mockKeyUpEvent = new KeyboardEvent('keyup');
@@ -20,6 +20,7 @@ const mockBBox = {
   height: 100,
   width: 100
 };
+const fakePosition = { pageX: 125, pageY: 250 };
 const mockSVGPoint = {
   x: 10,
   y: 10,
@@ -1739,6 +1740,13 @@ export const accessibility_keyboard_selection_test = {
     nextMarker['getBBox'] = () => mockBBox;
     markerGroup['getBBox'] = () => mockBBox;
 
+    // we are going to round data attributes to be safe
+    if (testProps && testProps['geometryPlacementAttributes'] && testProps['geometryPlacementAttributes'].length > 0) {
+      testProps['geometryPlacementAttributes'].forEach(dAttr => {
+        markerToClick.setAttribute(dAttr, roundTo(Number(markerToClick.getAttribute(dAttr)) * 1, 4));
+      });
+    }
+
     // ACT CLICK ON ELEMENT TO POPULATE THE CONTROLLER
     markerToClick.dispatchEvent(mockFocusEvent);
     await page.waitForChanges();
@@ -1808,6 +1816,7 @@ export const accessibility_keyboard_nav_generic_test = {
         }
       });
     }
+
     const innerMockKeyboardEvent = new KeyboardEvent('keydown', { ...keyDownObject });
 
     // ACT
@@ -1909,7 +1918,11 @@ export const accessibility_keyboard_nav_generic_test = {
     }
 
     // THIRD CHECK THAT FOCUS INDICATOR HAS BEEN CREATED
-    if (markerReceiveFocus.tagName !== 'g' && markerReceiveFocus.tagName !== 'svg') {
+    if (
+      markerReceiveFocus.tagName !== 'g' &&
+      markerReceiveFocus.tagName !== 'svg' &&
+      !testProps['focusIndicatorNotGrouped']
+    ) {
       // NOW WE CAN DETERMINE WHETHER THE NEXT SIBLING IS FOCUSED
       // FIND FOCUS MARKER CONTAINER
       const focusMarkerG = page.root.querySelector('.vcl-accessibility-focus-highlight');
@@ -1928,12 +1941,63 @@ export const accessibility_keyboard_nav_generic_test = {
           ? markerReceiveFocus.parentNode.parentNode.querySelectorAll('.vcl-accessibility-focus-highlight')
           : markerReceiveFocus.parentNode.querySelectorAll('.vcl-accessibility-focus-highlight');
       expect(focusMarkers).toBeTruthy();
-      expect(focusMarkers.length).toEqual(3);
+      expect(focusMarkers.length).toBeGreaterThan(1);
     }
 
     // FIRE THE KEYUP EVENT TO PREPARE FOR NEXT TEST
     newFocusedFigure.dispatchEvent(mockKeyUpEvent);
     await page.waitForChanges();
+  }
+};
+
+export const accessibility_keyboard_nav_tooltip_esc_hide = {
+  prop: 'accessibility',
+  group: 'labels',
+  name: 'keyboard nav: tooltip should get hidden on ESC key',
+  testProps: {},
+  testSelector: '[data-testid=mark]',
+  testFunc: async (
+    component: any,
+    page: SpecPage,
+    testProps: object,
+    testSelector: string,
+    expectedTooltipContent: string
+  ) => {
+    // ARRANGE
+    // if we have any testProps apply them
+    if (Object.keys(testProps).length) {
+      Object.keys(testProps).forEach(testProp => {
+        component[testProp] = testProps[testProp];
+      });
+    }
+    page.root.appendChild(component);
+    await page.waitForChanges();
+
+    // SETUP
+    const tooltipContainer = page.doc.querySelector(tooltipSelector);
+    const markerToHover = page.doc.querySelector(testSelector);
+
+    // ACT - TRIGGER HOVER
+    const mockMouseEvent = new MouseEvent('mouseover');
+    markerToHover.dispatchEvent({ ...mockMouseEvent, ...fakePosition });
+
+    // ACT - FLUSH TRANSITIONS
+    flushTransitions(tooltipContainer);
+    await page.waitForChanges();
+
+    // ASSERT - CHECK THAT TOOLTIP IS BEING DISPLAYED
+    expect(parseFloat(tooltipContainer.style.opacity)).toEqual(1);
+
+    // ACT - TRIGGER ESC
+    const mockKeyboardEvent = new KeyboardEvent('keydown', { key: 'Escape', code: 'Escape', keyCode: 27 });
+    page.win.dispatchEvent(mockKeyboardEvent);
+
+    // ACT - FLUSH TRANSITIONS
+    flushTransitions(tooltipContainer);
+    await page.waitForChanges();
+
+    // ASSERT - CHECK THAT TOOLTIP HAS BEEN HIDDEN
+    expect(parseFloat(tooltipContainer.style.opacity)).toEqual(0);
   }
 };
 
@@ -2577,7 +2641,6 @@ export const animationConfig_disabled_true_on_update = {
   }
 };
 
-/*
 // Accessibility annotation test does not run due to jsdom not supporting annotations util to date
 export const accessibility_annotation_description_set_on_load = {
   prop: 'annotations',
@@ -2620,7 +2683,82 @@ export const accessibility_annotation_description_set_on_load = {
     );
 
     // ASSERT
-    const annotationCount = component.annotations.length;
+    const ignoreAnnotationCount = component.annotations.filter(a => a.accessibilityDecorationOnly).length;
+    const annotationCount = component.annotations.length - ignoreAnnotationCount;
+    expect(annotationCount).toBeGreaterThanOrEqual(1);
+    expect(annotationDescriptionContainer).toEqualText(
+      `${annotationCount} annotation${annotationCount > 1 ? 's' : ''} on the chart`
+    );
+
+    component.annotations.forEach(annotation => {
+      if (annotation.note && annotation.note.title) {
+        expect(annotationDetailsHeaders[headerCount]).toEqualText(annotation.note.title);
+        headerCount++;
+      }
+      if (annotation.note && annotation.note.label) {
+        expect(annotationDetailsContent[detailCount]).toEqualText(annotation.note.label);
+        detailCount++;
+      }
+      if (annotation.accessibilityDescription) {
+        expect(annotationDetailsContent[detailCount]).toEqualText(annotation.accessibilityDescription);
+        detailCount++;
+      }
+    });
+  }
+};
+
+export const accessibility_annotation_description_set_on_update = {
+  prop: 'annotations',
+  group: 'accessibility',
+  name: 'instruction elements should contain annotation description on update if annotation exists on chart',
+  testProps: {},
+  testSelector: '.vcl-accessibility-instructions .vcl-access-annotations-heading',
+  nextTestSelector: '.vcl-accessibility-instructions .vcl-access-annotation',
+  testFunc: async (
+    component: any,
+    page: SpecPage,
+    testProps: object,
+    testSelector: string,
+    nextTestSelector: string
+  ) => {
+    // ARRANGE
+    component.wrapLabel = false;
+    component.highestHeadingLevel = 'h4';
+
+    // if we have any testProps apply them
+    let innerAnnotations;
+    if (Object.keys(testProps).length) {
+      Object.keys(testProps).forEach(testProp => {
+        if (testProp === 'annotations') {
+          innerAnnotations = testProps[testProp];
+        } else {
+          component[testProp] = testProps[testProp];
+        }
+      });
+    }
+
+    // ACT RENDER
+    page.root.appendChild(component);
+    await page.waitForChanges();
+
+    // ACT UPDATE
+    component.annotations = innerAnnotations;
+    await page.waitForChanges();
+
+    // ASSERT
+    const annotationDescriptionContainer = page.doc.querySelector(testSelector);
+    let headerCount = 0;
+    let detailCount = 0;
+    const annotationDetailsHeaders = Array.from(page.doc.querySelectorAll(nextTestSelector)).filter(
+      o => o.tagName.toUpperCase() === 'H6'
+    );
+    const annotationDetailsContent = Array.from(page.doc.querySelectorAll(nextTestSelector)).filter(
+      o => o.tagName.toUpperCase() === 'P'
+    );
+
+    // ASSERT
+    const ignoreAnnotationCount = component.annotations.filter(a => a.accessibilityDecorationOnly).length;
+    const annotationCount = component.annotations.length - ignoreAnnotationCount;
     expect(annotationCount).toBeGreaterThanOrEqual(1);
     expect(annotationDescriptionContainer).toEqualText(
       `${annotationCount} annotation${annotationCount > 1 ? 's' : ''} on the chart`
@@ -2642,4 +2780,3 @@ export const accessibility_annotation_description_set_on_load = {
     });
   }
 };
-*/

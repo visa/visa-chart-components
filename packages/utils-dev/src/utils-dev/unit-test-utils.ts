@@ -36,7 +36,9 @@ export const flushTransitions = (jsDomEle, i?) => {
       tween.value.bind(jsDomEle)(jsDomEle.__data__, i, jsDomEle);
     } else if (tween.name !== 'attr.transform') {
       if (tween.value.bind(jsDomEle)()) {
-        tween.value.bind(jsDomEle)(jsDomEle.__data__, i, jsDomEle)(1);
+        tween.value
+          .bind(jsDomEle)(jsDomEle.__data__, i, jsDomEle)
+          .bind(jsDomEle)(1);
       }
     }
   });
