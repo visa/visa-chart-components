@@ -56,6 +56,7 @@ export class ScatterPlotDefaultValues {
   static readonly clickStyle = propDefaultValues.symbolClickStyle;
 
   static readonly dataLabel = propDefaultValues.dataLabel;
+  static readonly dataKeyNames;
   static readonly legend = propDefaultValues.categoryLegend;
   static readonly tooltipLabel = propDefaultValues.tooltipLabel;
 

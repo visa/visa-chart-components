@@ -6,7 +6,7 @@
  *
  **/
 import { select } from 'd3-selection';
-import { setTooltipAccess } from './accessibilityUtils';
+import { setTooltipAccess, hideTooltipListener } from './accessibilityUtils';
 import { formatStats } from './formatStats';
 import { capitalized } from './calculation';
 import { formatDataLabel } from './dataLabel';
@@ -16,6 +16,7 @@ import { transition } from 'd3-transition';
 const buildTooltipContent = ({
   data,
   tooltipLabel,
+  dataKeyNames,
   xAxis,
   yAxis,
   dataLabel,
@@ -25,12 +26,14 @@ const buildTooltipContent = ({
   xAccessor, // equivalent to joinNameAccessor / markerNameAccessor in map and sourceAccessor in alluvial
   yAccessor, // equivalent to joinAccessor / markerAccessor in map and targetAccessor in alluvial
   groupAccessor, // equivalent to seriesAccessor in line, dumbbell, parallel
+  sizeConfig, // size for scatter plot tooltip
   diffLabelDetails,
   normalized,
   chartType
 }: {
   data?: any;
   tooltipLabel?: any;
+  dataKeyNames?: any;
   xAxis?: any;
   yAxis?: any;
   dataLabel?: any;
@@ -40,6 +43,7 @@ const buildTooltipContent = ({
   xAccessor?: any;
   yAccessor?: any;
   groupAccessor?: any;
+  sizeConfig?: any;
   diffLabelDetails?: any;
   normalized?: any;
   chartType?: any;
@@ -48,8 +52,12 @@ const buildTooltipContent = ({
   if (tooltipLabel && tooltipLabel.labelAccessor.length > 0) {
     let labelStr = '';
     tooltipLabel.labelAccessor.map((k, i) => {
-      const title =
-        tooltipLabel.labelTitle && tooltipLabel.labelTitle[i] !== '' ? tooltipLabel.labelTitle[i] + ': ' : '';
+      const title = // if we have tooltip label use it, if we have key map use it next
+        tooltipLabel.labelTitle && tooltipLabel.labelTitle[i] !== ''
+          ? tooltipLabel.labelTitle[i] + ': '
+          : dataKeyNames && dataKeyNames[k]
+          ? dataKeyNames[k] + ': '
+          : '';
       labelStr += `${title}<b>${
         tooltipLabel.format && tooltipLabel.format[i]
           ? data[k] instanceof Date
@@ -69,55 +77,74 @@ const buildTooltipContent = ({
     labelStr.replace(',', '');
     return labelStr;
   } else {
-    //default tooltip
+    // default tooltip
+    // make keymap the first check, then use axis labels, then data keys directly
     let defaultLabel = '';
-    const firstTitle =
-      xAxis && yAxis
-        ? (layout === 'horizontal' ? yAxis.label : xAxis.label) || xAccessor || ordinalAccessor
-        : ordinalAccessor;
-    const secondTitle =
-      xAxis && yAxis
-        ? (layout === 'horizontal' ? xAxis.label : yAxis.label) || yAccessor || valueAccessor
-        : valueAccessor;
+    const firstTitle = xAxis && yAxis ? xAccessor || ordinalAccessor : ordinalAccessor;
+    const secondTitle = xAxis && yAxis ? yAccessor || valueAccessor : valueAccessor;
+    const thirdTitle = sizeConfig ? sizeConfig.sizeAccessor : '';
+    const firstTitleMapped =
+      dataKeyNames && dataKeyNames[firstTitle]
+        ? dataKeyNames[firstTitle]
+        : xAxis && yAxis
+        ? layout === 'horizontal'
+          ? yAxis.label
+          : xAxis.label
+        : firstTitle;
+    const secondTitleMapped =
+      dataKeyNames && dataKeyNames[secondTitle]
+        ? dataKeyNames[secondTitle]
+        : xAxis && yAxis
+        ? layout === 'horizontal'
+          ? xAxis.label
+          : yAxis.label
+        : secondTitle;
+    const thirdTitleMapped = dataKeyNames && dataKeyNames[thirdTitle] ? dataKeyNames[thirdTitle] : thirdTitle;
 
     // bar, pie
     if (chartType === 'bar') {
       defaultLabel = `
-      <b>${groupAccessor ? data[groupAccessor] + '<br/>' : ''} </b>
-      ${capitalized(firstTitle) + ': <b>' + data[ordinalAccessor]} </b><br/> 
-        ${capitalized(secondTitle) + ':'}
+      <b>${groupAccessor && data[groupAccessor] ? data[groupAccessor] + '<br/>' : ''} </b>
+      ${capitalized(firstTitleMapped) + ': <b>' + data[ordinalAccessor]} </b><br/> 
+        ${capitalized(secondTitleMapped) + ':'}
         <b>${formatStats(data[valueAccessor], dataLabel.format)}</b>`;
     }
     // if we have normalized then we output percent and value
     else if (chartType === 'pie') {
       defaultLabel = `
-        ${capitalized(firstTitle) + ': <b>' + data[ordinalAccessor]} </b><br/> 
+        ${capitalized(firstTitleMapped) + ': <b>' + data[ordinalAccessor]} </b><br/> 
         ${
           normalized
-            ? capitalized(secondTitle) +
+            ? capitalized(secondTitleMapped) +
               ' (%): <b>' +
               formatDataLabel(data, valueAccessor, '0[.][0]%', normalized) +
               '</b><br/>'
             : ''
         }
-        ${capitalized(secondTitle) + ': '}
+        ${capitalized(secondTitleMapped) + ': '}
         <b>${formatStats(data[valueAccessor], dataLabel.format === 'normalized' ? '0[.][0]a' : dataLabel.format)}</b>
       `;
     }
     // scatter-plot
     else if (chartType === 'scatter') {
       defaultLabel = `
-        <b>${groupAccessor ? data[groupAccessor] + '<br/>' : ''} </b>
-        ${capitalized(firstTitle) + ':'} 
+        <b>${groupAccessor && data[groupAccessor] ? data[groupAccessor] + '<br/>' : ''} </b>
+        ${capitalized(firstTitleMapped) + ':'} 
         <b>${formatStats(data[xAccessor], xAxis.format || '')} </b><br/>
-        ${capitalized(secondTitle) + ':'} 
-        <b>${formatStats(data[yAccessor], yAxis.format || '')}</b>`;
+        ${capitalized(secondTitleMapped) + ':'} 
+        <b>${formatStats(data[yAccessor], yAxis.format || '')}</b>
+        ${sizeConfig && sizeConfig.sizeAccessor ? '<br/>' + capitalized(thirdTitleMapped) + ':' : ''} 
+        ${
+          sizeConfig && sizeConfig.sizeAccessor
+            ? '<b>' + formatStats(data[sizeConfig.sizeAccessor], sizeConfig.format || dataLabel.format || '') + '</b>'
+            : ''
+        }`;
     }
     // line, parallel
     else if (chartType === 'line' || chartType === 'parallel') {
       defaultLabel = `
-        <b>${groupAccessor ? data[groupAccessor] + '<br/>' : ''}</b>
-        ${capitalized(firstTitle) + ':'} 
+        <b>${groupAccessor && data[groupAccessor] ? data[groupAccessor] + '<br/>' : ''}</b>
+        ${capitalized(firstTitleMapped) + ':'} 
         <b>${
           data[ordinalAccessor] instanceof Date
             ? formatDate({
@@ -127,31 +154,31 @@ const buildTooltipContent = ({
               })
             : data[ordinalAccessor]
         } </b><br/>
-        ${capitalized(secondTitle) + ':'} 
+        ${capitalized(secondTitleMapped) + ':'} 
         <b>${formatStats(data[valueAccessor], dataLabel.format || '')}</b>`;
     }
     // stacked-bar, clustered-bar
     else if (chartType === 'stacked' || chartType === 'clustered') {
       defaultLabel = `
         <b>${data[groupAccessor] + '<br/>'}</b>
-        ${capitalized(firstTitle) + ':'} 
+        ${capitalized(firstTitleMapped) + ':'} 
         <b>${data[ordinalAccessor]} </b><br/> 
         ${
           normalized
-            ? capitalized(secondTitle) +
+            ? capitalized(secondTitleMapped) +
               ' (%): <b>' +
               formatDataLabel(data, valueAccessor, '0[.][0]%', normalized) +
               '</b><br/>'
             : ''
         }
-        ${capitalized(secondTitle) + ': '}
+        ${capitalized(secondTitleMapped) + ': '}
         <b>${formatStats(data[valueAccessor], dataLabel.format === 'normalized' ? '0[.][0]a' : dataLabel.format)}</b>
       `;
     }
     // heat-map
     else if (chartType === 'heat-map') {
       defaultLabel = `
-        ${capitalized(firstTitle) + ':'} 
+        ${capitalized(firstTitleMapped) + ':'} 
         <b>${
           data[xAccessor] instanceof Date
             ? formatDate({
@@ -161,7 +188,7 @@ const buildTooltipContent = ({
               })
             : data[xAccessor]
         } </b><br/>
-        ${capitalized(secondTitle) + ':'} 
+        ${capitalized(secondTitleMapped) + ':'} 
         <b>${
           data[yAccessor] instanceof Date
             ? formatDate({
@@ -171,22 +198,25 @@ const buildTooltipContent = ({
               })
             : data[yAccessor]
         } </b><br/>
-        ${capitalized(valueAccessor) + ':'}
+        ${capitalized(dataKeyNames && dataKeyNames[valueAccessor] ? dataKeyNames[valueAccessor] : valueAccessor) + ':'}
         <b>${formatStats(data[valueAccessor], dataLabel.format || '')}</b>`;
     }
     // circle-packing
     else if (chartType === 'circle-packing') {
       defaultLabel = `
         <b>${capitalized(data[ordinalAccessor])} </b><br/>
-        ${capitalized(groupAccessor) + ': <b>' + data[groupAccessor]} </b><br/>
-        ${capitalized(valueAccessor) + ':'}
+        ${capitalized(dataKeyNames && dataKeyNames[groupAccessor] ? dataKeyNames[groupAccessor] : groupAccessor) +
+          ': <b>' +
+          data[groupAccessor]} </b><br/>
+        ${capitalized(dataKeyNames && dataKeyNames[valueAccessor] ? dataKeyNames[valueAccessor] : valueAccessor) + ':'}
         <b>${formatStats(data[valueAccessor], dataLabel.format || '')}</b>`;
     }
     // world-map
     else if (chartType === 'world-map') {
       defaultLabel = `
+        <b>${groupAccessor && data[groupAccessor] ? data[groupAccessor] + '<br/>' : ''} </b>
         <b>${data[xAccessor]} (${data[yAccessor]}) </b><br/>
-          ${valueAccessor}: 
+          ${dataKeyNames && dataKeyNames[valueAccessor] ? dataKeyNames[valueAccessor] : valueAccessor}: 
           <b>${formatStats(data[valueAccessor], dataLabel.format || '')}</b>`;
     }
     // dumbbell
@@ -245,8 +275,9 @@ const buildTooltipContent = ({
     // alluvial-diagram
     else if (chartType === 'alluvial-diagram') {
       defaultLabel = `
+      <b>${groupAccessor && data[groupAccessor] ? data[groupAccessor] + '<br/>' : ''} </b>
       <b>${capitalized(data[xAccessor])}</b> to <b>${capitalized(data[yAccessor])} </b><br/>
-      ${capitalized(valueAccessor) + ':'}
+      ${capitalized(dataKeyNames && dataKeyNames[valueAccessor] ? dataKeyNames[valueAccessor] : valueAccessor) + ':'}
       <b>${
         dataLabel && dataLabel.format ? formatStats(data[valueAccessor], dataLabel.format) : data[valueAccessor]
       }</b>`;
@@ -293,6 +324,7 @@ export const drawTooltip = ({
   event,
   isToShow,
   tooltipLabel,
+  dataKeyNames,
   xAxis,
   yAxis,
   dataLabel,
@@ -302,6 +334,7 @@ export const drawTooltip = ({
   xAccessor, // equivalent to joinNameAccessor / markerNameAccessor in map and sourceAccessor in alluvial
   yAccessor, // equivalent to joinAccessor / markerAccessor in map and targetAccessor in alluvial
   groupAccessor, // equivalent to seriesAccessor in line, dumbbell, parallel,
+  sizeConfig, // size for scatter plot tooltip
   diffLabelDetails,
   normalized,
   chartType
@@ -311,6 +344,7 @@ export const drawTooltip = ({
   event?: any;
   isToShow?: any;
   tooltipLabel?: any;
+  dataKeyNames?: any;
   xAxis?: any;
   yAxis?: any;
   dataLabel?: any;
@@ -320,6 +354,7 @@ export const drawTooltip = ({
   xAccessor?: any;
   yAccessor?: any;
   groupAccessor?: any;
+  sizeConfig?: any;
   diffLabelDetails?: any;
   normalized?: any;
   chartType?: any;
@@ -329,6 +364,7 @@ export const drawTooltip = ({
     const tooltipContent = buildTooltipContent({
       data,
       tooltipLabel,
+      dataKeyNames,
       xAxis,
       yAxis,
       dataLabel,
@@ -338,6 +374,7 @@ export const drawTooltip = ({
       xAccessor, // equivalent to joinNameAccessor / markerNameAccessor in map and sourceAccessor in alluvial
       yAccessor, // equivalent to joinAccessor / markerAccessor in map and targetAccessor in alluvial
       groupAccessor, // equivalent to seriesAccessor in line, dumbbell, parallel
+      sizeConfig, // size for scatter plot tooltip
       diffLabelDetails,
       normalized,
       chartType
@@ -363,6 +400,7 @@ export const drawTooltip = ({
     // place tooltip and then fade in
     // left = mouse position - adjust left for parent container location (bounds.left) - adjust for scroll - adjust to left if on right half of graph
     // right = mouse position - adjust up for parent container location (bounds.right) - adjust for height of tooltip - adjust for scroll
+    // console.log('checking tooltip', positions, bounds, adjLeft, adjLeftFlip, adjTop); // for debugging of placement and width/height
     root
       .style('left', `${positions[0] - bounds.left - adjLeft - adjLeftFlip}px`)
       .style('top', `${positions[1] - bounds.top - bounds.height - adjTop}px`)
@@ -377,5 +415,6 @@ export const drawTooltip = ({
   if (root) {
     isToShow ? toShow() : toHide();
     setTooltipAccess(root.node());
+    hideTooltipListener(isToShow);
   }
 };
