@@ -1,5 +1,279 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`<circle-packing> rendered-html accessibility generic accessibility test suite accessibility: keyboard instruction component displays table in click state 1`] = `
+<div class="visa-viz-keyboard-instructions-container" id="visa-viz-keyboard-instructions-container-circle-packing-test">
+  <div>
+    <p>
+      Note: for VoiceOver users (mac), press and hold
+      <kbd>
+        Ctrl
+      </kbd>
+      +
+      <kbd>
+        Shift
+      </kbd>
+      when using the arrow keys for the best navigation experience.
+    </p>
+    <table class="vcc-ki-data-table vcc-ki-keyboard-instructions vcc-ki-state--compact vcc-ki-state--single-select" data-header="header">
+      <thead class="vcc-ki-thead">
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-th" scope="col">
+            Action
+          </th>
+          <th class="vcc-ki-th" scope="col">
+            Result
+          </th>
+        </tr>
+      </thead>
+      <tbody class="vcc-ki-tbody">
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Enter
+            </kbd>
+            on the chart area or a node collection.
+          </th>
+          <td class="vcc-ki-td">
+            Enter the chart area/drill down a level.
+          </td>
+        </tr>
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Shift
+            </kbd>
+            +
+            <kbd>
+              Enter
+            </kbd>
+            on a node collection or node.
+          </th>
+          <td class="vcc-ki-td">
+            Drill up a level.
+          </td>
+        </tr>
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Tab
+            </kbd>
+            at any time.
+          </th>
+          <td class="vcc-ki-td">
+            Exit the chart.
+          </td>
+        </tr>
+        <tr class="vcc-ki-disabled-row vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Space
+            </kbd>
+            is unused.
+          </th>
+          <td class="vcc-ki-td">
+            No effect on this chart.
+          </td>
+        </tr>
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              ←
+            </kbd>
+            /
+            <kbd>
+              →
+            </kbd>
+            on a node collection or node.
+          </th>
+          <td class="vcc-ki-td">
+            Move among sibling node collections or nodes.
+          </td>
+        </tr>
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              ↑
+            </kbd>
+            /
+            <kbd>
+              ↓
+            </kbd>
+            on a node collection or node.
+          </th>
+          <td class="vcc-ki-td">
+            Drill up or down a level.
+          </td>
+        </tr>
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Esc
+            </kbd>
+            at any time.
+          </th>
+          <td class="vcc-ki-td">
+            Dismiss the tooltip.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+`;
+
+exports[`<circle-packing> rendered-html accessibility generic accessibility test suite accessibility: keyboard instruction component displays table in click state with space enabled 1`] = `
+<div class="visa-viz-keyboard-instructions-container" id="visa-viz-keyboard-instructions-container-circle-packing-test">
+  <div>
+    <p>
+      Note: for VoiceOver users (mac), press and hold
+      <kbd>
+        Ctrl
+      </kbd>
+      +
+      <kbd>
+        Shift
+      </kbd>
+      when using the arrow keys for the best navigation experience.
+    </p>
+    <table class="vcc-ki-data-table vcc-ki-keyboard-instructions vcc-ki-state--compact vcc-ki-state--single-select" data-header="header">
+      <thead class="vcc-ki-thead">
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-th" scope="col">
+            Action
+          </th>
+          <th class="vcc-ki-th" scope="col">
+            Result
+          </th>
+        </tr>
+      </thead>
+      <tbody class="vcc-ki-tbody">
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Enter
+            </kbd>
+            on the chart area or a node collection.
+          </th>
+          <td class="vcc-ki-td">
+            Enter the chart area/drill down a level.
+          </td>
+        </tr>
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Shift
+            </kbd>
+            +
+            <kbd>
+              Enter
+            </kbd>
+            on a node collection or node.
+          </th>
+          <td class="vcc-ki-td">
+            Drill up a level.
+          </td>
+        </tr>
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Tab
+            </kbd>
+            at any time.
+          </th>
+          <td class="vcc-ki-td">
+            Exit the chart.
+          </td>
+        </tr>
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Space
+            </kbd>
+            on a node.
+          </th>
+          <td class="vcc-ki-td">
+            Select/Deselect a node.
+          </td>
+        </tr>
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              ←
+            </kbd>
+            /
+            <kbd>
+              →
+            </kbd>
+            on a node collection or node.
+          </th>
+          <td class="vcc-ki-td">
+            Move among sibling node collections or nodes.
+          </td>
+        </tr>
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              ↑
+            </kbd>
+            /
+            <kbd>
+              ↓
+            </kbd>
+            on a node collection or node.
+          </th>
+          <td class="vcc-ki-td">
+            Drill up or down a level.
+          </td>
+        </tr>
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Esc
+            </kbd>
+            at any time.
+          </th>
+          <td class="vcc-ki-td">
+            Dismiss the tooltip.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+`;
+
+exports[`<circle-packing> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: test whether space bar performs click action 1`] = `<circle class="node node-level-2 vcl-accessibility-focus-source" cursor="default" data-cx="-125.3304" data-cy="-35.2901" data-id="circle-Mexico-A" data-r="52.9312" data-role="img" data-testid="circle" data-translate-x="196" data-translate-y="196" fill="url(#circle-packing-test_texture_2)" focusable="false" id="chart-unit-test-123457-123457-123457" opacity="1" r="0" role="presentation" stroke="#efefef" stroke-dasharray="" stroke-width="1" tabindex="-1" transform="translate(-125.3304,-35.2901)"></circle>`;
+
+exports[`<circle-packing> rendered-html annotations should pass annotation prop 1`] = `
+<g aria-hidden="true" class="vcl-annotation-group" data-testid="annotation-group" focusable="false" role="presentation">
+  <g class="annotations">
+    <g class="annotation callout" transform="translate(200, 200)">
+      <g class="annotation-connector">
+        <path class="connector" d="M0,0L0,50" fill="none" stroke="pri_blue"></path>
+        <path class="connector-dot connector-end" d="M5.809009821810581e-16,-9.486832980505138A9.486832980505138,9.486832980505138,0,1,1,-5.809009821810581e-16,9.486832980505138A9.486832980505138,9.486832980505138,0,1,1,5.809009821810581e-16,-9.486832980505138Z" fill="pri_blue" stroke="pri_blue" transform="translate(0, 0)"></path>
+      </g>
+      <g class="annotation-subject"></g>
+      <g class="annotation-note" transform="translate(0, 50)">
+        <g class="annotation-note-content" transform="translate(-5, 3)">
+          <rect class="annotation-note-bg" fill="white" fill-opacity="0" height="50" width="50" x="-20" y="-20"></rect>
+          <text class="annotation-note-label" dx="0" fill="pri_blue" y="11">
+            <tspan dy="0.8em" x="0">
+              Social Media Intern returned to college
+            </tspan>
+          </text>
+          <text class="annotation-note-title" fill="pri_blue" font-weight="bold">
+            <tspan dy="0.8em" x="0">
+              Staff Change
+            </tspan>
+          </text>
+        </g>
+        <path class="note-line" d="M-5,0L5,0" stroke="pri_blue"></path>
+      </g>
+    </g>
+  </g>
+</g>
+`;
+
 exports[`<circle-packing> rendered-html event-emitter generic event testing customized mark based event testing [interaction] clickEvent: customized for circle-pack event object should emit and contain first data record when first mark is clicked 1`] = `<circle class="node node-level-1" cursor="default" data-cx="-84.1188" data-cy="-26.8081" data-id="circle-World-Mexico" data-r="99.35968555800707" data-role="img" data-testid="circle" data-translate-x="196" data-translate-y="196" fill="url(#circle-packing-test_texture_1)" focusable="false" id="circle-packing-test-123457-123457-123457" opacity="1" r="99.35968555800707" role="presentation" stroke="#666666" stroke-dasharray="" stroke-width="1" tabindex="-1" transform="translate(-84.1188,-26.8081)"></circle>`;
 
 exports[`<circle-packing> rendered-html event-emitter generic event testing mark based events [event] hoverEvent: event object should emit and contain first data record when first mark is hovered 1`] = `<circle class="node node-level-1" cursor="default" data-cx="-84.1188" data-cy="-26.8081" data-id="circle-World-Mexico" data-r="99.35968555800707" data-role="img" data-testid="circle" data-translate-x="196" data-translate-y="196" fill="url(#circle-packing-test_texture_1)" focusable="false" id="circle-packing-test-123457-123457-123457" opacity="1" r="99.35968555800707" role="presentation" stroke="#666666" stroke-dasharray="" stroke-width="1" tabindex="-1" transform="translate(-84.1188,-26.8081)"></circle>`;
@@ -64,29 +338,29 @@ exports[`<circle-packing> rendered-html render should render with minimal props[
       <p class="screen-reader-info vcl-region-label">
         Keyboard interactive circle-packing, Titled: Circle Packing Title. This section contains additional information about this chart. Pressing TAB will focus the keyboard instructions menu. Tabbing again takes you to the chart area.
       </p>
-      <p class="screen-reader-info vcl-access-title">
+      <h2 class="screen-reader-info vcl-access-title">
         Chart title: Circle Packing Title
-      </p>
-      <p class="screen-reader-info vcl-access-subtitle">
+      </h2>
+      <h3 class="screen-reader-info vcl-access-subtitle">
         Chart subtitle: This is the circle packing chart's subtitle
-      </p>
-      <p class="screen-reader-info vcl-access-executive-summary" data-level="p"></p>
-      <p class="screen-reader-info vcl-access-purpose" data-level="p"></p>
-      <p class="screen-reader-info vcl-access-long-description" data-level="p"></p>
-      <p class="screen-reader-info vcl-access-context" data-level="p"></p>
-      <p class="screen-reader-info vcl-access-structure-heading">
+      </h3>
+      <p class="screen-reader-info vcl-access-executive-summary" data-level="h3"></p>
+      <p class="screen-reader-info vcl-access-purpose" data-level="h3"></p>
+      <p class="screen-reader-info vcl-access-long-description" data-level="h3"></p>
+      <p class="screen-reader-info vcl-access-context" data-level="h3"></p>
+      <h3 class="screen-reader-info vcl-access-structure-heading">
         Structure
-      </p>
-      <p class="screen-reader-info vcl-access-statistics" data-level="p"></p>
-      <p class="screen-reader-info vcl-access-chart-layout-heading">
+      </h3>
+      <p class="screen-reader-info vcl-access-statistics" data-level="h4"></p>
+      <h4 class="screen-reader-info vcl-access-chart-layout-heading">
         Chart Layout Description
-      </p>
+      </h4>
       <p class="screen-reader-info vcl-access-layout">
         This is a circle-packing with 13 nodes (more nodes may be revealed upon interaction).
       </p>
       <p class="screen-reader-info vcl-access-xAxis"></p>
       <p class="screen-reader-info vcl-access-yAxis"></p>
-      <p class="screen-reader-info vcl-access-notes" data-annotationlevel="p" data-level="p"></p>
+      <p class="screen-reader-info vcl-access-notes" data-annotationlevel="h3" data-level="h4"></p>
     </div>
     <div class="o-layout--chart" data-testid="layout-chart">
       <h2 data-testid="main-title">
@@ -238,7 +512,7 @@ exports[`<circle-packing> rendered-html render should render with minimal props[
         <p style="margin: 0;"></p>
       </div>
       <data-table>
-        <div class="visa-viz-data-table-outer-container">
+        <div class="visa-viz-data-table-outer-container" data-testid="data-table-outer-container">
           <div class="visa-viz-button-wrapper" style="padding-bottom: 32px;">
             <button aria-expanded="false" aria-label="display data table" class="vcc-btn-icon vcc-btn-icon--light-tiny visa-viz-data-table-button" id="visa-viz-data-table-button-circle-packing-test" role="button" tabindex="0" type="button" style="transform: translate(8px,
                 0px);">
@@ -258,7 +532,7 @@ exports[`<circle-packing> rendered-html render should render with minimal props[
               </symbol>
             </svg>
           </div>
-          <div class="visa-viz-data-table-container" id="visa-viz-data-table-container-circle-packing-test"></div>
+          <div class="visa-viz-data-table-container" data-testid="data-table-container" id="visa-viz-data-table-container-circle-packing-test"></div>
         </div>
       </data-table>
     </div>

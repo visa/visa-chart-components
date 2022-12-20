@@ -40,7 +40,11 @@ exports[`<clustered-bar-chart> rendered-html accessibility generic accessibility
         <tr class="vcc-ki-tr">
           <th class="vcc-ki-td" scope="row">
             <kbd>
-              Esc
+              Shift
+            </kbd>
+            +
+            <kbd>
+              Enter
             </kbd>
             on a cluster or bar.
           </th>
@@ -100,6 +104,17 @@ exports[`<clustered-bar-chart> rendered-html accessibility generic accessibility
             Move among bars across clusters.
           </td>
         </tr>
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Esc
+            </kbd>
+            at any time.
+          </th>
+          <td class="vcc-ki-td">
+            Dismiss the tooltip.
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
@@ -146,7 +161,11 @@ exports[`<clustered-bar-chart> rendered-html accessibility generic accessibility
         <tr class="vcc-ki-tr">
           <th class="vcc-ki-td" scope="row">
             <kbd>
-              Esc
+              Shift
+            </kbd>
+            +
+            <kbd>
+              Enter
             </kbd>
             on a cluster or bar.
           </th>
@@ -206,6 +225,17 @@ exports[`<clustered-bar-chart> rendered-html accessibility generic accessibility
             Move among bars across clusters.
           </td>
         </tr>
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Esc
+            </kbd>
+            at any time.
+          </th>
+          <td class="vcc-ki-td">
+            Dismiss the tooltip.
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
@@ -217,23 +247,59 @@ exports[`<clustered-bar-chart> rendered-html accessibility generic accessibility
 exports[`<clustered-bar-chart> rendered-html annotations should pass annotation prop 1`] = `
 <g aria-hidden="true" class="vcl-annotation-group" data-testid="annotation-group" focusable="false" role="presentation">
   <g class="annotations">
-    <g class="annotation">
-      <g class="annotation-connector"></g>
+    <g class="annotation callout clustered-chart-annotation elbow" transform="translate(102.06, 89.1851851851852)">
+      <g class="annotation-connector">
+        <path class="connector" d="M0,0L54.944444444444464,-54.944444444444464L75.12750000000003,-54.944444444444464" fill="none" stroke="grey"></path>
+      </g>
       <g class="annotation-subject"></g>
-      <g class="annotation-note">
-        <g class="annotation-note-content">
-          <rect class="annotation-note-bg"></rect>
-          <text class="annotation-note-label"></text>
+      <g class="annotation-note" transform="translate(75.12750000000003, -54.944444444444464)">
+        <g class="annotation-note-content" transform="translate(-5, -13)">
+          <rect class="annotation-note-bg" fill="white" fill-opacity="0" height="10" width="20" x="-5" y="0"></rect>
+          <text class="annotation-note-label" dx="0" fill="grey" y="11">
+            <tspan dy="0.8em" x="0">
+              Product C saw strong gains until Product B was improved.
+            </tspan>
+          </text>
           <text class="annotation-note-title" fill="grey" font-weight="bold">
             <tspan dy="0.8em" x="0">
-              Temporary
+              Temporary Growth
             </tspan>
           </text>
         </g>
       </g>
     </g>
-    <g class="annotation"></g>
-    <g class="annotation"></g>
+    <g class="annotation callout clustered-chart-annotation elbow" transform="translate(190.512, 52.55555555555556)">
+      <g class="annotation-connector">
+        <path class="connector" d="M0,0L-13.324499999999972,-13.324499999999972L-13.324499999999972,-18.314814814814817" fill="none" stroke="grey"></path>
+      </g>
+      <g class="annotation-subject"></g>
+      <g class="annotation-note" transform="translate(-13.324499999999972, -18.314814814814817)">
+        <g class="annotation-note-content" transform="translate(-10, -13)">
+          <rect class="annotation-note-bg" fill="white" fill-opacity="0" height="10" width="10" x="0" y="0"></rect>
+          <text class="annotation-note-label" dx="0" fill="grey" y="0">
+            <tspan dy="0.8em" x="0"></tspan>
+          </text>
+          <text class="annotation-note-title"></text>
+        </g>
+        <path class="note-line" d="M-10,0L0,0" stroke="grey"></path>
+      </g>
+    </g>
+    <g class="annotation callout clustered-chart-annotation elbow" transform="translate(299.37600000000003, 1e-9)">
+      <g class="annotation-connector">
+        <path class="connector" d="M0,0L-34.240740739740744,34.240740739740744L-122.1885,34.240740739740744" fill="none" stroke="grey"></path>
+      </g>
+      <g class="annotation-subject"></g>
+      <g class="annotation-note" transform="translate(-122.1885, 34.240740739740744)">
+        <g class="annotation-note-content" transform="translate(-10, 3)">
+          <rect class="annotation-note-bg" fill="white" fill-opacity="0" height="10" width="10" x="0" y="0"></rect>
+          <text class="annotation-note-label" dx="0" fill="grey" y="0">
+            <tspan dy="0.8em" x="0"></tspan>
+          </text>
+          <text class="annotation-note-title"></text>
+        </g>
+        <path class="note-line" d="M-10,0L0,0" stroke="grey"></path>
+      </g>
+    </g>
   </g>
 </g>
 `;

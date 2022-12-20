@@ -229,11 +229,11 @@ describe('<scatter-plot>', () => {
               nextSelectorAriaLabel: 'A. 1. 2.7k. Point 1 of 3.'
             }
           },
-          accessibility_keyboard_nav_esc_to_group: {
-            name: 'keyboard nav: group - escape will move up to group',
+          accessibility_keyboard_nav_shift_enter_to_group: {
+            name: 'keyboard nav: group - shift+enter will move up to group',
             testSelector: '[data-testid=marker][data-id=marker-A-1-2700]',
             nextTestSelector: '[data-testid=marker-series-group][data-id=marker-series-A]',
-            keyDownObject: { key: 'Escape', code: 'Escape', keyCode: 27 },
+            keyDownObject: { key: 'Enter', code: 'Enter', keyCode: 13, shiftKey: true },
             testProps: {
               selectorAriaLabel: 'A. 1. 2.7k. Point 1 of 3.',
               nextSelectorAriaLabel: 'A. Scatter group 1 of 4 which contains 3 interactive points.'
@@ -283,6 +283,17 @@ describe('<scatter-plot>', () => {
                       className: 'scatter-annotation',
                       type: 'annotationCalloutCircle',
                       subject: { radius: 18 }
+                    },
+                    {
+                      note: {},
+                      accessibilityDecorationOnly: true,
+                      type: 'annotationXYThreshold',
+                      subject: {
+                        x1: 0,
+                        x2: 250
+                      },
+                      color: 'pri_blue',
+                      disable: ['note', 'connector']
                     }
                   ]
                 : []
@@ -446,52 +457,77 @@ describe('<scatter-plot>', () => {
       });
     });
 
-    // annotations break in jsdom due to their text wrapping function in d3-annotation
-    // describe('annotations', () => {
-    //   // TODO: need to add more precise test case for annotations label and text
-    //   it('should pass annotation prop', async () => {
-    //     // ARRANGE
-    //     const annotations = [
-    //       {
-    //         note: {
-    //           label: 'Social Media Intern returned to college',
-    //           bgPadding: 20,
-    //           title: 'Staff Change',
-    //           align: 'middle',
-    //           wrap: 130
-    //         },
-    //         accessibilityDescription:
-    //           'This is an annotation that explains a drop in tweet ACTivity due to staff change.',
-    //         y: [2600],
-    //         x: '62%',
-    //         dy: -85,
-    //         type: 'annotationCallout',
-    //         connector: { end: 'dot', endScale: 10 },
-    //         color: 'pri_blue'
-    //       }
-    //     ];
-    //     const data = [
-    //       { label: 'Q1', value: 1125 },
-    //       { label: 'Q2', value: 3725 },
-    //       { label: 'Q3', value: 2125 },
-    //       { label: 'Q4', value: 4125 }
-    //     ];
-    //     const dataLabel = { visible: true, placement: 'top', labelAccessor: 'value', format: '0,0' };
-    //     component.data = data;
-    //     component.ordinalAccessor = 'label';
-    //     component.valueAccessor = 'value';
-    //     component.dataLabel = dataLabel;
-    //     component.annotations = annotations;
+    // annotations break in jsdom due to their text wrapping function in d3-annotation -- fixed in stencil 2.17.3+
+    describe('annotations', () => {
+      // TODO: need to add more precise test case for annotations label and text
+      it('should pass annotation prop on load', async () => {
+        // ARRANGE
+        const annotations = [
+          {
+            note: {
+              label: 'scatter items',
+              bgPadding: 0,
+              title: 'Test Annotation',
+              align: 'left',
+              wrap: 130
+            },
+            accessibilityDescription: 'This is a test description for accessibility.',
+            data: {
+              item: 2,
+              value: 1500
+            },
+            dy: '-35%',
+            className: 'scatter-annotation',
+            type: 'annotationCalloutCircle',
+            subject: { radius: 18 }
+          }
+        ];
+        component.annotations = annotations;
 
-    //     // ACT
-    //     page.root.append(component);
-    //     await page.waitForChanges();
+        // ACT
+        page.root.append(component);
+        await page.waitForChanges();
 
-    //     // ASSERT
-    //     const annotationGroup = page.doc.querySelector('[data-testid=annotation-group]');
-    //     expect(annotationGroup).toMatchSnapshot();
-    //   });
-    // });
+        // ASSERT
+        const annotationGroup = page.doc.querySelector('[data-testid=annotation-group]');
+        expect(annotationGroup).toMatchSnapshot();
+      });
+      it('should pass annotation prop on update', async () => {
+        // ARRANGE
+        const annotations = [
+          {
+            note: {
+              label: 'scatter items',
+              bgPadding: 0,
+              title: 'Test Annotation',
+              align: 'left',
+              wrap: 130
+            },
+            accessibilityDescription: 'This is a test description for accessibility.',
+            data: {
+              item: 2,
+              value: 1500
+            },
+            dy: '-35%',
+            className: 'scatter-annotation',
+            type: 'annotationCalloutCircle',
+            subject: { radius: 18 }
+          }
+        ];
+
+        // ACT
+        page.root.append(component);
+        await page.waitForChanges();
+
+        // UPDATE
+        component.annotations = annotations;
+        await page.waitForChanges();
+
+        // ASSERT
+        const annotationGroup = page.doc.querySelector('[data-testid=annotation-group]');
+        expect(annotationGroup).toMatchSnapshot();
+      });
+    });
 
     describe('axes', () => {
       describe('xMinValueOverride & xMaxValueOverride', () => {
@@ -1384,19 +1420,80 @@ describe('<scatter-plot>', () => {
               tooltip_tooltipLabel_custom_format_load:
                 '<p style="margin: 0;">Testing123:<b>A</b><br>Count:<b>$2.7k</b><br></p>',
               tooltip_tooltipLabel_custom_format_update:
-                '<p style="margin: 0;">Testing123:<b>A</b><br>Count:<b>$2.7k</b><br></p>'
+                '<p style="margin: 0;">Testing123:<b>A</b><br>Count:<b>$2.7k</b><br></p>',
+              dataKeyNames_custom_on_load:
+                '<p style="margin: 0;"><b>A<br></b>Test Item:<b>1</b><br>Y Axis:<b>2.7k</b></p>',
+              dataKeyNames_custom_on_update:
+                '<p style="margin: 0;"><b>A<br></b>Test Item:<b>1</b><br>Y Axis:<b>2.7k</b></p>'
+            };
+            const innerAriaContent = {
+              dataKeyNames_custom_on_load: 'group A. Test Item 1. value 2.7k. Point 1 of 3.',
+              dataKeyNames_custom_on_update: 'group A. Test Item 1. value 2.7k. Point 1 of 3.'
             };
             const innerTestProps = { ...unitTestTooltip[test].testProps, ...innerTooltipProps[test] };
+            const customDataKeyNames = { dataKeyNames: { item: 'Test Item' } };
+            const customSizeConfig = { sizeConfig: { sizeAccessor: 'value', format: '$0.0a' } };
             // we have to handle clickEvent separately due to this.zooming boolean in circle-packing load
-
-            it(`${unitTestTooltip[test].prop}: ${unitTestTooltip[test].name}`, () =>
-              unitTestTooltip[test].testFunc(
-                component,
-                page,
-                innerTestProps,
-                innerTestSelector,
-                innerTooltipContent[test]
-              ));
+            if (test === 'dataKeyNames_custom_on_load' || test === 'dataKeyNames_custom_on_update') {
+              it(`${unitTestTooltip[test].prop}: ${unitTestTooltip[test].name}`, () =>
+                unitTestTooltip[test].testFunc(
+                  component,
+                  page,
+                  {
+                    ...innerTestProps,
+                    ...customDataKeyNames,
+                    accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true },
+                    selectorAriaLabel: innerAriaContent[test]
+                  },
+                  innerTestSelector,
+                  innerTooltipContent[test]
+                ));
+              it(`${unitTestTooltip[test].prop}: ${unitTestTooltip[test].name} sizeConfig`, () =>
+                unitTestTooltip[test].testFunc(
+                  component,
+                  page,
+                  {
+                    ...innerTestProps,
+                    ...customDataKeyNames,
+                    ...customSizeConfig,
+                    accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true },
+                    selectorAriaLabel: 'group A. Test Item 1. value $2.7k. Point 1 of 3.'
+                  },
+                  innerTestSelector,
+                  `<p style="margin: 0;"><b>A<br></b>Test Item:<b>1</b><br>Y Axis:<b>2.7k</b><br>Value:<b>$2.7k</b></p>`
+                ));
+            } else if (test === 'tooltip_tooltipLabel_default') {
+              // default tooltip without sizeConfig
+              it(`${unitTestTooltip[test].prop}: ${unitTestTooltip[test].name}`, () =>
+                unitTestTooltip[test].testFunc(
+                  component,
+                  page,
+                  innerTestProps,
+                  innerTestSelector,
+                  innerTooltipContent[test]
+                ));
+              // default tooltip with sizeConfig
+              it(`${unitTestTooltip[test].prop}: ${unitTestTooltip[test].name} sizeConfig`, () =>
+                unitTestTooltip[test].testFunc(
+                  component,
+                  page,
+                  {
+                    ...innerTestProps,
+                    ...customSizeConfig
+                  },
+                  innerTestSelector,
+                  `<p style="margin: 0;"><b>A<br></b>X Axis:<b>1</b><br>Y Axis:<b>2.7k</b><br>Value:<b>$2.7k</b></p>`
+                ));
+            } else {
+              it(`${unitTestTooltip[test].prop}: ${unitTestTooltip[test].name}`, () =>
+                unitTestTooltip[test].testFunc(
+                  component,
+                  page,
+                  innerTestProps,
+                  innerTestSelector,
+                  innerTooltipContent[test]
+                ));
+            }
           });
         });
       });

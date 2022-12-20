@@ -40,7 +40,11 @@ exports[`<parallel-plot> rendered-html accessibility generic accessibility test 
         <tr class="vcc-ki-tr">
           <th class="vcc-ki-td" scope="row">
             <kbd>
-              Esc
+              Shift
+            </kbd>
+            +
+            <kbd>
+              Enter
             </kbd>
             on a line or point.
           </th>
@@ -100,6 +104,17 @@ exports[`<parallel-plot> rendered-html accessibility generic accessibility test 
             Move among points across lines.
           </td>
         </tr>
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Esc
+            </kbd>
+            at any time.
+          </th>
+          <td class="vcc-ki-td">
+            Dismiss the tooltip.
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
@@ -146,7 +161,11 @@ exports[`<parallel-plot> rendered-html accessibility generic accessibility test 
         <tr class="vcc-ki-tr">
           <th class="vcc-ki-td" scope="row">
             <kbd>
-              Esc
+              Shift
+            </kbd>
+            +
+            <kbd>
+              Enter
             </kbd>
             on a line or point.
           </th>
@@ -206,13 +225,86 @@ exports[`<parallel-plot> rendered-html accessibility generic accessibility test 
             Move among points across lines.
           </td>
         </tr>
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Esc
+            </kbd>
+            at any time.
+          </th>
+          <td class="vcc-ki-td">
+            Dismiss the tooltip.
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
 </div>
 `;
 
-exports[`<parallel-plot> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: test whether space bar performs click action 1`] = `<circle class="vcl-accessibility-focus-source" cursor="default" data-cx="0" data-cy="13.811123674282923" data-fill="true" data-id="marker-North-America-Card-A" data-r="4.5" data-role="img" data-testid="marker" data-translate-x="80" data-translate-y="23" fill="#7c99b1" focusable="false" id="chart-unit-test-123457-123457-123457" r="4.5" role="presentation" stroke="#35495a" stroke-width="1" tabindex="-1"></circle>`;
+exports[`<parallel-plot> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: test whether space bar performs click action 1`] = `<circle class="vcl-accessibility-focus-source" cursor="default" data-cx="0" data-cy="13.8111" data-fill="true" data-id="marker-North-America-Card-A" data-r="4.5" data-role="img" data-testid="marker" data-translate-x="80" data-translate-y="23" fill="#7c99b1" focusable="false" id="chart-unit-test-123457-123457-123457" r="4.5" role="presentation" stroke="#35495a" stroke-width="1" tabindex="-1"></circle>`;
+
+exports[`<parallel-plot> rendered-html annotations should pass annotation prop on load 1`] = `
+<g aria-hidden="true" class="vcl-annotation-group" data-testid="annotation-group" focusable="false" role="presentation">
+  <g class="annotations">
+    <g class="annotation callout circle" transform="translate(undefined, 129.23290309914455)">
+      <g class="annotation-connector">
+        <path class="connector" d="MNaN,NaNLNaN,-78.99414699795707" fill="none" stroke="#56bec3"></path>
+      </g>
+      <g class="annotation-subject">
+        <path class="subject" d="M2.0818995585505003e-15,-34A34,34,0,1,1,-2.0818995585505003e-15,34A34,34,0,1,1,2.0818995585505003e-15,-34Z" fill-opacity="0" stroke="#56bec3"></path>
+      </g>
+      <g class="annotation-note" transform="translate(15.75, -78.99414699795707)">
+        <g class="annotation-note-content" transform="translate(0, -13)">
+          <rect class="annotation-note-bg" fill="white" fill-opacity="0" height="10" width="10" x="0" y="0"></rect>
+          <text class="annotation-note-label" dx="0" fill="#56bec3" y="11">
+            <tspan dy="0.8em" x="0">
+              Poor performance on Card A and Card B, but excellent on Card C
+            </tspan>
+          </text>
+          <text class="annotation-note-title" fill="#56bec3" font-weight="bold">
+            <tspan dy="0.8em" x="0">
+              Analysis:
+            </tspan>
+          </text>
+        </g>
+        <path class="note-line" d="M0,0L10,0" stroke="#56bec3"></path>
+      </g>
+    </g>
+  </g>
+</g>
+`;
+
+exports[`<parallel-plot> rendered-html annotations should pass annotation prop on update 1`] = `
+<g aria-hidden="true" class="vcl-annotation-group" data-testid="annotation-group" focusable="false" role="presentation">
+  <g class="annotations">
+    <g class="annotation callout circle" transform="translate(undefined, 129.23290309914455)">
+      <g class="annotation-connector">
+        <path class="connector" d="MNaN,NaNLNaN,-78.99414699795707" fill="none" stroke="#56bec3"></path>
+      </g>
+      <g class="annotation-subject">
+        <path class="subject" d="M2.0818995585505003e-15,-34A34,34,0,1,1,-2.0818995585505003e-15,34A34,34,0,1,1,2.0818995585505003e-15,-34Z" fill-opacity="0" stroke="#56bec3"></path>
+      </g>
+      <g class="annotation-note" transform="translate(15.75, -78.99414699795707)">
+        <g class="annotation-note-content" transform="translate(0, -13)">
+          <rect class="annotation-note-bg" fill="white" fill-opacity="0" height="10" width="10" x="0" y="0"></rect>
+          <text class="annotation-note-label" dx="0" fill="#56bec3" y="11">
+            <tspan dy="0.8em" x="0">
+              Poor performance on Card A and Card B, but excellent on Card C
+            </tspan>
+          </text>
+          <text class="annotation-note-title" fill="#56bec3" font-weight="bold">
+            <tspan dy="0.8em" x="0">
+              Analysis:
+            </tspan>
+          </text>
+        </g>
+        <path class="note-line" d="M0,0L10,0" stroke="#56bec3"></path>
+      </g>
+    </g>
+  </g>
+</g>
+`;
 
 exports[`<parallel-plot> rendered-html event-emitter generic event testing marker based events [event] clickEvent: event object should emit and contain first data record when first mark is clicked 1`] = `<circle cursor="default" cx="0" cy="13.811123674282923" data-cx="0" data-cy="13.811123674282923" data-fill="true" data-id="marker-North-America-Card-A" data-r="4.5" data-role="img" data-testid="marker" data-translate-x="80" data-translate-y="23" fill="#7c99b1" focusable="false" id="parallel-plot-unit-test-123457-123457-123457" opacity="1" r="4.5" role="presentation" stroke="#35495a" stroke-width="1" tabindex="-1"></circle>`;
 

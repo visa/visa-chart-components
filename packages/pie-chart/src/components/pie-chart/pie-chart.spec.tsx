@@ -217,11 +217,11 @@ describe('<pie-chart>', () => {
           //   nextTestSelector: '[data-testid=pie][data-id=pie-Client-A]',
           //   keyDownObject: { key: 'Enter', code: 'Enter', keyCode: 13 }
           // },
-          accessibility_keyboard_nav_group_esc_exit: {
-            name: 'keyboard nav: group - escape will exit group',
+          accessibility_keyboard_nav_group_shift_enter_exit: {
+            name: 'keyboard nav: group - shift+enter will exit group',
             testSelector: '[data-testid=pie][data-id=pie-Client-A]',
             nextTestSelector: '[data-testid=pie-group]',
-            keyDownObject: { key: 'Escape', code: 'Escape', keyCode: 27 },
+            keyDownObject: { key: 'Enter', code: 'Enter', keyCode: 13, shiftKey: true },
             testProps: {
               selectorAriaLabel: 'label Client-A. value 43k. Slice 1 of 5.',
               nextSelectorAriaLabel: 'Pie which contains 5 interactive slices.',
@@ -328,7 +328,7 @@ describe('<pie-chart>', () => {
             ...tempTestProps,
             sortOrder: 'default', // default is asc, we are testing against no sort
             geometryType: 'Pie',
-            geometryPlacementAttributes: ['data-r', 'data-x', 'data-y'],
+            geometryPlacementAttributes: ['data-r', 'data-fake-x', 'data-fake-y'],
             geometryAdjustmentValues: [
               { f: 'data-r', b: 7, w: 3, s: -1 },
               { f: 'data-x', b: 7, w: 3, s: -1 },
@@ -339,28 +339,30 @@ describe('<pie-chart>', () => {
                 ? [
                     {
                       note: {
-                        label: "May's volume is here.",
-                        bgPadding: 20,
-                        title: 'The month of may',
+                        label: 'oasijfoiajsf',
+                        bgPadding: 0,
                         align: 'middle',
                         wrap: 210
                       },
-                      accessibilityDescription: 'This annotation is a callout to May, which is for testing purposes.',
-                      data: { month: 'May-17', value: 6042320, cat: 'A' },
-                      dy: '-20%',
-                      color: 'pri_blue'
+                      accessibilityDescription: '2018 High Spend band total is 5,596',
+                      x: '8%',
+                      y: '40%',
+                      disable: ['connector', 'subject'],
+                      // dy: '-1%',
+                      color: '#000000',
+                      className: 'testing1 testing2 testing3',
+                      collisionHideOnly: false
                     },
                     {
-                      note: {
-                        label: "June's volume is here.",
-                        bgPadding: 20,
-                        title: 'The month of june',
-                        align: 'middle',
-                        wrap: 210
+                      note: {},
+                      accessibilityDecorationOnly: true,
+                      type: 'annotationXYThreshold',
+                      subject: {
+                        x1: 0,
+                        x2: 250
                       },
-                      data: { month: 'Jun-17', value: 3234002, cat: 'A' },
-                      dy: '-20%',
-                      color: 'pri_blue'
+                      color: 'pri_blue',
+                      disable: ['note', 'connector']
                     }
                   ]
                 : []
@@ -536,52 +538,73 @@ describe('<pie-chart>', () => {
       });
     });
 
-    // annotations break in jsdom due to their text wrapping function in d3-annotation
-    // describe('annotations', () => {
-    //   // TODO: need to add more precise test case for annotations label and text
-    //   it('should pass annotation prop', async () => {
-    //     // ARRANGE
-    //     const annotations = [
-    //       {
-    //         note: {
-    //           label: 'Social Media Intern returned to college',
-    //           bgPadding: 20,
-    //           title: 'Staff Change',
-    //           align: 'middle',
-    //           wrap: 130
-    //         },
-    //         accessibilityDescription:
-    //           'This is an annotation that explains a drop in tweet ACTivity due to staff change.',
-    //         y: [2600],
-    //         x: '62%',
-    //         dy: -85,
-    //         type: 'annotationCallout',
-    //         connector: { end: 'dot', endScale: 10 },
-    //         color: 'pri_blue'
-    //       }
-    //     ];
-    //     const data = [
-    //       { label: 'Q1', value: 1125 },
-    //       { label: 'Q2', value: 3725 },
-    //       { label: 'Q3', value: 2125 },
-    //       { label: 'Q4', value: 4125 }
-    //     ];
-    //     const dataLabel = { visible: true, placement: 'top', labelAccessor: 'value', format: '0,0' };
-    //     component.data = data;
-    //     component.ordinalAccessor = 'label';
-    //     component.valueAccessor = 'value';
-    //     component.dataLabel = dataLabel;
-    //     component.annotations = annotations;
+    // annotations break in jsdom due to their text wrapping function in d3-annotation -- fixed in stencil 2.17.3
+    describe('annotations', () => {
+      // TODO: need to add more precise test case for annotations label and text
+      it('should pass annotation prop on load', async () => {
+        // ARRANGE
+        const annotations = [
+          {
+            note: {
+              label: 'oasijfoiajsf',
+              bgPadding: 0,
+              align: 'middle',
+              wrap: 210
+            },
+            accessibilityDescription: '2018 High Spend band total is 5,596',
+            x: '8%',
+            y: '40%',
+            disable: ['connector', 'subject'],
+            // dy: '-1%',
+            color: '#000000',
+            className: 'testing1 testing2 testing3',
+            collisionHideOnly: false
+          }
+        ];
+        component.annotations = annotations;
 
-    //     // ACT
-    //     page.root.append(component);
-    //     await page.waitForChanges();
+        // ACT
+        page.root.append(component);
+        await page.waitForChanges();
 
-    //     // ASSERT
-    //     const annotationGroup = page.doc.querySelector('[data-testid=annotation-group]');
-    //     expect(annotationGroup).toMatchSnapshot();
-    //   });
-    // });
+        // ASSERT
+        const annotationGroup = page.doc.querySelector('[data-testid=annotation-group]');
+        expect(annotationGroup).toMatchSnapshot();
+      });
+      it('should pass annotation prop on update', async () => {
+        // ARRANGE
+        const annotations = [
+          {
+            note: {
+              label: 'oasijfoiajsf',
+              bgPadding: 0,
+              align: 'middle',
+              wrap: 210
+            },
+            accessibilityDescription: '2018 High Spend band total is 5,596',
+            x: '8%',
+            y: '40%',
+            disable: ['connector', 'subject'],
+            // dy: '-1%',
+            color: '#000000',
+            className: 'testing1 testing2 testing3',
+            collisionHideOnly: false
+          }
+        ];
+
+        // ACT
+        page.root.append(component);
+        await page.waitForChanges();
+
+        // UPDATE
+        component.annotations = annotations;
+        await page.waitForChanges();
+
+        // ASSERT
+        const annotationGroup = page.doc.querySelector('[data-testid=annotation-group]');
+        expect(annotationGroup).toMatchSnapshot();
+      });
+    });
 
     describe('interaction', () => {
       describe('pie based interaction tests', () => {
@@ -882,19 +905,43 @@ describe('<pie-chart>', () => {
               tooltip_tooltipLabel_custom_format_load:
                 '<p style="margin: 0;">Testing123:<b>Client-A</b><br>Count:<b>$43k</b><br></p>',
               tooltip_tooltipLabel_custom_format_update:
-                '<p style="margin: 0;">Testing123:<b>Client-A</b><br>Count:<b>$43k</b><br></p>'
+                '<p style="margin: 0;">Testing123:<b>Client-A</b><br>Count:<b>$43k</b><br></p>',
+              dataKeyNames_custom_on_load:
+                '<p style="margin: 0;">Test Label:<b>Client-A</b><br>Value (%):<b>23.5%</b><br>Value:<b>43k</b></p>',
+              dataKeyNames_custom_on_update:
+                '<p style="margin: 0;">Test Label:<b>Client-A</b><br>Value (%):<b>23.5%</b><br>Value:<b>43k</b></p>'
+            };
+            const innerAriaContent = {
+              dataKeyNames_custom_on_load: 'Test Label Client-A. value 43k. Slice 4 of 5.',
+              dataKeyNames_custom_on_update: 'Test Label Client-A. value 43k. Slice 4 of 5.'
             };
             const innerTestProps = { ...unitTestTooltip[test].testProps, ...innerTooltipProps[test] };
+            const customDataKeyNames = { dataKeyNames: { label: 'Test Label' } };
             // we have to handle clickEvent separately due to this.zooming boolean in circle-packing load
-
-            it(`${unitTestTooltip[test].prop}: ${unitTestTooltip[test].name}`, () =>
-              unitTestTooltip[test].testFunc(
-                component,
-                page,
-                innerTestProps,
-                innerTestSelector,
-                innerTooltipContent[test]
-              ));
+            if (test === 'dataKeyNames_custom_on_load' || test === 'dataKeyNames_custom_on_update') {
+              it(`${unitTestTooltip[test].prop}: ${unitTestTooltip[test].name}`, () =>
+                unitTestTooltip[test].testFunc(
+                  component,
+                  page,
+                  {
+                    ...innerTestProps,
+                    ...customDataKeyNames,
+                    accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true },
+                    selectorAriaLabel: innerAriaContent[test]
+                  },
+                  innerTestSelector,
+                  innerTooltipContent[test]
+                ));
+            } else {
+              it(`${unitTestTooltip[test].prop}: ${unitTestTooltip[test].name}`, () =>
+                unitTestTooltip[test].testFunc(
+                  component,
+                  page,
+                  innerTestProps,
+                  innerTestSelector,
+                  innerTooltipContent[test]
+                ));
+            }
           });
         });
       });

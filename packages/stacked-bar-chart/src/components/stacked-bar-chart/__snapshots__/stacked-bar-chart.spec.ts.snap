@@ -40,7 +40,11 @@ exports[`<stacked-bar-chart> rendered-html accessibility generic accessibility t
         <tr class="vcc-ki-tr">
           <th class="vcc-ki-td" scope="row">
             <kbd>
-              Esc
+              Shift
+            </kbd>
+            +
+            <kbd>
+              Enter
             </kbd>
             on a stack or bar.
           </th>
@@ -100,6 +104,17 @@ exports[`<stacked-bar-chart> rendered-html accessibility generic accessibility t
             Move among bars across stacks.
           </td>
         </tr>
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Esc
+            </kbd>
+            at any time.
+          </th>
+          <td class="vcc-ki-td">
+            Dismiss the tooltip.
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
@@ -146,7 +161,11 @@ exports[`<stacked-bar-chart> rendered-html accessibility generic accessibility t
         <tr class="vcc-ki-tr">
           <th class="vcc-ki-td" scope="row">
             <kbd>
-              Esc
+              Shift
+            </kbd>
+            +
+            <kbd>
+              Enter
             </kbd>
             on a stack or bar.
           </th>
@@ -206,34 +225,145 @@ exports[`<stacked-bar-chart> rendered-html accessibility generic accessibility t
             Move among bars across stacks.
           </td>
         </tr>
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Esc
+            </kbd>
+            at any time.
+          </th>
+          <td class="vcc-ki-td">
+            Dismiss the tooltip.
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
 </div>
 `;
 
-exports[`<stacked-bar-chart> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: test whether space bar performs click action 1`] = `<rect class="geometryIsMoving stacked-bar vcl-accessibility-focus-source" cursor="default" data-height="44.888888888888914" data-id="bar-2016-A" data-role="img" data-testid="bar" data-translate-x="54" data-translate-y="24" data-width="148.00000000000003" data-x="37" data-y="149.62962962962962" fill="url(#stacked-bar-test_texture_0)" focusable="false" height="44.888888888888914" id="chart-unit-test-123457-123457-123457" opacity="0" role="presentation" tabindex="-1" width="0" x="64.75000000000001" y="149.62962962962962"></rect>`;
+exports[`<stacked-bar-chart> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: test whether space bar performs click action 1`] = `<rect class="geometryIsMoving stacked-bar vcl-accessibility-focus-source" cursor="default" data-height="44.888888888888914" data-id="bar-2016-A" data-role="img" data-testid="bar" data-translate-x="54" data-translate-y="24" data-width="148.00000000000003" data-x="37" data-y="149.62962962962962" fill="url(#stacked-bar-test_texture_0)" focusable="false" height="44.8889" id="chart-unit-test-123457-123457-123457" opacity="0" role="presentation" tabindex="-1" width="0" x="64.75" y="149.6296"></rect>`;
 
-exports[`<stacked-bar-chart> rendered-html annotations should pass annotation prop 1`] = `
+exports[`<stacked-bar-chart> rendered-html annotations should pass annotation prop on load 1`] = `
 <g aria-hidden="true" class="vcl-annotation-group" data-testid="annotation-group" focusable="false" role="presentation">
   <g class="annotations">
-    <g class="annotation">
-      <g class="annotation-connector"></g>
+    <g class="annotation callout elbow stacked-chart-annotation" transform="translate(106.56, 116.7111111111111)">
+      <g class="annotation-connector">
+        <path class="connector" d="M0,0L51.622222222222206,-51.622222222222206L78.44000000000003,-51.622222222222206" fill="none" stroke="grey"></path>
+      </g>
       <g class="annotation-subject"></g>
-      <g class="annotation-note">
-        <g class="annotation-note-content">
-          <rect class="annotation-note-bg"></rect>
-          <text class="annotation-note-label"></text>
+      <g class="annotation-note" transform="translate(78.44000000000003, -51.622222222222206)">
+        <g class="annotation-note-content" transform="translate(-5, -13)">
+          <rect class="annotation-note-bg" fill="white" fill-opacity="0" height="10" width="20" x="-5" y="0"></rect>
+          <text class="annotation-note-label" dx="0" fill="grey" y="11">
+            <tspan dy="0.8em" x="0">
+              Product C saw strong gains until Product B was improved.
+            </tspan>
+          </text>
           <text class="annotation-note-title" fill="grey" font-weight="bold">
             <tspan dy="0.8em" x="0">
-              Temporary
+              Temporary Growth
             </tspan>
           </text>
         </g>
       </g>
     </g>
-    <g class="annotation"></g>
-    <g class="annotation"></g>
+    <g class="annotation callout elbow stacked-chart-annotation" transform="translate(198.912, 82.2962962962963)">
+      <g class="annotation-connector">
+        <path class="connector" d="M0,0L-13.911999999999978,-13.911999999999978L-13.911999999999978,-17.207407407407416" fill="none" stroke="grey"></path>
+      </g>
+      <g class="annotation-subject"></g>
+      <g class="annotation-note" transform="translate(-13.911999999999978, -17.207407407407416)">
+        <g class="annotation-note-content" transform="translate(-10, -13)">
+          <rect class="annotation-note-bg" fill="white" fill-opacity="0" height="10" width="10" x="0" y="0"></rect>
+          <text class="annotation-note-label" dx="0" fill="grey" y="0">
+            <tspan dy="0.8em" x="0">
+              Annotation #2
+            </tspan>
+          </text>
+          <text class="annotation-note-title"></text>
+        </g>
+        <path class="note-line" d="M-10,0L0,0" stroke="grey"></path>
+      </g>
+    </g>
+    <g class="annotation callout elbow stacked-chart-annotation" transform="translate(312.576, 32.918518518518525)">
+      <g class="annotation-connector">
+        <path class="connector" d="M0,0L-32.170370370370364,32.170370370370364L-127.576,32.170370370370364" fill="none" stroke="grey"></path>
+      </g>
+      <g class="annotation-subject"></g>
+      <g class="annotation-note" transform="translate(-127.576, 32.170370370370364)">
+        <g class="annotation-note-content" transform="translate(-10, 3)">
+          <rect class="annotation-note-bg" fill="white" fill-opacity="0" height="10" width="10" x="0" y="0"></rect>
+          <text class="annotation-note-label" dx="0" fill="grey" y="0">
+            <tspan dy="0.8em" x="0"></tspan>
+          </text>
+          <text class="annotation-note-title"></text>
+        </g>
+        <path class="note-line" d="M-10,0L0,0" stroke="grey"></path>
+      </g>
+    </g>
+  </g>
+</g>
+`;
+
+exports[`<stacked-bar-chart> rendered-html annotations should pass annotation prop on update 1`] = `
+<g aria-hidden="true" class="vcl-annotation-group" data-testid="annotation-group" focusable="false" role="presentation">
+  <g class="annotations">
+    <g class="annotation callout elbow stacked-chart-annotation" transform="translate(106.56, 116.7111111111111)">
+      <g class="annotation-connector">
+        <path class="connector" d="M0,0L51.622222222222206,-51.622222222222206L78.44000000000003,-51.622222222222206" fill="none" stroke="grey"></path>
+      </g>
+      <g class="annotation-subject"></g>
+      <g class="annotation-note" transform="translate(78.44000000000003, -51.622222222222206)">
+        <g class="annotation-note-content" transform="translate(-5, -13)">
+          <rect class="annotation-note-bg" fill="white" fill-opacity="0" height="10" width="20" x="-5" y="0"></rect>
+          <text class="annotation-note-label" dx="0" fill="grey" y="11">
+            <tspan dy="0.8em" x="0">
+              Product C saw strong gains until Product B was improved.
+            </tspan>
+          </text>
+          <text class="annotation-note-title" fill="grey" font-weight="bold">
+            <tspan dy="0.8em" x="0">
+              Temporary Growth
+            </tspan>
+          </text>
+        </g>
+      </g>
+    </g>
+    <g class="annotation callout elbow stacked-chart-annotation" transform="translate(198.912, 82.2962962962963)">
+      <g class="annotation-connector">
+        <path class="connector" d="M0,0L-13.911999999999978,-13.911999999999978L-13.911999999999978,-17.207407407407416" fill="none" stroke="grey"></path>
+      </g>
+      <g class="annotation-subject"></g>
+      <g class="annotation-note" transform="translate(-13.911999999999978, -17.207407407407416)">
+        <g class="annotation-note-content" transform="translate(-10, -13)">
+          <rect class="annotation-note-bg" fill="white" fill-opacity="0" height="10" width="10" x="0" y="0"></rect>
+          <text class="annotation-note-label" dx="0" fill="grey" y="0">
+            <tspan dy="0.8em" x="0">
+              Annotation #2
+            </tspan>
+          </text>
+          <text class="annotation-note-title"></text>
+        </g>
+        <path class="note-line" d="M-10,0L0,0" stroke="grey"></path>
+      </g>
+    </g>
+    <g class="annotation callout elbow stacked-chart-annotation" transform="translate(312.576, 32.918518518518525)">
+      <g class="annotation-connector">
+        <path class="connector" d="M0,0L-32.170370370370364,32.170370370370364L-127.576,32.170370370370364" fill="none" stroke="grey"></path>
+      </g>
+      <g class="annotation-subject"></g>
+      <g class="annotation-note" transform="translate(-127.576, 32.170370370370364)">
+        <g class="annotation-note-content" transform="translate(-10, 3)">
+          <rect class="annotation-note-bg" fill="white" fill-opacity="0" height="10" width="10" x="0" y="0"></rect>
+          <text class="annotation-note-label" dx="0" fill="grey" y="0">
+            <tspan dy="0.8em" x="0"></tspan>
+          </text>
+          <text class="annotation-note-title"></text>
+        </g>
+        <path class="note-line" d="M-10,0L0,0" stroke="grey"></path>
+      </g>
+    </g>
   </g>
 </g>
 `;

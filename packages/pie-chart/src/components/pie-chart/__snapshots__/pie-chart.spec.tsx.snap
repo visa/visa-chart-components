@@ -40,7 +40,11 @@ exports[`<pie-chart> rendered-html accessibility generic accessibility test suit
         <tr class="vcc-ki-tr">
           <th class="vcc-ki-td" scope="row">
             <kbd>
-              Esc
+              Shift
+            </kbd>
+            +
+            <kbd>
+              Enter
             </kbd>
             on a pie or slice.
           </th>
@@ -100,6 +104,17 @@ exports[`<pie-chart> rendered-html accessibility generic accessibility test suit
             No effect on this chart.
           </td>
         </tr>
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Esc
+            </kbd>
+            at any time.
+          </th>
+          <td class="vcc-ki-td">
+            Dismiss the tooltip.
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
@@ -146,7 +161,11 @@ exports[`<pie-chart> rendered-html accessibility generic accessibility test suit
         <tr class="vcc-ki-tr">
           <th class="vcc-ki-td" scope="row">
             <kbd>
-              Esc
+              Shift
+            </kbd>
+            +
+            <kbd>
+              Enter
             </kbd>
             on a pie or slice.
           </th>
@@ -206,13 +225,70 @@ exports[`<pie-chart> rendered-html accessibility generic accessibility test suit
             No effect on this chart.
           </td>
         </tr>
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Esc
+            </kbd>
+            at any time.
+          </th>
+          <td class="vcc-ki-td">
+            Dismiss the tooltip.
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
 </div>
 `;
 
-exports[`<pie-chart> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: test whether space bar performs click action 1`] = `<path class="arc geometryIsMoving vcl-accessibility-focus-source" cursor="default" data-d="M5.970153145843347e-15,-97.5A97.5,97.5,0,0,1,97.06571493411373,-9.192224123103863L67.9460004538796,-6.434556886172704A68.25,68.25,0,0,0,4.1791072020903425e-15,-68.25Z" data-fake-x="82.43625545908955" data-fake-y="-90.61188545595842" data-id="pie-Client-A" data-r="1" data-role="img" data-testid="pie" data-translate-x="197.5" data-translate-y="147.5" focusable="false" id="chart-unit-test-123457-123457-123457" opacity="0" role="presentation" tabindex="-1"></path>`;
+exports[`<pie-chart> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: test whether space bar performs click action 1`] = `<path class="arc geometryIsMoving vcl-accessibility-focus-source" cursor="default" data-d="M5.970153145843347e-15,-97.5A97.5,97.5,0,0,1,97.06571493411373,-9.192224123103863L67.9460004538796,-6.434556886172704A68.25,68.25,0,0,0,4.1791072020903425e-15,-68.25Z" data-fake-x="82.4363" data-fake-y="-90.6119" data-id="pie-Client-A" data-r="1" data-role="img" data-testid="pie" data-translate-x="197.5" data-translate-y="147.5" focusable="false" id="chart-unit-test-123457-123457-123457" opacity="0" role="presentation" tabindex="-1"></path>`;
+
+exports[`<pie-chart> rendered-html annotations should pass annotation prop on load 1`] = `
+<g aria-hidden="true" class="vcl-annotation-group" data-testid="annotation-group" focusable="false" role="presentation">
+  <g class="annotations">
+    <g class="annotation callout testing1 testing2 testing3" transform="translate(8, 40)">
+      <g class="annotation-connector"></g>
+      <g class="annotation-subject"></g>
+      <g class="annotation-note" transform="translate(0, 0)">
+        <g class="annotation-note-content" transform="translate(-5, 3)">
+          <rect class="annotation-note-bg" fill="white" fill-opacity="0" height="10" width="10" x="0" y="0"></rect>
+          <text class="annotation-note-label" dx="0" fill="#000000" y="0">
+            <tspan dy="0.8em" x="0">
+              oasijfoiajsf
+            </tspan>
+          </text>
+          <text class="annotation-note-title"></text>
+        </g>
+        <path class="note-line" d="M-5,0L5,0" stroke="#000000"></path>
+      </g>
+    </g>
+  </g>
+</g>
+`;
+
+exports[`<pie-chart> rendered-html annotations should pass annotation prop on update 1`] = `
+<g aria-hidden="true" class="vcl-annotation-group" data-testid="annotation-group" focusable="false" role="presentation">
+  <g class="annotations">
+    <g class="annotation callout testing1 testing2 testing3" transform="translate(8, 40)">
+      <g class="annotation-connector"></g>
+      <g class="annotation-subject"></g>
+      <g class="annotation-note" transform="translate(0, 0)">
+        <g class="annotation-note-content" transform="translate(-5, 3)">
+          <rect class="annotation-note-bg" fill="white" fill-opacity="0" height="10" width="10" x="0" y="0"></rect>
+          <text class="annotation-note-label" dx="0" fill="#000000" y="0">
+            <tspan dy="0.8em" x="0">
+              oasijfoiajsf
+            </tspan>
+          </text>
+          <text class="annotation-note-title"></text>
+        </g>
+        <path class="note-line" d="M-5,0L5,0" stroke="#000000"></path>
+      </g>
+    </g>
+  </g>
+</g>
+`;
 
 exports[`<pie-chart> rendered-html event-emitter generic event testing pie based events [event] clickEvent: event object should emit and contain first data record when first mark is clicked 1`] = `<path class="arc geometryIsMoving" cursor="default" d="M5.970153145843347e-15,-97.5A97.5,97.5,0,0,1,97.06571493411373,-9.192224123103863L67.9460004538796,-6.434556886172704A68.25,68.25,0,0,0,4.1791072020903425e-15,-68.25Z" data-d="M5.970153145843347e-15,-97.5A97.5,97.5,0,0,1,97.06571493411373,-9.192224123103863L67.9460004538796,-6.434556886172704A68.25,68.25,0,0,0,4.1791072020903425e-15,-68.25Z" data-fake-x="82.43625545908955" data-fake-y="-90.61188545595842" data-id="pie-Client-A" data-r="1" data-role="img" data-testid="pie" data-translate-x="197.5" data-translate-y="147.5" focusable="false" id="pie-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" tabindex="-1"></path>`;
 

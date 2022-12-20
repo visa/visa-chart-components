@@ -40,7 +40,11 @@ exports[`<heat-map> rendered-html accessibility generic accessibility test suite
         <tr class="vcc-ki-tr">
           <th class="vcc-ki-td" scope="row">
             <kbd>
-              Esc
+              Shift
+            </kbd>
+            +
+            <kbd>
+              Enter
             </kbd>
             on a row or cell.
           </th>
@@ -100,6 +104,17 @@ exports[`<heat-map> rendered-html accessibility generic accessibility test suite
             Move among cells across rows.
           </td>
         </tr>
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Esc
+            </kbd>
+            at any time.
+          </th>
+          <td class="vcc-ki-td">
+            Dismiss the tooltip.
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
@@ -146,7 +161,11 @@ exports[`<heat-map> rendered-html accessibility generic accessibility test suite
         <tr class="vcc-ki-tr">
           <th class="vcc-ki-td" scope="row">
             <kbd>
-              Esc
+              Shift
+            </kbd>
+            +
+            <kbd>
+              Enter
             </kbd>
             on a row or cell.
           </th>
@@ -206,24 +225,41 @@ exports[`<heat-map> rendered-html accessibility generic accessibility test suite
             Move among cells across rows.
           </td>
         </tr>
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Esc
+            </kbd>
+            at any time.
+          </th>
+          <td class="vcc-ki-td">
+            Dismiss the tooltip.
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
 </div>
 `;
 
-exports[`<heat-map> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: test whether space bar performs click action 1`] = `<rect class="grid vcl-accessibility-focus-source" cursor="default" data-id="marker-2010-A" data-role="img" data-testid="marker" fill="#b59acc" filter="url(#VCL-filter-694588-rest-heat-map-unit-test)" focusable="false" height="62.360406091370564" id="chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="29.648760330578508" x="1.988636363636374" y="1.9796954314720665"></rect>`;
+exports[`<heat-map> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: test whether space bar performs click action 1`] = `<rect class="grid vcl-accessibility-focus-source" cursor="default" data-id="marker-2010-A" data-role="img" data-testid="marker" fill="#b59acc" filter="url(#VCL-filter-694588-rest-heat-map-unit-test)" focusable="false" height="62.3604" id="chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="29.6488" x="1.9886" y="1.9797"></rect>`;
 
 exports[`<heat-map> rendered-html annotations should pass annotation prop 1`] = `
 <g aria-hidden="true" class="vcl-annotation-group" data-testid="annotation-group" focusable="false" role="presentation">
   <g class="annotations">
-    <g class="annotation">
+    <g class="annotation callout heatmap-annotation rect" transform="translate(1.988636363636374, 1e-9)">
       <g class="annotation-connector"></g>
-      <g class="annotation-subject"></g>
-      <g class="annotation-note">
-        <g class="annotation-note-content">
-          <rect class="annotation-note-bg"></rect>
-          <text class="annotation-note-label"></text>
+      <g class="annotation-subject">
+        <path class="subject" d="M0,0L31.63739669421487,0L31.63739669421487,195L0,195L0,0" fill-opacity="0.1" stroke="grey"></path>
+      </g>
+      <g class="annotation-note" transform="translate(0, 0)">
+        <g class="annotation-note-content" transform="translate(0, 3)">
+          <rect class="annotation-note-bg" fill="white" fill-opacity="0" height="10" width="10" x="0" y="0"></rect>
+          <text class="annotation-note-label" dx="0" fill="grey" y="11">
+            <tspan dy="0.8em" x="0">
+              The year 2011
+            </tspan>
+          </text>
           <text class="annotation-note-title" fill="grey" font-weight="bold">
             <tspan dy="0.8em" x="0">
               2011:

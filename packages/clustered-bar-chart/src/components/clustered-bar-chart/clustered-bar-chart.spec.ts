@@ -172,11 +172,11 @@ describe('<clustered-bar-chart>', () => {
           //     accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true }
           //   }
           // },
-          accessibility_keyboard_nav_group_esc_to_wrapper: {
-            name: 'keyboard nav: group - escape will exit group',
+          accessibility_keyboard_nav_group_shift_enter_exit_to_wrapper: {
+            name: 'keyboard nav: group - shift+enter will exit group',
             testSelector: '[data-testid=bar][data-id=bar-2016-A]',
             nextTestSelector: '[data-testid=clustered-bar-wrapper][data-id=clustered-bar-wrapper-2016]',
-            keyDownObject: { key: 'Escape', code: 'Escape', keyCode: 27 },
+            keyDownObject: { key: 'Enter', code: 'Enter', keyCode: 13, shiftKey: true },
             testProps: {
               selectorAriaLabel: 'year 2016. item A. value -30. Bar 1 of 3.',
               nextSelectorAriaLabel: 'year 2016. Cluster 1 of 3 which contains 3 interactive bars.',
@@ -184,11 +184,11 @@ describe('<clustered-bar-chart>', () => {
             }
           },
           // esc from wrapper takes us to svg selection controller is empty in this case
-          // accessibility_keyboard_nav_group_esc_exit: {
-          //   name: 'keyboard nav: group - escape will exit group',
+          // accessibility_keyboard_nav_group_shift_enter_exit: {
+          //   name: 'keyboard nav: group - shift+enter will exit group',
           //   testSelector: '[data-testid=clustered-bar-wrapper][data-id=clustered-bar-wrapper-2016]',
           //   nextTestSelector: '[data-testid=clustered-bar-group]',
-          //   keyDownObject: { key: 'Escape', code: 'Escape', keyCode: 27 },
+          //   keyDownObject: { key: 'Enter', code: 'Enter', keyCode: 13, shiftKey: true },
           //   testProps: {
           //     selectorAriaLabel: 'year 2016. Cluster 1 of 3 which contains 3 interactive bars.',
           //     nextSelectorAriaLabel: 'Bar group which contains 12 interactive bars.',
@@ -320,6 +320,7 @@ describe('<clustered-bar-chart>', () => {
                       x: '33.6%',
                       dy: [56.5],
                       dx: ['2017', '2016'],
+                      accessibilityDecorationOnly: true,
                       className: 'clustered-chart-annotation',
                       type: 'annotationCalloutElbow'
                     },
@@ -329,6 +330,7 @@ describe('<clustered-bar-chart>', () => {
                       x: '52.8%',
                       dy: [56.5],
                       dx: ['2017', '2016'],
+                      accessibilityDecorationOnly: true,
                       className: 'clustered-chart-annotation',
                       type: 'annotationCalloutElbow'
                     }
@@ -497,7 +499,7 @@ describe('<clustered-bar-chart>', () => {
     });
 
     // annotations break in jsdom due to their text wrapping function in d3-annotation
-    describe.skip('annotations', () => {
+    describe('annotations', () => {
       // TODO: need to add more precise test case for annotations label and text
       // Now it only tests against first word of title
       it('should pass annotation prop', async () => {
@@ -1260,19 +1262,44 @@ describe('<clustered-bar-chart>', () => {
               tooltip_tooltipLabel_custom_format_load:
                 '<p style="margin: 0;">Testing123:<b>A</b><br>Count:<b>-$30</b><br></p>',
               tooltip_tooltipLabel_custom_format_update:
-                '<p style="margin: 0;">Testing123:<b>A</b><br>Count:<b>-$30</b><br></p>'
+                '<p style="margin: 0;">Testing123:<b>A</b><br>Count:<b>-$30</b><br></p>',
+              dataKeyNames_custom_on_load:
+                '<p style="margin: 0;"><b>A<br></b>Test Year:<b>2016</b><br>Y Axis:<b>-30</b></p>',
+              dataKeyNames_custom_on_update:
+                '<p style="margin: 0;"><b>A<br></b>Test Year:<b>2016</b><br>Y Axis:<b>-30</b></p>'
+            };
+            const innerAriaContent = {
+              dataKeyNames_custom_on_load: 'Test Year 2016. item A. value -30. Bar 1 of 3.',
+              dataKeyNames_custom_on_update: 'Test Year 2016. item A. value -30. Bar 1 of 3.'
             };
             const innerTestProps = { ...unitTestTooltip[test].testProps, ...innerTooltipProps[test] };
+            const customDataKeyNames = { dataKeyNames: { year: 'Test Year' } };
             // we have to handle clickEvent separately due to this.zooming boolean in circle-packing load
 
-            it(`${unitTestTooltip[test].prop}: ${unitTestTooltip[test].name}`, () =>
-              unitTestTooltip[test].testFunc(
-                component,
-                page,
-                innerTestProps,
-                innerTestSelector,
-                innerTooltipContent[test]
-              ));
+            if (test === 'dataKeyNames_custom_on_load' || test === 'dataKeyNames_custom_on_update') {
+              it(`${unitTestTooltip[test].prop}: ${unitTestTooltip[test].name}`, () =>
+                unitTestTooltip[test].testFunc(
+                  component,
+                  page,
+                  {
+                    ...innerTestProps,
+                    ...customDataKeyNames,
+                    accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true },
+                    selectorAriaLabel: innerAriaContent[test]
+                  },
+                  innerTestSelector,
+                  innerTooltipContent[test]
+                ));
+            } else {
+              it(`${unitTestTooltip[test].prop}: ${unitTestTooltip[test].name}`, () =>
+                unitTestTooltip[test].testFunc(
+                  component,
+                  page,
+                  innerTestProps,
+                  innerTestSelector,
+                  innerTooltipContent[test]
+                ));
+            }
           });
         });
       });

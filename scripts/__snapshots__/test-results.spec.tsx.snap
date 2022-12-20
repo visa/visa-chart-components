@@ -624,10 +624,10 @@ Object {
         "generic accessibility test suite",
       ],
       "failureMessages": Array [],
-      "fullName": "<alluvial-diagram> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: group - escape will exit group",
+      "fullName": "<alluvial-diagram> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: group - shift+enter will exit group",
       "location": null,
       "status": "passed",
-      "title": "accessibility: keyboard nav: group - escape will exit group",
+      "title": "accessibility: keyboard nav: group - shift+enter will exit group",
     },
     Object {
       "ancestorTitles": Array [
@@ -690,11 +690,11 @@ Object {
       ],
       "failureMessages": Array [
         "Error: expected to not have css class \\"vcl-accessibility-focus-source\\"
-    at call (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:1784:47)
+    at call (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:1798:47)
     at step (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:66:23)
     at Object.next (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:47:53)
     at fulfilled (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:37:58)
-    at processTicksAndRejections (internal/process/task_queues.js:95:5)",
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)",
       ],
       "fullName": "<alluvial-diagram> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: cousin - up arrow goes to next",
       "location": null,
@@ -710,16 +710,29 @@ Object {
       ],
       "failureMessages": Array [
         "Error: expected to not have css class \\"vcl-accessibility-focus-source\\"
-    at call (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:1784:47)
+    at call (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:1798:47)
     at step (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:66:23)
     at Object.next (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:47:53)
     at fulfilled (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:37:58)
-    at processTicksAndRejections (internal/process/task_queues.js:95:5)",
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)",
       ],
       "fullName": "<alluvial-diagram> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: cousin - down arrow goes to next",
       "location": null,
       "status": "failed",
       "title": "accessibility: keyboard nav: cousin - down arrow goes to next",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<alluvial-diagram>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<alluvial-diagram> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: tooltip should get hidden on ESC key",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: keyboard nav: tooltip should get hidden on ESC key",
     },
     Object {
       "ancestorTitles": Array [
@@ -895,6 +908,32 @@ Object {
         "<alluvial-diagram>",
         "rendered-html",
         "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<alluvial-diagram> rendered-html accessibility generic accessibility test suite annotations: instruction elements should contain annotation description on load if annotation exists on chart",
+      "location": null,
+      "status": "passed",
+      "title": "annotations: instruction elements should contain annotation description on load if annotation exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<alluvial-diagram>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<alluvial-diagram> rendered-html accessibility generic accessibility test suite annotations: instruction elements should contain annotation description on update if annotation exists on chart",
+      "location": null,
+      "status": "passed",
+      "title": "annotations: instruction elements should contain annotation description on update if annotation exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<alluvial-diagram>",
+        "rendered-html",
+        "accessibility",
         "validation",
       ],
       "failureMessages": Array [],
@@ -902,6 +941,18 @@ Object {
       "location": null,
       "status": "passed",
       "title": "refer to generic results above for accessibility validation tests",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<alluvial-diagram>",
+        "rendered-html",
+        "annotations",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<alluvial-diagram> rendered-html annotations should pass annotation prop",
+      "location": null,
+      "status": "passed",
+      "title": "should pass annotation prop",
     },
     Object {
       "ancestorTitles": Array [
@@ -1255,6 +1306,20 @@ Object {
         "link based events",
       ],
       "failureMessages": Array [],
+      "fullName": "<alluvial-diagram> rendered-html event-emitter generic event testing link based events [event] initialLoadEndEvent: event object should emit and contain uniqueID on initial load end",
+      "location": null,
+      "status": "passed",
+      "title": "[event] initialLoadEndEvent: event object should emit and contain uniqueID on initial load end",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<alluvial-diagram>",
+        "rendered-html",
+        "event-emitter",
+        "generic event testing",
+        "link based events",
+      ],
+      "failureMessages": Array [],
       "fullName": "<alluvial-diagram> rendered-html event-emitter generic event testing link based events [event] drawStartEvent: event object should emit and contain uniqueID on initial load",
       "location": null,
       "status": "passed",
@@ -1399,6 +1464,34 @@ Object {
       "location": null,
       "status": "passed",
       "title": "tooltipLabel: tooltip should render formatted custom content on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<alluvial-diagram>",
+        "rendered-html",
+        "labels",
+        "tooltip",
+        "generic tooltip tests",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<alluvial-diagram> rendered-html labels tooltip generic tooltip tests dataKeyNames: if provided on load, dataKeyNames prop is used for key names across chart",
+      "location": null,
+      "status": "passed",
+      "title": "dataKeyNames: if provided on load, dataKeyNames prop is used for key names across chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<alluvial-diagram>",
+        "rendered-html",
+        "labels",
+        "tooltip",
+        "generic tooltip tests",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<alluvial-diagram> rendered-html labels tooltip generic tooltip tests dataKeyNames: if provided on update, dataKeyNames prop is used for key names across chart",
+      "location": null,
+      "status": "passed",
+      "title": "dataKeyNames: if provided on update, dataKeyNames prop is used for key names across chart",
     },
     Object {
       "ancestorTitles": Array [
@@ -1584,10 +1677,10 @@ Object {
       ],
       "failureMessages": Array [
         "Error: expected attribute stroke \\"none\\" to equal \\"#7c99b1\\"
-    at ./packages/alluvial-diagram/src/components/alluvial-diagram/alluvial-diagram.spec.ts:1050:26
+    at ./packages/alluvial-diagram/src/components/alluvial-diagram/alluvial-diagram.spec.ts:1123:26
     at Array.forEach (<anonymous>)
-    at Object.<anonymous> (./packages/alluvial-diagram/src/components/alluvial-diagram/alluvial-diagram.spec.ts:1049:17)
-    at processTicksAndRejections (internal/process/task_queues.js:95:5)",
+    at Object.<anonymous> (./packages/alluvial-diagram/src/components/alluvial-diagram/alluvial-diagram.spec.ts:1122:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)",
       ],
       "fullName": "<alluvial-diagram> rendered-html links fillMode should have fillMode of link if passed on load",
       "location": null,
@@ -1629,10 +1722,10 @@ Object {
       ],
       "failureMessages": Array [
         "Error: expected attribute stroke \\"#7c99b1\\" to equal \\"#624c48\\"
-    at ./packages/alluvial-diagram/src/components/alluvial-diagram/alluvial-diagram.spec.ts:1126:26
+    at ./packages/alluvial-diagram/src/components/alluvial-diagram/alluvial-diagram.spec.ts:1199:26
     at Array.forEach (<anonymous>)
-    at Object.<anonymous> (./packages/alluvial-diagram/src/components/alluvial-diagram/alluvial-diagram.spec.ts:1124:17)
-    at processTicksAndRejections (internal/process/task_queues.js:95:5)",
+    at Object.<anonymous> (./packages/alluvial-diagram/src/components/alluvial-diagram/alluvial-diagram.spec.ts:1197:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)",
       ],
       "fullName": "<alluvial-diagram> rendered-html links fillMode should have fillMode of target if passed on load",
       "location": null,
@@ -2489,10 +2582,10 @@ Object {
         "generic accessibility test suite",
       ],
       "failureMessages": Array [],
-      "fullName": "<bar-chart> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: group - escape will exit group",
+      "fullName": "<bar-chart> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: group - shift+enter will exit group",
       "location": null,
       "status": "passed",
-      "title": "accessibility: keyboard nav: group - escape will exit group",
+      "title": "accessibility: keyboard nav: group - shift+enter will exit group",
     },
     Object {
       "ancestorTitles": Array [
@@ -2597,6 +2690,19 @@ Object {
       "location": null,
       "status": "passed",
       "title": "accessibility: keyboard nav: cousin - down arrow loops to first",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<bar-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<bar-chart> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: tooltip should get hidden on ESC key",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: keyboard nav: tooltip should get hidden on ESC key",
     },
     Object {
       "ancestorTitles": Array [
@@ -2772,6 +2878,32 @@ Object {
         "<bar-chart>",
         "rendered-html",
         "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<bar-chart> rendered-html accessibility generic accessibility test suite annotations: instruction elements should contain annotation description on load if annotation exists on chart",
+      "location": null,
+      "status": "passed",
+      "title": "annotations: instruction elements should contain annotation description on load if annotation exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<bar-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<bar-chart> rendered-html accessibility generic accessibility test suite annotations: instruction elements should contain annotation description on update if annotation exists on chart",
+      "location": null,
+      "status": "passed",
+      "title": "annotations: instruction elements should contain annotation description on update if annotation exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<bar-chart>",
+        "rendered-html",
+        "accessibility",
         "validation",
       ],
       "failureMessages": Array [],
@@ -2829,6 +2961,18 @@ Object {
       "location": null,
       "status": "passed",
       "title": "refer to generic results above for margin & padding tests",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<bar-chart>",
+        "rendered-html",
+        "annotations",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<bar-chart> rendered-html annotations should pass annotation prop",
+      "location": null,
+      "status": "passed",
+      "title": "should pass annotation prop",
     },
     Object {
       "ancestorTitles": Array [
@@ -3351,6 +3495,20 @@ Object {
         "bar based events",
       ],
       "failureMessages": Array [],
+      "fullName": "<bar-chart> rendered-html event-emitter generic event testing bar based events [event] initialLoadEndEvent: event object should emit and contain uniqueID on initial load end",
+      "location": null,
+      "status": "passed",
+      "title": "[event] initialLoadEndEvent: event object should emit and contain uniqueID on initial load end",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<bar-chart>",
+        "rendered-html",
+        "event-emitter",
+        "generic event testing",
+        "bar based events",
+      ],
+      "failureMessages": Array [],
       "fullName": "<bar-chart> rendered-html event-emitter generic event testing bar based events [event] drawStartEvent: event object should emit and contain uniqueID on initial load",
       "location": null,
       "status": "passed",
@@ -3592,6 +3750,34 @@ Object {
         "<bar-chart>",
         "rendered-html",
         "labels",
+        "tooltip",
+        "generic tooltip tests",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<bar-chart> rendered-html labels tooltip generic tooltip tests dataKeyNames: if provided on load, dataKeyNames prop is used for key names across chart",
+      "location": null,
+      "status": "passed",
+      "title": "dataKeyNames: if provided on load, dataKeyNames prop is used for key names across chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<bar-chart>",
+        "rendered-html",
+        "labels",
+        "tooltip",
+        "generic tooltip tests",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<bar-chart> rendered-html labels tooltip generic tooltip tests dataKeyNames: if provided on update, dataKeyNames prop is used for key names across chart",
+      "location": null,
+      "status": "passed",
+      "title": "dataKeyNames: if provided on update, dataKeyNames prop is used for key names across chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<bar-chart>",
+        "rendered-html",
+        "labels",
         "dataLabel",
         "visible",
       ],
@@ -3656,6 +3842,34 @@ Object {
       "location": null,
       "status": "passed",
       "title": "should format number if passed as prop",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<bar-chart>",
+        "rendered-html",
+        "labels",
+        "dataLabel",
+        "format",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<bar-chart> rendered-html labels dataLabel format should format number with custom format if passed as prop",
+      "location": null,
+      "status": "passed",
+      "title": "should format number with custom format if passed as prop",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<bar-chart>",
+        "rendered-html",
+        "labels",
+        "dataLabel",
+        "format",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<bar-chart> rendered-html labels dataLabel format should format number with specified locale if changed",
+      "location": null,
+      "status": "passed",
+      "title": "should format number with specified locale if changed",
     },
     Object {
       "ancestorTitles": Array [
@@ -4348,6 +4562,565 @@ Object {
         "<circle-packing>",
         "rendered-html",
         "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<circle-packing> rendered-html accessibility generic accessibility test suite accessibility: default instruction elements should exist and have screen reader class",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: default instruction elements should exist and have screen reader class",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<circle-packing>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<circle-packing> rendered-html accessibility generic accessibility test suite accessibility: custom instruction elements should exist and have screen reader class on load",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: custom instruction elements should exist and have screen reader class on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<circle-packing>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<circle-packing> rendered-html accessibility generic accessibility test suite accessibility: custom instruction elements should exist and have screen reader class on update",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: custom instruction elements should exist and have screen reader class on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<circle-packing>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<circle-packing> rendered-html accessibility generic accessibility test suite accessibility: instruction elements should have default html tags",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: instruction elements should have default html tags",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<circle-packing>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<circle-packing> rendered-html accessibility generic accessibility test suite accessibility: instruction elements should have h3+ html tags and headings on load",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: instruction elements should have h3+ html tags and headings on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<circle-packing>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<circle-packing> rendered-html accessibility generic accessibility test suite accessibility: instruction elements should have div html tags on load",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: instruction elements should have div html tags on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<circle-packing>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<circle-packing> rendered-html accessibility generic accessibility test suite accessibility: instruction elements should have h4+ html tags and all headings on update",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: instruction elements should have h4+ html tags and all headings on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<circle-packing>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<circle-packing> rendered-html accessibility generic accessibility test suite accessibility: instruction elements should have p html tags on update",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: instruction elements should have p html tags on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<circle-packing>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<circle-packing> rendered-html accessibility generic accessibility test suite accessibility: keyboard instruction component renders in default state",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: keyboard instruction component renders in default state",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<circle-packing>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<circle-packing> rendered-html accessibility generic accessibility test suite accessibility: keyboard instruction component shows header in focus state",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: keyboard instruction component shows header in focus state",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<circle-packing>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<circle-packing> rendered-html accessibility generic accessibility test suite accessibility: keyboard instruction component displays table in click state",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: keyboard instruction component displays table in click state",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<circle-packing>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<circle-packing> rendered-html accessibility generic accessibility test suite accessibility: keyboard instruction component displays table in click state with space enabled",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: keyboard instruction component displays table in click state with space enabled",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<circle-packing>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<circle-packing> rendered-html accessibility generic accessibility test suite accessibility: attributes should be added to static geometries on load",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: attributes should be added to static geometries on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<circle-packing>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<circle-packing> rendered-html accessibility generic accessibility test suite accessibility: attributes should be added to geometries on load",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: attributes should be added to geometries on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<circle-packing>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<circle-packing> rendered-html accessibility generic accessibility test suite accessibility: controller div should be created and attributes should be added on load",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: controller div should be created and attributes should be added on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<circle-packing>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<circle-packing> rendered-html accessibility generic accessibility test suite accessibility: controller div should be created and static image attributes should be added on load",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: controller div should be created and static image attributes should be added on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<circle-packing>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<circle-packing> rendered-html accessibility generic accessibility test suite accessibility: focus marker style should be applied on focus",
+      "location": null,
+      "status": "pending",
+      "title": "accessibility: focus marker style should be applied on focus",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<circle-packing>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<circle-packing> rendered-html accessibility generic accessibility test suite accessibility: focus group style should be applied on focus",
+      "location": null,
+      "status": "pending",
+      "title": "accessibility: focus group style should be applied on focus",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<circle-packing>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<circle-packing> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: test whether space bar performs click action",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: keyboard nav: test whether space bar performs click action",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<circle-packing>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<circle-packing> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: sibling - right arrow goes to next",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: keyboard nav: sibling - right arrow goes to next",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<circle-packing>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<circle-packing> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: sibling - right arrow goes to first from last",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: keyboard nav: sibling - right arrow goes to first from last",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<circle-packing>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<circle-packing> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: sibling - left arrow goes to next",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: keyboard nav: sibling - left arrow goes to next",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<circle-packing>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<circle-packing> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: sibling - left arrow loops to last from first",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: keyboard nav: sibling - left arrow loops to last from first",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<circle-packing>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<circle-packing> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: drill - up arrow goes to parent",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: keyboard nav: drill - up arrow goes to parent",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<circle-packing>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<circle-packing> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: drill - down arrow goes to child",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: keyboard nav: drill - down arrow goes to child",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<circle-packing>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<circle-packing> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: drill - shift+enter will move up to parent",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: keyboard nav: drill - shift+enter will move up to parent",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<circle-packing>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<circle-packing> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: drill - enter will move into to children",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: keyboard nav: drill - enter will move into to children",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<circle-packing>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<circle-packing> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: tooltip should get hidden on ESC key",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: keyboard nav: tooltip should get hidden on ESC key",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<circle-packing>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<circle-packing> rendered-html accessibility generic accessibility test suite accessibility: instruction elements should contain xAxis description on load if xAxis exists on chart",
+      "location": null,
+      "status": "pending",
+      "title": "accessibility: instruction elements should contain xAxis description on load if xAxis exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<circle-packing>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<circle-packing> rendered-html accessibility generic accessibility test suite accessibility: instruction elements should not contain xAxis description on load if xAxis is not visible on chart",
+      "location": null,
+      "status": "pending",
+      "title": "accessibility: instruction elements should not contain xAxis description on load if xAxis is not visible on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<circle-packing>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<circle-packing> rendered-html accessibility generic accessibility test suite accessibility: instruction elements should contain xAxis description on update if xAxis exists on chart",
+      "location": null,
+      "status": "pending",
+      "title": "accessibility: instruction elements should contain xAxis description on update if xAxis exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<circle-packing>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<circle-packing> rendered-html accessibility generic accessibility test suite accessibility: instruction elements should contain yAxis description on load if yAxis exists on chart",
+      "location": null,
+      "status": "pending",
+      "title": "accessibility: instruction elements should contain yAxis description on load if yAxis exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<circle-packing>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<circle-packing> rendered-html accessibility generic accessibility test suite accessibility: instruction elements should not contain yAxis description on load if yAxis is not visible on chart",
+      "location": null,
+      "status": "pending",
+      "title": "accessibility: instruction elements should not contain yAxis description on load if yAxis is not visible on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<circle-packing>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<circle-packing> rendered-html accessibility generic accessibility test suite accessibility: instruction elements should contain yAxis description on update if yAxis exists on chart",
+      "location": null,
+      "status": "pending",
+      "title": "accessibility: instruction elements should contain yAxis description on update if yAxis exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<circle-packing>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<circle-packing> rendered-html accessibility generic accessibility test suite accessibility: accessibility textures are applied by default on load",
+      "location": null,
+      "status": "pending",
+      "title": "accessibility: accessibility textures are applied by default on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<circle-packing>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<circle-packing> rendered-html accessibility generic accessibility test suite accessibility: accessibility textures are removed on load",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: accessibility textures are removed on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<circle-packing>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<circle-packing> rendered-html accessibility generic accessibility test suite accessibility: accessibility textures are removed on update",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: accessibility textures are removed on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<circle-packing>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<circle-packing> rendered-html accessibility generic accessibility test suite accessibility: accessibility textures are applied in default order on load",
+      "location": null,
+      "status": "pending",
+      "title": "accessibility: accessibility textures are applied in default order on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<circle-packing>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<circle-packing> rendered-html accessibility generic accessibility test suite animationConfig: animationConfig disabled is false by default",
+      "location": null,
+      "status": "passed",
+      "title": "animationConfig: animationConfig disabled is false by default",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<circle-packing>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<circle-packing> rendered-html accessibility generic accessibility test suite animationConfig: animationConfig disabled is true when passed on load",
+      "location": null,
+      "status": "passed",
+      "title": "animationConfig: animationConfig disabled is true when passed on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<circle-packing>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<circle-packing> rendered-html accessibility generic accessibility test suite animationConfig: animationConfig disabled is true when passed on update",
+      "location": null,
+      "status": "passed",
+      "title": "animationConfig: animationConfig disabled is true when passed on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<circle-packing>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<circle-packing> rendered-html accessibility generic accessibility test suite annotations: instruction elements should contain annotation description on load if annotation exists on chart",
+      "location": null,
+      "status": "passed",
+      "title": "annotations: instruction elements should contain annotation description on load if annotation exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<circle-packing>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<circle-packing> rendered-html accessibility generic accessibility test suite annotations: instruction elements should contain annotation description on update if annotation exists on chart",
+      "location": null,
+      "status": "passed",
+      "title": "annotations: instruction elements should contain annotation description on update if annotation exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<circle-packing>",
+        "rendered-html",
+        "accessibility",
         "validation",
       ],
       "failureMessages": Array [],
@@ -4379,6 +5152,18 @@ Object {
       "location": null,
       "status": "passed",
       "title": "refer to generic results above for margin & padding tests",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<circle-packing>",
+        "rendered-html",
+        "annotations",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<circle-packing> rendered-html annotations should pass annotation prop",
+      "location": null,
+      "status": "passed",
+      "title": "should pass annotation prop",
     },
     Object {
       "ancestorTitles": Array [
@@ -4656,6 +5441,20 @@ Object {
       "location": null,
       "status": "passed",
       "title": "[event] initialLoadEvent: event object should emit and contain uniqueID on initial load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<circle-packing>",
+        "rendered-html",
+        "event-emitter",
+        "generic event testing",
+        "mark based events",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<circle-packing> rendered-html event-emitter generic event testing mark based events [event] initialLoadEndEvent: event object should emit and contain uniqueID on initial load end",
+      "location": null,
+      "status": "passed",
+      "title": "[event] initialLoadEndEvent: event object should emit and contain uniqueID on initial load end",
     },
     Object {
       "ancestorTitles": Array [
@@ -5037,6 +5836,34 @@ Object {
       "location": null,
       "status": "passed",
       "title": "tooltipLabel: tooltip should render formatted custom content on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<circle-packing>",
+        "rendered-html",
+        "labels",
+        "tooltip",
+        "generic tooltip tests",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<circle-packing> rendered-html labels tooltip generic tooltip tests dataKeyNames: if provided on load, dataKeyNames prop is used for key names across chart",
+      "location": null,
+      "status": "passed",
+      "title": "dataKeyNames: if provided on load, dataKeyNames prop is used for key names across chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<circle-packing>",
+        "rendered-html",
+        "labels",
+        "tooltip",
+        "generic tooltip tests",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<circle-packing> rendered-html labels tooltip generic tooltip tests dataKeyNames: if provided on update, dataKeyNames prop is used for key names across chart",
+      "location": null,
+      "status": "passed",
+      "title": "dataKeyNames: if provided on update, dataKeyNames prop is used for key names across chart",
     },
     Object {
       "ancestorTitles": Array [
@@ -5810,10 +6637,10 @@ Object {
         "generic accessibility test suite",
       ],
       "failureMessages": Array [],
-      "fullName": "<clustered-bar-chart> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: group - escape will exit group",
+      "fullName": "<clustered-bar-chart> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: group - shift+enter will exit group",
       "location": null,
       "status": "passed",
-      "title": "accessibility: keyboard nav: group - escape will exit group",
+      "title": "accessibility: keyboard nav: group - shift+enter will exit group",
     },
     Object {
       "ancestorTitles": Array [
@@ -5918,6 +6745,19 @@ Object {
       "location": null,
       "status": "passed",
       "title": "accessibility: keyboard nav: cousin - down arrow loops to first",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<clustered-bar-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<clustered-bar-chart> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: tooltip should get hidden on ESC key",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: keyboard nav: tooltip should get hidden on ESC key",
     },
     Object {
       "ancestorTitles": Array [
@@ -6093,6 +6933,32 @@ Object {
         "<clustered-bar-chart>",
         "rendered-html",
         "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<clustered-bar-chart> rendered-html accessibility generic accessibility test suite annotations: instruction elements should contain annotation description on load if annotation exists on chart",
+      "location": null,
+      "status": "passed",
+      "title": "annotations: instruction elements should contain annotation description on load if annotation exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<clustered-bar-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<clustered-bar-chart> rendered-html accessibility generic accessibility test suite annotations: instruction elements should contain annotation description on update if annotation exists on chart",
+      "location": null,
+      "status": "passed",
+      "title": "annotations: instruction elements should contain annotation description on update if annotation exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<clustered-bar-chart>",
+        "rendered-html",
+        "accessibility",
         "validation",
       ],
       "failureMessages": Array [],
@@ -6160,7 +7026,7 @@ Object {
       "failureMessages": Array [],
       "fullName": "<clustered-bar-chart> rendered-html annotations should pass annotation prop",
       "location": null,
-      "status": "pending",
+      "status": "passed",
       "title": "should pass annotation prop",
     },
     Object {
@@ -7003,6 +7869,20 @@ Object {
         "bar based events",
       ],
       "failureMessages": Array [],
+      "fullName": "<clustered-bar-chart> rendered-html event-emitter generic event testing bar based events [event] initialLoadEndEvent: event object should emit and contain uniqueID on initial load end",
+      "location": null,
+      "status": "passed",
+      "title": "[event] initialLoadEndEvent: event object should emit and contain uniqueID on initial load end",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<clustered-bar-chart>",
+        "rendered-html",
+        "event-emitter",
+        "generic event testing",
+        "bar based events",
+      ],
+      "failureMessages": Array [],
       "fullName": "<clustered-bar-chart> rendered-html event-emitter generic event testing bar based events [event] drawStartEvent: event object should emit and contain uniqueID on initial load",
       "location": null,
       "status": "passed",
@@ -7218,6 +8098,34 @@ Object {
         "<clustered-bar-chart>",
         "rendered-html",
         "labels",
+        "tooltip",
+        "generic tooltip tests",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<clustered-bar-chart> rendered-html labels tooltip generic tooltip tests dataKeyNames: if provided on load, dataKeyNames prop is used for key names across chart",
+      "location": null,
+      "status": "passed",
+      "title": "dataKeyNames: if provided on load, dataKeyNames prop is used for key names across chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<clustered-bar-chart>",
+        "rendered-html",
+        "labels",
+        "tooltip",
+        "generic tooltip tests",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<clustered-bar-chart> rendered-html labels tooltip generic tooltip tests dataKeyNames: if provided on update, dataKeyNames prop is used for key names across chart",
+      "location": null,
+      "status": "passed",
+      "title": "dataKeyNames: if provided on update, dataKeyNames prop is used for key names across chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<clustered-bar-chart>",
+        "rendered-html",
+        "labels",
         "dataLabel",
         "visible",
       ],
@@ -7405,8 +8313,8 @@ Object {
       ],
       "failureMessages": Array [
         "Error: expected textContent \\"$15\\" to equal \\"15\\"
-    at Object.<anonymous> (./packages/clustered-bar-chart/src/components/clustered-bar-chart/clustered-bar-chart.spec.ts:1514:33)
-    at processTicksAndRejections (internal/process/task_queues.js:95:5)",
+    at Object.<anonymous> (./packages/clustered-bar-chart/src/components/clustered-bar-chart/clustered-bar-chart.spec.ts:1541:33)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)",
       ],
       "fullName": "<clustered-bar-chart> rendered-html labels legend format should format number if passed as prop",
       "location": null,
@@ -8237,10 +9145,10 @@ Object {
         "generic accessibility test suite",
       ],
       "failureMessages": Array [],
-      "fullName": "<dumbbell-plot> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: group - escape will exit group",
+      "fullName": "<dumbbell-plot> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: group - shift+enter will exit group",
       "location": null,
       "status": "passed",
-      "title": "accessibility: keyboard nav: group - escape will exit group",
+      "title": "accessibility: keyboard nav: group - shift+enter will exit group",
     },
     Object {
       "ancestorTitles": Array [
@@ -8293,6 +9201,19 @@ Object {
       "location": null,
       "status": "passed",
       "title": "accessibility: keyboard nav: sibling - left arrow loops to last from first",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<dumbbell-plot>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<dumbbell-plot> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: tooltip should get hidden on ESC key",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: keyboard nav: tooltip should get hidden on ESC key",
     },
     Object {
       "ancestorTitles": Array [
@@ -8468,6 +9389,32 @@ Object {
         "<dumbbell-plot>",
         "rendered-html",
         "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<dumbbell-plot> rendered-html accessibility generic accessibility test suite annotations: instruction elements should contain annotation description on load if annotation exists on chart",
+      "location": null,
+      "status": "passed",
+      "title": "annotations: instruction elements should contain annotation description on load if annotation exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<dumbbell-plot>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<dumbbell-plot> rendered-html accessibility generic accessibility test suite annotations: instruction elements should contain annotation description on update if annotation exists on chart",
+      "location": null,
+      "status": "passed",
+      "title": "annotations: instruction elements should contain annotation description on update if annotation exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<dumbbell-plot>",
+        "rendered-html",
+        "accessibility",
         "validation",
       ],
       "failureMessages": Array [],
@@ -8548,7 +9495,7 @@ Object {
       "failureMessages": Array [],
       "fullName": "<dumbbell-plot> rendered-html annotations should pass annotation prop",
       "location": null,
-      "status": "pending",
+      "status": "passed",
       "title": "should pass annotation prop",
     },
     Object {
@@ -9189,6 +10136,20 @@ Object {
         "label based events",
       ],
       "failureMessages": Array [],
+      "fullName": "<dumbbell-plot> rendered-html event-emitter generic event testing label based events [event] initialLoadEndEvent: event object should emit and contain uniqueID on initial load end",
+      "location": null,
+      "status": "passed",
+      "title": "[event] initialLoadEndEvent: event object should emit and contain uniqueID on initial load end",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<dumbbell-plot>",
+        "rendered-html",
+        "event-emitter",
+        "generic event testing",
+        "label based events",
+      ],
+      "failureMessages": Array [],
       "fullName": "<dumbbell-plot> rendered-html event-emitter generic event testing label based events [event] drawStartEvent: event object should emit and contain uniqueID on initial load",
       "location": null,
       "status": "passed",
@@ -9593,6 +10554,34 @@ Object {
       "location": null,
       "status": "passed",
       "title": "tooltipLabel: tooltip should render formatted custom content on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<dumbbell-plot>",
+        "rendered-html",
+        "labels",
+        "tooltip",
+        "generic tooltip tests",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<dumbbell-plot> rendered-html labels tooltip generic tooltip tests dataKeyNames: if provided on load, dataKeyNames prop is used for key names across chart",
+      "location": null,
+      "status": "passed",
+      "title": "dataKeyNames: if provided on load, dataKeyNames prop is used for key names across chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<dumbbell-plot>",
+        "rendered-html",
+        "labels",
+        "tooltip",
+        "generic tooltip tests",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<dumbbell-plot> rendered-html labels tooltip generic tooltip tests dataKeyNames: if provided on update, dataKeyNames prop is used for key names across chart",
+      "location": null,
+      "status": "passed",
+      "title": "dataKeyNames: if provided on update, dataKeyNames prop is used for key names across chart",
     },
     Object {
       "ancestorTitles": Array [
@@ -11111,10 +12100,10 @@ Object {
         "generic accessibility test suite",
       ],
       "failureMessages": Array [],
-      "fullName": "<heat-map> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: group - escape will exit group",
+      "fullName": "<heat-map> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: group - shift+enter will exit group",
       "location": null,
       "status": "passed",
-      "title": "accessibility: keyboard nav: group - escape will exit group",
+      "title": "accessibility: keyboard nav: group - shift+enter will exit group",
     },
     Object {
       "ancestorTitles": Array [
@@ -11219,6 +12208,19 @@ Object {
       "location": null,
       "status": "passed",
       "title": "accessibility: keyboard nav: cousin - down arrow loops to first",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<heat-map>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<heat-map> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: tooltip should get hidden on ESC key",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: keyboard nav: tooltip should get hidden on ESC key",
     },
     Object {
       "ancestorTitles": Array [
@@ -11394,6 +12396,32 @@ Object {
         "<heat-map>",
         "rendered-html",
         "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<heat-map> rendered-html accessibility generic accessibility test suite annotations: instruction elements should contain annotation description on load if annotation exists on chart",
+      "location": null,
+      "status": "passed",
+      "title": "annotations: instruction elements should contain annotation description on load if annotation exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<heat-map>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<heat-map> rendered-html accessibility generic accessibility test suite annotations: instruction elements should contain annotation description on update if annotation exists on chart",
+      "location": null,
+      "status": "passed",
+      "title": "annotations: instruction elements should contain annotation description on update if annotation exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<heat-map>",
+        "rendered-html",
+        "accessibility",
         "validation",
       ],
       "failureMessages": Array [],
@@ -11435,7 +12463,7 @@ Object {
       "failureMessages": Array [],
       "fullName": "<heat-map> rendered-html annotations should pass annotation prop",
       "location": null,
-      "status": "pending",
+      "status": "passed",
       "title": "should pass annotation prop",
     },
     Object {
@@ -11577,10 +12605,10 @@ Object {
       ],
       "failureMessages": Array [
         "Error: expected textContent \\"$2010\\" to equal \\"2010\\"
-    at ./packages/heat-map/src/components/heat-map/heat-map.spec.ts:778:26
+    at ./packages/heat-map/src/components/heat-map/heat-map.spec.ts:790:26
     at Array.forEach (<anonymous>)
-    at Object.<anonymous> (./packages/heat-map/src/components/heat-map/heat-map.spec.ts:777:22)
-    at processTicksAndRejections (internal/process/task_queues.js:95:5)",
+    at Object.<anonymous> (./packages/heat-map/src/components/heat-map/heat-map.spec.ts:789:22)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)",
       ],
       "fullName": "<heat-map> rendered-html axes axis.format xAxis should have custom format applied to numbers if passed",
       "location": null,
@@ -11700,13 +12728,13 @@ Object {
       ],
       "failureMessages": Array [
         "Error: expected attribute radius \\"1\\" to equal \\"2\\"
-    at forEach (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:5375:43)
+    at forEach (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:5526:43)
     at Array.forEach (<anonymous>)
-    at call (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:5374:44)
+    at call (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:5525:44)
     at step (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:66:23)
     at Object.next (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:47:53)
     at fulfilled (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:37:58)
-    at processTicksAndRejections (internal/process/task_queues.js:95:5)",
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)",
       ],
       "fullName": "<heat-map> rendered-html interaction cell based interaction tests [interaction] clickStyle: on click the selected mark should be default clickStyle and others should have hoverOpacity",
       "location": null,
@@ -11748,13 +12776,13 @@ Object {
       ],
       "failureMessages": Array [
         "Error: expected attribute radius \\"1\\" to equal \\"2\\"
-    at forEach (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:5870:43)
+    at forEach (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:6021:43)
     at Array.forEach (<anonymous>)
-    at call (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:5869:44)
+    at call (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:6020:44)
     at step (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:66:23)
     at Object.next (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:47:53)
     at fulfilled (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:37:58)
-    at processTicksAndRejections (internal/process/task_queues.js:95:5)",
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)",
       ],
       "fullName": "<heat-map> rendered-html interaction cell based interaction tests [interaction] hoverStyle: on hover the mark should be default hoverStyle and others should have hoverOpacity",
       "location": null,
@@ -11960,6 +12988,20 @@ Object {
       "location": null,
       "status": "passed",
       "title": "[event] initialLoadEvent: event object should emit and contain uniqueID on initial load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<heat-map>",
+        "rendered-html",
+        "event-emitter",
+        "generic event testing",
+        "cell based events",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<heat-map> rendered-html event-emitter generic event testing cell based events [event] initialLoadEndEvent: event object should emit and contain uniqueID on initial load end",
+      "location": null,
+      "status": "passed",
+      "title": "[event] initialLoadEndEvent: event object should emit and contain uniqueID on initial load end",
     },
     Object {
       "ancestorTitles": Array [
@@ -12224,6 +13266,34 @@ Object {
         "<heat-map>",
         "rendered-html",
         "labels",
+        "tooltip",
+        "generic tooltip tests",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<heat-map> rendered-html labels tooltip generic tooltip tests dataKeyNames: if provided on load, dataKeyNames prop is used for key names across chart",
+      "location": null,
+      "status": "passed",
+      "title": "dataKeyNames: if provided on load, dataKeyNames prop is used for key names across chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<heat-map>",
+        "rendered-html",
+        "labels",
+        "tooltip",
+        "generic tooltip tests",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<heat-map> rendered-html labels tooltip generic tooltip tests dataKeyNames: if provided on update, dataKeyNames prop is used for key names across chart",
+      "location": null,
+      "status": "passed",
+      "title": "dataKeyNames: if provided on update, dataKeyNames prop is used for key names across chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<heat-map>",
+        "rendered-html",
+        "labels",
         "dataLabel",
         "visible",
       ],
@@ -12360,8 +13430,8 @@ Object {
       ],
       "failureMessages": Array [
         "Error: expected textContent \\"$15\\" to equal \\"15\\"
-    at Object.<anonymous> (./packages/heat-map/src/components/heat-map/heat-map.spec.ts:1499:35)
-    at processTicksAndRejections (internal/process/task_queues.js:95:5)",
+    at Object.<anonymous> (./packages/heat-map/src/components/heat-map/heat-map.spec.ts:1535:35)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)",
       ],
       "fullName": "<heat-map> rendered-html labels dataLabel legend format should format number if passed as prop",
       "location": null,
@@ -12838,13 +13908,13 @@ Object {
 
 Expected substring: [32m\\"exit\\"[39m
 Received string:    [31m\\"update\\"[39m
-    at forEach (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:4991:52)
+    at forEach (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:5142:52)
     at Array.forEach (<anonymous>)
-    at call (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:4984:30)
+    at call (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:5135:30)
     at step (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:66:23)
     at Object.next (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:47:53)
     at fulfilled (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:37:58)
-    at processTicksAndRejections (internal/process/task_queues.js:95:5)",
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)",
       ],
       "fullName": "<line-chart> rendered-html generic test suite data: custom data exit on update",
       "location": null,
@@ -13234,10 +14304,23 @@ Received string:    [31m\\"update\\"[39m
         "generic accessibility test suite",
       ],
       "failureMessages": Array [],
-      "fullName": "<line-chart> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: group - escape will move up to group",
+      "fullName": "<line-chart> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: group - shift+enter will move up to group",
       "location": null,
       "status": "passed",
-      "title": "accessibility: keyboard nav: group - escape will move up to group",
+      "title": "accessibility: keyboard nav: group - shift+enter will move up to group",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<line-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<line-chart> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: tooltip should get hidden on ESC key",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: keyboard nav: tooltip should get hidden on ESC key",
     },
     Object {
       "ancestorTitles": Array [
@@ -13413,6 +14496,32 @@ Received string:    [31m\\"update\\"[39m
         "<line-chart>",
         "rendered-html",
         "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<line-chart> rendered-html accessibility generic accessibility test suite annotations: instruction elements should contain annotation description on load if annotation exists on chart",
+      "location": null,
+      "status": "passed",
+      "title": "annotations: instruction elements should contain annotation description on load if annotation exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<line-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<line-chart> rendered-html accessibility generic accessibility test suite annotations: instruction elements should contain annotation description on update if annotation exists on chart",
+      "location": null,
+      "status": "passed",
+      "title": "annotations: instruction elements should contain annotation description on update if annotation exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<line-chart>",
+        "rendered-html",
+        "accessibility",
         "validation",
       ],
       "failureMessages": Array [],
@@ -13444,6 +14553,30 @@ Received string:    [31m\\"update\\"[39m
       "location": null,
       "status": "passed",
       "title": "refer to generic results above for margin & padding tests",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<line-chart>",
+        "rendered-html",
+        "annotations",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<line-chart> rendered-html annotations should pass annotation prop on load",
+      "location": null,
+      "status": "passed",
+      "title": "should pass annotation prop on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<line-chart>",
+        "rendered-html",
+        "annotations",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<line-chart> rendered-html annotations should pass annotation prop on update",
+      "location": null,
+      "status": "passed",
+      "title": "should pass annotation prop on update",
     },
     Object {
       "ancestorTitles": Array [
@@ -14096,6 +15229,20 @@ Received string:    [31m\\"update\\"[39m
         "marker based events",
       ],
       "failureMessages": Array [],
+      "fullName": "<line-chart> rendered-html event-emitter generic event testing marker based events [event] initialLoadEndEvent: event object should emit and contain uniqueID on initial load end",
+      "location": null,
+      "status": "passed",
+      "title": "[event] initialLoadEndEvent: event object should emit and contain uniqueID on initial load end",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<line-chart>",
+        "rendered-html",
+        "event-emitter",
+        "generic event testing",
+        "marker based events",
+      ],
+      "failureMessages": Array [],
       "fullName": "<line-chart> rendered-html event-emitter generic event testing marker based events [event] drawStartEvent: event object should emit and contain uniqueID on initial load",
       "location": null,
       "status": "passed",
@@ -14266,6 +15413,34 @@ Received string:    [31m\\"update\\"[39m
       "location": null,
       "status": "passed",
       "title": "tooltipLabel: tooltip should render formatted custom content on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<line-chart>",
+        "rendered-html",
+        "labels",
+        "tooltip",
+        "generic tooltip tests",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<line-chart> rendered-html labels tooltip generic tooltip tests dataKeyNames: if provided on load, dataKeyNames prop is used for key names across chart",
+      "location": null,
+      "status": "passed",
+      "title": "dataKeyNames: if provided on load, dataKeyNames prop is used for key names across chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<line-chart>",
+        "rendered-html",
+        "labels",
+        "tooltip",
+        "generic tooltip tests",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<line-chart> rendered-html labels tooltip generic tooltip tests dataKeyNames: if provided on update, dataKeyNames prop is used for key names across chart",
+      "location": null,
+      "status": "passed",
+      "title": "dataKeyNames: if provided on update, dataKeyNames prop is used for key names across chart",
     },
     Object {
       "ancestorTitles": Array [
@@ -14641,8 +15816,8 @@ Received string:    [31m\\"update\\"[39m
       ],
       "failureMessages": Array [
         "Error: expected textContent \\"$15\\" to equal \\"15\\"
-    at Object.<anonymous> (./packages/line-chart/src/components/line-chart/line-chart.spec.tsx:1788:33)
-    at processTicksAndRejections (internal/process/task_queues.js:95:5)",
+    at Object.<anonymous> (./packages/line-chart/src/components/line-chart/line-chart.spec.tsx:1844:33)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)",
       ],
       "fullName": "<line-chart> rendered-html labels legend format should format number if passed as prop",
       "location": null,
@@ -15693,10 +16868,23 @@ Received string:    [31m\\"update\\"[39m
         "generic accessibility test suite",
       ],
       "failureMessages": Array [],
-      "fullName": "<parallel-plot> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: group - escape will move up to group",
+      "fullName": "<parallel-plot> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: group - shift+enter will move up to group",
       "location": null,
       "status": "passed",
-      "title": "accessibility: keyboard nav: group - escape will move up to group",
+      "title": "accessibility: keyboard nav: group - shift+enter will move up to group",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<parallel-plot>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<parallel-plot> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: tooltip should get hidden on ESC key",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: keyboard nav: tooltip should get hidden on ESC key",
     },
     Object {
       "ancestorTitles": Array [
@@ -15745,12 +16933,12 @@ Received string:    [31m\\"update\\"[39m
         "generic accessibility test suite",
       ],
       "failureMessages": Array [
-        "TypeError: Cannot read property 'textContent' of undefined
-    at call (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:1982:51)
+        "TypeError: Cannot read properties of undefined (reading 'textContent')
+    at call (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:2045:51)
     at step (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:66:23)
     at Object.next (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:47:53)
     at fulfilled (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:37:58)
-    at processTicksAndRejections (internal/process/task_queues.js:95:5)",
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)",
       ],
       "fullName": "<parallel-plot> rendered-html accessibility generic accessibility test suite accessibility: instruction elements should contain yAxis description on load if yAxis exists on chart",
       "location": null,
@@ -15879,6 +17067,32 @@ Received string:    [31m\\"update\\"[39m
         "<parallel-plot>",
         "rendered-html",
         "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<parallel-plot> rendered-html accessibility generic accessibility test suite annotations: instruction elements should contain annotation description on load if annotation exists on chart",
+      "location": null,
+      "status": "passed",
+      "title": "annotations: instruction elements should contain annotation description on load if annotation exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<parallel-plot>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<parallel-plot> rendered-html accessibility generic accessibility test suite annotations: instruction elements should contain annotation description on update if annotation exists on chart",
+      "location": null,
+      "status": "passed",
+      "title": "annotations: instruction elements should contain annotation description on update if annotation exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<parallel-plot>",
+        "rendered-html",
+        "accessibility",
         "validation",
       ],
       "failureMessages": Array [],
@@ -15910,6 +17124,30 @@ Received string:    [31m\\"update\\"[39m
       "location": null,
       "status": "passed",
       "title": "refer to generic results above for margin & padding tests",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<parallel-plot>",
+        "rendered-html",
+        "annotations",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<parallel-plot> rendered-html annotations should pass annotation prop on load",
+      "location": null,
+      "status": "passed",
+      "title": "should pass annotation prop on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<parallel-plot>",
+        "rendered-html",
+        "annotations",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<parallel-plot> rendered-html annotations should pass annotation prop on update",
+      "location": null,
+      "status": "passed",
+      "title": "should pass annotation prop on update",
     },
     Object {
       "ancestorTitles": Array [
@@ -16562,6 +17800,20 @@ Received string:    [31m\\"update\\"[39m
         "marker based events",
       ],
       "failureMessages": Array [],
+      "fullName": "<parallel-plot> rendered-html event-emitter generic event testing marker based events [event] initialLoadEndEvent: event object should emit and contain uniqueID on initial load end",
+      "location": null,
+      "status": "passed",
+      "title": "[event] initialLoadEndEvent: event object should emit and contain uniqueID on initial load end",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<parallel-plot>",
+        "rendered-html",
+        "event-emitter",
+        "generic event testing",
+        "marker based events",
+      ],
+      "failureMessages": Array [],
       "fullName": "<parallel-plot> rendered-html event-emitter generic event testing marker based events [event] drawStartEvent: event object should emit and contain uniqueID on initial load",
       "location": null,
       "status": "passed",
@@ -16732,6 +17984,34 @@ Received string:    [31m\\"update\\"[39m
       "location": null,
       "status": "passed",
       "title": "tooltipLabel: tooltip should render formatted custom content on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<parallel-plot>",
+        "rendered-html",
+        "labels",
+        "tooltip",
+        "generic tooltip tests",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<parallel-plot> rendered-html labels tooltip generic tooltip tests dataKeyNames: if provided on load, dataKeyNames prop is used for key names across chart",
+      "location": null,
+      "status": "passed",
+      "title": "dataKeyNames: if provided on load, dataKeyNames prop is used for key names across chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<parallel-plot>",
+        "rendered-html",
+        "labels",
+        "tooltip",
+        "generic tooltip tests",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<parallel-plot> rendered-html labels tooltip generic tooltip tests dataKeyNames: if provided on update, dataKeyNames prop is used for key names across chart",
+      "location": null,
+      "status": "passed",
+      "title": "dataKeyNames: if provided on update, dataKeyNames prop is used for key names across chart",
     },
     Object {
       "ancestorTitles": Array [
@@ -17107,8 +18387,8 @@ Received string:    [31m\\"update\\"[39m
       ],
       "failureMessages": Array [
         "Error: expected textContent \\"$15\\" to equal \\"15\\"
-    at Object.<anonymous> (./packages/parallel-plot/src/components/parallel-plot/parallel-plot.spec.ts:1793:33)
-    at processTicksAndRejections (internal/process/task_queues.js:95:5)",
+    at Object.<anonymous> (./packages/parallel-plot/src/components/parallel-plot/parallel-plot.spec.ts:1847:33)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)",
       ],
       "fullName": "<parallel-plot> rendered-html labels legend format should format number if passed as prop",
       "location": null,
@@ -17163,8 +18443,8 @@ Received string:    [31m\\"update\\"[39m
       ],
       "failureMessages": Array [
         "Error: expected attribute opacity \\"1\\" to equal \\"0\\"
-    at Object.<anonymous> (./packages/parallel-plot/src/components/parallel-plot/parallel-plot.spec.ts:1914:31)
-    at processTicksAndRejections (internal/process/task_queues.js:95:5)",
+    at Object.<anonymous> (./packages/parallel-plot/src/components/parallel-plot/parallel-plot.spec.ts:1968:31)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)",
       ],
       "fullName": "<parallel-plot> rendered-html reference line should pass referenceLines prop",
       "location": null,
@@ -17179,8 +18459,8 @@ Received string:    [31m\\"update\\"[39m
       ],
       "failureMessages": Array [
         "Error: expected attribute opacity \\"1\\" to equal \\"0\\"
-    at Object.<anonymous> (./packages/parallel-plot/src/components/parallel-plot/parallel-plot.spec.ts:1931:31)
-    at processTicksAndRejections (internal/process/task_queues.js:95:5)",
+    at Object.<anonymous> (./packages/parallel-plot/src/components/parallel-plot/parallel-plot.spec.ts:1985:31)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)",
       ],
       "fullName": "<parallel-plot> rendered-html reference line should pass referenceStyle prop",
       "location": null,
@@ -18041,11 +19321,11 @@ Received string:    [31m\\"update\\"[39m
 
 Expected: [32m\\"[7m2[27mpx\\"[39m
 Received: [31m\\"[7m14[27mpx\\"[39m
-    at call (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:1526:88)
+    at call (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:1534:88)
     at step (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:66:23)
     at Object.next (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:47:53)
     at fulfilled (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:37:58)
-    at processTicksAndRejections (internal/process/task_queues.js:95:5)",
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)",
       ],
       "fullName": "<pie-chart> rendered-html accessibility generic accessibility test suite accessibility: focus marker style should be applied on focus",
       "location": null,
@@ -18086,10 +19366,10 @@ Received: [31m\\"[7m14[27mpx\\"[39m
         "generic accessibility test suite",
       ],
       "failureMessages": Array [],
-      "fullName": "<pie-chart> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: group - escape will exit group",
+      "fullName": "<pie-chart> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: group - shift+enter will exit group",
       "location": null,
       "status": "passed",
-      "title": "accessibility: keyboard nav: group - escape will exit group",
+      "title": "accessibility: keyboard nav: group - shift+enter will exit group",
     },
     Object {
       "ancestorTitles": Array [
@@ -18142,6 +19422,19 @@ Received: [31m\\"[7m14[27mpx\\"[39m
       "location": null,
       "status": "passed",
       "title": "accessibility: keyboard nav: sibling - left arrow loops to last from first",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: tooltip should get hidden on ESC key",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: keyboard nav: tooltip should get hidden on ESC key",
     },
     Object {
       "ancestorTitles": Array [
@@ -18317,6 +19610,32 @@ Received: [31m\\"[7m14[27mpx\\"[39m
         "<pie-chart>",
         "rendered-html",
         "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html accessibility generic accessibility test suite annotations: instruction elements should contain annotation description on load if annotation exists on chart",
+      "location": null,
+      "status": "passed",
+      "title": "annotations: instruction elements should contain annotation description on load if annotation exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html accessibility generic accessibility test suite annotations: instruction elements should contain annotation description on update if annotation exists on chart",
+      "location": null,
+      "status": "passed",
+      "title": "annotations: instruction elements should contain annotation description on update if annotation exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "accessibility",
         "validation",
       ],
       "failureMessages": Array [],
@@ -18348,6 +19667,30 @@ Received: [31m\\"[7m14[27mpx\\"[39m
       "location": null,
       "status": "passed",
       "title": "refer to generic results above for margin & padding tests",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "annotations",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html annotations should pass annotation prop on load",
+      "location": null,
+      "status": "passed",
+      "title": "should pass annotation prop on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "annotations",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html annotations should pass annotation prop on update",
+      "location": null,
+      "status": "passed",
+      "title": "should pass annotation prop on update",
     },
     Object {
       "ancestorTitles": Array [
@@ -18649,6 +19992,20 @@ Received: [31m\\"[7m14[27mpx\\"[39m
         "pie based events",
       ],
       "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html event-emitter generic event testing pie based events [event] initialLoadEndEvent: event object should emit and contain uniqueID on initial load end",
+      "location": null,
+      "status": "passed",
+      "title": "[event] initialLoadEndEvent: event object should emit and contain uniqueID on initial load end",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "event-emitter",
+        "generic event testing",
+        "pie based events",
+      ],
+      "failureMessages": Array [],
       "fullName": "<pie-chart> rendered-html event-emitter generic event testing pie based events [event] drawStartEvent: event object should emit and contain uniqueID on initial load",
       "location": null,
       "status": "passed",
@@ -18858,6 +20215,34 @@ Received: [31m\\"[7m14[27mpx\\"[39m
       "location": null,
       "status": "passed",
       "title": "tooltipLabel: tooltip should render formatted custom content on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "labels",
+        "tooltip",
+        "generic tooltip tests",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html labels tooltip generic tooltip tests dataKeyNames: if provided on load, dataKeyNames prop is used for key names across chart",
+      "location": null,
+      "status": "passed",
+      "title": "dataKeyNames: if provided on load, dataKeyNames prop is used for key names across chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "labels",
+        "tooltip",
+        "generic tooltip tests",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html labels tooltip generic tooltip tests dataKeyNames: if provided on update, dataKeyNames prop is used for key names across chart",
+      "location": null,
+      "status": "passed",
+      "title": "dataKeyNames: if provided on update, dataKeyNames prop is used for key names across chart",
     },
     Object {
       "ancestorTitles": Array [
@@ -19950,10 +21335,23 @@ Received: [31m\\"[7m14[27mpx\\"[39m
         "generic accessibility test suite",
       ],
       "failureMessages": Array [],
-      "fullName": "<scatter-plot> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: group - escape will move up to group",
+      "fullName": "<scatter-plot> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: group - shift+enter will move up to group",
       "location": null,
       "status": "passed",
-      "title": "accessibility: keyboard nav: group - escape will move up to group",
+      "title": "accessibility: keyboard nav: group - shift+enter will move up to group",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<scatter-plot>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<scatter-plot> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: tooltip should get hidden on ESC key",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: keyboard nav: tooltip should get hidden on ESC key",
     },
     Object {
       "ancestorTitles": Array [
@@ -20129,6 +21527,32 @@ Received: [31m\\"[7m14[27mpx\\"[39m
         "<scatter-plot>",
         "rendered-html",
         "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<scatter-plot> rendered-html accessibility generic accessibility test suite annotations: instruction elements should contain annotation description on load if annotation exists on chart",
+      "location": null,
+      "status": "passed",
+      "title": "annotations: instruction elements should contain annotation description on load if annotation exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<scatter-plot>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<scatter-plot> rendered-html accessibility generic accessibility test suite annotations: instruction elements should contain annotation description on update if annotation exists on chart",
+      "location": null,
+      "status": "passed",
+      "title": "annotations: instruction elements should contain annotation description on update if annotation exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<scatter-plot>",
+        "rendered-html",
+        "accessibility",
         "validation",
       ],
       "failureMessages": Array [],
@@ -20160,6 +21584,30 @@ Received: [31m\\"[7m14[27mpx\\"[39m
       "location": null,
       "status": "passed",
       "title": "refer to generic results above for margin & padding tests",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<scatter-plot>",
+        "rendered-html",
+        "annotations",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<scatter-plot> rendered-html annotations should pass annotation prop on load",
+      "location": null,
+      "status": "passed",
+      "title": "should pass annotation prop on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<scatter-plot>",
+        "rendered-html",
+        "annotations",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<scatter-plot> rendered-html annotations should pass annotation prop on update",
+      "location": null,
+      "status": "passed",
+      "title": "should pass annotation prop on update",
     },
     Object {
       "ancestorTitles": Array [
@@ -20786,6 +22234,20 @@ Received: [31m\\"[7m14[27mpx\\"[39m
         "marker based events",
       ],
       "failureMessages": Array [],
+      "fullName": "<scatter-plot> rendered-html event-emitter generic event testing marker based events [event] initialLoadEndEvent: event object should emit and contain uniqueID on initial load end",
+      "location": null,
+      "status": "passed",
+      "title": "[event] initialLoadEndEvent: event object should emit and contain uniqueID on initial load end",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<scatter-plot>",
+        "rendered-html",
+        "event-emitter",
+        "generic event testing",
+        "marker based events",
+      ],
+      "failureMessages": Array [],
       "fullName": "<scatter-plot> rendered-html event-emitter generic event testing marker based events [event] drawStartEvent: event object should emit and contain uniqueID on initial load",
       "location": null,
       "status": "passed",
@@ -20910,6 +22372,20 @@ Received: [31m\\"[7m14[27mpx\\"[39m
         "generic tooltip tests",
       ],
       "failureMessages": Array [],
+      "fullName": "<scatter-plot> rendered-html labels tooltip generic tooltip tests tooltipLabel: tooltip should render default content on load sizeConfig",
+      "location": null,
+      "status": "passed",
+      "title": "tooltipLabel: tooltip should render default content on load sizeConfig",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<scatter-plot>",
+        "rendered-html",
+        "labels",
+        "tooltip",
+        "generic tooltip tests",
+      ],
+      "failureMessages": Array [],
       "fullName": "<scatter-plot> rendered-html labels tooltip generic tooltip tests tooltipLabel: tooltip should render custom content on load",
       "location": null,
       "status": "passed",
@@ -20956,6 +22432,62 @@ Received: [31m\\"[7m14[27mpx\\"[39m
       "location": null,
       "status": "passed",
       "title": "tooltipLabel: tooltip should render formatted custom content on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<scatter-plot>",
+        "rendered-html",
+        "labels",
+        "tooltip",
+        "generic tooltip tests",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<scatter-plot> rendered-html labels tooltip generic tooltip tests dataKeyNames: if provided on load, dataKeyNames prop is used for key names across chart",
+      "location": null,
+      "status": "passed",
+      "title": "dataKeyNames: if provided on load, dataKeyNames prop is used for key names across chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<scatter-plot>",
+        "rendered-html",
+        "labels",
+        "tooltip",
+        "generic tooltip tests",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<scatter-plot> rendered-html labels tooltip generic tooltip tests dataKeyNames: if provided on load, dataKeyNames prop is used for key names across chart sizeConfig",
+      "location": null,
+      "status": "passed",
+      "title": "dataKeyNames: if provided on load, dataKeyNames prop is used for key names across chart sizeConfig",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<scatter-plot>",
+        "rendered-html",
+        "labels",
+        "tooltip",
+        "generic tooltip tests",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<scatter-plot> rendered-html labels tooltip generic tooltip tests dataKeyNames: if provided on update, dataKeyNames prop is used for key names across chart",
+      "location": null,
+      "status": "passed",
+      "title": "dataKeyNames: if provided on update, dataKeyNames prop is used for key names across chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<scatter-plot>",
+        "rendered-html",
+        "labels",
+        "tooltip",
+        "generic tooltip tests",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<scatter-plot> rendered-html labels tooltip generic tooltip tests dataKeyNames: if provided on update, dataKeyNames prop is used for key names across chart sizeConfig",
+      "location": null,
+      "status": "passed",
+      "title": "dataKeyNames: if provided on update, dataKeyNames prop is used for key names across chart sizeConfig",
     },
     Object {
       "ancestorTitles": Array [
@@ -21219,8 +22751,8 @@ Received: [31m\\"[7m14[27mpx\\"[39m
       ],
       "failureMessages": Array [
         "Error: expected textContent \\"$15\\" to equal \\"15\\"
-    at Object.<anonymous> (./packages/scatter-plot/src/components/scatter-plot/scatter-plot.spec.tsx:1789:33)
-    at processTicksAndRejections (internal/process/task_queues.js:95:5)",
+    at Object.<anonymous> (./packages/scatter-plot/src/components/scatter-plot/scatter-plot.spec.tsx:1886:33)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)",
       ],
       "fullName": "<scatter-plot> rendered-html labels legend format should format number if passed as prop",
       "location": null,
@@ -22220,10 +23752,10 @@ Received: [31m\\"[7m14[27mpx\\"[39m
         "generic accessibility test suite",
       ],
       "failureMessages": Array [],
-      "fullName": "<stacked-bar-chart> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: group - escape will exit group",
+      "fullName": "<stacked-bar-chart> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: group - shift+enter will exit group",
       "location": null,
       "status": "passed",
-      "title": "accessibility: keyboard nav: group - escape will exit group",
+      "title": "accessibility: keyboard nav: group - shift+enter will exit group",
     },
     Object {
       "ancestorTitles": Array [
@@ -22328,6 +23860,19 @@ Received: [31m\\"[7m14[27mpx\\"[39m
       "location": null,
       "status": "passed",
       "title": "accessibility: keyboard nav: cousin - down arrow loops to first",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<stacked-bar-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<stacked-bar-chart> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: tooltip should get hidden on ESC key",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: keyboard nav: tooltip should get hidden on ESC key",
     },
     Object {
       "ancestorTitles": Array [
@@ -22503,6 +24048,32 @@ Received: [31m\\"[7m14[27mpx\\"[39m
         "<stacked-bar-chart>",
         "rendered-html",
         "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<stacked-bar-chart> rendered-html accessibility generic accessibility test suite annotations: instruction elements should contain annotation description on load if annotation exists on chart",
+      "location": null,
+      "status": "passed",
+      "title": "annotations: instruction elements should contain annotation description on load if annotation exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<stacked-bar-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<stacked-bar-chart> rendered-html accessibility generic accessibility test suite annotations: instruction elements should contain annotation description on update if annotation exists on chart",
+      "location": null,
+      "status": "passed",
+      "title": "annotations: instruction elements should contain annotation description on update if annotation exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<stacked-bar-chart>",
+        "rendered-html",
+        "accessibility",
         "validation",
       ],
       "failureMessages": Array [],
@@ -22568,10 +24139,22 @@ Received: [31m\\"[7m14[27mpx\\"[39m
         "annotations",
       ],
       "failureMessages": Array [],
-      "fullName": "<stacked-bar-chart> rendered-html annotations should pass annotation prop",
+      "fullName": "<stacked-bar-chart> rendered-html annotations should pass annotation prop on load",
       "location": null,
-      "status": "pending",
-      "title": "should pass annotation prop",
+      "status": "passed",
+      "title": "should pass annotation prop on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<stacked-bar-chart>",
+        "rendered-html",
+        "annotations",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<stacked-bar-chart> rendered-html annotations should pass annotation prop on update",
+      "location": null,
+      "status": "passed",
+      "title": "should pass annotation prop on update",
     },
     Object {
       "ancestorTitles": Array [
@@ -23439,6 +25022,20 @@ Received: [31m\\"[7m14[27mpx\\"[39m
         "bar based events",
       ],
       "failureMessages": Array [],
+      "fullName": "<stacked-bar-chart> rendered-html event-emitter generic event testing bar based events [event] initialLoadEndEvent: event object should emit and contain uniqueID on initial load end",
+      "location": null,
+      "status": "passed",
+      "title": "[event] initialLoadEndEvent: event object should emit and contain uniqueID on initial load end",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<stacked-bar-chart>",
+        "rendered-html",
+        "event-emitter",
+        "generic event testing",
+        "bar based events",
+      ],
+      "failureMessages": Array [],
       "fullName": "<stacked-bar-chart> rendered-html event-emitter generic event testing bar based events [event] drawStartEvent: event object should emit and contain uniqueID on initial load",
       "location": null,
       "status": "passed",
@@ -23583,6 +25180,34 @@ Received: [31m\\"[7m14[27mpx\\"[39m
       "location": null,
       "status": "passed",
       "title": "tooltipLabel: tooltip should render formatted custom content on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<stacked-bar-chart>",
+        "rendered-html",
+        "labels",
+        "tooltip",
+        "generic tooltip tests",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<stacked-bar-chart> rendered-html labels tooltip generic tooltip tests dataKeyNames: if provided on load, dataKeyNames prop is used for key names across chart",
+      "location": null,
+      "status": "passed",
+      "title": "dataKeyNames: if provided on load, dataKeyNames prop is used for key names across chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<stacked-bar-chart>",
+        "rendered-html",
+        "labels",
+        "tooltip",
+        "generic tooltip tests",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<stacked-bar-chart> rendered-html labels tooltip generic tooltip tests dataKeyNames: if provided on update, dataKeyNames prop is used for key names across chart",
+      "location": null,
+      "status": "passed",
+      "title": "dataKeyNames: if provided on update, dataKeyNames prop is used for key names across chart",
     },
     Object {
       "ancestorTitles": Array [
@@ -23818,8 +25443,8 @@ Received: [31m\\"[7m14[27mpx\\"[39m
       ],
       "failureMessages": Array [
         "Error: expected textContent \\"$15\\" to equal \\"15\\"
-    at Object.<anonymous> (./packages/stacked-bar-chart/src/components/stacked-bar-chart/stacked-bar-chart.spec.ts:1548:33)
-    at processTicksAndRejections (internal/process/task_queues.js:95:5)",
+    at Object.<anonymous> (./packages/stacked-bar-chart/src/components/stacked-bar-chart/stacked-bar-chart.spec.ts:1575:33)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)",
       ],
       "fullName": "<stacked-bar-chart> rendered-html labels legend format should format number if passed as prop",
       "location": null,
@@ -24400,6 +26025,526 @@ Received: [31m\\"[7m14[27mpx\\"[39m
         "<world-map />",
         "rendered-html",
         "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<world-map /> rendered-html accessibility generic accessibility test suite accessibility: default instruction elements should exist and have screen reader class",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: default instruction elements should exist and have screen reader class",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<world-map />",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<world-map /> rendered-html accessibility generic accessibility test suite accessibility: custom instruction elements should exist and have screen reader class on load",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: custom instruction elements should exist and have screen reader class on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<world-map />",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<world-map /> rendered-html accessibility generic accessibility test suite accessibility: custom instruction elements should exist and have screen reader class on update",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: custom instruction elements should exist and have screen reader class on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<world-map />",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<world-map /> rendered-html accessibility generic accessibility test suite accessibility: instruction elements should have default html tags",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: instruction elements should have default html tags",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<world-map />",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<world-map /> rendered-html accessibility generic accessibility test suite accessibility: instruction elements should have h3+ html tags and headings on load",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: instruction elements should have h3+ html tags and headings on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<world-map />",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<world-map /> rendered-html accessibility generic accessibility test suite accessibility: instruction elements should have div html tags on load",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: instruction elements should have div html tags on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<world-map />",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<world-map /> rendered-html accessibility generic accessibility test suite accessibility: instruction elements should have h4+ html tags and all headings on update",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: instruction elements should have h4+ html tags and all headings on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<world-map />",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<world-map /> rendered-html accessibility generic accessibility test suite accessibility: instruction elements should have p html tags on update",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: instruction elements should have p html tags on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<world-map />",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<world-map /> rendered-html accessibility generic accessibility test suite accessibility: keyboard instruction component renders in default state",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: keyboard instruction component renders in default state",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<world-map />",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<world-map /> rendered-html accessibility generic accessibility test suite accessibility: keyboard instruction component shows header in focus state",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: keyboard instruction component shows header in focus state",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<world-map />",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<world-map /> rendered-html accessibility generic accessibility test suite accessibility: keyboard instruction component displays table in click state",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: keyboard instruction component displays table in click state",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<world-map />",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<world-map /> rendered-html accessibility generic accessibility test suite accessibility: keyboard instruction component displays table in click state with space enabled",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: keyboard instruction component displays table in click state with space enabled",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<world-map />",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<world-map /> rendered-html accessibility generic accessibility test suite accessibility: attributes should be added to static geometries on load",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: attributes should be added to static geometries on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<world-map />",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<world-map /> rendered-html accessibility generic accessibility test suite accessibility: attributes should be added to geometries on load",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: attributes should be added to geometries on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<world-map />",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<world-map /> rendered-html accessibility generic accessibility test suite accessibility: controller div should be created and attributes should be added on load",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: controller div should be created and attributes should be added on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<world-map />",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<world-map /> rendered-html accessibility generic accessibility test suite accessibility: controller div should be created and static image attributes should be added on load",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: controller div should be created and static image attributes should be added on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<world-map />",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<world-map /> rendered-html accessibility generic accessibility test suite accessibility: focus marker style should be applied on focus",
+      "location": null,
+      "status": "pending",
+      "title": "accessibility: focus marker style should be applied on focus",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<world-map />",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<world-map /> rendered-html accessibility generic accessibility test suite accessibility: focus group style should be applied on focus",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: focus group style should be applied on focus",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<world-map />",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<world-map /> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: test whether space bar performs click action",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: keyboard nav: test whether space bar performs click action",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<world-map />",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<world-map /> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: sibling - right arrow goes to next",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: keyboard nav: sibling - right arrow goes to next",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<world-map />",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<world-map /> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: sibling - right arrow goes to first from last",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: keyboard nav: sibling - right arrow goes to first from last",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<world-map />",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<world-map /> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: sibling - left arrow goes to next",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: keyboard nav: sibling - left arrow goes to next",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<world-map />",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<world-map /> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: sibling - left arrow loops to last from first",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: keyboard nav: sibling - left arrow loops to last from first",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<world-map />",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<world-map /> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: group - shift+enter will move up to group",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: keyboard nav: group - shift+enter will move up to group",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<world-map />",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<world-map /> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: tooltip should get hidden on ESC key",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: keyboard nav: tooltip should get hidden on ESC key",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<world-map />",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<world-map /> rendered-html accessibility generic accessibility test suite accessibility: instruction elements should contain xAxis description on load if xAxis exists on chart",
+      "location": null,
+      "status": "pending",
+      "title": "accessibility: instruction elements should contain xAxis description on load if xAxis exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<world-map />",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<world-map /> rendered-html accessibility generic accessibility test suite accessibility: instruction elements should not contain xAxis description on load if xAxis is not visible on chart",
+      "location": null,
+      "status": "pending",
+      "title": "accessibility: instruction elements should not contain xAxis description on load if xAxis is not visible on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<world-map />",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<world-map /> rendered-html accessibility generic accessibility test suite accessibility: instruction elements should contain xAxis description on update if xAxis exists on chart",
+      "location": null,
+      "status": "pending",
+      "title": "accessibility: instruction elements should contain xAxis description on update if xAxis exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<world-map />",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<world-map /> rendered-html accessibility generic accessibility test suite accessibility: instruction elements should contain yAxis description on load if yAxis exists on chart",
+      "location": null,
+      "status": "pending",
+      "title": "accessibility: instruction elements should contain yAxis description on load if yAxis exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<world-map />",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<world-map /> rendered-html accessibility generic accessibility test suite accessibility: instruction elements should not contain yAxis description on load if yAxis is not visible on chart",
+      "location": null,
+      "status": "pending",
+      "title": "accessibility: instruction elements should not contain yAxis description on load if yAxis is not visible on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<world-map />",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<world-map /> rendered-html accessibility generic accessibility test suite accessibility: instruction elements should contain yAxis description on update if yAxis exists on chart",
+      "location": null,
+      "status": "pending",
+      "title": "accessibility: instruction elements should contain yAxis description on update if yAxis exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<world-map />",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<world-map /> rendered-html accessibility generic accessibility test suite accessibility: accessibility textures are applied by default on load",
+      "location": null,
+      "status": "pending",
+      "title": "accessibility: accessibility textures are applied by default on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<world-map />",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<world-map /> rendered-html accessibility generic accessibility test suite accessibility: accessibility textures are removed on load",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: accessibility textures are removed on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<world-map />",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<world-map /> rendered-html accessibility generic accessibility test suite accessibility: accessibility textures are removed on update",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: accessibility textures are removed on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<world-map />",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<world-map /> rendered-html accessibility generic accessibility test suite accessibility: accessibility textures are applied in default order on load",
+      "location": null,
+      "status": "pending",
+      "title": "accessibility: accessibility textures are applied in default order on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<world-map />",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<world-map /> rendered-html accessibility generic accessibility test suite animationConfig: animationConfig disabled is false by default",
+      "location": null,
+      "status": "passed",
+      "title": "animationConfig: animationConfig disabled is false by default",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<world-map />",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<world-map /> rendered-html accessibility generic accessibility test suite animationConfig: animationConfig disabled is true when passed on load",
+      "location": null,
+      "status": "passed",
+      "title": "animationConfig: animationConfig disabled is true when passed on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<world-map />",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<world-map /> rendered-html accessibility generic accessibility test suite animationConfig: animationConfig disabled is true when passed on update",
+      "location": null,
+      "status": "passed",
+      "title": "animationConfig: animationConfig disabled is true when passed on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<world-map />",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<world-map /> rendered-html accessibility generic accessibility test suite annotations: instruction elements should contain annotation description on load if annotation exists on chart",
+      "location": null,
+      "status": "passed",
+      "title": "annotations: instruction elements should contain annotation description on load if annotation exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<world-map />",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<world-map /> rendered-html accessibility generic accessibility test suite annotations: instruction elements should contain annotation description on update if annotation exists on chart",
+      "location": null,
+      "status": "passed",
+      "title": "annotations: instruction elements should contain annotation description on update if annotation exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<world-map />",
+        "rendered-html",
+        "accessibility",
         "validation",
       ],
       "failureMessages": Array [],
@@ -24431,6 +26576,30 @@ Received: [31m\\"[7m14[27mpx\\"[39m
       "location": null,
       "status": "passed",
       "title": "refer to generic results above for margin & padding tests",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<world-map />",
+        "rendered-html",
+        "annotations",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<world-map /> rendered-html annotations should pass annotation prop on load",
+      "location": null,
+      "status": "passed",
+      "title": "should pass annotation prop on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<world-map />",
+        "rendered-html",
+        "annotations",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<world-map /> rendered-html annotations should pass annotation prop on update",
+      "location": null,
+      "status": "passed",
+      "title": "should pass annotation prop on update",
     },
     Object {
       "ancestorTitles": Array [
@@ -25619,6 +27788,32 @@ Received: [31m\\"[7m14[27mpx\\"[39m
       "ancestorTitles": Array [
         "<world-map />",
         "rendered-html",
+        "tooltip",
+        "generic tooltip tests for markers",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<world-map /> rendered-html tooltip generic tooltip tests for markers dataKeyNames: if provided on load, dataKeyNames prop is used for key names across chart",
+      "location": null,
+      "status": "passed",
+      "title": "dataKeyNames: if provided on load, dataKeyNames prop is used for key names across chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<world-map />",
+        "rendered-html",
+        "tooltip",
+        "generic tooltip tests for markers",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<world-map /> rendered-html tooltip generic tooltip tests for markers dataKeyNames: if provided on update, dataKeyNames prop is used for key names across chart",
+      "location": null,
+      "status": "passed",
+      "title": "dataKeyNames: if provided on update, dataKeyNames prop is used for key names across chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<world-map />",
+        "rendered-html",
         "style",
         "colorPalette",
       ],
@@ -25785,6 +27980,20 @@ Received: [31m\\"[7m14[27mpx\\"[39m
         "path based events",
       ],
       "failureMessages": Array [],
+      "fullName": "<world-map /> rendered-html event-emitter generic event testing path based events [event] initialLoadEndEvent: event object should emit and contain uniqueID on initial load end",
+      "location": null,
+      "status": "passed",
+      "title": "[event] initialLoadEndEvent: event object should emit and contain uniqueID on initial load end",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<world-map />",
+        "rendered-html",
+        "event-emitter",
+        "generic event testing",
+        "path based events",
+      ],
+      "failureMessages": Array [],
       "fullName": "<world-map /> rendered-html event-emitter generic event testing path based events [event] drawStartEvent: event object should emit and contain uniqueID on initial load",
       "location": null,
       "status": "passed",
@@ -25887,6 +28096,20 @@ Received: [31m\\"[7m14[27mpx\\"[39m
       "location": null,
       "status": "passed",
       "title": "[event] initialLoadEvent: event object should emit and contain uniqueID on initial load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<world-map />",
+        "rendered-html",
+        "event-emitter",
+        "generic event testing",
+        "marker based events",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<world-map /> rendered-html event-emitter generic event testing marker based events [event] initialLoadEndEvent: event object should emit and contain uniqueID on initial load end",
+      "location": null,
+      "status": "passed",
+      "title": "[event] initialLoadEndEvent: event object should emit and contain uniqueID on initial load end",
     },
     Object {
       "ancestorTitles": Array [

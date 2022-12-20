@@ -40,7 +40,11 @@ exports[`<dumbbell-plot> rendered-html accessibility generic accessibility test 
         <tr class="vcc-ki-tr">
           <th class="vcc-ki-td" scope="row">
             <kbd>
-              Esc
+              Shift
+            </kbd>
+            +
+            <kbd>
+              Enter
             </kbd>
             on a group or dumbbell.
           </th>
@@ -100,6 +104,17 @@ exports[`<dumbbell-plot> rendered-html accessibility generic accessibility test 
             No effect on this chart.
           </td>
         </tr>
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Esc
+            </kbd>
+            at any time.
+          </th>
+          <td class="vcc-ki-td">
+            Dismiss the tooltip.
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
@@ -146,7 +161,11 @@ exports[`<dumbbell-plot> rendered-html accessibility generic accessibility test 
         <tr class="vcc-ki-tr">
           <th class="vcc-ki-td" scope="row">
             <kbd>
-              Esc
+              Shift
+            </kbd>
+            +
+            <kbd>
+              Enter
             </kbd>
             on a group or dumbbell.
           </th>
@@ -206,6 +225,17 @@ exports[`<dumbbell-plot> rendered-html accessibility generic accessibility test 
             No effect on this chart.
           </td>
         </tr>
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Esc
+            </kbd>
+            at any time.
+          </th>
+          <td class="vcc-ki-td">
+            Dismiss the tooltip.
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
@@ -218,12 +248,14 @@ exports[`<dumbbell-plot> rendered-html annotations should pass annotation prop 1
 Array [
   <g aria-hidden="true" class="vcl-annotation-group" data-testid="annotation-group" focusable="false" role="presentation">
   <g class="annotations">
-    <g class="annotation">
-      <g class="annotation-connector"></g>
+    <g class="annotation dumbbell-annotation label" transform="translate(0, 82.27523135146653)">
+      <g class="annotation-connector">
+        <path class="connector" d="M0,0LNaN,1.1647886269699228LNaN,-19.037501368174134LNaN,-18.373405187227803LNaN,-25.396669328385656LNaN,60.5243803856993LNaN,24.697911958797505LNaN,-31.55657325392962LNaN,-21.896866388508798LNaN,-38.22040137176512LNaN,-33.26388831726067LNaN,-56.429077505312705" fill="none" stroke="#226092"></path>
+      </g>
       <g class="annotation-subject"></g>
-      <g class="annotation-note">
-        <g class="annotation-note-content">
-          <rect class="annotation-note-bg"></rect>
+      <g class="annotation-note" transform="translate(NaN, -56.429077505312705)">
+        <g class="annotation-note-content" transform="translate(-5, -13)">
+          <rect class="annotation-note-bg" fill="white" fill-opacity="0" height="10" width="10" x="0" y="0"></rect>
           <text class="annotation-note-label" dx="0" fill="#226092" y="0">
             <tspan dy="0.8em" x="0"></tspan>
           </text>
@@ -231,7 +263,21 @@ Array [
         </g>
       </g>
     </g>
-    <g class="annotation"></g>
+    <g class="annotation dumbbell-annotation label" transform="translate(0, 112.7200602806407)">
+      <g class="annotation-connector">
+        <path class="connector" d="M0,0LNaN,53.75131132281618LNaN,88.90325574435244LNaN,28.67769406695041LNaN,60.402394017468765LNaN,-25.274682960155133LNaN,-66.63657482872497LNaN,4.4236791169125524LNaN,36.225079749005516LNaN,53.11408541575733LNaN,-5.586771108920516LNaN,26.602274119707744" fill="none" stroke="catecategorical_grey"></path>
+      </g>
+      <g class="annotation-subject"></g>
+      <g class="annotation-note" transform="translate(NaN, 26.602274119707744)">
+        <g class="annotation-note-content" transform="translate(-5, 3)">
+          <rect class="annotation-note-bg" fill="white" fill-opacity="0" height="10" width="10" x="0" y="0"></rect>
+          <text class="annotation-note-label" dx="0" fill="catecategorical_grey" y="0">
+            <tspan dy="0.8em" x="0"></tspan>
+          </text>
+          <text class="annotation-note-title"></text>
+        </g>
+      </g>
+    </g>
   </g>
 </g>,
 ]
@@ -975,7 +1021,7 @@ exports[`<dumbbell-plot> rendered-html render should render with minimal props[d
         <p style="margin: 0;"></p>
       </div>
       <data-table>
-        <div class="visa-viz-data-table-outer-container">
+        <div class="visa-viz-data-table-outer-container" data-testid="data-table-outer-container">
           <div class="visa-viz-button-wrapper" style="padding-bottom: 0px;">
             <button aria-expanded="false" aria-label="display data table" class="vcc-btn-icon vcc-btn-icon--light-tiny visa-viz-data-table-button" id="visa-viz-data-table-button-unique-d-plot" role="button" tabindex="0" type="button" style="transform: translate(21.5px,
                 -40px);">
@@ -995,7 +1041,7 @@ exports[`<dumbbell-plot> rendered-html render should render with minimal props[d
               </symbol>
             </svg>
           </div>
-          <div class="visa-viz-data-table-container" id="visa-viz-data-table-container-unique-d-plot"></div>
+          <div class="visa-viz-data-table-container" data-testid="data-table-container" id="visa-viz-data-table-container-unique-d-plot"></div>
         </div>
       </data-table>
     </div>

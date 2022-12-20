@@ -10,7 +10,7 @@ import { DumbbellPlot } from './dumbbell-plot';
 import { DumbbellPlotDefaultValues } from './dumbbell-plot-default-values';
 import { scalePoint, scaleLinear, scaleTime } from 'd3-scale';
 import { timeMonth } from 'd3-time';
-import { rgb } from 'd3-color';
+// import { rgb } from 'd3-color'; // this code is commented out now
 // we need to bring in our nested components as well, was required to bring in the source vs dist folder to get it to mount
 import { KeyboardInstructions } from '../../../node_modules/@visa/keyboard-instructions/src/components/keyboard-instructions/keyboard-instructions';
 import { DataTable } from '../../../node_modules/@visa/visa-charts-data-table/src/components/data-table/data-table';
@@ -18,7 +18,7 @@ import { DataTable } from '../../../node_modules/@visa/visa-charts-data-table/sr
 import Utils from '@visa/visa-charts-utils';
 import UtilsDev from '@visa/visa-charts-utils-dev';
 
-const { formatStats, getColors, roundTo, getContrastingStroke, getAccessibleStrokes, ensureTextContrast } = Utils;
+const { formatStats, getColors, roundTo, getContrastingStroke, ensureTextContrast } = Utils;
 
 const {
   asyncForEach,
@@ -258,11 +258,11 @@ describe('<dumbbell-plot>', () => {
           //   nextTestSelector: '[data-testid=bar][data-id=bar-Apr-17]',
           //   keyDownObject: { key: 'Enter', code: 'Enter', keyCode: 13 }
           // },
-          accessibility_keyboard_nav_group_esc_exit: {
-            name: 'keyboard nav: group - escape will exit group',
+          accessibility_keyboard_nav_group_shift_enter_exit: {
+            name: 'keyboard nav: group - shift+enter will exit group',
             testSelector: '[data-testid=line][data-id=line-Jan-2016]',
             nextTestSelector: '[data-testid=dumbbell-group]',
-            keyDownObject: { key: 'Escape', code: 'Escape', keyCode: 27 },
+            keyDownObject: { key: 'Enter', code: 'Enter', keyCode: 13, shiftKey: true },
             testProps: {
               selectorAriaLabel:
                 'category CatA. value 7.7b. category CatB. value 6.6b. Difference 1.1b. Dumbbell 1 of 12.',
@@ -328,7 +328,7 @@ describe('<dumbbell-plot>', () => {
             ...tempTestProps,
             geometryType: 'Dumbbell',
             // we will need to udpate the below when we enable the dumbbell focus indicator test
-            geometryPlacementAttributes: ['x', 'y', 'height', 'width'],
+            geometryPlacementAttributes: [],
             geometryAdjustmentValues: [
               { f: 'x', b: 7, w: 3, s: -1 },
               { f: 'y', b: 7, w: 3, s: -1 },
@@ -408,21 +408,19 @@ describe('<dumbbell-plot>', () => {
                   accessibilityTestMarks[keyboardTest].keyDownObject
                 ));
             });
-            // } else if (
-            //   // these accessibility tests need a group accessor for bar-chart
-            //   test === 'accessibility_categorical_textures_created_by_default' ||
-            //   test === 'accessibility_group_aria_label_add_update' ||
-            //   test === 'accessibility_group_aria_label_remove_update'
-            // ) {
-            //   it(`${unitTestAccessibility[test].prop}: ${unitTestAccessibility[test].name}`, () =>
-            //     unitTestAccessibility[test].testFunc(
-            //       component,
-            //       page,
-            //       { ...innerTestProps, groupAccessor: 'cat' },
-            //       innerTestSelector,
-            //       innerNextTestSelector
-            //     ));
-            //   // update this test to check out just one of them
+          } else if (
+            // these accessibility tests need a group accessor for bar-chart
+            test === 'accessibility_keyboard_nav_tooltip_esc_hide'
+          ) {
+            // for the tooltip we need to test against the data label
+            it(`${unitTestAccessibility[test].prop}: ${unitTestAccessibility[test].name}`, () =>
+              unitTestAccessibility[test].testFunc(
+                component,
+                page,
+                innerTestProps,
+                '[data-testid=dataLabel][data-id="label-Jan-2016-CatA"]',
+                innerNextTestSelector
+              ));
             // skipping a few tests that we have not finished adjusting for dumbbell yet.
           } else if (
             test === 'accessibility_focus_marker_style' ||
@@ -632,7 +630,7 @@ describe('<dumbbell-plot>', () => {
 
     // the bbox call in d3-svg-annotations breaks due to the mockSVGElement not
     // having the bbox function available on it.
-    describe.skip('annotations', () => {
+    describe('annotations', () => {
       // TODO: need to add more precise test case for annotations label and text
       it('should pass annotation prop', async () => {
         // ARRANGE
@@ -1602,6 +1600,7 @@ describe('<dumbbell-plot>', () => {
         describe('generic tooltip tests', () => {
           Object.keys(unitTestTooltip).forEach(test => {
             const innerTestSelector = '[data-testid=dataLabel][data-id="label-North America-CatA"]';
+            const dataKeyTestSelector = '[data-testid=line][data-id=line-CEMEA]';
             const innerTooltipProps = {
               tooltip_tooltipLabel_custom_load: tooltip1,
               tooltip_tooltipLabel_custom_update: tooltip1,
@@ -1615,23 +1614,48 @@ describe('<dumbbell-plot>', () => {
               tooltip_tooltipLabel_custom_format_load:
                 '<p style="margin: 0;">Testing123:<b>North America</b><br>Count:<b>$3.5b</b><br></p>',
               tooltip_tooltipLabel_custom_format_update:
-                '<p style="margin: 0;">Testing123:<b>North America</b><br>Count:<b>$3.5b</b><br></p>'
+                '<p style="margin: 0;">Testing123:<b>North America</b><br>Count:<b>$3.5b</b><br></p>',
+              dataKeyNames_custom_on_load:
+                '<p style="margin: 0;"><b>CEMEA</b><br>Difference:<b>3b<br></b>CatA:<b>7.6b</b><br>CatB:<b>4.6b</b></p>',
+              dataKeyNames_custom_on_update:
+                '<p style="margin: 0;"><b>CEMEA</b><br>Difference:<b>3b<br></b>CatA:<b>7.6b</b><br>CatB:<b>4.6b</b></p>'
+            };
+            const innerAriaContent = {
+              dataKeyNames_custom_on_load:
+                'Test Category CatA. value 7.6b. Test Category CatB. value 4.6b. Difference 3b. Dumbbell 2 of 4.',
+              dataKeyNames_custom_on_update:
+                'Test Category CatA. value 7.6b. Test Category CatB. value 4.6b. Difference 3b. Dumbbell 2 of 4.'
             };
             const innerTestProps = {
               ...commonInteractionProps,
               ...unitTestTooltip[test].testProps,
               ...innerTooltipProps[test]
             };
-            // we have to handle clickEvent separately due to this.zooming boolean in circle-packing load
-
-            it(`${unitTestTooltip[test].prop}: ${unitTestTooltip[test].name}`, () =>
-              unitTestTooltip[test].testFunc(
-                component,
-                page,
-                innerTestProps,
-                innerTestSelector,
-                innerTooltipContent[test]
-              ));
+            const customDataKeyNames = { dataKeyNames: { category: 'Test Category' } };
+            if (test === 'dataKeyNames_custom_on_load' || test === 'dataKeyNames_custom_on_update') {
+              it(`${unitTestTooltip[test].prop}: ${unitTestTooltip[test].name}`, () =>
+                unitTestTooltip[test].testFunc(
+                  component,
+                  page,
+                  {
+                    ...innerTestProps,
+                    ...customDataKeyNames,
+                    accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true },
+                    selectorAriaLabel: innerAriaContent[test]
+                  },
+                  dataKeyTestSelector,
+                  innerTooltipContent[test]
+                ));
+            } else {
+              it(`${unitTestTooltip[test].prop}: ${unitTestTooltip[test].name}`, () =>
+                unitTestTooltip[test].testFunc(
+                  component,
+                  page,
+                  innerTestProps,
+                  innerTestSelector,
+                  innerTooltipContent[test]
+                ));
+            }
           });
         });
       });
