@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -300,6 +300,12 @@ export class AppD3Map {
 
   @Element()
   appEl: HTMLElement;
+  dataKeyNames: any = {
+    Type: 'Letter',
+    Name: 'Country',
+    'Country Code': 'C Code',
+    'Birth Rate': 'Rate'
+  };
   legend: any = {
     visible: true,
     interactive: true,
@@ -659,10 +665,11 @@ export class AppD3Map {
             onClickEvent={d => this.onClickHandler(d)}
             onHoverEvent={d => this.onHoverHandler(d)}
             onMouseOutEvent={() => this.onHoverHandler('')}
-            onInitialLoadEvent={e => console.log('load event', e.detail, e)}
-            onDrawStartEvent={e => console.log('draw start event', e.detail, e)}
-            onDrawEndEvent={e => console.log('draw end event', e.detail, e)}
-            onTransitionEndEvent={e => console.log('transition event', e.detail, e)}
+            // onInitialLoadEvent={e => console.log('load event', e.detail, e)}
+            // onInitialLoadEndEvent={e => console.log('load end event', e.detail, e)}
+            // onDrawStartEvent={e => console.log('draw start event', e.detail, e)}
+            // onDrawEndEvent={e => console.log('draw end event', e.detail, e)}
+            // onTransitionEndEvent={e => console.log('transition event', e.detail, e)}
             showGridlines
             // maxValueOverride={this.propChange}
             colorPalette={this.colorPalette}
@@ -676,6 +683,7 @@ export class AppD3Map {
             hoverOpacity={0.8}
             legend={this.legend}
             dataLabel={this.dataLabel}
+            dataKeyNames={this.dataKeyNames}
             clickStyle={this.clickStyle}
             // hoverStyle={this.hoverStyle}
             countryStyle={this.countryStyle}

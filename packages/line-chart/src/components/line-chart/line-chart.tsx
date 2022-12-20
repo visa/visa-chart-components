@@ -97,6 +97,7 @@ export class LineChart {
   @Event() hoverEvent: EventEmitter;
   @Event() mouseOutEvent: EventEmitter;
   @Event() initialLoadEvent: EventEmitter;
+  @Event() initialLoadEndEvent: EventEmitter;
   @Event() drawStartEvent: EventEmitter;
   @Event() drawEndEvent: EventEmitter;
   @Event() transitionEndEvent: EventEmitter;
@@ -138,6 +139,7 @@ export class LineChart {
 
   // Data label (5/7)
   @Prop({ mutable: true }) dataLabel: IDataLabelType = LineChartDefaultValues.dataLabel;
+  @Prop({ mutable: true }) dataKeyNames: object;
   @Prop({ mutable: true }) showTooltip: boolean = LineChartDefaultValues.showTooltip;
   @Prop({ mutable: true }) tooltipLabel: ITooltipLabelType = LineChartDefaultValues.tooltipLabel;
   @Prop({ mutable: true }) accessibility: IAccessibilityType = LineChartDefaultValues.accessibility;
@@ -675,6 +677,8 @@ export class LineChart {
   @Watch('tooltipLabel')
   tooltipLabelWatcher(_newVal, _oldVal) {
     this.shouldUpdateTableData = true;
+    this.shouldSetParentSVGAccessibility = true;
+    this.shouldSetGeometryAriaLabels = true;
   }
 
   @Watch('showTooltip')
@@ -802,6 +806,7 @@ export class LineChart {
   annotationsWatcher(_newVal, _oldVal) {
     this.shouldValidate = true;
     this.shouldUpdateAnnotations = true;
+    this.shouldSetAnnotationAccessibility = true;
   }
 
   @Watch('maxValueOverride')
@@ -883,6 +888,17 @@ export class LineChart {
     this.shouldUpdateColors = true;
     this.shouldBindInteractivity = true;
     this.shouldUpdateCursor = true;
+  }
+
+  @Watch('dataKeyNames')
+  dataKeyNamesWatcher(_newVal, _oldVal) {
+    this.shouldUpdateXAxis = true;
+    this.shouldSetXAxisAccessibility = true;
+    this.shouldUpdateYAxis = true;
+    this.shouldSetYAxisAccessibility = true;
+    this.shouldSetParentSVGAccessibility = true;
+    this.shouldSetGroupAccessibilityLabel = true;
+    this.shouldSetGeometryAriaLabels = true;
   }
 
   @Watch('suppressEvents')
@@ -1005,7 +1021,7 @@ export class LineChart {
       this.onChangeHandler();
       this.defaults = false;
       resolve('component did load');
-    });
+    }).then(() => this.initialLoadEndEvent.emit({ chartID: this.chartID }));
   }
 
   componentDidUpdate() {
@@ -1450,9 +1466,22 @@ export class LineChart {
     this.colorArr = adjustedColors;
   }
 
-  setTableData() {
+  innerScopeDataKeys() {
     // generate scoped and formatted data for data-table component
-    const keys = scopeDataKeys(this, chartAccessors, 'line-chart');
+    // we also scope singleAccessor array in chartAccessors based on what is actually in the data
+    const innerChartSingleAccessors = [];
+    chartAccessors.singleAccessors.forEach(accessor => {
+      if (this[accessor] && min(this.data, d => d[this[accessor]]) !== undefined) {
+        innerChartSingleAccessors.push(accessor);
+      }
+    });
+    const innerChartAccessors = { ...chartAccessors, singleAccessors: innerChartSingleAccessors };
+    return scopeDataKeys(this, innerChartAccessors, 'line-chart');
+  }
+
+  setTableData() {
+    const keys = this.innerScopeDataKeys();
+
     this.tableData = getScopedData(this.data, keys);
     this.tableColumns = Object.keys(keys);
   }
@@ -1673,6 +1702,13 @@ export class LineChart {
   }
 
   drawXAxis() {
+    const axisLabel =
+      this.xAxis.label || this.xAxis.label === ''
+        ? this.xAxis.label
+        : this.dataKeyNames && this.dataKeyNames[this.ordinalAccessor]
+        ? this.dataKeyNames[this.ordinalAccessor]
+        : this.xAxis.label;
+
     const bandWidth = (this.innerPaddedWidth / this.nest[0].values.length) * 0.7;
     drawAxis({
       root: this.rootG,
@@ -1684,7 +1720,7 @@ export class LineChart {
       dateFormat: this.xAxis.format,
       format: this.xAxis.format,
       tickInterval: this.xAxis.tickInterval,
-      label: this.xAxis.label,
+      label: axisLabel, // this.xAxis.label,
       padding: this.padding,
       hide: !this.xAxis.visible,
       duration: this.duration
@@ -1692,6 +1728,13 @@ export class LineChart {
   }
 
   drawYAxis() {
+    const axisLabel =
+      this.yAxis.label && this.yAxis.label !== ''
+        ? this.yAxis.label
+        : this.dataKeyNames && this.dataKeyNames[this.valueAccessor]
+        ? this.dataKeyNames[this.valueAccessor]
+        : this.yAxis.label;
+
     drawAxis({
       root: this.rootG,
       height: this.innerPaddedHeight,
@@ -1701,7 +1744,7 @@ export class LineChart {
       wrapLabel: this.wrapLabel ? this.padding.left : '',
       format: this.yAxis.format,
       tickInterval: this.yAxis.tickInterval,
-      label: this.yAxis.label,
+      label: axisLabel, // this.yAxis.label,
       padding: this.padding,
       hide: !this.yAxis.visible,
       duration: this.duration
@@ -1709,20 +1752,34 @@ export class LineChart {
   }
 
   setXAxisAccessibility() {
+    const axisLabel =
+      this.xAxis.label || this.xAxis.label === ''
+        ? this.xAxis.label
+        : this.dataKeyNames && this.dataKeyNames[this.ordinalAccessor]
+        ? this.dataKeyNames[this.ordinalAccessor]
+        : this.xAxis.label;
+
     setAccessXAxis({
       rootEle: this.lineChartEl,
       hasXAxis: this.xAxis ? this.xAxis.visible : false,
       xAxis: this.x,
-      xAxisLabel: this.xAxis.label ? this.xAxis.label : ''
+      xAxisLabel: axisLabel ? axisLabel : ''
     });
   }
 
   setYAxisAccessibility() {
+    const axisLabel =
+      this.yAxis.label && this.yAxis.label !== ''
+        ? this.yAxis.label
+        : this.dataKeyNames && this.dataKeyNames[this.valueAccessor]
+        ? this.dataKeyNames[this.valueAccessor]
+        : this.yAxis.label;
+
     setAccessYAxis({
       rootEle: this.lineChartEl,
       hasYAxis: this.yAxis ? this.yAxis.visible : false,
       yAxis: this.y,
-      yAxisLabel: this.yAxis.label ? this.yAxis.label : ''
+      yAxisLabel: axisLabel ? axisLabel : ''
     });
   }
 
@@ -2360,6 +2417,8 @@ export class LineChart {
         ? ''
         : this.labelDetails.label
         ? this.labelDetails.label[i]
+        : !d.key || d.key === 'undefined'
+        ? ''
         : d.key
     );
 
@@ -3295,6 +3354,13 @@ export class LineChart {
   }
 
   drawLegendElements() {
+    // if we have default series access and it is not in the data don't show legend
+    const noSeriesAccessor =
+      this.seriesAccessor === LineChartDefaultValues.seriesAccessor &&
+      this.nest &&
+      this.nest.length === 1 &&
+      this.nest[0].key === 'undefined';
+
     drawLegend({
       root: this.legendG,
       uniqueID: this.chartID,
@@ -3310,7 +3376,7 @@ export class LineChart {
       fontSize: 16,
       data: this.nest,
       label: this.legend.labels,
-      hide: !(this.legend.visible || !this.legend),
+      hide: !((this.legend.visible && !noSeriesAccessor) || !this.legend || !this.seriesAccessor),
       interactionKeys: this.innerInteractionKeys,
       groupAccessor: this.seriesAccessor,
       hoverHighlight: this.hoverHighlight,
@@ -3466,7 +3532,8 @@ export class LineChart {
       uniqueID: this.chartID,
       geomType: 'point',
       includeKeyNames: this.accessibility.includeDataKeyNames,
-      dataKeys: scopeDataKeys(this, chartAccessors, 'line-chart'),
+      dataKeys: this.innerScopeDataKeys(),
+      dataKeyNames: this.dataKeyNames,
       groupAccessor: this.seriesAccessor,
       groupName: 'line',
       disableKeyNav:
@@ -3486,13 +3553,14 @@ export class LineChart {
 
   setGeometryAriaLabels() {
     // this adds an ARIA label to each geom (a description read by screen readers)
-    const keys = scopeDataKeys(this, chartAccessors, 'line-chart');
+    const keys = this.innerScopeDataKeys();
     this.updateDots.each((_d, i, n) => {
       setElementFocusHandler({
         node: n[i],
         geomType: 'point',
         includeKeyNames: this.accessibility.includeDataKeyNames,
         dataKeys: keys,
+        dataKeyNames: this.dataKeyNames,
         groupName: 'line',
         uniqueID: this.chartID,
         disableKeyNav:
@@ -3615,6 +3683,7 @@ export class LineChart {
       xAxis: this.xAxis,
       yAxis: this.yAxis,
       dataLabel: this.dataLabel,
+      dataKeyNames: this.dataKeyNames,
       ordinalAccessor: this.ordinalAccessor,
       valueAccessor: this.valueAccessor,
       groupAccessor: this.seriesAccessor,
@@ -3703,6 +3772,7 @@ export class LineChart {
             uniqueID={this.chartID}
             isCompact
             tableColumns={this.tableColumns}
+            dataKeyNames={this.dataKeyNames}
             data={this.tableData}
             padding={this.padding}
             margin={this.margin}

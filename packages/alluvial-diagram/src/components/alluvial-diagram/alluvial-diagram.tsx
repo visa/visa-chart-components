@@ -89,6 +89,7 @@ export class AlluvialDiagram {
   @Event() hoverEvent: EventEmitter;
   @Event() mouseOutEvent: EventEmitter;
   @Event() initialLoadEvent: EventEmitter;
+  @Event() initialLoadEndEvent: EventEmitter;
   @Event() drawStartEvent: EventEmitter;
   @Event() drawEndEvent: EventEmitter;
   @Event() transitionEndEvent: EventEmitter;
@@ -125,6 +126,7 @@ export class AlluvialDiagram {
 
   // Data label (5/7)
   @Prop({ mutable: true }) dataLabel: IDataLabelType = AlluvialDiagramDefaultValues.dataLabel;
+  @Prop({ mutable: true }) dataKeyNames: object;
   @Prop({ mutable: true }) showTooltip: boolean = AlluvialDiagramDefaultValues.showTooltip;
   @Prop({ mutable: true }) tooltipLabel: ITooltipLabelType = AlluvialDiagramDefaultValues.tooltipLabel;
   @Prop({ mutable: true }) accessibility: IAccessibilityType = AlluvialDiagramDefaultValues.accessibility;
@@ -191,7 +193,6 @@ export class AlluvialDiagram {
   innerNodeInteractionKeys: any;
   innerLinkInteractionKeys: any;
   innerInteractionKeys: any = [];
-  interactionKeysWithObjs: any;
   colorArr: any;
   noLinksLeftPadding: any;
   widthAllNodesNoLinks: any;
@@ -598,6 +599,8 @@ export class AlluvialDiagram {
   @Watch('tooltipLabel')
   tooltipLabelWatcher(_newVal, _oldVal) {
     this.shouldUpdateTableData = true;
+    this.shouldSetParentSVGAccessibility = true;
+    this.shouldSetGeometryAriaLabels = true;
   }
 
   @Watch('showTooltip')
@@ -743,6 +746,13 @@ export class AlluvialDiagram {
     this.shouldUpdateCursor = true;
   }
 
+  @Watch('dataKeyNames')
+  dataKeyNamesWatcher(_newVal, _oldVal) {
+    this.shouldSetParentSVGAccessibility = true;
+    this.shouldSetGroupAccessibilityLabel = true;
+    this.shouldSetGeometryAriaLabels = true;
+  }
+
   @Watch('suppressEvents')
   suppressWatcher(_newVal, _oldVal) {
     this.shouldBindInteractivity = true;
@@ -851,7 +861,7 @@ export class AlluvialDiagram {
       this.defaults = false;
       hideNonessentialGroups(this.root.node(), null);
       resolve('component did load');
-    });
+    }).then(() => this.initialLoadEndEvent.emit({ chartID: this.chartID }));
   }
 
   componentDidUpdate() {
@@ -1077,7 +1087,6 @@ export class AlluvialDiagram {
   }
 
   validateInteractionKeys() {
-    this.interactionKeysWithObjs = [];
     this.innerInteractionKeys = [];
 
     this.innerInteractionKeys =
@@ -1778,7 +1787,6 @@ export class AlluvialDiagram {
     //         this.hoverHighlight,
     //         this.clickHighlight,
     //         this.innerInteractionKeys,
-    //         this.interactionKeysWithObjs,
     //         this.nodeIDAccessor
     //       ) >= 1
     //   );
@@ -1793,7 +1801,6 @@ export class AlluvialDiagram {
     //         this.hoverHighlight,
     //         this.clickHighlight,
     //         this.innerInteractionKeys,
-    //         this.interactionKeysWithObjs,
     //         this.nodeIDAccessor
     //       ) >= 1
     //   );
@@ -2552,6 +2559,7 @@ export class AlluvialDiagram {
       geomType: 'link',
       includeKeyNames: this.accessibility.includeDataKeyNames,
       dataKeys: keys,
+      dataKeyNames: this.dataKeyNames,
       groupAccessor: this.innerIDAccessor,
       groupKeys: ['value'],
       groupName: 'node',
@@ -2579,6 +2587,7 @@ export class AlluvialDiagram {
         geomType: 'link',
         includeKeyNames: this.accessibility.includeDataKeyNames,
         dataKeys: keys,
+        dataKeyNames: this.dataKeyNames,
         groupName: 'node',
         uniqueID: this.chartID,
         disableKeyNav:
@@ -2714,6 +2723,7 @@ export class AlluvialDiagram {
       event: evt,
       isToShow,
       tooltipLabel: this.tooltipLabel,
+      dataKeyNames: this.dataKeyNames,
       groupAccessor: this.groupAccessor,
       xAccessor: this.sourceAccessor, // map source to x for default tooltip logic
       yAccessor: this.targetAccessor, // map source to y for default tooltip logic
@@ -2821,6 +2831,7 @@ export class AlluvialDiagram {
               uniqueID={this.chartID}
               isCompact
               tableColumns={this.tableColumns}
+              dataKeyNames={this.dataKeyNames}
               data={this.tableData}
               secondaryData={this.secondaryTableData}
               secondaryTableColumns={this.secondaryTableColumns}

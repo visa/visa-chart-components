@@ -310,6 +310,7 @@ export class AppBarChart {
           ordinalAccessor={'country'}
           valueAccessor={'value'}
           groupAccessor={this.groupAccessor}
+          dataKeyNames={this.keyNames}
           sortOrder={'desc'}
           dataLabel={{ visible: true, placement: 'bottom', labelAccessor: 'value', format: '0.[a]' }}
           tooltipLabel={{ labelAccessor: ['country', 'value'], labelTitle: ['a', 'b'], format: ['', '0.[a]'] }}

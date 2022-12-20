@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -1184,6 +1184,10 @@ export class AppHeatMap {
 
   @Element()
   appEl: HTMLElement;
+  dataKeyNames: any = {
+    category: 'Grouping',
+    value: 'Rank'
+  };
 
   onClickFunc(d) {
     let index = -1;
@@ -1461,6 +1465,7 @@ export class AppHeatMap {
           cursor={'pointer'}
           data={this.data}
           dataLabel={this.dataLabel}
+          dataKeyNames={this.dataKeyNames}
           height={400}
           hideAxisPath={true}
           legend={this.legend}
@@ -1469,7 +1474,7 @@ export class AppHeatMap {
           padding={this.padding}
           subTitle={'Interaction Style'}
           showTooltip={true}
-          tooltipLabel={this.label}
+          // tooltipLabel={this.label}
           width={800}
           maxValueOverride={50}
           valueAccessor={this.valueAccessor}
@@ -1488,10 +1493,11 @@ export class AppHeatMap {
           onClickEvent={d => this.onClickFunc(d)}
           onHoverEvent={d => this.onHoverFunc(d)}
           onMouseOutEvent={() => this.onMouseOut()}
-          onInitialLoadEvent={e => e} // console.log('load event', e.detail, e)}
-          onDrawStartEvent={e => e} // console.log('draw start event', e.detail, e)}
-          onDrawEndEvent={e => e} // console.log('draw end event', e.detail, e)}
-          onTransitionEndEvent={e => e} // console.log('transition event', e.detail, e)}
+          // onInitialLoadEvent={e => e} // console.log('load event', e.detail, e)}
+          // onInitialLoadEndEvent={e => console.log('load end event', e.detail, e)}
+          // onDrawStartEvent={e => e} // console.log('draw start event', e.detail, e)}
+          // onDrawEndEvent={e => e} // console.log('draw end event', e.detail, e)}
+          // onTransitionEndEvent={e => e} // console.log('transition event', e.detail, e)}
         />
       </div>
     );

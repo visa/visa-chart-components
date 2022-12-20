@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -8,6 +8,10 @@
 import { Component, State, Element, h } from '@stencil/core';
 import '@visa/visa-charts-data-table';
 import '@visa/keyboard-instructions';
+import { select } from 'd3-selection';
+import Utils from '@visa/visa-charts-utils';
+
+const { formatStats } = Utils;
 @Component({
   tag: 'app-pie-chart',
   styleUrl: 'app-pie-chart.scss'
@@ -22,10 +26,10 @@ export class AppPieChart {
   @State() width: any = 500;
   @State() height: any = 500;
   @State() padding: any = {
-    top: 50,
-    left: 50,
-    right: 50,
-    bottom: 50
+    top: 100,
+    left: 100,
+    right: 100,
+    bottom: 100
   };
   @State() interactionKeys: any = ['label'];
   @State() clickElement: any = [
@@ -35,7 +39,7 @@ export class AppPieChart {
   @State() edge: any = true;
   @State() valueAccessor: any = 'value';
   @State() refData: any;
-  @State() edgeline: any = true;
+  @State() edgeline: any = false;
   @State() access: any = {
     includeDataKeyNames: true,
     longDescription:
@@ -121,20 +125,25 @@ export class AppPieChart {
     ]
   ];
   dataLabel: any = {
-    visible: true,
-    placement: 'inside',
+    visible: false,
+    placement: 'outside',
     labelAccessor: 'value',
     format: '$0[.][0]a',
-    collisionHideOnly: true
+    collisionHideOnly: false
   }; // format: 'normalized' };
   ref = [{ label: 'PY Share', value: '3396000' }];
   style = { color: 'supp_purple' };
 
   @Element()
   appEl: HTMLElement;
+  dataKeyNames: any = {
+    label: 'Pie Slice',
+    value: 'Pie Value'
+  };
 
   componentWillLoad() {
     this.data = this.dataStorage[this.stateTrigger];
+    // this.placeAnnotationLabels();
   }
   // componentWillUpdate() {
   //   // console.log('will update', this.clickElement);
@@ -255,11 +264,62 @@ export class AppPieChart {
   toggleAnimations() {
     this.animations = { disabled: !this.animations.disabled };
   }
+  placeAnnotationLabels() {
+    console.log('placeannotations');
+    const pieSlices = select('.pie-dataLabel-group').selectAll('.pie-dataLabel-highlight');
+    console.log('pieSlices', pieSlices.size(), pieSlices);
+    const annotations = [];
+    const quadrantHash = { 1: [], 2: [], 3: [], 4: [] };
+    const quadrantStarts = {
+      1: {
+        x: this.width - 50 - this.padding.left - this.padding.right,
+        y: -(this.height - 50) + this.padding.top + this.padding.bottom
+      },
+      2: { x: this.width - 100, y: this.height - 100 },
+      3: { x: -50, y: 50 },
+      4: { x: 0, y: 0 }
+    };
+    console.log('we are placing annotations', pieSlices, this.data, this.annotations);
+
+    pieSlices.each((d, i, n) => {
+      const me = select(n[i]);
+      const quadrant =
+        d.endAngle - d.startAngle < Math.PI / 2
+          ? 1
+          : d.endAngle - d.startAngle < Math.PI
+          ? 2
+          : d.endAngle - d.startAngle < Math.PI * 1.5
+          ? 3
+          : 4;
+      quadrantHash[quadrant].push({ ...d, quadrant });
+
+      console.log('checking slice', n[i], d, quadrant, quadrantStarts[quadrant], quadrantHash[quadrant]);
+      annotations.push({
+        note: {
+          label: formatStats(d[this.valueAccessor], '0.0a'),
+          title: d['label'],
+          lineType: 'vertical',
+          align: 'middle'
+        },
+        connector: { type: 'elbow', end: 'dot', endScale: 1.5 },
+        data: d,
+        x: +me.attr('data-x'),
+        y: +me.attr('data-y'),
+        color: me.attr('fill'),
+        nx: quadrantStarts[quadrant].x - 100,
+        ny: quadrantStarts[quadrant].y + quadrantHash[quadrant].length * 50
+      });
+    });
+
+    this.annotations = [...annotations];
+    console.log('we are placing annotations', this.data, this.annotations);
+  }
 
   render() {
     console.log('loaded!', this.chartUpdates);
     this.data = this.dataStorage[this.stateTrigger];
     this.refData = this.refDataStorage[this.refStateTrigger];
+    // this.placeAnnotationLabels();
     return (
       <div>
         <button
@@ -357,8 +417,8 @@ export class AppPieChart {
             valueAccessor={this.valueAccessor}
             innerRatio={0.1} // {0.0000000001}
             dataLabel={this.dataLabel}
-            labelOffset={25}
-            showLabelNote={true}
+            labelOffset={0.0000001}
+            showLabelNote={false}
             // colors={['blue','grey','brown','darkgreen','#eeeeee']}
             colorPalette={'categorical'}
             hoverOpacity={0.15}
@@ -367,7 +427,7 @@ export class AppPieChart {
             showTooltip={true}
             showPercentage={false}
             showEdgeLine={this.edgeline}
-            // annotations={this.annotations}
+            annotations={this.annotations}
             // referenceData={this.refData}
             // referenceStyle={{ color: 'supp_purple' }}
             interactionKeys={this.interactionKeys}
@@ -376,10 +436,11 @@ export class AppPieChart {
             onClickEvent={d => this.onClickFunc(d)}
             onHoverEvent={d => this.onHoverFunc(d)}
             onMouseOutEvent={() => this.onMouseOut()}
-            onInitialLoadEvent={e => e} // console.log('load event', e.detail, e)}
-            onDrawStartEvent={e => e} // console.log('draw start event', e.detail, e)}
-            onDrawEndEvent={e => e} // console.log('draw end event', e.detail, e)}
-            onTransitionEndEvent={e => e} // console.log('transition event', e.detail, e)}
+            // onInitialLoadEvent={e => console.log('load event', e.detail, e)}
+            // onInitialLoadEndEvent={e => console.log('load end event', e.detail, e)}
+            // onDrawStartEvent={e => console.log('draw start event', e.detail, e)}
+            // onDrawEndEvent={e => console.log('draw end event', e.detail, e)}
+            onTransitionEndEvent={() => this.placeAnnotationLabels()} //  console.log('transition event', e.detail, e)}
           />
         </div>
         <div>

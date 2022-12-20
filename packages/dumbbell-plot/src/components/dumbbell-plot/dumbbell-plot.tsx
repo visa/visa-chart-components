@@ -100,6 +100,7 @@ export class DumbbellPlot {
   @Event() hoverEvent: EventEmitter;
   @Event() mouseOutEvent: EventEmitter;
   @Event() initialLoadEvent: EventEmitter;
+  @Event() initialLoadEndEvent: EventEmitter;
   @Event() drawStartEvent: EventEmitter;
   @Event() drawEndEvent: EventEmitter;
   @Event() transitionEndEvent: EventEmitter;
@@ -143,6 +144,7 @@ export class DumbbellPlot {
 
   // Data label (5/7)
   @Prop({ mutable: true }) dataLabel: IDataLabelType = DumbbellPlotDefaultValues.dataLabel;
+  @Prop({ mutable: true }) dataKeyNames: object;
   @Prop({ mutable: true }) seriesLabel: ISeriesLabelType = DumbbellPlotDefaultValues.seriesLabel;
   @Prop({ mutable: true }) differenceLabel: IDifferenceLabelType = DumbbellPlotDefaultValues.differenceLabel;
   @Prop({ mutable: true }) showTooltip: boolean = DumbbellPlotDefaultValues.showTooltip;
@@ -821,6 +823,8 @@ export class DumbbellPlot {
   @Watch('tooltipLabel')
   tooltipLabelWatcher(_newVal, _oldVal) {
     this.shouldUpdateTableData = true;
+    this.shouldSetParentSVGAccessibility = true;
+    this.shouldSetGeometryAriaLabels = true;
   }
 
   @Watch('accessibility')
@@ -1039,6 +1043,17 @@ export class DumbbellPlot {
     }
   }
 
+  @Watch('dataKeyNames')
+  dataKeyNamesWatcher(_newVal, _oldVal) {
+    this.shouldUpdateXAxis = true;
+    this.shouldSetXAxisAccessibility = true;
+    this.shouldUpdateYAxis = true;
+    this.shouldSetYAxisAccessibility = true;
+    this.shouldSetParentSVGAccessibility = true;
+    this.shouldSetGroupAccessibilityLabel = true;
+    this.shouldSetGeometryAriaLabels = true;
+  }
+
   @Watch('unitTest')
   unitTestWatcher(_newVal, _oldVal) {
     this.shouldSetTestingAttributes = true;
@@ -1160,7 +1175,7 @@ export class DumbbellPlot {
       this.setGroupAccessibilityID();
       this.defaults = false;
       resolve('component did load');
-    });
+    }).then(() => this.initialLoadEndEvent.emit({ chartID: this.chartID }));
   }
 
   componentDidUpdate() {
@@ -2039,6 +2054,13 @@ export class DumbbellPlot {
   }
 
   drawXAxis() {
+    const axisLabel =
+      this.xAxis.label || this.xAxis.label === ''
+        ? this.xAxis.label
+        : this.dataKeyNames && this.dataKeyNames[this.xAccessor]
+        ? this.dataKeyNames[this.xAccessor]
+        : this.xAxis.label;
+
     const bandWidth = (this.innerPaddedWidth / this.nest.length) * 0.7;
     drawAxis({
       root: this.rootG,
@@ -2050,7 +2072,7 @@ export class DumbbellPlot {
       dateFormat: this.xAxis.format,
       format: this.xAxis.format,
       tickInterval: this.xAxis.tickInterval,
-      label: this.xAxis.label,
+      label: axisLabel, // this.xAxis.label,
       padding: this.padding,
       hide: !this.xAxis.visible,
       duration: this.duration
@@ -2058,6 +2080,13 @@ export class DumbbellPlot {
   }
 
   drawYAxis() {
+    const axisLabel =
+      this.yAxis.label && this.yAxis.label !== ''
+        ? this.yAxis.label
+        : this.dataKeyNames && this.dataKeyNames[this.yAccessor]
+        ? this.dataKeyNames[this.yAccessor]
+        : this.yAxis.label;
+
     drawAxis({
       root: this.rootG,
       height: this.innerPaddedHeight,
@@ -2067,7 +2096,7 @@ export class DumbbellPlot {
       wrapLabel: this.wrapLabel ? 100 : '',
       format: this.yAxis.format,
       tickInterval: this.yAxis.tickInterval,
-      label: this.yAxis.label,
+      label: axisLabel, // this.yAxis.label,
       padding: this.padding,
       hide: !this.yAxis.visible,
       duration: this.duration
@@ -2075,20 +2104,34 @@ export class DumbbellPlot {
   }
 
   setXAxisAccessibility() {
+    const axisLabel =
+      this.xAxis.label || this.xAxis.label === ''
+        ? this.xAxis.label
+        : this.dataKeyNames && this.dataKeyNames[this.xAccessor]
+        ? this.dataKeyNames[this.xAccessor]
+        : this.xAxis.label;
+
     setAccessXAxis({
       rootEle: this.dumbbellPlotEl,
       hasXAxis: this.xAxis ? this.xAxis.visible : false,
       xAxis: this.x ? this.x : false, // this is optional for some charts, if hasXAxis is always false
-      xAxisLabel: this.xAxis.label ? this.xAxis.label : '' // this is optional for some charts, if hasXAxis is always false
+      xAxisLabel: axisLabel ? axisLabel : '' // this is optional for some charts, if hasXAxis is always false
     });
   }
 
   setYAxisAccessibility() {
+    const axisLabel =
+      this.yAxis.label && this.yAxis.label !== ''
+        ? this.yAxis.label
+        : this.dataKeyNames && this.dataKeyNames[this.yAccessor]
+        ? this.dataKeyNames[this.yAccessor]
+        : this.yAxis.label;
+
     setAccessYAxis({
       rootEle: this.dumbbellPlotEl,
       hasYAxis: this.yAxis ? this.yAxis.visible : false,
       yAxis: this.y ? this.y : false, // this is optional for some charts, if hasXAxis is always false
-      yAxisLabel: this.yAxis.label ? this.yAxis.label : '' // this is optional for some charts, if hasXAxis is always false
+      yAxisLabel: axisLabel ? axisLabel : '' // this is optional for some charts, if hasXAxis is always false
     });
   }
 
@@ -3550,6 +3593,7 @@ export class DumbbellPlot {
       geomType: 'dumbbell',
       includeKeyNames: this.accessibility.includeDataKeyNames,
       dataKeys: keys,
+      dataKeyNames: this.dataKeyNames,
       // groupAccessor: this.groupAccessor
       // groupName: 'node',
       groupKeys: ['message'],
@@ -3578,6 +3622,7 @@ export class DumbbellPlot {
         geomType: 'dumbbell',
         includeKeyNames: this.accessibility.includeDataKeyNames,
         dataKeys: keys,
+        dataKeyNames: this.dataKeyNames,
         groupKeys: ['message'],
         nested: ['values'],
         uniqueID: this.chartID,
@@ -3703,6 +3748,7 @@ export class DumbbellPlot {
       xAxis: this.xAxis,
       yAxis: this.yAxis,
       dataLabel: this.dataLabel,
+      dataKeyNames: this.dataKeyNames,
       ordinalAccessor: this.ordinalAccessor,
       valueAccessor: this.valueAccessor,
       groupAccessor: this.seriesAccessor,
@@ -4028,9 +4074,11 @@ export class DumbbellPlot {
           <div class="dumbbell-tooltip vcl-tooltip" style={{ display: this.showTooltip ? 'block' : 'none' }} />
           <data-table
             uniqueID={this.chartID}
+            unitTest={this.unitTest}
             isCompact
             tableColumns={this.tableColumns}
             data={this.tableData}
+            dataKeyNames={this.dataKeyNames}
             padding={this.padding}
             margin={this.margin}
             hideDataTable={this.accessibility.hideDataTableButton}
