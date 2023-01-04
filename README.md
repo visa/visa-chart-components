@@ -12,7 +12,7 @@ Visa Chart Components (VCC) is provided under the [MIT license](LICENSE).
 
 To use VCC in your projects run `yarn add @visa/charts`, or you can also install a single component by running `yarn add @visa/bar-chart`. We recommend leveraging bundles if you are going to install three (3) or more specific components for your project.
 
-While we do deliver React (`@visa/charts-react`) and Angular (`@visa/charts-angular`) bundles, VCC components are compiled to standard web components, leveraging [Stencil.js](https://stenciljs.com/) and can be reused directly in many web environments and/or frameworks.
+While we do deliver React (`@visa/charts-react`) and Angular (`@visa/charts-angular`) bundles, VCC components are compiled to standard web components within (`@visa/charts`), leveraging [Stencil.js](https://stenciljs.com/) and can be reused directly in many web environments and/or frameworks.
 
 #### Bundles
 
@@ -20,7 +20,8 @@ While we do deliver React (`@visa/charts-react`) and Angular (`@visa/charts-angu
 - [@visa/charts-react](packages/charts-react) (react)
 - [@visa/charts-angular](packages/charts-angular) (angular)
 - [@visa/charts-R](packages/charts-R) (R), `visachartR` function in R
-- [@visa/charts-python](packages/charts-python) (python), `pyvisacharts` package in Python
+- [@visa/charts-python](packages/charts-python) (Python), `pyvisacharts` package in Python
+- [@visa/charts-figma](packages/charts-figma) (Figma), `Visa Chart Components` plugin for Figma
 
 #### Components with `Ready` status
 
@@ -151,12 +152,15 @@ You can find license information for all dependencies included in our build [her
 - [node-uuid](https://github.com/uuidjs/uuid)
 - [vega-label](https://github.com/vega/vega-label)
 - [storybook](https://storybook.js.org/)
+- [htmlwidgets](https://www.htmlwidgets.org/)
 - [widget-cookiecutter](https://github.com/jupyter-widgets/widget-cookiecutter)
+- [figma plugin api](https://www.figma.com/plugin-docs/api/api-reference)
 
 This project was/is built with tireless efforts from:
 
 - Chris DeMartini ([@visa](https://github.com/chris-demartini) / [personal](https://github.com/demartsc))
 - Stephanie Modica ([@visa](https://github.com/steph-modica) / [personal](https://github.com/stephmod))
+- David Kutas ([@visa](https://github.com/david-kutas))
 - Lilach Manheim ([personal](https://github.com/lmanheim))
 - Jaime Tanner ([personal](https://github.com/tannerjaime))
 - Frank Elavsky ([personal](https://github.com/frankelavsky))
