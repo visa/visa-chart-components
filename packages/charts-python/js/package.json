@@ -60,7 +60,8 @@
     "@visa/charts": "^6.2.0"
   },
   "resolutions": {
-    "got": "^11.8.5"
+    "got": "^11.8.5",
+    "loader-utils": "^1.4.1"
   },
   "jupyterlab": {
     "extension": "lib/labplugin",
