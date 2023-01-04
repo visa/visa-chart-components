@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="144px" height="113px" viewBox="0 0 144 113" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 58 (84663) - https://sketch.com -->
+    <title>bar-chart</title>
+    <desc>Created with Sketch.</desc>
+    <g id="bar-chart" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="Rectangle" fill="#0051DC" fill-rule="nonzero" transform="translate(25.193174, 68.270833) scale(-1, 1) translate(-25.193174, -68.270833) " x="20.1887994" y="23.5416667" width="10.0087487" height="89.4583333"></rect>
+        <rect id="Rectangle" fill="#0051DC" fill-rule="nonzero" transform="translate(40.801922, 56.500000) scale(-1, 1) translate(-40.801922, -56.500000) " x="35.7975481" y="0" width="10.0087487" height="113"></rect>
+        <rect id="Rectangle" fill="#0051DC" fill-rule="nonzero" transform="translate(9.584425, 107.114583) scale(-1, 1) translate(-9.584425, -107.114583) " x="4.58005074" y="101.229167" width="10.0087487" height="11.7708333"></rect>
+        <rect id="Rectangle" fill="#0051DC" fill-rule="nonzero" transform="translate(134.454415, 100.640625) scale(-1, 1) translate(-134.454415, -100.640625) " x="129.45004" y="88.28125" width="10.0087487" height="24.71875"></rect>
+        <rect id="Rectangle" fill="#0051DC" fill-rule="nonzero" transform="translate(118.845666, 95.932292) scale(-1, 1) translate(-118.845666, -95.932292) " x="113.841292" y="78.8645833" width="10.0087487" height="34.1354167"></rect>
+        <rect id="Rectangle" fill="#0051DC" fill-rule="nonzero" transform="translate(72.019420, 90.635417) scale(-1, 1) translate(-72.019420, -90.635417) " x="67.0150455" y="68.2708333" width="10.0087487" height="44.7291667"></rect>
+        <rect id="Rectangle" fill="#0051DC" fill-rule="nonzero" transform="translate(87.628168, 95.932292) scale(-1, 1) translate(-87.628168, -95.932292) " x="82.6237941" y="78.8645833" width="10.0087487" height="34.1354167"></rect>
+        <rect id="Rectangle" fill="#0051DC" fill-rule="nonzero" transform="translate(56.410671, 75.921875) scale(-1, 1) translate(-56.410671, -75.921875) " x="51.4062968" y="38.84375" width="10.0087487" height="74.15625"></rect>
+        <rect id="Rectangle" fill="#0051DC" fill-rule="nonzero" transform="translate(103.236917, 92.989583) scale(-1, 1) translate(-103.236917, -92.989583) " x="98.2325428" y="72.9791667" width="10.0087487" height="40.0208333"></rect>
+    </g>
+</svg>
