@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -239,6 +239,10 @@ export class AppClusteredBarChart {
       { year: '2019', otherCategory: '1993', otherGroup: 'F', otherValue: 33, item: 'C', value: 5 }
     ]
   ];
+  dataKeyNames: any = {
+    year: 'Calendar Year',
+    value: 'Named Value'
+  };
 
   componentWillUpdate() {
     // console.log('will update', this.clickElement);
@@ -427,6 +431,7 @@ export class AppClusteredBarChart {
           groupAccessor={this.groupAccessor}
           tooltipLabel={this.tooltipLabel}
           dataLabel={this.dataLabel}
+          dataKeyNames={this.dataKeyNames}
           colorPalette={'categorical'}
           cursor={'pointer'}
           hoverOpacity={0.2}

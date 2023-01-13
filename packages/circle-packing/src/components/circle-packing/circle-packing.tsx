@@ -79,6 +79,7 @@ export class CirclePacking {
   @Event() hoverEvent: EventEmitter;
   @Event() mouseOutEvent: EventEmitter;
   @Event() initialLoadEvent: EventEmitter;
+  @Event() initialLoadEndEvent: EventEmitter;
   @Event() drawStartEvent: EventEmitter;
   @Event() drawEndEvent: EventEmitter;
   @Event() transitionEndEvent: EventEmitter;
@@ -115,6 +116,7 @@ export class CirclePacking {
   @Prop({ mutable: true }) showTooltip: boolean = CirclePackingDefaultValues.showTooltip;
   @Prop({ mutable: true }) tooltipLabel: ITooltipLabelType = CirclePackingDefaultValues.tooltipLabel;
   @Prop({ mutable: true }) dataLabel: IDataLabelType = CirclePackingDefaultValues.dataLabel;
+  @Prop({ mutable: true }) dataKeyNames: object;
   @Prop({ mutable: true }) annotations: object[] = CirclePackingDefaultValues.annotations;
   @Prop({ mutable: true }) accessibility: IAccessibilityType = CirclePackingDefaultValues.accessibility;
 
@@ -205,6 +207,7 @@ export class CirclePacking {
   shouldSetChartAccessibilityPurpose: boolean = false;
   shouldSetChartAccessibilityContext: boolean = false;
   shouldSetChartAccessibilityCount: boolean = false;
+  shouldSetAnnotationAccessibility: boolean = false;
   shouldUpdateLayout: boolean = false;
   shouldSetTextures: boolean = false;
   shouldSetStrokes: boolean = false;
@@ -263,6 +266,7 @@ export class CirclePacking {
     this.shouldSetChartAccessibilityPurpose = true;
     this.shouldSetChartAccessibilityStatisticalNotes = true;
     this.shouldSetChartAccessibilityStructureNotes = true;
+    this.shouldSetAnnotationAccessibility = true;
   }
 
   @Watch('parentAccessor')
@@ -341,6 +345,8 @@ export class CirclePacking {
   @Watch('tooltipLabel')
   tooltipLabelWatcher(_new, _old) {
     this.shouldUpdateTableData = true;
+    this.shouldSetParentSVGAccessibility = true;
+    this.shouldSetGeometryAriaLabels = true;
   }
 
   @Watch('hoverOpacity')
@@ -382,6 +388,13 @@ export class CirclePacking {
     this.shouldValidateInteractionKeys = true;
     this.shouldUpdateTableData = true;
     this.shouldDrawInteractionState = true;
+    this.shouldSetGeometryAriaLabels = true;
+  }
+
+  @Watch('dataKeyNames')
+  dataKeyNamesWatcher(_newVal, _oldVal) {
+    this.shouldSetParentSVGAccessibility = true;
+    this.shouldSetGroupAccessibilityLabel = true;
     this.shouldSetGeometryAriaLabels = true;
   }
 
@@ -495,6 +508,7 @@ export class CirclePacking {
   annotationsWatcher(_new, _old) {
     this.shouldValidate = true;
     this.shouldUpdateAnnotations = true;
+    this.shouldSetAnnotationAccessibility = true;
   }
 
   @Watch('uniqueID')
@@ -592,6 +606,7 @@ export class CirclePacking {
       this.addStrokeUnder();
       this.zoom(target);
       this.drawAnnotations();
+      this.setAnnotationAccessibility();
       this.onChangeHandler();
       // we want to hide all child <g> of this.root BUT we want to make sure not to hide the
       // parent<g> that contains our geometries! In a subGroup chart (like stacked bars),
@@ -599,7 +614,7 @@ export class CirclePacking {
       hideNonessentialGroups(this.root.node(), this.circleG.node(), true);
       // this.setGroupAccessibilityAttributes();
       resolve('component did load');
-    });
+    }).then(() => this.initialLoadEndEvent.emit({ chartID: this.chartID }));
   }
 
   componentDidUpdate() {
@@ -723,6 +738,10 @@ export class CirclePacking {
       if (this.shouldUpdateAnnotations) {
         this.drawAnnotations();
         this.shouldUpdateAnnotations = false;
+      }
+      if (this.shouldSetAnnotationAccessibility) {
+        this.setAnnotationAccessibility();
+        this.shouldSetAnnotationAccessibility = false;
       }
       this.onChangeHandler();
       resolve('component did update');
@@ -974,6 +993,7 @@ export class CirclePacking {
           geomType: 'node',
           includeKeyNames: this.accessibility.includeDataKeyNames,
           dataKeys: scopeDataKeys(this, chartAccessors, 'circle-packing'),
+          dataKeyNames: this.dataKeyNames,
           recursive: true,
           groupName: 'node',
           uniqueID: this.chartID
@@ -1260,6 +1280,9 @@ export class CirclePacking {
       margin: this.margin,
       bitmaps: this.bitmaps
     });
+  }
+
+  setAnnotationAccessibility() {
     setAccessAnnotation(this.circlePackingEl, this.annotations);
   }
 
@@ -1529,6 +1552,7 @@ export class CirclePacking {
       isToShow,
       tooltipLabel: this.tooltipLabel,
       dataLabel: this.dataLabel,
+      dataKeyNames: this.dataKeyNames,
       ordinalAccessor: this.nodeAccessor,
       groupAccessor: this.parentAccessor,
       valueAccessor: this.sizeAccessor,
@@ -1547,6 +1571,7 @@ export class CirclePacking {
       title: this.accessibility.title || this.mainTitle,
       chartTag: 'circle-packing',
       uniqueID: this.chartID,
+      highestHeadingLevel: this.highestHeadingLevel,
       recursive: true,
       redraw: this.shouldRedrawWrapper,
       disableKeyNav:
@@ -1568,6 +1593,7 @@ export class CirclePacking {
       geomType: 'node',
       includeKeyNames: this.accessibility.includeDataKeyNames,
       dataKeys: scopeDataKeys(this, chartAccessors, 'circle-packing'),
+      dataKeyNames: this.dataKeyNames,
       groupAccessor: this.parentAccessor,
       groupName: 'node',
       recursive: true,
@@ -1593,6 +1619,7 @@ export class CirclePacking {
         geomType: 'node',
         includeKeyNames: this.accessibility.includeDataKeyNames,
         dataKeys: keys,
+        dataKeyNames: this.dataKeyNames,
         recursive: true,
         groupName: 'node',
         uniqueID: this.chartID,
@@ -1735,8 +1762,10 @@ export class CirclePacking {
           />
           <data-table
             uniqueID={this.chartID}
+            unitTest={true} // default this to true for now since we dont have prop yet
             isCompact
             tableColumns={this.tableColumns}
+            dataKeyNames={this.dataKeyNames}
             data={this.tableData}
             padding={this.padding}
             margin={this.margin}

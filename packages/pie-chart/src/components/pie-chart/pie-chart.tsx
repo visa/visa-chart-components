@@ -87,6 +87,7 @@ export class PieChart {
   @Event() hoverEvent: EventEmitter;
   @Event() mouseOutEvent: EventEmitter;
   @Event() initialLoadEvent: EventEmitter;
+  @Event() initialLoadEndEvent: EventEmitter;
   @Event() drawStartEvent: EventEmitter;
   @Event() drawEndEvent: EventEmitter;
   @Event() transitionEndEvent: EventEmitter;
@@ -128,6 +129,7 @@ export class PieChart {
   @Prop({ mutable: true }) showLabelNote: boolean = PieChartDefaultValues.showLabelNote;
   @Prop({ mutable: true }) labelOffset: number = PieChartDefaultValues.labelOffset;
   @Prop({ mutable: true }) dataLabel: IDataLabelType = PieChartDefaultValues.dataLabel;
+  @Prop({ mutable: true }) dataKeyNames: object;
   @Prop({ mutable: true }) tooltipLabel: ITooltipLabelType = PieChartDefaultValues.tooltipLabel;
   @Prop({ mutable: true }) accessibility: IAccessibilityType = PieChartDefaultValues.accessibility;
   @Prop({ mutable: true }) annotations: object[] = PieChartDefaultValues.annotations;
@@ -483,6 +485,8 @@ export class PieChart {
   tooltipLabelWatcher(_newVal, _oldVal) {
     this.shouldValidate = true;
     this.shouldUpdateTableData = true;
+    this.shouldSetParentSVGAccessibility = true;
+    this.shouldSetGeometryAriaLabels = true;
   }
 
   @Watch('dataLabel')
@@ -692,6 +696,13 @@ export class PieChart {
     this.shouldUpdateTableData = true;
   }
 
+  @Watch('dataKeyNames')
+  dataKeyNamesWatcher(_newVal, _oldVal) {
+    this.shouldSetParentSVGAccessibility = true;
+    this.shouldSetGroupAccessibilityLabel = true;
+    this.shouldSetGeometryAriaLabels = true;
+  }
+
   @Watch('unitTest')
   unitTestWatcher(_newVal, _oldVal) {
     this.shouldSetTestingAttributes = true;
@@ -787,7 +798,7 @@ export class PieChart {
       this.setGroupAccessibilityID();
       this.defaults = false;
       resolve('component did load');
-    });
+    }).then(() => this.initialLoadEndEvent.emit({ chartID: this.chartID }));
   }
 
   componentDidUpdate() {
@@ -2448,6 +2459,7 @@ export class PieChart {
       geomType: 'slice',
       includeKeyNames: this.accessibility.includeDataKeyNames,
       dataKeys: scopeDataKeys(this, chartAccessors, 'pie-chart'),
+      dataKeyNames: this.dataKeyNames,
       // groupAccessor: this.groupAccessor // pie chart does not include these
       groupName: 'pie',
       disableKeyNav:
@@ -2478,6 +2490,7 @@ export class PieChart {
         geomType: 'slice',
         includeKeyNames: this.accessibility.includeDataKeyNames,
         dataKeys: keys,
+        dataKeyNames: this.dataKeyNames,
         groupName: 'pie',
         uniqueID: this.chartID,
         disableKeyNav:
@@ -2639,6 +2652,7 @@ export class PieChart {
       isToShow,
       tooltipLabel: this.tooltipLabel,
       dataLabel: this.dataLabel,
+      dataKeyNames: this.dataKeyNames,
       ordinalAccessor: this.ordinalAccessor,
       valueAccessor: this.valueAccessor,
       chartType: 'pie',
@@ -2722,6 +2736,7 @@ export class PieChart {
             uniqueID={this.chartID}
             isCompact
             tableColumns={this.tableColumns}
+            dataKeyNames={this.dataKeyNames}
             data={this.tableData}
             padding={this.padding}
             margin={this.margin}

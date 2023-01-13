@@ -10,8 +10,10 @@ import { getBrowser } from './browser-util';
 import { polyfillMouseEvents } from './customPolyfills';
 import { setHighContrastListener } from './accessibilityUtils';
 import { createLabel, createGroupLabel } from './altTextGenerator';
-const keyCodes = {
-  parent: 27, // ESCAPE
+
+export const keyCodes = {
+  hideTooltip: 27, // ESCAPE
+  parent: 13, // ENTER (only triggered when shiftKey is true)
   child: 13, // ENTER
   select: 32, // SPACEBAR
   nextSibling: 39, // RIGHT ARROW
@@ -21,7 +23,8 @@ const keyCodes = {
   nextCousinAlternate: 190, // PERIOD
   previousCousinAlternate: 188, // COMMA
   shift: 16, // SHIFT
-  tab: 9 // TAB
+  tab: 9, // TAB
+  escape: 27 // ESCAPE
 };
 const browser = getBrowser();
 const isIE11 = browser === 'IE'; // ua.includes('rv:11.0');
@@ -31,11 +34,12 @@ const staticGeometryRole = 'img'; // 'menuitem'; // !(isIE11 || isIEEdge) ? 'img
 const interactiveGeometryRole = 'button'; // 'menuitem'; // !(isIE11 || isIEEdge) ? 'button' : 'treeitem';
 const controllerPrefix = 'node-';
 let fired = false;
-let shiftFired = false;
 if (isIE11) {
   polyfillMouseEvents(window);
 }
 
+// This function initializes and maintains the root-level controller node and is designed
+// to hook into the VCC lifecycle (so that it stays up to date as a chart changes).
 export const setAccessibilityController = ({
   node,
   chartTag,
@@ -45,6 +49,7 @@ export const setAccessibilityController = ({
   geomType,
   includeKeyNames,
   dataKeys,
+  dataKeyNames,
   groupKeys,
   nested,
   groupName,
@@ -60,6 +65,7 @@ export const setAccessibilityController = ({
   geomType: string;
   includeKeyNames: boolean;
   dataKeys: any;
+  dataKeyNames?: object;
   groupKeys?: any;
   nested?: string;
   groupName?: string;
@@ -125,9 +131,7 @@ export const setAccessibilityController = ({
       'keyup',
       !disableKeyNav
         ? () => {
-            const e = event;
-            const keyCode = e.keyCode || e.which;
-            keyUpHandler(keyCode);
+            fired = false;
           }
         : null
     )
@@ -141,7 +145,6 @@ export const setAccessibilityController = ({
 
             drawKeyboardFocusClone(n[i], recursive);
             const bounds = node.getBoundingClientRect();
-
             controller
               .style('width', `${bounds.width}px`)
               .style('height', `${bounds.height}px`)
@@ -181,6 +184,7 @@ export const setAccessibilityController = ({
                   geomType,
                   includeKeyNames,
                   dataKeys,
+                  dataKeyNames,
                   groupKeys,
                   nested,
                   groupName,
@@ -222,6 +226,7 @@ export const setElementFocusHandler = ({
   geomType,
   includeKeyNames,
   dataKeys,
+  dataKeyNames,
   groupKeys,
   nested,
   recursive,
@@ -233,6 +238,7 @@ export const setElementFocusHandler = ({
   geomType: string;
   includeKeyNames: boolean;
   dataKeys: any;
+  dataKeyNames?: object;
   groupKeys?: any;
   nested?: string;
   recursive?: boolean;
@@ -255,6 +261,7 @@ export const setElementFocusHandler = ({
               geomType,
               includeKeyNames,
               dataKeys,
+              dataKeyNames,
               groupKeys,
               nested,
               groupName,
@@ -353,6 +360,7 @@ const prepareControllerNodes = ({
   geomType,
   includeKeyNames,
   dataKeys,
+  dataKeyNames,
   groupKeys,
   nested,
   groupName,
@@ -366,6 +374,7 @@ const prepareControllerNodes = ({
   geomType: string;
   includeKeyNames: boolean;
   dataKeys: any;
+  dataKeyNames?: object;
   groupKeys?: any;
   nested?: string;
   groupName?: string;
@@ -390,6 +399,7 @@ const prepareControllerNodes = ({
         geomType,
         includeKeyNames,
         dataKeys,
+        dataKeyNames,
         groupKeys,
         nested,
         recursive,
@@ -410,6 +420,7 @@ const prepareControllerNodes = ({
         geomType,
         includeKeyNames,
         dataKeys,
+        dataKeyNames,
         groupKeys,
         nested,
         recursive,
@@ -448,6 +459,7 @@ const prepareControllerNodes = ({
         geomType,
         includeKeyNames,
         dataKeys,
+        dataKeyNames,
         groupKeys,
         nested,
         recursive,
@@ -502,6 +514,7 @@ const createControllerNode = ({
   geomType,
   includeKeyNames,
   dataKeys,
+  dataKeyNames,
   groupKeys,
   nested,
   recursive,
@@ -517,6 +530,7 @@ const createControllerNode = ({
   geomType: string;
   includeKeyNames: boolean;
   dataKeys: any;
+  dataKeyNames?: object;
   groupKeys?: any;
   nested?: string;
   recursive?: boolean;
@@ -575,6 +589,7 @@ const createControllerNode = ({
             geomType,
             includeKeyNames,
             dataKeys,
+            dataKeyNames,
             groupKeys,
             nested,
             groupName,
@@ -608,6 +623,7 @@ const createControllerNode = ({
                 geomType,
                 includeKeyNames,
                 dataKeys,
+                dataKeyNames,
                 groupKeys,
                 nested,
                 groupName,
@@ -639,6 +655,7 @@ const createControllerNode = ({
           index,
           groupAccessor,
           groupKeys,
+          dataKeyNames,
           siblings,
           isOffsetGroup,
           includeKeyNames,
@@ -655,6 +672,7 @@ const createControllerNode = ({
           capitalizedGroupName,
           includeKeyNames,
           dataKeys,
+          dataKeyNames,
           groupKeys,
           nested,
           recursive
@@ -772,13 +790,15 @@ const focusTarget = target => {
     // https://mkyong.com/javascript/focus-is-not-working-in-ie-solution/
     // IE has lazy focusing, so it must be wrapped in a timeout
     setTimeout(function() {
-      'focus' in target ? target.focus() : target.dispatchEvent(new Event('focus'));
+      target.focus();
+      // stencil@2.17.3+ mocks focus in jsdom, this additional logic is no longer needed
+      // 'focus' in target ? target.focus() : target.dispatchEvent(new Event('focus'));
     }, 10);
     // HTMLElement.prototype.focus.apply(target);
   } /* else if (isIEEdge) {
     FocusableForeignObject(target);
   }*/ else {
-    'focus' in target ? target.focus() : target.dispatchEvent(new Event('focus'));
+    target.focus();
   }
 };
 
@@ -852,20 +872,13 @@ const findSVGRoot = node => {
 const enterChartArea = (_event: any) => {
   const currentTarget: any = _event.target;
   const keyCode = _event.keyCode || _event.which;
-  if (keyCode === keyCodes.child || keyCode === keyCodes.select) {
+  if (!_event.shiftKey && (keyCode === keyCodes.child || keyCode === keyCodes.select)) {
     // we will allow ENTER or SPACEBAR to enter the chart area
     _event.preventDefault();
     return select(currentTarget.parentNode)
       .select('svg')
       .select('[tabindex]')
       .node();
-  }
-};
-
-const keyUpHandler = code => {
-  fired = false;
-  if (code === keyCodes.shift) {
-    shiftFired = false;
   }
 };
 
@@ -1006,6 +1019,7 @@ const getInteractionResult = (
   };
   const currentTarget: any = document.getElementById(nodeID);
   const keyCode = _event.keyCode || _event.which;
+  const eventType = validKeyCode(keyCode);
   const direction =
     keyCode === keyCodes.nextSibling || keyCode === keyCodes.nextCousin || keyCode === keyCodes.nextCousinAlternate
       ? 'next'
@@ -1013,7 +1027,7 @@ const getInteractionResult = (
         keyCode === keyCodes.previousCousin ||
         keyCode === keyCodes.previousCousinAlternate
       ? 'previous'
-      : keyCode === keyCodes.parent
+      : _event.shiftKey && keyCode === keyCodes.parent
       ? 'up'
       : keyCode === keyCodes.child
       ? 'down'
@@ -1021,10 +1035,7 @@ const getInteractionResult = (
   if (direction || keyCode === keyCodes.select) {
     _event.preventDefault();
   }
-  if (keyCode === keyCodes.shift && !shiftFired) {
-    shiftFired = true;
-  }
-  if (!fired) {
+  if (eventType && !fired) {
     fired = true;
     if (keyCode === keyCodes.select) {
       // a selection has happened

@@ -23,6 +23,10 @@ visa-charts-lib/src/components.d.ts
 packages/charts-angular/**/src/lib/directives/
 packages/charts-react*/src/components/
 
+# figma binding auto-generated files
+packages/charts-figma/src/react-component-lib/
+packages/charts-figma/src/visa-charts.ts
+
 # charts copied files
 packages/charts/src/components/
 packages/charts/scss/

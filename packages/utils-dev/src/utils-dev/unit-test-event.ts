@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -179,6 +179,32 @@ export const event_initialLoadEvent_emit = {
     component.uniqueID = 'fake123';
     page.root.appendChild(component);
     page.doc.addEventListener('initialLoadEvent', _callback);
+    await page.waitForChanges();
+
+    // ASSERT
+    expect(_callback).toHaveBeenCalled();
+    expect(_callback.mock.calls[0][0].detail).toMatchObject({ chartID: 'fake123' });
+  }
+};
+
+export const event_initialLoadEndEvent_emit = {
+  prop: 'initialLoadEndEvent',
+  group: 'event',
+  name: 'event object should emit and contain uniqueID on initial load end',
+  testProps: { showTooltip: false, nestedDataLocation: false },
+  testSelector: '[data-testid=mark]',
+  testFunc: async (component: any, page: SpecPage, testProps: object, testSelector: string, expectedData: object) => {
+    // ARRANGE
+    const _callback = jest.fn();
+    // if we have any testProps apply them
+    if (Object.keys(testProps).length) {
+      Object.keys(testProps).forEach(testProp => {
+        component[testProp] = testProps[testProp];
+      });
+    }
+    component.uniqueID = 'fake123';
+    page.root.appendChild(component);
+    page.doc.addEventListener('initialLoadEndEvent', _callback);
     await page.waitForChanges();
 
     // ASSERT

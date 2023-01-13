@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -34,6 +34,7 @@ export class CirclePackingDefaultValues {
   static readonly colorPalette = propDefaultValues.colorPaletteSequentialGrey;
 
   static readonly dataLabel = propDefaultValues.dataLabelCenter;
+  static readonly dataKeyNames;
   static readonly hoverStyle = propDefaultValues.hoverStyle;
   static readonly clickStyle = propDefaultValues.clickStyle;
   static readonly hoverOpacity = propDefaultValues.hoverOpacity;

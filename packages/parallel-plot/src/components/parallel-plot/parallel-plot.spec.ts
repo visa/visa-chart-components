@@ -251,11 +251,11 @@ describe('<parallel-plot>', () => {
               nextSelectorAriaLabel: 'North-America. Card-A. 9.6b. Point 1 of 3.'
             }
           },
-          accessibility_keyboard_nav_esc_to_group: {
-            name: 'keyboard nav: group - escape will move up to group',
+          accessibility_keyboard_nav_shift_enter_to_group: {
+            name: 'keyboard nav: group - shift+enter will move up to group',
             testSelector: '[data-testid=marker][data-id=marker-North-America-Card-A]',
             nextTestSelector: '[data-testid=marker-series-group][data-id=marker-series-North-America]',
-            keyDownObject: { key: 'Escape', code: 'Escape', keyCode: 27 },
+            keyDownObject: { key: 'Enter', code: 'Enter', keyCode: 13, shiftKey: true },
             testProps: {
               selectorAriaLabel: 'North-America. Card-A. 9.6b. Point 1 of 3.',
               nextSelectorAriaLabel: 'North-America. Line 1 of 5 which contains 3 interactive points.'
@@ -325,7 +325,7 @@ describe('<parallel-plot>', () => {
           const innerTestProps = {
             ...tempTestProps,
             geometryType: 'Circle',
-            geometryPlacementAttributes: ['r', 'cx', 'cy'],
+            geometryPlacementAttributes: ['data-r', 'data-cx', 'data-cy'],
             geometryAdjustmentValues: [
               { f: 'r', b: 7, w: 3, s: -1 },
               { f: 'cx', b: 7, w: 3, s: -1 },
@@ -349,6 +349,17 @@ describe('<parallel-plot>', () => {
                       color: '#56bec3',
                       type: 'annotationCalloutCircle',
                       subject: { radius: 34 }
+                    },
+                    {
+                      note: {},
+                      accessibilityDecorationOnly: true,
+                      type: 'annotationXYThreshold',
+                      subject: {
+                        x1: 0,
+                        x2: 250
+                      },
+                      color: 'pri_blue',
+                      disable: ['note', 'connector']
                     }
                   ]
                 : []
@@ -458,52 +469,71 @@ describe('<parallel-plot>', () => {
       });
     });
 
-    // annotations break in jsdom due to their text wrapping function in d3-annotation
-    // describe('annotations', () => {
-    //   // TODO: need to add more precise test case for annotations label and text
-    //   it('should pass annotation prop', async () => {
-    //     // ARRANGE
-    //     const annotations = [
-    //       {
-    //         note: {
-    //           label: 'Social Media Intern returned to college',
-    //           bgPadding: 20,
-    //           title: 'Staff Change',
-    //           align: 'middle',
-    //           wrap: 130
-    //         },
-    //         accessibilityDescription:
-    //           'This is an annotation that explains a drop in tweet ACTivity due to staff change.',
-    //         y: [2600],
-    //         x: '62%',
-    //         dy: -85,
-    //         type: 'annotationCallout',
-    //         connector: { end: 'dot', endScale: 10 },
-    //         color: 'pri_blue'
-    //       }
-    //     ];
-    //     const data = [
-    //       { label: 'Q1', value: 1125 },
-    //       { label: 'Q2', value: 3725 },
-    //       { label: 'Q3', value: 2125 },
-    //       { label: 'Q4', value: 4125 }
-    //     ];
-    //     const dataLabel = { visible: true, placement: 'top', labelAccessor: 'value', format: '0,0' };
-    //     component.data = data;
-    //     component.ordinalAccessor = 'label';
-    //     component.valueAccessor = 'value';
-    //     component.dataLabel = dataLabel;
-    //     component.annotations = annotations;
+    // annotations break in jsdom due to their text wrapping function in d3-annotation -- fixed in stencil 2.17.3+
+    describe('annotations', () => {
+      // TODO: need to add more precise test case for annotations label and text
+      it('should pass annotation prop on load', async () => {
+        // ARRANGE
+        const annotations = [
+          {
+            note: {
+              title: 'Analysis:',
+              label: 'Poor performance on Card A and Card B, but excellent on Card C',
+              bgPadding: 0,
+              align: 'center',
+              wrap: 175
+            },
+            data: { category: 'Card C', value: 6051933407 },
+            dy: [8500000000],
+            dx: '5%',
+            color: '#56bec3',
+            type: 'annotationCalloutCircle',
+            subject: { radius: 34 }
+          }
+        ];
+        component.annotations = annotations;
 
-    //     // ACT
-    //     page.root.append(component);
-    //     await page.waitForChanges();
+        // ACT
+        page.root.append(component);
+        await page.waitForChanges();
 
-    //     // ASSERT
-    //     const annotationGroup = page.doc.querySelector('[data-testid=annotation-group]');
-    //     expect(annotationGroup).toMatchSnapshot();
-    //   });
-    // });
+        // ASSERT
+        const annotationGroup = page.doc.querySelector('[data-testid=annotation-group]');
+        expect(annotationGroup).toMatchSnapshot();
+      });
+      it('should pass annotation prop on update', async () => {
+        // ARRANGE
+        const annotations = [
+          {
+            note: {
+              title: 'Analysis:',
+              label: 'Poor performance on Card A and Card B, but excellent on Card C',
+              bgPadding: 0,
+              align: 'center',
+              wrap: 175
+            },
+            data: { category: 'Card C', value: 6051933407 },
+            dy: [8500000000],
+            dx: '5%',
+            color: '#56bec3',
+            type: 'annotationCalloutCircle',
+            subject: { radius: 34 }
+          }
+        ];
+
+        // ACT
+        page.root.append(component);
+        await page.waitForChanges();
+
+        // UPDATE
+        component.annotations = annotations;
+        await page.waitForChanges();
+
+        // ASSERT
+        const annotationGroup = page.doc.querySelector('[data-testid=annotation-group]');
+        expect(annotationGroup).toMatchSnapshot();
+      });
+    });
 
     describe('axes', () => {
       // known issues with min/max override pattern on parallel-plot skipping these tests for now
@@ -1225,19 +1255,43 @@ describe('<parallel-plot>', () => {
               tooltip_tooltipLabel_custom_format_load:
                 '<p style="margin: 0;">Testing123:<b>Card-A</b><br>Count:<b>$9.6b</b><br></p>',
               tooltip_tooltipLabel_custom_format_update:
-                '<p style="margin: 0;">Testing123:<b>Card-A</b><br>Count:<b>$9.6b</b><br></p>'
+                '<p style="margin: 0;">Testing123:<b>Card-A</b><br>Count:<b>$9.6b</b><br></p>',
+              dataKeyNames_custom_on_load:
+                '<p style="margin: 0;"><b>North-America<br></b>Test Category:<b>Card-A</b><br>Y Axis:<b>9.6b</b></p>',
+              dataKeyNames_custom_on_update:
+                '<p style="margin: 0;"><b>North-America<br></b>Test Category:<b>Card-A</b><br>Y Axis:<b>9.6b</b></p>'
+            };
+            const innerAriaContent = {
+              dataKeyNames_custom_on_load: 'region North-America. Test Category Card-A. value 9.6b. Point 1 of 3.',
+              dataKeyNames_custom_on_update: 'region North-America. Test Category Card-A. value 9.6b. Point 1 of 3.'
             };
             const innerTestProps = { ...unitTestTooltip[test].testProps, ...innerTooltipProps[test] };
+            const customDataKeyNames = { dataKeyNames: { category: 'Test Category' } };
             // we have to handle clickEvent separately due to zooming boolean in circle-packing load
-
-            it(`${unitTestTooltip[test].prop}: ${unitTestTooltip[test].name}`, () =>
-              unitTestTooltip[test].testFunc(
-                component,
-                page,
-                innerTestProps,
-                innerTestSelector,
-                innerTooltipContent[test]
-              ));
+            if (test === 'dataKeyNames_custom_on_load' || test === 'dataKeyNames_custom_on_update') {
+              it(`${unitTestTooltip[test].prop}: ${unitTestTooltip[test].name}`, () =>
+                unitTestTooltip[test].testFunc(
+                  component,
+                  page,
+                  {
+                    ...innerTestProps,
+                    ...customDataKeyNames,
+                    accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true },
+                    selectorAriaLabel: innerAriaContent[test]
+                  },
+                  innerTestSelector,
+                  innerTooltipContent[test]
+                ));
+            } else {
+              it(`${unitTestTooltip[test].prop}: ${unitTestTooltip[test].name}`, () =>
+                unitTestTooltip[test].testFunc(
+                  component,
+                  page,
+                  innerTestProps,
+                  innerTestSelector,
+                  innerTooltipContent[test]
+                ));
+            }
           });
         });
       });

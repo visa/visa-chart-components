@@ -98,6 +98,7 @@ export class StackedBarChart {
   @Event() hoverEvent: EventEmitter;
   @Event() mouseOutEvent: EventEmitter;
   @Event() initialLoadEvent: EventEmitter;
+  @Event() initialLoadEndEvent: EventEmitter;
   @Event() drawStartEvent: EventEmitter;
   @Event() drawEndEvent: EventEmitter;
   @Event() transitionEndEvent: EventEmitter;
@@ -139,6 +140,7 @@ export class StackedBarChart {
 
   // Data label (5/7)
   @Prop({ mutable: true }) dataLabel: IDataLabelType = StackedBarChartDefaultValues.dataLabel;
+  @Prop({ mutable: true }) dataKeyNames: object;
   @Prop({ mutable: true }) showTotalValue: boolean = StackedBarChartDefaultValues.showTotalValue;
   @Prop({ mutable: true }) showTooltip: boolean = StackedBarChartDefaultValues.showTooltip;
   @Prop({ mutable: true }) tooltipLabel: ITooltipLabelType = StackedBarChartDefaultValues.tooltipLabel;
@@ -680,6 +682,8 @@ export class StackedBarChart {
   @Watch('tooltipLabel')
   tooltipLabelWatcher(_newVal, _oldVal) {
     this.shouldUpdateTableData = true;
+    this.shouldSetParentSVGAccessibility = true;
+    this.shouldSetGeometryAriaLabels = true;
   }
 
   @Watch('accessibility')
@@ -834,6 +838,17 @@ export class StackedBarChart {
     this.shouldSetGeometryAriaLabels = true;
   }
 
+  @Watch('dataKeyNames')
+  dataKeyNamesWatcher(_newVal, _oldVal) {
+    this.shouldUpdateXAxis = true;
+    this.shouldSetXAxisAccessibility = true;
+    this.shouldUpdateYAxis = true;
+    this.shouldSetYAxisAccessibility = true;
+    this.shouldSetParentSVGAccessibility = true;
+    this.shouldSetGroupAccessibilityLabel = true;
+    this.shouldSetGeometryAriaLabels = true;
+  }
+
   @Watch('hoverHighlight')
   hoverWatcher(_newVal, _oldVal) {
     this.shouldDrawInteractionState = true;
@@ -972,7 +987,7 @@ export class StackedBarChart {
       this.onChangeHandler();
       this.defaults = false;
       resolve('component did load');
-    });
+    }).then(() => this.initialLoadEndEvent.emit({ chartID: this.chartID }));
   }
 
   componentDidUpdate() {
@@ -1652,6 +1667,13 @@ export class StackedBarChart {
   }
 
   drawXAxis() {
+    const axisAccessor = this.layout === 'vertical' ? this.groupAccessor : this.valueAccessor;
+    const axisLabel =
+      this.xAxis.label && this.xAxis.label !== ''
+        ? this.xAxis.label
+        : this.dataKeyNames && this.dataKeyNames[axisAccessor]
+        ? this.dataKeyNames[axisAccessor]
+        : this.xAxis.label;
     drawAxis({
       root: this.rootG,
       height: this.innerPaddedHeight,
@@ -1662,7 +1684,7 @@ export class StackedBarChart {
       format: this.xAxis.format,
       dateFormat: this.xAxis.format,
       tickInterval: this.xAxis.tickInterval,
-      label: this.xAxis.label,
+      label: axisLabel, // this.xAxis.label,
       padding: this.padding,
       hide: !this.innerXAxis.visible,
       duration: this.duration
@@ -1670,6 +1692,14 @@ export class StackedBarChart {
   }
 
   drawYAxis() {
+    const axisAccessor = this.layout === 'vertical' ? this.valueAccessor : this.groupAccessor;
+    const axisLabel =
+      this.yAxis.label && this.yAxis.label !== ''
+        ? this.yAxis.label
+        : this.dataKeyNames && this.dataKeyNames[axisAccessor]
+        ? this.dataKeyNames[axisAccessor]
+        : this.yAxis.label;
+
     drawAxis({
       root: this.rootG,
       height: this.innerPaddedHeight,
@@ -1680,7 +1710,7 @@ export class StackedBarChart {
       format: this.yAxis.format,
       dateFormat: this.yAxis.format,
       tickInterval: this.yAxis.tickInterval,
-      label: this.yAxis.label,
+      label: axisLabel, // this.yAxis.label,
       padding: this.padding,
       hide: !this.innerYAxis.visible,
       duration: this.duration
@@ -1688,23 +1718,36 @@ export class StackedBarChart {
   }
 
   setXAxisAccessibility() {
+    const axisAccessor = this.layout === 'vertical' ? this.groupAccessor : this.valueAccessor;
+    const axisLabel =
+      this.xAxis.label && this.xAxis.label !== ''
+        ? this.xAxis.label
+        : this.dataKeyNames && this.dataKeyNames[axisAccessor]
+        ? this.dataKeyNames[axisAccessor]
+        : this.xAxis.label;
+
     setAccessXAxis({
       rootEle: this.stackedBarChartEl,
       hasXAxis: this.innerXAxis ? this.innerXAxis.visible : false,
       xAxis: this.layout === 'vertical' ? this.x || false : this.y || false, // this is optional for some charts, if hasXAxis is always false
-      xAxisLabel: this.xAxis.label ? this.xAxis.label : '' // this is optional for some charts, if hasXAxis is always false
+      xAxisLabel: axisLabel ? axisLabel : '' // this is optional for some charts, if hasXAxis is always false
     });
   }
 
   setYAxisAccessibility() {
+    const axisAccessor = this.layout === 'vertical' ? this.valueAccessor : this.groupAccessor;
+    const axisLabel =
+      this.yAxis.label && this.yAxis.label !== ''
+        ? this.yAxis.label
+        : this.dataKeyNames && this.dataKeyNames[axisAccessor]
+        ? this.dataKeyNames[axisAccessor]
+        : this.yAxis.label;
+
     setAccessYAxis({
       rootEle: this.stackedBarChartEl,
       hasYAxis: this.innerYAxis ? this.innerYAxis.visible : false,
       yAxis: this.layout === 'vertical' ? this.y || false : this.x || false, // this is optional for some charts, if hasXAxis is always false
-      yAxisLabel: this.yAxis.label ? this.yAxis.label : '' // this is optional for some charts, if hasXAxis is always false
-      // secondaryYAxis?: any, // pareto uses this
-      // secondaryYAxisLabel?: string, // pareto uses this
-      // xAxisLabel: this.xAxis.label ? this.xAxis.label : '' // parallel uses this to label all the y axes
+      yAxisLabel: axisLabel ? axisLabel : '' // this is optional for some charts, if hasXAxis is always false
     });
   }
 
@@ -2984,6 +3027,7 @@ export class StackedBarChart {
       geomType: 'bar',
       includeKeyNames: this.accessibility.includeDataKeyNames,
       dataKeys: scopeDataKeys(this, chartAccessors, 'stacked-bar-chart'),
+      dataKeyNames: this.dataKeyNames,
       groupAccessor: this.groupAccessor,
       groupName: 'stack',
       groupKeys: this.showTotalValue ? ['sumMessage'] : false, // for special group-level keys (typically not needed)
@@ -3013,6 +3057,7 @@ export class StackedBarChart {
         geomType: 'bar',
         includeKeyNames: this.accessibility.includeDataKeyNames,
         dataKeys: keys,
+        dataKeyNames: this.dataKeyNames,
         groupKeys: this.showTotalValue ? ['sumMessage'] : false,
         groupName: 'stack',
         uniqueID: this.chartID,
@@ -3132,6 +3177,7 @@ export class StackedBarChart {
       event: evt,
       isToShow,
       tooltipLabel: this.tooltipLabel,
+      dataKeyNames: this.dataKeyNames,
       xAxis: this.xAxis,
       yAxis: this.yAxis,
       dataLabel: this.dataLabel,
@@ -3259,6 +3305,7 @@ export class StackedBarChart {
             uniqueID={this.chartID}
             isCompact
             tableColumns={this.tableColumns}
+            dataKeyNames={this.dataKeyNames}
             data={this.tableData}
             padding={this.padding}
             margin={this.margin}

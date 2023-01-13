@@ -178,11 +178,11 @@ describe('<heat-map>', () => {
           //   nextTestSelector: '[data-testid=bar][data-id=bar-Apr-17]',
           //   keyDownObject: { key: 'Enter', code: 'Enter', keyCode: 13 }
           // },
-          accessibility_keyboard_nav_group_esc_exit: {
-            name: 'keyboard nav: group - escape will exit group',
+          accessibility_keyboard_nav_group_shift_enter_exit: {
+            name: 'keyboard nav: group - shift+enter will exit group',
             testSelector: '[data-testid=marker][data-id=marker-2010-A]',
             nextTestSelector: '[data-testid=map-group]',
-            keyDownObject: { key: 'Escape', code: 'Escape', keyCode: 27 },
+            keyDownObject: { key: 'Enter', code: 'Enter', keyCode: 13, shiftKey: true },
             testProps: {
               selectorAriaLabel: 'year 2010. item A. value 40. Cell 1 of 11.',
               nextSelectorAriaLabel: 'item A. Row 1 of 3 which contains 11 interactive cells.',
@@ -333,31 +333,43 @@ describe('<heat-map>', () => {
               { f: 'y', b: 7, w: 3, s: -1 },
               { f: 'height', b: 7 * 2, w: 3 * 2, s: 1 },
               { f: 'width', b: 7 * 2, w: 3 * 2, s: 1 }
-            ]
-            // annotations test is not currently being run
-            // annotations:
-            //   unitTestAccessibility[test].prop === 'annotations'
-            //     ? [{
-            //         "note": {
-            //           "title":"2011:",
-            //           "label":"The year 2011",
-            //           "bgPadding":0,
-            //           "align":"center",
-            //           "lineType":"none",
-            //           "wrap":250
-            //         },
-            //         "y":"0%",
-            //         "x":["2010"],
-            //         "className":"heatmap-annotation",
-            //         "type":"annotationCalloutRect",
-            //         "accessibilityDescription": 'This annotation is a callout to 2011, which is for testing purposes.',
-            //         "subject": {
-            //           "width":["2011","2010"],
-            //           "height":"100%"
-            //         },
-            //         "disable":["connector"]
-            //       }]
-            //     : []
+            ],
+            annotations:
+              unitTestAccessibility[test].prop === 'annotations'
+                ? [
+                    {
+                      note: {
+                        title: '2011:',
+                        label: 'The year 2011',
+                        bgPadding: 0,
+                        align: 'center',
+                        lineType: 'none',
+                        wrap: 250
+                      },
+                      y: '0%',
+                      x: ['2010'],
+                      className: 'heatmap-annotation',
+                      type: 'annotationCalloutRect',
+                      accessibilityDescription: 'This annotation is a callout to 2011, which is for testing purposes.',
+                      subject: {
+                        width: ['2011', '2010'],
+                        height: '100%'
+                      },
+                      disable: ['connector']
+                    },
+                    {
+                      note: {},
+                      accessibilityDecorationOnly: true,
+                      type: 'annotationXYThreshold',
+                      subject: {
+                        x1: 0,
+                        x2: 250
+                      },
+                      color: 'pri_blue',
+                      disable: ['note', 'connector']
+                    }
+                  ]
+                : []
           };
           const innerTestSelector =
             unitTestAccessibility[test].testSelector === 'component-name'
@@ -473,7 +485,7 @@ describe('<heat-map>', () => {
     });
 
     // annotations break in jsdom due to their text wrapping function in d3-annotation
-    describe.skip('annotations', () => {
+    describe('annotations', () => {
       // TODO: need to add more precise test case for annotations label and text
       it('should pass annotation prop', async () => {
         // ARRANGE
@@ -1281,19 +1293,43 @@ describe('<heat-map>', () => {
               tooltip_tooltipLabel_custom_format_load:
                 '<p style="margin: 0;">Testing123:<b>A</b><br>Count:<b>$40</b><br></p>',
               tooltip_tooltipLabel_custom_format_update:
-                '<p style="margin: 0;">Testing123:<b>A</b><br>Count:<b>$40</b><br></p>'
+                '<p style="margin: 0;">Testing123:<b>A</b><br>Count:<b>$40</b><br></p>',
+              dataKeyNames_custom_on_load:
+                '<p style="margin: 0;">Test Year:<b>2010</b><br>Y Axis:<b>A</b><br>Value:<b>40</b></p>',
+              dataKeyNames_custom_on_update:
+                '<p style="margin: 0;">Test Year:<b>2010</b><br>Y Axis:<b>A</b><br>Value:<b>40</b></p>'
+            };
+            const innerAriaContent = {
+              dataKeyNames_custom_on_load: 'Test Year 2010. item A. value 40. Cell 1 of 11.',
+              dataKeyNames_custom_on_update: 'Test Year 2010. item A. value 40. Cell 1 of 11.'
             };
             const innerTestProps = { ...unitTestTooltip[test].testProps, ...innerTooltipProps[test] };
+            const customDataKeyNames = { dataKeyNames: { year: 'Test Year' } };
             // we have to handle clickEvent separately due to this.zooming boolean in circle-packing load
-
-            it(`${unitTestTooltip[test].prop}: ${unitTestTooltip[test].name}`, () =>
-              unitTestTooltip[test].testFunc(
-                component,
-                page,
-                innerTestProps,
-                innerTestSelector,
-                innerTooltipContent[test]
-              ));
+            if (test === 'dataKeyNames_custom_on_load' || test === 'dataKeyNames_custom_on_update') {
+              it(`${unitTestTooltip[test].prop}: ${unitTestTooltip[test].name}`, () =>
+                unitTestTooltip[test].testFunc(
+                  component,
+                  page,
+                  {
+                    ...innerTestProps,
+                    ...customDataKeyNames,
+                    accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true },
+                    selectorAriaLabel: innerAriaContent[test]
+                  },
+                  innerTestSelector,
+                  innerTooltipContent[test]
+                ));
+            } else {
+              it(`${unitTestTooltip[test].prop}: ${unitTestTooltip[test].name}`, () =>
+                unitTestTooltip[test].testFunc(
+                  component,
+                  page,
+                  innerTestProps,
+                  innerTestSelector,
+                  innerTooltipContent[test]
+                ));
+            }
           });
         });
       });

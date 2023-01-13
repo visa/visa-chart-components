@@ -97,6 +97,7 @@ export class ClusteredBarChart {
   @Event() hoverEvent: EventEmitter;
   @Event() mouseOutEvent: EventEmitter;
   @Event() initialLoadEvent: EventEmitter;
+  @Event() initialLoadEndEvent: EventEmitter;
   @Event() drawStartEvent: EventEmitter;
   @Event() drawEndEvent: EventEmitter;
   @Event() transitionEndEvent: EventEmitter;
@@ -139,6 +140,7 @@ export class ClusteredBarChart {
 
   // Data label (5/7)
   @Prop({ mutable: true }) dataLabel: IDataLabelType = ClusteredBarChartDefaultValues.dataLabel;
+  @Prop({ mutable: true }) dataKeyNames: object;
   @Prop({ mutable: true }) showTooltip: boolean = ClusteredBarChartDefaultValues.showTooltip;
   @Prop({ mutable: true }) tooltipLabel: ITooltipLabelType = ClusteredBarChartDefaultValues.tooltipLabel;
   @Prop({ mutable: true }) accessibility: IAccessibilityType = ClusteredBarChartDefaultValues.accessibility;
@@ -634,6 +636,8 @@ export class ClusteredBarChart {
   @Watch('tooltipLabel')
   tooltipLabelWatcher(_newVal, _oldVal) {
     this.shouldUpdateTableData = true;
+    this.shouldSetParentSVGAccessibility = true;
+    this.shouldSetGeometryAriaLabels = true;
   }
 
   @Watch('accessibility')
@@ -796,6 +800,17 @@ export class ClusteredBarChart {
     this.shouldSetGeometryAriaLabels = true;
   }
 
+  @Watch('dataKeyNames')
+  dataKeyNamesWatcher(_newVal, _oldVal) {
+    this.shouldUpdateXAxis = true;
+    this.shouldSetXAxisAccessibility = true;
+    this.shouldUpdateYAxis = true;
+    this.shouldSetYAxisAccessibility = true;
+    this.shouldSetParentSVGAccessibility = true;
+    this.shouldSetGroupAccessibilityLabel = true;
+    this.shouldSetGeometryAriaLabels = true;
+  }
+
   @Watch('suppressEvents')
   suppressWatcher(_newVal, _oldVal) {
     this.shouldBindInteractivity = true;
@@ -917,7 +932,7 @@ export class ClusteredBarChart {
       // catch all to remove entering class from labels once we have loaded component
       this.updateLabels.classed('entering', false);
       resolve('component did load');
-    });
+    }).then(() => this.initialLoadEndEvent.emit({ chartID: this.chartID }));
   }
 
   componentDidUpdate() {
@@ -1414,6 +1429,14 @@ export class ClusteredBarChart {
 
   // draw axis line
   drawXAxis() {
+    const axisAccessor = this.layout === 'vertical' ? this.groupAccessor : this.valueAccessor;
+    const axisLabel =
+      this.xAxis.label || this.xAxis.label === ''
+        ? this.xAxis.label
+        : this.dataKeyNames && this.dataKeyNames[axisAccessor]
+        ? this.dataKeyNames[axisAccessor]
+        : this.xAxis.label;
+
     drawAxis({
       root: this.rootG,
       height: this.innerPaddedHeight,
@@ -1423,7 +1446,7 @@ export class ClusteredBarChart {
       wrapLabel: this.wrapLabel && this.layout === 'vertical' ? this.x0.bandwidth() : '',
       format: this.xAxis.format,
       tickInterval: this.xAxis.tickInterval,
-      label: this.xAxis.label,
+      label: axisLabel, // this.xAxis.label,
       padding: this.padding,
       hide: !this.innerXAxis.visible,
       duration: this.duration
@@ -1431,6 +1454,14 @@ export class ClusteredBarChart {
   }
 
   drawYAxis() {
+    const axisAccessor = this.layout === 'vertical' ? this.valueAccessor : this.groupAccessor;
+    const axisLabel =
+      this.yAxis.label && this.yAxis.label !== ''
+        ? this.yAxis.label
+        : this.dataKeyNames && this.dataKeyNames[axisAccessor]
+        ? this.dataKeyNames[axisAccessor]
+        : this.yAxis.label;
+
     drawAxis({
       root: this.rootG,
       height: this.innerPaddedHeight,
@@ -1440,7 +1471,7 @@ export class ClusteredBarChart {
       wrapLabel: this.wrapLabel ? this.padding.left || 100 : '',
       format: this.yAxis.format,
       tickInterval: this.yAxis.tickInterval,
-      label: this.yAxis.label,
+      label: axisLabel, // this.yAxis.label,
       padding: this.padding,
       hide: !this.innerYAxis.visible,
       duration: this.duration
@@ -1448,20 +1479,36 @@ export class ClusteredBarChart {
   }
 
   setXAxisAccessibility() {
+    const axisAccessor = this.layout === 'vertical' ? this.groupAccessor : this.valueAccessor;
+    const axisLabel =
+      this.xAxis.label || this.xAxis.label === ''
+        ? this.xAxis.label
+        : this.dataKeyNames && this.dataKeyNames[axisAccessor]
+        ? this.dataKeyNames[axisAccessor]
+        : this.xAxis.label;
+
     setAccessXAxis({
       rootEle: this.clusteredBarChartEl,
       hasXAxis: this.innerXAxis ? this.innerXAxis.visible : false,
       xAxis: this.layout === 'vertical' ? this.x0 || false : this.x || false, // this is optional for some charts, if hasXAxis is always false
-      xAxisLabel: this.xAxis.label ? this.xAxis.label : '' // this is optional for some charts, if hasXAxis is always false
+      xAxisLabel: axisLabel ? axisLabel : '' // this is optional for some charts, if hasXAxis is always false
     });
   }
 
   setYAxisAccessibility() {
+    const axisAccessor = this.layout === 'vertical' ? this.valueAccessor : this.groupAccessor;
+    const axisLabel =
+      this.yAxis.label && this.yAxis.label !== ''
+        ? this.yAxis.label
+        : this.dataKeyNames && this.dataKeyNames[axisAccessor]
+        ? this.dataKeyNames[axisAccessor]
+        : this.yAxis.label;
+
     setAccessYAxis({
       rootEle: this.clusteredBarChartEl,
       hasYAxis: this.innerYAxis ? this.innerYAxis.visible : false,
       yAxis: this.layout === 'vertical' ? this.y || false : this.y0 || false, // this is optional for some charts, if hasXAxis is always false
-      yAxisLabel: this.yAxis.label ? this.yAxis.label : '' // this is optional for some charts, if hasXAxis is always false
+      yAxisLabel: axisLabel ? axisLabel : '' // this is optional for some charts, if hasXAxis is always false
     });
   }
 
@@ -2608,6 +2655,7 @@ export class ClusteredBarChart {
       geomType: 'bar',
       includeKeyNames: this.accessibility.includeDataKeyNames,
       dataKeys: scopeDataKeys(this, chartAccessors, 'clustered-bar-chart'),
+      dataKeyNames: this.dataKeyNames,
       groupAccessor: this.groupAccessor,
       groupName: 'cluster',
       disableKeyNav:
@@ -2635,6 +2683,7 @@ export class ClusteredBarChart {
         geomType: 'bar',
         includeKeyNames: this.accessibility.includeDataKeyNames,
         dataKeys: keys,
+        dataKeyNames: this.dataKeyNames,
         groupName: 'cluster',
         uniqueID: this.chartID,
         disableKeyNav:
@@ -2753,6 +2802,7 @@ export class ClusteredBarChart {
       xAxis: this.xAxis,
       yAxis: this.yAxis,
       dataLabel: this.dataLabel,
+      dataKeyNames: this.dataKeyNames,
       layout: this.layout,
       ordinalAccessor: this.groupAccessor, // on purpose - to match tooltip util format
       groupAccessor: this.ordinalAccessor, // on purpose - to match tooltip util format
@@ -2872,6 +2922,7 @@ export class ClusteredBarChart {
             uniqueID={this.chartID}
             isCompact
             tableColumns={this.tableColumns}
+            dataKeyNames={this.dataKeyNames}
             data={this.tableData}
             padding={this.padding}
             margin={this.margin}

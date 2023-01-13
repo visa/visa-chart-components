@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="144px" height="113px" viewBox="0 0 144 113" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 58 (84663) - https://sketch.com -->
+    <title>clustered-bar-chart</title>
+    <desc>Created with Sketch.</desc>
+    <g id="clustered-bar-chart" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="Rectangle" fill-opacity="0.5" fill="#0051DC" fill-rule="nonzero" x="-0.0264851485" y="91.2692308" width="10.3087248" height="21.7307692"></rect>
+        <rect id="Rectangle" fill="#363636" fill-rule="nonzero" x="12.8594209" y="78.2307692" width="10.3087248" height="34.7692308"></rect>
+        <rect id="Rectangle" fill="#0051DC" fill-rule="nonzero" x="25.7453269" y="24.8563607" width="10.3087248" height="88.1436393"></rect>
+        <rect id="Rectangle" fill-opacity="0.5" fill="#0051DC" fill-rule="nonzero" x="53.9332464" y="79.6794872" width="10.3087248" height="33.3205128"></rect>
+        <rect id="Rectangle" fill="#363636" fill-rule="nonzero" x="66.8191524" y="60.0119163" width="10.3087248" height="52.9880837"></rect>
+        <rect id="Rectangle" fill="#0051DC" fill-rule="nonzero" x="79.7050585" y="39.1223833" width="10.3087248" height="73.8776167"></rect>
+        <rect id="Rectangle" fill-opacity="0.5" fill="#0051DC" fill-rule="nonzero" x="107.892978" y="47.8076923" width="10.3087248" height="65.1923077"></rect>
+        <rect id="Rectangle" fill="#363636" fill-rule="nonzero" x="120.778884" y="0" width="10.3087248" height="113"></rect>
+        <rect id="Rectangle" fill="#0051DC" fill-rule="nonzero" x="133.66479" y="91.0914654" width="10.3087248" height="21.9085346"></rect>
+    </g>
+</svg>

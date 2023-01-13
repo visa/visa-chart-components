@@ -1,0 +1,8 @@
+{
+  "name": "Visa Chart Components",
+  "id": "1149755677820738274",
+  "api": "1.0.0",
+  "main": "dist/code.js",
+  "ui": "dist/ui.html",
+  "editorType": ["figma"]
+}

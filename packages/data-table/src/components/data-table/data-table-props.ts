@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -34,6 +34,13 @@ export interface IDataTableProps {
    * @controlName TextArea
    * @groupName Data */
   secondaryTableColumns: object[];
+
+  /**
+   * @shortDescription Enables custom, user friendly names for data keys
+   * @controlName TextArea
+   * @groupName Labels */
+  dataKeyNames: object;
+
   /**
    * @shortDescription When selected, applies compact height to rows of table
    * @controlName Toggle

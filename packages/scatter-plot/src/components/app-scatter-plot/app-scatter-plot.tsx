@@ -273,6 +273,11 @@ export class AppScatterPlot {
 
   @Element()
   appEl: HTMLElement;
+  dataKeyNames: any = {
+    group: 'Grouping',
+    value: 'Named Value'
+  };
+
   componentWillUpdate() {
     // console.log("will update", this.clickElement);
   }
@@ -516,16 +521,18 @@ export class AppScatterPlot {
             // groupAccessor={''}
             legend={{ visible: true, interactive: true }}
             dataLabel={this.dataLabel}
+            dataKeyNames={this.dataKeyNames}
             interactionKeys={this.interactionKeys}
             hoverHighlight={this.hoverElement}
             clickHighlight={this.clickElement}
             onClickEvent={d => this.onClickFunc(d)}
             onHoverEvent={d => this.onHoverFunc(d)}
             onMouseOutEvent={() => this.onMouseOut()}
-            onInitialLoadEvent={e => e} // console.log('load event', e.detail, e)}
-            onDrawStartEvent={e => e} // console.log('draw start event', e.detail, e)}
-            onDrawEndEvent={e => e} // console.log('draw end event', e.detail, e)}
-            onTransitionEndEvent={e => e} // console.log('transition event', e.detail, e)}
+            // onInitialLoadEvent={e => console.log('load event', e.detail, e)}
+            // onInitialLoadEndEvent={e => console.log('load end event', e.detail, e)}
+            // onDrawStartEvent={e => console.log('draw start event', e.detail, e)}
+            // onDrawEndEvent={e => console.log('draw end event', e.detail, e)}
+            // onTransitionEndEvent={e => console.log('transition event', e.detail, e)}
             // clickStyle={{
             //   strokeWidth: this.clickStrokeWidth,
             //   color: this.clickColor

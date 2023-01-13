@@ -19,7 +19,14 @@ import UtilsDev from '@visa/visa-charts-utils-dev';
 
 const { visaColors, getColors } = Utils;
 
-const { flushTransitions, unitTestGeneric, unitTestEvent, unitTestInteraction, unitTestTooltip } = UtilsDev;
+const {
+  flushTransitions,
+  unitTestAccessibility,
+  unitTestGeneric,
+  unitTestEvent,
+  unitTestInteraction,
+  unitTestTooltip
+} = UtilsDev;
 
 describe('<world-map />', () => {
   // TECH DEBT: Need to revisit class-logic-testing post PURE function refactor.
@@ -136,6 +143,246 @@ describe('<world-map />', () => {
     });
 
     describe('accessibility', () => {
+      describe('generic accessibility test suite', () => {
+        const accessibilityTestMarks = {
+          accessibility_keyboard_nav_right_arrow: {
+            name: 'keyboard nav: sibling - right arrow goes to next',
+            testSelector: '[data-testid=marker][data-id=marker-840]',
+            nextTestSelector: '[data-testid=marker][data-id=marker-024]',
+            keyDownObject: { key: 'ArrowRight', code: 'ArrowRight', keyCode: 39 },
+            testProps: {
+              selectorAriaLabel: 'Name USA. Birth Rate 50. Country Code 840. Marker 1 of 4.',
+              nextSelectorAriaLabel: 'Name Angola. Birth Rate 14.2. Country Code 024. Marker 2 of 4.',
+              accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true }
+            }
+          },
+          accessibility_keyboard_nav_right_arrow_loop: {
+            name: 'keyboard nav: sibling - right arrow goes to first from last',
+            testSelector: '[data-testid=marker][data-id=marker-304]',
+            nextTestSelector: '[data-testid=marker][data-id=marker-840]',
+            keyDownObject: { key: 'ArrowRight', code: 'ArrowRight', keyCode: 39 },
+            testProps: {
+              selectorAriaLabel: 'Greenland. 39.2. 304. Marker 4 of 4.',
+              nextSelectorAriaLabel: 'USA. 50. 840. Marker 1 of 4.'
+            }
+          },
+          accessibility_keyboard_nav_left_arrow_sibling: {
+            name: 'keyboard nav: sibling - left arrow goes to next',
+            testSelector: '[data-testid=marker][data-id=marker-024]',
+            nextTestSelector: '[data-testid=marker][data-id=marker-840]',
+            keyDownObject: { key: 'ArrowLeft', code: 'ArrowLeft', keyCode: 37 },
+            testProps: {
+              selectorAriaLabel: 'Name Angola. Birth Rate 14.2. Country Code 024. Marker 2 of 4.',
+              nextSelectorAriaLabel: 'Name USA. Birth Rate 50. Country Code 840. Marker 1 of 4.',
+              accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true }
+            }
+          },
+          accessibility_keyboard_nav_left_arrow_loop: {
+            name: 'keyboard nav: sibling - left arrow loops to last from first',
+            testSelector: '[data-testid=marker][data-id=marker-840]',
+            nextTestSelector: '[data-testid=marker][data-id=marker-304]',
+            keyDownObject: { key: 'ArrowLeft', code: 'ArrowLeft', keyCode: 37 },
+            testProps: {
+              selectorAriaLabel: 'USA. 50. 840. Marker 1 of 4.',
+              nextSelectorAriaLabel: 'Greenland. 39.2. 304. Marker 4 of 4.'
+            }
+          },
+          // accessibility_keyboard_nav_up_arrow_cousin: {
+          //   name: 'keyboard nav: cousin - up arrow goes to next',
+          //   testSelector: '[data-testid=marker][data-id=marker-B-4-2454]',
+          //   nextTestSelector: '[data-testid=marker][data-id=marker-A-1-2700]',
+          //   keyDownObject: { key: 'ArrowUp', code: 'ArrowUp', keyCode: 38 },
+          //   testProps: {
+          //     selectorAriaLabel: 'B. 4. 2.5k. Point 1 of 3.',
+          //     nextSelectorAriaLabel: 'A. 1. 2.7k. Point 1 of 3.'
+          //   }
+          // },
+          // accessibility_keyboard_nav_up_arrow_cousin_loop: {
+          //   name: 'keyboard nav: cousin - up arrow loops to last',
+          //   testSelector: '[data-testid=marker][data-id=marker-A-1-2700]',
+          //   nextTestSelector: '[data-testid=marker][data-id=marker-D-11-8845]',
+          //   keyDownObject: { key: 'ArrowUp', code: 'ArrowUp', keyCode: 38 },
+          //   testProps: {
+          //     selectorAriaLabel: 'A. 1. 2.7k. Point 1 of 3.',
+          //     nextSelectorAriaLabel: 'D. 11. 8.8k. Point 1 of 4.'
+          //   }
+          // },
+          // accessibility_keyboard_nav_down_arrow_cousin: {
+          //   name: 'keyboard nav: cousin - down arrow goes to next',
+          //   testSelector: '[data-testid=marker][data-id=marker-A-1-2700]',
+          //   nextTestSelector: '[data-testid=marker][data-id=marker-B-4-2454]',
+          //   keyDownObject: { key: 'ArrowDown', code: 'ArrowDown', keyCode: 40 },
+          //   testProps: {
+          //     selectorAriaLabel: 'A. 1. 2.7k. Point 1 of 3.',
+          //     nextSelectorAriaLabel: 'B. 4. 2.5k. Point 1 of 3.'
+          //   }
+          // },
+          // accessibility_keyboard_nav_down_arrow_cousin_loop: {
+          //   name: 'keyboard nav: cousin - down arrow loops to first',
+          //   testSelector: '[data-testid=marker][data-id=marker-D-11-8845]',
+          //   nextTestSelector: '[data-testid=marker][data-id=marker-A-1-2700]',
+          //   keyDownObject: { key: 'ArrowDown', code: 'ArrowDown', keyCode: 40 },
+          //   testProps: {
+          //     selectorAriaLabel: 'D. 11. 8.8k. Point 1 of 4.',
+          //     nextSelectorAriaLabel: 'A. 1. 2.7k. Point 1 of 3.'
+          //   }
+          // },
+          accessibility_keyboard_nav_shift_enter_to_group: {
+            name: 'keyboard nav: group - shift+enter will move up to group',
+            testSelector: '[data-testid=marker][data-id=marker-840]',
+            nextTestSelector: '[data-testid=marker-group]',
+            keyDownObject: { key: 'Enter', code: 'Enter', keyCode: 13, shiftKey: true },
+            testProps: {
+              selectorAriaLabel: 'USA. 50. 840. Marker 1 of 4.',
+              nextSelectorAriaLabel: 'Marker group which contains 4 interactive markers.'
+            }
+          }
+          // accessibility_keyboard_nav_enter_group: {
+          //   name: 'keyboard nav: group - enter will move into to group',
+          //   testSelector: '[data-testid=marker-series-group][data-id=marker-series-A]',
+          //   nextTestSelector: '[data-testid=marker][data-id=marker-A-1-2700]',
+          //   keyDownObject: { key: 'Enter', code: 'Enter', keyCode: 13 },
+          //   testProps: {
+          //     selectorAriaLabel: 'A. Scatter group 1 of 4 which contains 3 interactive points.',
+          //     nextSelectorAriaLabel: 'A. 1. 2.7k. Point 1 of 3.'
+          //   }
+          // }
+        };
+        Object.keys(unitTestAccessibility).forEach(test => {
+          const tempTestProps = unitTestAccessibility[test].testDefault
+            ? { [unitTestAccessibility[test].prop]: WorldMapDefaultValues[unitTestAccessibility[test].prop] }
+            : unitTestAccessibility[test].testProps;
+          const innerTestProps = {
+            ...tempTestProps,
+            markerStyle: { ...INTERACTIONTESTMARKERSTYLEVISIBLE, color: visaColors.oss_blue },
+            geometryType: 'Circle',
+            geometryPlacementAttributes: ['data-r', 'data-cx', 'data-cy'],
+            geometryAdjustmentValues: [
+              { f: 'data-r', b: 7, w: 3, s: -1 },
+              { f: 'data-cx', b: 7, w: 3, s: -1 },
+              { f: 'data-cy', b: 7 * 2, w: 3 * 2, s: 1 }
+            ],
+            annotations:
+              unitTestAccessibility[test].prop === 'annotations'
+                ? [
+                    {
+                      note: {
+                        label: 'items',
+                        bgPadding: 0,
+                        title: 'Test Annotation',
+                        align: 'left',
+                        wrap: 130
+                      },
+                      accessibilityDescription: 'This is a test description for accessibility.',
+                      x: 250,
+                      y: 250,
+                      className: 'world-map-annotation',
+                      type: 'annotationCalloutCircle',
+                      subject: { radius: 18 }
+                    },
+                    {
+                      note: {},
+                      accessibilityDecorationOnly: true,
+                      type: 'annotationXYThreshold',
+                      subject: {
+                        x1: 0,
+                        x2: 250
+                      },
+                      color: 'pri_blue',
+                      disable: ['note', 'connector']
+                    }
+                  ]
+                : []
+          };
+          const innerTestSelector =
+            unitTestAccessibility[test].testSelector === 'component-name'
+              ? 'world-map'
+              : unitTestAccessibility[test].testSelector === '[data-testid=controller]'
+              ? '.VCL-controller'
+              : unitTestAccessibility[test].testSelector === '[data-testid=svg]'
+              ? '[data-testid=root-svg]'
+              : unitTestAccessibility[test].testSelector === '[data-testid=padding]'
+              ? '[data-testid=padding-container]'
+              : unitTestAccessibility[test].testSelector === '[data-testid=mark]'
+              ? '[data-testid=marker]'
+              : unitTestAccessibility[test].testSelector === '[data-testid=group]'
+              ? '[data-testid=marker-group]'
+              : unitTestAccessibility[test].testSelector === '[data-id=mark-id]'
+              ? accessibilityTestMarks[test]
+                ? accessibilityTestMarks[test].testSelector
+                : '[data-testid=marker][data-id=marker-840]'
+              : unitTestAccessibility[test].testSelector;
+          const innerNextTestSelector =
+            unitTestAccessibility[test].nextTestSelector === '[data-id=mark-id]'
+              ? accessibilityTestMarks[test]
+                ? accessibilityTestMarks[test].nextTestSelector
+                : '[data-testid=marker][data-id=marker-024]'
+              : unitTestAccessibility[test].nextTestSelector === '[data-testid=svg]'
+              ? '[data-testid=root-svg]'
+              : unitTestAccessibility[test].nextTestSelector;
+          if (test === 'accessibility_keyboard_nav_generic_test') {
+            // run keyboard nav test for each scenario above
+            // skipping these by default as the target.focus() code in accessibilityController breaks them
+            Object.keys(accessibilityTestMarks).forEach(keyboardTest => {
+              it(`${unitTestAccessibility[test].prop}: ${accessibilityTestMarks[keyboardTest].name}`, () =>
+                unitTestAccessibility[test].testFunc(
+                  component,
+                  page,
+                  accessibilityTestMarks[keyboardTest].testProps
+                    ? { ...innerTestProps, ...accessibilityTestMarks[keyboardTest].testProps }
+                    : innerTestProps,
+                  accessibilityTestMarks[keyboardTest].testSelector,
+                  accessibilityTestMarks[keyboardTest].nextTestSelector,
+                  accessibilityTestMarks[keyboardTest].keyDownObject
+                ));
+            });
+          } else if (
+            test === 'accessibility_textures_on_by_default' ||
+            test === 'accessibility_categorical_textures_created_by_default' ||
+            test === 'accessibility_focus_marker_style' ||
+            // test === 'accessibility_focus_group_style' ||
+            test === 'accessibility_xaxis_description_set_on_load' ||
+            test === 'accessibility_xaxis_description_off_on_load' ||
+            test === 'accessibility_xaxis_description_added_on_update' ||
+            test === 'accessibility_yaxis_description_set_on_load' ||
+            test === 'accessibility_yaxis_description_off_on_load' ||
+            test === 'accessibility_yaxis_description_added_on_update'
+          ) {
+            it.skip(`${unitTestAccessibility[test].prop}: ${unitTestAccessibility[test].name}`, () =>
+              unitTestAccessibility[test].testFunc(
+                component,
+                page,
+                innerTestProps,
+                innerTestSelector,
+                innerNextTestSelector
+              ));
+          } else if (
+            test === 'accessibility_keyboard_selection_test' // update this test for single test review
+          ) {
+            it(`${unitTestAccessibility[test].prop}: ${unitTestAccessibility[test].name}`, () =>
+              unitTestAccessibility[test].testFunc(
+                component,
+                page,
+                { ...innerTestProps },
+                innerTestSelector,
+                innerNextTestSelector
+              ));
+            // skipping these by default as the target.focus() code in accessibilityController breaks them
+            // skipping texture default tests for scatter as scatter uses symbols instead of textures
+          } else {
+            // these tests can just be run straight away
+            it(`${unitTestAccessibility[test].prop}: ${unitTestAccessibility[test].name}`, () =>
+              unitTestAccessibility[test].testFunc(
+                component,
+                page,
+                innerTestProps,
+                innerTestSelector,
+                innerNextTestSelector
+              ));
+          }
+        });
+      });
+
       describe('validation', () => {
         it('refer to generic results above for accessibility validation tests', () => {
           expect(true).toBeTruthy();
@@ -152,6 +399,54 @@ describe('<world-map />', () => {
     describe('margin & padding', () => {
       it('refer to generic results above for margin & padding tests', () => {
         expect(true).toBeTruthy();
+      });
+    });
+
+    describe('annotations', () => {
+      // TODO: need to add more precise test case for annotations label and text
+      const annotations = [
+        {
+          note: {
+            label: 'Social Media Intern returned to college',
+            bgPadding: 20,
+            title: 'Staff Change',
+            align: 'middle',
+            wrap: 130
+          },
+          accessibilityDescription: 'This is an annotation that explains a drop in tweet ACTivity due to staff change.',
+          y: 200,
+          x: 200,
+          dy: 50,
+          type: 'annotationCallout',
+          connector: { end: 'dot', endScale: 10 },
+          color: 'pri_blue'
+        }
+      ];
+
+      it('should pass annotation prop on load', async () => {
+        // ARRANGE
+        component.annotations = annotations;
+
+        // ACT
+        page.root.append(component);
+        await page.waitForChanges();
+
+        // ASSERT
+        const annotationGroup = page.doc.querySelector('[data-testid=annotation-group]');
+        expect(annotationGroup).toMatchSnapshot();
+      });
+      it('should pass annotation prop on update', async () => {
+        // ACT
+        page.root.append(component);
+        await page.waitForChanges();
+
+        // UPDATE
+        component.annotations = annotations;
+        await page.waitForChanges();
+
+        // ASSERT
+        const annotationGroup = page.doc.querySelector('[data-testid=annotation-group]');
+        expect(annotationGroup).toMatchSnapshot();
       });
     });
 
@@ -1232,7 +1527,7 @@ describe('<world-map />', () => {
             tooltip_tooltipLabel_custom_format_update: tooltip2
           };
           const innerTooltipContent = {
-            tooltip_tooltipLabel_default: '<p style="margin: 0;"><b>USA (840)</b><br>Birth Rate:<b>50</b></p>',
+            tooltip_tooltipLabel_default: '<p style="margin: 0;"><b></b><b>USA (840)</b><br>Birth Rate:<b>50</b></p>',
             tooltip_tooltipLabel_custom_load: '<p style="margin: 0;">Testing123:<b>USA</b><br></p>',
             tooltip_tooltipLabel_custom_update: '<p style="margin: 0;">Testing123:<b>USA</b><br></p>',
             tooltip_tooltipLabel_custom_format_load:
@@ -1241,15 +1536,16 @@ describe('<world-map />', () => {
               '<p style="margin: 0;">Testing123:<b>USA</b><br>Rate:<b>$50</b><br></p>'
           };
           const innerTestProps = { ...unitTestTooltip[test].testProps, ...innerTooltipProps[test] };
-
-          it(`${unitTestTooltip[test].prop}: ${unitTestTooltip[test].name}`, () =>
-            unitTestTooltip[test].testFunc(
-              component,
-              page,
-              innerTestProps,
-              innerTestSelector,
-              innerTooltipContent[test]
-            ));
+          if (test !== 'dataKeyNames_custom_on_load' && test !== 'dataKeyNames_custom_on_update') {
+            it(`${unitTestTooltip[test].prop}: ${unitTestTooltip[test].name}`, () =>
+              unitTestTooltip[test].testFunc(
+                component,
+                page,
+                innerTestProps,
+                innerTestSelector,
+                innerTooltipContent[test]
+              ));
+          }
         });
       });
       describe('custom tooltip test for paths', () => {
@@ -1292,28 +1588,52 @@ describe('<world-map />', () => {
             tooltip_tooltipLabel_custom_format_update: tooltip2
           };
           const innerTooltipContent = {
-            tooltip_tooltipLabel_default: '<p style="margin: 0;"><b>USA (840)</b><br>Birth Rate:<b>50</b></p>',
+            tooltip_tooltipLabel_default: '<p style="margin: 0;"><b></b><b>USA (840)</b><br>Birth Rate:<b>50</b></p>',
             tooltip_tooltipLabel_custom_load: '<p style="margin: 0;">Testing123:<b>USA</b><br></p>',
             tooltip_tooltipLabel_custom_update: '<p style="margin: 0;">Testing123:<b>USA</b><br></p>',
             tooltip_tooltipLabel_custom_format_load:
               '<p style="margin: 0;">Testing123:<b>USA</b><br>Rate:<b>$50</b><br></p>',
             tooltip_tooltipLabel_custom_format_update:
-              '<p style="margin: 0;">Testing123:<b>USA</b><br>Rate:<b>$50</b><br></p>'
+              '<p style="margin: 0;">Testing123:<b>USA</b><br>Rate:<b>$50</b><br></p>',
+            dataKeyNames_custom_on_load:
+              '<p style="margin: 0;"><b></b><b>USA (840)</b><br>Test Birth Rate:<b>50</b></p>',
+            dataKeyNames_custom_on_update:
+              '<p style="margin: 0;"><b></b><b>USA (840)</b><br>Test Birth Rate:<b>50</b></p>'
+          };
+          const innerAriaContent = {
+            dataKeyNames_custom_on_load: 'Name USA. Test Birth Rate 50. Country Code 840. Marker 1 of 4.',
+            dataKeyNames_custom_on_update: 'Name USA. Test Birth Rate 50. Country Code 840. Marker 1 of 4.'
           };
           const innerTestProps = {
             ...unitTestTooltip[test].testProps,
             ...innerTooltipProps[test],
             markerStyle: DEFAULTMARKERSTYLEVISIBLE
           };
-
-          it(`${unitTestTooltip[test].prop}: ${unitTestTooltip[test].name}`, () =>
-            unitTestTooltip[test].testFunc(
-              component,
-              page,
-              innerTestProps,
-              innerTestSelector,
-              innerTooltipContent[test]
-            ));
+          const customDataKeyNames = { dataKeyNames: { ['Birth Rate']: 'Test Birth Rate' } };
+          if (test === 'dataKeyNames_custom_on_load' || test === 'dataKeyNames_custom_on_update') {
+            it(`${unitTestTooltip[test].prop}: ${unitTestTooltip[test].name}`, () =>
+              unitTestTooltip[test].testFunc(
+                component,
+                page,
+                {
+                  ...innerTestProps,
+                  ...customDataKeyNames,
+                  accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true },
+                  selectorAriaLabel: innerAriaContent[test]
+                },
+                innerTestSelector,
+                innerTooltipContent[test]
+              ));
+          } else {
+            it(`${unitTestTooltip[test].prop}: ${unitTestTooltip[test].name}`, () =>
+              unitTestTooltip[test].testFunc(
+                component,
+                page,
+                innerTestProps,
+                innerTestSelector,
+                innerTooltipContent[test]
+              ));
+          }
         });
       });
     });

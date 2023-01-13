@@ -1,5 +1,309 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`<world-map /> rendered-html accessibility generic accessibility test suite accessibility: keyboard instruction component displays table in click state 1`] = `
+<div class="visa-viz-keyboard-instructions-container" id="visa-viz-keyboard-instructions-container-snapshot-test-1">
+  <div>
+    <p>
+      Note: for VoiceOver users (mac), press and hold
+      <kbd>
+        Ctrl
+      </kbd>
+      +
+      <kbd>
+        Shift
+      </kbd>
+      when using the arrow keys for the best navigation experience.
+    </p>
+    <table class="vcc-ki-data-table vcc-ki-keyboard-instructions vcc-ki-state--compact vcc-ki-state--single-select" data-header="header">
+      <thead class="vcc-ki-thead">
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-th" scope="col">
+            Action
+          </th>
+          <th class="vcc-ki-th" scope="col">
+            Result
+          </th>
+        </tr>
+      </thead>
+      <tbody class="vcc-ki-tbody">
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Enter
+            </kbd>
+            on the chart area or a marker group.
+          </th>
+          <td class="vcc-ki-td">
+            Enter the chart area/drill down a level.
+          </td>
+        </tr>
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Shift
+            </kbd>
+            +
+            <kbd>
+              Enter
+            </kbd>
+            on a marker group or marker.
+          </th>
+          <td class="vcc-ki-td">
+            Drill up a level.
+          </td>
+        </tr>
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Tab
+            </kbd>
+            at any time.
+          </th>
+          <td class="vcc-ki-td">
+            Exit the chart.
+          </td>
+        </tr>
+        <tr class="vcc-ki-disabled-row vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Space
+            </kbd>
+            is unused.
+          </th>
+          <td class="vcc-ki-td">
+            No effect on this chart.
+          </td>
+        </tr>
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              ←
+            </kbd>
+            /
+            <kbd>
+              →
+            </kbd>
+            on a marker group or marker.
+          </th>
+          <td class="vcc-ki-td">
+            Move among sibling marker groups or markers.
+          </td>
+        </tr>
+        <tr class="vcc-ki-disabled-row vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              ↑
+            </kbd>
+            /
+            <kbd>
+              ↓
+            </kbd>
+            are unused.
+          </th>
+          <td class="vcc-ki-td">
+            No effect on this chart.
+          </td>
+        </tr>
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Esc
+            </kbd>
+            at any time.
+          </th>
+          <td class="vcc-ki-td">
+            Dismiss the tooltip.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+`;
+
+exports[`<world-map /> rendered-html accessibility generic accessibility test suite accessibility: keyboard instruction component displays table in click state with space enabled 1`] = `
+<div class="visa-viz-keyboard-instructions-container" id="visa-viz-keyboard-instructions-container-snapshot-test-1">
+  <div>
+    <p>
+      Note: for VoiceOver users (mac), press and hold
+      <kbd>
+        Ctrl
+      </kbd>
+      +
+      <kbd>
+        Shift
+      </kbd>
+      when using the arrow keys for the best navigation experience.
+    </p>
+    <table class="vcc-ki-data-table vcc-ki-keyboard-instructions vcc-ki-state--compact vcc-ki-state--single-select" data-header="header">
+      <thead class="vcc-ki-thead">
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-th" scope="col">
+            Action
+          </th>
+          <th class="vcc-ki-th" scope="col">
+            Result
+          </th>
+        </tr>
+      </thead>
+      <tbody class="vcc-ki-tbody">
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Enter
+            </kbd>
+            on the chart area or a marker group.
+          </th>
+          <td class="vcc-ki-td">
+            Enter the chart area/drill down a level.
+          </td>
+        </tr>
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Shift
+            </kbd>
+            +
+            <kbd>
+              Enter
+            </kbd>
+            on a marker group or marker.
+          </th>
+          <td class="vcc-ki-td">
+            Drill up a level.
+          </td>
+        </tr>
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Tab
+            </kbd>
+            at any time.
+          </th>
+          <td class="vcc-ki-td">
+            Exit the chart.
+          </td>
+        </tr>
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Space
+            </kbd>
+            on a marker.
+          </th>
+          <td class="vcc-ki-td">
+            Select/Deselect a marker.
+          </td>
+        </tr>
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              ←
+            </kbd>
+            /
+            <kbd>
+              →
+            </kbd>
+            on a marker group or marker.
+          </th>
+          <td class="vcc-ki-td">
+            Move among sibling marker groups or markers.
+          </td>
+        </tr>
+        <tr class="vcc-ki-disabled-row vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              ↑
+            </kbd>
+            /
+            <kbd>
+              ↓
+            </kbd>
+            are unused.
+          </th>
+          <td class="vcc-ki-td">
+            No effect on this chart.
+          </td>
+        </tr>
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Esc
+            </kbd>
+            at any time.
+          </th>
+          <td class="vcc-ki-td">
+            Dismiss the tooltip.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+`;
+
+exports[`<world-map /> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: test whether space bar performs click action 1`] = `<circle class="marker vcl-accessibility-focus-source" cursor="default" cx="106.92563458682301" cy="106.64431124026817" data-cx="106.9256" data-cy="106.6443" data-fill="true" data-id="marker-840" data-r="5" data-role="img" data-testid="marker" data-translate-x="15" data-translate-y="16" fill="#0051dc" fill-opacity="1" filter="url(#VCL-t-s-f-ffffff1snapshot-test-11)" focusable="false" id="chart-unit-test-123457-123457-123457" r="0" role="presentation" stroke="#85b2ff" stroke-dasharray="" stroke-opacity="1" stroke-width="1" tabindex="-1" style="mix-blend-mode: normal;"></circle>`;
+
+exports[`<world-map /> rendered-html annotations should pass annotation prop on load 1`] = `
+<g aria-hidden="true" class="vcl-annotation-group" data-testid="annotation-group" focusable="false" role="presentation">
+  <g class="annotations">
+    <g class="annotation callout" transform="translate(200, 200)">
+      <g class="annotation-connector">
+        <path class="connector" d="M0,0L0,50" fill="none" stroke="pri_blue"></path>
+        <path class="connector-dot connector-end" d="M5.809009821810581e-16,-9.486832980505138A9.486832980505138,9.486832980505138,0,1,1,-5.809009821810581e-16,9.486832980505138A9.486832980505138,9.486832980505138,0,1,1,5.809009821810581e-16,-9.486832980505138Z" fill="pri_blue" stroke="pri_blue" transform="translate(0, 0)"></path>
+      </g>
+      <g class="annotation-subject"></g>
+      <g class="annotation-note" transform="translate(0, 50)">
+        <g class="annotation-note-content" transform="translate(-5, 3)">
+          <rect class="annotation-note-bg" fill="white" fill-opacity="0" height="50" width="50" x="-20" y="-20"></rect>
+          <text class="annotation-note-label" dx="0" fill="pri_blue" y="11">
+            <tspan dy="0.8em" x="0">
+              Social Media Intern returned to college
+            </tspan>
+          </text>
+          <text class="annotation-note-title" fill="pri_blue" font-weight="bold">
+            <tspan dy="0.8em" x="0">
+              Staff Change
+            </tspan>
+          </text>
+        </g>
+        <path class="note-line" d="M-5,0L5,0" stroke="pri_blue"></path>
+      </g>
+    </g>
+  </g>
+</g>
+`;
+
+exports[`<world-map /> rendered-html annotations should pass annotation prop on update 1`] = `
+<g aria-hidden="true" class="vcl-annotation-group" data-testid="annotation-group" focusable="false" role="presentation">
+  <g class="annotations">
+    <g class="annotation callout" transform="translate(200, 200)">
+      <g class="annotation-connector">
+        <path class="connector" d="M0,0L0,50" fill="none" stroke="pri_blue"></path>
+        <path class="connector-dot connector-end" d="M5.809009821810581e-16,-9.486832980505138A9.486832980505138,9.486832980505138,0,1,1,-5.809009821810581e-16,9.486832980505138A9.486832980505138,9.486832980505138,0,1,1,5.809009821810581e-16,-9.486832980505138Z" fill="pri_blue" stroke="pri_blue" transform="translate(0, 0)"></path>
+      </g>
+      <g class="annotation-subject"></g>
+      <g class="annotation-note" transform="translate(0, 50)">
+        <g class="annotation-note-content" transform="translate(-5, 3)">
+          <rect class="annotation-note-bg" fill="white" fill-opacity="0" height="50" width="50" x="-20" y="-20"></rect>
+          <text class="annotation-note-label" dx="0" fill="pri_blue" y="11">
+            <tspan dy="0.8em" x="0">
+              Social Media Intern returned to college
+            </tspan>
+          </text>
+          <text class="annotation-note-title" fill="pri_blue" font-weight="bold">
+            <tspan dy="0.8em" x="0">
+              Staff Change
+            </tspan>
+          </text>
+        </g>
+        <path class="note-line" d="M-5,0L5,0" stroke="pri_blue"></path>
+      </g>
+    </g>
+  </g>
+</g>
+`;
+
 exports[`<world-map /> rendered-html event-emitter generic event testing marker based events [event] clickEvent: event object should emit and contain first data record when first mark is clicked 1`] = `<circle class="marker" cursor="default" cx="106.92563458682301" cy="106.64431124026817" data-cx="106.92563458682301" data-cy="106.64431124026817" data-fill="true" data-id="marker-840" data-r="5" data-role="img" data-testid="marker" data-translate-x="15" data-translate-y="16" fill="#554f87" fill-opacity="1" filter="url(#VCL-t-s-f-ffffff1snapshot-test-11)" focusable="false" id="snapshot-test-1-123457-123457-123457" r="5" role="presentation" stroke="#554f87" stroke-dasharray="" stroke-opacity="1" stroke-width="1" tabindex="-1" style="mix-blend-mode: normal;"></circle>`;
 
 exports[`<world-map /> rendered-html event-emitter generic event testing marker based events [event] hoverEvent: event object should emit and contain first data record when first mark is hovered 1`] = `<circle class="marker" cursor="default" cx="106.92563458682301" cy="106.64431124026817" data-cx="106.92563458682301" data-cy="106.64431124026817" data-fill="true" data-id="marker-840" data-r="5" data-role="img" data-testid="marker" data-translate-x="15" data-translate-y="16" fill="#554f87" fill-opacity="1" filter="url(#VCL-t-s-f-ffffff1snapshot-test-11)" focusable="false" id="snapshot-test-1-123457-123457-123457" r="5" role="presentation" stroke="#554f87" stroke-dasharray="" stroke-opacity="1" stroke-width="1" tabindex="-1" style="mix-blend-mode: normal;"></circle>`;
@@ -99,7 +403,6 @@ exports[`<world-map /> rendered-html render should render with minimal props giv
       <p class="screen-reader-info vcl-access-xAxis"></p>
       <p class="screen-reader-info vcl-access-yAxis"></p>
       <p class="screen-reader-info vcl-access-notes" data-annotationlevel="h3" data-level="h4"></p>
-      <h3 class="screen-reader-info vcl-access-annotations-heading"></h3>
     </div>
     <div class="o-layout--chart">
       <h2 aria-hidden="true" class="vcl-main-title world-map-main-title" data-testid="main-title">
@@ -436,6 +739,8 @@ exports[`<world-map /> rendered-html render should render with minimal props giv
                 <text class="world-map-dataLabel" cursor="default" data-id="label-076" data-testid="dataLabel" data-translate-x="15" data-translate-y="16" data-use-dy="false" data-x="164.82825378525303" data-y="203.36103904416487" dy="0" opacity="0" text-anchor="middle" x="164.82825378525303" y="203.36103904416487"></text>
                 <text class="world-map-dataLabel" cursor="default" data-id="label-304" data-testid="dataLabel" data-translate-x="15" data-translate-y="16" data-use-dy="false" data-x="199.2271944484533" data-y="72.96701727530966" dy="0" opacity="0" text-anchor="middle" x="199.2271944484533" y="72.96701727530966"></text>
               </g>
+              <g aria-hidden="true" class="vcl-annotation-group" data-testid="annotation-group" focusable="false" role="presentation"></g>
+              <g aria-hidden="true" class="editable vcl-annotation-group" data-testid="editable-annotation-group" focusable="false" role="presentation"></g>
             </g>
           </g>
           <defs data-testid="pattern-defs">

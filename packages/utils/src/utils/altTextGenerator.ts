@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2021 Visa, Inc.
+ * Copyright (c) 2021, 2022 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -16,6 +16,7 @@ export const createLabel = ({
   capitalizedGroupName,
   includeKeyNames,
   dataKeys,
+  dataKeyNames,
   groupKeys,
   nested,
   recursive
@@ -27,6 +28,7 @@ export const createLabel = ({
   capitalizedGroupName: string;
   includeKeyNames: boolean;
   dataKeys: any;
+  dataKeyNames?: object;
   groupKeys?: any;
   nested?: string;
   recursive?: boolean;
@@ -36,7 +38,7 @@ export const createLabel = ({
   if (nested) {
     if (datum[nested].length) {
       datum[nested].forEach(child => {
-        label += iterateKeys(child, dataKeys, includeKeyNames, true);
+        label += iterateKeys(child, dataKeys, dataKeyNames, includeKeyNames, true);
       });
     }
     if (groupKeys && groupKeys.length) {
@@ -45,7 +47,7 @@ export const createLabel = ({
       });
     }
   } else {
-    label += iterateKeys(datum, dataKeys, includeKeyNames);
+    label += iterateKeys(datum, dataKeys, dataKeyNames, includeKeyNames);
   }
   label += capitalizedGeomType + ' ' + (i + 1) + ' of ' + n.length + '.';
   if (recursive) {
@@ -70,6 +72,7 @@ export const createGroupLabel = ({
   index,
   groupAccessor,
   groupKeys,
+  dataKeyNames,
   siblings,
   isOffsetGroup,
   includeKeyNames,
@@ -82,6 +85,7 @@ export const createGroupLabel = ({
   index: number;
   groupAccessor: string;
   groupKeys: any;
+  dataKeyNames?: object;
   siblings: any;
   isOffsetGroup: boolean;
   includeKeyNames: boolean;
@@ -100,7 +104,13 @@ export const createGroupLabel = ({
     const firstChild = targetNode.querySelectorAll('*:not(.vcl-accessibility-focus-highlight)')[0];
     let groupData =
       firstChild && firstChild['__data__']
-        ? includeKeyNames && groupAccessor && firstChild['__data__'][groupAccessor]
+        ? includeKeyNames &&
+          groupAccessor &&
+          dataKeyNames &&
+          firstChild['__data__'][groupAccessor] &&
+          dataKeyNames[groupAccessor]
+          ? dataKeyNames[groupAccessor] + ' ' + firstChild['__data__'][groupAccessor] + '. '
+          : includeKeyNames && groupAccessor && firstChild['__data__'][groupAccessor]
           ? groupAccessor + ' ' + firstChild['__data__'][groupAccessor] + '. '
           : firstChild['__data__'][groupAccessor] + '. '
         : '';
@@ -138,7 +148,13 @@ export const createGroupLabel = ({
   }
 };
 
-const iterateKeys = (item: any, objectOfDataKeys: any, includeKeyNames: boolean, nested?: boolean) => {
+const iterateKeys = (
+  item: any,
+  objectOfDataKeys: any,
+  dataKeyNames: object,
+  includeKeyNames: boolean,
+  nested?: boolean
+) => {
   const dataKeys = Object.keys(objectOfDataKeys);
   let label = '';
   const datum = !item.data
@@ -146,17 +162,18 @@ const iterateKeys = (item: any, objectOfDataKeys: any, includeKeyNames: boolean,
     : getScopedData([item.data], objectOfDataKeys)[0];
   let keyPosition = 1;
   dataKeys.forEach(key => {
+    const mappedKeyName = dataKeyNames && dataKeyNames[key] ? dataKeyNames[key] : key;
     if (datum[key] !== undefined) {
       const keyEnding = typeof datum[key] === 'string' && datum[key][datum[key].length - 1] === '.' ? ' ' : '. ';
       if (!(nested && !includeKeyNames)) {
-        label += includeKeyNames ? key + ' ' : '';
+        label += includeKeyNames ? mappedKeyName + ' ' : '';
         label += datum[key] + keyEnding;
       } else {
         label += datum[key] + (keyPosition % 2 ? ' ' : keyEnding);
       }
       if (datum[key + '%'] !== undefined) {
         const percentKeyEnding = datum[key + '%'][datum[key + '%'].length - 1] === '.' ? ' ' : '. ';
-        label += includeKeyNames ? key + ' as a percentage ' : '';
+        label += includeKeyNames ? mappedKeyName + ' as a percentage ' : '';
         label += datum[key + '%'] + percentKeyEnding;
       }
       keyPosition++;

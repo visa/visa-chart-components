@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="144px" height="113px" viewBox="0 0 144 113" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 58 (84663) - https://sketch.com -->
+    <title>line-chart</title>
+    <desc>Created with Sketch.</desc>
+    <g id="line-chart" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-2" transform="translate(0.000000, 1.000000)">
+            <polyline id="Path" stroke="#363636" stroke-width="2" points="5.08064516 96.9716755 49.5362903 44.8702046 93.9919355 44.5696456 138.447581 22.2173912"></polyline>
+            <polyline id="Path" stroke="#7FA8ED" stroke-width="2" points="5.08064516 56.1966114 49.5362903 60.727174 93.9919355 65.2577367 138.447581 106.032801"></polyline>
+            <polyline id="Path" stroke="#0051DC" stroke-width="2" points="5.08064516 74.3188621 49.5362903 19.9521099 93.9919355 22.2173912 138.447581 6.36042184"></polyline>
+            <circle id="Oval" fill="#363636" fill-rule="nonzero" cx="5.08064516" cy="96.9716755" r="5.08064516"></circle>
+            <circle id="Oval" fill="#363636" fill-rule="nonzero" cx="49.5362903" cy="44.8702046" r="5.08064516"></circle>
+            <circle id="Oval" fill="#363636" fill-rule="nonzero" cx="93.9919355" cy="44.5696456" r="5.08064516"></circle>
+            <circle id="Oval" fill="#363636" fill-rule="nonzero" cx="138.447581" cy="22.2173912" r="5.08064516"></circle>
+            <circle id="Oval-Copy" fill="#0051DC" fill-rule="nonzero" cx="5.08064516" cy="73.3291084" r="5.08064516"></circle>
+            <circle id="Oval-Copy-2" fill="#0051DC" fill-rule="nonzero" cx="49.5362903" cy="20.436855" r="5.08064516"></circle>
+            <circle id="Oval-Copy-3" fill="#0051DC" fill-rule="nonzero" cx="93.9919355" cy="22.2173912" r="5.08064516"></circle>
+            <circle id="Oval-Copy-4" fill="#0051DC" fill-rule="nonzero" cx="138.447581" cy="5.50978029" r="5.08064516"></circle>
+            <circle id="Oval" fill="#7FA8ED" fill-rule="nonzero" cx="5.08064516" cy="56.1966114" r="5.08064516"></circle>
+            <circle id="Oval" fill="#7FA8ED" fill-rule="nonzero" cx="49.5362903" cy="60.727174" r="5.08064516"></circle>
+            <circle id="Oval" fill="#7FA8ED" fill-rule="nonzero" cx="93.9919355" cy="65.2577367" r="5.08064516"></circle>
+            <circle id="Oval" fill="#7FA8ED" fill-rule="nonzero" cx="138.447581" cy="106.032801" r="5.08064516"></circle>
+        </g>
+    </g>
+</svg>

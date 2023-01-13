@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "allowUnreachableCode": false,
+    "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "lib": ["es2016", "DOM"],
+    "moduleResolution": "node",
+    "noImplicitAny": false,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "outDir": "dist",
+    "removeComments": false,
+    "resolveJsonModule": true,
+    "sourceMap": true,
+    "jsx": "react",
+    "target": "es2016",
+    "typeRoots": ["./node_modules/@types", "./node_modules/@figma"],
+    "skipLibCheck": true
+  },
+  "include": ["src/**/*.js", "src/**/*.ts", "src/**/*.tsx"],
+  "exclude": ["**/__tests__/**"],
+  "compileOnSave": false,
+  "buildOnSave": false
+}

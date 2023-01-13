@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -50,6 +50,7 @@ export class LineChartDefaultValues {
   static readonly cursor = propDefaultValues.cursor;
 
   static readonly dataLabel = propDefaultValues.dataLabelLine;
+  static readonly dataKeyNames;
   static readonly seriesLabel = propDefaultValues.seriesLabel;
   static readonly legend = propDefaultValues.categoryLegend;
   static readonly tooltipLabel = propDefaultValues.tooltipLabel;

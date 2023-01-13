@@ -98,6 +98,7 @@ export class ParallelPlot {
   @Event() hoverEvent: EventEmitter;
   @Event() mouseOutEvent: EventEmitter;
   @Event() initialLoadEvent: EventEmitter;
+  @Event() initialLoadEndEvent: EventEmitter;
   @Event() drawStartEvent: EventEmitter;
   @Event() drawEndEvent: EventEmitter;
   @Event() transitionEndEvent: EventEmitter;
@@ -139,6 +140,7 @@ export class ParallelPlot {
 
   // Data label (5/7)
   @Prop({ mutable: true }) dataLabel: IDataLabelType = ParallelPlotDefaultValues.dataLabel;
+  @Prop({ mutable: true }) dataKeyNames: object;
   @Prop({ mutable: true }) showTooltip: boolean = ParallelPlotDefaultValues.showTooltip;
   @Prop({ mutable: true }) tooltipLabel: ITooltipLabelType = ParallelPlotDefaultValues.tooltipLabel;
   @Prop({ mutable: true }) accessibility: IAccessibilityType = ParallelPlotDefaultValues.accessibility;
@@ -688,6 +690,8 @@ export class ParallelPlot {
   @Watch('tooltipLabel')
   tooltipLabelWatcher(_newVal, _oldVal) {
     this.shouldUpdateTableData = true;
+    this.shouldSetParentSVGAccessibility = true;
+    this.shouldSetGeometryAriaLabels = true;
   }
 
   @Watch('showTooltip')
@@ -815,6 +819,7 @@ export class ParallelPlot {
   annotationsWatcher(_newVal, _oldVal) {
     this.shouldValidate = true;
     this.shouldUpdateAnnotations = true;
+    this.shouldSetAnnotationAccessibility = true;
   }
 
   @Watch('maxValueOverride')
@@ -896,6 +901,17 @@ export class ParallelPlot {
     this.shouldUpdateColors = true;
     this.shouldBindInteractivity = true;
     this.shouldUpdateCursor = true;
+  }
+
+  @Watch('dataKeyNames')
+  dataKeyNamesWatcher(_newVal, _oldVal) {
+    this.shouldUpdateXAxis = true;
+    this.shouldSetXAxisAccessibility = true;
+    this.shouldUpdateYAxis = true;
+    this.shouldSetYAxisAccessibility = true;
+    this.shouldSetParentSVGAccessibility = true;
+    this.shouldSetGroupAccessibilityLabel = true;
+    this.shouldSetGeometryAriaLabels = true;
   }
 
   @Watch('suppressEvents')
@@ -1023,7 +1039,7 @@ export class ParallelPlot {
       this.onChangeHandler();
       this.defaults = false;
       resolve('component did load');
-    });
+    }).then(() => this.initialLoadEndEvent.emit({ chartID: this.chartID }));
   }
 
   componentDidUpdate() {
@@ -1303,9 +1319,22 @@ export class ParallelPlot {
     this.colorArr = adjustedColors;
   }
 
+  innerScopeDataKeys() {
+    // generate scoped and formatted data for data-table component
+    // we also scope singleAccessor array in chartAccessors based on what is actually in the data
+    const innerChartSingleAccessors = [];
+    chartAccessors.singleAccessors.forEach(accessor => {
+      if (this[accessor] && min(this.data, d => d[this[accessor]]) !== undefined) {
+        innerChartSingleAccessors.push(accessor);
+      }
+    });
+    const innerChartAccessors = { ...chartAccessors, singleAccessors: innerChartSingleAccessors };
+    return scopeDataKeys(this, innerChartAccessors, 'parallel-plot');
+  }
+
   setTableData() {
     // generate scoped and formatted data for data-table component
-    const keys = scopeDataKeys(this, chartAccessors, 'parallel-plot');
+    const keys = this.innerScopeDataKeys();
     this.tableData = getScopedData(this.data, keys);
     this.tableColumns = Object.keys(keys);
   }
@@ -1698,6 +1727,13 @@ export class ParallelPlot {
 
   // draw axis line
   drawXAxis() {
+    const axisLabel =
+      this.xAxis.label || this.xAxis.label === ''
+        ? this.xAxis.label
+        : this.dataKeyNames && this.dataKeyNames[this.ordinalAccessor]
+        ? this.dataKeyNames[this.ordinalAccessor]
+        : this.xAxis.label;
+
     const bandWidth = (this.innerPaddedWidth / this.nest[0].values.length) * 0.7;
     drawAxis({
       root: this.rootG,
@@ -1708,7 +1744,7 @@ export class ParallelPlot {
       wrapLabel: this.wrapLabel ? bandWidth : '',
       format: this.xAxis.format,
       tickInterval: this.xAxis.tickInterval,
-      label: this.xAxis.label,
+      label: axisLabel, // this.xAxis.label,
       padding: this.padding,
       hide: !this.xAxis.visible,
       duration: this.duration,
@@ -1733,6 +1769,13 @@ export class ParallelPlot {
   }
 
   drawYAxis() {
+    const axisLabel =
+      this.yAxis.label && this.yAxis.label !== ''
+        ? this.yAxis.label
+        : this.dataKeyNames && this.dataKeyNames[this.valueAccessor]
+        ? this.dataKeyNames[this.valueAccessor]
+        : this.yAxis.label;
+
     this.yUpdate
       .each((d, i, n) => {
         const ticks =
@@ -1753,7 +1796,7 @@ export class ParallelPlot {
           wrapLabel: this.wrapLabel ? this.padding.left : '',
           format: this.yAxis.format,
           tickInterval: ticks ? 1 : this.yAxis.tickInterval,
-          label: this.yAxis.scales === 'individual' || hideMe ? '' : this.yAxis.label,
+          label: this.yAxis.scales === 'individual' || hideMe ? '' : axisLabel, // this.yAxis.label,
           padding: this.padding,
           hide: hideMe,
           hidePath: true,
@@ -1769,21 +1812,42 @@ export class ParallelPlot {
   }
 
   setXAxisAccessibility() {
+    const axisLabel =
+      this.xAxis.label || this.xAxis.label === ''
+        ? this.xAxis.label
+        : this.dataKeyNames && this.dataKeyNames[this.ordinalAccessor]
+        ? this.dataKeyNames[this.ordinalAccessor]
+        : this.xAxis.label;
+
     setAccessXAxis({
       rootEle: this.parallelChartEl,
       hasXAxis: this.xAxis ? this.xAxis.visible : false,
       xAxis: this.x ? this.x : false, // this is optional for some charts, if hasXAxis is always false
-      xAxisLabel: this.xAxis.label ? this.xAxis.label : '' // this is optional for some charts, if hasXAxis is always false
+      xAxisLabel: axisLabel ? axisLabel : '' // this is optional for some charts, if hasXAxis is always false
     });
   }
 
   setYAxisAccessibility() {
+    const axisLabelX =
+      this.xAxis.label || this.xAxis.label === ''
+        ? this.xAxis.label
+        : this.dataKeyNames && this.dataKeyNames[this.ordinalAccessor]
+        ? this.dataKeyNames[this.ordinalAccessor]
+        : this.xAxis.label;
+
+    const axisLabel =
+      this.yAxis.label && this.yAxis.label !== ''
+        ? this.yAxis.label
+        : this.dataKeyNames && this.dataKeyNames[this.valueAccessor]
+        ? this.dataKeyNames[this.valueAccessor]
+        : this.yAxis.label;
+
     setAccessYAxis({
       rootEle: this.parallelChartEl,
       hasYAxis: this.yAxis ? this.yAxis.visible : false,
       yAxis: this.y ? this.y : false, // this is optional for some charts, if hasXAxis is always false
-      yAxisLabel: this.yAxis.label ? this.yAxis.label : '', // this is optional for some charts, if hasXAxis is always false
-      xAxisLabel: this.xAxis.label ? this.xAxis.label : '' // parallel uses this to label all the y axes
+      yAxisLabel: axisLabel ? axisLabel : '', // this is optional for some charts, if hasXAxis is always false
+      xAxisLabel: axisLabelX ? axisLabelX : '' // parallel uses this to label all the y axes
     });
   }
 
@@ -2400,6 +2464,8 @@ export class ParallelPlot {
           ? ''
           : this.labelDetails.label
           ? this.labelDetails.label[i]
+          : !d.key || d.key === 'undefined'
+          ? ''
           : d.key
       )
       .style('visibility', (_, i, n) =>
@@ -3543,7 +3609,8 @@ export class ParallelPlot {
       uniqueID: this.chartID,
       geomType: 'point',
       includeKeyNames: this.accessibility.includeDataKeyNames,
-      dataKeys: scopeDataKeys(this, chartAccessors, 'parallel-plot'),
+      dataKeys: this.innerScopeDataKeys(),
+      dataKeyNames: this.dataKeyNames,
       groupAccessor: this.seriesAccessor,
       groupName: 'line',
       disableKeyNav:
@@ -3563,13 +3630,14 @@ export class ParallelPlot {
 
   setGeometryAriaLabels() {
     // this adds an ARIA label to each geom (a description read by screen readers)
-    const keys = scopeDataKeys(this, chartAccessors, 'parallel-plot');
+    const keys = this.innerScopeDataKeys();
     this.updateDots.each((_d, i, n) => {
       setElementFocusHandler({
         node: n[i],
         geomType: 'point',
         includeKeyNames: this.accessibility.includeDataKeyNames,
         dataKeys: keys,
+        dataKeyNames: this.dataKeyNames,
         groupName: 'line',
         uniqueID: this.chartID,
         disableKeyNav:
@@ -3696,6 +3764,7 @@ export class ParallelPlot {
       xAxis: this.xAxis,
       yAxis: this.yAxis,
       dataLabel: this.dataLabel,
+      dataKeyNames: this.dataKeyNames,
       ordinalAccessor: this.ordinalAccessor,
       valueAccessor: this.valueAccessor,
       groupAccessor: this.seriesAccessor,
@@ -3736,6 +3805,13 @@ export class ParallelPlot {
   }
 
   drawLegendElements() {
+    // if we have default series access and it is not in the data don't show legend
+    const noSeriesAccessor =
+      this.seriesAccessor === ParallelPlotDefaultValues.seriesAccessor &&
+      this.nest &&
+      this.nest.length === 1 &&
+      this.nest[0].key === 'undefined';
+
     drawLegend({
       root: this.legendG,
       uniqueID: this.chartID,
@@ -3751,7 +3827,7 @@ export class ParallelPlot {
       fontSize: 16,
       data: this.nest,
       label: this.legend.labels,
-      hide: !(this.legend.visible || !this.legend),
+      hide: !((this.legend.visible && !noSeriesAccessor) || !this.legend || !this.seriesAccessor),
       interactionKeys: this.innerInteractionKeys,
       groupAccessor: this.seriesAccessor,
       hoverHighlight: this.hoverHighlight,
@@ -3847,6 +3923,7 @@ export class ParallelPlot {
             uniqueID={this.chartID}
             isCompact
             tableColumns={this.tableColumns}
+            dataKeyNames={this.dataKeyNames}
             data={this.tableData}
             padding={this.padding}
             margin={this.margin}

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -1527,6 +1527,11 @@ export class AppLineChart {
   hoveredIndex: number = -1;
   @Element()
   appEl: HTMLElement;
+  dataKeyNames: any = {
+    date: 'Line Date',
+    value: 'Named Value'
+  };
+
   componentWillLoad() {
     this.theWorstDataEver = this.generateTheWorstDataEver();
   }
@@ -1965,6 +1970,7 @@ export class AppLineChart {
           valueAccessor={this.valueAccessor}
           seriesAccessor={this.seriesAccessor}
           dataLabel={this.dataLabel}
+          dataKeyNames={this.dataKeyNames}
           seriesLabel={this.seriesLabel}
           // legend={{ visible: false, labels: [], interactive: true }}
           // colorPalette={'sequential_grey'}
@@ -1988,12 +1994,13 @@ export class AppLineChart {
           onClickEvent={d => this.onClickFunc(d)}
           onHoverEvent={d => this.onHoverFunc(d)}
           onMouseOutEvent={() => this.onMouseOut()}
-          onInitialLoadEvent={e => e} // console.log('load event', e.detail, e)}
-          onDrawStartEvent={e => e} // console.log('draw start event', e.detail, e)}
-          onDrawEndEvent={e => e} // console.log('draw end event', e.detail, e)}
-          onTransitionEndEvent={e => e} // console.log('transition event', e.detail, e)}
-          showTooltip={false}
-          tooltipLabel={this.tooltipLabel}
+          // onInitialLoadEvent={e => e} // console.log('load event', e.detail, e)}
+          // onInitialLoadEndEvent={e => console.log('load end event', e.detail, e)}
+          // onDrawStartEvent={e => e} // console.log('draw start event', e.detail, e)}
+          // onDrawEndEvent={e => e} // console.log('draw end event', e.detail, e)}
+          // onTransitionEndEvent={e => e} // console.log('transition event', e.detail, e)}
+          showTooltip={true}
+          // tooltipLabel={this.tooltipLabel}
           // annotations={this.annotations}
           accessibility={this.accessibility}
           suppressEvents={this.suppressEvents}

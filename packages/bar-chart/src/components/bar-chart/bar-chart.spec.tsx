@@ -17,7 +17,16 @@ import { DataTable } from '../../../node_modules/@visa/visa-charts-data-table/sr
 import Utils from '@visa/visa-charts-utils';
 import UtilsDev from '@visa/visa-charts-utils-dev';
 
-const { getColors, visaColors, formatStats, getContrastingStroke } = Utils;
+const {
+  getColors,
+  visaColors,
+  formatStats,
+  getContrastingStroke,
+  getNumeralInstance,
+  registerNumeralFormat,
+  registerNumeralLocale,
+  setNumeralLocale
+} = Utils;
 
 const {
   asyncForEach,
@@ -149,11 +158,11 @@ describe('<bar-chart>', () => {
           //   nextTestSelector: '[data-testid=bar][data-id=bar-Apr-17]',
           //   keyDownObject: { key: 'Enter', code: 'Enter', keyCode: 13 }
           // },
-          accessibility_keyboard_nav_group_esc_exit: {
-            name: 'keyboard nav: group - escape will exit group',
+          accessibility_keyboard_nav_group_shift_enter_exit: {
+            name: 'keyboard nav: group - shift+enter will exit group',
             testSelector: '[data-testid=bar][data-id=bar-Apr-17]',
             nextTestSelector: '[data-testid=bar-group]',
-            keyDownObject: { key: 'Escape', code: 'Escape', keyCode: 27 },
+            keyDownObject: { key: 'Enter', code: 'Enter', keyCode: 13, shiftKey: true },
             testProps: {
               selectorAriaLabel: 'month Apr-17. value 1.4m. Bar 1 of 12.',
               nextSelectorAriaLabel: 'Bar group which contains 12 interactive bars.',
@@ -209,8 +218,8 @@ describe('<bar-chart>', () => {
             keyDownObject: { key: 'ArrowUp', code: 'ArrowUp', keyCode: 38 },
             testProps: {
               groupAccessor: 'cat',
-              selectorAriaLabel: 'Sep-17. 3.8m. B. Bar 6 of 12.',
-              nextSelectorAriaLabel: 'Jul-17. 2.2m. B. Bar 4 of 12.'
+              selectorAriaLabel: 'B. Sep-17. 3.8m. Bar 6 of 12.',
+              nextSelectorAriaLabel: 'B. Jul-17. 2.2m. Bar 4 of 12.'
             }
           },
           accessibility_keyboard_nav_up_arrow_cousin_loop: {
@@ -220,8 +229,8 @@ describe('<bar-chart>', () => {
             keyDownObject: { key: 'ArrowUp', code: 'ArrowUp', keyCode: 38 },
             testProps: {
               groupAccessor: 'cat',
-              selectorAriaLabel: 'Jul-17. 2.2m. B. Bar 4 of 12.',
-              nextSelectorAriaLabel: 'Mar-18. 8.5m. B. Bar 12 of 12.'
+              selectorAriaLabel: 'B. Jul-17. 2.2m. Bar 4 of 12.',
+              nextSelectorAriaLabel: 'B. Mar-18. 8.5m. Bar 12 of 12.'
             }
           },
           accessibility_keyboard_nav_down_arrow_cousin: {
@@ -231,8 +240,8 @@ describe('<bar-chart>', () => {
             keyDownObject: { key: 'ArrowDown', code: 'ArrowDown', keyCode: 40 },
             testProps: {
               groupAccessor: 'cat',
-              selectorAriaLabel: 'month Jul-17. value 2.2m. cat B. Bar 4 of 12.',
-              nextSelectorAriaLabel: 'month Sep-17. value 3.8m. cat B. Bar 6 of 12.',
+              selectorAriaLabel: 'cat B. month Jul-17. value 2.2m. Bar 4 of 12.',
+              nextSelectorAriaLabel: 'cat B. month Sep-17. value 3.8m. Bar 6 of 12.',
               accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true }
             }
           },
@@ -243,8 +252,8 @@ describe('<bar-chart>', () => {
             keyDownObject: { key: 'ArrowDown', code: 'ArrowDown', keyCode: 40 },
             testProps: {
               groupAccessor: 'cat',
-              selectorAriaLabel: 'month Mar-18. value 8.5m. cat B. Bar 12 of 12.',
-              nextSelectorAriaLabel: 'month Jul-17. value 2.2m. cat B. Bar 4 of 12.',
+              selectorAriaLabel: 'cat B. month Mar-18. value 8.5m. Bar 12 of 12.',
+              nextSelectorAriaLabel: 'cat B. month Jul-17. value 2.2m. Bar 4 of 12.',
               accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true }
             }
           }
@@ -290,6 +299,17 @@ describe('<bar-chart>', () => {
                       data: { month: 'Jun-17', value: 3234002, cat: 'A' },
                       dy: '-20%',
                       color: 'pri_blue'
+                    },
+                    {
+                      note: {},
+                      accessibilityDecorationOnly: true,
+                      type: 'annotationXYThreshold',
+                      subject: {
+                        x1: 0,
+                        x2: 250
+                      },
+                      color: 'pri_blue',
+                      disable: ['note', 'connector']
                     }
                   ]
                 : []
@@ -453,52 +473,52 @@ describe('<bar-chart>', () => {
       });
     });
 
-    // annotations break in jsdom due to their text wrapping function in d3-annotation
-    // describe('annotations', () => {
-    //   // TODO: need to add more precise test case for annotations label and text
-    //   it('should pass annotation prop', async () => {
-    //     // ARRANGE
-    //     const annotations = [
-    //       {
-    //         note: {
-    //           label: 'Social Media Intern returned to college',
-    //           bgPadding: 20,
-    //           title: 'Staff Change',
-    //           align: 'middle',
-    //           wrap: 130
-    //         },
-    //         accessibilityDescription:
-    //           'This is an annotation that explains a drop in tweet ACTivity due to staff change.',
-    //         y: [2600],
-    //         x: '62%',
-    //         dy: -85,
-    //         type: 'annotationCallout',
-    //         connector: { end: 'dot', endScale: 10 },
-    //         color: 'pri_blue'
-    //       }
-    //     ];
-    //     const data = [
-    //       { label: 'Q1', value: 1125 },
-    //       { label: 'Q2', value: 3725 },
-    //       { label: 'Q3', value: 2125 },
-    //       { label: 'Q4', value: 4125 }
-    //     ];
-    //     const dataLabel = { visible: true, placement: 'top', labelAccessor: 'value', format: '0,0' };
-    //     component.data = data;
-    //     component.ordinalAccessor = 'label';
-    //     component.valueAccessor = 'value';
-    //     component.dataLabel = dataLabel;
-    //     component.annotations = annotations;
+    // annotations break in jsdom due to their text wrapping function in d3-annotation - fixed in stencil 2.17.3+
+    describe('annotations', () => {
+      // TODO: need to add more precise test case for annotations label and text
+      it('should pass annotation prop', async () => {
+        // ARRANGE
+        const annotations = [
+          {
+            note: {
+              label: 'Social Media Intern returned to college',
+              bgPadding: 20,
+              title: 'Staff Change',
+              align: 'middle',
+              wrap: 130
+            },
+            accessibilityDescription:
+              'This is an annotation that explains a drop in tweet ACTivity due to staff change.',
+            y: [2600],
+            x: '62%',
+            dy: -85,
+            type: 'annotationCallout',
+            connector: { end: 'dot', endScale: 10 },
+            color: 'pri_blue'
+          }
+        ];
+        const data = [
+          { label: 'Q1', value: 1125 },
+          { label: 'Q2', value: 3725 },
+          { label: 'Q3', value: 2125 },
+          { label: 'Q4', value: 4125 }
+        ];
+        const dataLabel = { visible: true, placement: 'top', labelAccessor: 'value', format: '0,0' };
+        component.data = data;
+        component.ordinalAccessor = 'label';
+        component.valueAccessor = 'value';
+        component.dataLabel = dataLabel;
+        component.annotations = annotations;
 
-    //     // ACT
-    //     page.root.append(component);
-    //     await page.waitForChanges();
+        // ACT
+        page.root.append(component);
+        await page.waitForChanges();
 
-    //     // ASSERT
-    //     const annotationGroup = page.doc.querySelector('[data-testid=annotation-group]');
-    //     expect(annotationGroup).toMatchSnapshot();
-    //   });
-    // });
+        // ASSERT
+        const annotationGroup = page.doc.querySelector('[data-testid=annotation-group]');
+        expect(annotationGroup).toMatchSnapshot();
+      });
+    });
 
     describe('axes', () => {
       describe('barIntervalRatio', () => {
@@ -1232,19 +1252,44 @@ describe('<bar-chart>', () => {
               tooltip_tooltipLabel_custom_format_load:
                 '<p style="margin: 0;">Testing123:<b>A</b><br>Count:<b>$1.4m</b><br></p>',
               tooltip_tooltipLabel_custom_format_update:
-                '<p style="margin: 0;">Testing123:<b>A</b><br>Count:<b>$1.4m</b><br></p>'
+                '<p style="margin: 0;">Testing123:<b>A</b><br>Count:<b>$1.4m</b><br></p>',
+              dataKeyNames_custom_on_load:
+                '<p style="margin: 0;"><b></b> Test Month: <b>Apr-17 </b><br> Y Axis: <b>1.4m</b></p>',
+              dataKeyNames_custom_on_update:
+                '<p style="margin: 0;"><b></b> Test Month: <b>Apr-17 </b><br> Y Axis: <b>1.4m</b></p>'
+            };
+            const innerAriaContent = {
+              dataKeyNames_custom_on_load: 'Test Month Apr-17. value 1.4m. Bar 1 of 12.',
+              dataKeyNames_custom_on_update: 'Test Month Apr-17. value 1.4m. Bar 1 of 12.'
             };
             const innerTestProps = { ...unitTestTooltip[test].testProps, ...innerTooltipProps[test] };
+            const customDataKeyNames = { dataKeyNames: { month: 'Test Month' } };
             // we have to handle clickEvent separately due to this.zooming boolean in circle-packing load
-
-            it(`${unitTestTooltip[test].prop}: ${unitTestTooltip[test].name}`, () =>
-              unitTestTooltip[test].testFunc(
-                component,
-                page,
-                innerTestProps,
-                innerTestSelector,
-                innerTooltipContent[test]
-              ));
+            if (test === 'dataKeyNames_custom_on_load' || test === 'dataKeyNames_custom_on_update') {
+              it(`${unitTestTooltip[test].prop}: ${unitTestTooltip[test].name}`, () =>
+                unitTestTooltip[test].testFunc(
+                  component,
+                  page,
+                  {
+                    ...innerTestProps,
+                    ...customDataKeyNames,
+                    accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true },
+                    selectorAriaLabel: innerAriaContent[test]
+                  },
+                  innerTestSelector,
+                  innerTooltipContent[test]
+                ));
+            } else {
+              // these tests can just be run straight away
+              it(`${unitTestTooltip[test].prop}: ${unitTestTooltip[test].name}`, () =>
+                unitTestTooltip[test].testFunc(
+                  component,
+                  page,
+                  innerTestProps,
+                  innerTestSelector,
+                  innerTooltipContent[test]
+                ));
+            }
           });
         });
       });
@@ -1337,6 +1382,104 @@ describe('<bar-chart>', () => {
               const expectedLabelValue = formatStats(EXPECTEDDATA[i].value, '$0[.][0]a'); // tslint:disable-line: no-string-literal
               expect(label).toEqualText(expectedLabelValue);
             });
+          });
+          it('should format number with custom format if passed as prop', async () => {
+            component.dataLabel = {
+              visible: true,
+              labelAccessor: 'value',
+              format: '0[.][0][a] USD',
+              position: 'top'
+            };
+            const numeral = getNumeralInstance();
+            registerNumeralFormat('full-currency-code', {
+              regexps: {
+                format: /([A-Z]{3})$/,
+                unformat: /([A-Z]{3})$/
+              },
+              format: function(value, format, roundingFunction) {
+                var currencyCode = format.substring(format.length - 3);
+                var space = numeral._.includes(format, ` ${currencyCode}`) ? ' ' : '';
+                var output;
+
+                // check for space before currency code
+                var regexCode = new RegExp(`/( ${currencyCode})$/`, 'g');
+                format = format.replace(regexCode, '');
+
+                output = numeral._.numberToFormat(value, format, roundingFunction);
+
+                if (numeral._.includes(output, ')')) {
+                  output = output.split('');
+
+                  output.splice(-1, 0, space + currencyCode);
+
+                  output = output.join('');
+                } else {
+                  output = output + space + currencyCode;
+                }
+
+                return output;
+              },
+              unformat: function(string) {
+                return numeral._.stringToNumber(string) * 0.01;
+              }
+            });
+
+            // ACT
+            page.root.appendChild(component);
+            await page.waitForChanges();
+
+            // ASSERT
+            const dataLabels = page.doc.querySelectorAll('[data-testid=dataLabel]');
+            dataLabels.forEach((label, i) => {
+              const expectedLabelValue = formatStats(EXPECTEDDATA[i].value, '0[.][0][a] USD'); // tslint:disable-line: no-string-literal
+              expect(label).toEqualText(expectedLabelValue);
+            });
+          });
+          it('should format number with specified locale if changed', async () => {
+            component.dataLabel = {
+              visible: true,
+              labelAccessor: 'value',
+              format: '$0[.][0][a]',
+              position: 'top'
+            };
+            registerNumeralLocale('ja', {
+              delimiters: {
+                thousands: ',',
+                decimal: '.'
+              },
+              abbreviations: {
+                thousand: '千',
+                million: '百万',
+                billion: '十億',
+                trillion: '兆'
+              },
+              ordinal: function(number) {
+                return '.';
+              },
+              currency: {
+                symbol: '¥'
+              }
+            });
+            setNumeralLocale('ja');
+            const numeral = getNumeralInstance();
+
+            // ACT
+            page.root.appendChild(component);
+            await page.waitForChanges();
+
+            // ASSERT
+            const dataLabels = page.doc.querySelectorAll('[data-testid=dataLabel]');
+            expect(Object.keys(numeral.locales).length).toBeGreaterThan(1);
+            expect(numeral.locales['ja']).toBeTruthy(); // tslint:disable-line: no-string-literal
+            expect(numeral.options.currentLocale).toEqual('ja');
+
+            dataLabels.forEach((label, i) => {
+              const expectedLabelValue = formatStats(EXPECTEDDATA[i].value, '$0[.][0][a]'); // tslint:disable-line: no-string-literal
+              expect(label).toEqualText(expectedLabelValue);
+            });
+
+            // now we need to reset the locale to en for future tests
+            setNumeralLocale('en');
           });
         });
         describe('placement', () => {

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -188,6 +188,12 @@ export interface IClusteredBarChartProps {
   dataLabel: IDataLabelType;
 
   /**
+   * @shortDescription Enables custom, user friendly names for data keys
+   * @controlName TextArea
+   * @groupName Labels */
+  dataKeyNames: object;
+
+  /**
    * @shortDescription Manages messages and settings for chart accessibility
    * @controlName TextArea
    * @groupName Accessibility */
@@ -264,6 +270,12 @@ export interface IClusteredBarChartProps {
    * @controlName Toggle
    * @groupName Events */
   initialLoadEvent: any;
+
+  /**
+   * @shortDescription Set a callback to execute when chart's initial load ends.
+   * @controlName Toggle
+   * @groupName Events */
+  initialLoadEndEvent: any;
 
   /**
    * @shortDescription Set a callback to execute when chart drawing starts.

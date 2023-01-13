@@ -156,11 +156,11 @@ describe('<stacked-bar-chart>', () => {
           //     accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true }
           //   }
           // },
-          accessibility_keyboard_nav_group_esc_to_wrapper: {
-            name: 'keyboard nav: group - escape will exit group',
+          accessibility_keyboard_nav_group_shift_enter_to_wrapper: {
+            name: 'keyboard nav: group - shift+enter will exit group',
             testSelector: '[data-testid=bar][data-id=bar-2016-A]',
             nextTestSelector: '[data-testid=stacked-bar-wrapper][data-id=stacked-bar-wrapper-2016]',
-            keyDownObject: { key: 'Escape', code: 'Escape', keyCode: 27 },
+            keyDownObject: { key: 'Enter', code: 'Enter', keyCode: 13, shiftKey: true },
             testProps: {
               selectorAriaLabel: 'year 2016. item A. value -30. Bar 1 of 3.',
               nextSelectorAriaLabel: 'year 2016. Sum -13. Stack 1 of 3 which contains 3 interactive bars.',
@@ -168,11 +168,11 @@ describe('<stacked-bar-chart>', () => {
             }
           },
           // esc from wrapper takes us to svg selection controller is empty in this case
-          // accessibility_keyboard_nav_group_esc_exit: {
-          //   name: 'keyboard nav: group - escape will exit group',
+          // accessibility_keyboard_nav_group_shift_enter_exit: {
+          //   name: 'keyboard nav: group - shift+enter will exit group',
           //   testSelector: '[data-testid=stacked-bar-wrapper][data-id=stacked-bar-wrapper-2016]',
           //   nextTestSelector: '[data-testid=stacked-bar-group]',
-          //   keyDownObject: { key: 'Escape', code: 'Escape', keyCode: 27 },
+          //   keyDownObject: { key: 'Enter', code: 'Enter', keyCode: 13, shiftKey: true },
           //   testProps: {
           //     selectorAriaLabel: 'year 2016. Stack 1 of 3 which contains 3 interactive bars.',
           //     nextSelectorAriaLabel: 'Bar group which contains 12 interactive bars.',
@@ -299,7 +299,9 @@ describe('<stacked-bar-chart>', () => {
                       type: 'annotationCalloutElbow'
                     },
                     {
-                      note: {},
+                      note: {
+                        label: 'Annotation #2'
+                      },
                       y: [45],
                       x: '33.6%',
                       dy: [56.5],
@@ -309,12 +311,14 @@ describe('<stacked-bar-chart>', () => {
                     },
                     {
                       note: {},
-                      y: [78],
-                      x: '52.8%',
-                      dy: [56.5],
-                      dx: ['2017', '2016'],
-                      className: 'stacked-chart-annotation',
-                      type: 'annotationCalloutElbow'
+                      accessibilityDecorationOnly: true,
+                      type: 'annotationXYThreshold',
+                      subject: {
+                        x1: 0,
+                        x2: 250
+                      },
+                      color: 'pri_blue',
+                      disable: ['note', 'connector']
                     }
                   ]
                 : []
@@ -487,71 +491,70 @@ describe('<stacked-bar-chart>', () => {
       });
     });
 
-    // annotations break in jsdom due to their text wrapping function in d3-annotation
-    describe.skip('annotations', () => {
+    // annotations break in jsdom due to their text wrapping function in d3-annotation -- fixed in stencil 2.17.3+
+    describe('annotations', () => {
       // TODO: need to add more precise test case for annotations label and text
       // Now it only tests against first word of title
-      it('should pass annotation prop', async () => {
+      const annotations = [
+        {
+          note: {
+            label: 'Product C saw strong gains until Product B was improved.',
+            bgPadding: { top: 0, bottom: 0, left: 5, right: 5 },
+            title: 'Temporary Growth',
+            lineType: 'none',
+            align: 'middle',
+            wrap: 225
+          },
+          accessibilityDescription:
+            "This annotation points to Product C's strong growth starting in 2016 but ending in 2018.",
+          y: [22],
+          x: '18%',
+          dy: [56.5],
+          dx: ['2017', '2016'],
+          className: 'stacked-chart-annotation',
+          type: 'annotationCalloutElbow'
+        },
+        {
+          note: {
+            label: 'Annotation #2'
+          },
+          y: [45],
+          x: '33.6%',
+          dy: [56.5],
+          dx: ['2017', '2016'],
+          className: 'stacked-chart-annotation',
+          type: 'annotationCalloutElbow'
+        },
+        {
+          note: {},
+          y: [78],
+          x: '52.8%',
+          dy: [56.5],
+          dx: ['2017', '2016'],
+          className: 'stacked-chart-annotation',
+          type: 'annotationCalloutElbow'
+        }
+      ];
+
+      it('should pass annotation prop on load', async () => {
         // ARRANGE
-        const annotations = [
-          {
-            note: {
-              label: 'Product C saw strong gains until Product B was improved.',
-              bgPadding: { top: 0, bottom: 0, left: 5, right: 5 },
-              title: 'Temporary Growth',
-              lineType: 'none',
-              align: 'middle',
-              wrap: 225
-            },
-            accessibilityDescription:
-              "This annotation points to Product C's strong growth starting in 2016 but ending in 2018.",
-            y: [22],
-            x: '18%',
-            dy: [56.5],
-            dx: ['2017', '2016'],
-            className: 'stacked-chart-annotation',
-            type: 'annotationCalloutElbow'
-          },
-          {
-            note: {},
-            y: [45],
-            x: '33.6%',
-            dy: [56.5],
-            dx: ['2017', '2016'],
-            className: 'stacked-chart-annotation',
-            type: 'annotationCalloutElbow'
-          },
-          {
-            note: {},
-            y: [78],
-            x: '52.8%',
-            dy: [56.5],
-            dx: ['2017', '2016'],
-            className: 'stacked-chart-annotation',
-            type: 'annotationCalloutElbow'
-          }
-        ];
-        const data = [
-          { year: '2016', item: 'A', value: -30 },
-          { year: '2017', item: 'A', value: 15 },
-          { year: '2018', item: 'A', value: 4 },
-          { year: '2016', item: 'B', value: -5 },
-          { year: '2017', item: 'B', value: 23 },
-          { year: '2018', item: 'B', value: 6 },
-          { year: '2016', item: 'C', value: 22 },
-          { year: '2017', item: 'C', value: 45 },
-          { year: '2018', item: 'C', value: 78 }
-        ];
-        const dataLabel = { visible: true, placement: 'top', labelAccessor: 'value', format: '0,0' };
-        component.data = data;
-        component.ordinalAccessor = 'item';
-        component.valueAccessor = 'value';
-        component.groupAccessor = 'year';
-        component.dataLabel = dataLabel;
         component.annotations = annotations;
 
         // ACT
         page.root.append(component);
+        await page.waitForChanges();
+
+        // ASSERT
+        const annotationGroup = await page.doc.querySelector('[data-testid=annotation-group]');
+        expect(annotationGroup).toMatchSnapshot();
+      });
+      it('should pass annotation prop on update', async () => {
+        // ACT
+        page.root.append(component);
+        await page.waitForChanges();
+
+        // UPDATE
+        component.annotations = annotations;
         await page.waitForChanges();
 
         // ASSERT
@@ -1251,19 +1254,43 @@ describe('<stacked-bar-chart>', () => {
               tooltip_tooltipLabel_custom_format_load:
                 '<p style="margin: 0;">Testing123:<b>A</b><br>Count:<b>-$30</b><br></p>',
               tooltip_tooltipLabel_custom_format_update:
-                '<p style="margin: 0;">Testing123:<b>A</b><br>Count:<b>-$30</b><br></p>'
+                '<p style="margin: 0;">Testing123:<b>A</b><br>Count:<b>-$30</b><br></p>',
+              dataKeyNames_custom_on_load:
+                '<p style="margin: 0;"><b>A<br></b>Test Year:<b>2016</b><br>Y Axis:<b>-30</b></p>',
+              dataKeyNames_custom_on_update:
+                '<p style="margin: 0;"><b>A<br></b>Test Year:<b>2016</b><br>Y Axis:<b>-30</b></p>'
+            };
+            const innerAriaContent = {
+              dataKeyNames_custom_on_load: 'Test Year 2016. item A. value -30. Bar 1 of 3.',
+              dataKeyNames_custom_on_update: 'Test Year 2016. item A. value -30. Bar 1 of 3.'
             };
             const innerTestProps = { ...unitTestTooltip[test].testProps, ...innerTooltipProps[test] };
+            const customDataKeyNames = { dataKeyNames: { year: 'Test Year' } };
             // we have to handle clickEvent separately due to this.zooming boolean in circle-packing load
-
-            it(`${unitTestTooltip[test].prop}: ${unitTestTooltip[test].name}`, () =>
-              unitTestTooltip[test].testFunc(
-                component,
-                page,
-                innerTestProps,
-                innerTestSelector,
-                innerTooltipContent[test]
-              ));
+            if (test === 'dataKeyNames_custom_on_load' || test === 'dataKeyNames_custom_on_update') {
+              it(`${unitTestTooltip[test].prop}: ${unitTestTooltip[test].name}`, () =>
+                unitTestTooltip[test].testFunc(
+                  component,
+                  page,
+                  {
+                    ...innerTestProps,
+                    ...customDataKeyNames,
+                    accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true },
+                    selectorAriaLabel: innerAriaContent[test]
+                  },
+                  innerTestSelector,
+                  innerTooltipContent[test]
+                ));
+            } else {
+              it(`${unitTestTooltip[test].prop}: ${unitTestTooltip[test].name}`, () =>
+                unitTestTooltip[test].testFunc(
+                  component,
+                  page,
+                  innerTestProps,
+                  innerTestSelector,
+                  innerTooltipContent[test]
+                ));
+            }
           });
         });
       });

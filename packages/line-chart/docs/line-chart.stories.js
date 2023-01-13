@@ -89,6 +89,11 @@ const Template = args => {
       args.onInitialLoad(e);
     }
   };
+  const initialLoadEnd = e => {
+    if (args.initialLoadEndEvent) {
+      args.onInitialLoadEnd(e);
+    }
+  };
   const transitionEnd = e => {
     if (args.transitionEndEvent) {
       args.onTransitionEnd(e);
@@ -106,6 +111,7 @@ const Template = args => {
       onDrawStartEvent={drawStart}
       onDrawEndEvent={drawEnd}
       onInitialLoadEvent={initialLoad}
+      onInitialLoadEndEvent={initialLoadEnd}
       onTransitionEndEvent={transitionEnd}
       {...args}
     />

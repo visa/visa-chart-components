@@ -28,7 +28,7 @@ export interface ISizeConfigType {
   minSizeOverride?: string | number;
   maxSizeOverride?: string | number;
   dualEncodeColor?: boolean;
-  // format?: any;
+  format?: string;
 }
 
 export interface IAxisType {
@@ -96,7 +96,7 @@ export interface IReferenceStyleType {
 
 export interface ITooltipLabelType {
   labelAccessor: string[];
-  labelTitle: string[];
+  labelTitle?: string[];
   format: any[];
 }
 

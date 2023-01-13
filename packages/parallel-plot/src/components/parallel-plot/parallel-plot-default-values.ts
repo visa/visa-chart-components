@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -51,6 +51,7 @@ export class ParallelPlotDefaultValues {
   static readonly cursor = propDefaultValues.cursor;
 
   static readonly dataLabel = propDefaultValues.dataLabelBottomRight;
+  static readonly dataKeyNames;
   static readonly seriesLabel = propDefaultValues.seriesLabel;
   static readonly legend = propDefaultValues.hiddenLegend;
   static readonly tooltipLabel = propDefaultValues.tooltipLabel;

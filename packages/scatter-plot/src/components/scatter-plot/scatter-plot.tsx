@@ -96,6 +96,7 @@ export class ScatterPlot {
   @Event() hoverEvent: EventEmitter;
   @Event() mouseOutEvent: EventEmitter;
   @Event() initialLoadEvent: EventEmitter;
+  @Event() initialLoadEndEvent: EventEmitter;
   @Event() drawStartEvent: EventEmitter;
   @Event() drawEndEvent: EventEmitter;
   @Event() transitionEndEvent: EventEmitter;
@@ -139,6 +140,7 @@ export class ScatterPlot {
 
   // Data label (5/7)
   @Prop({ mutable: true }) dataLabel: IDataLabelType = ScatterPlotDefaultValues.dataLabel;
+  @Prop({ mutable: true }) dataKeyNames: object;
   @Prop({ mutable: true }) showTooltip: boolean = ScatterPlotDefaultValues.showTooltip;
   @Prop({ mutable: true }) tooltipLabel: ITooltipLabelType = ScatterPlotDefaultValues.tooltipLabel;
   @Prop({ mutable: true }) accessibility: IAccessibilityType = ScatterPlotDefaultValues.accessibility;
@@ -209,6 +211,7 @@ export class ScatterPlot {
   innerClickStyle: any;
   innerHoverStyle: any;
   innerLabelAccessor: string;
+  innerLabelFormat: string;
   duration: any;
   labels: any;
   labelG: any;
@@ -444,8 +447,10 @@ export class ScatterPlot {
     this.shouldDrawFitLine = true;
     this.shouldUpdateReferenceLines = true;
     this.shouldUpdateAnnotations = true;
+    this.shouldSetParentSVGAccessibility = true;
     this.shouldSetGeometryAriaLabels = true;
     this.shouldValidateDataLabelAccessor = true;
+    this.shouldUpdateTableData = true;
   }
 
   @Watch('groupAccessor')
@@ -583,15 +588,19 @@ export class ScatterPlot {
   labelWatcher(_newVal, _oldVal) {
     this.shouldUpdateLabels = true;
     this.shouldUpdateGeometries = true; // this is need for auto placement
-    this.shouldUpdateTableData = true;
+    this.shouldUpdateTableData = true; // this is needed for data table formatting
+    this.shouldSetParentSVGAccessibility = true; // this is needed for aria label formatting
+    this.shouldSetGeometryAriaLabels = true; // this is needed for aria label formatting
     const newVisibleVal = _newVal && _newVal.visible;
     const oldVisibleVal = _oldVal && _oldVal.visible;
     const newAccessor = _newVal && _newVal.labelAccessor ? _newVal.labelAccessor : false;
     const oldAccessor = _oldVal && _oldVal.labelAccessor ? _oldVal.labelAccessor : false;
+    const newFormat = _newVal && _newVal.format ? _newVal.format : false;
+    const oldFormat = _oldVal && _oldVal.format ? _oldVal.format : false;
     if (newVisibleVal !== oldVisibleVal) {
       this.shouldSetLabelOpacity = true;
     }
-    if (newAccessor !== oldAccessor) {
+    if (newAccessor !== oldAccessor || newFormat !== oldFormat) {
       this.shouldValidateDataLabelAccessor = true;
     }
   }
@@ -603,7 +612,10 @@ export class ScatterPlot {
 
   @Watch('tooltipLabel')
   tooltipLabelWatcher(_newVal, _oldVal) {
+    // we need to call anywhere that innerDataKeys is used
     this.shouldUpdateTableData = true;
+    this.shouldSetParentSVGAccessibility = true;
+    this.shouldSetGeometryAriaLabels = true;
   }
 
   @Watch('legend')
@@ -798,6 +810,17 @@ export class ScatterPlot {
     this.shouldUpdateLegendInteractivity = true;
   }
 
+  @Watch('dataKeyNames')
+  dataKeyNamesWatcher(_newVal, _oldVal) {
+    this.shouldUpdateXAxis = true;
+    this.shouldSetXAxisAccessibility = true;
+    this.shouldUpdateYAxis = true;
+    this.shouldSetYAxisAccessibility = true;
+    this.shouldSetParentSVGAccessibility = true;
+    this.shouldSetGroupAccessibilityLabel = true;
+    this.shouldSetGeometryAriaLabels = true;
+  }
+
   @Watch('unitTest')
   unitTestWatcher(_newVal, _oldVal) {
     this.shouldSetTestingAttributes = true;
@@ -896,7 +919,7 @@ export class ScatterPlot {
       this.setGroupAccessibilityID();
       this.defaults = false;
       resolve('component did load');
-    });
+    }).then(() => this.initialLoadEndEvent.emit({ chartID: this.chartID }));
   }
 
   componentDidUpdate() {
@@ -1135,11 +1158,30 @@ export class ScatterPlot {
       : this.sizeConfig.sizeAccessor
       ? this.sizeConfig.sizeAccessor
       : this.yAccessor;
+
+    this.innerLabelFormat = this.dataLabel.labelAccessor
+      ? this.dataLabel.format
+      : this.sizeConfig.sizeAccessor
+      ? this.sizeConfig.format
+      : this.yAxis.format;
+  }
+
+  innerScopeDataKeys() {
+    // generate scoped and formatted data for data-table component
+    // we also scope singleAccessor array in chartAccessors based on what is actually in the data
+    const innerChartSingleAccessors = [];
+    chartAccessors.singleAccessors.forEach(accessor => {
+      if (this[accessor] && min(this.data, d => d[this[accessor]]) !== undefined) {
+        innerChartSingleAccessors.push(accessor);
+      }
+    });
+    const innerChartAccessors = { ...chartAccessors, singleAccessors: innerChartSingleAccessors };
+    return scopeDataKeys(this, innerChartAccessors, 'scatter-plot');
   }
 
   setTableData() {
     // generate scoped and formatted data for data-table component
-    const keys = scopeDataKeys(this, chartAccessors, 'scatter-plot');
+    const keys = this.innerScopeDataKeys();
     this.tableData = getScopedData(this.data, keys);
     this.tableColumns = Object.keys(keys);
   }
@@ -1826,6 +1868,13 @@ export class ScatterPlot {
   }
 
   drawXAxis() {
+    const axisLabel =
+      this.xAxis.label || this.xAxis.label === ''
+        ? this.xAxis.label
+        : this.dataKeyNames && this.dataKeyNames[this.xAccessor]
+        ? this.dataKeyNames[this.xAccessor]
+        : this.xAxis.label;
+
     drawAxis({
       root: this.rootG,
       height: this.innerPaddedHeight,
@@ -1834,7 +1883,7 @@ export class ScatterPlot {
       left: false,
       format: this.xAxis.format,
       tickInterval: this.xAxis.tickInterval,
-      label: this.xAxis.label,
+      label: axisLabel, // this.xAxis.label,
       padding: this.padding,
       hide: !this.xAxis.visible,
       duration: this.duration
@@ -1842,6 +1891,13 @@ export class ScatterPlot {
   }
 
   drawYAxis() {
+    const axisLabel =
+      this.yAxis.label && this.yAxis.label !== ''
+        ? this.yAxis.label
+        : this.dataKeyNames && this.dataKeyNames[this.yAccessor]
+        ? this.dataKeyNames[this.yAccessor]
+        : this.yAxis.label;
+
     drawAxis({
       root: this.rootG,
       height: this.innerPaddedHeight,
@@ -1850,7 +1906,7 @@ export class ScatterPlot {
       left: true,
       format: this.yAxis.format,
       tickInterval: this.yAxis.tickInterval,
-      label: this.yAxis.label,
+      label: axisLabel, // this.yAxis.label,
       padding: this.padding,
       hide: !this.yAxis.visible,
       duration: this.duration
@@ -1858,20 +1914,34 @@ export class ScatterPlot {
   }
 
   setXAxisAccessibility() {
+    const axisLabel =
+      this.xAxis.label || this.xAxis.label === ''
+        ? this.xAxis.label
+        : this.dataKeyNames && this.dataKeyNames[this.xAccessor]
+        ? this.dataKeyNames[this.xAccessor]
+        : this.xAxis.label;
+
     setAccessXAxis({
       rootEle: this.scatterChartEl,
       hasXAxis: this.xAxis ? this.xAxis.visible : false,
       xAxis: this.x,
-      xAxisLabel: this.xAxis.label ? this.xAxis.label : '' // this is optional for some charts, if hasXAxis is always false
+      xAxisLabel: axisLabel ? axisLabel : '' // this is optional for some charts, if hasXAxis is always false
     });
   }
 
   setYAxisAccessibility() {
+    const axisLabel =
+      this.yAxis.label && this.yAxis.label !== ''
+        ? this.yAxis.label
+        : this.dataKeyNames && this.dataKeyNames[this.yAccessor]
+        ? this.dataKeyNames[this.yAccessor]
+        : this.yAxis.label;
+
     setAccessYAxis({
       rootEle: this.scatterChartEl,
       hasYAxis: this.yAxis ? this.yAxis.visible : false,
       yAxis: this.y,
-      yAxisLabel: this.yAxis.label ? this.yAxis.label : ''
+      yAxisLabel: axisLabel ? axisLabel : ''
     });
   }
 
@@ -2091,7 +2161,7 @@ export class ScatterPlot {
     const hideOnly = this.dataLabel.placement !== 'auto' && this.dataLabel.collisionHideOnly;
 
     this.updateLabels.text(d => {
-      return formatDataLabel(d, this.innerLabelAccessor, this.dataLabel.format);
+      return formatDataLabel(d, this.innerLabelAccessor, this.innerLabelFormat);
     });
 
     const labelSettingUpdate = this.updateLabels
@@ -2489,7 +2559,8 @@ export class ScatterPlot {
       uniqueID: this.chartID,
       geomType: 'point',
       includeKeyNames: this.accessibility.includeDataKeyNames,
-      dataKeys: scopeDataKeys(this, chartAccessors, 'scatter-plot'),
+      dataKeys: this.innerScopeDataKeys(),
+      dataKeyNames: this.dataKeyNames,
       groupAccessor: this.groupAccessor,
       groupName: 'scatter group',
       disableKeyNav:
@@ -2510,13 +2581,14 @@ export class ScatterPlot {
   }
 
   setGeometryAriaLabels() {
-    const keys = scopeDataKeys(this, chartAccessors, 'scatter-plot');
+    const keys = this.innerScopeDataKeys();
     this.updatePoints.each((_d, i, n) => {
       setElementFocusHandler({
         node: n[i],
         geomType: 'point',
         includeKeyNames: this.accessibility.includeDataKeyNames,
         dataKeys: keys,
+        dataKeyNames: this.dataKeyNames,
         groupName: 'scatter group',
         uniqueID: this.chartID,
         disableKeyNav:
@@ -2586,6 +2658,13 @@ export class ScatterPlot {
   // new accessibility stuff ends here
 
   drawLegendElements() {
+    // if we have default series access and it is not in the data don't show legend
+    const noGroupAccessor =
+      this.groupAccessor === ScatterPlotDefaultValues.groupAccessor &&
+      this.nest &&
+      this.nest.length === 1 &&
+      this.nest[0].key === 'undefined';
+
     drawLegend({
       root: this.legendG,
       uniqueID: this.chartID,
@@ -2602,7 +2681,7 @@ export class ScatterPlot {
       data: this.nest,
       label: this.legend.labels,
       symbol: this.dotSymbols,
-      hide: !this.legend.visible || !this.groupAccessor,
+      hide: !((this.legend.visible && !noGroupAccessor) || !this.legend || !this.groupAccessor),
       interactionKeys: this.innerInteractionKeys,
       groupAccessor: this.groupAccessor,
       hoverHighlight: this.hoverHighlight,
@@ -2662,7 +2741,10 @@ export class ScatterPlot {
       tooltipLabel: this.tooltipLabel,
       xAxis: this.xAxis,
       yAxis: this.yAxis,
+      dataLabel: this.dataLabel,
+      dataKeyNames: this.dataKeyNames,
       groupAccessor: this.groupAccessor,
+      sizeConfig: this.sizeConfig,
       xAccessor: this.xAccessor,
       yAccessor: this.yAccessor,
       chartType: 'scatter'
@@ -2751,6 +2833,7 @@ export class ScatterPlot {
             isCompact
             tableColumns={this.tableColumns}
             data={this.tableData}
+            dataKeyNames={this.dataKeyNames}
             padding={this.padding}
             margin={this.margin}
             hideDataTable={this.accessibility.hideDataTableButton}
