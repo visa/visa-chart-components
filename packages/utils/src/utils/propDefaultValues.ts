@@ -226,7 +226,8 @@ export const sizeConfig = {
   maxValueOverride: '',
   minSizeOverride: '',
   maxSizeOverride: '',
-  dualEncodeColor: false
+  dualEncodeColor: false,
+  format: ''
 };
 
 export const legend = {

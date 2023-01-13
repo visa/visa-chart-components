@@ -40,7 +40,11 @@ exports[`<bar-chart> rendered-html accessibility generic accessibility test suit
         <tr class="vcc-ki-tr">
           <th class="vcc-ki-td" scope="row">
             <kbd>
-              Esc
+              Shift
+            </kbd>
+            +
+            <kbd>
+              Enter
             </kbd>
             on a bar group or bar.
           </th>
@@ -100,6 +104,17 @@ exports[`<bar-chart> rendered-html accessibility generic accessibility test suit
             No effect on this chart.
           </td>
         </tr>
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Esc
+            </kbd>
+            at any time.
+          </th>
+          <td class="vcc-ki-td">
+            Dismiss the tooltip.
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
@@ -146,7 +161,11 @@ exports[`<bar-chart> rendered-html accessibility generic accessibility test suit
         <tr class="vcc-ki-tr">
           <th class="vcc-ki-td" scope="row">
             <kbd>
-              Esc
+              Shift
+            </kbd>
+            +
+            <kbd>
+              Enter
             </kbd>
             on a bar group or bar.
           </th>
@@ -206,13 +225,54 @@ exports[`<bar-chart> rendered-html accessibility generic accessibility test suit
             No effect on this chart.
           </td>
         </tr>
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Esc
+            </kbd>
+            at any time.
+          </th>
+          <td class="vcc-ki-td">
+            Dismiss the tooltip.
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
 </div>
 `;
 
-exports[`<bar-chart> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: test whether space bar performs click action 1`] = `<rect class="bar vcl-accessibility-focus-source" cursor="default" data-height="41.132822334144294" data-id="bar-Apr-17" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="8.877049180327845" data-y="207.3671776658557" fill="url(#bar-chart-unit-test_texture_0)" focusable="false" height="41.132822334144294" id="chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="8.877049180327845" y="207.3671776658557"></rect>`;
+exports[`<bar-chart> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: test whether space bar performs click action 1`] = `<rect class="bar vcl-accessibility-focus-source" cursor="default" data-height="41.132822334144294" data-id="bar-Apr-17" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="8.877049180327845" data-y="207.3671776658557" fill="url(#bar-chart-unit-test_texture_0)" focusable="false" height="41.1328" id="chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.5082" x="8.877" y="207.3672"></rect>`;
+
+exports[`<bar-chart> rendered-html annotations should pass annotation prop 1`] = `
+<g aria-hidden="true" class="vcl-annotation-group" data-testid="annotation-group" focusable="false" role="presentation">
+  <g class="annotations">
+    <g class="annotation callout" transform="translate(335.73, 91.86969696969699)">
+      <g class="annotation-connector">
+        <path class="connector" d="M0,0L0,-85" fill="none" stroke="pri_blue"></path>
+        <path class="connector-dot connector-end" d="M5.809009821810581e-16,-9.486832980505138A9.486832980505138,9.486832980505138,0,1,1,-5.809009821810581e-16,9.486832980505138A9.486832980505138,9.486832980505138,0,1,1,5.809009821810581e-16,-9.486832980505138Z" fill="pri_blue" stroke="pri_blue" transform="translate(0, 0)"></path>
+      </g>
+      <g class="annotation-subject"></g>
+      <g class="annotation-note" transform="translate(0, -85)">
+        <g class="annotation-note-content" transform="translate(-5, -13)">
+          <rect class="annotation-note-bg" fill="white" fill-opacity="0" height="50" width="50" x="-20" y="-20"></rect>
+          <text class="annotation-note-label" dx="0" fill="pri_blue" y="11">
+            <tspan dy="0.8em" x="0">
+              Social Media Intern returned to college
+            </tspan>
+          </text>
+          <text class="annotation-note-title" fill="pri_blue" font-weight="bold">
+            <tspan dy="0.8em" x="0">
+              Staff Change
+            </tspan>
+          </text>
+        </g>
+        <path class="note-line" d="M-5,0L5,0" stroke="pri_blue"></path>
+      </g>
+    </g>
+  </g>
+</g>
+`;
 
 exports[`<bar-chart> rendered-html event-emitter generic event testing bar based events [event] clickEvent: event object should emit and contain first data record when first mark is clicked 1`] = `<rect class="bar" cursor="default" data-height="41.132822334144294" data-id="bar-Apr-17" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="8.877049180327845" data-y="207.3671776658557" fill="url(#bar-chart-unit-test_texture_0)" focusable="false" height="41.132822334144294" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="8.877049180327845" y="207.3671776658557"></rect>`;
 

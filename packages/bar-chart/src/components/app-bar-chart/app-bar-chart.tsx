@@ -6,12 +6,11 @@
  *
  **/
 import { Component, State, Element, h } from '@stencil/core';
-import Utils from '@visa/visa-charts-utils';
 import '@visa/visa-charts-data-table';
 import '@visa/keyboard-instructions';
+import Utils from '@visa/visa-charts-utils';
 
-const { findTagLevel } = Utils;
-
+const { formatStats, setNumeralLocale, getNumeralInstance, registerNumeralLocale, registerNumeralFormat } = Utils;
 @Component({
   tag: 'app-bar-chart',
   styleUrl: 'app-bar-chart.scss'
@@ -32,7 +31,7 @@ export class AppBarChart {
     { country: 'Thailand', value: '30', region: 'Asia' },
     {
       country: 'United States',
-      value: '114',
+      value: '1143482',
       region: 'North America'
     },
     { country: 'Canada', value: '24', region: 'North America' },
@@ -138,9 +137,93 @@ export class AppBarChart {
 
   @Element()
   appEl: HTMLElement;
+  keyNames: any = {
+    country: 'Countries',
+    value: 'Custom Value Name',
+    region: 'Groupped'
+  };
+
+  // load a locale
+  frLocale = {
+    delimiters: {
+      thousands: ' ',
+      decimal: ','
+    },
+    abbreviations: {
+      thousand: 'k',
+      million: 'm',
+      billion: 'b',
+      trillion: 't'
+    },
+    ordinal: function(number) {
+      return number === 1 ? 'er' : 'ème';
+    },
+    currency: {
+      symbol: '€'
+    }
+  };
+  jpLocale = {
+    delimiters: {
+      thousands: ',',
+      decimal: '.'
+    },
+    abbreviations: {
+      thousand: '千',
+      million: '百万',
+      billion: '十億',
+      trillion: '兆'
+    },
+    ordinal: function(number) {
+      return '.';
+    },
+    currency: {
+      symbol: '¥'
+    }
+  };
+
+  componentDidLoad() {
+    // execute this code after the component mounts
+  }
 
   componentWillLoad() {
     this.data = this.dataStorage[this.stateTrigger];
+    // we can load and set locale, this code is adapted from numeral.js examples
+    registerNumeralLocale('ja', this.jpLocale);
+    setNumeralLocale('ja');
+    const numeral = getNumeralInstance();
+    registerNumeralFormat('full-currency-code', {
+      regexps: {
+        format: /([A-Z]{3})$/,
+        unformat: /([A-Z]{3})$/
+      },
+      format: function(value, format, roundingFunction) {
+        var currencyCode = format.substring(format.length - 3);
+        var space = numeral._.includes(format, ` ${currencyCode}`) ? ' ' : '';
+        var output;
+
+        // check for space before currency code
+        var regexCode = new RegExp(`/( ${currencyCode})$/`, 'g');
+        format = format.replace(regexCode, '');
+
+        output = numeral._.numberToFormat(value, format, roundingFunction);
+
+        if (numeral._.includes(output, ')')) {
+          output = output.split('');
+
+          output.splice(-1, 0, space + currencyCode);
+
+          output = output.join('');
+        } else {
+          output = output + space + currencyCode;
+        }
+
+        return output;
+      },
+      unformat: function(string) {
+        return numeral._.stringToNumber(string) * 0.01;
+      }
+    });
+    // console.log('checking numeral instance', numeral._, numeral.locales, numeral.formats, formatStats);
   }
   onClickFunc(d) {
     let index = -1;
@@ -227,9 +310,10 @@ export class AppBarChart {
           ordinalAccessor={'country'}
           valueAccessor={'value'}
           groupAccessor={this.groupAccessor}
+          dataKeyNames={this.keyNames}
           sortOrder={'desc'}
           dataLabel={{ visible: true, placement: 'bottom', labelAccessor: 'value', format: '0.[a]' }}
-          tooltipLabel={{ labelAccessor: ['country', 'value'], labelTitle: ['', ''], format: ['', '0.[a]'] }}
+          tooltipLabel={{ labelAccessor: ['country', 'value'], labelTitle: ['a', 'b'], format: ['', '0.[a]'] }}
           colorPalette={'categorical'}
           legend={{ visible: true, interactive: true }}
           cursor={'pointer'}
@@ -241,6 +325,11 @@ export class AppBarChart {
           onClickEvent={d => this.onClickFunc(d)}
           onHoverEvent={d => this.onHoverFunc(d)}
           onMouseOutEvent={() => this.onMouseOut()}
+          // onInitialLoadEvent={e => console.log('load event', e.detail, e)}
+          // onInitialLoadEndEvent={e => console.log('load end event', e.detail, e)}
+          // onDrawStartEvent={e => console.log('draw start event', e.detail, e)}
+          // onDrawEndEvent={e => console.log('draw end event', e.detail, e)}
+          // onTransitionEndEvent={e => console.log('transition event', e.detail, e)}
           highestHeadingLevel={3}
           accessibility={{
             elementDescriptionAccessor: 'note',
@@ -255,6 +344,7 @@ export class AppBarChart {
             statisticalNotes:
               'Values here represent total Card A spend in raw amount by segment. These values are the sum of FY19 performance.',
             elementsAreInterface: true,
+            showSmallLabels: true,
             includeDataKeyNames: true,
             onChangeFunc: d => {
               this.onChangeFunc(d);

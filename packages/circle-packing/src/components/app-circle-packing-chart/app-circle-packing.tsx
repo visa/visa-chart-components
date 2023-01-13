@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -84,6 +84,7 @@ export class AppCirclePacking {
     purpose:
       'The purpose of this chart template is to test the functionality of a basic circle packing chart in the chart library',
     statisticalNotes: "This chart is using organizational data on Visa's product team",
+    includeDataKeyNames: true,
     keyboardNavConfig: { disabled: false }
   };
   @State() suppressEvents: boolean = false;
@@ -922,6 +923,10 @@ export class AppCirclePacking {
     { p: 'suppressWatcher', c: 'suppressWatcher.shouldBindInteractivity', cLabel: 'shouldBindInteractivity', v: 1 },
     { p: 'suppressWatcher', c: 'suppressWatcher.shouldUpdateCursor', cLabel: 'shouldUpdateCursor', v: 1 }
   ];
+  dataKeyNames: any = {
+    value: 'Named Value',
+    Type: 'Grouping'
+  };
 
   updateClick(item) {
     if (Array.isArray(item)) {
@@ -1124,6 +1129,7 @@ export class AppCirclePacking {
             // }}
             colors={['white', 'white', 'white']}
             dataLabel={this.dataLabel}
+            dataKeyNames={this.dataKeyNames}
             onHoverEvent={d => this.onHoverFunc(d)}
             onClickEvent={d => this.onClickFunc(d)}
             onMouseOutEvent={() => this.onMouseOut()}

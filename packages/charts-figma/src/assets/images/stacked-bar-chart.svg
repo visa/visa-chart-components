@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="144px" height="113px" viewBox="0 0 144 113" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 58 (84663) - https://sketch.com -->
+    <title>stacked-bar-chart</title>
+    <desc>Created with Sketch.</desc>
+    <g id="stacked-bar-chart" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="Rectangle" fill="#363636" fill-rule="nonzero" x="-2.27373675e-13" y="101.310345" width="33.8086957" height="11.6896552"></rect>
+        <rect id="Rectangle" fill="#0051DC" fill-rule="nonzero" x="-2.27373675e-13" y="83.3862069" width="33.8086957" height="17.9241379"></rect>
+        <rect id="Rectangle" fill="#7FA8ED" fill-rule="nonzero" x="-2.27373675e-13" y="48.3172414" width="33.8086957" height="35.0689655"></rect>
+        <rect id="Rectangle" fill="#363636" fill-rule="nonzero" x="55.0956522" y="94.2965517" width="33.8086957" height="18.7034483"></rect>
+        <rect id="Rectangle" fill="#0051DC" fill-rule="nonzero" x="55.0956522" y="74.0344828" width="33.8086957" height="20.262069"></rect>
+        <rect id="Rectangle" fill="#7FA8ED" fill-rule="nonzero" x="55.0956522" y="13.2482759" width="33.8086957" height="60.7862069"></rect>
+        <rect id="Rectangle" fill="#363636" fill-rule="nonzero" x="110.191304" y="56.1103448" width="33.8086957" height="56.8896552"></rect>
+        <rect id="Rectangle" fill="#0051DC" fill-rule="nonzero" x="110.191304" y="39.7448276" width="33.8086957" height="16.3655172"></rect>
+        <rect id="Rectangle" fill="#7FA8ED" fill-rule="nonzero" x="110.191304" y="1.70530257e-13" width="33.8086957" height="39.7448276"></rect>
+    </g>
+</svg>

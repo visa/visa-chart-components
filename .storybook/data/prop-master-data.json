@@ -510,6 +510,12 @@
     }
   },
   {
+    "name": "dataKeyNames",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
     "name": "sizeConfig",
     "options": {
       "enabled": true
@@ -629,25 +635,32 @@
     "sortOrder": 5
   },
   {
-    "name": "drawStartEvent",
+    "name": "initialLoadEndEvent",
     "options": {
       "enabled": false
     },
     "sortOrder": 6
   },
   {
-    "name": "drawEndEvent",
+    "name": "drawStartEvent",
     "options": {
       "enabled": false
     },
     "sortOrder": 7
   },
   {
-    "name": "transitionEndEvent",
+    "name": "drawEndEvent",
     "options": {
       "enabled": false
     },
     "sortOrder": 8
+  },
+  {
+    "name": "transitionEndEvent",
+    "options": {
+      "enabled": false
+    },
+    "sortOrder": 9
   },
   {
     "name": "clickHighlight",
@@ -1414,7 +1427,7 @@
   {
     "name": "sizeConfig.format",
     "options": {
-      "enabled": false,
+      "enabled": true,
       "description": "Sets numeric formatting for the size value, EG 0,0.0[a]",
       "sortOrder": 7
     }

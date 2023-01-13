@@ -16,7 +16,14 @@ import { DataTable } from '../../../node_modules/@visa/visa-charts-data-table/sr
 import Utils from '@visa/visa-charts-utils';
 import UtilsDev from '@visa/visa-charts-utils-dev';
 const { getColors, outlineColor, visaColors, getContrastingStroke } = Utils;
-const { flushTransitions, unitTestGeneric, unitTestEvent, unitTestInteraction, unitTestTooltip } = UtilsDev;
+const {
+  flushTransitions,
+  unitTestAccessibility,
+  unitTestGeneric,
+  unitTestEvent,
+  unitTestInteraction,
+  unitTestTooltip
+} = UtilsDev;
 
 // shows how to use asyncForEach if needed
 // add asyncForEach to import UtilsDev above
@@ -80,6 +87,7 @@ describe('<circle-packing>', () => {
       component.parentAccessor = EXPECTEDPARENTACCESSOR;
       component.sizeAccessor = EXPECTEDSIZEACCESSOR;
       component.accessibility = EXPECTEDACCESSIBILITY;
+      // component.unitTest = true;
 
       // for circle pack specifically we need
       jest.useFakeTimers('legacy');
@@ -152,6 +160,238 @@ describe('<circle-packing>', () => {
     });
 
     describe('accessibility', () => {
+      describe('generic accessibility test suite', () => {
+        const accessibilityTestMarks = {
+          accessibility_keyboard_nav_right_arrow: {
+            name: 'keyboard nav: sibling - right arrow goes to next',
+            testSelector: '[data-testid=circle][data-id=circle-Mexico-A]',
+            nextTestSelector: '[data-testid=circle][data-id=circle-Mexico-B]',
+            keyDownObject: { key: 'ArrowRight', code: 'ArrowRight', keyCode: 39 },
+            testProps: {
+              selectorAriaLabel: 'Type A. value 64. Country Mexico. Node 1 of 3. This Node contains 0 child elements',
+              nextSelectorAriaLabel:
+                'Type B. value 35. Country Mexico. Node 2 of 3. This Node contains 0 child elements',
+              accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true },
+              focusIndicatorNotGrouped: true
+            }
+          },
+          accessibility_keyboard_nav_right_arrow_loop: {
+            name: 'keyboard nav: sibling - right arrow goes to first from last',
+            testSelector: '[data-testid=circle][data-id=circle-Mexico-E]',
+            nextTestSelector: '[data-testid=circle][data-id=circle-Mexico-A]',
+            keyDownObject: { key: 'ArrowRight', code: 'ArrowRight', keyCode: 39 },
+            testProps: {
+              selectorAriaLabel: 'E. 25. Mexico. Node 3 of 3. This Node contains 0 child elements',
+              nextSelectorAriaLabel: 'A. 64. Mexico. Node 1 of 3. This Node contains 0 child elements',
+              focusIndicatorNotGrouped: true
+            }
+          },
+          accessibility_keyboard_nav_left_arrow_sibling: {
+            name: 'keyboard nav: sibling - left arrow goes to next',
+            testSelector: '[data-testid=circle][data-id=circle-Mexico-B]',
+            nextTestSelector: '[data-testid=circle][data-id=circle-Mexico-A]',
+            keyDownObject: { key: 'ArrowLeft', code: 'ArrowLeft', keyCode: 37 },
+            testProps: {
+              selectorAriaLabel: 'Type B. value 35. Country Mexico. Node 2 of 3. This Node contains 0 child elements',
+              nextSelectorAriaLabel:
+                'Type A. value 64. Country Mexico. Node 1 of 3. This Node contains 0 child elements',
+              accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true },
+              focusIndicatorNotGrouped: true
+            }
+          },
+          accessibility_keyboard_nav_left_arrow_loop: {
+            name: 'keyboard nav: sibling - left arrow loops to last from first',
+            testSelector: '[data-testid=circle][data-id=circle-Mexico-A]',
+            nextTestSelector: '[data-testid=circle][data-id=circle-Mexico-E]',
+            keyDownObject: { key: 'ArrowLeft', code: 'ArrowLeft', keyCode: 37 },
+            testProps: {
+              selectorAriaLabel: 'A. 64. Mexico. Node 1 of 3. This Node contains 0 child elements',
+              nextSelectorAriaLabel: 'E. 25. Mexico. Node 3 of 3. This Node contains 0 child elements',
+              focusIndicatorNotGrouped: true
+            }
+          },
+          accessibility_keyboard_nav_up_arrow_parent: {
+            name: 'keyboard nav: drill - up arrow goes to parent',
+            testSelector: '[data-testid=circle][data-id=circle-Mexico-A]',
+            nextTestSelector: '[data-testid=circle][data-id=circle-World-Mexico]',
+            keyDownObject: { key: 'ArrowUp', code: 'ArrowUp', keyCode: 38 },
+            testProps: {
+              selectorAriaLabel: 'A. 64. Mexico. Node 1 of 3. This Node contains 0 child elements',
+              nextSelectorAriaLabel: 'Mexico. 73. World. Node 1 of 3. This Node contains 3 child elements',
+              focusIndicatorNotGrouped: true
+            }
+          },
+          accessibility_keyboard_nav_down_arrow_child: {
+            name: 'keyboard nav: drill - down arrow goes to child',
+            testSelector: '[data-testid=circle][data-id=circle-World-Mexico]',
+            nextTestSelector: '[data-testid=circle][data-id=circle-Mexico-A]',
+            keyDownObject: { key: 'ArrowDown', code: 'ArrowDown', keyCode: 40 },
+            testProps: {
+              selectorAriaLabel: 'Mexico. 73. World. Node 1 of 3. This Node contains 3 child elements',
+              nextSelectorAriaLabel: 'A. 64. Mexico. Node 1 of 3. This Node contains 0 child elements',
+              focusIndicatorNotGrouped: true
+            }
+          },
+          accessibility_keyboard_nav_shift_enter_to_parent: {
+            name: 'keyboard nav: drill - shift+enter will move up to parent',
+            testSelector: '[data-testid=circle][data-id=circle-Mexico-A]',
+            nextTestSelector: '[data-testid=circle][data-id=circle-World-Mexico]',
+            keyDownObject: { key: 'Enter', code: 'Enter', keyCode: 13, shiftKey: true },
+            testProps: {
+              selectorAriaLabel: 'A. 64. Mexico. Node 1 of 3. This Node contains 0 child elements',
+              nextSelectorAriaLabel: 'Mexico. 73. World. Node 1 of 3. This Node contains 3 child elements',
+              focusIndicatorNotGrouped: true
+            }
+          },
+          accessibility_keyboard_nav_enter_to_child: {
+            name: 'keyboard nav: drill - enter will move into to children',
+            testSelector: '[data-testid=circle][data-id=circle-World-Mexico]',
+            nextTestSelector: '[data-testid=circle][data-id=circle-Mexico-A]',
+            keyDownObject: { key: 'Enter', code: 'Enter', keyCode: 13 },
+            testProps: {
+              selectorAriaLabel: 'Mexico. 73. World. Node 1 of 3. This Node contains 3 child elements',
+              nextSelectorAriaLabel: 'A. 64. Mexico. Node 1 of 3. This Node contains 0 child elements',
+              focusIndicatorNotGrouped: true
+            }
+          }
+        };
+        Object.keys(unitTestAccessibility).forEach(test => {
+          const tempTestProps = unitTestAccessibility[test].testDefault
+            ? { [unitTestAccessibility[test].prop]: CirclePackingDefaultValues[unitTestAccessibility[test].prop] }
+            : unitTestAccessibility[test].testProps;
+          const innerTestProps = {
+            ...tempTestProps,
+            expectedData: { id: 5, Type: 'A', Country: 'Mexico', value: 64 },
+            geometryType: 'Circle',
+            geometryPlacementAttributes: ['data-r', 'data-cx', 'data-cy'],
+            geometryAdjustmentValues: [
+              { f: 'data-r', b: 7, w: 3, s: -1 },
+              { f: 'data-cx', b: 7, w: 3, s: -1 },
+              { f: 'data-cy', b: 7 * 2, w: 3 * 2, s: 1 }
+            ],
+            // groupOverrideSelector: '#circle-in-pack-Mexico-circle-pack-unit-test-chart',
+            annotations:
+              unitTestAccessibility[test].prop === 'annotations'
+                ? [
+                    {
+                      note: {
+                        label: 'items',
+                        bgPadding: 0,
+                        title: 'Test Annotation',
+                        align: 'left',
+                        wrap: 130
+                      },
+                      accessibilityDescription: 'This is a test description for accessibility.',
+                      x: 100,
+                      y: 100,
+                      className: 'circle-pack-annotation',
+                      type: 'annotationCalloutCircle',
+                      subject: { radius: 18 }
+                    },
+                    {
+                      note: {},
+                      accessibilityDecorationOnly: true,
+                      type: 'annotationXYThreshold',
+                      subject: {
+                        x1: 0,
+                        x2: 250
+                      },
+                      color: 'pri_blue',
+                      disable: ['note', 'connector']
+                    }
+                  ]
+                : []
+          };
+          const innerTestSelector =
+            unitTestAccessibility[test].testSelector === 'component-name'
+              ? 'circle-packing'
+              : unitTestAccessibility[test].testSelector === '[data-testid=controller]'
+              ? '.VCL-controller'
+              : unitTestAccessibility[test].testSelector === '[data-testid=svg]'
+              ? '[data-testid=root-svg]'
+              : unitTestAccessibility[test].testSelector === '[data-testid=padding]'
+              ? '[data-testid=padding-container]'
+              : unitTestAccessibility[test].testSelector === '[data-testid=mark]'
+              ? '[data-testid=circle]'
+              : unitTestAccessibility[test].testSelector === '[data-testid=group]'
+              ? '[data-testid=circle-group]'
+              : unitTestAccessibility[test].testSelector === '[data-id=mark-id]'
+              ? accessibilityTestMarks[test]
+                ? accessibilityTestMarks[test].testSelector
+                : '[data-testid=circle][data-id=circle-Mexico-A]'
+              : unitTestAccessibility[test].testSelector;
+          const innerNextTestSelector =
+            unitTestAccessibility[test].nextTestSelector === '[data-id=mark-id]'
+              ? accessibilityTestMarks[test]
+                ? accessibilityTestMarks[test].nextTestSelector
+                : '[data-testid=circle][data-id=circle-Mexico-B]'
+              : unitTestAccessibility[test].nextTestSelector === '[data-testid=svg]'
+              ? '[data-testid=root-svg]'
+              : unitTestAccessibility[test].nextTestSelector;
+          if (test === 'accessibility_keyboard_nav_generic_test') {
+            // run keyboard nav test for each scenario above
+            // skipping these by default as the target.focus() code in accessibilityController breaks them
+            Object.keys(accessibilityTestMarks).forEach(keyboardTest => {
+              it(`${unitTestAccessibility[test].prop}: ${accessibilityTestMarks[keyboardTest].name}`, () =>
+                unitTestAccessibility[test].testFunc(
+                  component,
+                  page,
+                  accessibilityTestMarks[keyboardTest].testProps
+                    ? { ...innerTestProps, ...accessibilityTestMarks[keyboardTest].testProps }
+                    : innerTestProps,
+                  accessibilityTestMarks[keyboardTest].testSelector,
+                  accessibilityTestMarks[keyboardTest].nextTestSelector,
+                  accessibilityTestMarks[keyboardTest].keyDownObject
+                ));
+            });
+          } else if (
+            test === 'accessibility_textures_on_by_default' ||
+            test === 'accessibility_categorical_textures_created_by_default' ||
+            test === 'accessibility_focus_marker_style' ||
+            test === 'accessibility_focus_group_style' ||
+            test === 'accessibility_xaxis_description_set_on_load' ||
+            test === 'accessibility_xaxis_description_off_on_load' ||
+            test === 'accessibility_xaxis_description_added_on_update' ||
+            test === 'accessibility_yaxis_description_set_on_load' ||
+            test === 'accessibility_yaxis_description_off_on_load' ||
+            test === 'accessibility_yaxis_description_added_on_update'
+            // test === 'accessibility_keyboard_selection_test'
+          ) {
+            it.skip(`${unitTestAccessibility[test].prop}: ${unitTestAccessibility[test].name}`, () =>
+              unitTestAccessibility[test].testFunc(
+                component,
+                page,
+                innerTestProps,
+                innerTestSelector,
+                innerNextTestSelector
+              ));
+          } else if (
+            test === 'accessibility_focus_marker_style' // update this test for single test review
+          ) {
+            it(`${unitTestAccessibility[test].prop}: ${unitTestAccessibility[test].name}`, () =>
+              unitTestAccessibility[test].testFunc(
+                component,
+                page,
+                { ...innerTestProps },
+                innerTestSelector,
+                innerNextTestSelector
+              ));
+            // skipping these by default as the target.focus() code in accessibilityController breaks them
+            // skipping texture default tests for scatter as scatter uses symbols instead of textures
+          } else {
+            // these tests can just be run straight away
+            it(`${unitTestAccessibility[test].prop}: ${unitTestAccessibility[test].name}`, () =>
+              unitTestAccessibility[test].testFunc(
+                component,
+                page,
+                innerTestProps,
+                innerTestSelector,
+                innerNextTestSelector
+              ));
+          }
+        });
+      });
+
       describe('validation', () => {
         it('refer to generic results above for accessibility validation tests', () => {
           expect(true).toBeTruthy();
@@ -168,6 +408,41 @@ describe('<circle-packing>', () => {
     describe('margin & padding', () => {
       it('refer to generic results above for margin & padding tests', () => {
         expect(true).toBeTruthy();
+      });
+    });
+
+    describe('annotations', () => {
+      // TODO: need to add more precise test case for annotations label and text
+      it('should pass annotation prop', async () => {
+        // ARRANGE
+        const annotations = [
+          {
+            note: {
+              label: 'Social Media Intern returned to college',
+              bgPadding: 20,
+              title: 'Staff Change',
+              align: 'middle',
+              wrap: 130
+            },
+            accessibilityDescription:
+              'This is an annotation that explains a drop in tweet ACTivity due to staff change.',
+            y: 200,
+            x: 200,
+            dy: 50,
+            type: 'annotationCallout',
+            connector: { end: 'dot', endScale: 10 },
+            color: 'pri_blue'
+          }
+        ];
+        component.annotations = annotations;
+
+        // ACT
+        page.root.append(component);
+        await page.waitForChanges();
+
+        // ASSERT
+        const annotationGroup = page.doc.querySelector('[data-testid=annotation-group]');
+        expect(annotationGroup).toMatchSnapshot();
       });
     });
 
@@ -681,19 +956,46 @@ describe('<circle-packing>', () => {
               tooltip_tooltipLabel_custom_format_load:
                 '<p style="margin: 0;">Testing123:<b>Mexico</b><br>Count:<b>$73</b><br></p>',
               tooltip_tooltipLabel_custom_format_update:
-                '<p style="margin: 0;">Testing123:<b>Mexico</b><br>Count:<b>$73</b><br></p>'
+                '<p style="margin: 0;">Testing123:<b>Mexico</b><br>Count:<b>$73</b><br></p>',
+              dataKeyNames_custom_on_load:
+                '<p style="margin: 0;"><b>Mexico</b><br>Test Country:<b>World</b><br>Value:<b>73</b></p>',
+              dataKeyNames_custom_on_update:
+                '<p style="margin: 0;"><b>Mexico</b><br>Test Country:<b>World</b><br>Value:<b>73</b></p>'
+            };
+            const innerAriaContent = {
+              dataKeyNames_custom_on_load:
+                'Test Destination Mexico. value 73. Test Country World. Node 1 of 3. This Node contains 3 child elements',
+              dataKeyNames_custom_on_update:
+                'Test Destination Mexico. value 73. Test Country World. Node 1 of 3. This Node contains 3 child elements'
             };
             const innerTestProps = { ...unitTestTooltip[test].testProps, ...innerTooltipProps[test] };
+            const customDataKeyNames = { dataKeyNames: { Country: 'Test Country', Type: 'Test Destination' } };
             // we have to handle clickEvent separately due to this.zooming boolean in circle-packing load
 
-            it(`${unitTestTooltip[test].prop}: ${unitTestTooltip[test].name}`, () =>
-              unitTestTooltip[test].testFunc(
-                component,
-                page,
-                innerTestProps,
-                innerTestSelector,
-                innerTooltipContent[test]
-              ));
+            if (test === 'dataKeyNames_custom_on_load' || test === 'dataKeyNames_custom_on_update') {
+              it(`${unitTestTooltip[test].prop}: ${unitTestTooltip[test].name}`, () =>
+                unitTestTooltip[test].testFunc(
+                  component,
+                  page,
+                  {
+                    ...innerTestProps,
+                    ...customDataKeyNames,
+                    accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true },
+                    selectorAriaLabel: innerAriaContent[test]
+                  },
+                  innerTestSelector,
+                  innerTooltipContent[test]
+                ));
+            } else {
+              it(`${unitTestTooltip[test].prop}: ${unitTestTooltip[test].name}`, () =>
+                unitTestTooltip[test].testFunc(
+                  component,
+                  page,
+                  innerTestProps,
+                  innerTestSelector,
+                  innerTooltipContent[test]
+                ));
+            }
           });
         });
       });

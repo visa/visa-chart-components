@@ -200,6 +200,12 @@ export interface IScatterPlotProps {
   dataLabel: IDataLabelType;
 
   /**
+   * @shortDescription Enables custom, user friendly names for data keys
+   * @controlName TextArea
+   * @groupName Labels */
+  dataKeyNames: object;
+
+  /**
    * @shortDescription Controls size, dual color encoding and range of size for marks
    * @controlName TextArea
    * @groupName Marker */
@@ -290,6 +296,12 @@ export interface IScatterPlotProps {
   initialLoadEvent: any;
 
   /**
+   * @shortDescription Set a callback to execute when chart's initial load ends.
+   * @controlName Toggle
+   * @groupName Events */
+  initialLoadEndEvent: any;
+
+  /**
    * @shortDescription Set a callback to execute when chart drawing starts.
    * @controlName Toggle
    * @groupName Events */
@@ -365,7 +377,7 @@ export interface ISizeConfigType {
   minSizeOverride?: number;
   maxSizeOverride?: number;
   dualEncodeColor?: boolean;
-  // format?: any;
+  format?: string;
 }
 
 export interface ITooltipLabelType {

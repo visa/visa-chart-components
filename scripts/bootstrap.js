@@ -333,6 +333,16 @@ function run() {
       pre: ['gdj']
     }),
 
+    sf: createTask({
+      name: `start figma plugin in dev mode ${chalk.gray('(start figma plugin in dev mode)')}`,
+      defaultValue: false,
+      option: '--sf',
+      command: () => {
+        spawn(`lerna run --scope @visa/charts-figma start`);
+      },
+      order: 12
+    }),
+
     srd: createTask({
       name: `start charts react demo ${chalk.gray('(start charts react demo)')}`,
       defaultValue: false,
@@ -340,7 +350,7 @@ function run() {
       command: () => {
         spawn(`lerna run --scope charts-react-demo start`);
       },
-      order: 12
+      order: 13
     }),
 
     srhd: createTask({
@@ -351,7 +361,7 @@ function run() {
         spawn(`lerna run --scope charts-react-hooks-demo start`);
         // spawn(`npm -C ./packages/charts-react-hooks-demo run start`);
       },
-      order: 13
+      order: 14
     }),
 
     c: createTask({

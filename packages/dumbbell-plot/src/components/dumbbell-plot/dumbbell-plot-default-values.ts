@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -76,6 +76,7 @@ export class DumbbellPlotDefaultValues {
   static readonly hoverOpacity = propDefaultValues.hoverOpacity;
 
   static readonly dataLabel = propDefaultValues.dataLabelEnds;
+  static readonly dataKeyNames;
   static readonly legend = propDefaultValues.hiddenLegend;
   static readonly tooltipLabel = propDefaultValues.tooltipLabel;
 

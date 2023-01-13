@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2021 Visa, Inc.
+ * Copyright (c) 2021, 2022 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -7,6 +7,9 @@
  **/
 import { select, selectAll } from 'd3-selection';
 import { getBrowser } from './browser-util';
+import { keyCodes } from './accessibilityController';
+import { drawTooltip } from './tooltip';
+
 const browser = getBrowser();
 const isIE11 = browser === 'IE'; // ua.includes('rv:11.0');
 const isIEEdge = browser === 'Edge'; // ua.includes('Edge');
@@ -130,5 +133,36 @@ const handleContrast = (a?: any, id?: string) => {
       .selectAll('.vcl-svg')
       .select('g')
       .attr('filter', null);
+  }
+};
+
+// hideTooltip handles is called by hideTooltipListener.
+// We are checking if the tooltip is visible, if yes,
+// we are settings its opacity to 0.
+const hideTooltipHandler = event => {
+  if (event.keyCode === keyCodes.escape) {
+    selectAll('.vcl-tooltip').each((_, i, n) => {
+      const root = select(n[i]);
+      if (root.style('opacity') == 1) {
+        drawTooltip({ root: root, isToShow: false });
+      }
+    });
+
+    // }
+  }
+};
+
+// hideTooltipListener is responsible to attach/remove a global eventListener
+// to the window. It is attached/removed once even if we have multiple
+// chart instances on the page. However, the listener is created when a tooltip
+// is shown, therefore if there are multiple visible tooltips the window
+// eventListener could be added to the DOM as many times as many tooltips are visible
+// in a moment in time. Multiple tooltips is an unlikely scenario so we settle with
+// this solution for now.
+export const hideTooltipListener = isToShow => {
+  if (isToShow) {
+    window.addEventListener('keydown', hideTooltipHandler, true);
+  } else {
+    window.removeEventListener('keydown', hideTooltipHandler, true);
   }
 };

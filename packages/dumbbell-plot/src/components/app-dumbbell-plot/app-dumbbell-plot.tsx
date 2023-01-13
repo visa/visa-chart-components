@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -258,6 +258,10 @@ export class AppDumbbellPlot {
 
   @Element()
   appEl: HTMLElement;
+  dataKeyNames: any = {
+    category: 'Grouping',
+    value: 'Percentages'
+  };
 
   button = document.querySelector('input');
 
@@ -774,6 +778,7 @@ export class AppDumbbellPlot {
           valueAccessor={this.valueAccessor}
           seriesAccessor={this.seriesAccessor}
           dataLabel={this.dataLabel}
+          dataKeyNames={this.dataKeyNames}
           seriesLabel={this.seriesLabel}
           differenceLabel={this.differenceLabel}
           xAxis={this.xAxis}

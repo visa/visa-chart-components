@@ -1,6 +1,6 @@
 # @visa/charts-react
 
-This package bundles [visa chart components](../../) web components and exports them as react components. We leveage [stencil's react bindings](https://stenciljs.com/docs/framework-bindings) in the creation of @visa/charts-react.
+This package bundles [visa chart components](../../) web components and exports them as react components. We leverage [stencil's react bindings](https://stenciljs.com/docs/framework-bindings) in the creation of @visa/charts-react.
 
 ---
 

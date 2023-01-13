@@ -40,7 +40,11 @@ exports[`<line-chart> rendered-html accessibility generic accessibility test sui
         <tr class="vcc-ki-tr">
           <th class="vcc-ki-td" scope="row">
             <kbd>
-              Esc
+              Shift
+            </kbd>
+            +
+            <kbd>
+              Enter
             </kbd>
             on a line or point.
           </th>
@@ -100,6 +104,17 @@ exports[`<line-chart> rendered-html accessibility generic accessibility test sui
             Move among points across lines.
           </td>
         </tr>
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Esc
+            </kbd>
+            at any time.
+          </th>
+          <td class="vcc-ki-td">
+            Dismiss the tooltip.
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
@@ -146,7 +161,11 @@ exports[`<line-chart> rendered-html accessibility generic accessibility test sui
         <tr class="vcc-ki-tr">
           <th class="vcc-ki-td" scope="row">
             <kbd>
-              Esc
+              Shift
+            </kbd>
+            +
+            <kbd>
+              Enter
             </kbd>
             on a line or point.
           </th>
@@ -206,13 +225,118 @@ exports[`<line-chart> rendered-html accessibility generic accessibility test sui
             Move among points across lines.
           </td>
         </tr>
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Esc
+            </kbd>
+            at any time.
+          </th>
+          <td class="vcc-ki-td">
+            Dismiss the tooltip.
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
 </div>
 `;
 
-exports[`<line-chart> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: test whether space bar performs click action 1`] = `<circle class="vcl-accessibility-focus-source" cursor="default" data-cx="22.375" data-cy="79.79816729742207" data-fill="true" data-id="marker-Card-A-2016-01" data-r="5" data-role="img" data-testid="marker" data-translate-x="56.5" fill="#7c99b1" focusable="false" id="chart-unit-test-123457-123457-123457" r="5" role="presentation" stroke="#35495a" stroke-width="2" tabindex="-1"></circle>`;
+exports[`<line-chart> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: test whether space bar performs click action 1`] = `<circle class="vcl-accessibility-focus-source" cursor="default" cx="0" cy="0" data-cx="22.375" data-cy="79.79816729742207" data-fill="true" data-id="marker-Card-A-2016-01" data-r="5" data-role="img" data-testid="marker" data-translate-x="56.5" fill="#7c99b1" focusable="false" id="chart-unit-test-123457-123457-123457" r="5" role="presentation" stroke="#35495a" stroke-width="2" tabindex="-1"></circle>`;
+
+exports[`<line-chart> rendered-html annotations should pass annotation prop on load 1`] = `
+<g aria-hidden="true" class="vcl-annotation-group" data-testid="annotation-group" focusable="false" role="presentation">
+  <g class="annotations">
+    <g class="annotation callout rect" transform="translate(undefined, 9.966336410922754)">
+      <g class="annotation-connector">
+        <path class="connector" d="M50,0L50,0LNaN,0" fill="none" stroke="#6e5a55"></path>
+      </g>
+      <g class="annotation-subject">
+        <path class="subject" d="M0,0L100,0L100,213.92L0,213.92L0,0" fill-opacity="0.1" stroke="#6e5a55"></path>
+      </g>
+      <g class="annotation-note" transform="translate(85.92, 0)">
+        <g class="annotation-note-content" transform="translate(-10, 3)">
+          <rect class="annotation-note-bg" fill="white" fill-opacity="0" height="10" width="10" x="0" y="0"></rect>
+          <text class="annotation-note-label" dx="0" fill="#6e5a55" y="0">
+            <tspan dy="0.8em" x="0">
+              Beginning of Year
+            </tspan>
+          </text>
+          <text class="annotation-note-title"></text>
+        </g>
+        <path class="note-line" d="M-10,0L0,0" stroke="#6e5a55"></path>
+      </g>
+    </g>
+    <g class="annotation callout circle" transform="translate(undefined, 205.33333333333334)">
+      <g class="annotation-connector">
+        <path class="connector" d="MNaN,NaNLNaN,4.48" fill="none" stroke="#954737"></path>
+      </g>
+      <g class="annotation-subject">
+        <path class="subject" d="M3.6739403974420594e-16,-6A6,6,0,1,1,-3.6739403974420594e-16,6A6,6,0,1,1,3.6739403974420594e-16,-6Z" fill-opacity="0" stroke="#954737"></path>
+      </g>
+      <g class="annotation-note" transform="translate(187.95, 4.48)">
+        <g class="annotation-note-content" transform="translate(-10, 3)">
+          <rect class="annotation-note-bg" fill="white" fill-opacity="0" height="10" width="10" x="0" y="0"></rect>
+          <text class="annotation-note-label" dx="0" fill="#954737" y="0">
+            <tspan dy="0.8em" x="0">
+              Low Card B in June
+            </tspan>
+          </text>
+          <text class="annotation-note-title"></text>
+        </g>
+        <path class="note-line" d="M-10,0L0,0" stroke="#954737"></path>
+      </g>
+    </g>
+  </g>
+</g>
+`;
+
+exports[`<line-chart> rendered-html annotations should pass annotation prop on update 1`] = `
+<g aria-hidden="true" class="vcl-annotation-group" data-testid="annotation-group" focusable="false" role="presentation">
+  <g class="annotations">
+    <g class="annotation callout rect" transform="translate(undefined, 9.966336410922754)">
+      <g class="annotation-connector">
+        <path class="connector" d="M50,0L50,0LNaN,0" fill="none" stroke="#6e5a55"></path>
+      </g>
+      <g class="annotation-subject">
+        <path class="subject" d="M0,0L100,0L100,213.92L0,213.92L0,0" fill-opacity="0.1" stroke="#6e5a55"></path>
+      </g>
+      <g class="annotation-note" transform="translate(85.92, 0)">
+        <g class="annotation-note-content" transform="translate(-10, 3)">
+          <rect class="annotation-note-bg" fill="white" fill-opacity="0" height="10" width="10" x="0" y="0"></rect>
+          <text class="annotation-note-label" dx="0" fill="#6e5a55" y="0">
+            <tspan dy="0.8em" x="0">
+              Beginning of Year
+            </tspan>
+          </text>
+          <text class="annotation-note-title"></text>
+        </g>
+        <path class="note-line" d="M-10,0L0,0" stroke="#6e5a55"></path>
+      </g>
+    </g>
+    <g class="annotation callout circle" transform="translate(undefined, 205.33333333333334)">
+      <g class="annotation-connector">
+        <path class="connector" d="MNaN,NaNLNaN,4.48" fill="none" stroke="#954737"></path>
+      </g>
+      <g class="annotation-subject">
+        <path class="subject" d="M3.6739403974420594e-16,-6A6,6,0,1,1,-3.6739403974420594e-16,6A6,6,0,1,1,3.6739403974420594e-16,-6Z" fill-opacity="0" stroke="#954737"></path>
+      </g>
+      <g class="annotation-note" transform="translate(187.95, 4.48)">
+        <g class="annotation-note-content" transform="translate(-10, 3)">
+          <rect class="annotation-note-bg" fill="white" fill-opacity="0" height="10" width="10" x="0" y="0"></rect>
+          <text class="annotation-note-label" dx="0" fill="#954737" y="0">
+            <tspan dy="0.8em" x="0">
+              Low Card B in June
+            </tspan>
+          </text>
+          <text class="annotation-note-title"></text>
+        </g>
+        <path class="note-line" d="M-10,0L0,0" stroke="#954737"></path>
+      </g>
+    </g>
+  </g>
+</g>
+`;
 
 exports[`<line-chart> rendered-html event-emitter generic event testing marker based events [event] clickEvent: event object should emit and contain first data record when first mark is clicked 1`] = `<circle cursor="default" cx="22.375" cy="79.79816729742207" data-cx="22.375" data-cy="79.79816729742207" data-fill="true" data-id="marker-Card-A-2016-01" data-index="0" data-r="5" data-role="img" data-testid="marker" data-translate-x="56.5" fill="#7c99b1" focusable="false" id="line-chart-unit-test-123457-123457-123457" opacity="1" r="5" role="presentation" stroke="#35495a" stroke-width="2" tabindex="-1"></circle>`;
 

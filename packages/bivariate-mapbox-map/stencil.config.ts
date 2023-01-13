@@ -22,7 +22,7 @@ if (dev) {
 }
 export const config: Config | any = {
   namespace: 'bivariate-mapbox-map',
-  tsconfig: dev ? './tsconfig.dev.json' : './tsconfig.json',
+  tsconfig: dev ? './tsconfig.dev.json' : './tsconfig.prod.json',
   buildEs5: 'prod',
   extras: {
     cssVarsShim: true,

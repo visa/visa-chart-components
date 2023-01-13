@@ -9,10 +9,11 @@
 var widgets = require('@jupyter-widgets/base');
 var pkg = require('../package.json');
 
+// temporary comment to bump charts with feature commit
 // import vcc components for python widget
 var { BarChart } = require('@visa/charts/dist/components/bar-chart');
-var { ClusteredBarChart } = require('@visa/charts/dist/components/clustered-bar-chart');
 var { StackedBarChart } = require('@visa/charts/dist/components/stacked-bar-chart');
+var { ClusteredBarChart } = require('@visa/charts/dist/components/clustered-bar-chart');
 var { LineChart } = require('@visa/charts/dist/components/line-chart');
 var { PieChart } = require('@visa/charts/dist/components/pie-chart');
 var { ScatterPlot } = require('@visa/charts/dist/components/scatter-plot');

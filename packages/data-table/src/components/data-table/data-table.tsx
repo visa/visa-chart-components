@@ -26,6 +26,7 @@ export class DataTable {
   @Prop({ mutable: true }) padding: IBoxModelType = DataTableDefaultValues.padding;
   @Prop({ mutable: true }) tableColumns: string[];
   @Prop({ mutable: true }) secondaryTableColumns: string[];
+  @Prop({ mutable: true }) dataKeyNames: object;
 
   // data for the table
   @Prop() data: object[];
@@ -129,7 +130,7 @@ export class DataTable {
         .append('th')
         .attr('class', 'vcc-th')
         .attr('scope', 'col')
-        .text(d => d);
+        .text(d => (this.dataKeyNames && this.dataKeyNames[d] ? this.dataKeyNames[d] : d));
 
       this.tbody = this.table.append('tbody').attr('class', 'vcc-tbody');
 
@@ -175,7 +176,7 @@ export class DataTable {
           .append('th')
           .attr('class', 'vcc-th')
           .attr('scope', 'col')
-          .text(d => d);
+          .text(d => (this.dataKeyNames && this.dataKeyNames[d] ? this.dataKeyNames[d] : d));
 
         this.tbody = this.secondaryTable.append('tbody').attr('class', 'vcc-tbody');
 

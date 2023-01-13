@@ -286,11 +286,11 @@ describe('<line-chart>', () => {
               data: moreCategoryData
             }
           },
-          accessibility_keyboard_nav_esc_to_group: {
-            name: 'keyboard nav: group - escape will move up to group',
+          accessibility_keyboard_nav_shift_enter_to_group: {
+            name: 'keyboard nav: group - shift+enter will move up to group',
             testSelector: '[data-testid=marker][data-id=marker-Card-A-2016-01]',
             nextTestSelector: '[data-testid=marker-series-group][data-id=marker-series-Card-A]',
-            keyDownObject: { key: 'Escape', code: 'Escape', keyCode: 27 },
+            keyDownObject: { key: 'Enter', code: 'Enter', keyCode: 13, shiftKey: true },
             testProps: {
               selectorAriaLabel: 'Card-A. 2016-01. 7.7b. Point 1 of 12.',
               nextSelectorAriaLabel: 'Card-A. Line 1 of 2 which contains 12 interactive points.'
@@ -370,21 +370,26 @@ describe('<line-chart>', () => {
               unitTestAccessibility[test].prop === 'annotations'
                 ? [
                     {
-                      note: {
-                        label: 'Low debit in June',
-                        bgPadding: 0,
-                        align: 'right',
-                        wrap: 130
-                      },
-                      accessibilityDescription: 'This is a test description for accessibility.',
-                      data: { date: '2016-06', category: 'Card-B', value: 3484192554 },
-                      dx: '35%',
-                      dy: '2%',
-                      color: 'categorical_orange',
+                      note: { label: 'High Card B in Nov', bgPadding: 0, align: 'left', wrap: 130 },
+                      parseAsDates: ['date'],
+                      data: { date: '2016-11-01T00:00:00.000Z', category: 'Card B', value: 6772849978 },
+                      dx: '-25%',
+                      dy: '-2%',
+                      color: 'sec_blue',
                       type: 'annotationCalloutCircle',
+                      subject: { radius: 6 },
+                      accessibilityDescription: 'This is a test description for accessibility.'
+                    },
+                    {
+                      note: {},
+                      accessibilityDecorationOnly: true,
+                      type: 'annotationXYThreshold',
                       subject: {
-                        radius: 6
-                      }
+                        x1: 0,
+                        x2: 250
+                      },
+                      color: 'pri_blue',
+                      disable: ['note', 'connector']
                     }
                   ]
                 : []
@@ -494,52 +499,79 @@ describe('<line-chart>', () => {
       });
     });
 
-    // annotations break in jsdom due to their text wrapping function in d3-annotation
-    // describe('annotations', () => {
-    //   // TODO: need to add more precise test case for annotations label and text
-    //   it('should pass annotation prop', async () => {
-    //     // ARRANGE
-    //     const annotations = [
-    //       {
-    //         note: {
-    //           label: 'Social Media Intern returned to college',
-    //           bgPadding: 20,
-    //           title: 'Staff Change',
-    //           align: 'middle',
-    //           wrap: 130
-    //         },
-    //         accessibilityDescription:
-    //           'This is an annotation that explains a drop in tweet ACTivity due to staff change.',
-    //         y: [2600],
-    //         x: '62%',
-    //         dy: -85,
-    //         type: 'annotationCallout',
-    //         connector: { end: 'dot', endScale: 10 },
-    //         color: 'pri_blue'
-    //       }
-    //     ];
-    //     const data = [
-    //       { label: 'Q1', value: 1125 },
-    //       { label: 'Q2', value: 3725 },
-    //       { label: 'Q3', value: 2125 },
-    //       { label: 'Q4', value: 4125 }
-    //     ];
-    //     const dataLabel = { visible: true, placement: 'top', labelAccessor: 'value', format: '0,0' };
-    //     component.data = data;
-    //     component.ordinalAccessor = 'label';
-    //     component.valueAccessor = 'value';
-    //     component.dataLabel = dataLabel;
-    //     component.annotations = annotations;
+    // annotations break in jsdom due to their text wrapping function in d3-annotation - fixed in stencil 2.17.3+
+    describe('annotations', () => {
+      // TODO: need to add more precise test case for annotations label and text
+      it('should pass annotation prop on load', async () => {
+        // ARRANGE
+        const annotations = [
+          {
+            note: { label: 'Beginning of Year', bgPadding: 0, align: 'right', wrap: 100 },
+            dx: '16%',
+            parseAsDates: ['date'],
+            data: { date: '2016-01-15T00:00:00.000Z', value: 10000000000 },
+            color: 'categorical_grey_text',
+            type: 'annotationCalloutRect',
+            subject: { height: '95.5%', width: ['2016-01-01', '2016-02-01'] }
+          },
+          {
+            note: { label: 'Low Card B in June', bgPadding: 0, align: 'right', wrap: 130 },
+            parseAsDates: ['date'],
+            data: { date: '2016-06-01T00:00:00.000Z', category: 'Card B', value: 3484192554 },
+            dx: '35%',
+            dy: '2%',
+            color: 'categorical_rose_text',
+            type: 'annotationCalloutCircle',
+            subject: { radius: 6 }
+          }
+        ];
+        component.annotations = annotations;
 
-    //     // ACT
-    //     page.root.append(component);
-    //     await page.waitForChanges();
+        // ACT
+        page.root.append(component);
+        await page.waitForChanges();
 
-    //     // ASSERT
-    //     const annotationGroup = page.doc.querySelector('[data-testid=annotation-group]');
-    //     expect(annotationGroup).toMatchSnapshot();
-    //   });
-    // });
+        // ASSERT
+        const annotationGroup = page.doc.querySelector('[data-testid=annotation-group]');
+        expect(annotationGroup).toMatchSnapshot();
+      });
+      it('should pass annotation prop on update', async () => {
+        // ARRANGE
+        const annotations = [
+          {
+            note: { label: 'Beginning of Year', bgPadding: 0, align: 'right', wrap: 100 },
+            dx: '16%',
+            parseAsDates: ['date'],
+            data: { date: '2016-01-15T00:00:00.000Z', value: 10000000000 },
+            color: 'categorical_grey_text',
+            type: 'annotationCalloutRect',
+            subject: { height: '95.5%', width: ['2016-01-01', '2016-02-01'] }
+          },
+          {
+            note: { label: 'Low Card B in June', bgPadding: 0, align: 'right', wrap: 130 },
+            parseAsDates: ['date'],
+            data: { date: '2016-06-01T00:00:00.000Z', category: 'Card B', value: 3484192554 },
+            dx: '35%',
+            dy: '2%',
+            color: 'categorical_rose_text',
+            type: 'annotationCalloutCircle',
+            subject: { radius: 6 }
+          }
+        ];
+
+        // ACT
+        page.root.append(component);
+        await page.waitForChanges();
+
+        //  UPDATE
+        component.annotations = annotations;
+        await page.waitForChanges();
+
+        // ASSERT
+        const annotationGroup = page.doc.querySelector('[data-testid=annotation-group]');
+        expect(annotationGroup).toMatchSnapshot();
+      });
+    });
 
     describe('axes', () => {
       describe('minValueOverride & maxValueOverride', () => {
@@ -1258,19 +1290,43 @@ describe('<line-chart>', () => {
               tooltip_tooltipLabel_custom_format_load:
                 '<p style="margin: 0;">Testing123:<b>Card-A</b><br>Count:<b>$7.7b</b><br></p>',
               tooltip_tooltipLabel_custom_format_update:
-                '<p style="margin: 0;">Testing123:<b>Card-A</b><br>Count:<b>$7.7b</b><br></p>'
+                '<p style="margin: 0;">Testing123:<b>Card-A</b><br>Count:<b>$7.7b</b><br></p>',
+              dataKeyNames_custom_on_load:
+                '<p style="margin: 0;"><b>Card-A<br></b>Test Date:<b>2016-01</b><br>Y Axis:<b>7.7b</b></p>',
+              dataKeyNames_custom_on_update:
+                '<p style="margin: 0;"><b>Card-A<br></b>Test Date:<b>2016-01</b><br>Y Axis:<b>7.7b</b></p>'
+            };
+            const innerAriaContent = {
+              dataKeyNames_custom_on_load: 'category Card-A. Test Date 2016-01. value 7.7b. Point 1 of 12.',
+              dataKeyNames_custom_on_update: 'category Card-A. Test Date 2016-01. value 7.7b. Point 1 of 12.'
             };
             const innerTestProps = { ...unitTestTooltip[test].testProps, ...innerTooltipProps[test] };
+            const customDataKeyNames = { dataKeyNames: { date: 'Test Date' } };
             // we have to handle clickEvent separately due to zooming boolean in circle-packing load
-
-            it(`${unitTestTooltip[test].prop}: ${unitTestTooltip[test].name}`, () =>
-              unitTestTooltip[test].testFunc(
-                component,
-                page,
-                innerTestProps,
-                innerTestSelector,
-                innerTooltipContent[test]
-              ));
+            if (test === 'dataKeyNames_custom_on_load' || test === 'dataKeyNames_custom_on_update') {
+              it(`${unitTestTooltip[test].prop}: ${unitTestTooltip[test].name}`, () =>
+                unitTestTooltip[test].testFunc(
+                  component,
+                  page,
+                  {
+                    ...innerTestProps,
+                    ...customDataKeyNames,
+                    accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true },
+                    selectorAriaLabel: innerAriaContent[test]
+                  },
+                  innerTestSelector,
+                  innerTooltipContent[test]
+                ));
+            } else {
+              it(`${unitTestTooltip[test].prop}: ${unitTestTooltip[test].name}`, () =>
+                unitTestTooltip[test].testFunc(
+                  component,
+                  page,
+                  innerTestProps,
+                  innerTestSelector,
+                  innerTooltipContent[test]
+                ));
+            }
           });
         });
       });

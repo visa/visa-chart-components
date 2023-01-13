@@ -104,7 +104,7 @@ export class KeyboardInstructions {
               </tr>
               <tr class="vcc-ki-tr">
                 <th scope="row" class="vcc-ki-td">
-                  <kbd>Esc</kbd> on a {this.groupName} or {this.geomType}.
+                  <kbd>Shift</kbd> + <kbd>Enter</kbd> on a {this.groupName} or {this.geomType}.
                 </th>
                 <td class="vcc-ki-td">Drill up a level.</td>
               </tr>
@@ -135,6 +135,12 @@ export class KeyboardInstructions {
                   <kbd>↑</kbd> / <kbd>↓</kbd> {this.cousinAction()}.
                 </th>
                 <td class="vcc-ki-td">{this.cousinResult()}.</td>
+              </tr>
+              <tr class="vcc-ki-tr">
+                <th scope="row" class="vcc-ki-td">
+                  <kbd>Esc</kbd> at any time.
+                </th>
+                <td class="vcc-ki-td">Dismiss the tooltip.</td>
               </tr>
             </tbody>
           </table>

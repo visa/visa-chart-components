@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="144px" height="113px" viewBox="0 0 144 113" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 58 (84663) - https://sketch.com -->
+    <title>parallel-coordinates</title>
+    <desc>Created with Sketch.</desc>
+    <g id="parallel-coordinates" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M0.223767628,113 L0.223767628,0" id="Path-Copy-3" stroke="#767676" stroke-width="0.75"></path>
+        <path d="M35.5833876,113 L35.5833876,0" id="Path-Copy-4" stroke="#767676" stroke-width="0.5"></path>
+        <path d="M71.5833876,113 L71.5833876,0" id="Path-Copy-5" stroke="#767676" stroke-width="0.5"></path>
+        <path d="M107.583388,113 L107.583388,0" id="Path-Copy-6" stroke="#767676" stroke-width="0.5"></path>
+        <path d="M143.583388,113 L143.583388,0" id="Path-Copy-7" stroke="#767676" stroke-width="0.75"></path>
+        <polyline id="Path-7" stroke="#363636" points="-0.223767628 17.491038 35.3596199 60.517554 71.3596199 55.6053596 107.35962 27.4717785 143.35962 40.3745216"></polyline>
+        <polyline id="Path-8" stroke="#363636" points="8.52651283e-14 12.545626 35.3596199 56.4678715 71.3596199 60.8508754 107.35962 32.3272739 143.35962 35.7996576"></polyline>
+        <polyline id="Path-9" stroke="#363636" points="143.583388 46.5887883 107.583388 39.3754167 71.5833876 54.6555083 35.5833876 49.929447 5.68434189e-14 18.7787923"></polyline>
+        <polyline id="Path-10" stroke="#363636" points="7.10542736e-14 22.2004905 35.3596199 51.2338101 71.3596199 47.2333813 107.35962 23.5137308 143.35962 33.2954521"></polyline>
+        <polyline id="Path-12" stroke="#0051DC" points="143.583388 93.4607906 107.583388 83.7758621 71.5679261 65.6213248 35.5833876 94.816092 0.223767628 77.9080164"></polyline>
+        <polyline id="Path-13" stroke="#0051DC" points="144 77.491751 107.583388 87.840445 71.5679261 91.4587521 35.5833876 67.9786374 0.223767628 91.4587521"></polyline>
+        <polyline id="Path-14" stroke="#0051DC" points="144 83.7758621 107.583388 70.7873563 71.5679261 85.8586098 35.5833876 74.683908 0.223767628 83.7758621"></polyline>
+    </g>
+</svg>

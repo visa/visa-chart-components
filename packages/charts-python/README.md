@@ -97,3 +97,5 @@ To the python widget locally, you will need to follow the below installation and
 ```
 
 After running these commands, the js lib `@visa/charts` will by symlink'd and a jupyter notebook will be spun up locally for development and testing work. If you update the js build and/or python code you will likely need to restart/refresh the juptyer notebook to see development changes reflected.
+
+In addition to the core project team, special thanks to Luis Chaves Rodriguez ([@visa](https://github.com/luis-chaves-visa)) for his assistance in development of `pyvisacharts`.

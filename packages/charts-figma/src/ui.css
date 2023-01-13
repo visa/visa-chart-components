@@ -1,0 +1,167 @@
+/**
+ * Copyright (c) 2022 Visa, Inc.
+ *
+ * This source code is licensed under the MIT license
+ * https://github.com/visa/visa-chart-components/blob/master/LICENSE
+ *
+ **/
+html {
+  font-family: OpenSans !important;
+}
+body {
+  /* font: 12px sans-serif; */
+  /* text-align: center; */
+  margin: 20px;
+}
+h1 {
+  color: #164d79;
+  font-size: 2rem;
+  font-weight: 300;
+  letter-spacing: 0.01429rem;
+  margin: 1.42857rem 0rem 1.07143rem 0rem;
+  text-transform: capitalize;
+}
+h2,
+h3 {
+  color: #164d79;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0rem;
+  margin: 0.71429rem 0rem 0.35714rem 0rem;
+  text-transform: uppercase;
+}
+h4,
+h5,
+h6 {
+  color: #164d79;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0rem;
+  line-height: 1.42857rem;
+}
+.text--body {
+  color: #565656;
+  font-size: 1em;
+  font-weight: 500;
+  line-height: 1.78571rem;
+}
+.text--instructions {
+  color: #57587d;
+  font-size: 1em;
+  font-weight: 500;
+  line-height: 1.57143rem;
+}
+#create {
+  box-shadow: none;
+  background: #18a0fb;
+  color: white;
+}
+input {
+  border: none;
+  outline: none;
+  padding: 8px;
+}
+input:hover {
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+}
+button:focus {
+  box-shadow: inset 0 0 0 2px #18a0fb;
+}
+#create:focus {
+  box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.3);
+}
+input:focus {
+  box-shadow: inset 0 0 0 2px #18a0fb;
+}
+.recipeButton {
+  cursor: pointer;
+  margin: 10px;
+  height: 180px;
+  width: 150px !important;
+  background: white;
+  /* div {
+    cursor: pointer;
+  }
+  svg {
+    pointer-events: none;
+  } */
+}
+
+.gallery-card {
+  width: 200px;
+  height: 200px;
+  border: 1px solid #c2c0cb;
+  border-radius: 5px;
+  position: relative;
+  z-index: 0;
+  background-color: #fff;
+}
+
+.card-title {
+  display: block;
+  text-align: center;
+  padding: 15px 5px 5px;
+  color: #164d79;
+}
+
+.row {
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: row wrap;
+  flex-direction: row;
+  width: 100%;
+  line-height: 1.25rem;
+  padding-bottom: 0.25rem;
+}
+
+.col {
+  box-sizing: inherit;
+  -webkit-box-flex: 1;
+  flex-grow: 1;
+  max-width: 100%;
+  padding: 6px;
+}
+
+.recipe-chart {
+  pointer-events: none;
+}
+
+.busy-overlay {
+  position: fixed; /* Sit on top of the page content */
+  width: 100%; /* Full width (cover the whole page) */
+  height: 100%; /* Full height (cover the whole page) */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75); /* Black background with opacity */
+  z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+}
+
+.busy-spinner {
+  border: 16px solid rgba(0, 0, 0, 0.85); /* Black background with opacity */
+  border-top: 16px solid #ffffff;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  margin: auto;
+  margin-top: 10em;
+  animation: spin 4s linear infinite;
+}
+
+.busy-text {
+  stroke: #000000;
+  stroke-width: 1.5px;
+  color: #ffffff;
+  margin: 10 auto;
+  max-width: 190px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

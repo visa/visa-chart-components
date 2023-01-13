@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -68,12 +68,11 @@ export class AppStackedBarChart {
     format: this.layout === 'horizontal' ? '0[.][0][0]a' : '%b',
     visible: true,
     gridVisible: false,
-    label: 'xAxis'
+    label: ''
   };
   yAxis: any = {
     visible: true,
     gridVisible: true,
-    label: 'Y Axis',
     format: this.layout === 'horizontal' ? '%b' : '0[.][0][0]a',
     tickInterval: 1
   };
@@ -84,6 +83,7 @@ export class AppStackedBarChart {
     strokeWidth: 3
   };
   @State() accessibility: any = {
+    includeDataKeyNames: true,
     disableValidation: true,
     // hideTextures: true,
     // hideStrokes: true,
@@ -2518,6 +2518,12 @@ export class AppStackedBarChart {
     categorical_text: 6
   };
   accessibilityData: any = [];
+  dataKeyNames: any = {
+    [this.ordinalAccessor]: 'Test Ordinal Name',
+    [this.groupAccessor]: 'Test Group Name',
+    [this.valueAccessor]: 'Test Value Name'
+  };
+
   onClickFunc(d) {
     let index = -1;
     this.clickElement.forEach((el, i) => {
@@ -2636,8 +2642,9 @@ export class AppStackedBarChart {
         width: 100,
         layout: 'vertical',
         showTooltip: true,
-        xAxis: { visible: false },
-        yAxis: { visible: false },
+        // if xAxis and yAxis are not commented out, {colorBars} tooltips do not work
+        // xAxis: { visible: false },
+        // yAxis: { visible: false },
         data: [],
         colorPalette: palette,
         ordinalAccessor: 'category',
@@ -2761,7 +2768,8 @@ export class AppStackedBarChart {
     });
     return (
       <div>
-        {/* {colorBars} */}
+        {/* multiple chart instances can be tested if the colorBars line is active */}
+        {colorBars}
         <br />
         {this.fixedData ? (
           <stacked-bar-chart data={this.fixedData} ordinalAccessor="cat" groupAccessor="group" valueAccessor="val" />
@@ -2882,13 +2890,15 @@ export class AppStackedBarChart {
           onClickEvent={d => this.onClickFunc(d)}
           onHoverEvent={d => this.onHoverFunc(d)}
           onMouseOutEvent={() => this.onMouseOut()}
-          onInitialLoadEvent={e => e} // console.log('load event', e.detail, e)}
-          onDrawStartEvent={e => e} // console.log('draw start event', e.detail, e)}
-          onDrawEndEvent={e => e} // console.log('draw end event', e.detail, e)}
-          onTransitionEndEvent={e => e} // console.log('transition event', e.detail, e)}
+          // onInitialLoadEvent={e => console.log('load event', e.detail, e)}
+          // onInitialLoadEndEvent={e => console.log('load end event', e.detail, e)}
+          // onDrawStartEvent={e => console.log('draw start event', e.detail, e)}
+          // onDrawEndEvent={e => console.log('draw end event', e.detail, e)}
+          // onTransitionEndEvent={e => console.log('transition event', e.detail, e)}
           ordinalAccessor={this.ordinalAccessor}
           valueAccessor={this.valueAccessor}
           groupAccessor={this.groupAccessor}
+          dataKeyNames={this.dataKeyNames}
           mainTitle={'Stacked Bar Chart'}
           subTitle={'test subtitle'}
           height={500}
@@ -2906,7 +2916,7 @@ export class AppStackedBarChart {
           cursor={'pointer'}
           clickStyle={this.clickStyle}
           hoverStyle={this.hoverStyle}
-          tooltipLabel={this.label}
+          // tooltipLabel={this.label}
           dataLabel={this.dataLabel}
           hoverOpacity={0.999}
           hoverHighlight={this.hoverElement}

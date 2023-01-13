@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="144px" height="113px" viewBox="0 0 144 113" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 58 (84663) - https://sketch.com -->
+    <title>pie-chart</title>
+    <desc>Created with Sketch.</desc>
+    <g id="pie-chart" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M72.0016234,0 C93.7502686,0 113.568156,12.4835115 122.960443,32.099538 C132.352731,51.7155645 129.6518,74.9812403 116.015391,91.9238467 C102.378982,108.866453 80.2282671,116.477796 59.0580428,111.495309 L72.0016234,56.4989701 L72.0016234,0 Z" id="Path" fill="#0051DC" fill-rule="nonzero"></path>
+        <path d="M59.0580428,111.495309 C31.1379403,104.924216 12.5719557,78.4753122 15.8795683,49.9837153 C19.1871808,21.4921185 43.3186774,0 72.0016234,0 L72.0016234,56.4989701 L59.0580428,111.495309 Z" id="Path" fill="#D7D9DE" fill-rule="nonzero"></path>
+    </g>
+</svg>

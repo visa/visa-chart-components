@@ -112,6 +112,7 @@ export class AppAlluvialDiagram {
     contextExplanation: 'This chart is standalone, and can be manipulated by the preceding buttons.',
     executiveSummary: 'Medium is now the largest category in 2019.',
     purpose: 'Examines the flow of groups, between cateogries, over years.',
+    includeDataKeyNames: true,
     structureNotes:
       'The categories are sorted from high to low, with new at the bottom. Links are used to visualize the population of the group moving between categories year over year.',
     statisticalNotes: 'Count of group members.',
@@ -736,6 +737,11 @@ export class AppAlluvialDiagram {
     ],
     this.nodeStartData
   ];
+  dataKeyNames: any = {
+    id: 'Test ID',
+    Freq: 'Frequency Value',
+    newHair: 'Hair Color'
+  };
 
   @Element()
   appEl: HTMLElement;
@@ -1225,11 +1231,12 @@ export class AppAlluvialDiagram {
             mainTitle={''}
             subTitle={''}
             dataLabel={this.dataLabel}
+            dataKeyNames={this.dataKeyNames}
             // interactionKeys={this.interactionKeys}
             hoverOpacity={0.2}
             showTooltip={true}
             colorPalette={'categorical'}
-            tooltipLabel={this.tooltipLabel}
+            // tooltipLabel={this.tooltipLabel}
             hoverHighlight={this.hoverElement}
             clickHighlight={this.clickElement}
             onClickEvent={d => this.onClickFunc(d)}

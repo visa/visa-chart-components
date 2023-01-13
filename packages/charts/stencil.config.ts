@@ -21,16 +21,17 @@ function external(c = {}) {
   };
 }
 
+// temporary comment to bump charts with feature commit
 export const config: Config | any = {
   namespace: 'charts',
   buildEs5: 'prod',
   extras: {
+    appendChildSlotFix: false,
     cssVarsShim: true,
     dynamicImportShim: true,
     safari10: true,
     shadowDomShim: true,
     scriptDataOpts: true,
-    appendChildSlotFix: false,
     cloneNodeFix: false,
     slotChildNodesFix: true
   },
@@ -40,6 +41,15 @@ export const config: Config | any = {
       proxiesFile: '../charts-react/src/components/visa-charts.ts',
       includeDefineCustomElements: true,
       includePolyfills: true,
+      excludeComponents: ['visa-charts']
+    }),
+    reactOutputTarget({
+      componentCorePackage: '@visa/charts',
+      proxiesFile: '../charts-figma/src/visa-charts.ts',
+      includeDefineCustomElements: false,
+      includeImportCustomElements: true,
+      includePolyfills: false,
+      customElementsDir: 'dist/components',
       excludeComponents: ['visa-charts']
     }),
     angularOutputTarget({

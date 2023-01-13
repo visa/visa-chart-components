@@ -57,12 +57,12 @@ const {
   setAccessStatistics,
   setAccessChartCounts,
   setAccessStructure,
-  // setAccessAnnotation, // not yet supported
+  setAccessAnnotation,
   retainAccessFocus,
   checkAccessFocus,
   setElementInteractionAccessState,
   setAccessibilityDescriptionWidth,
-  // annotate, // not yet supported
+  annotate, // not yet supported
   chartAccessors,
   checkInteraction,
   checkHovered,
@@ -93,6 +93,7 @@ export class WorldMap {
   @Event() hoverEvent: EventEmitter;
   @Event() mouseOutEvent: EventEmitter;
   @Event() initialLoadEvent: EventEmitter;
+  @Event() initialLoadEndEvent: EventEmitter;
   @Event() drawStartEvent: EventEmitter;
   @Event() drawEndEvent: EventEmitter;
   @Event() transitionEndEvent: EventEmitter;
@@ -141,6 +142,7 @@ export class WorldMap {
   @Prop({ mutable: true }) showGridlines: boolean = WorldMapDefaultValues.showGridLines;
   @Prop({ mutable: true }) tooltipLabel: ITooltipLabelType = WorldMapDefaultValues.tooltipLabel;
   @Prop({ mutable: true }) dataLabel: IDataLabelType = WorldMapDefaultValues.dataLabel;
+  @Prop({ mutable: true }) dataKeyNames: object;
   @Prop({ mutable: true }) annotations: object[] = WorldMapDefaultValues.annotations;
 
   // Calculation (6/7)
@@ -272,6 +274,7 @@ export class WorldMap {
   shouldSetGroupAccessibilityLabel: boolean = false;
   shouldSetChartAccessibilityPurpose: boolean = false;
   shouldSetChartAccessibilityContext: boolean = false;
+  shouldSetAnnotationAccessibility: boolean = false;
   shouldRedrawWrapper: boolean = false;
   shouldSetTagLevels: boolean = false;
   shouldSetChartAccessibilityCount: boolean = false;
@@ -408,7 +411,6 @@ export class WorldMap {
     this.shouldRedrawWrapper = true;
     this.shouldSetTagLevels = true;
     this.shouldSetChartAccessibilityCount = true;
-    // this.shouldSetAnnotationAccessibility = true; // not yet supported
     this.shouldUpdateDescriptionWrapper = true;
     this.shouldSetChartAccessibilityTitle = true;
     this.shouldSetChartAccessibilitySubtitle = true;
@@ -418,6 +420,7 @@ export class WorldMap {
     this.shouldSetChartAccessibilityPurpose = true;
     this.shouldSetChartAccessibilityStatisticalNotes = true;
     this.shouldSetChartAccessibilityStructureNotes = true;
+    this.shouldSetAnnotationAccessibility = true;
   }
 
   @Watch('mainTitle')
@@ -516,6 +519,8 @@ export class WorldMap {
   @Watch('tooltipLabel')
   tooltipLabelWatcher(_newVal, _oldVal) {
     this.shouldUpdateTableData = true;
+    this.shouldSetParentSVGAccessibility = true;
+    this.shouldSetGeometryAriaLabels = true;
   }
 
   @Watch('hoverOpacity')
@@ -585,6 +590,13 @@ export class WorldMap {
     this.shouldUpdateTableData = true;
     this.shouldDrawInteractionState = true;
     this.shouldSetMarkerSelectionClass = true;
+    this.shouldSetGeometryAriaLabels = true;
+  }
+
+  @Watch('dataKeyNames')
+  dataKeyNamesWatcher(_newVal, _oldVal) {
+    this.shouldSetParentSVGAccessibility = true;
+    this.shouldSetGroupAccessibilityLabel = true;
     this.shouldSetGeometryAriaLabels = true;
   }
 
@@ -694,6 +706,7 @@ export class WorldMap {
   annotationsWatcher(_newVal, _oldVal) {
     this.shouldValidate = true;
     this.shouldUpdateAnnotations = true;
+    this.shouldSetAnnotationAccessibility = true;
   }
 
   @Watch('uniqueID')
@@ -808,6 +821,7 @@ export class WorldMap {
       this.drawDataLabels();
       this.setMarkerSelectedClass();
       this.drawAnnotations();
+      this.setAnnotationAccessibility();
       // we want to hide all child <g> of this.root BUT we want to make sure not to hide the
       // parent<g> that contains our geometries! In a subGroup chart (like stacked bars),
       // we want to pass the PARENT of all the <g>s that contain bars
@@ -817,7 +831,7 @@ export class WorldMap {
       this.onChangeHandler();
       this.defaults = false;
       resolve('component did load');
-    });
+    }).then(() => this.initialLoadEndEvent.emit({ chartID: this.chartID }));
   }
 
   componentWillUpdate() {
@@ -1001,6 +1015,10 @@ export class WorldMap {
       if (this.shouldUpdateAnnotations) {
         this.drawAnnotations();
         this.shouldUpdateAnnotations = false;
+      }
+      if (this.shouldSetAnnotationAccessibility) {
+        this.setAnnotationAccessibility();
+        this.shouldSetAnnotationAccessibility = false;
       }
       this.onChangeHandler();
       resolve('component did update');
@@ -1309,9 +1327,22 @@ export class WorldMap {
       : '';
   }
 
+  innerScopeDataKeys() {
+    // generate scoped and formatted data for data-table component
+    // we also scope singleAccessor array in chartAccessors based on what is actually in the data
+    const innerChartSingleAccessors = [];
+    chartAccessors.singleAccessors.forEach(accessor => {
+      if (this[accessor] && min(this.data, d => d[this[accessor]]) !== undefined) {
+        innerChartSingleAccessors.push(accessor);
+      }
+    });
+    const innerChartAccessors = { ...chartAccessors, singleAccessors: innerChartSingleAccessors };
+    return scopeDataKeys(this, innerChartAccessors, 'world-map');
+  }
+
   setTableData() {
     // generate scoped and formatted data for data-table component
-    const keys = scopeDataKeys(this, chartAccessors, 'world-map');
+    const keys = this.innerScopeDataKeys();
     this.tableData = getScopedData(this.preppedData, keys);
     this.tableColumns = Object.keys(keys);
   }
@@ -2461,25 +2492,40 @@ export class WorldMap {
 
   // for the time being we are going to emit a warning as annotations do not work on world-map yet
   drawAnnotations() {
-    if (this.annotations && this.annotations.length) {
-      console.warn(
-        'Annotations prop submitted to world-map. The annotations prop is currently not supported on world-map component.'
-      );
-    }
-    // annotate({
-    //   source: this.rootG.node(),
-    //   data: this.annotations // ,
-    //   // xScale: this.x,
-    //   // xAccessor: this.ordinalAccessor,
-    //   // yScale: this.y,
-    //   // yAccessor: this.valueAccessor
-    // });
+    // if (this.annotations && this.annotations.length) {
+    //   console.warn(
+    //     'Annotations prop submitted to world-map. The annotations prop is currently not supported on world-map component.'
+    //   );
+    // }
 
-    // setAccessAnnotation(this.worldMapEl, this.annotations);
+    annotate({
+      source: this.rootG.node(),
+      data: this.annotations,
+      // xScale: this.x,
+      // xAccessor: this.ordinalAccessor,
+      // yScale: this.y,
+      // yAccessor: this.valueAccessor
+      width: this.width,
+      height: this.height,
+      padding: this.padding,
+      margin: this.margin,
+      bitmaps: this.bitmaps
+    });
+  }
+
+  setAnnotationAccessibility() {
+    setAccessAnnotation(this.worldMapEl, this.annotations);
   }
 
   // utilize the legend component to draw the map's legend.
   drawLegendElements() {
+    // if we have default series access and it is not in the data don't show legend
+    const noGroupAccessor =
+      this.groupAccessor === WorldMapDefaultValues.groupAccessor &&
+      this.legendData &&
+      this.legendData.length === 1 &&
+      this.legendData[0].key === 'undefined';
+
     drawLegend({
       root: this.legendG,
       uniqueID: this.chartID,
@@ -2502,7 +2548,7 @@ export class WorldMap {
       labelKey: this.groupAccessor,
       label: this.legend.labels,
       format: this.legend.format,
-      hide: !this.legend.visible,
+      hide: !this.legend || !this.legend.visible || (this.groupAccessor && noGroupAccessor), // may need to adjust for when we have group undefined
       interactionKeys: this.innerInteractionKeys,
       groupAccessor: this.groupAccessor,
       hoverHighlight: this.hoverHighlight,
@@ -2545,7 +2591,8 @@ export class WorldMap {
       uniqueID: this.chartID,
       geomType: 'marker',
       includeKeyNames: this.accessibility.includeDataKeyNames,
-      dataKeys: scopeDataKeys(this, chartAccessors, 'world-map'),
+      dataKeys: this.innerScopeDataKeys(),
+      dataKeyNames: this.dataKeyNames,
       groupAccessor: this.groupAccessor,
       disableKeyNav:
         this.suppressEvents &&
@@ -2564,13 +2611,14 @@ export class WorldMap {
 
   setGeometryAriaLabels() {
     // this adds an ARIA label to each geom (a description read by screen readers)
-    const keys = scopeDataKeys(this, chartAccessors, 'world-map');
+    const keys = this.innerScopeDataKeys();
     this.updateMarker.each((_d, i, n) => {
       setElementFocusHandler({
         node: n[i],
         geomType: 'marker',
         includeKeyNames: this.accessibility.includeDataKeyNames,
         dataKeys: keys,
+        dataKeyNames: this.dataKeyNames,
         uniqueID: this.chartID,
         disableKeyNav:
           this.suppressEvents &&
@@ -2701,6 +2749,7 @@ export class WorldMap {
       isToShow,
       tooltipLabel: this.tooltipLabel,
       dataLabel: this.dataLabel,
+      dataKeyNames: this.dataKeyNames,
       xAccessor:
         isToShow && select(evt.target).classed('country')
           ? this.joinNameAccessor
@@ -2815,6 +2864,7 @@ export class WorldMap {
             uniqueID={this.chartID}
             isCompact
             tableColumns={this.tableColumns}
+            dataKeyNames={this.dataKeyNames}
             data={this.tableData}
             padding={this.padding}
             margin={this.margin}

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="144px" height="113px" viewBox="0 0 144 113" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 58 (84663) - https://sketch.com -->
+    <title>alluvial-diagram</title>
+    <desc>Created with Sketch.</desc>
+    <g id="alluvial-diagram" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="sankey-(5)-copy" transform="translate(72.000000, 56.000000) scale(-1, 1) translate(-72.000000, -56.000000) ">
+            <g id="Group" transform="translate(10.731501, 8.108675)" stroke="#0051DC" stroke-opacity="0.4">
+                <path d="M0.903669592,44.4875855 C22.560629,44.4875855 25.1034324,3.19132494 55.6034324,3.19132494" id="Path" stroke-width="18"></path>
+                <path d="M0.903669592,94.7450002 C33.491788,94.7450002 35.81242,27.7898364 55.6034324,27.7898364" id="Path" stroke-width="5"></path>
+                <path d="M0.903669592,1.84205556 C33.491788,1.84205556 23.015314,42.8129179 55.6034324,42.8129179" id="Path" stroke-width="20"></path>
+                <path d="M0.903669592,83.6644819 C21.5490187,83.6644819 31.2375138,18.368485 57.4683742,18.368485" id="Path" stroke-width="12"></path>
+                <path d="M0.903669592,66.9612992 C33.491788,66.9612992 23.015314,86.4509653 55.6034324,86.4509653" id="Path" stroke-width="19"></path>
+                <path d="M0.903669592,24.2795766 C28.253551,24.2795766 28.253551,66.0443442 55.6034324,66.0443442" id="Path" stroke-width="20"></path>
+                <path d="M0.903669592,101.028902 C33.491788,101.028902 23.015314,99.910663 55.6034324,99.910663" id="Path" stroke-width="4"></path>
+                <path d="M66.6358419,18.368485 C94.1358419,18.368485 94.1358419,67.186439 121.635842,67.186439" id="Path" stroke-width="24"></path>
+                <path d="M66.6358419,0.186785198 C94.1358419,0.186785198 94.0630374,3.49732592 121.563037,3.49732592" id="Path" stroke-width="12"></path>
+                <path d="M66.6358419,42.777462 C94.1358419,42.777462 94.0630374,19.5524737 121.563037,19.5524737" id="Path" stroke-width="20"></path>
+                <path d="M65.0592703,86.4509653 C97.6473887,86.4509653 96.5024295,38.818628 124.23679,38.818628" id="Path" stroke-width="19"></path>
+                <path d="M66.6358419,65.9883648 C94.1358419,65.9883648 94.0630374,89.1908148 121.563037,89.1908148" id="Path" stroke-width="20"></path>
+                <path d="M66.8690171,99.8947303 C96.5024295,99.8947303 113.664669,50.6740706 122.063037,50.6740706" id="Path" stroke-width="4"></path>
+            </g>
+            <polygon id="Rectangle" fill="#0051DC" fill-rule="nonzero" points="132.294538 63.2693058 143.55438 63.2693058 143.55438 107.345993 132.294538 107.345993"></polygon>
+            <rect id="Rectangle" fill="#0051DC" fill-rule="nonzero" x="132.294538" y="5.63102435" width="11.2598423" height="55.3858717"></rect>
+            <rect id="Rectangle" fill="#0051DC" fill-rule="nonzero" x="0.375328076" y="43.5676044" width="11.2598423" height="18.1942443"></rect>
+            <rect id="Rectangle" fill="#0051DC" fill-rule="nonzero" x="0.375328076" y="100.068617" width="11.2598423" height="5.57011613"></rect>
+            <rect id="Rectangle" fill="#0051DC" fill-rule="nonzero" x="0.375328076" y="8.52651283e-14" width="11.2598423" height="20.1067475"></rect>
+            <rect id="Rectangle" fill="#0051DC" fill-rule="nonzero" x="0.375328076" y="85.7301065" width="11.2598423" height="12.086101"></rect>
+            <rect id="Rectangle" fill="#0051DC" fill-rule="nonzero" x="0.375328076" y="65.4968074" width="11.2598423" height="19.1463336"></rect>
+            <rect id="Rectangle" fill="#0051DC" fill-rule="nonzero" x="0.375328076" y="22.3767406" width="11.2598423" height="20.0709135"></rect>
+            <rect id="Rectangle" fill="#0051DC" fill-rule="nonzero" x="0.375328076" y="107.061896" width="11.2598423" height="4.15146273"></rect>
+            <rect id="Rectangle" fill="#0051DC" fill-rule="nonzero" x="66.3349331" y="40.8682191" width="11.2598423" height="20.1067475"></rect>
+            <rect id="Rectangle" fill="#0051DC" fill-rule="nonzero" x="66.3349331" y="84.9018488" width="11.2598423" height="19.3155831"></rect>
+            <rect id="Rectangle" fill="#0051DC" fill-rule="nonzero" x="66.3349331" y="2.25240974" width="11.2598423" height="36.3633997"></rect>
+            <rect id="Rectangle" fill="#0051DC" fill-rule="nonzero" x="66.3349331" y="105.943607" width="11.2598423" height="4.15146273"></rect>
+            <rect id="Rectangle" fill="#0051DC" fill-rule="nonzero" x="66.3349331" y="63.9875696" width="11.2598423" height="20.3308993"></rect>
+        </g>
+    </g>
+</svg>

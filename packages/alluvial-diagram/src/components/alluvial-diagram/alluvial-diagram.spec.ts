@@ -234,11 +234,11 @@ describe('<alluvial-diagram>', () => {
           //   nextTestSelector: '[data-testid=bar][data-id=bar-Apr-17]',
           //   keyDownObject: { key: 'Enter', code: 'Enter', keyCode: 13 }
           // },
-          accessibility_keyboard_nav_group_esc_exit: {
-            name: 'keyboard nav: group - escape will exit group',
+          accessibility_keyboard_nav_group_shift_enter_exit: {
+            name: 'keyboard nav: group - shift+enter will exit group',
             testSelector: '[data-testid=link][data-id=link-Cat12018-Cat12019]',
             nextTestSelector: '[data-testid=node][data-id=node-Cat12018]',
-            keyDownObject: { key: 'Escape', code: 'Escape', keyCode: 27 },
+            keyDownObject: { key: 'Enter', code: 'Enter', keyCode: 13, shiftKey: true },
             testProps: {
               linkConfig: { visible: true, fillMode: 'source', opacity: 1 },
               groupMarkerOverrideSelector: '[data-testid=node][data-id=node-Cat12018]',
@@ -346,43 +346,54 @@ describe('<alluvial-diagram>', () => {
           const innerTestProps = {
             ...tempTestProps,
             geometryType: 'Bar',
-            geometryPlacementAttributes: ['x', 'y', 'height', 'width'],
+            geometryPlacementAttributes: [], // we don't use these yet in alluvial tests
             geometryAdjustmentValues: [
               { f: 'x', b: 7, w: 3, s: -1 },
               { f: 'y', b: 7, w: 3, s: -1 },
               { f: 'height', b: 7 * 2, w: 3 * 2, s: 1 },
               { f: 'width', b: 7 * 2, w: 3 * 2, s: 1 }
-            ]
-            // annotations:
-            //   unitTestAccessibility[test].prop === 'annotations'
-            //     ? [
-            //         {
-            //           note: {
-            //             label: "May's volume is here.",
-            //             bgPadding: 20,
-            //             title: 'The month of may',
-            //             align: 'middle',
-            //             wrap: 210
-            //           },
-            //           accessibilityDescription: 'This annotation is a callout to May, which is for testing purposes.',
-            //           data: { month: 'May-17', value: 6042320, cat: 'A' },
-            //           dy: '-20%',
-            //           color: 'pri_blue'
-            //         },
-            //         {
-            //           note: {
-            //             label: "June's volume is here.",
-            //             bgPadding: 20,
-            //             title: 'The month of june',
-            //             align: 'middle',
-            //             wrap: 210
-            //           },
-            //           data: { month: 'Jun-17', value: 3234002, cat: 'A' },
-            //           dy: '-20%',
-            //           color: 'pri_blue'
-            //         }
-            //       ]
-            //     : []
+            ],
+            annotations:
+              unitTestAccessibility[test].prop === 'annotations'
+                ? [
+                    {
+                      note: {
+                        label: "May's volume is here.",
+                        bgPadding: 20,
+                        title: 'The month of may',
+                        align: 'middle',
+                        wrap: 210
+                      },
+                      accessibilityDescription: 'This annotation is a callout to May, which is for testing purposes.',
+                      data: { month: 'May-17', value: 6042320, cat: 'A' },
+                      dy: '-20%',
+                      color: 'pri_blue'
+                    },
+                    {
+                      note: {
+                        label: "June's volume is here.",
+                        bgPadding: 20,
+                        title: 'The month of june',
+                        align: 'middle',
+                        wrap: 210
+                      },
+                      data: { month: 'Jun-17', value: 3234002, cat: 'A' },
+                      dy: '-20%',
+                      color: 'pri_blue'
+                    },
+                    {
+                      note: {},
+                      accessibilityDecorationOnly: true,
+                      type: 'annotationXYThreshold',
+                      subject: {
+                        x1: 0,
+                        x2: 250
+                      },
+                      color: 'pri_blue',
+                      disable: ['note', 'connector']
+                    }
+                  ]
+                : []
           };
           const innerTestSelector =
             unitTestAccessibility[test].testSelector === 'component-name'
@@ -485,6 +496,42 @@ describe('<alluvial-diagram>', () => {
         });
       });
     });
+
+    describe('annotations', () => {
+      // TODO: need to add more precise test case for annotations label and text
+      it('should pass annotation prop', async () => {
+        // ARRANGE
+        const annotations = [
+          {
+            note: {
+              label: 'Social Media Intern returned to college',
+              bgPadding: 20,
+              title: 'Staff Change',
+              align: 'middle',
+              wrap: 130
+            },
+            accessibilityDescription:
+              'This is an annotation that explains a drop in tweet ACTivity due to staff change.',
+            y: 200,
+            x: 200,
+            dy: 50,
+            type: 'annotationCallout',
+            connector: { end: 'dot', endScale: 10 },
+            color: 'pri_blue'
+          }
+        ];
+        component.annotations = annotations;
+
+        // ACT
+        page.root.append(component);
+        await page.waitForChanges();
+
+        // ASSERT
+        const annotationGroup = page.doc.querySelector('[data-testid=annotation-group]');
+        expect(annotationGroup).toMatchSnapshot();
+      });
+    });
+
     describe('interaction', () => {
       // currently (v6.1.0), interaction is only built on links of alluvial diagram
       describe('link based interaction tests', () => {
@@ -774,25 +821,51 @@ describe('<alluvial-diagram>', () => {
             };
             const innerTooltipContent = {
               tooltip_tooltipLabel_default:
-                '<p style="margin: 0;"><b>Cat12018</b>to<b>Cat12019</b><br>Value:<b>3010</b></p>',
+                '<p style="margin: 0;"><b>Remained<br></b><b>Cat12018</b>to<b>Cat12019</b><br>Value:<b>3010</b></p>',
               tooltip_tooltipLabel_custom_load: '<p style="margin: 0;">Testing123:<b>Cat12018</b><br></p>',
               tooltip_tooltipLabel_custom_update: '<p style="margin: 0;">Testing123:<b>Cat12018</b><br></p>',
               tooltip_tooltipLabel_custom_format_load:
                 '<p style="margin: 0;">Testing123:<b>Cat12018</b><br>Count:<b>$3k</b><br></p>',
               tooltip_tooltipLabel_custom_format_update:
-                '<p style="margin: 0;">Testing123:<b>Cat12018</b><br>Count:<b>$3k</b><br></p>'
+                '<p style="margin: 0;">Testing123:<b>Cat12018</b><br>Count:<b>$3k</b><br></p>',
+              dataKeyNames_custom_on_load:
+                '<p style="margin: 0;"><b>Remained<br></b><b>Cat12018</b>to<b>Cat12019</b><br>Test Value:<b>3010</b></p>',
+              dataKeyNames_custom_on_update:
+                '<p style="margin: 0;"><b>Remained<br></b><b>Cat12018</b>to<b>Cat12019</b><br>Test Value:<b>3010</b></p>'
+            };
+            const innerAriaContent = {
+              dataKeyNames_custom_on_load:
+                'Test Value 3k. group Remained. Test Cat Cat12018. target Cat12019. Link 1 of 12.',
+              dataKeyNames_custom_on_update:
+                'Test Value 3k. group Remained. Test Cat Cat12018. target Cat12019. Link 1 of 12.'
             };
             const innerTestProps = { ...unitTestTooltip[test].testProps, ...innerTooltipProps[test] };
+            const customDataKeyNames = { dataKeyNames: { value: 'Test Value', cat: 'Test Cat' } };
             // we have to handle clickEvent separately due to this.zooming boolean in circle-packing load
-
-            it(`${unitTestTooltip[test].prop}: ${unitTestTooltip[test].name}`, () =>
-              unitTestTooltip[test].testFunc(
-                component,
-                page,
-                innerTestProps,
-                innerTestSelector,
-                innerTooltipContent[test]
-              ));
+            if (test === 'dataKeyNames_custom_on_load' || test === 'dataKeyNames_custom_on_update') {
+              it(`${unitTestTooltip[test].prop}: ${unitTestTooltip[test].name}`, () =>
+                unitTestTooltip[test].testFunc(
+                  component,
+                  page,
+                  {
+                    ...innerTestProps,
+                    ...customDataKeyNames,
+                    accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true },
+                    selectorAriaLabel: innerAriaContent[test]
+                  },
+                  innerTestSelector,
+                  innerTooltipContent[test]
+                ));
+            } else {
+              it(`${unitTestTooltip[test].prop}: ${unitTestTooltip[test].name}`, () =>
+                unitTestTooltip[test].testFunc(
+                  component,
+                  page,
+                  innerTestProps,
+                  innerTestSelector,
+                  innerTooltipContent[test]
+                ));
+            }
           });
         });
       });

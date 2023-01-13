@@ -6,10 +6,11 @@
  *
  **/
 
+// temporary comment to bump charts with feature commit
 export { AlluvialDiagram } from './components/visa-charts';
+export { CirclePacking } from './components/visa-charts';
 export { BarChart } from './components/visa-charts';
 // export { BivariateMapboxMap } from './components/bivariate-mapbox-map';
-export { CirclePacking } from './components/visa-charts';
 export { ClusteredBarChart } from './components/visa-charts';
 export { DataTable as VisaChartsDataTable } from './components/visa-charts';
 export { DumbbellPlot } from './components/visa-charts';

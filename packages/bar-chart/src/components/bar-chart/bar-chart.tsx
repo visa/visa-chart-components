@@ -99,6 +99,7 @@ export class BarChart {
   @Event() hoverEvent: EventEmitter;
   @Event() mouseOutEvent: EventEmitter;
   @Event() initialLoadEvent: EventEmitter;
+  @Event() initialLoadEndEvent: EventEmitter;
   @Event() drawStartEvent: EventEmitter;
   @Event() drawEndEvent: EventEmitter;
   @Event() transitionEndEvent: EventEmitter;
@@ -141,6 +142,7 @@ export class BarChart {
 
   // Data label (5/7)
   @Prop({ mutable: true }) dataLabel: IDataLabelType = BarChartDefaultValues.dataLabel;
+  @Prop({ mutable: true }) dataKeyNames: object;
   @Prop({ mutable: true }) showTooltip: boolean = BarChartDefaultValues.showTooltip;
   @Prop({ mutable: true }) tooltipLabel: ITooltipLabelType = BarChartDefaultValues.tooltipLabel;
   @Prop({ mutable: true }) accessibility: IAccessibilityType = BarChartDefaultValues.accessibility;
@@ -577,6 +579,8 @@ export class BarChart {
   @Watch('tooltipLabel')
   tooltipLabelWatcher(_newVal, _oldVal) {
     this.shouldUpdateTableData = true;
+    this.shouldSetParentSVGAccessibility = true;
+    this.shouldSetGeometryAriaLabels = true;
   }
 
   @Watch('showTooltip')
@@ -627,6 +631,17 @@ export class BarChart {
     this.shouldSetSelectionClass = true;
     this.shouldSetGeometryAriaLabels = true;
     this.shouldUpdateTableData = true;
+  }
+
+  @Watch('dataKeyNames')
+  dataKeyNamesWatcher(_newVal, _oldVal) {
+    this.shouldUpdateXAxis = true;
+    this.shouldSetXAxisAccessibility = true;
+    this.shouldUpdateYAxis = true;
+    this.shouldSetYAxisAccessibility = true;
+    this.shouldSetParentSVGAccessibility = true;
+    this.shouldSetGroupAccessibilityLabel = true;
+    this.shouldSetGeometryAriaLabels = true;
   }
 
   @Watch('cursor')
@@ -898,7 +913,7 @@ export class BarChart {
       // catch all to remove entering class from labels once we have loaded component
       this.updatingLabels.classed('entering', false);
       resolve('component did load');
-    });
+    }).then(() => this.initialLoadEndEvent.emit({ chartID: this.chartID }));
   }
 
   componentDidUpdate() {
@@ -1369,6 +1384,14 @@ export class BarChart {
 
   // draw axis line
   drawXAxis() {
+    const axisAccessor = this.layout === 'vertical' ? this.ordinalAccessor : this.valueAccessor;
+    const axisLabel =
+      this.xAxis.label || this.xAxis.label === ''
+        ? this.xAxis.label
+        : this.dataKeyNames && this.dataKeyNames[axisAccessor]
+        ? this.dataKeyNames[axisAccessor]
+        : this.xAxis.label;
+
     drawAxis({
       root: this.rootG,
       height: this.innerPaddedHeight,
@@ -1379,7 +1402,7 @@ export class BarChart {
       format: this.xAxis.format,
       dateFormat: this.xAxis.format,
       tickInterval: this.xAxis.tickInterval,
-      label: this.xAxis.label,
+      label: axisLabel, // this.xAxis.label,
       padding: this.padding,
       hide: !this.xAxis.visible,
       duration: this.duration
@@ -1387,6 +1410,14 @@ export class BarChart {
   }
 
   drawYAxis() {
+    const axisAccessor = this.layout === 'vertical' ? this.valueAccessor : this.ordinalAccessor;
+    const axisLabel =
+      this.yAxis.label && this.yAxis.label !== ''
+        ? this.yAxis.label
+        : this.dataKeyNames && this.dataKeyNames[axisAccessor]
+        ? this.dataKeyNames[axisAccessor]
+        : this.yAxis.label;
+
     drawAxis({
       root: this.rootG,
       height: this.innerPaddedHeight,
@@ -1397,7 +1428,7 @@ export class BarChart {
       format: this.yAxis.format,
       dateFormat: this.yAxis.format,
       tickInterval: this.yAxis.tickInterval,
-      label: this.yAxis.label,
+      label: axisLabel, // this.yAxis.label,
       padding: this.padding,
       hide: !this.yAxis.visible,
       duration: this.duration
@@ -1433,20 +1464,36 @@ export class BarChart {
   }
 
   setXAxisAccessibility() {
+    const axisAccessor = this.layout === 'vertical' ? this.ordinalAccessor : this.valueAccessor;
+    const axisLabel =
+      this.xAxis.label && this.xAxis.label !== ''
+        ? this.xAxis.label
+        : this.dataKeyNames && this.dataKeyNames[axisAccessor]
+        ? this.dataKeyNames[axisAccessor]
+        : this.xAxis.label;
+
     setAccessXAxis({
       rootEle: this.barChartEl,
       hasXAxis: this.xAxis ? this.xAxis.visible : false,
       xAxis: this.x ? this.x : false, // this is optional for some charts, if hasXAxis is always false
-      xAxisLabel: this.xAxis.label ? this.xAxis.label : '' // this is optional for some charts, if hasXAxis is always false
+      xAxisLabel: axisLabel ? axisLabel : '' // this is optional for some charts, if hasXAxis is always false
     });
   }
 
   setYAxisAccessibility() {
+    const axisAccessor = this.layout === 'vertical' ? this.valueAccessor : this.ordinalAccessor;
+    const axisLabel =
+      this.yAxis.label && this.yAxis.label !== ''
+        ? this.yAxis.label
+        : this.dataKeyNames && this.dataKeyNames[axisAccessor]
+        ? this.dataKeyNames[axisAccessor]
+        : this.yAxis.label;
+
     setAccessYAxis({
       rootEle: this.barChartEl,
       hasYAxis: this.yAxis ? this.yAxis.visible : false,
       yAxis: this.y ? this.y : false, // this is optional for some charts, if hasXAxis is always false
-      yAxisLabel: this.yAxis.label ? this.yAxis.label : '' // this is optional for some charts, if hasXAxis is always false
+      yAxisLabel: axisLabel ? axisLabel : '' // this is optional for some charts, if hasXAxis is always false
       // secondaryYAxis?: any, // pareto uses this
       // secondaryYAxisLabel?: string, // pareto uses this
       // xAxisLabel: this.xAxis.label ? this.xAxis.label : '' // parallel uses this to label all the y axes
@@ -2519,6 +2566,7 @@ export class BarChart {
       geomType: 'bar',
       includeKeyNames: this.accessibility.includeDataKeyNames,
       dataKeys: scopeDataKeys(this, chartAccessors, 'bar-chart'),
+      dataKeyNames: this.dataKeyNames,
       groupAccessor: this.groupAccessor,
       disableKeyNav:
         this.suppressEvents &&
@@ -2546,6 +2594,7 @@ export class BarChart {
         geomType: 'bar',
         includeKeyNames: this.accessibility.includeDataKeyNames,
         dataKeys: keys,
+        dataKeyNames: this.dataKeyNames,
         uniqueID: this.chartID,
         disableKeyNav:
           this.suppressEvents &&
@@ -2666,6 +2715,7 @@ export class BarChart {
       event: evt,
       isToShow,
       tooltipLabel: this.tooltipLabel,
+      dataKeyNames: this.dataKeyNames,
       xAxis: this.xAxis,
       yAxis: this.yAxis,
       dataLabel: this.dataLabel,
@@ -2793,6 +2843,7 @@ export class BarChart {
             uniqueID={this.chartID}
             isCompact
             tableColumns={this.tableColumns}
+            dataKeyNames={this.dataKeyNames}
             data={this.tableData}
             padding={this.padding}
             margin={this.margin}

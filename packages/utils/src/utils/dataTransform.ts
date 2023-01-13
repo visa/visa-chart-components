@@ -68,8 +68,8 @@ export const accessorFormats = {
 };
 export const orderColumns = {
   'alluvial-diagram': ['nodeIDAccessor', 'labelAccessor', 'valueAccessor'],
-  'alluvial-diagram-secondary-table': ['sourceAccessor', 'targetAccessor', 'groupAccessor', 'valueAccessor'],
-  'bar-chart': ['ordinalAccessor', 'valueAccessor', 'groupAccessor'],
+  'alluvial-diagram-secondary-table': ['groupAccessor', 'sourceAccessor', 'targetAccessor', 'valueAccessor'],
+  'bar-chart': ['groupAccessor', 'ordinalAccessor', 'valueAccessor'],
   'clustered-bar-chart': ['groupAccessor', 'ordinalAccessor', 'valueAccessor'],
   'stacked-bar-chart': ['groupAccessor', 'ordinalAccessor', 'valueAccessor'],
   'line-chart': ['seriesAccessor', 'ordinalAccessor', 'valueAccessor'],
@@ -79,7 +79,7 @@ export const orderColumns = {
   'circle-packing': ['clusterAccessor', 'nodeAccessor', 'nodeSizeAccessor', 'idAccessor'],
   'parallel-plot': ['seriesAccessor', 'ordinalAccessor', 'valueAccessor'],
   'dumbbell-plot': ['seriesAccessor', 'ordinalAccessor', 'valueAccessor'],
-  'world-map': ['markerNameAccessor', 'joinNameAccessor', 'valueAccessor']
+  'world-map': ['groupAccessor', 'markerNameAccessor', 'joinNameAccessor', 'valueAccessor']
 };
 
 export const chartAccessors = {
@@ -122,7 +122,8 @@ export const chartAccessors = {
     },
     {
       objectName: 'sizeConfig',
-      objectAccessors: ['sizeAccessor']
+      objectAccessors: ['sizeAccessor'],
+      formatAccessors: ['format']
     }
   ]
 };
@@ -130,7 +131,7 @@ export const chartAccessors = {
 export function orderScopedData(_this, dataSample, chartType) {
   const tableColumns = [];
   orderColumns[chartType].forEach(col => {
-    if (_this[col]) {
+    if (_this[col] && dataSample[_this[col]] !== undefined) {
       tableColumns.push(_this[col]);
     }
   });

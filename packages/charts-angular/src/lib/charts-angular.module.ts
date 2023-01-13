@@ -10,10 +10,11 @@ import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { applyPolyfills, defineCustomElements } from '@visa/charts/dist/loader';
 
+// temporary comment to bump charts with feature commit
 import {
   AlluvialDiagram,
-  BarChart,
   CirclePacking,
+  BarChart,
   ClusteredBarChart,
   DataTable as VisaChartsDataTable,
   DumbbellPlot,

@@ -188,6 +188,11 @@
       <a href="#formatting-numbers">Formatting Numbers</a>
       <ul>
         <li><a href="#round-to">roundTo()</a></li>
+        <li><a href="#format-stats">formatStats()</a></li>
+        <li><a href="#get-numeral">getNumeralInstance()</a></li>
+        <li><a href="#register-numeral-locale">registerNumeralLocale()</a></li>
+        <li><a href="#set-numeral-locale">setNumeralLocale()</a></li>
+        <li><a href="#register-numeral-format">registerNumeralFormat()</a></li>
       </ul>
     </li>
     <li>
@@ -924,6 +929,163 @@ roundTo(1.005, 2); // 1.01
 
 Number(parseFloat('1.555').toFixed(2)); // Returns 1.55 instead of 1.56.
 roundTo(1.555, 2); // 1.56
+```
+
+<br>
+
+#### <a name='format-stats' href='#format-stats'>#</a> `formatStats(value: number, format: string) [ functional ]`:
+
+This function takes in a number and the string representation of a [format](http://numeraljs.com/#format) and returns a string representation of the number formatted by numeral.js. This utility is used for formatting of labels throughout VCC, but can also be used outside of VCC, for example, a custom number formatting Angular pipe.
+
+Example use:
+
+```js
+// see built in formats available at http://numeraljs.com/#format
+const exampleNumber = 2343289.4798;
+
+formatStats(exampleNumber, '0.0a'); // returns '2.3m'
+formatStats(exampleNumber, '$0,0.00'); // '$2,343,289.48'
+formatStats(0.082343289798, '0.00%'); // returns '8.23%'
+formatStats(exampleNumber, '$0[.][0][0][a]'); // returns '$2.3m' or locale specific currency symbol
+formatStats(100.325, '0[.][00][a]'); // returns '100.33'
+
+// you can also use a custom format added with registerNumeralFormat() util
+formatStats(100.325, '0[.][00][a] USD'); // returns '100.33 USD'
+```
+
+```js
+// example of how to use this function within an angular pipe
+import { Pipe, PipeTransform } from '@angular/core';
+import Utils from '@visa/visa-charts-utils';
+const { formatStats } = Utils;
+
+@Pipe({
+  name: 'formatStats'
+})
+export class FormatStatsPipe implements PipeTransform {
+  transform(input: any, format?: string): any {
+    if (!format) {
+      format = '0[.][0][0]a';
+    }
+
+    if (Number.isNaN(input)) {
+      return null;
+    }
+
+    return formatStats(input, format);
+  }
+}
+```
+
+<br>
+
+#### <a name='get-numeral' href='#get-numeral'>#</a> `getNumeralInstance()`:
+
+This function returns the instance of numeral loaded by the `formatStats` util.
+
+Example use:
+
+```js
+const numeral = getNumeralInstance();
+
+// checking registered numeral locales and formats
+console.log('registered: locales', numeral.locales, ', formats: ', numeral.formats);
+```
+
+<br>
+
+#### <a name='register-numeral-locale' href='#register-numeral-locale'>#</a> `registerNumeralLocale( name: string, locale: object{}) [ functional ]`:
+
+This function calls `numeral.register` internally to enable the addition of locales to the number formatting provided via [numeral.js](http://numeraljs.com/). See the docs about [locales](http://numeraljs.com/#locales) for more information.
+
+Example use:
+
+```js
+// see http://numeraljs.com/#locales and
+// https://github.com/adamwdraper/Numeral-js/tree/master/src/locales
+// for more examples
+registerNumeralLocale('ja', {
+  delimiters: {
+    thousands: ',',
+    decimal: '.'
+  },
+  abbreviations: {
+    thousand: '千',
+    million: '百万',
+    billion: '十億',
+    trillion: '兆'
+  },
+  ordinal: function(number) {
+    return '.';
+  },
+  currency: {
+    symbol: '¥'
+  }
+});
+```
+
+<br>
+
+#### <a name='set-numeral-locale' href='#set-numeral-locale'>#</a> `setNumeralLocale(name: string) [ functional ]`:
+
+This function calls `numeral.locale` internally to set the current locale rules to be applied within the number formatting provided via [numeral.js](http://numeraljs.com/). See the docs about [locales](http://numeraljs.com/#locales) for more information.
+
+Example use:
+
+```js
+// see http://numeraljs.com/#locales
+// assuming locale 'ja' has been loaded and registered in our instance of numeral
+setNumeralLocale('ja');
+formatStats(2343289.4798, '$0[.][0][0][a]'); // returns '¥2.3百万' based on the 'ja' locale config
+
+setNumeralLocale('en');
+formatStats(2343289.4798, '$0[.][0][0][a]'); // returns '$2.3m' based on the 'en' locale config
+```
+
+<br>
+
+#### <a name='register-numeral-format' href='#register-numeral-format'>#</a> `registerNumeralFormat( name: string, format: object{}) [ functional ]`:
+
+This function calls `numeral.register` internally to enable the addition of formats to the number formatting provided via [numeral.js](http://numeraljs.com/). See the docs about [custom formats](http://numeraljs.com/#custom-formats) for more information.
+
+Example use:
+
+```js
+// see http://numeraljs.com/#custom-formats and
+// https://github.com/adamwdraper/Numeral-js/tree/master/src/formats
+// for more examples
+registerNumeralFormat('full-currency-code', {
+  regexps: {
+    format: /([A-Z]{3})$/,
+    unformat: /([A-Z]{3})$/
+  },
+  format: function(value, format, roundingFunction) {
+    var currencyCode = format.substring(format.length - 3);
+    var space = numeral._.includes(format, ` ${currencyCode}`) ? ' ' : '';
+    var output;
+
+    // check for space before currency code
+    var regexCode = new RegExp(`/( ${currencyCode})$/`, 'g');
+    format = format.replace(regexCode, '');
+
+    output = numeral._.numberToFormat(value, format, roundingFunction);
+
+    if (numeral._.includes(output, ')')) {
+      output = output.split('');
+
+      output.splice(-1, 0, space + currencyCode);
+
+      output = output.join('');
+    } else {
+      output = output + space + currencyCode;
+    }
+
+    return output;
+  },
+  unformat: function(string) {
+    return numeral._.stringToNumber(string) * 0.01;
+  }
+});
 ```
 
 <hr>

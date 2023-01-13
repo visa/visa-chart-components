@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -80,6 +80,7 @@ export class AppParallelPlot {
     onChangeFunc: d => {
       this.onChange(d);
     },
+    includeDataKeyNames: true,
     keyboardNavConfig: { disabled: false }
   };
   @State() suppressEvents: boolean = false;
@@ -654,6 +655,11 @@ export class AppParallelPlot {
 
   @Element()
   appEl: HTMLElement;
+  dataKeyNames: any = {
+    filter: 'Grouping',
+    them: 'Set',
+    spend: 'Named Value'
+  };
 
   componentWillUpdate() {
     // console.log("will update", this.clickElement);
@@ -901,11 +907,12 @@ export class AppParallelPlot {
           seriesAccessor={this.seriesAccessor}
           seriesLabel={this.seriesLabelProp}
           dataLabel={this.dataLabel}
+          dataKeyNames={this.dataKeyNames}
           yAxis={this.yAxis}
           dotRadius={5}
           strokeWidth={2}
           showDots={this.dotOpacity}
-          tooltipLabel={this.tooltipLabel}
+          // tooltipLabel={this.tooltipLabel}
           hoverOpacity={0.5}
           secondaryLines={this.secondaryLines}
           cursor={this.cursor}
@@ -920,10 +927,11 @@ export class AppParallelPlot {
           onClickEvent={d => this.onClickFunc(d)}
           onHoverEvent={d => this.onHoverFunc(d)}
           onMouseOutEvent={() => this.onMouseOut()}
-          onInitialLoadEvent={e => e} // console.log('load event', e.detail, e)}
-          onDrawStartEvent={e => e} // console.log('draw start event', e.detail, e)}
-          onDrawEndEvent={e => e} // console.log('draw end event', e.detail, e)}
-          onTransitionEndEvent={e => e} //console.log('transition event', e.detail, e)}
+          // onInitialLoadEvent={e => e} // console.log('load event', e.detail, e)}
+          // onInitialLoadEndEvent={e => console.log('load end event', e.detail, e)}
+          // onDrawStartEvent={e => e} // console.log('draw start event', e.detail, e)}
+          // onDrawEndEvent={e => e} // console.log('draw end event', e.detail, e)}
+          // onTransitionEndEvent={e => e} //console.log('transition event', e.detail, e)}
         />
       </div>
     );

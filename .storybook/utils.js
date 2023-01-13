@@ -68,6 +68,7 @@ const categories = {
     'drawStartEvent',
     'drawEndEvent',
     'initialLoadEvent',
+    'initialLoadEndEvent',
     'transitionEndEvent',
     'suppressEvents',
     'clickHighlight',
@@ -76,6 +77,7 @@ const categories = {
   ],
   Labels: [
     'dataLabel',
+    'dataKeyNames',
     'tooltipLabel',
     'legend',
     'showTooltip',

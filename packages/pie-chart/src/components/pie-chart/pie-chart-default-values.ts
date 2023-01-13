@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -51,6 +51,7 @@ export class PieChartDefaultValues {
 
   static readonly showTooltip = propDefaultValues.showTooltip;
   static readonly dataLabel = propDefaultValues.dataLabelNormalizedOut;
+  static readonly dataKeyNames;
   static readonly tooltipLabel = propDefaultValues.tooltipLabel;
   static readonly annotations = propDefaultValues.annotations;
   static readonly suppressEvents = propDefaultValues.suppressEvents;
