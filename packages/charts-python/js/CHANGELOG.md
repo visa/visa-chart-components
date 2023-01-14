@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0](https://github.com/visa/visa-chart-components/compare/@visa/charts-python@1.0.0...@visa/charts-python@1.1.0) (2023-01-13)
+
+### Features
+
+- feat bump charts-python bundle for dataKeyNames prop and more ([e9586b9](https://github.com/visa/visa-chart-components/commit/e9586b9ad6412b3b7563f197a7a40e136fa8de99))
+
 # 1.0.0 (2022-07-28)
 
 ### chore

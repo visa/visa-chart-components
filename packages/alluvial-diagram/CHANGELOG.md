@@ -3,107 +3,73 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0](https://github.com/visa/visa-chart-components/compare/@visa/alluvial-diagram@2.1.2...@visa/alluvial-diagram@2.2.0) (2023-01-13)
+
+### Bug Fixes
+
+- update stencil/tsconfig across lib to include app- in dev and exclude it in prod build ([08ec353](https://github.com/visa/visa-chart-components/commit/08ec35339ca384994333305c82f061b0e800262b))
+
+### Features
+
+- add dataKeyNames prop and initialLoadEndEvent across chart components in lib ([486d44a](https://github.com/visa/visa-chart-components/commit/486d44aba0867ee28734eeae30ffbac353926dfe))
+
 ## [2.1.2](https://github.com/visa/visa-chart-components/compare/@visa/alluvial-diagram@2.1.1...@visa/alluvial-diagram@2.1.2) (2022-07-28)
 
 **Note:** Version bump only for package @visa/alluvial-diagram
 
-
-
-
-
 ## [2.1.1](https://github.com/visa/visa-chart-components/compare/@visa/alluvial-diagram@2.1.0...@visa/alluvial-diagram@2.1.1) (2022-06-27)
-
 
 ### Bug Fixes
 
-* augment unit testing for alluvial, remove uniqueID update, fix contrasting stroke on node and tooltip accessors ([59b0896](https://github.com/visa/visa-chart-components/commit/59b0896756782527801bb7e5c30d9ff6114fc6cd))
-
-
-
-
+- augment unit testing for alluvial, remove uniqueID update, fix contrasting stroke on node and tooltip accessors ([59b0896](https://github.com/visa/visa-chart-components/commit/59b0896756782527801bb7e5c30d9ff6114fc6cd))
 
 # [2.1.0](https://github.com/visa/visa-chart-components/compare/@visa/alluvial-diagram@2.0.1...@visa/alluvial-diagram@2.1.0) (2022-03-29)
 
-
 ### Bug Fixes
 
-* alluvial-diagram missing freq in data table fix ([b90ba7f](https://github.com/visa/visa-chart-components/commit/b90ba7f95a0e387f5018381b1de6b34c3dc95f3f))
-
+- alluvial-diagram missing freq in data table fix ([b90ba7f](https://github.com/visa/visa-chart-components/commit/b90ba7f95a0e387f5018381b1de6b34c3dc95f3f))
 
 ### Features
 
-* major bump of stencil, bump other deps as well, add storybook demo app ([70719eb](https://github.com/visa/visa-chart-components/commit/70719ebc7fa59dc169bcc7fea62b238bcfab6418))
-
-
-
-
+- major bump of stencil, bump other deps as well, add storybook demo app ([70719eb](https://github.com/visa/visa-chart-components/commit/70719ebc7fa59dc169bcc7fea62b238bcfab6418))
 
 ## [2.0.1](https://github.com/visa/visa-chart-components/compare/@visa/alluvial-diagram@2.0.0...@visa/alluvial-diagram@2.0.1) (2022-02-04)
 
 **Note:** Version bump only for package @visa/alluvial-diagram
 
-
-
-
-
 # [2.0.0](https://github.com/visa/visa-chart-components/compare/@visa/alluvial-diagram@1.2.1...@visa/alluvial-diagram@2.0.0) (2021-11-18)
-
 
 ### chore
 
-* refactor watch lifecycle, object emitted on click and hover events in alluvial-diagram ([1ff29bb](https://github.com/visa/visa-chart-components/commit/1ff29bbca83561341506a472990b67568961a7b7))
-
+- refactor watch lifecycle, object emitted on click and hover events in alluvial-diagram ([1ff29bb](https://github.com/visa/visa-chart-components/commit/1ff29bbca83561341506a472990b67568961a7b7))
 
 ### BREAKING CHANGES
 
-* The linkConfig.fillMode option 'path' is now renamed to 'link'. Update to this new name in order to maintain fill styling that is applied to each link individually
-* e.detail now contains two objects, data and target. To access data object, you now need to use e.detail.data. clickFunc, hoverFunc, and mouseOutFunc have been removed and replaced with clickEvent, hoverEvent, and mouseOutEvent, respectively
-
-
-
-
+- The linkConfig.fillMode option 'path' is now renamed to 'link'. Update to this new name in order to maintain fill styling that is applied to each link individually
+- e.detail now contains two objects, data and target. To access data object, you now need to use e.detail.data. clickFunc, hoverFunc, and mouseOutFunc have been removed and replaced with clickEvent, hoverEvent, and mouseOutEvent, respectively
 
 ## [1.2.1](https://github.com/visa/visa-chart-components/compare/@visa/alluvial-diagram@1.2.0...@visa/alluvial-diagram@1.2.1) (2021-10-27)
 
-
 ### Bug Fixes
 
-* add label collision to lifecycle and update a11y features on alluvial-diagram ([74b32fd](https://github.com/visa/visa-chart-components/commit/74b32fd0c03205d80fae6d65b7645a4f1dfd9849))
-
-
-
-
+- add label collision to lifecycle and update a11y features on alluvial-diagram ([74b32fd](https://github.com/visa/visa-chart-components/commit/74b32fd0c03205d80fae6d65b7645a4f1dfd9849))
 
 # [1.2.0](https://github.com/visa/visa-chart-components/compare/@visa/alluvial-diagram@1.1.2...@visa/alluvial-diagram@1.2.0) (2021-08-09)
 
-
 ### Features
 
-* push keyboard-instructions, animationConfig, label-collision and fixes across lib ([ea1b1a4](https://github.com/visa/visa-chart-components/commit/ea1b1a478b3ea9bcf07e76551a45a9adaaacdb47))
-
-
-
-
+- push keyboard-instructions, animationConfig, label-collision and fixes across lib ([ea1b1a4](https://github.com/visa/visa-chart-components/commit/ea1b1a478b3ea9bcf07e76551a45a9adaaacdb47))
 
 ## [1.1.2](https://github.com/visa/visa-chart-components/compare/@visa/alluvial-diagram@1.1.1...@visa/alluvial-diagram@1.1.2) (2021-04-13)
 
 **Note:** Version bump only for package @visa/alluvial-diagram
 
-
-
-
-
 ## [1.1.1](https://github.com/visa/visa-chart-components/compare/@visa/alluvial-diagram@1.1.0...@visa/alluvial-diagram@1.1.1) (2021-04-02)
 
 **Note:** Version bump only for package @visa/alluvial-diagram
 
-
-
-
-
 # 1.1.0 (2021-04-02)
-
 
 ### Features
 
-* add alluvial diagram package ([b6391da](https://github.com/visa/visa-chart-components/commit/b6391da16a7f2aabd0a0596b3d38994ff456876f))
+- add alluvial diagram package ([b6391da](https://github.com/visa/visa-chart-components/commit/b6391da16a7f2aabd0a0596b3d38994ff456876f))
