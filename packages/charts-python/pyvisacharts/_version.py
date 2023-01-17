@@ -6,7 +6,7 @@
 # *
 # **/
 # Module version
-version_info = (1, 0, 0, 'final', 0)
+version_info = (1, 1, 0, 'final', 0)
 
 # Module version stage suffix map
 _specifier_ = {'alpha': 'a', 'beta': 'b', 'candidate': 'rc', 'final': ''}
