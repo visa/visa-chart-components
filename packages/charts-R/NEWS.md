@@ -3,7 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://www.conventionalcommits.org/) for commit guidelines.
 
-# [2.1.2](https://github.com/visa/visa-chart-components/compare/@visa/charts@6.1.1...@visa/charts@6.2.0) (2022-07-28)
+# [2.2.0](https://github.com/visa/visa-chart-components/compare/@visa/charts@6.2.0...@visa/charts@6.3.0) (2023-01-13)
+
+### Features
+
+- add dataKeyNames, sizeConfig tooltip default, dismiss tooltip w/ esc, no group accessor handling & initialLoadEndEvent ([de01a0a](https://github.com/visa/visa-chart-components/commit/de01a0ab5cea8146ff3d4d0c48da995c2ba0fb9a))
+
+## [2.1.2](https://github.com/visa/visa-chart-components/compare/@visa/charts@6.1.1...@visa/charts@6.2.0) (2022-07-28)
 
 ### Features
 

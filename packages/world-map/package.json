@@ -1,6 +1,6 @@
 {
   "name": "@visa/world-map",
-  "version": "5.1.2",
+  "version": "5.2.0",
   "description": "world-map component",
   "license": "SEE LICENCE IN LICENSE",
   "module": "dist/index.js",
@@ -35,10 +35,10 @@
     "access": "public"
   },
   "dependencies": {
-    "@visa/charts-types": "^0.4.2",
-    "@visa/keyboard-instructions": "^1.2.2",
-    "@visa/visa-charts-data-table": "^2.2.2",
-    "@visa/visa-charts-utils": "^4.7.1",
+    "@visa/charts-types": "^0.5.0",
+    "@visa/keyboard-instructions": "^1.2.3",
+    "@visa/visa-charts-data-table": "^2.3.0",
+    "@visa/visa-charts-utils": "^4.8.0",
     "d3-array": "^1.2.4",
     "d3-collection": "^1.0.7",
     "d3-color": "1.4.1",
@@ -51,7 +51,7 @@
     "uuid": "8.3.2"
   },
   "devDependencies": {
-    "@visa/visa-charts-utils-dev": "^3.3.15"
+    "@visa/visa-charts-utils-dev": "^3.4.0"
   },
   "jest": {
     "preset": "@stencil/core/testing",
