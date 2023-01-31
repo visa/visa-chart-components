@@ -33,27 +33,27 @@
     "test:es5-check": "es-check es5 'dist/*.js'"
   },
   "peerDependencies": {
-    "react": "^16.7.0",
-    "react-dom": "^16.7.0"
+    "react": ">=16.9.0",
+    "react-dom": ">=16.9.0"
   },
   "dependencies": {
     "@visa/charts": "^6.3.0"
   },
   "devDependencies": {
     "@types/node": "^13.7.0",
-    "@types/react": "^16.7.6",
-    "@types/react-dom": "^16.0.9",
+    "@types/react": "^18.0.27",
+    "@types/react-dom": "^18.0.10",
     "@visa/charts-types": "^0.5.0",
-    "react": "^16.7.0",
-    "react-dom": "^16.7.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "rollup": "^1.21.2",
     "rollup-plugin-node-resolve": "^5.2.0",
     "typescript": "^3.9.10"
   },
   "resolutions": {
-    "@types/react": "^17.0.43",
     "minimist": "^1.2.6",
-    "path-parse": "^1.0.7"
+    "path-parse": "^1.0.7",
+    "d3-color": "^3.1.0"
   },
   "jest": {
     "preset": "ts-jest",
