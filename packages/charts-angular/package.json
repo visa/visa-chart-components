@@ -14,8 +14,8 @@
   },
   "author": "Visa Data Experience Team",
   "peerDependencies": {
-    "@angular/common": "^12.2.16",
-    "@angular/core": "^12.2.16"
+    "@angular/common": "^14.2.4",
+    "@angular/core": "^14.2.4"
   },
   "private": true,
   "scripts": {
@@ -29,24 +29,24 @@
     "lint": "ng lint"
   },
   "dependencies": {
-    "@angular/animations": "12.2.16",
-    "@angular/common": "12.2.16",
-    "@angular/compiler": "12.2.16",
-    "@angular/core": "12.2.16",
-    "@angular/forms": "12.2.16",
-    "@angular/platform-browser": "12.2.16",
-    "@angular/platform-browser-dynamic": "12.2.16",
-    "@angular/router": "12.2.16",
+    "@angular/animations": "14.2.4",
+    "@angular/common": "14.2.4",
+    "@angular/compiler": "14.2.4",
+    "@angular/core": "14.2.4",
+    "@angular/forms": "14.2.4",
+    "@angular/platform-browser": "14.2.4",
+    "@angular/platform-browser-dynamic": "14.2.4",
+    "@angular/router": "14.2.4",
     "@visa/charts": "^6.3.0",
-    "rxjs": "~6.6.0",
-    "tslib": "^2.2.0",
+    "rxjs": "7.4.0",
+    "tslib": "2.4.0",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~12.2.16",
-    "@angular/cli": "12.2.16",
-    "@angular/compiler-cli": "12.2.16",
-    "@types/jasmine": "~3.6.0",
+    "@angular-devkit/build-angular": "^14.2.4",
+    "@angular/cli": "14.2.4",
+    "@angular/compiler-cli": "14.2.4",
+    "@types/jasmine": "~3.8.0",
     "@types/node": "^12.11.1",
     "@visa/charts-types": "^0.5.0",
     "es-check": "5.2.0",
@@ -57,16 +57,16 @@
     "karma-coverage": "~2.0.3",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
-    "ng-packagr": "^12.2.7",
+    "ng-packagr": "^14.2.1",
     "protractor": "~7.0.0",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
-    "typescript": "~4.3.5"
+    "typescript": "4.6.4"
   },
   "resolutions": {
     "decode-uri-component": "^0.2.1",
     "engine.io": "^6.2.1",
-    "loader-utils": "^1.4.1",
+    "loader-utils": "^3.2.1",
     "minimist": "^1.2.6",
     "minimatch": "^3.0.5",
     "node-forge": "^1.3.0",
@@ -77,6 +77,7 @@
     "ansi-regex": "^5.0.1",
     "set-value": "^4.0.1",
     "ua-parser-js": "^0.7.30",
-    "webpack-dev-server": "^4.3.1"
+    "webpack-dev-server": "^4.3.1",
+    "d3-color": "^3.1.0"
   }
 }
