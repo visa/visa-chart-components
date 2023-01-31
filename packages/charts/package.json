@@ -34,7 +34,7 @@
   "dependencies": {
     "d3-array": "^1.2.4",
     "d3-collection": "^1.0.7",
-    "d3-color": "1.4.1",
+    "d3-color": "^3.1.0",
     "d3-geo": "^1.12.1",
     "d3-geo-projection": "2.9.0",
     "d3-hierarchy": "^1.1.9",
@@ -64,6 +64,9 @@
     "@visa/visa-charts-data-table": "^2.3.0",
     "@visa/visa-charts-utils": "^4.8.0",
     "@visa/world-map": "^5.2.0"
+  },
+  "resolutions": {
+    "d3-color": "^3.1.0"
   },
   "jest": {
     "transform": {

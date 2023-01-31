@@ -23,7 +23,7 @@
     "test": "stencil test --spec --no-cache --color --coverage --json --outputFile=./coverage/test-report.json",
     "test:watch": "jest -watch",
     "test:es5-check": "es-check es5 'dist/index.cjs.js' 'dist/loader/index.cjs.js'",
-    "update-snapshot": "jest --updateSnapshot --color"
+    "update-snapshot": "stencil test --spec --updateSnapshot --color"
   },
   "repository": {
     "type": "git",
@@ -50,12 +50,12 @@
     "@visa/visa-charts-utils-dev": "^3.4.0"
   },
   "author": "Visa Data Experience Team",
+  "resolutions": {
+    "d3-color": "^3.1.0"
+  },
   "jest": {
     "preset": "@stencil/core/testing",
     "testRunner": "jest-jasmine2",
-    "transformIgnorePatterns": [
-      "/node_modules/(?!(@visa/charts-types)/)"
-    ],
     "collectCoverageFrom": [
       "**/*.{tsx,ts}",
       "!**/node_modules/**",

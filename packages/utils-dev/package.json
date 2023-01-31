@@ -27,7 +27,7 @@
     "@visa/visa-charts-utils": "^4.8.0",
     "d3": "^4.13.0",
     "d3-axis": "^1.0.12",
-    "d3-color": "^1.4.1",
+    "d3-color": "^3.1.0",
     "d3-ease": "^1.0.7",
     "d3-format": "^1.4.5",
     "d3-scale": "^2.2.2",
@@ -50,8 +50,10 @@
     "typescript": "^3.9.10"
   },
   "resolutions": {
+    "json5": "^2.2.2",
     "minimist": "^1.2.6",
-    "path-parse": "^1.0.7"
+    "path-parse": "^1.0.7",
+    "d3-color": "^3.1.0"
   },
   "files": [
     "dist"
