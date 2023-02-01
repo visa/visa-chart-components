@@ -35,9 +35,9 @@ export class BarChartDefaultValues {
   static readonly accessibility = propDefaultValues.accessibility;
   static readonly animationConfig = propDefaultValues.animationConfig;
   static readonly sortOrder = propDefaultValues.sortOrder;
-  static readonly xAxis = propDefaultValues.xAxis;
+  static readonly xAxis = propDefaultValues.xAxisBarChart;
 
-  static readonly yAxis = propDefaultValues.yAxis;
+  static readonly yAxis = propDefaultValues.yAxisBarChart;
   static readonly wrapLabel = propDefaultValues.wrapLabel;
   static readonly colorPalette = propDefaultValues.colorPaletteSingle;
 

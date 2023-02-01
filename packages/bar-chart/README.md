@@ -183,17 +183,18 @@ const changeHandler = d => {
 
 ### IAxisType Definition
 
-| Name (xAxis./yAxis.)    | Type    | Default Value(s)               | Description                                                                                                                                            |
-| ----------------------- | ------- | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `visible`               | boolean | true                           | Toggles the visibility of the axis.                                                                                                                    |
-| `gridVisible`           | boolean | true                           | Toggles the visibility of the axis grid.                                                                                                               |
-| `label`                 | string  | 'X Axis'                       | Sets the label for the axis.                                                                                                                           |
-| `placement`             | string  | 'top' (x), 'left' (y)          | Sets the axis placement for x 'top' or 'bottom' and for y 'left', or 'right'.                                                                          |
-| `format`                | string  | '' or '%b %y' or '0[.][0][0]a' | Sets the formatting for axis elements, EG %b, refer to [d3-time-format](https://github.com/d3/d3-time-format) and [numeral.js](http://numeraljs.com/). |
-| `tickInterval`          | number  | 1                              | Can be used to reduce the frequency of axis ticks. This number sets the interval of axis ticks that are shown.                                         |
-| `unit`                  | string  | '' or 'month'                  | Sets the unit of padding for the axis when accessor is a date.                                                                                         |
-| `yAxis.scales`          | string  | `undefined` or 'preNormalized' | Sets the type of scales used in y axis for parallel plot.                                                                                              |
-| `yAxis.onlyTickExtents` | boolean | true                           | Hides yAxis ticks between min/max for parallel plot.                                                                                                   |
+| Name (xAxis./yAxis.)    | Type    | Default Value(s)               | Description                                                                                                                                                           |
+| ----------------------- | ------- | ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `visible`               | boolean | true                           | Toggles the visibility of the axis.                                                                                                                                   |
+| `gridVisible`           | boolean | true                           | Toggles the visibility of the axis grid.                                                                                                                              |
+| `label`                 | string  | 'X Axis'                       | Sets the label for the axis.                                                                                                                                          |
+| `placement`             | string  | 'top' (x), 'left' (y)          | Sets the axis placement for x 'top' or 'bottom' and for y 'left', or 'right'.                                                                                         |
+| `format`                | string  | '' or '%b %y' or '0[.][0][0]a' | Sets the formatting for axis elements, EG %b, refer to [d3-time-format](https://github.com/d3/d3-time-format) and [numeral.js](http://numeraljs.com/).                |
+| `tickInterval`          | number  | 1                              | Can be used to reduce the frequency of axis ticks. This number sets the interval of axis ticks that are shown.                                                        |
+| `unit`                  | string  | '' or 'month'                  | Sets the unit of padding for the axis when accessor is a date.                                                                                                        |
+| `centerBaseline`        | boolean | false                          | Centers bars on the axis. When set to true, the axis is hidden. Note: `centerBaseline` behavior is disabled if any negative values exist in the incoming data object. |
+| `yAxis.scales`          | string  | `undefined` or 'preNormalized' | Sets the type of scales used in y axis for parallel plot.                                                                                                             |
+| `yAxis.onlyTickExtents` | boolean | true                           | Hides yAxis ticks between min/max for parallel plot.                                                                                                                  |
 
 <br>
 <br>
