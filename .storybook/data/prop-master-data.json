@@ -1541,6 +1541,13 @@
     }
   },
   {
+    "name": "xAxis.centerBaseline",
+    "options": {
+      "enabled": true,
+      "description": "Centers bars on the x axis"
+    }
+  },
+  {
     "name": "yAxis.visible",
     "options": {
       "enabled": true,
@@ -1610,6 +1617,13 @@
     "options": {
       "enabled": true,
       "description": "Sets the y axis placement as 'left' or 'right'"
+    }
+  },
+  {
+    "name": "yAxis.centerBaseline",
+    "options": {
+      "enabled": true,
+      "description": "Centers bars on the y axis"
     }
   },
   {
