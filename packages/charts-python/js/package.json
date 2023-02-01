@@ -61,7 +61,8 @@
   "resolutions": {
     "got": "^11.8.5",
     "loader-utils": "^3.2.1",
-    "verdaccio": "^5.19.1"
+    "verdaccio": "^5.19.1",
+    "d3-color": "^3.1.0"
   },
   "jupyterlab": {
     "extension": "lib/labplugin",
