@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0](https://github.com/visa/visa-chart-components/compare/@visa/visa-charts-utils@4.8.0...@visa/visa-charts-utils@5.0.0) (2023-02-01)
+
+### chore
+
+- d3-color bump to 3.1.0 and resolutions ([dd9a2fb](https://github.com/visa/visa-chart-components/commit/dd9a2fb369c44bab6607acb5229ceb656dce5561))
+
+### Features
+
+- add yAxis.centerBaseline prop ([96b943d](https://github.com/visa/visa-chart-components/commit/96b943db7ee03a9eca97a3acf54e9e552878b794))
+
+### BREAKING CHANGES
+
+- d3-color bump to 3.1.0, IE11 support no longer maintained. If you need to support IE11, you should stick with the previous release.
+
 # [4.8.0](https://github.com/visa/visa-chart-components/compare/@visa/visa-charts-utils@4.7.1...@visa/visa-charts-utils@4.8.0) (2023-01-13)
 
 ### Features

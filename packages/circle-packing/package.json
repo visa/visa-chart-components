@@ -1,6 +1,6 @@
 {
   "name": "@visa/circle-packing",
-  "version": "6.2.0",
+  "version": "7.0.0",
   "description": "visa circle packing",
   "license": "SEE LICENCE IN LICENSE",
   "module": "dist/index.js",
@@ -35,10 +35,10 @@
     "access": "public"
   },
   "dependencies": {
-    "@visa/charts-types": "^0.5.0",
-    "@visa/keyboard-instructions": "^1.2.3",
-    "@visa/visa-charts-data-table": "^2.3.0",
-    "@visa/visa-charts-utils": "^4.8.0",
+    "@visa/charts-types": "^0.5.1",
+    "@visa/keyboard-instructions": "^1.2.4",
+    "@visa/visa-charts-data-table": "^2.3.1",
+    "@visa/visa-charts-utils": "^5.0.0",
     "d3-array": "^1.2.4",
     "d3-hierarchy": "^1.1.9",
     "d3-scale": "^2.2.2",
@@ -47,7 +47,7 @@
     "uuid": "8.3.2"
   },
   "devDependencies": {
-    "@visa/visa-charts-utils-dev": "^3.4.0"
+    "@visa/visa-charts-utils-dev": "^4.0.0"
   },
   "resolutions": {
     "d3-color": "^3.1.0"
