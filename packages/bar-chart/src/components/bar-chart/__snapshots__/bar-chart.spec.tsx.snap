@@ -333,7 +333,7 @@ Array [
 
 exports[`<bar-chart> rendered-html reference line should pass referenceLines prop 1`] = `
 <g aria-hidden="true" class="bar-reference-line-group" data-testid="reference-line-group" focusable="false" role="presentation">
-  <g class=".bar-reference" opacity="1" transform="translate(0,43.93803895226644)">
+  <g class="bar-reference" opacity="1" transform="translate(0,43.93803895226644)">
     <line class="bar-reference-line" opacity="0" x1="0" x2="541.5" y1="0" y2="0"></line>
     <text class="bar-reference-line-label" dx="-0.1em" dy="0.3em" opacity="0" text-anchor="end" x="0" y="0"></text>
   </g>
