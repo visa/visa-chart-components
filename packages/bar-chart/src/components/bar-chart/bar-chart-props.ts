@@ -322,6 +322,7 @@ export interface IAxisType {
   format?: string;
   tickInterval?: number;
   placement?: string;
+  centerBaseline?: boolean;
 }
 
 export interface IBoxModelType {

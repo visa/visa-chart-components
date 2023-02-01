@@ -11,8 +11,11 @@
     "lib": ["dom", "es2018"]
   },
   "angularCompilerOptions": {
+    "compilationMode": "partial",
+    "fullTemplateTypeCheck": true,
     "skipTemplateCodegen": true,
     "strictMetadataEmit": true,
+    "strictInjectionParameters": true,
     "enableResourceInlining": true
   },
   "exclude": ["src/test.ts", "**/*.spec.ts"]

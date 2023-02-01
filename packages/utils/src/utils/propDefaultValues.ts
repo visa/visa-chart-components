@@ -47,6 +47,15 @@ export const xAxis = {
   tickInterval: 1
 };
 
+export const xAxisBarChart = {
+  visible: true,
+  gridVisible: true,
+  label: 'X Axis',
+  format: '0[.][0][0]a',
+  tickInterval: 1,
+  centerBaseline: false
+};
+
 export const xAxisDate = {
   visible: true,
   gridVisible: false,
@@ -62,6 +71,15 @@ export const yAxis = {
   label: 'Y Axis',
   format: '0[.][0][0]a',
   tickInterval: 1
+};
+
+export const yAxisBarChart = {
+  visible: true,
+  gridVisible: true,
+  label: 'Y Axis',
+  format: '0[.][0][0]a',
+  tickInterval: 1,
+  centerBaseline: false
 };
 
 export const wrapLabel = true;

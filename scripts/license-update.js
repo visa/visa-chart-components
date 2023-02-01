@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -8,10 +8,12 @@
 const path = require('path');
 const glob = require('glob');
 const fs = require('fs');
-const git = require('simple-git/promise');
+const { simpleGit, CleanOptions } = require('simple-git');
+simpleGit().clean(CleanOptions.FORCE);
+const git = simpleGit();
 
 const ossFirstCommitDate = '2020-12-10'; // the week of initial release of OSS on GH
-const defaultYearDate = '2022-12-10'; // each year this needs to be set to the new year
+const defaultYearDate = new Date().getFullYear();
 const parentLicenseFile = glob.sync(path.join(__dirname, '..') + '/LICENSE', {});
 const parentLicenseHeaderFile = glob.sync(path.join(__dirname, '..') + '/LICENSE HEADER', {});
 const tsFileExclusions = [
@@ -57,7 +59,7 @@ const parentHeaderFileRContent = fs
 async function getFilesGitHistory(file) {
   let statusSummary;
   try {
-    statusSummary = await git().log({ '--since': ossFirstCommitDate, file });
+    statusSummary = await git.log({ '--since': ossFirstCommitDate, file });
   } catch (e) {
     // handle the error
     console.error(e);
@@ -82,7 +84,7 @@ const tsFiles = [
   ...glob.sync(path.join(__dirname, '..', 'packages/*/src') + '/**/*.ts*', { ignore: tsFileExclusions }), // all ts and tsx files in package/src directories
   ...glob.sync(path.join(__dirname, '..', 'packages/*/src') + '/**/*.js*', { ignore: tsFileExclusions }), // all js and jsx files in package/src directories
   ...glob.sync(path.join(__dirname, '..', 'packages/*/docs') + '/**/*.js*', { ignore: tsFileExclusions }), // all js and jsx files in package/src directories
-  ...glob.sync(path.join(__dirname, '..', 'packages/*') + '/stencil.config.ts', {}), // all stencil config files in pakages
+  ...glob.sync(path.join(__dirname, '..', 'packages/*') + '/stencil.config.ts', {}), // all stencil config files in packages
   ...glob.sync(path.join(__dirname, '..', 'packages/*/src') + '/**/*.*ss', {}), // all scss files in package/src directories
   ...glob.sync(path.join(__dirname, '..', 'packages/charts-R/inst/htmlwidgets') + '/**/*.js', {}), // @visa/charts compiled code in charts-R
   ...glob.sync(path.join(__dirname, '..', 'packages/charts-python/js') + '/**/*.js', { ignore: tsFileExclusions }),
@@ -110,8 +112,6 @@ tsFiles.forEach(function(file) {
     headerExists =
       fileContent[lastHeaderLine].trim().substr(0, 3) === '/**' &&
       fileContent[lastHeaderLine + 1].trim().substr(0, 11) === '* Copyright';
-    // console.log('checking file content', headerExists, fileContent[0].substr(0,3), fileContent[1].substr(0,12));
-
     if (headerExists) {
       // remove existing header
       for (i = lastHeaderLine; i <= fileContent.length; i++) {
@@ -133,7 +133,7 @@ tsFiles.forEach(function(file) {
             }
           });
         } else {
-          yearArray.push(new Date(defaultYearDate).getFullYear());
+          yearArray.push(defaultYearDate);
         }
         // sort years in order from first to last and make it a csv string
         const yearString = yearArray.sort((a, b) => a - b).join(', ');
@@ -148,7 +148,7 @@ tsFiles.forEach(function(file) {
       .catch(err => {
         // console an error and return the current year if there are issues
         console.error(err);
-        const yearString = String(new Date().getFullYear());
+        const yearString = String(defaultYearDate);
         // replace the parentHeaderContent
         const yearHeader = parentHeaderFileContent.map(line => {
           return line.replace('[YEARTOREPLACE]', yearString);
@@ -211,7 +211,7 @@ htmlFiles.forEach(function(file) {
             }
           });
         } else {
-          yearArray.push(new Date(defaultYearDate).getFullYear());
+          yearArray.push(defaultYearDate);
         }
 
         // sort years in order from first to last and make it a csv string
@@ -227,7 +227,7 @@ htmlFiles.forEach(function(file) {
       .catch(err => {
         // console an error and return the current year if there are issues
         console.error(err);
-        const yearString = String(new Date().getFullYear());
+        const yearString = String(defaultYearDate);
         const yearHeader = parentHeaderFileHTMLContent.map(line => {
           return line.replace('[YEARTOREPLACE]', yearString);
         });
@@ -282,7 +282,7 @@ rFiles.forEach(function(file) {
             }
           });
         } else {
-          yearArray.push(new Date(defaultYearDate).getFullYear());
+          yearArray.push(defaultYearDate);
         }
 
         // sort years in order from first to last and make it a csv string
@@ -298,7 +298,7 @@ rFiles.forEach(function(file) {
       .catch(err => {
         // console an error and return the current year if there are issues
         console.error(err);
-        const yearString = String(new Date().getFullYear());
+        const yearString = String(defaultYearDate);
         const yearHeader = parentHeaderFileRContent.map(line => {
           return line.replace('[YEARTOREPLACE]', yearString);
         });

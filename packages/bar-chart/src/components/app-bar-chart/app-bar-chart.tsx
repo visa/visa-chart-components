@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -17,13 +17,27 @@ const { formatStats, setNumeralLocale, getNumeralInstance, registerNumeralLocale
 })
 export class AppBarChart {
   @State() data: any;
-  @State() stateTrigger: any = 0;
+  @State() stateTrigger: any = 1;
   @State() hoverElement: any = '';
   @State() chartUpdates: string;
   @State() clickElement: any = [];
   @State() interactionKeys: any = ['region'];
   @State() groupAccessor: any = 'region';
   @State() clickStatus: any = '';
+  @State() dataLabel: any = { visible: true, placement: 'left', labelAccessor: 'value', format: '0.[a]' };
+  @State() tooltipLabel: any = { labelAccessor: ['country', 'value'], labelTitle: ['a', 'b'], format: ['', '0.[a]'] };
+  @State() xAxis: any = {
+    visible: true,
+    // gridVisible: false,
+    // label: 'Countries'
+    centerBaseline: false
+  };
+  @State() yAxis: any = {
+    visible: true
+    // label: 'Amount',
+    // format: '0.[a]',
+    // centerBaseline: false
+  };
 
   startData: any = [
     { country: 'China', value: '27', region: 'Asia' },
@@ -277,8 +291,10 @@ export class AppBarChart {
   }
 
   changeData() {
-    this.stateTrigger = this.stateTrigger < this.dataStorage.length - 1 ? this.stateTrigger + 1 : 0;
-    this.data = this.dataStorage[this.stateTrigger];
+    // this.stateTrigger = this.stateTrigger < this.dataStorage.length - 1 ? this.stateTrigger + 1 : 0;
+    // this.data = this.dataStorage[this.stateTrigger];
+
+    this.xAxis = { visible: true, centerBaseline: !this.xAxis.centerBaseline };
   }
 
   render() {
@@ -292,28 +308,21 @@ export class AppBarChart {
           subTitle={
             'Shows patterns, multi-strokes, annotations, sub-grouping (+ keyboard nav), special screen reader note on a geometry (Indonesia), dynamic (changing) data, automatic label hiding (Japan), and "interactive" element feedback.'
           }
-          yAxis={{
-            visible: true,
-            label: 'Amount',
-            format: '0.[a]'
-          }}
-          xAxis={{
-            visible: true,
-            label: 'Countries'
-          }}
-          padding={{
-            top: 20,
-            left: 60,
-            right: 10,
-            bottom: 40
-          }}
+          yAxis={this.yAxis}
+          xAxis={this.xAxis}
+          // padding={{
+          //   top: 20,
+          //   left: 60,
+          //   right: 10,
+          //   bottom: 40
+          // }}
           ordinalAccessor={'country'}
           valueAccessor={'value'}
           groupAccessor={this.groupAccessor}
           dataKeyNames={this.keyNames}
           sortOrder={'desc'}
-          dataLabel={{ visible: true, placement: 'bottom', labelAccessor: 'value', format: '0.[a]' }}
-          tooltipLabel={{ labelAccessor: ['country', 'value'], labelTitle: ['a', 'b'], format: ['', '0.[a]'] }}
+          dataLabel={this.dataLabel}
+          tooltipLabel={this.tooltipLabel}
           colorPalette={'categorical'}
           legend={{ visible: true, interactive: true }}
           cursor={'pointer'}
@@ -325,6 +334,7 @@ export class AppBarChart {
           onClickEvent={d => this.onClickFunc(d)}
           onHoverEvent={d => this.onHoverFunc(d)}
           onMouseOutEvent={() => this.onMouseOut()}
+          // layout={'horizontal'}
           // onInitialLoadEvent={e => console.log('load event', e.detail, e)}
           // onInitialLoadEndEvent={e => console.log('load end event', e.detail, e)}
           // onDrawStartEvent={e => console.log('draw start event', e.detail, e)}
@@ -350,22 +360,22 @@ export class AppBarChart {
               this.onChangeFunc(d);
             }
           }}
-          annotations={[
-            {
-              note: {
-                label: "China's Amount-per-capita is massively under market performance.",
-                bgPadding: 20,
-                title: 'Low Amount Per Capita',
-                align: 'middle',
-                wrap: 210
-              },
-              accessibilityDescription:
-                'This annotation is a callout to China, which only has 27 million amount but 1.3 billion people.',
-              data: { country: 'China', value: '27', region: 'Asia' },
-              dy: '-20%',
-              color: 'categorical_blue'
-            }
-          ]}
+          // annotations={[
+          //   {
+          //     note: {
+          //       label: "China's Amount-per-capita is massively under market performance.",
+          //       bgPadding: 20,
+          //       title: 'Low Amount Per Capita',
+          //       align: 'middle',
+          //       wrap: 210
+          //     },
+          //     accessibilityDescription:
+          //       'This annotation is a callout to China, which only has 27 million amount but 1.3 billion people.',
+          //     data: { country: 'China', value: '27', region: 'Asia' },
+          //     dy: '-10%',
+          //     color: 'categorical_blue'
+          //   }
+          // ]}
         />
         <span>
           <h4>Status Caption:</h4>
@@ -381,7 +391,7 @@ export class AppBarChart {
             this.changeData();
           }}
         >
-          change data
+          change centerBaseline
         </button>
       </div>
     );

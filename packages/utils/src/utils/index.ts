@@ -15,7 +15,7 @@ import { prepareBitmap, addToBitmap } from './vega-label/BitMap';
 
 import { checkInteraction, checkClicked, checkHovered, interactionStyle, buildStrokes } from './interaction';
 
-import { drawAxis, wrap } from './axis';
+import { drawAxis, wrap, halve } from './axis';
 
 import { getBrowser, getOS } from './browser-util';
 
@@ -205,6 +205,7 @@ export {
   checkHovered,
   drawAxis,
   wrap,
+  halve,
   drawGrid,
   drawLegend,
   setLegendInteractionState,

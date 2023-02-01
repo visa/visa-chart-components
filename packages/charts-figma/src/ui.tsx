@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022 Visa, Inc.
+ * Copyright (c) 2022, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -56,7 +56,7 @@ const App: React.FunctionComponent<CustomProps> = () => {
           type: 'fetch-fonts'
         }
       },
-      '*'
+      'https://www.figma.com'
     );
     // add event listener for messages
     window.addEventListener('message', handleMessage);
@@ -82,7 +82,7 @@ const App: React.FunctionComponent<CustomProps> = () => {
               type: 'show-ui'
             }
           },
-          '*'
+          'https://www.figma.com'
         );
         break;
       }
@@ -554,12 +554,12 @@ const App: React.FunctionComponent<CustomProps> = () => {
           }
         }
       },
-      '*'
+      'https://www.figma.com'
     );
   };
 
   const onCancel = () => {
-    parent.postMessage({ pluginMessage: { type: 'cancel' } }, '*');
+    parent.postMessage({ pluginMessage: { type: 'cancel' } }, 'https://www.figma.com');
   };
 
   // console.log('checking render', level1, level2, createDisabled);
