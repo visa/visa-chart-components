@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.0.0](https://github.com/visa/visa-chart-components/compare/@visa/charts-react@3.2.0...@visa/charts-react@4.0.0) (2023-02-01)
+
+### chore
+
+- bump react to v18.2, d3-color to v3, update configs ([b3984b3](https://github.com/visa/visa-chart-components/commit/b3984b33d42c1d78b67c4abd1d1f928ef5e11b34))
+
+### BREAKING CHANGES
+
+- d3-color v3 no longer supports ie11, thus charts-react will no longer support es5/legacy browsers
+
+Co-authored-by: David Kutas <118760653+david-kutas@users.noreply.github.com>
+
 # [3.2.0](https://github.com/visa/visa-chart-components/compare/@visa/charts-react@3.1.2...@visa/charts-react@3.2.0) (2023-01-13)
 
 ### Features

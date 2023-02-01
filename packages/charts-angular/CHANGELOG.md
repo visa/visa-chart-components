@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.0.0](https://github.com/visa/visa-chart-components/compare/@visa/charts-angular@3.2.0...@visa/charts-angular@4.0.0) (2023-02-01)
+
+### chore
+
+- bump angular to v14, d3-color to v3, update configs ([544c53a](https://github.com/visa/visa-chart-components/commit/544c53a83b810b349ac24becbaab082b1151222e))
+
+### BREAKING CHANGES
+
+- Angular 14 and d3-color v3 no longer supports ie11, thus charts-angular will no longer support es5/legacy browsers
+
+Co-authored-by: David Kutas <118760653+david-kutas@users.noreply.github.com>
+
 # [3.2.0](https://github.com/visa/visa-chart-components/compare/@visa/charts-angular@3.1.2...@visa/charts-angular@3.2.0) (2023-01-13)
 
 ### Features

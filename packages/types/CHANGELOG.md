@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.1](https://github.com/visa/visa-chart-components/compare/@visa/charts-types@0.5.0...@visa/charts-types@0.5.1) (2023-02-01)
+
+### Bug Fixes
+
+- update iAxisType for centerBaseline ([45d55e6](https://github.com/visa/visa-chart-components/commit/45d55e6d9e9e3d63aa3f1f070168ab696ea8b2ce))
+
 # [0.5.0](https://github.com/visa/visa-chart-components/compare/@visa/charts-types@0.4.2...@visa/charts-types@0.5.0) (2023-01-13)
 
 ### Features

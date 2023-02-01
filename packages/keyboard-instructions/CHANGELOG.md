@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.4](https://github.com/visa/visa-chart-components/compare/@visa/keyboard-instructions@1.2.3...@visa/keyboard-instructions@1.2.4) (2023-02-01)
+
+**Note:** Version bump only for package @visa/keyboard-instructions
+
 # [1.2.3](https://github.com/visa/visa-chart-components/compare/@visa/keyboard-instructions@1.2.2...@visa/keyboard-instructions@1.2.3) (2023-01-13)
 
 ### Bug Fixes
