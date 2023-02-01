@@ -3,7 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://www.conventionalcommits.org/) for commit guidelines.
 
-# [2.2.0](https://github.com/visa/visa-chart-components/compare/@visa/charts@6.2.0...@visa/charts@6.3.0) (2023-01-13)
+# [3.0.0](https://github.com/visa/visa-chart-components/compare/@visa/charts@6.3.0...@visa/charts@7.0.0) (2023-02-01)
+
+### chore
+
+- d3-color bump to 3.1.0 and resolutions ([dd9a2fb](https://github.com/visa/visa-chart-components/commit/dd9a2fb369c44bab6607acb5229ceb656dce5561))
+
+### BREAKING CHANGES
+
+- d3-color bump to 3.1.0, IE11 support no longer maintained. If you need to support IE11, you should stick with the previous release.
+
+## [2.2.0](https://github.com/visa/visa-chart-components/compare/@visa/charts@6.2.0...@visa/charts@6.3.0) (2023-01-13)
 
 ### Features
 
