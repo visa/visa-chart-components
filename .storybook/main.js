@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022 Visa, Inc.
+ * Copyright (c) 2022, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -38,6 +38,9 @@ module.exports = {
     './addons/show-source-code/register'
   ],
   framework: '@storybook/react',
+  core: {
+    disableTelemetry: true
+  },
   webpackFinal: config => {
     config.output.publicPath = process.env.RENDER_PATH !== 'local' ? process.env.RENDER_PATH : '';
     config.module.rules.push({

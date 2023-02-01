@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -79,66 +79,66 @@ export const placeDataLabels = ({
       case 'auto':
         if (layout === 'vertical') {
           xPlacement = d => xScale(d[ordinalAccessor]) + xScale.bandwidth() / 2;
-          yPlacement = d => yScale(Math.max(0, d[valueAccessor]));
+          yPlacement = d => yScale(Math.max(0, d[valueAccessor] * (labelOffset || 1)));
           offset2 = '0.25em';
           textAnchor = 'middle';
         } else if (layout === 'horizontal') {
           yPlacement = d => yScale(d[ordinalAccessor]) + yScale.bandwidth() / 2;
-          xPlacement = d => xScale(Math.max(0, d[valueAccessor]));
+          xPlacement = d => xScale(Math.max(0, d[valueAccessor] * (labelOffset || 1)));
           offset2 = '0.25em';
           textAnchor = 'middle';
         }
         break;
       case 'top':
         xPlacement = d => xScale(d[ordinalAccessor]) + xScale.bandwidth() / 2;
-        yPlacement = d => yScale(Math.max(0, d[valueAccessor]));
+        yPlacement = d => yScale(Math.max(0, d[valueAccessor] * (labelOffset || 1)));
         offset = '-.3em';
         textAnchor = 'middle';
         break;
       case 'bottom':
         xPlacement = d => xScale(d[ordinalAccessor]) + xScale.bandwidth() / 2;
-        yPlacement = d => yScale(Math.min(0, d[valueAccessor]));
+        yPlacement = d => yScale(Math.min(0, d[valueAccessor] * (-labelOffset || 1)));
         offset = '-.3em';
         textAnchor = 'middle';
         break;
       case 'left':
         yPlacement = d => yScale(d[ordinalAccessor]) + yScale.bandwidth() / 2;
-        xPlacement = d => xScale(Math.min(0, d[valueAccessor]));
+        xPlacement = d => xScale(Math.min(0, d[valueAccessor] * (-labelOffset || 1)));
         offset = '.2em';
         offset2 = '.3em';
         textAnchor = 'start';
         break;
       case 'right':
         yPlacement = d => yScale(d[ordinalAccessor]) + yScale.bandwidth() / 2;
-        xPlacement = d => xScale(Math.max(0, d[valueAccessor]));
+        xPlacement = d => xScale(Math.max(0, d[valueAccessor] * (labelOffset || 1)));
         offset = '.3em';
         offset2 = '.3em';
         textAnchor = 'start';
         break;
       case 'top-left':
         yPlacement = d => yScale(d[ordinalAccessor]);
-        xPlacement = d => xScale(Math.min(0, d[valueAccessor]));
+        xPlacement = d => xScale(Math.min(0, d[valueAccessor] * (-labelOffset || 1)));
         offset = '.2em';
         offset2 = '-.2em';
         textAnchor = 'start';
         break;
       case 'top-right':
         yPlacement = d => yScale(d[ordinalAccessor]);
-        xPlacement = d => xScale(Math.max(0, d[valueAccessor]));
+        xPlacement = d => xScale(Math.max(0, d[valueAccessor] * (labelOffset || 1)));
         offset = '-3em';
         offset2 = '-.2em';
         textAnchor = 'start';
         break;
       case 'bottom-left':
         yPlacement = d => yScale(d[ordinalAccessor]) + yScale.bandwidth();
-        xPlacement = d => xScale(Math.min(0, d[valueAccessor]));
+        xPlacement = d => xScale(Math.min(0, d[valueAccessor] * (-labelOffset || 1)));
         offset = '.2em';
         offset2 = '1em';
         textAnchor = 'start';
         break;
       case 'bottom-right':
         yPlacement = d => yScale(d[ordinalAccessor]) + yScale.bandwidth();
-        xPlacement = d => xScale(Math.max(0, d[valueAccessor]));
+        xPlacement = d => xScale(Math.max(0, d[valueAccessor] * (labelOffset || 1)));
         offset = '-3em';
         offset2 = '1em';
         textAnchor = 'start';
@@ -441,7 +441,7 @@ export const placeDataLabels = ({
     yPlacement = d => xScale([+d[ordinalAccessor], +d[valueAccessor]])[1];
   }
 
-  // we run bitmap if passed, not heat-map and whether we pass "auto" OR hideOnly with reg placement
+  // if we receive bitmap and auto placement we run, with heat-map as the only exception
   const autoPlacementIndicator = avoidCollision && avoidCollision.runOccupancyBitmap && placement === 'auto';
   const hideNoPlaceIndicator = avoidCollision && avoidCollision.hideOnly && !autoPlacementIndicator;
   if (chartType !== 'heat-map' && autoPlacementIndicator && !hideNoPlaceIndicator) {

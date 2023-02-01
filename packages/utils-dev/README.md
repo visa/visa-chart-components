@@ -180,3 +180,104 @@ const transformData = parseTransform(xAxisTick.getAttribute('transform'));
 expect(parseFloat(transformData['translate'][0])).toBeLessThan(2);
 //...
 ```
+
+## Testing Use Case
+
+It is vital to the longevity of VCC to understand how the testing suite can be used/modified/extended. The below use case explanation is introducing how testing works in practice.
+
+![Software flow diagram of a testing use case. The numbers on this diagram correspond with the High Level Description section's numbered list of items. The items on the diagram and corresponding High Level Description items describe the testing use case.](./../../docs/test-use-case.png 'Testing Use Case Diagram')
+
+Note: the numbers on the above diagram correspond with the numbered list below.
+
+### High Level Description
+
+1. The `bar-chart-spec.tsx` is rendering the `bar-chart` component which is coded in the `bar-chart.tsx` file. In general, `*-spec.tsx` file is the unit testing file, that renders a component over and over again for every test we choose to run. The `bar-chart` component will be the focus of our unit testing use case.
+2. When the `unitTest` flag is set to true, testing (selection) attributes (like `data-testid=chart-container`) are added to the component's DOM layers to make selection of specific parts of the component easier when the executing tests. For example, the `setTestingAttributes` function within `bar-chart.tsx` is assigning testing related `id`s to the component.
+3. The `bar-chart-spec.tsx` (unit testing file) is used to configure and run different tests. Each test defined in this file is configured to run an instance of the `bar-chart` component. We can run tests specific to `bar-chart` in this file, and, we can also reference common (reusable) tests which can be run across a number of components. See Point 4 for details about common tests.
+4. Common tests refer to tests that are grouped together according to focus area. These tests are defined and referenced above in this `README.md` file (e.g., [accessibility tests](#accessibility_tests)). Common tests are written in a reusable way, so they can be referenced by many components. There is an API like structure to these which enables the reuse across a number of components. Here is an example of the unit test for default height which is used across different chart components:
+
+```js
+/*
+  test is exported as a named object, we loop through these in the *-spec.tsx testing files
+*/
+export const generic_height_default_load = {
+  /* the prop this test will effect */
+  prop: 'height',
+  /* the group this prop belongs to */
+  group: 'base',
+  /* human friendly test name */
+  name: 'default height on load',
+  /* is test for a default behavior? */
+  testDefault: true,
+  /*
+    testProps is an object which is looped through within the testFunc, this allows for custom prop assignments to be sent across unit testing for different charts. In some tests it has a default value, but often this is overridden by passing this object from the *-spec.tsx files
+  */
+  testProps: { height: 999999 },
+  /*
+    test selector, often used to classify and further the select the example DOM element of the chart, sometimes this will need to overridden in each chart's unit testing as well.
+  */
+  testSelector: '[data-testid=chart-container] svg',
+  /*
+    next test selector, similar to testSelector, but allows for a secondary selector to be passed. Useful when we have to different elements to test (e.g., keyboard navigation).
+  */
+  nextTestSelector: '[data-testid=chart-container] svg',
+  /*
+    the test function which contains all code needed to execute the common unit test. It will take in various variables (e.g., component) and these variables can change slightly depending on the test. This is example is simple and takes in the component, page, testProps and testSelector variables only.
+  */
+  testFunc: async (component: any, page: SpecPage, testProps: object, testSelector: string) => {
+  /*
+    ...
+    unit test code
+    ...
+  */
+```
+
+Here is an example of calling a common test and configuring it specifically for a single test in our `bar-chart` component. In this example we are going to use our `accessibility_keyboard_nav_generic_test` within `unit-test-accessibility.ts` and configure it to test for using shift+tab to exit a group of bars on the chart.
+
+```js
+/* first we configure set up for how to the test in bar-chart */
+const accessibilityTestMarks = {
+   accessibility_keyboard_nav_group_shift_enter_exit: {
+    name: 'keyboard nav: group - shift+enter will exit group',
+    testSelector: '[data-testid=bar][data-id=bar-Apr-17]',
+    nextTestSelector: '[data-testid=bar-group]',
+    keyDownObject: { key: 'Enter', code: 'Enter', keyCode: 13, shiftKey: true },
+    testProps: {
+      selectorAriaLabel: 'month Apr-17. value 1.4m. Bar 1 of 12.',
+      nextSelectorAriaLabel: 'Bar group which contains 12 interactive bars.',
+      accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true }
+    }
+  },
+/* ... more tests and their configurations declared here ... */
+};
+
+// in our *-spec.tsx file, we are going to loop through accessibility common tests.
+Object.keys(unitTestAccessibility).forEach(test => {
+  // then for the keyboard nav test specifically we are going to run multiple iterations
+  if (test === 'accessibility_keyboard_nav_generic_test') {
+    // run keyboard nav test for each scenario in accessibilityTestMarks
+    Object.keys(accessibilityTestMarks).forEach(keyboardTest => {
+      it(`${unitTestAccessibility[test].prop}: ${accessibilityTestMarks[keyboardTest].name}`, () =>
+        // we run the testFunc and then pass the custom configs defined above
+        unitTestAccessibility[test].testFunc(
+          component, // an instance of the component created in *-spec.tsx file
+          page, // an instance of stencil's SpecPage created in *-spec.tsx file
+          accessibilityTestMarks[keyboardTest].testProps
+            ? { ...innerTestProps, ...accessibilityTestMarks[keyboardTest].testProps }
+            : innerTestProps,
+          accessibilityTestMarks[keyboardTest].testSelector,
+          accessibilityTestMarks[keyboardTest].nextTestSelector,
+          accessibilityTestMarks[keyboardTest].keyDownObject
+        ));
+    });
+  } // ... more else ifs and other tests run ...
+```
+
+While this example shows how to leverage a common test, we also create feature relevant tests directly in each chart's `*-spec.tsx` file.
+
+### Components Related Test Modifications
+
+When a component is modified, it is likely that tests will also need some modification(s) in order to keep up to date with the new component behavior. Thus, when this happens, we need to check the following:
+
+- Upon completion of a new functionality or bug fixes, the unit testing suite should be run. If test failures are occurring, then it should be determined whether this is due to new functionality in the component that is affecting tests, or issues that have been introduced to the component. We may need to address the occurring issues in component changes, and/or update tests to match the expected behavior of a component.
+- Tests may also fail due to snapshots becoming out of date. Testing snapshots need to be updated in one or many chart components. Documentation is provided in the root `README.md` on how to update snapshots when needed.

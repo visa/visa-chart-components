@@ -41,6 +41,7 @@ export interface IAxisType {
   placement?: string;
   scales?: string;
   onlyTickExtents?: boolean;
+  centerBaseline?: boolean;
 }
 
 export interface ILegendType {

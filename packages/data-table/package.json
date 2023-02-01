@@ -40,6 +40,9 @@
   "devDependencies": {
     "@visa/visa-charts-utils-dev": "^3.4.0"
   },
+  "resolutions": {
+    "d3-color": "^3.1.0"
+  },
   "jest": {
     "transform": {
       "^.+\\.(ts|tsx)$": "<rootDir>/node_modules/@stencil/core/testing/jest.preprocessor.js"

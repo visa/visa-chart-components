@@ -46,8 +46,7 @@
     "build:labextension:dev": "jupyter labextension build --development True .",
     "run-notebook": "cd ../docs && jupyter notebook 'VCC Demo Notebook.ipynb'",
     "run-lab": "cd ../docs && jupyter lab 'VCC Demo Notebook.ipynb'",
-    "watch": "webpack --watch --mode=development",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "watch": "webpack --watch --mode=development"
   },
   "devDependencies": {
     "@jupyterlab/builder": "^3.0.0",
@@ -61,7 +60,9 @@
   },
   "resolutions": {
     "got": "^11.8.5",
-    "loader-utils": "^1.4.1"
+    "loader-utils": "^3.2.1",
+    "verdaccio": "^5.19.1",
+    "d3-color": "^3.1.0"
   },
   "jupyterlab": {
     "extension": "lib/labplugin",

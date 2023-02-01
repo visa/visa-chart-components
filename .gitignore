@@ -20,6 +20,7 @@ visa-charts-lib/src/components.d.ts
 *.d.ts
 
 # react/angular binding auto-generated files
+packages/charts-angular/.angular/
 packages/charts-angular/**/src/lib/directives/
 packages/charts-react*/src/components/
 

@@ -25,7 +25,8 @@ const {
   getNumeralInstance,
   registerNumeralFormat,
   registerNumeralLocale,
-  setNumeralLocale
+  setNumeralLocale,
+  halve
 } = Utils;
 
 const {
@@ -668,6 +669,221 @@ describe('<bar-chart>', () => {
             await page.waitForChanges();
             expect(bar).toEqualAttribute('height', EXPECTEDSCALE(0) - EXPECTEDSCALE(EXPECTEDDATA[i].value));
           });
+        });
+      });
+
+      describe('axis.centerBaseline', () => {
+        it('y value should be half the actual when centerBaseline is passed as true on load', async () => {
+          const EXPECTEDSCALE = scaleLinear()
+            .domain([-halve(MAXVALUE), halve(MAXVALUE)])
+            .range([500, 0]);
+
+          component.yAxis = {
+            visible: true,
+            gridVisible: true,
+            label: 'Y Axis',
+            format: '0[.][0][0]a',
+            tickInterval: 1,
+            centerBaseline: true
+          };
+          component.height = 500;
+          component.margin = { bottom: 0, left: 0, right: 0, top: 0 };
+          component.padding = { bottom: 0, left: 0, right: 0, top: 0 };
+
+          // ACT
+          page.root.appendChild(component);
+          await page.waitForChanges();
+
+          // ASSERT
+          const bars = page.doc.querySelectorAll('[data-testid=bar]');
+          await asyncForEach(bars, async (bar, i) => {
+            flushTransitions(bar);
+            await page.waitForChanges();
+            expect(bar).toEqualAttribute('y', EXPECTEDSCALE(halve(EXPECTEDDATA[i].value)));
+          });
+        });
+        it('y value should be half the actual when centerBaseline is passed as true on update', async () => {
+          const EXPECTEDSCALE = scaleLinear()
+            .domain([-halve(MAXVALUE), halve(MAXVALUE)])
+            .range([500, 0]);
+
+          component.yAxis = {
+            visible: true,
+            gridVisible: true,
+            label: 'Y Axis',
+            format: '0[.][0][0]a',
+            tickInterval: 1
+          };
+          component.height = 500;
+          component.margin = { bottom: 0, left: 0, right: 0, top: 0 };
+          component.padding = { bottom: 0, left: 0, right: 0, top: 0 };
+
+          // ACT LOAD
+          page.root.appendChild(component);
+          await page.waitForChanges();
+
+          // ACT UPDATE
+          component.yAxis = { ...component.yAxis, centerBaseline: true };
+          await page.waitForChanges();
+
+          // ASSERT
+          const bars = page.doc.querySelectorAll('[data-testid=bar]');
+          await asyncForEach(bars, async (bar, i) => {
+            flushTransitions(bar);
+            await page.waitForChanges();
+            expect(bar).toEqualAttribute('y', EXPECTEDSCALE(halve(EXPECTEDDATA[i].value)));
+          });
+        });
+        it('yAxis should not render when centerBaseline is passed as true on load', async () => {
+          // ARRANGE
+          component.yAxis = {
+            visible: true,
+            gridVisible: true,
+            label: 'Y Axis',
+            format: '0[.][0][0]a',
+            tickInterval: 1,
+            centerBaseline: true
+          };
+
+          // ACT
+          page.root.appendChild(component);
+          await page.waitForChanges();
+
+          // ASSERT
+          const yAxis = page.doc.querySelector('[data-testid=y-axis]');
+          flushTransitions(yAxis);
+          expect(yAxis).toEqualAttribute('opacity', 0);
+        });
+        it('yAxis should not render when centerBaseline is passed as true on update', async () => {
+          // ARRANGE
+          component.yAxis = {
+            visible: true,
+            gridVisible: true,
+            label: 'Y Axis',
+            format: '0[.][0][0]a',
+            tickInterval: 1
+          };
+
+          // ACT
+          page.root.appendChild(component);
+          await page.waitForChanges();
+
+          // ACT UPDATE
+          component.yAxis = { ...component.yAxis, centerBaseline: true };
+          await page.waitForChanges();
+
+          // ASSERT
+          const yAxis = page.doc.querySelector('[data-testid=y-axis]');
+          flushTransitions(yAxis);
+          expect(yAxis).toEqualAttribute('opacity', 0);
+        });
+        it('x value should be -half the actual when centerBaseline is passed as true and layout is horizontal on load', async () => {
+          const EXPECTEDSCALE = scaleLinear()
+            .domain([-halve(MAXVALUE), halve(MAXVALUE)])
+            .range([0, 500]);
+
+          component.xAxis = {
+            visible: false,
+            gridVisible: true,
+            label: 'X Axis',
+            format: '0[.][0][0]a',
+            tickInterval: 1,
+            centerBaseline: true
+          };
+          component.width = 500;
+          component.margin = { bottom: 0, left: 0, right: 0, top: 0 };
+          component.padding = { bottom: 0, left: 0, right: 0, top: 0 };
+          component.layout = 'horizontal';
+
+          // ACT
+          page.root.appendChild(component);
+          await page.waitForChanges();
+
+          // ASSERT
+          const bars = page.doc.querySelectorAll('[data-testid=bar]');
+          await asyncForEach(bars, async (bar, i) => {
+            flushTransitions(bar);
+            await page.waitForChanges();
+            expect(bar).toEqualAttribute('x', EXPECTEDSCALE(-halve(EXPECTEDDATA[i].value)));
+          });
+        });
+        it('x value should be -half the actual when centerBaseline is passed as true and layout is horizontal on update', async () => {
+          const EXPECTEDSCALE = scaleLinear()
+            .domain([-halve(MAXVALUE), halve(MAXVALUE)])
+            .range([0, 500]);
+
+          component.xAxis = {
+            visible: false,
+            gridVisible: true,
+            label: 'X Axis',
+            format: '0[.][0][0]a',
+            tickInterval: 1
+          };
+          component.width = 500;
+          component.margin = { bottom: 0, left: 0, right: 0, top: 0 };
+          component.padding = { bottom: 0, left: 0, right: 0, top: 0 };
+
+          // ACT
+          page.root.appendChild(component);
+          await page.waitForChanges();
+
+          // ACT UPDATE
+          component.xAxis = { ...component.xAxis, centerBaseline: true };
+          component.layout = 'horizontal';
+          await page.waitForChanges();
+
+          // ASSERT
+          const bars = page.doc.querySelectorAll('[data-testid=bar]');
+          await asyncForEach(bars, async (bar, i) => {
+            flushTransitions(bar);
+            await page.waitForChanges();
+            expect(bar).toEqualAttribute('x', EXPECTEDSCALE(-halve(EXPECTEDDATA[i].value)));
+          });
+        });
+        it('xAxis should not render when centerBaseline is passed as true and layout is horizontal on load', async () => {
+          // ARRANGE
+          component.xAxis = {
+            visible: false,
+            gridVisible: true,
+            label: 'X Axis',
+            format: '0[.][0][0]a',
+            tickInterval: 1,
+            centerBaseline: true
+          };
+          component.layout = 'horizontal';
+
+          // ACT
+          page.root.appendChild(component);
+          await page.waitForChanges();
+
+          // ASSERT
+          const xAxis = page.doc.querySelector('[data-testid=x-axis]');
+          flushTransitions(xAxis);
+          expect(xAxis).toEqualAttribute('opacity', 0);
+        });
+        it('xAxis should not render when centerBaseline is passed as true and layout is horizontal on update', async () => {
+          // ARRANGE
+          component.xAxis = {
+            visible: false,
+            gridVisible: true,
+            label: 'X Axis',
+            format: '0[.][0][0]a',
+            tickInterval: 1
+          };
+
+          // ACT
+          page.root.appendChild(component);
+          await page.waitForChanges();
+
+          // ACT UPDATE
+          component.xAxis = { ...component.xAxis, centerBaseline: true };
+          component.layout = 'horizontal';
+          await page.waitForChanges();
+
+          // ASSERT
+          const xAxis = page.doc.querySelector('[data-testid=x-axis]');
+          flushTransitions(xAxis);
+          expect(xAxis).toEqualAttribute('opacity', 0);
         });
       });
 

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -87,7 +87,8 @@ const {
   findTagLevel,
   prepareRenderChange,
   roundTo,
-  resolveLabelCollision
+  resolveLabelCollision,
+  halve
 } = Utils;
 
 @Component({
@@ -439,6 +440,25 @@ export class BarChart {
     if (newGridVal !== oldGridVal || newTickInterval !== oldTickInterval) {
       this.shouldUpdateXGrid = true;
     }
+    const newCenterBaseline = _newVal && _newVal.centerBaseline;
+    const oldCenterBaseline = _oldVal && _oldVal.centerBaseline;
+    if (newCenterBaseline !== oldCenterBaseline) {
+      this.shouldValidateLabelPlacement = true;
+      this.shouldUpdateScales = true;
+      this.shouldResetRoot = true;
+      this.shouldUpdateGeometries = true;
+      this.shouldSetGeometryAccessibilityAttributes = true;
+      this.shouldUpdateXAxis = true;
+      this.shouldUpdateYAxis = true;
+      this.shouldUpdateXGrid = true;
+      this.shouldUpdateYGrid = true;
+      this.shouldSetLabelPosition = true;
+      this.shouldCheckLabelColor = true;
+      this.shouldUpdateLegend = true;
+      this.shouldUpdateReferenceLines = true;
+      this.shouldUpdateBaseline = true;
+      this.shouldUpdateAnnotations = true;
+    }
   }
 
   @Watch('yAxis')
@@ -451,6 +471,25 @@ export class BarChart {
     const oldTickInterval = _oldVal && _oldVal.tickInterval ? _oldVal.tickInterval : 0;
     if (newGridVal !== oldGridVal || newTickInterval !== oldTickInterval) {
       this.shouldUpdateYGrid = true;
+    }
+    const newCenterBaseline = _newVal && _newVal.centerBaseline;
+    const oldCenterBaseline = _oldVal && _oldVal.centerBaseline;
+    if (newCenterBaseline !== oldCenterBaseline) {
+      this.shouldValidateLabelPlacement = true;
+      this.shouldUpdateScales = true;
+      this.shouldResetRoot = true;
+      this.shouldUpdateGeometries = true;
+      this.shouldSetGeometryAccessibilityAttributes = true;
+      this.shouldUpdateXAxis = true;
+      this.shouldUpdateYAxis = true;
+      this.shouldUpdateXGrid = true;
+      this.shouldUpdateYGrid = true;
+      this.shouldSetLabelPosition = true;
+      this.shouldCheckLabelColor = true;
+      this.shouldUpdateLegend = true;
+      this.shouldUpdateReferenceLines = true;
+      this.shouldUpdateBaseline = true;
+      this.shouldUpdateAnnotations = true;
     }
   }
 
@@ -1315,17 +1354,33 @@ export class BarChart {
     }
   }
 
-  prepareScales() {
-    // scale band based on layout of chart
-    const minBarValue =
-      this.minValueOverride && this.minValueOverride < min(this.preppedData, d => d[this.valueAccessor])
-        ? this.minValueOverride
-        : min(this.preppedData, d => d[this.valueAccessor]);
+  // scale band based on layout of chart, called in mulitple places to reduce code repetition
+  shouldCenterBaseline() {
+    return (
+      ((this.xAxis.centerBaseline && this.layout === 'horizontal') ||
+        (this.yAxis.centerBaseline && this.layout === 'vertical')) &&
+      min(this.preppedData, d => d[this.valueAccessor]) >= 0
+    );
+  }
 
-    const maxBarValue =
-      this.maxValueOverride && this.maxValueOverride > max(this.preppedData, d => d[this.valueAccessor])
-        ? this.maxValueOverride
-        : max(this.preppedData, d => d[this.valueAccessor]);
+  prepareScales() {
+    // if center baseline then (1) use maxOverride halved or (2) use data halved
+    // else (1) use minOverride or (2) use data
+    const minBarValue = this.shouldCenterBaseline()
+      ? this.maxValueOverride && this.maxValueOverride > max(this.preppedData, d => d[this.valueAccessor])
+        ? -halve(this.maxValueOverride)
+        : -halve(max(this.preppedData, d => d[this.valueAccessor]))
+      : this.minValueOverride && this.minValueOverride < min(this.preppedData, d => d[this.valueAccessor])
+      ? this.minValueOverride
+      : min(this.preppedData, d => d[this.valueAccessor]);
+
+    const maxBarValue = this.shouldCenterBaseline()
+      ? this.maxValueOverride && this.maxValueOverride > max(this.preppedData, d => d[this.valueAccessor])
+        ? halve(this.maxValueOverride)
+        : halve(max(this.preppedData, d => d[this.valueAccessor]))
+      : this.maxValueOverride && this.maxValueOverride > max(this.preppedData, d => d[this.valueAccessor])
+      ? this.maxValueOverride
+      : max(this.preppedData, d => d[this.valueAccessor]);
 
     if (this.layout === 'vertical') {
       this.y = scaleLinear()
@@ -1382,6 +1437,14 @@ export class BarChart {
     setAccessibilityDescriptionWidth(this.chartID, this.width);
   }
 
+  // this function is used in drawAxis and setAccessAxis functions to determine (inverse) visible
+  // of the relevant axis + layout combination
+  checkHideAxisState(axisName: string, relevantLayout: string, minValue: number) {
+    return this[axisName].centerBaseline && this.layout === relevantLayout && minValue >= 0
+      ? true
+      : !this[axisName].visible;
+  }
+
   // draw axis line
   drawXAxis() {
     const axisAccessor = this.layout === 'vertical' ? this.ordinalAccessor : this.valueAccessor;
@@ -1404,7 +1467,7 @@ export class BarChart {
       tickInterval: this.xAxis.tickInterval,
       label: axisLabel, // this.xAxis.label,
       padding: this.padding,
-      hide: !this.xAxis.visible,
+      hide: this.checkHideAxisState('xAxis', 'horizontal', min(this.preppedData, d => d[this.valueAccessor])),
       duration: this.duration
     });
   }
@@ -1430,14 +1493,14 @@ export class BarChart {
       tickInterval: this.yAxis.tickInterval,
       label: axisLabel, // this.yAxis.label,
       padding: this.padding,
-      hide: !this.yAxis.visible,
+      hide: this.checkHideAxisState('yAxis', 'vertical', min(this.preppedData, d => d[this.valueAccessor])),
       duration: this.duration
     });
   }
 
   drawBaseline() {
     // add baseline at 0
-    if (this.layout === 'vertical') {
+    if (this.layout === 'vertical' && !this.shouldCenterBaseline()) {
       drawAxis({
         root: this.rootG,
         height: this.innerPaddedHeight,
@@ -1457,7 +1520,13 @@ export class BarChart {
         axisScale: this.y,
         left: true,
         padding: this.padding,
-        markOffset: this.x(0) || -1,
+        markOffset: this.shouldCenterBaseline()
+          ? this.maxValueOverride && this.maxValueOverride > max(this.preppedData, d => d[this.valueAccessor])
+            ? -halve(this.maxValueOverride)
+            : -halve(max(this.preppedData, d => d[this.valueAccessor]))
+          : this.minValueOverride && this.minValueOverride < min(this.preppedData, d => d[this.valueAccessor])
+          ? this.minValueOverride
+          : this.x(0) || -1,
         duration: this.duration
       });
     }
@@ -1474,7 +1543,7 @@ export class BarChart {
 
     setAccessXAxis({
       rootEle: this.barChartEl,
-      hasXAxis: this.xAxis ? this.xAxis.visible : false,
+      hasXAxis: !this.checkHideAxisState('xAxis', 'horizontal', min(this.preppedData, d => d[this.valueAccessor])), // this is inverse of how drawAxis works
       xAxis: this.x ? this.x : false, // this is optional for some charts, if hasXAxis is always false
       xAxisLabel: axisLabel ? axisLabel : '' // this is optional for some charts, if hasXAxis is always false
     });
@@ -1491,7 +1560,7 @@ export class BarChart {
 
     setAccessYAxis({
       rootEle: this.barChartEl,
-      hasYAxis: this.yAxis ? this.yAxis.visible : false,
+      hasYAxis: !this.checkHideAxisState('yAxis', 'vertical', min(this.preppedData, d => d[this.valueAccessor])), // this is inverse of how drawAxis works
       yAxis: this.y ? this.y : false, // this is optional for some charts, if hasXAxis is always false
       yAxisLabel: axisLabel ? axisLabel : '' // this is optional for some charts, if hasXAxis is always false
       // secondaryYAxis?: any, // pareto uses this
@@ -1508,7 +1577,9 @@ export class BarChart {
       this.innerPaddedWidth,
       this.x,
       false,
-      !(!(this.layout === 'vertical') && this.xAxis.gridVisible),
+      this.shouldCenterBaseline() && this.xAxis.gridVisible
+        ? !(this.layout === 'vertical')
+        : !(!(this.layout === 'vertical') && this.xAxis.gridVisible),
       this.xAxis.tickInterval,
       this.duration
     );
@@ -1521,7 +1592,9 @@ export class BarChart {
       this.innerPaddedWidth,
       this.y,
       true,
-      !(this.layout === 'vertical' && this.yAxis.gridVisible),
+      this.shouldCenterBaseline() && this.yAxis.gridVisible
+        ? !(this.layout === 'horizontal')
+        : !(this.layout === 'vertical' && this.yAxis.gridVisible),
       this.yAxis.tickInterval,
       this.duration
     );
@@ -1561,7 +1634,11 @@ export class BarChart {
           ? this.colorArr(d[this.groupAccessor])
           : this.colorArr(d[this.valueAccessor]);
       })
-      .attr(valueAxis, d => this[valueAxis](Math[choice](0, d[this.valueAccessor])))
+      .attr(valueAxis, d =>
+        this.shouldCenterBaseline()
+          ? this[valueAxis](halve(d[this.valueAccessor]) * (this.layout === 'vertical' ? 1 : -1))
+          : this[valueAxis](Math[choice](0, d[this.valueAccessor]))
+      )
       .attr(valueDimension, d =>
         Math.abs(
           this.layout === 'vertical'
@@ -1677,7 +1754,9 @@ export class BarChart {
           {
             attr: valueAxis,
             numeric: true,
-            newValue: this[valueAxis](Math[choice](0, d[this.valueAccessor])) // this.y(d[this.valueAccessor]))
+            newValue: this.shouldCenterBaseline()
+              ? this[valueAxis](halve(d[this.valueAccessor]) * (this.layout === 'vertical' ? 1 : -1))
+              : this[valueAxis](Math[choice](0, d[this.valueAccessor]))
           },
           {
             attr: valueDimension,
@@ -1695,7 +1774,11 @@ export class BarChart {
       .attr('data-translate-y', this.padding.top + this.margin.top)
       .attr(`data-${ordinalAxis}`, d => this[ordinalAxis](d[this.ordinalAccessor]))
       .attr(`data-${ordinalDimension}`, this[ordinalAxis].bandwidth())
-      .attr(`data-${valueAxis}`, d => this[valueAxis](Math[choice](0, d[this.valueAccessor]))) // this.y(d[this.valueAccessor]))
+      .attr(`data-${valueAxis}`, d =>
+        this.shouldCenterBaseline()
+          ? this[valueAxis](halve(d[this.valueAccessor]) * (this.layout === 'vertical' ? 1 : -1))
+          : this[valueAxis](Math[choice](0, d[this.valueAccessor]))
+      )
       .attr(`data-${valueDimension}`, d =>
         Math.abs(
           this.layout === 'vertical'
@@ -1708,7 +1791,11 @@ export class BarChart {
       .ease(easeCircleIn)
       .attr(ordinalAxis, d => this[ordinalAxis](d[this.ordinalAccessor]))
       .attr(ordinalDimension, this[ordinalAxis].bandwidth())
-      .attr(valueAxis, d => this[valueAxis](Math[choice](0, d[this.valueAccessor]))) // this.y(d[this.valueAccessor]))
+      .attr(valueAxis, d =>
+        this.shouldCenterBaseline()
+          ? this[valueAxis](halve(d[this.valueAccessor]) * (this.layout === 'vertical' ? 1 : -1))
+          : this[valueAxis](Math[choice](0, d[this.valueAccessor]))
+      )
       .attr(valueDimension, d =>
         Math.abs(
           this.layout === 'vertical'
@@ -2314,7 +2401,11 @@ export class BarChart {
       })
       .attr(`data-${ordinalAxis}`, d => this[ordinalAxis](d[this.ordinalAccessor]))
       .attr(`data-${ordinalDimension}`, this[ordinalAxis].bandwidth())
-      .attr(`data-${valueAxis}`, d => this[valueAxis](Math[choice](0, d[this.valueAccessor]))) // this.y(d[this.valueAccessor]))
+      .attr(`data-${valueAxis}`, d =>
+        this.shouldCenterBaseline()
+          ? this[valueAxis](halve(d[this.valueAccessor]) * (this.layout === 'vertical' ? 1 : -1))
+          : this[valueAxis](Math[choice](0, d[this.valueAccessor]))
+      )
       .attr(`data-${valueDimension}`, d =>
         Math.abs(
           this.layout === 'vertical'
@@ -2340,6 +2431,7 @@ export class BarChart {
       valueAccessor: this.valueAccessor,
       placement: this.placement,
       layout: this.layout,
+      labelOffset: this.shouldCenterBaseline() ? halve(1) : undefined,
       chartType: 'bar',
       avoidCollision: {
         runOccupancyBitmap: this.dataLabel.visible && this.placement === 'auto',
@@ -2363,7 +2455,7 @@ export class BarChart {
     const enterReferences = currentReferences
       .enter()
       .append('g')
-      .attr('class', '.bar-reference')
+      .attr('class', 'bar-reference')
       .attr('opacity', 1);
 
     const enterLines = enterReferences.append('line');
