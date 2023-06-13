@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022 Visa, Inc.
+ * Copyright (c) 2022, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -8,7 +8,13 @@
 import recipe_json from './data/recipe-data.json';
 import props_json from './data/prop-master-data.json';
 import apidocs_json from './data/apidocs.json';
-import { propDefaultValues } from '../packages/utils/dist/visa-charts-utils.cjs';
+import {
+  propDefaultValues,
+  registerI18NextLanguage,
+  registerNumeralLocale
+} from '../packages/utils/dist/visa-charts-utils.cjs';
+import { hu } from '../packages/utils/src/utils/localization/languages/hu';
+import { HU } from '../packages/utils/src/utils/localization/numeralLocales/hu';
 // import data_json from './data/demo-data.json';
 
 const categories = {
@@ -92,6 +98,7 @@ const categories = {
     'showZeroLabels'
   ],
   Links: ['linkConfig'],
+  Localization: ['localization', 'language', 'numeralLocale', 'skipValidation', 'overwrite'],
   Map: ['mapProjection', 'quality', 'mapScaleZoom', 'showGridlines'],
   Margin: ['margin'],
   Marker: ['marker', 'focusMarker', 'markerStyle', 'sizeConfig', 'dotRadius', 'dotOpacity', 'dotSymbols', 'showDots'],
@@ -491,6 +498,11 @@ export function setProperties(recipes, name, argList) {
 
   // exclusions.push('uniqueID');
   return { args, exclusions };
+}
+
+export function registerLocalization() {
+  registerI18NextLanguage(hu);
+  registerNumeralLocale('hu', HU);
 }
 
 export function transformDates(args) {
