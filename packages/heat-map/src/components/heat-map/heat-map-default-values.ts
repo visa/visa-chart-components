@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -26,6 +26,8 @@ export class HeatMapDefaultValues {
     right: 60,
     left: 80
   };
+
+  static readonly localization = propDefaultValues.localization;
 
   static readonly xAccessor = 'date';
   static readonly yAccessor = 'category';

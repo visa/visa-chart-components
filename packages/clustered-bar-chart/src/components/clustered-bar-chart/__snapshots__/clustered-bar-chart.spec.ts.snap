@@ -3,17 +3,6 @@
 exports[`<clustered-bar-chart> rendered-html accessibility generic accessibility test suite accessibility: keyboard instruction component displays table in click state 1`] = `
 <div class="visa-viz-keyboard-instructions-container" id="visa-viz-keyboard-instructions-container-clustered-bar-test">
   <div>
-    <p>
-      Note: for VoiceOver users (mac), press and hold
-      <kbd>
-        Ctrl
-      </kbd>
-      +
-      <kbd>
-        Shift
-      </kbd>
-      when using the arrow keys for the best navigation experience.
-    </p>
     <table class="vcc-ki-data-table vcc-ki-keyboard-instructions vcc-ki-state--compact vcc-ki-state--single-select" data-header="header">
       <thead class="vcc-ki-thead">
         <tr class="vcc-ki-tr">
@@ -31,10 +20,9 @@ exports[`<clustered-bar-chart> rendered-html accessibility generic accessibility
             <kbd>
               Enter
             </kbd>
-            on the chart area or a cluster.
           </th>
           <td class="vcc-ki-td">
-            Enter the chart area/drill down a level.
+            Enter the chart area/drill down a level on the chart area or a cluster.
           </td>
         </tr>
         <tr class="vcc-ki-tr">
@@ -46,10 +34,9 @@ exports[`<clustered-bar-chart> rendered-html accessibility generic accessibility
             <kbd>
               Enter
             </kbd>
-            on a cluster or bar.
           </th>
           <td class="vcc-ki-td">
-            Drill up a level.
+            Drill up a level on a cluster or bar.
           </td>
         </tr>
         <tr class="vcc-ki-tr">
@@ -57,21 +44,9 @@ exports[`<clustered-bar-chart> rendered-html accessibility generic accessibility
             <kbd>
               Tab
             </kbd>
-            at any time.
           </th>
           <td class="vcc-ki-td">
-            Exit the chart.
-          </td>
-        </tr>
-        <tr class="vcc-ki-disabled-row vcc-ki-tr">
-          <th class="vcc-ki-td" scope="row">
-            <kbd>
-              Space
-            </kbd>
-            is unused.
-          </th>
-          <td class="vcc-ki-td">
-            No effect on this chart.
+            Exit the chart at any time.
           </td>
         </tr>
         <tr class="vcc-ki-tr">
@@ -83,10 +58,9 @@ exports[`<clustered-bar-chart> rendered-html accessibility generic accessibility
             <kbd>
               →
             </kbd>
-            on a cluster or bar.
           </th>
           <td class="vcc-ki-td">
-            Move among sibling clusters or bars.
+            Move among sibling clusters or bars on a cluster or bar.
           </td>
         </tr>
         <tr class="vcc-ki-tr">
@@ -98,10 +72,9 @@ exports[`<clustered-bar-chart> rendered-html accessibility generic accessibility
             <kbd>
               ↓
             </kbd>
-            on a cluster or bar.
           </th>
           <td class="vcc-ki-td">
-            Move among bars across clusters.
+            Move among bars across clusters on a cluster or bar.
           </td>
         </tr>
         <tr class="vcc-ki-tr">
@@ -109,10 +82,33 @@ exports[`<clustered-bar-chart> rendered-html accessibility generic accessibility
             <kbd>
               Esc
             </kbd>
-            at any time.
           </th>
           <td class="vcc-ki-td">
-            Dismiss the tooltip.
+            Exit the chart at any time.
+          </td>
+        </tr>
+      </tbody>
+      <thead class="vcc-ki-thead">
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-th" scope="col">
+            Note
+          </th>
+          <th class="vcc-ki-th" scope="col"></th>
+        </tr>
+      </thead>
+      <tbody class="vcc-ki-tbody">
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Control
+            </kbd>
+            +
+            <kbd>
+              Shift
+            </kbd>
+          </th>
+          <td class="vcc-ki-td">
+            Press and hold when using the arrow keys for the best navigation experience on a Mac (Voiceover).
           </td>
         </tr>
       </tbody>
@@ -124,17 +120,6 @@ exports[`<clustered-bar-chart> rendered-html accessibility generic accessibility
 exports[`<clustered-bar-chart> rendered-html accessibility generic accessibility test suite accessibility: keyboard instruction component displays table in click state with space enabled 1`] = `
 <div class="visa-viz-keyboard-instructions-container" id="visa-viz-keyboard-instructions-container-clustered-bar-test">
   <div>
-    <p>
-      Note: for VoiceOver users (mac), press and hold
-      <kbd>
-        Ctrl
-      </kbd>
-      +
-      <kbd>
-        Shift
-      </kbd>
-      when using the arrow keys for the best navigation experience.
-    </p>
     <table class="vcc-ki-data-table vcc-ki-keyboard-instructions vcc-ki-state--compact vcc-ki-state--single-select" data-header="header">
       <thead class="vcc-ki-thead">
         <tr class="vcc-ki-tr">
@@ -152,10 +137,9 @@ exports[`<clustered-bar-chart> rendered-html accessibility generic accessibility
             <kbd>
               Enter
             </kbd>
-            on the chart area or a cluster.
           </th>
           <td class="vcc-ki-td">
-            Enter the chart area/drill down a level.
+            Enter the chart area/drill down a level on the chart area or a cluster.
           </td>
         </tr>
         <tr class="vcc-ki-tr">
@@ -167,10 +151,9 @@ exports[`<clustered-bar-chart> rendered-html accessibility generic accessibility
             <kbd>
               Enter
             </kbd>
-            on a cluster or bar.
           </th>
           <td class="vcc-ki-td">
-            Drill up a level.
+            Drill up a level on a cluster or bar.
           </td>
         </tr>
         <tr class="vcc-ki-tr">
@@ -178,10 +161,9 @@ exports[`<clustered-bar-chart> rendered-html accessibility generic accessibility
             <kbd>
               Tab
             </kbd>
-            at any time.
           </th>
           <td class="vcc-ki-td">
-            Exit the chart.
+            Exit the chart at any time.
           </td>
         </tr>
         <tr class="vcc-ki-tr">
@@ -189,10 +171,9 @@ exports[`<clustered-bar-chart> rendered-html accessibility generic accessibility
             <kbd>
               Space
             </kbd>
-            on a bar.
           </th>
           <td class="vcc-ki-td">
-            Select/Deselect a bar.
+            Select/Deselect a bar on a bar.
           </td>
         </tr>
         <tr class="vcc-ki-tr">
@@ -204,10 +185,9 @@ exports[`<clustered-bar-chart> rendered-html accessibility generic accessibility
             <kbd>
               →
             </kbd>
-            on a cluster or bar.
           </th>
           <td class="vcc-ki-td">
-            Move among sibling clusters or bars.
+            Move among sibling clusters or bars on a cluster or bar.
           </td>
         </tr>
         <tr class="vcc-ki-tr">
@@ -219,10 +199,9 @@ exports[`<clustered-bar-chart> rendered-html accessibility generic accessibility
             <kbd>
               ↓
             </kbd>
-            on a cluster or bar.
           </th>
           <td class="vcc-ki-td">
-            Move among bars across clusters.
+            Move among bars across clusters on a cluster or bar.
           </td>
         </tr>
         <tr class="vcc-ki-tr">
@@ -230,10 +209,33 @@ exports[`<clustered-bar-chart> rendered-html accessibility generic accessibility
             <kbd>
               Esc
             </kbd>
-            at any time.
           </th>
           <td class="vcc-ki-td">
-            Dismiss the tooltip.
+            Exit the chart at any time.
+          </td>
+        </tr>
+      </tbody>
+      <thead class="vcc-ki-thead">
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-th" scope="col">
+            Note
+          </th>
+          <th class="vcc-ki-th" scope="col"></th>
+        </tr>
+      </thead>
+      <tbody class="vcc-ki-tbody">
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Control
+            </kbd>
+            +
+            <kbd>
+              Shift
+            </kbd>
+          </th>
+          <td class="vcc-ki-td">
+            Press and hold when using the arrow keys for the best navigation experience on a Mac (Voiceover).
           </td>
         </tr>
       </tbody>
@@ -372,12 +374,623 @@ exports[`<clustered-bar-chart> rendered-html reference line should pass referenc
 
 exports[`<clustered-bar-chart> rendered-html reference line should pass referenceStyle prop 1`] = `<line class="clustered-bar-reference-line" opacity="0" x1="0" x2="567" y1="0" y2="0"></line>`;
 
+exports[`<clustered-bar-chart> rendered-html render localization: should render localized with minimal props[data,accessors] given 1`] = `
+<clustered-bar-chart id="clustered-bar-test">
+  <div class="is--vertical light o-layout">
+    <div class="vcl-accessibility-instructions" id="chart-instructions-clustered-bar-test" style="position: absolute; width: 675px;">
+      <p class="screen-reader-info vcl-region-label">
+        Billentyűzet Interaktív clustered-bar-chart, Elnevezés: Clustered Bar Chart Title. Ez a szekció információkkal szolgál a diagramról. A TAB billentyű lenyomásával a fókusz a billentyűzet instruckciók menüpontra kerül. A TAB újbóli lenyomása a diagram területre való navigálást eredményez.
+      </p>
+      <h2 class="screen-reader-info vcl-access-title">
+        Diagram diagram címe: Clustered Bar Chart Title
+      </h2>
+      <h3 class="screen-reader-info vcl-access-subtitle">
+        Diagram alcím: This is the clustered bar chart's subtitle
+      </h3>
+      <p class="screen-reader-info vcl-access-executive-summary" data-level="h3"></p>
+      <p class="screen-reader-info vcl-access-purpose" data-level="h3"></p>
+      <p class="screen-reader-info vcl-access-long-description" data-level="h3"></p>
+      <p class="screen-reader-info vcl-access-context" data-level="h3"></p>
+      <h3 class="screen-reader-info vcl-access-structure-heading">
+        Struktúra
+      </h3>
+      <p class="screen-reader-info vcl-access-statistics" data-level="h4"></p>
+      <h4 class="screen-reader-info vcl-access-chart-layout-heading">
+        Diagramterület leírása
+      </h4>
+      <p class="screen-reader-info vcl-access-layout">
+        Clustered-bar-chart. Cluster: 3, bar: 9.
+      </p>
+      <p class="screen-reader-info vcl-access-xAxis">
+        A diagram horizontális X tengelyt tartalmaz. Diagram címe X Axis. Kezdeti erték érték 2016, végső érték érték 2018.
+      </p>
+      <p class="screen-reader-info vcl-access-yAxis">
+        A diagram elsődleges vertikális Y tengelyt tartalmaz. Diagram címe Y Axis. Kezdeti erték érték -30, végső érték érték 40.
+      </p>
+      <p class="screen-reader-info vcl-access-notes" data-annotationlevel="h3" data-level="h4"></p>
+    </div>
+    <div class="o-layout--chart">
+      <h2 aria-hidden="true" class="clustered-bar-main-title vcl-main-title" data-testid="main-title">
+        Clustered Bar Chart Title
+      </h2>
+      <p aria-hidden="true" class="clustered-bar-sub-title vcl-sub-title visa-ui-text--instructions" data-testid="sub-title">
+        This is the clustered bar chart's subtitle
+      </p>
+      <div aria-hidden="true" class="clustered-bar-legend vcl-legend" role="presentation" style="display: block;">
+        <svg aria-hidden="true" class="vcl-svg" data-testid="legend-container" data-type="bar" focusable="false" height="49" opacity="1" role="presentation" viewBox="0 0 672 49" width="672">
+          <g class="legend-padding-wrapper" transform="translate(58,24)">
+            <g class="bar legend">
+              <rect class="bar-rect" data-base-color="#7c99b1" data-fill="url(#clustered-bar-test_texture_0)" data-stroke="#35495a" data-stroke-width="1" fill="url(#clustered-bar-test_texture_0)" height="20" opacity="1" stroke="#35495a" stroke-dasharray="none" stroke-width="1" width="20" x="0" y="0" style="fill: url(#clustered-bar-test_texture_0); stroke: #35495a; stroke-width: 1; stroke-dasharray: none;"></rect>
+              <text class="bar-text" dx=".2em" dy="16" filter="url(#VCL-t-s-f-ffffffclustered-bar-test-legend)" opacity="1" x="25" y="0">
+                A
+              </text>
+            </g>
+            <g class="bar legend">
+              <rect class="bar-rect" data-base-color="#cacae7" data-fill="url(#clustered-bar-test_texture_1)" data-stroke="#6868ba" data-stroke-width="1" fill="url(#clustered-bar-test_texture_1)" height="20" opacity="1" stroke="#6868ba" stroke-dasharray="none" stroke-width="1" width="20" x="45" y="0" style="fill: url(#clustered-bar-test_texture_1); stroke: #6868ba; stroke-width: 1; stroke-dasharray: none;"></rect>
+              <text class="bar-text" dx=".2em" dy="16" filter="url(#VCL-t-s-f-ffffffclustered-bar-test-legend)" opacity="1" x="70" y="0">
+                B
+              </text>
+            </g>
+            <g class="bar legend">
+              <rect class="bar-rect" data-base-color="#abb798" data-fill="url(#clustered-bar-test_texture_2)" data-stroke="#576245" data-stroke-width="1" fill="url(#clustered-bar-test_texture_2)" height="20" opacity="1" stroke="#576245" stroke-dasharray="none" stroke-width="1" width="20" x="90" y="0" style="fill: url(#clustered-bar-test_texture_2); stroke: #576245; stroke-width: 1; stroke-dasharray: none;"></rect>
+              <text class="bar-text" dx=".2em" dy="16" filter="url(#VCL-t-s-f-ffffffclustered-bar-test-legend)" opacity="1" x="115" y="0">
+                C
+              </text>
+            </g>
+          </g>
+          <defs>
+            <filter class="VCL-t-s-f-ffffff" id="VCL-t-s-f-ffffffclustered-bar-test-legend">
+              <feMorphology in="SourceAlpha" operator="dilate" radius="1.5" result="dilatedText"></feMorphology>
+              <feFlood flood-color="#ffffff" flood-opacity="1" result="whiteTextFlood"></feFlood>
+              <feComposite in="whiteTextFlood" in2="dilatedText" operator="in" result="textOutline"></feComposite>
+              <feMerge>
+                <feMergeNode in="textOutline"></feMergeNode>
+                <feMergeNode in="textOutline"></feMergeNode>
+                <feMergeNode in="textOutline"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+              </feMerge>
+            </filter>
+          </defs>
+        </svg>
+      </div>
+      <keyboard-instructions>
+        <div class="vcc-ki-keyboard-instructions-root" style="position: relative; width: 671px;">
+          <div class="visa-viz-keyboard-instructions-outer-container" style="width: 416px;">
+            <div class="vcc-ki-keyboard-instructions-header vcc-ki-minimize">
+              <p class="vcc-ki-keyboard-heading">
+                Billentyűzet Instrukciók Megjelenítése
+              </p>
+            </div>
+            <div class="visa-viz-keyboard-instructions-button-wrapper">
+              <button aria-expanded="false" aria-label="display keyboard instructions" class="vcc-ki-btn-icon vcc-ki-btn-icon--light-tiny visa-viz-keyboard-instructions-button" id="visa-viz-keyboard-instructions-button-clustered-bar-test" role="button" tabindex="0" type="button">
+                <svg class="vcc-ki-icon--tiny" focusable="false" tabindex="-1">
+                  <use href="#visa-viz-keyboard-instructions-info--tiny-clustered-bar-test"></use>
+                </svg>
+              </button>
+              <svg class="vcc-ki-icons">
+                <symbol id="visa-viz-keyboard-instructions-info--tiny-clustered-bar-test" viewbox="0 0 16 16">
+                  <path d="M8.7,3.8a.68.68,0,0,1,.7.7.79.79,0,0,1-.8.8H8.5c-.4,0-.6-.3-.6-.7A.79.79,0,0,1,8.7,3.8ZM6.6,12.1l1.2-6H9l-1.2,6ZM14,8a6,6,0,1,0-6,6A6,6,0,0,0,14,8Zm2,0A8,8,0,1,1,8,0,8,8,0,0,1,16,8Z"></path>
+                </symbol>
+              </svg>
+            </div>
+            <div class="visa-viz-keyboard-instructions-container" id="visa-viz-keyboard-instructions-container-clustered-bar-test"></div>
+          </div>
+        </div>
+      </keyboard-instructions>
+      <div class="visa-viz-d3-clustered-bar-container" data-testid="chart-container" style="position: relative;">
+        <div aria-label="Clustered Bar Chart Title. This is the clustered bar chart's subtitle.  Navigálás a diagramterületre az ENTER billentyű lenyomásával." class="VCL-controller" data-group="year" id="chart-area-clustered-bar-test" role="application" tabindex="0" style="position: absolute; top: 0; left: 0; opacity: 0; pointer-events: none; width: 0px; height: 0px;">
+          Interaktív clustered-bar-chart.
+        </div>
+        <svg class="vcl-svg" data-testid="root-svg" focusable="false" height="250" role="presentation" tabindex="-1" viewBox="0 0 675 250" width="675" style="overflow: hidden;">
+          <g data-testid="margin-container" id="visa-viz-margin-container-g-clustered-bar-test" transform="translate(4, 4)">
+            <g data-testid="padding-container" id="visa-viz-padding-container-g-clustered-bar-test" transform="translate(50, 20)">
+              <g aria-hidden="true" class="grid-group" focusable="false" role="presentation">
+                <g class="bottom grid" data-testid="grid-bottom" fill="none" font-family="sans-serif" font-size="10" opacity="0" text-anchor="middle">
+                  <path class="domain" d="M0.5,172V0.5H567.5V172" stroke="currentColor"></path>
+                  <g class="tick" opacity="1" transform="translate(106.31249999999999,0)">
+                    <line stroke="currentColor" y2="172"></line>
+                    <text dy="0.71em" fill="currentColor" y="175"></text>
+                  </g>
+                  <g class="tick" opacity="1" transform="translate(283.5,0)">
+                    <line stroke="currentColor" y2="172"></line>
+                    <text dy="0.71em" fill="currentColor" y="175"></text>
+                  </g>
+                  <g class="tick" opacity="1" transform="translate(460.6875,0)">
+                    <line stroke="currentColor" y2="172"></line>
+                    <text dy="0.71em" fill="currentColor" y="175"></text>
+                  </g>
+                </g>
+                <g class="grid left" data-testid="grid-left" fill="none" font-family="sans-serif" font-size="10" opacity="1" text-anchor="end">
+                  <path class="domain" d="M567,172.5H0.5V0.5H567" stroke="currentColor"></path>
+                  <g class="tick" opacity="1" transform="translate(0,172.5)">
+                    <line stroke="currentColor" x2="567"></line>
+                    <text dy="0.32em" fill="currentColor" x="-3"></text>
+                  </g>
+                  <g class="tick" opacity="1" transform="translate(0,149.56666666666666)">
+                    <line stroke="currentColor" x2="567"></line>
+                    <text dy="0.32em" fill="currentColor" x="-3"></text>
+                  </g>
+                  <g class="tick" opacity="1" transform="translate(0,126.63333333333334)">
+                    <line stroke="currentColor" x2="567"></line>
+                    <text dy="0.32em" fill="currentColor" x="-3"></text>
+                  </g>
+                  <g class="tick" opacity="1" transform="translate(0,103.7)">
+                    <line stroke="currentColor" x2="567"></line>
+                    <text dy="0.32em" fill="currentColor" x="-3"></text>
+                  </g>
+                  <g class="tick" opacity="1" transform="translate(0,80.76666666666667)">
+                    <line stroke="currentColor" x2="567"></line>
+                    <text dy="0.32em" fill="currentColor" x="-3"></text>
+                  </g>
+                  <g class="tick" opacity="1" transform="translate(0,57.83333333333334)">
+                    <line stroke="currentColor" x2="567"></line>
+                    <text dy="0.32em" fill="currentColor" x="-3"></text>
+                  </g>
+                  <g class="tick" opacity="1" transform="translate(0,34.89999999999999)">
+                    <line stroke="currentColor" x2="567"></line>
+                    <text dy="0.32em" fill="currentColor" x="-3"></text>
+                  </g>
+                  <g class="tick" opacity="1" transform="translate(0,11.966666666666665)">
+                    <line stroke="currentColor" x2="567"></line>
+                    <text dy="0.32em" fill="currentColor" x="-3"></text>
+                  </g>
+                </g>
+              </g>
+              <g class="clustered-bar-group" data-testid="clustered-bar-group">
+                <g class="clustered-bar-wrapper entering" data-id="clustered-bar-wrapper-2016" data-testid="clustered-bar-wrapper" focusable="false" id="clustered-bar-test-123457-123457-123457" role="presentation" tabindex="-1" transform="translate(35.43749999999997,0)">
+                  <rect class="clustered-bar" cursor="default" data-height="68.8" data-id="bar-2016-A" data-role="img" data-testid="bar" data-translate-x="89.43749999999997" data-translate-y="24" data-width="35" data-x="9" data-y="103.2" fill="url(#clustered-bar-test_texture_0)" focusable="false" height="68.8" id="clustered-bar-test-123457-123457-123457" opacity="0" role="presentation" rx="0" ry="0" tabindex="-1" width="35" x="9" y="103.2"></rect>
+                  <rect class="clustered-bar" cursor="default" data-height="11.466666666666683" data-id="bar-2016-B" data-role="img" data-testid="bar" data-translate-x="89.43749999999997" data-translate-y="24" data-width="35" data-x="53" data-y="103.2" fill="url(#clustered-bar-test_texture_1)" focusable="false" height="11.466666666666683" id="clustered-bar-test-123457-123457-123457" opacity="0" role="presentation" rx="0" ry="0" tabindex="-1" width="35" x="53" y="103.2"></rect>
+                  <rect class="clustered-bar" cursor="default" data-height="50.45333333333334" data-id="bar-2016-C" data-role="img" data-testid="bar" data-translate-x="89.43749999999997" data-translate-y="24" data-width="35" data-x="97" data-y="52.74666666666666" fill="url(#clustered-bar-test_texture_2)" focusable="false" height="50.45333333333334" id="clustered-bar-test-123457-123457-123457" opacity="0" role="presentation" rx="0" ry="0" tabindex="-1" width="35" x="97" y="52.74666666666666"></rect>
+                </g>
+                <g class="clustered-bar-wrapper entering" data-id="clustered-bar-wrapper-2017" data-testid="clustered-bar-wrapper" focusable="false" id="clustered-bar-test-123457-123457-123457" role="presentation" tabindex="-1" transform="translate(212.625,0)">
+                  <rect class="clustered-bar" cursor="default" data-height="34.400000000000006" data-id="bar-2017-A" data-role="img" data-testid="bar" data-translate-x="266.625" data-translate-y="24" data-width="35" data-x="9" data-y="68.8" fill="url(#clustered-bar-test_texture_0)" focusable="false" height="34.400000000000006" id="clustered-bar-test-123457-123457-123457" opacity="0" role="presentation" rx="0" ry="0" tabindex="-1" width="35" x="9" y="68.8"></rect>
+                  <rect class="clustered-bar" cursor="default" data-height="52.74666666666667" data-id="bar-2017-B" data-role="img" data-testid="bar" data-translate-x="266.625" data-translate-y="24" data-width="35" data-x="53" data-y="50.45333333333333" fill="url(#clustered-bar-test_texture_1)" focusable="false" height="52.74666666666667" id="clustered-bar-test-123457-123457-123457" opacity="0" role="presentation" rx="0" ry="0" tabindex="-1" width="35" x="53" y="50.45333333333333"></rect>
+                  <rect class="clustered-bar" cursor="default" data-height="103.2" data-id="bar-2017-C" data-role="img" data-testid="bar" data-translate-x="266.625" data-translate-y="24" data-width="35" data-x="97" data-y="0" fill="url(#clustered-bar-test_texture_2)" focusable="false" height="103.2" id="clustered-bar-test-123457-123457-123457" opacity="0" role="presentation" rx="0" ry="0" tabindex="-1" width="35" x="97" y="0"></rect>
+                </g>
+                <g class="clustered-bar-wrapper entering" data-id="clustered-bar-wrapper-2018" data-testid="clustered-bar-wrapper" focusable="false" id="clustered-bar-test-123457-123457-123457" role="presentation" tabindex="-1" transform="translate(389.8125,0)">
+                  <rect class="clustered-bar" cursor="default" data-height="59.62666666666667" data-id="bar-2018-A" data-role="img" data-testid="bar" data-translate-x="443.8125" data-translate-y="24" data-width="35" data-x="9" data-y="43.57333333333333" fill="url(#clustered-bar-test_texture_0)" focusable="false" height="59.62666666666667" id="clustered-bar-test-123457-123457-123457" opacity="0" role="presentation" rx="0" ry="0" tabindex="-1" width="35" x="9" y="43.57333333333333"></rect>
+                  <rect class="clustered-bar" cursor="default" data-height="64.21333333333334" data-id="bar-2018-B" data-role="img" data-testid="bar" data-translate-x="443.8125" data-translate-y="24" data-width="35" data-x="53" data-y="38.98666666666667" fill="url(#clustered-bar-test_texture_1)" focusable="false" height="64.21333333333334" id="clustered-bar-test-123457-123457-123457" opacity="0" role="presentation" rx="0" ry="0" tabindex="-1" width="35" x="53" y="38.98666666666667"></rect>
+                  <rect class="clustered-bar" cursor="default" data-height="71.09333333333333" data-id="bar-2018-C" data-role="img" data-testid="bar" data-translate-x="443.8125" data-translate-y="24" data-width="35" data-x="97" data-y="32.10666666666666" fill="url(#clustered-bar-test_texture_2)" focusable="false" height="71.09333333333333" id="clustered-bar-test-123457-123457-123457" opacity="0" role="presentation" rx="0" ry="0" tabindex="-1" width="35" x="97" y="32.10666666666666"></rect>
+                </g>
+              </g>
+              <g aria-hidden="true" class="clustered-bar-dataLabel-group" data-testid="clustered-bar-dataLabel-group" focusable="false" role="presentation">
+                <g class="clustered-bar-label-wrapper entering" data-id="clustered-bar-dataLabel-wrapper-2016" data-testid="clustered-bar-dataLabel-wrapper" transform="translate(35.43749999999997,0)">
+                  <text class="clustered-bar-dataLabel clustered-bar-dataLabel-vertical" cursor="default" data-height="68.8" data-id="dataLabel-2016-A" data-testid="dataLabel" data-translate-x="89.43749999999997" data-translate-y="24" data-width="35" data-x="9" data-y="103.2" dy="-.3em" fill="#222222" filter="url(#VCL-t-s-f-ffffffclustered-bar-test)" opacity="1" text-anchor="middle" x="26.5" y="103.2">
+                    -30
+                  </text>
+                  <text class="clustered-bar-dataLabel clustered-bar-dataLabel-vertical" cursor="default" data-height="11.466666666666683" data-id="dataLabel-2016-B" data-testid="dataLabel" data-translate-x="89.43749999999997" data-translate-y="24" data-width="35" data-x="53" data-y="103.2" dy="-.3em" fill="#222222" filter="url(#VCL-t-s-f-ffffffclustered-bar-test)" opacity="1" text-anchor="middle" x="70.5" y="103.2">
+                    -5
+                  </text>
+                  <text class="clustered-bar-dataLabel clustered-bar-dataLabel-vertical" cursor="default" data-height="50.45333333333334" data-id="dataLabel-2016-C" data-testid="dataLabel" data-translate-x="89.43749999999997" data-translate-y="24" data-width="35" data-x="97" data-y="52.74666666666666" dy="-.3em" fill="#222222" filter="url(#VCL-t-s-f-ffffffclustered-bar-test)" opacity="1" text-anchor="middle" x="114.5" y="52.74666666666666">
+                    22
+                  </text>
+                </g>
+                <g class="clustered-bar-label-wrapper entering" data-id="clustered-bar-dataLabel-wrapper-2017" data-testid="clustered-bar-dataLabel-wrapper" transform="translate(212.625,0)">
+                  <text class="clustered-bar-dataLabel clustered-bar-dataLabel-vertical" cursor="default" data-height="34.400000000000006" data-id="dataLabel-2017-A" data-testid="dataLabel" data-translate-x="266.625" data-translate-y="24" data-width="35" data-x="9" data-y="68.8" dy="-.3em" fill="#222222" filter="url(#VCL-t-s-f-ffffffclustered-bar-test)" opacity="1" text-anchor="middle" x="26.5" y="68.8">
+                    15
+                  </text>
+                  <text class="clustered-bar-dataLabel clustered-bar-dataLabel-vertical" cursor="default" data-height="52.74666666666667" data-id="dataLabel-2017-B" data-testid="dataLabel" data-translate-x="266.625" data-translate-y="24" data-width="35" data-x="53" data-y="50.45333333333333" dy="-.3em" fill="#222222" filter="url(#VCL-t-s-f-ffffffclustered-bar-test)" opacity="1" text-anchor="middle" x="70.5" y="50.45333333333333">
+                    23
+                  </text>
+                  <text class="clustered-bar-dataLabel clustered-bar-dataLabel-vertical" cursor="default" data-height="103.2" data-id="dataLabel-2017-C" data-testid="dataLabel" data-translate-x="266.625" data-translate-y="24" data-width="35" data-x="97" data-y="0" dy="-.3em" fill="#222222" filter="url(#VCL-t-s-f-ffffffclustered-bar-test)" opacity="1" text-anchor="middle" x="114.5" y="0">
+                    45
+                  </text>
+                </g>
+                <g class="clustered-bar-label-wrapper entering" data-id="clustered-bar-dataLabel-wrapper-2018" data-testid="clustered-bar-dataLabel-wrapper" transform="translate(389.8125,0)">
+                  <text class="clustered-bar-dataLabel clustered-bar-dataLabel-vertical" cursor="default" data-height="59.62666666666667" data-id="dataLabel-2018-A" data-testid="dataLabel" data-translate-x="443.8125" data-translate-y="24" data-width="35" data-x="9" data-y="43.57333333333333" dy="-.3em" fill="#222222" filter="url(#VCL-t-s-f-ffffffclustered-bar-test)" opacity="1" text-anchor="middle" x="26.5" y="43.57333333333333">
+                    26
+                  </text>
+                  <text class="clustered-bar-dataLabel clustered-bar-dataLabel-vertical" cursor="default" data-height="64.21333333333334" data-id="dataLabel-2018-B" data-testid="dataLabel" data-translate-x="443.8125" data-translate-y="24" data-width="35" data-x="53" data-y="38.98666666666667" dy="-.3em" fill="#222222" filter="url(#VCL-t-s-f-ffffffclustered-bar-test)" opacity="1" text-anchor="middle" x="70.5" y="38.98666666666667">
+                    28
+                  </text>
+                  <text class="clustered-bar-dataLabel clustered-bar-dataLabel-vertical" cursor="default" data-height="71.09333333333333" data-id="dataLabel-2018-C" data-testid="dataLabel" data-translate-x="443.8125" data-translate-y="24" data-width="35" data-x="97" data-y="32.10666666666666" dy="-.3em" fill="#222222" filter="url(#VCL-t-s-f-ffffffclustered-bar-test)" opacity="1" text-anchor="middle" x="114.5" y="32.10666666666666">
+                    31
+                  </text>
+                </g>
+              </g>
+              <g aria-hidden="true" class="clustered-bar-reference-line-group" data-testid="reference-line-group" focusable="false" role="presentation"></g>
+              <g aria-hidden="true" class="vcl-annotation-group" data-testid="annotation-group" focusable="false" role="presentation"></g>
+              <g aria-hidden="true" class="editable vcl-annotation-group" data-testid="editable-annotation-group" focusable="false" role="presentation"></g>
+              <g aria-hidden="true" class="axis bottom x" data-testid="x-axis" fill="none" focusable="false" font-family="sans-serif" font-size="10" opacity="1" role="presentation" text-anchor="middle" transform="translate(0, 172)">
+                <path class="domain" d="M0.5,0.5H567.5" stroke="currentColor"></path>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(106.31249999999999,0)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10">
+                    <tspan data-testid="axis-tick-text-tspan" dy="0.71em" x="0" y="10">
+                      2016
+                    </tspan>
+                  </text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(283.5,0)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10">
+                    <tspan data-testid="axis-tick-text-tspan" dy="0.71em" x="0" y="10">
+                      2017
+                    </tspan>
+                  </text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(460.6875,0)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10">
+                    <tspan data-testid="axis-tick-text-tspan" dy="0.71em" x="0" y="10">
+                      2018
+                    </tspan>
+                  </text>
+                </g>
+              </g>
+              <text aria-hidden="true" class="axis-label bottom x" data-testid="x-axis-label" focusable="false" role="presentation" transform="translate(0, 0)" x="283.5" y="222">
+                X Axis
+              </text>
+              <g aria-hidden="true" class="axis left y" data-testid="y-axis" fill="none" focusable="false" font-family="sans-serif" font-size="10" opacity="1" role="presentation" text-anchor="end">
+                <path class="domain" d="M0.5,172.5V0.5" stroke="currentColor"></path>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0,172.5)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" x2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.32em" fill="currentColor" x="-10">
+                    <tspan data-testid="axis-tick-text-tspan" dy="0.32em" x="-8">
+                      -30
+                    </tspan>
+                  </text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0,149.56666666666666)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" x2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.32em" fill="currentColor" x="-10">
+                    <tspan data-testid="axis-tick-text-tspan" dy="0.32em" x="-8">
+                      -20
+                    </tspan>
+                  </text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0,126.63333333333334)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" x2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.32em" fill="currentColor" x="-10">
+                    <tspan data-testid="axis-tick-text-tspan" dy="0.32em" x="-8">
+                      -10
+                    </tspan>
+                  </text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0,103.7)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" x2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.32em" fill="currentColor" x="-10">
+                    <tspan data-testid="axis-tick-text-tspan" dy="0.32em" x="-8">
+                      0
+                    </tspan>
+                  </text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0,80.76666666666667)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" x2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.32em" fill="currentColor" x="-10">
+                    <tspan data-testid="axis-tick-text-tspan" dy="0.32em" x="-8">
+                      10
+                    </tspan>
+                  </text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0,57.83333333333334)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" x2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.32em" fill="currentColor" x="-10">
+                    <tspan data-testid="axis-tick-text-tspan" dy="0.32em" x="-8">
+                      20
+                    </tspan>
+                  </text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0,34.89999999999999)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" x2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.32em" fill="currentColor" x="-10">
+                    <tspan data-testid="axis-tick-text-tspan" dy="0.32em" x="-8">
+                      30
+                    </tspan>
+                  </text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0,11.966666666666665)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" x2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.32em" fill="currentColor" x="-10">
+                    <tspan data-testid="axis-tick-text-tspan" dy="0.32em" x="-8">
+                      40
+                    </tspan>
+                  </text>
+                </g>
+              </g>
+              <text aria-hidden="true" class="axis-label left y" data-testid="y-axis-label" dy="1em" focusable="false" role="presentation" transform="rotate(-90)" x="-86" y="-50">
+                Y Axis
+              </text>
+              <g aria-hidden="true" class="axis-mark axis-mark-x" data-testid="x-axis-mark" fill="none" focusable="false" font-family="sans-serif" font-size="10" opacity="1" role="presentation" text-anchor="middle" transform="translate(0, 103.2)">
+                <path class="domain" d="M0.5,0.5H567.5" stroke="currentColor"></path>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(106.31249999999999,0)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(283.5,0)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(460.6875,0)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
+                </g>
+              </g>
+              <g aria-hidden="true" class="axis-mark axis-mark-y" data-testid="y-axis-mark" fill="none" focusable="false" font-family="sans-serif" font-size="10" opacity="0" role="presentation" text-anchor="end" transform="">
+                <path class="domain" d="M0.5,172.5V0.5" stroke="currentColor"></path>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0,172.5)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" x2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.32em" fill="currentColor" x="-10"></text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0,149.56666666666666)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" x2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.32em" fill="currentColor" x="-10"></text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0,126.63333333333334)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" x2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.32em" fill="currentColor" x="-10"></text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0,103.7)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" x2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.32em" fill="currentColor" x="-10"></text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0,80.76666666666667)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" x2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.32em" fill="currentColor" x="-10"></text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0,57.83333333333334)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" x2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.32em" fill="currentColor" x="-10"></text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0,34.89999999999999)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" x2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.32em" fill="currentColor" x="-10"></text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0,11.966666666666665)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" x2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.32em" fill="currentColor" x="-10"></text>
+                </g>
+              </g>
+            </g>
+          </g>
+          <defs data-testid="pattern-defs">
+            <filter class="vcl-inversion-filter" color-interpolation-filters="sRGB" id="inversion-clustered-bar-test">
+              <feColorMatrix in="SourceGraphic" type="matrix" values="-1 0 0 0 1 
+        0 -1 0 0 1 
+        0 0 -1 0 1
+        0 0 0 1 0"></feColorMatrix>
+              <feColorMatrix type="hueRotate" values="180"></feColorMatrix>
+            </filter>
+            <pattern class="VCL-texture-pattern" height="12" id="clustered-bar-test_texture_0" patternContentUnits="userSpaceOnUse" patternUnits="userSpaceOnUse" width="12" x="0" y="0">
+              <rect class="VCL-t-p-e" fill="#7c99b1" height="12" width="12"></rect>
+              <path class="VCL-t-p-e" d="M 0,0 l 12,12 M -3,9 l 6,6 M 9,-3 l 6,6" shape-rendering="auto" stroke="#35495a" stroke-linecap="square" stroke-width="1"></path>
+            </pattern>
+            <pattern class="VCL-texture-pattern" height="12" id="clustered-bar-test_texture_1" patternContentUnits="userSpaceOnUse" patternUnits="userSpaceOnUse" width="12" x="0" y="0">
+              <rect class="VCL-t-p-e" fill="#cacae7" height="12" width="12"></rect>
+              <circle class="VCL-t-p-e" cx="6" cy="6" fill="#6868ba" r="1" stroke="#343434" stroke-width="0"></circle>
+              <circle class="VCL-t-p-e" cx="0" cy="0" fill="#6868ba" r="1" stroke="#343434" stroke-width="0"></circle>
+              <circle class="VCL-t-p-e" cx="0" cy="12" fill="#6868ba" r="1" stroke="#343434" stroke-width="0"></circle>
+              <circle class="VCL-t-p-e" cx="12" cy="0" fill="#6868ba" r="1" stroke="#343434" stroke-width="0"></circle>
+              <circle class="VCL-t-p-e" cx="12" cy="12" fill="#6868ba" r="1" stroke="#343434" stroke-width="0"></circle>
+            </pattern>
+            <pattern class="VCL-texture-pattern" height="24" id="clustered-bar-test_texture_2" patternContentUnits="userSpaceOnUse" patternUnits="userSpaceOnUse" width="24" x="0" y="0">
+              <rect class="VCL-t-p-e" fill="#abb798" height="24" width="24"></rect>
+              <path class="VCL-t-p-e" d="M 0,0 l 24,24 M -6,18 l 12,12 M 18,-6 l 12,12" shape-rendering="auto" stroke="#576245" stroke-linecap="square" stroke-width="1"></path>
+              <path class="VCL-t-p-e" d="M 0,24 l 24,-24 M -6,6 l 12,-12 M 18,30 l 12,-12" shape-rendering="auto" stroke="#576245" stroke-linecap="square" stroke-width="1"></path>
+            </pattern>
+            <filter class="VCL-accessibility-stroke-filter" id="VCL-filter-35495a-rest-clustered-bar-test">
+              <feMorphology in="SourceAlpha" operator="dilate" radius="1" result="outside-morph"></feMorphology>
+              <feFlood flood-color="#ffffff" result="outside-color"></feFlood>
+              <feComposite in="outside-color" in2="outside-morph" operator="in" result="outside-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="0" result="primary-morph"></feMorphology>
+              <feFlood flood-color="#35495a" result="primary-color"></feFlood>
+              <feComposite in="primary-color" in2="primary-morph" operator="in" result="primary-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="1" result="clean-morph"></feMorphology>
+              <feFlood flood-color="#7c99b1" result="clean-color"></feFlood>
+              <feComposite in="clean-color" in2="clean-morph" operator="in" result="clean-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="2" result="morph-erode-2"></feMorphology>
+              <feComposite in="SourceGraphic" in2="morph-erode-2" operator="in" result="fill"></feComposite>
+              <feMerge>
+                <feMergeNode in="outside-stroke"></feMergeNode>
+                <feMergeNode in="primary-stroke"></feMergeNode>
+                <feMergeNode in="clean-stroke"></feMergeNode>
+                <feMergeNode in="fill"></feMergeNode>
+              </feMerge>
+            </filter>
+            <filter class="VCL-accessibility-stroke-filter" id="VCL-filter-7c99b1-hover-clustered-bar-test">
+              <feMorphology in="SourceAlpha" operator="dilate" radius="1" result="outside-morph"></feMorphology>
+              <feFlood flood-color="#ffffff" result="outside-color"></feFlood>
+              <feComposite in="outside-color" in2="outside-morph" operator="in" result="outside-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="0" result="primary-morph"></feMorphology>
+              <feFlood flood-color="#7c99b1" result="primary-color"></feFlood>
+              <feComposite in="primary-color" in2="primary-morph" operator="in" result="primary-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="2" result="clean-morph"></feMorphology>
+              <feFlood flood-color="#7c99b1" result="clean-color"></feFlood>
+              <feComposite in="clean-color" in2="clean-morph" operator="in" result="clean-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="3" result="morph-erode-3"></feMorphology>
+              <feComposite in="SourceGraphic" in2="morph-erode-3" operator="in" result="fill"></feComposite>
+              <feMerge>
+                <feMergeNode in="outside-stroke"></feMergeNode>
+                <feMergeNode in="primary-stroke"></feMergeNode>
+                <feMergeNode in="clean-stroke"></feMergeNode>
+                <feMergeNode in="fill"></feMergeNode>
+              </feMerge>
+            </filter>
+            <filter class="VCL-accessibility-stroke-filter" id="VCL-filter-35495a-click-clustered-bar-test">
+              <feMorphology in="SourceAlpha" operator="dilate" radius="1" result="outside-morph"></feMorphology>
+              <feFlood flood-color="#ffffff" result="outside-color"></feFlood>
+              <feComposite in="outside-color" in2="outside-morph" operator="in" result="outside-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="0" result="primary-morph"></feMorphology>
+              <feFlood flood-color="#35495a" result="primary-color"></feFlood>
+              <feComposite in="primary-color" in2="primary-morph" operator="in" result="primary-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="2" result="clean-morph"></feMorphology>
+              <feFlood flood-color="#7c99b1" result="clean-color"></feFlood>
+              <feComposite in="clean-color" in2="clean-morph" operator="in" result="clean-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="3" result="morph-erode-3"></feMorphology>
+              <feComposite in="SourceGraphic" in2="morph-erode-3" operator="in" result="fill"></feComposite>
+              <feMerge>
+                <feMergeNode in="outside-stroke"></feMergeNode>
+                <feMergeNode in="primary-stroke"></feMergeNode>
+                <feMergeNode in="clean-stroke"></feMergeNode>
+                <feMergeNode in="fill"></feMergeNode>
+              </feMerge>
+            </filter>
+            <filter class="VCL-accessibility-stroke-filter" id="VCL-filter-6868ba-rest-clustered-bar-test">
+              <feMorphology in="SourceAlpha" operator="dilate" radius="1" result="outside-morph"></feMorphology>
+              <feFlood flood-color="#ffffff" result="outside-color"></feFlood>
+              <feComposite in="outside-color" in2="outside-morph" operator="in" result="outside-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="0" result="primary-morph"></feMorphology>
+              <feFlood flood-color="#6868ba" result="primary-color"></feFlood>
+              <feComposite in="primary-color" in2="primary-morph" operator="in" result="primary-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="1" result="clean-morph"></feMorphology>
+              <feFlood flood-color="#cacae7" result="clean-color"></feFlood>
+              <feComposite in="clean-color" in2="clean-morph" operator="in" result="clean-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="2" result="morph-erode-2"></feMorphology>
+              <feComposite in="SourceGraphic" in2="morph-erode-2" operator="in" result="fill"></feComposite>
+              <feMerge>
+                <feMergeNode in="outside-stroke"></feMergeNode>
+                <feMergeNode in="primary-stroke"></feMergeNode>
+                <feMergeNode in="clean-stroke"></feMergeNode>
+                <feMergeNode in="fill"></feMergeNode>
+              </feMerge>
+            </filter>
+            <filter class="VCL-accessibility-stroke-filter" id="VCL-filter-cacae7-hover-clustered-bar-test">
+              <feMorphology in="SourceAlpha" operator="dilate" radius="1" result="outside-morph"></feMorphology>
+              <feFlood flood-color="#ffffff" result="outside-color"></feFlood>
+              <feComposite in="outside-color" in2="outside-morph" operator="in" result="outside-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="0" result="primary-morph"></feMorphology>
+              <feFlood flood-color="#cacae7" result="primary-color"></feFlood>
+              <feComposite in="primary-color" in2="primary-morph" operator="in" result="primary-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="2" result="clean-morph"></feMorphology>
+              <feFlood flood-color="#cacae7" result="clean-color"></feFlood>
+              <feComposite in="clean-color" in2="clean-morph" operator="in" result="clean-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="3" result="morph-erode-3"></feMorphology>
+              <feComposite in="SourceGraphic" in2="morph-erode-3" operator="in" result="fill"></feComposite>
+              <feMerge>
+                <feMergeNode in="outside-stroke"></feMergeNode>
+                <feMergeNode in="primary-stroke"></feMergeNode>
+                <feMergeNode in="clean-stroke"></feMergeNode>
+                <feMergeNode in="fill"></feMergeNode>
+              </feMerge>
+            </filter>
+            <filter class="VCL-accessibility-stroke-filter" id="VCL-filter-6868ba-click-clustered-bar-test">
+              <feMorphology in="SourceAlpha" operator="dilate" radius="1" result="outside-morph"></feMorphology>
+              <feFlood flood-color="#ffffff" result="outside-color"></feFlood>
+              <feComposite in="outside-color" in2="outside-morph" operator="in" result="outside-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="0" result="primary-morph"></feMorphology>
+              <feFlood flood-color="#6868ba" result="primary-color"></feFlood>
+              <feComposite in="primary-color" in2="primary-morph" operator="in" result="primary-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="2" result="clean-morph"></feMorphology>
+              <feFlood flood-color="#cacae7" result="clean-color"></feFlood>
+              <feComposite in="clean-color" in2="clean-morph" operator="in" result="clean-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="3" result="morph-erode-3"></feMorphology>
+              <feComposite in="SourceGraphic" in2="morph-erode-3" operator="in" result="fill"></feComposite>
+              <feMerge>
+                <feMergeNode in="outside-stroke"></feMergeNode>
+                <feMergeNode in="primary-stroke"></feMergeNode>
+                <feMergeNode in="clean-stroke"></feMergeNode>
+                <feMergeNode in="fill"></feMergeNode>
+              </feMerge>
+            </filter>
+            <filter class="VCL-accessibility-stroke-filter" id="VCL-filter-576245-rest-clustered-bar-test">
+              <feMorphology in="SourceAlpha" operator="dilate" radius="1" result="outside-morph"></feMorphology>
+              <feFlood flood-color="#ffffff" result="outside-color"></feFlood>
+              <feComposite in="outside-color" in2="outside-morph" operator="in" result="outside-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="0" result="primary-morph"></feMorphology>
+              <feFlood flood-color="#576245" result="primary-color"></feFlood>
+              <feComposite in="primary-color" in2="primary-morph" operator="in" result="primary-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="1" result="clean-morph"></feMorphology>
+              <feFlood flood-color="#abb798" result="clean-color"></feFlood>
+              <feComposite in="clean-color" in2="clean-morph" operator="in" result="clean-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="2" result="morph-erode-2"></feMorphology>
+              <feComposite in="SourceGraphic" in2="morph-erode-2" operator="in" result="fill"></feComposite>
+              <feMerge>
+                <feMergeNode in="outside-stroke"></feMergeNode>
+                <feMergeNode in="primary-stroke"></feMergeNode>
+                <feMergeNode in="clean-stroke"></feMergeNode>
+                <feMergeNode in="fill"></feMergeNode>
+              </feMerge>
+            </filter>
+            <filter class="VCL-accessibility-stroke-filter" id="VCL-filter-abb798-hover-clustered-bar-test">
+              <feMorphology in="SourceAlpha" operator="dilate" radius="1" result="outside-morph"></feMorphology>
+              <feFlood flood-color="#ffffff" result="outside-color"></feFlood>
+              <feComposite in="outside-color" in2="outside-morph" operator="in" result="outside-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="0" result="primary-morph"></feMorphology>
+              <feFlood flood-color="#abb798" result="primary-color"></feFlood>
+              <feComposite in="primary-color" in2="primary-morph" operator="in" result="primary-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="2" result="clean-morph"></feMorphology>
+              <feFlood flood-color="#abb798" result="clean-color"></feFlood>
+              <feComposite in="clean-color" in2="clean-morph" operator="in" result="clean-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="3" result="morph-erode-3"></feMorphology>
+              <feComposite in="SourceGraphic" in2="morph-erode-3" operator="in" result="fill"></feComposite>
+              <feMerge>
+                <feMergeNode in="outside-stroke"></feMergeNode>
+                <feMergeNode in="primary-stroke"></feMergeNode>
+                <feMergeNode in="clean-stroke"></feMergeNode>
+                <feMergeNode in="fill"></feMergeNode>
+              </feMerge>
+            </filter>
+            <filter class="VCL-accessibility-stroke-filter" id="VCL-filter-576245-click-clustered-bar-test">
+              <feMorphology in="SourceAlpha" operator="dilate" radius="1" result="outside-morph"></feMorphology>
+              <feFlood flood-color="#ffffff" result="outside-color"></feFlood>
+              <feComposite in="outside-color" in2="outside-morph" operator="in" result="outside-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="0" result="primary-morph"></feMorphology>
+              <feFlood flood-color="#576245" result="primary-color"></feFlood>
+              <feComposite in="primary-color" in2="primary-morph" operator="in" result="primary-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="2" result="clean-morph"></feMorphology>
+              <feFlood flood-color="#abb798" result="clean-color"></feFlood>
+              <feComposite in="clean-color" in2="clean-morph" operator="in" result="clean-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="3" result="morph-erode-3"></feMorphology>
+              <feComposite in="SourceGraphic" in2="morph-erode-3" operator="in" result="fill"></feComposite>
+              <feMerge>
+                <feMergeNode in="outside-stroke"></feMergeNode>
+                <feMergeNode in="primary-stroke"></feMergeNode>
+                <feMergeNode in="clean-stroke"></feMergeNode>
+                <feMergeNode in="fill"></feMergeNode>
+              </feMerge>
+            </filter>
+            <filter class="VCL-t-s-f-ffffff" id="VCL-t-s-f-ffffffclustered-bar-test">
+              <feMorphology in="SourceAlpha" operator="dilate" radius="1.5" result="dilatedText"></feMorphology>
+              <feFlood flood-color="#ffffff" flood-opacity="1" result="whiteTextFlood"></feFlood>
+              <feComposite in="whiteTextFlood" in2="dilatedText" operator="in" result="textOutline"></feComposite>
+              <feMerge>
+                <feMergeNode in="textOutline"></feMergeNode>
+                <feMergeNode in="textOutline"></feMergeNode>
+                <feMergeNode in="textOutline"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+              </feMerge>
+            </filter>
+          </defs>
+        </svg>
+      </div>
+      <div class="clustered-bar-tooltip vcl-tooltip" data-testid="tooltip-container" style="display: block; position: absolute; padding: 0.5rem; opacity: 0; background-color: #ffffff; font-size: 14px; font-weight: 400; color: #222222; border: 1px solid #565656; border-radius: 3px; pointer-events: none; min-width: 80px; max-width: 300px; z-index: 10;">
+        <p style="margin: 0;"></p>
+      </div>
+      <data-table>
+        <div class="visa-viz-data-table-outer-container" data-testid="data-table-outer-container">
+          <div class="visa-viz-button-wrapper" style="padding-bottom: 0px;">
+            <button aria-expanded="false" aria-label="Adattábla megjelenítése" class="vcc-btn-icon vcc-btn-icon--light-tiny visa-viz-data-table-button" id="visa-viz-data-table-button-clustered-bar-test" role="button" tabindex="0" type="button" style="transform: translate(19px,
+                -40px);">
+              <svg class="vcc-icon--tiny" focusable="false" tabindex="-1">
+                <use href="#visa-viz-view-grid--tiny-clustered-bar-test"></use>
+              </svg>
+            </button>
+            <svg class="vcc-icons">
+              <symbol id="visa-viz-view-grid--tiny-clustered-bar-test" viewbox="0 0 16 16">
+                <path d="M5,5 L5,2 L2,2 L2,5 L5,5 Z M5,7 L2,7 C0.894905844,7 0,6.1044757 0,5 L0,2 C0,0.8955243 0.894905844,3.55271368e-15 2,3.55271368e-15 L5,3.55271368e-15 C6.10509416,3.55271368e-15 7,0.8955243 7,2 L7,5 C7,6.1044757 6.10509416,7 5,7 Z M14,5 L14,2 L11,2 L11,5 L14,5 Z M14,7 L11,7 C9.89490584,7 9,6.1044757 9,5 L9,2 C9,0.8955243 9.89490584,3.55271368e-15 11,3.55271368e-15 L14,3.55271368e-15 C15.1050942,3.55271368e-15 16,0.8955243 16,2 L16,5 C16,6.1044757 15.1050942,7 14,7 Z M5,14 L5,11 L2,11 L2,14 L5,14 Z M5,16 L2,16 C0.894905844,16 0,15.1044757 0,14 L0,11 C0,9.8955243 0.894905844,9 2,9 L5,9 C6.10509416,9 7,9.8955243 7,11 L7,14 C7,15.1044757 6.10509416,16 5,16 Z M14,14 L14,11 L11,11 L11,14 L14,14 Z M14,16 L11,16 C9.89490584,16 9,15.1044757 9,14 L9,11 C9,9.8955243 9.89490584,9 11,9 L14,9 C15.1050942,9 16,9.8955243 16,11 L16,14 C16,15.1044757 15.1050942,16 14,16 Z"></path>
+                <g fill="none" fill-rule="evenodd" stroke="none" stroke-width="1">
+                  <mask fill="#fff">
+                    <use xlink:href="#path-1"></use>
+                  </mask>
+                  <use fill="#000" fill-rule="nonzero" xlink:href="#path-1"></use>
+                </g>
+              </symbol>
+            </svg>
+          </div>
+          <div class="visa-viz-data-table-container" data-testid="data-table-container" id="visa-viz-data-table-container-clustered-bar-test"></div>
+        </div>
+      </data-table>
+    </div>
+  </div>
+</clustered-bar-chart>
+`;
+
 exports[`<clustered-bar-chart> rendered-html render should render with minimal props[data,oridnalAccessor,groupAccessor,valueAccessor] given 1`] = `
 <clustered-bar-chart id="clustered-bar-test">
   <div class="is--vertical light o-layout">
     <div class="vcl-accessibility-instructions" id="chart-instructions-clustered-bar-test" style="position: absolute; width: 675px;">
       <p class="screen-reader-info vcl-region-label">
-        Keyboard interactive clustered-bar-chart, Titled: Clustered Bar Chart Title. This section contains additional information about this chart. Pressing TAB will focus the keyboard instructions menu. Tabbing again takes you to the chart area.
+        Keyboard Interactive clustered-bar-chart, Titled: Clustered Bar Chart Title. This section contains additional information about this chart. Pressing TAB will focus the keyboard instructions menu. Tabbing again takes you to the chart area.
       </p>
       <h2 class="screen-reader-info vcl-access-title">
         Chart title: Clustered Bar Chart Title
@@ -397,13 +1010,13 @@ exports[`<clustered-bar-chart> rendered-html render should render with minimal p
         Chart Layout Description
       </h4>
       <p class="screen-reader-info vcl-access-layout">
-        This is a clustered-bar-chart with 3 clusters containing a total 9 bars.
+        Clustered-bar-chart. Cluster: 3, bar: 9.
       </p>
       <p class="screen-reader-info vcl-access-xAxis">
-        The chart has a horizontal X Axis, titled X Axis with a range that starts with 2016 and ends with 2018.
+        The chart has a horizontal X axis. Title X Axis. Start value 2016, end value 2018.
       </p>
       <p class="screen-reader-info vcl-access-yAxis">
-        The chart has a vertical Y axis, titled Y Axis with a range that starts with -30 and ends with 40.
+        The chart has a primary vertical Y axis. Title Y Axis. Start value -30, end value 40.
       </p>
       <p class="screen-reader-info vcl-access-notes" data-annotationlevel="h3" data-level="h4"></p>
     </div>

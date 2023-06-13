@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -11,6 +11,13 @@ export interface IKeyboardInstructionsProps {
    * @controlName TextField
    * @groupName Data */
   uniqueID: string;
+
+  /**
+   * @shortDescription Internationalization properties of the chart
+   * @controlName TextArea
+   * @groupName Localization
+   * @sortOrder 1 */
+  localization: ILocalizationType;
 
   /**
    * @shortDescription Type of geometry described in the menu. Defaults to "Geometry."
@@ -65,4 +72,11 @@ export interface IKeyboardInstructionsProps {
    * @controlName Toggle
    * @groupName Base */
   disabled: boolean;
+}
+
+export interface ILocalizationType {
+  language?: string | object;
+  numeralLocale?: string | object;
+  skipValidation?: boolean;
+  overwrite?: boolean;
 }

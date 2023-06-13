@@ -26,6 +26,9 @@ export class BarChartDefaultValues {
     right: 60,
     left: 60
   };
+
+  static readonly localization = propDefaultValues.localization;
+
   static readonly ordinalAccessor = 'label';
   static readonly valueAccessor = 'value';
   static readonly groupAccessor = '';

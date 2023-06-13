@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -8,6 +8,12 @@
 import { Component, State, Element, h } from '@stencil/core';
 import '@visa/visa-charts-data-table';
 import '@visa/keyboard-instructions';
+
+// importing custom languages
+// import { hu } from '../../../../utils/src/utils/localization/languages/hu';
+
+// importing numeralLocales
+// import { HU } from '@visa/visa-charts-utils/src/utils/localization/numeralLocales/hu';
 @Component({
   tag: 'app-scatter-plot',
   styleUrl: 'app-scatter-plot.scss'
@@ -281,6 +287,7 @@ export class AppScatterPlot {
   componentWillUpdate() {
     // console.log("will update", this.clickElement);
   }
+
   onClickFunc(d) {
     let index = -1;
     this.clickElement.forEach((el, i) => {
@@ -484,6 +491,11 @@ export class AppScatterPlot {
             toggle animations
           </button>
           <scatter-plot
+            // localization={{
+            //   language: hu,
+            //   numeralLocale: HU,
+            //   skipValidation: false
+            // }}
             // Chart Attributes (1/7)
             mainTitle={'Scatter Plot Default '}
             animationConfig={this.animations}

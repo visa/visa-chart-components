@@ -7,8 +7,8 @@
  **/
 export interface IBoxModelType {
   top: number;
-  bottom: number;
   right: number;
+  bottom: number;
   left: number;
 }
 
@@ -65,6 +65,13 @@ export interface IAnimationConfig {
 }
 export interface IKeyConfig {
   disabled?: boolean;
+}
+
+export interface ILocalizationType {
+  language?: string | object;
+  numeralLocale?: string | object;
+  skipValidation?: boolean;
+  overwrite?: boolean;
 }
 
 export interface IAccessibilityType {

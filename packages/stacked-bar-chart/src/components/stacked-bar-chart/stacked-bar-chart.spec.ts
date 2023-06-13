@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -9,9 +9,14 @@ import { newSpecPage, SpecPage } from '@stencil/core/testing';
 import { StackedBarChart } from './stacked-bar-chart';
 import { StackedBarChartDefaultValues } from './stacked-bar-chart-default-values';
 import { scaleBand, scaleOrdinal, scaleLinear } from 'd3-scale';
+
 // we need to bring in our nested components as well, was required to bring in the source vs dist folder to get it to mount
-import { KeyboardInstructions } from '../../../node_modules/@visa/keyboard-instructions/src/components/keyboard-instructions/keyboard-instructions';
-import { DataTable } from '../../../node_modules/@visa/visa-charts-data-table/src/components/data-table/data-table';
+import { KeyboardInstructions } from '@visa/keyboard-instructions/src/components/keyboard-instructions/keyboard-instructions';
+import { DataTable } from '@visa/visa-charts-data-table/src/components/data-table/data-table';
+
+// importing custom languages and locales
+import { hu } from '@visa/visa-charts-utils/src/utils/localization/languages/hu';
+import { HU } from '@visa/visa-charts-utils/src/utils/localization/numeralLocales/hu';
 
 import Utils from '@visa/visa-charts-utils';
 import UtilsDev from '@visa/visa-charts-utils-dev';
@@ -74,6 +79,7 @@ describe('<stacked-bar-chart>', () => {
 
     // disable accessibility validation to keep output stream(terminal) clean
     const EXPECTEDACCESSIBILITY = { ...StackedBarChartDefaultValues.accessibility, disableValidation: true };
+    const EXPECTEDLOCALIZATION = { ...StackedBarChartDefaultValues.localization, skipValidation: true };
 
     beforeEach(async () => {
       page = await newSpecPage({
@@ -88,6 +94,7 @@ describe('<stacked-bar-chart>', () => {
       component.groupAccessor = EXPECTEDGROUPACCESSOR;
       component.valueAccessor = EXPECTEDVALUEACCESSOR;
       component.accessibility = EXPECTEDACCESSIBILITY;
+      component.localization = EXPECTEDLOCALIZATION;
     });
 
     it('should build', () => {
@@ -109,6 +116,28 @@ describe('<stacked-bar-chart>', () => {
         // ACT
         page.root.appendChild(component);
         await page.waitForChanges();
+
+        // ASSERT
+        expect(page.root).toMatchSnapshot();
+      });
+
+      it('localization: should render localized with minimal props[data,accessors] given', async () => {
+        component.localization = {
+          language: hu,
+          numeralLocale: HU,
+          skipValidation: true,
+          overwrite: false
+        };
+        // ACT
+        page.root.appendChild(component);
+        await page.waitForChanges();
+
+        // flush labels for testing to ensure opacity of 1 on initial render
+        const elements = page.doc.querySelectorAll('[data-testid=dataLabel]');
+        await asyncForEach(elements, async element => {
+          flushTransitions(element);
+          await page.waitForChanges();
+        });
 
         // ASSERT
         expect(page.root).toMatchSnapshot();
@@ -162,8 +191,8 @@ describe('<stacked-bar-chart>', () => {
             nextTestSelector: '[data-testid=stacked-bar-wrapper][data-id=stacked-bar-wrapper-2016]',
             keyDownObject: { key: 'Enter', code: 'Enter', keyCode: 13, shiftKey: true },
             testProps: {
-              selectorAriaLabel: 'year 2016. item A. value -30. Bar 1 of 3.',
-              nextSelectorAriaLabel: 'year 2016. Sum -13. Stack 1 of 3 which contains 3 interactive bars.',
+              selectorAriaLabel: 'year 2016. item A. value -30. Bar 1.',
+              nextSelectorAriaLabel: 'year 2016. Sum -13. stack 1.',
               accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true }
             }
           },
@@ -185,8 +214,8 @@ describe('<stacked-bar-chart>', () => {
             nextTestSelector: '[data-testid=bar][data-id=bar-2016-B]',
             keyDownObject: { key: 'ArrowRight', code: 'ArrowRight', keyCode: 39 },
             testProps: {
-              selectorAriaLabel: 'year 2016. item A. value -30. Bar 1 of 3.',
-              nextSelectorAriaLabel: 'year 2016. item B. value -5. Bar 2 of 3.',
+              selectorAriaLabel: 'year 2016. item A. value -30. Bar 1.',
+              nextSelectorAriaLabel: 'year 2016. item B. value -5. Bar 2.',
               accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true }
             }
           },
@@ -196,8 +225,8 @@ describe('<stacked-bar-chart>', () => {
             nextTestSelector: '[data-testid=bar][data-id=bar-2016-A]',
             keyDownObject: { key: 'ArrowRight', code: 'ArrowRight', keyCode: 39 },
             testProps: {
-              selectorAriaLabel: '2016. C. 22. Bar 3 of 3.',
-              nextSelectorAriaLabel: '2016. A. -30. Bar 1 of 3.'
+              selectorAriaLabel: '2016. C. 22. Bar 3.',
+              nextSelectorAriaLabel: '2016. A. -30. Bar 1.'
             }
           },
           accessibility_keyboard_nav_left_arrow_sibling: {
@@ -206,8 +235,8 @@ describe('<stacked-bar-chart>', () => {
             nextTestSelector: '[data-testid=bar][data-id=bar-2016-A]',
             keyDownObject: { key: 'ArrowLeft', code: 'ArrowLeft', keyCode: 37 },
             testProps: {
-              selectorAriaLabel: 'year 2016. item B. value -5. Bar 2 of 3.',
-              nextSelectorAriaLabel: 'year 2016. item A. value -30. Bar 1 of 3.',
+              selectorAriaLabel: 'year 2016. item B. value -5. Bar 2.',
+              nextSelectorAriaLabel: 'year 2016. item A. value -30. Bar 1.',
               accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true }
             }
           },
@@ -217,8 +246,8 @@ describe('<stacked-bar-chart>', () => {
             nextTestSelector: '[data-testid=bar][data-id=bar-2016-C]',
             keyDownObject: { key: 'ArrowLeft', code: 'ArrowLeft', keyCode: 37 },
             testProps: {
-              selectorAriaLabel: '2016. A. -30. Bar 1 of 3.',
-              nextSelectorAriaLabel: '2016. C. 22. Bar 3 of 3.'
+              selectorAriaLabel: '2016. A. -30. Bar 1.',
+              nextSelectorAriaLabel: '2016. C. 22. Bar 3.'
             }
           },
           accessibility_keyboard_nav_up_arrow_cousin: {
@@ -227,8 +256,8 @@ describe('<stacked-bar-chart>', () => {
             nextTestSelector: '[data-testid=bar][data-id=bar-2016-A]',
             keyDownObject: { key: 'ArrowUp', code: 'ArrowUp', keyCode: 38 },
             testProps: {
-              selectorAriaLabel: '2017. A. 15. Bar 1 of 3.',
-              nextSelectorAriaLabel: '2016. A. -30. Bar 1 of 3.'
+              selectorAriaLabel: '2017. A. 15. Bar 1.',
+              nextSelectorAriaLabel: '2016. A. -30. Bar 1.'
             }
           },
           accessibility_keyboard_nav_up_arrow_cousin_loop: {
@@ -237,8 +266,8 @@ describe('<stacked-bar-chart>', () => {
             nextTestSelector: '[data-testid=bar][data-id=bar-2018-A]',
             keyDownObject: { key: 'ArrowUp', code: 'ArrowUp', keyCode: 38 },
             testProps: {
-              selectorAriaLabel: '2016. A. -30. Bar 1 of 3.',
-              nextSelectorAriaLabel: '2018. A. 26. Bar 1 of 3.'
+              selectorAriaLabel: '2016. A. -30. Bar 1.',
+              nextSelectorAriaLabel: '2018. A. 26. Bar 1.'
             }
           },
           accessibility_keyboard_nav_down_arrow_cousin: {
@@ -247,8 +276,8 @@ describe('<stacked-bar-chart>', () => {
             nextTestSelector: '[data-testid=bar][data-id=bar-2017-A]',
             keyDownObject: { key: 'ArrowDown', code: 'ArrowDown', keyCode: 40 },
             testProps: {
-              selectorAriaLabel: '2016. A. -30. Bar 1 of 3.',
-              nextSelectorAriaLabel: '2017. A. 15. Bar 1 of 3.'
+              selectorAriaLabel: '2016. A. -30. Bar 1.',
+              nextSelectorAriaLabel: '2017. A. 15. Bar 1.'
             }
           },
           accessibility_keyboard_nav_down_arrow_cousin_loop: {
@@ -257,9 +286,22 @@ describe('<stacked-bar-chart>', () => {
             nextTestSelector: '[data-testid=bar][data-id=bar-2016-A]',
             keyDownObject: { key: 'ArrowDown', code: 'ArrowDown', keyCode: 40 },
             testProps: {
-              selectorAriaLabel: 'year 2018. item A. value 26. Bar 1 of 3.',
-              nextSelectorAriaLabel: 'year 2016. item A. value -30. Bar 1 of 3.',
+              selectorAriaLabel: 'year 2018. item A. value 26. Bar 1.',
+              nextSelectorAriaLabel: 'year 2016. item A. value -30. Bar 1.',
               accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true }
+            }
+          },
+          // new
+          accessibility_normalized: {
+            name: 'keyboard nav: sibling - right arrow goes to next normalized',
+            testSelector: '[data-testid=bar][data-id=bar-2017-A]',
+            nextTestSelector: '[data-testid=bar][data-id=bar-2017-B]',
+            keyDownObject: { key: 'ArrowRight', code: 'ArrowRight', keyCode: 39 },
+            testProps: {
+              selectorAriaLabel: 'year 2017. item A. value 15. value (%) 15%. Bar 1.',
+              nextSelectorAriaLabel: 'year 2017. item B. value 40. value (%) 40%. Bar 2.',
+              accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true },
+              normalized: true
             }
           }
         };
@@ -1237,9 +1279,10 @@ describe('<stacked-bar-chart>', () => {
             labelTitle: ['Testing123', 'Count']
           }
         };
+
         describe('generic tooltip tests', () => {
           Object.keys(unitTestTooltip).forEach(test => {
-            const innerTestSelector = '[data-testid=bar][data-id=bar-2016-A]';
+            const innerTestSelector = '[data-testid=bar][data-id=bar-2017-A]';
             const innerTooltipProps = {
               tooltip_tooltipLabel_custom_load: tooltip1,
               tooltip_tooltipLabel_custom_update: tooltip1,
@@ -1248,23 +1291,80 @@ describe('<stacked-bar-chart>', () => {
             };
             const innerTooltipContent = {
               tooltip_tooltipLabel_default:
-                '<p style="margin: 0;"><b>A<br></b>X Axis:<b>2016</b><br>Y Axis:<b>-30</b></p>',
+                '<p style="margin: 0;"><b>A<br></b>X Axis:<b>2017</b><br>Y Axis:<b>15</b></p>',
               tooltip_tooltipLabel_custom_load: '<p style="margin: 0;">Testing123:<b>A</b><br></p>',
               tooltip_tooltipLabel_custom_update: '<p style="margin: 0;">Testing123:<b>A</b><br></p>',
               tooltip_tooltipLabel_custom_format_load:
-                '<p style="margin: 0;">Testing123:<b>A</b><br>Count:<b>-$30</b><br></p>',
+                '<p style="margin: 0;">Testing123:<b>A</b><br>Count:<b>$15</b><br></p>',
               tooltip_tooltipLabel_custom_format_update:
-                '<p style="margin: 0;">Testing123:<b>A</b><br>Count:<b>-$30</b><br></p>',
+                '<p style="margin: 0;">Testing123:<b>A</b><br>Count:<b>$15</b><br></p>',
               dataKeyNames_custom_on_load:
-                '<p style="margin: 0;"><b>A<br></b>Test Year:<b>2016</b><br>Y Axis:<b>-30</b></p>',
+                '<p style="margin: 0;"><b>A<br></b>Test Year:<b>2017</b><br>Y Axis:<b>15</b></p>',
               dataKeyNames_custom_on_update:
-                '<p style="margin: 0;"><b>A<br></b>Test Year:<b>2016</b><br>Y Axis:<b>-30</b></p>'
+                '<p style="margin: 0;"><b>A<br></b>Test Year:<b>2017</b><br>Y Axis:<b>15</b></p>'
             };
             const innerAriaContent = {
-              dataKeyNames_custom_on_load: 'Test Year 2016. item A. value -30. Bar 1 of 3.',
-              dataKeyNames_custom_on_update: 'Test Year 2016. item A. value -30. Bar 1 of 3.'
+              dataKeyNames_custom_on_load: 'Test Year 2017. item A. value 15. Bar 1.',
+              dataKeyNames_custom_on_update: 'Test Year 2017. item A. value 15. Bar 1.'
             };
             const innerTestProps = { ...unitTestTooltip[test].testProps, ...innerTooltipProps[test] };
+            const customDataKeyNames = { dataKeyNames: { year: 'Test Year' } };
+            // we have to handle clickEvent separately due to this.zooming boolean in circle-packing load
+            if (test === 'dataKeyNames_custom_on_load' || test === 'dataKeyNames_custom_on_update') {
+              it(`${unitTestTooltip[test].prop}: ${unitTestTooltip[test].name}`, () =>
+                unitTestTooltip[test].testFunc(
+                  component,
+                  page,
+                  {
+                    ...innerTestProps,
+                    ...customDataKeyNames,
+                    accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true },
+                    selectorAriaLabel: innerAriaContent[test]
+                  },
+                  innerTestSelector,
+                  innerTooltipContent[test]
+                ));
+            } else {
+              it(`${unitTestTooltip[test].prop}: ${unitTestTooltip[test].name}`, () =>
+                unitTestTooltip[test].testFunc(
+                  component,
+                  page,
+                  innerTestProps,
+                  innerTestSelector,
+                  innerTooltipContent[test]
+                ));
+            }
+          });
+        });
+        describe('normalized tooltip tests', () => {
+          Object.keys(unitTestTooltip).forEach(test => {
+            const innerTestSelector = '[data-testid=bar][data-id=bar-2017-A]';
+            const innerTooltipProps = {
+              tooltip_tooltipLabel_custom_load: tooltip1,
+              tooltip_tooltipLabel_custom_update: tooltip1,
+              tooltip_tooltipLabel_custom_format_load: tooltip2,
+              tooltip_tooltipLabel_custom_format_update: tooltip2
+            };
+            const innerTooltipContent = {
+              tooltip_tooltipLabel_default:
+                '<p style="margin: 0;"><b>A<br></b>X Axis:<b>2017</b><br>Y Axis (%):<b>15%</b><br>Y Axis:<b>15</b></p>',
+              tooltip_tooltipLabel_custom_load: '<p style="margin: 0;">Testing123:<b>A</b><br></p>',
+              tooltip_tooltipLabel_custom_update: '<p style="margin: 0;">Testing123:<b>A</b><br></p>',
+              tooltip_tooltipLabel_custom_format_load:
+                '<p style="margin: 0;">Testing123:<b>A</b><br>Count:<b>$15</b><br></p>',
+              tooltip_tooltipLabel_custom_format_update:
+                '<p style="margin: 0;">Testing123:<b>A</b><br>Count:<b>$15</b><br></p>',
+              dataKeyNames_custom_on_load:
+                '<p style="margin: 0;"><b>A<br></b>Test Year:<b>2017</b><br>Y Axis (%):<b>15%</b><br>Y Axis:<b>15</b></p>',
+              dataKeyNames_custom_on_update:
+                '<p style="margin: 0;"><b>A<br></b>Test Year:<b>2017</b><br>Y Axis (%):<b>15%</b><br>Y Axis:<b>15</b></p>'
+            };
+            const innerAriaContent = {
+              dataKeyNames_custom_on_load: 'Test Year 2017. item A. value 15. value (%) 15%. Bar 1.',
+              dataKeyNames_custom_on_update: 'Test Year 2017. item A. value 15. value (%) 15%. Bar 1.'
+            };
+
+            const innerTestProps = { normalized: true, ...unitTestTooltip[test].testProps, ...innerTooltipProps[test] };
             const customDataKeyNames = { dataKeyNames: { year: 'Test Year' } };
             // we have to handle clickEvent separately due to this.zooming boolean in circle-packing load
             if (test === 'dataKeyNames_custom_on_load' || test === 'dataKeyNames_custom_on_update') {

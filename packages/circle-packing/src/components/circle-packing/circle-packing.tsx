@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -7,6 +7,7 @@
  **/
 import { Component, Element, Prop, h, Watch, Event, EventEmitter } from '@stencil/core';
 import {
+  ILocalizationType,
   IBoxModelType,
   IHoverStyleType,
   IClickStyleType,
@@ -24,6 +25,9 @@ import Utils from '@visa/visa-charts-utils';
 import { v4 as uuid } from 'uuid';
 
 const {
+  configLocalization,
+  getGlobalInstances,
+  getActiveLanguageString,
   getContrastingStroke,
   createTextStrokeFilter,
   convertColorsToTextures,
@@ -65,6 +69,7 @@ const {
   scopeDataKeys,
   visaColors,
   validateAccessibilityProps,
+  validateLocalizationProps,
   findTagLevel,
   prepareRenderChange,
   resolveLabelCollision
@@ -85,6 +90,7 @@ export class CirclePacking {
   @Event() transitionEndEvent: EventEmitter;
 
   // Chart Attributes (1/7)
+  @Prop({ mutable: true }) localization: ILocalizationType = CirclePackingDefaultValues.localization;
   @Prop({ mutable: true }) mainTitle: string = CirclePackingDefaultValues.mainTitle;
   @Prop({ mutable: true }) subTitle: string = CirclePackingDefaultValues.subTitle;
   @Prop({ mutable: true }) height: number = CirclePackingDefaultValues.height;
@@ -132,6 +138,7 @@ export class CirclePacking {
   @Element()
   circlePackingEl: HTMLElement;
   shouldValidateAccessibility: boolean = true;
+  shouldValidateLocalization: boolean = true;
   svg: any;
   root: any;
   rootG: any;
@@ -215,6 +222,7 @@ export class CirclePacking {
   shouldSetTagLevels: boolean = false;
   shouldRedrawWrapper: boolean = false;
   shouldSetIDs: boolean = false;
+  shouldSetLocalizationConfig: boolean = false;
   innerInteractionKeys: any = [];
   defaultsLoaded: any = {};
   bottomLevel: string = 'p';
@@ -504,6 +512,39 @@ export class CirclePacking {
     }
   }
 
+  @Watch('localization')
+  localizationWatcher(_newVal, _oldVal) {
+    this.shouldValidate = true;
+
+    // language
+    const newLanguage = _newVal && _newVal.language ? _newVal.language : false;
+    const oldLanguage = _oldVal && _oldVal.language ? _oldVal.language : false;
+    if (newLanguage !== oldLanguage) {
+      this.shouldSetLocalizationConfig = true;
+      this.shouldUpdateTableData = true;
+      this.shouldRedrawWrapper = true;
+      this.shouldUpdateDescriptionWrapper = true;
+      this.shouldSetChartAccessibilityCount = true;
+      this.shouldUpdateDescriptionWrapper = true;
+      this.shouldSetGeometryAriaLabels = true;
+      this.shouldSetParentSVGAccessibility = true;
+    }
+
+    // numeralLocale
+    const newNumeralLocale = _newVal && _newVal.numeralLocale ? _newVal.numeralLocale : false;
+    const oldNumeralLocale = _oldVal && _oldVal.numeralLocale ? _oldVal.numeralLocale : false;
+    if (newNumeralLocale !== oldNumeralLocale) {
+      this.shouldSetLocalizationConfig = true;
+      this.shouldUpdateTableData = true;
+      this.shouldRedrawWrapper = true;
+      this.shouldUpdateDescriptionWrapper = true;
+      this.shouldSetChartAccessibilityCount = true;
+      this.shouldUpdateDescriptionWrapper = true;
+      this.shouldSetGeometryAriaLabels = true;
+      this.shouldSetParentSVGAccessibility = true;
+    }
+  }
+
   @Watch('annotations')
   annotationsWatcher(_new, _old) {
     this.shouldValidate = true;
@@ -553,17 +594,20 @@ export class CirclePacking {
 
   componentWillLoad() {
     const chartID = this.uniqueID || 'circle-pack-' + uuid();
+
     this.initialLoadEvent.emit({ chartID: chartID });
     return new Promise(resolve => {
       this.duration = 0;
       this.chartID = chartID;
       this.circlePackingEl.id = this.chartID;
+      this.setLocalizationConfig();
       this.setTagLevels();
       this.validateInteractionKeys();
       this.setTableData();
       this.setLayoutData();
       this.restructureData();
       this.shouldValidateAccessibilityProps();
+      this.shouldValidateLocalizationProps();
       this.setColors();
       resolve('component will load');
     });
@@ -748,6 +792,21 @@ export class CirclePacking {
     }).then(() => this.drawEndEvent.emit({ chartID: this.chartID }));
   }
 
+  shouldValidateLocalizationProps() {
+    const windowInstances = getGlobalInstances();
+    const languageString = windowInstances.i18Next.language;
+    const languageObject = windowInstances.i18Next.getResourceBundle(languageString);
+    const numeralObject = windowInstances.numeral.localeData();
+    if (this.shouldValidateLocalization && !this.localization.skipValidation) {
+      this.shouldValidateLocalization = false;
+      validateLocalizationProps(this.chartID, {
+        ...this.localization,
+        language: languageObject,
+        numeralLocale: numeralObject
+      });
+    }
+  }
+
   shouldValidateAccessibilityProps() {
     if (this.shouldValidateAccessibility && !this.accessibility.disableValidation) {
       this.shouldValidateAccessibility = false;
@@ -809,6 +868,14 @@ export class CirclePacking {
       : max(this.nodes, d => d.depth);
 
     this.nodes = this.nodes.filter(d => !(d.depth > this.innerDataDepth));
+  }
+
+  getLanguageString() {
+    return getActiveLanguageString(this.localization);
+  }
+
+  setLocalizationConfig() {
+    configLocalization(this.localization);
   }
 
   validateInteractionKeys() {
@@ -1283,7 +1350,7 @@ export class CirclePacking {
   }
 
   setAnnotationAccessibility() {
-    setAccessAnnotation(this.circlePackingEl, this.annotations);
+    setAccessAnnotation(this.getLanguageString(), this.circlePackingEl, this.annotations);
   }
 
   setColors() {
@@ -1567,6 +1634,7 @@ export class CirclePacking {
   }
   setChartDescriptionWrapper() {
     initializeDescriptionRoot({
+      language: this.getLanguageString(),
       rootEle: this.circlePackingEl,
       title: this.accessibility.title || this.mainTitle,
       chartTag: 'circle-packing',
@@ -1585,8 +1653,9 @@ export class CirclePacking {
 
   setParentSVGAccessibility() {
     setAccessibilityController({
-      node: this.svg.node(),
       chartTag: 'circle-packing',
+      language: this.getLanguageString(),
+      node: this.svg.node(),
       title: this.accessibility.title || this.mainTitle,
       description: this.subTitle,
       uniqueID: this.chartID,
@@ -1615,6 +1684,8 @@ export class CirclePacking {
     const keys = scopeDataKeys(this, chartAccessors, 'circle-packing');
     this.rootG.selectAll('.node').each((_d, i, n) => {
       setElementFocusHandler({
+        chartTag: 'circle-packing',
+        langauge: this.getLanguageString(),
         node: n[i],
         geomType: 'node',
         includeKeyNames: this.accessibility.includeDataKeyNames,
@@ -1639,31 +1710,31 @@ export class CirclePacking {
   }
 
   setChartAccessibilityTitle() {
-    setAccessTitle(this.circlePackingEl, this.accessibility.title || this.mainTitle);
+    setAccessTitle(this.getLanguageString(), this.circlePackingEl, this.accessibility.title || this.mainTitle);
   }
 
   setChartAccessibilitySubtitle() {
-    setAccessSubtitle(this.circlePackingEl, this.subTitle);
+    setAccessSubtitle(this.getLanguageString(), this.circlePackingEl, this.subTitle);
   }
 
   setChartAccessibilityLongDescription() {
-    setAccessLongDescription(this.circlePackingEl, this.accessibility.longDescription);
+    setAccessLongDescription(this.getLanguageString(), this.circlePackingEl, this.accessibility.longDescription);
   }
 
   setChartAccessibilityExecutiveSummary() {
-    setAccessExecutiveSummary(this.circlePackingEl, this.accessibility.executiveSummary);
+    setAccessExecutiveSummary(this.getLanguageString(), this.circlePackingEl, this.accessibility.executiveSummary);
   }
 
   setChartAccessibilityPurpose() {
-    setAccessPurpose(this.circlePackingEl, this.accessibility.purpose);
+    setAccessPurpose(this.getLanguageString(), this.circlePackingEl, this.accessibility.purpose);
   }
 
   setChartAccessibilityContext() {
-    setAccessContext(this.circlePackingEl, this.accessibility.contextExplanation);
+    setAccessContext(this.getLanguageString(), this.circlePackingEl, this.accessibility.contextExplanation);
   }
 
   setChartAccessibilityStatisticalNotes() {
-    setAccessStatistics(this.circlePackingEl, this.accessibility.statisticalNotes);
+    setAccessStatistics(this.getLanguageString(), this.circlePackingEl, this.accessibility.statisticalNotes);
   }
 
   setChartCountAccessibility() {
@@ -1678,7 +1749,7 @@ export class CirclePacking {
   }
 
   setChartAccessibilityStructureNotes() {
-    setAccessStructure(this.circlePackingEl, this.accessibility.structureNotes);
+    setAccessStructure(this.getLanguageString(), this.circlePackingEl, this.accessibility.structureNotes);
   }
 
   onChangeHandler() {
@@ -1707,6 +1778,10 @@ export class CirclePacking {
   render() {
     this.drawStartEvent.emit({ chartID: this.chartID });
     this.init();
+    if (this.shouldSetLocalizationConfig) {
+      this.setLocalizationConfig();
+      this.shouldSetLocalizationConfig = false;
+    }
     if (this.shouldSetTagLevels) {
       this.setTagLevels();
       this.shouldSetTagLevels = false;
@@ -1721,6 +1796,7 @@ export class CirclePacking {
     }
     if (this.shouldValidate) {
       this.shouldValidateAccessibilityProps();
+      this.shouldValidateLocalizationProps();
       this.shouldValidate = false;
     }
     if (this.shouldUpdateLayout) {
@@ -1742,11 +1818,11 @@ export class CirclePacking {
             uniqueID={this.chartID}
             geomType={'node'}
             groupName={'node collection'} // taken from initializeDescriptionRoot, on bar this should be "bar group", stacked bar is "stack", and clustered is "cluster"
+            language={this.getLanguageString()}
             chartTag={'circle-packing'}
             width={this.width - (this.margin ? this.margin.right || 0 : 0)}
             isInteractive={this.accessibility.elementsAreInterface}
             hasCousinNavigation={true}
-            cousinResultOverride={'Drill up or down a level'}
             disabled={
               this.suppressEvents &&
               this.accessibility.elementsAreInterface === false &&
@@ -1762,6 +1838,7 @@ export class CirclePacking {
           />
           <data-table
             uniqueID={this.chartID}
+            language={this.getLanguageString()}
             unitTest={true} // default this to true for now since we dont have prop yet
             isCompact
             tableColumns={this.tableColumns}

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -12,6 +12,7 @@ import { scaleBand, scaleLinear } from 'd3-scale';
 import { nest } from 'd3-collection';
 import { easeCircleIn } from 'd3-ease';
 import {
+  ILocalizationType,
   IBoxModelType,
   IHoverStyleType,
   IClickStyleType,
@@ -28,6 +29,9 @@ import 'd3-transition';
 import Utils from '@visa/visa-charts-utils';
 import { v4 as uuid } from 'uuid';
 const {
+  configLocalization,
+  getGlobalInstances,
+  getActiveLanguageString,
   verifyTextHasSpace,
   checkAttributeTransitions,
   createTextStrokeFilter,
@@ -82,6 +86,7 @@ const {
   transitionEndAll,
   visaColors,
   validateAccessibilityProps,
+  validateLocalizationProps,
   findTagLevel,
   prepareRenderChange,
   roundTo,
@@ -115,6 +120,7 @@ export class ClusteredBarChart {
   // Data (2/7)
   @Prop() data;
   @Prop() uniqueID;
+  @Prop({ mutable: true }) localization: ILocalizationType = ClusteredBarChartDefaultValues.localization;
   @Prop({ mutable: true }) ordinalAccessor: string = ClusteredBarChartDefaultValues.ordinalAccessor;
   @Prop({ mutable: true }) valueAccessor: string = ClusteredBarChartDefaultValues.valueAccessor;
   @Prop({ mutable: true }) groupAccessor: string = ClusteredBarChartDefaultValues.groupAccessor;
@@ -166,6 +172,7 @@ export class ClusteredBarChart {
   @Element()
   clusteredBarChartEl: HTMLElement;
   shouldValidateAccessibility: boolean = true;
+  shouldValidateLocalization: boolean = true;
   svg: any;
   root: any;
   rootG: any;
@@ -277,6 +284,7 @@ export class ClusteredBarChart {
   shouldSetAnnotationAccessibility: boolean = false;
   shouldSetTextures: boolean = false;
   shouldSetStrokes: boolean = false;
+  shouldSetLocalizationConfig: boolean = false;
   strokes: any = {};
   topLevel: string = 'h2';
   bottomLevel: string = 'p';
@@ -757,6 +765,49 @@ export class ClusteredBarChart {
     }
   }
 
+  @Watch('localization')
+  localizationWatcher(_newVal, _oldVal) {
+    this.shouldValidate = true;
+
+    // language
+    const newLanguage = _newVal && _newVal.language ? _newVal.language : false;
+    const oldLanguage = _oldVal && _oldVal.language ? _oldVal.language : false;
+    if (newLanguage !== oldLanguage) {
+      this.shouldSetLocalizationConfig = true;
+      this.shouldUpdateTableData = true;
+      this.shouldValidateDataLabelAccessor = true;
+      this.shouldSetLabelContent = true;
+      this.shouldCheckLabelColor = true;
+      this.shouldRedrawWrapper = true;
+      this.shouldUpdateDescriptionWrapper = true;
+      this.shouldSetChartAccessibilityCount = true;
+      this.shouldSetYAxisAccessibility = true;
+      this.shouldSetXAxisAccessibility = true;
+      this.shouldUpdateDescriptionWrapper = true;
+      this.shouldSetGeometryAriaLabels = true;
+      this.shouldSetParentSVGAccessibility = true;
+    }
+
+    // numeralLocale
+    const newNumeralLocale = _newVal && _newVal.numeralLocale ? _newVal.numeralLocale : false;
+    const oldNumeralLocale = _oldVal && _oldVal.numeralLocale ? _oldVal.numeralLocale : false;
+    if (newNumeralLocale !== oldNumeralLocale) {
+      this.shouldSetLocalizationConfig = true;
+      this.shouldUpdateTableData = true;
+      this.shouldValidateDataLabelAccessor = true;
+      this.shouldSetLabelContent = true;
+      this.shouldCheckLabelColor = true;
+      this.shouldRedrawWrapper = true;
+      this.shouldUpdateDescriptionWrapper = true;
+      this.shouldSetChartAccessibilityCount = true;
+      this.shouldSetYAxisAccessibility = true;
+      this.shouldSetXAxisAccessibility = true;
+      this.shouldUpdateDescriptionWrapper = true;
+      this.shouldSetGeometryAriaLabels = true;
+      this.shouldSetParentSVGAccessibility = true;
+    }
+  }
+
   @Watch('annotations')
   annotationsWatcher(_newVal, _oldVal) {
     this.shouldValidate = true;
@@ -848,6 +899,7 @@ export class ClusteredBarChart {
       this.defaults = true;
       this.chartID = chartID;
       this.clusteredBarChartEl.id = this.chartID;
+      this.setLocalizationConfig();
       this.setTagLevels();
       this.prepareData();
       this.prepareLegendData();
@@ -859,6 +911,7 @@ export class ClusteredBarChart {
       this.validateLabelPlacement();
       this.setTableData();
       this.shouldValidateAccessibilityProps();
+      this.shouldValidateLocalizationProps();
       this.setColors();
       resolve('component will load');
     });
@@ -876,6 +929,7 @@ export class ClusteredBarChart {
   componentDidLoad() {
     return new Promise(resolve => {
       this.shouldValidateAccessibilityProps();
+      this.shouldValidateLocalizationProps();
       this.renderRootElements();
       this.setTooltipInitialStyle();
       this.setChartDescriptionWrapper();
@@ -1121,6 +1175,21 @@ export class ClusteredBarChart {
     }).then(() => this.drawEndEvent.emit({ chartID: this.chartID }));
   }
 
+  shouldValidateLocalizationProps() {
+    const windowInstances = getGlobalInstances();
+    const languageString = windowInstances.i18Next.language;
+    const languageObject = windowInstances.i18Next.getResourceBundle(languageString);
+    const numeralObject = windowInstances.numeral.localeData();
+    if (this.shouldValidateLocalization && !this.localization.skipValidation) {
+      this.shouldValidateLocalization = false;
+      validateLocalizationProps(this.chartID, {
+        ...this.localization,
+        language: languageObject,
+        numeralLocale: numeralObject
+      });
+    }
+  }
+
   shouldValidateAccessibilityProps() {
     if (this.shouldValidateAccessibility && !this.accessibility.disableValidation) {
       this.shouldValidateAccessibility = false;
@@ -1168,6 +1237,14 @@ export class ClusteredBarChart {
         this.dataLabel.placement = 'right';
       }
     }
+  }
+
+  getLanguageString() {
+    return getActiveLanguageString(this.localization);
+  }
+
+  setLocalizationConfig() {
+    configLocalization(this.localization);
   }
 
   setDimensions() {
@@ -2619,7 +2696,7 @@ export class ClusteredBarChart {
   }
 
   setAnnotationAccessibility() {
-    setAccessAnnotation(this.clusteredBarChartEl, this.annotations);
+    setAccessAnnotation(this.getLanguageString(), this.clusteredBarChartEl, this.annotations);
   }
 
   // new accessibility functions added here
@@ -2630,6 +2707,7 @@ export class ClusteredBarChart {
 
   setChartDescriptionWrapper() {
     initializeDescriptionRoot({
+      language: this.getLanguageString(),
       rootEle: this.clusteredBarChartEl,
       title: this.accessibility.title || this.mainTitle,
       chartTag: 'clustered-bar-chart',
@@ -2647,8 +2725,9 @@ export class ClusteredBarChart {
 
   setParentSVGAccessibility() {
     setAccessibilityController({
-      node: this.svg.node(),
       chartTag: 'clustered-bar-chart',
+      language: this.getLanguageString(),
+      node: this.svg.node(),
       title: this.accessibility.title || this.mainTitle,
       description: this.subTitle,
       uniqueID: this.chartID,
@@ -2679,6 +2758,8 @@ export class ClusteredBarChart {
     const keys = scopeDataKeys(this, chartAccessors, 'clustered-bar-chart');
     this.update.each((_d, i, n) => {
       setElementFocusHandler({
+        chartTag: 'clustered-bar-chart',
+        language: this.getLanguageString(),
         node: n[i],
         geomType: 'bar',
         includeKeyNames: this.accessibility.includeDataKeyNames,
@@ -2709,31 +2790,31 @@ export class ClusteredBarChart {
   }
 
   setChartAccessibilityTitle() {
-    setAccessTitle(this.clusteredBarChartEl, this.accessibility.title || this.mainTitle);
+    setAccessTitle(this.getLanguageString(), this.clusteredBarChartEl, this.accessibility.title || this.mainTitle);
   }
 
   setChartAccessibilitySubtitle() {
-    setAccessSubtitle(this.clusteredBarChartEl, this.subTitle);
+    setAccessSubtitle(this.getLanguageString(), this.clusteredBarChartEl, this.subTitle);
   }
 
   setChartAccessibilityLongDescription() {
-    setAccessLongDescription(this.clusteredBarChartEl, this.accessibility.longDescription);
+    setAccessLongDescription(this.getLanguageString(), this.clusteredBarChartEl, this.accessibility.longDescription);
   }
 
   setChartAccessibilityExecutiveSummary() {
-    setAccessExecutiveSummary(this.clusteredBarChartEl, this.accessibility.executiveSummary);
+    setAccessExecutiveSummary(this.getLanguageString(), this.clusteredBarChartEl, this.accessibility.executiveSummary);
   }
 
   setChartAccessibilityPurpose() {
-    setAccessPurpose(this.clusteredBarChartEl, this.accessibility.purpose);
+    setAccessPurpose(this.getLanguageString(), this.clusteredBarChartEl, this.accessibility.purpose);
   }
 
   setChartAccessibilityContext() {
-    setAccessContext(this.clusteredBarChartEl, this.accessibility.contextExplanation);
+    setAccessContext(this.getLanguageString(), this.clusteredBarChartEl, this.accessibility.contextExplanation);
   }
 
   setChartAccessibilityStatisticalNotes() {
-    setAccessStatistics(this.clusteredBarChartEl, this.accessibility.statisticalNotes);
+    setAccessStatistics(this.getLanguageString(), this.clusteredBarChartEl, this.accessibility.statisticalNotes);
   }
 
   setChartCountAccessibility() {
@@ -2748,7 +2829,7 @@ export class ClusteredBarChart {
   }
 
   setChartAccessibilityStructureNotes() {
-    setAccessStructure(this.clusteredBarChartEl, this.accessibility.structureNotes);
+    setAccessStructure(this.getLanguageString(), this.clusteredBarChartEl, this.accessibility.structureNotes);
   }
   // new accessibility stuff ends here
 
@@ -2819,6 +2900,10 @@ export class ClusteredBarChart {
     // everything between this comment and the third should eventually
     // be moved into componentWillUpdate (if the stenicl bug is fixed)
     this.init();
+    if (this.shouldSetLocalizationConfig) {
+      this.setLocalizationConfig();
+      this.shouldSetLocalizationConfig = false;
+    }
     if (this.shouldSetTagLevels) {
       this.setTagLevels();
       this.shouldSetTagLevels = false;
@@ -2879,6 +2964,7 @@ export class ClusteredBarChart {
     }
     if (this.shouldValidate) {
       this.shouldValidateAccessibilityProps();
+      this.shouldValidateLocalizationProps();
       this.shouldValidate = false;
     }
     if (this.shouldSetColors) {
@@ -2889,7 +2975,6 @@ export class ClusteredBarChart {
       this.validateLabelPlacement();
       this.shouldValidateLabelPlacement = false;
     }
-
     // Everything between this comment and the first should eventually
     // be moved into componentWillUpdate (if the stenicl bug is fixed)
 
@@ -2905,6 +2990,7 @@ export class ClusteredBarChart {
             uniqueID={this.chartID}
             geomType={'bar'}
             groupName={'cluster'} // taken from initializeDescriptionRoot, on bar this should be "bar group", stacked bar is "stack", and clustered is "cluster"
+            language={this.getLanguageString()}
             chartTag={'clustered-bar-chart'}
             width={this.width - (this.margin ? this.margin.right || 0 : 0)}
             isInteractive={this.accessibility.elementsAreInterface}
@@ -2921,6 +3007,7 @@ export class ClusteredBarChart {
           <data-table
             uniqueID={this.chartID}
             isCompact
+            language={this.getLanguageString()}
             tableColumns={this.tableColumns}
             dataKeyNames={this.dataKeyNames}
             data={this.tableData}

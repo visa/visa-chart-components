@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -10,9 +10,14 @@ import { ScatterPlot } from './scatter-plot';
 import { ScatterPlotDefaultValues } from './scatter-plot-default-values';
 import { scaleOrdinal, scaleLinear, scaleSqrt, scaleSequentialSqrt } from 'd3-scale';
 import { interpolate } from 'd3-interpolate';
+
 // we need to bring in our nested components as well, was required to bring in the source vs dist folder to get it to mount
-import { KeyboardInstructions } from '../../../node_modules/@visa/keyboard-instructions/src/components/keyboard-instructions/keyboard-instructions';
-import { DataTable } from '../../../node_modules/@visa/visa-charts-data-table/src/components/data-table/data-table';
+import { KeyboardInstructions } from '@visa/keyboard-instructions/src/components/keyboard-instructions/keyboard-instructions';
+import { DataTable } from '@visa/visa-charts-data-table/src/components/data-table/data-table';
+
+// importing custom languages and locales
+import { hu } from '@visa/visa-charts-utils/src/utils/localization/languages/hu';
+import { HU } from '@visa/visa-charts-utils/src/utils/localization/numeralLocales/hu';
 
 import Utils from '@visa/visa-charts-utils';
 import UtilsDev from '@visa/visa-charts-utils-dev';
@@ -70,6 +75,7 @@ describe('<scatter-plot>', () => {
 
     // disable accessibility validation to keep output stream(terminal) clean
     const EXPECTEDACCESSIBILITY = { ...ScatterPlotDefaultValues.accessibility, disableValidation: true };
+    const EXPECTEDLOCALIZATION = { ...ScatterPlotDefaultValues.localization, skipValidation: true };
 
     beforeEach(async () => {
       page = await newSpecPage({
@@ -82,6 +88,7 @@ describe('<scatter-plot>', () => {
       component.xAccessor = EXPECTEDXACCESSOR;
       component.yAccessor = EXPECTEDYACCESSOR;
       component.accessibility = EXPECTEDACCESSIBILITY;
+      component.localization = EXPECTEDLOCALIZATION;
       component.uniqueID = 'scatter-plot-unit-test';
       component.unitTest = true;
     });
@@ -102,6 +109,28 @@ describe('<scatter-plot>', () => {
       });
 
       it('should render with minimal props[data,(group,x,y)Accessor] given', async () => {
+        // ACT
+        page.root.appendChild(component);
+        await page.waitForChanges();
+
+        // flush labels for testing to ensure opacity of 1 on initial render
+        const elements = page.doc.querySelectorAll('[data-testid=dataLabel]');
+        await asyncForEach(elements, async element => {
+          flushTransitions(element);
+          await page.waitForChanges();
+        });
+
+        // ASSERT
+        expect(page.root).toMatchSnapshot();
+      });
+
+      it('localization: should render localized with minimal props[data,accessors] given', async () => {
+        component.localization = {
+          language: hu,
+          numeralLocale: HU,
+          skipValidation: true,
+          overwrite: false
+        };
         // ACT
         page.root.appendChild(component);
         await page.waitForChanges();
@@ -153,8 +182,8 @@ describe('<scatter-plot>', () => {
             nextTestSelector: '[data-testid=marker][data-id=marker-A-2-1000]',
             keyDownObject: { key: 'ArrowRight', code: 'ArrowRight', keyCode: 39 },
             testProps: {
-              selectorAriaLabel: 'group A. item 1. value 2.7k. Point 1 of 3.',
-              nextSelectorAriaLabel: 'group A. item 2. value 1k. Point 2 of 3.',
+              selectorAriaLabel: 'group A. item 1. value 2.7k. Point 1.',
+              nextSelectorAriaLabel: 'group A. item 2. value 1k. Point 2.',
               accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true }
             }
           },
@@ -164,8 +193,8 @@ describe('<scatter-plot>', () => {
             nextTestSelector: '[data-testid=marker][data-id=marker-A-1-2700]',
             keyDownObject: { key: 'ArrowRight', code: 'ArrowRight', keyCode: 39 },
             testProps: {
-              selectorAriaLabel: 'A. 3. 4k. Point 3 of 3.',
-              nextSelectorAriaLabel: 'A. 1. 2.7k. Point 1 of 3.'
+              selectorAriaLabel: 'A. 3. 4k. Point 3.',
+              nextSelectorAriaLabel: 'A. 1. 2.7k. Point 1.'
             }
           },
           accessibility_keyboard_nav_left_arrow_sibling: {
@@ -174,8 +203,8 @@ describe('<scatter-plot>', () => {
             nextTestSelector: '[data-testid=marker][data-id=marker-A-2-1000]',
             keyDownObject: { key: 'ArrowLeft', code: 'ArrowLeft', keyCode: 37 },
             testProps: {
-              selectorAriaLabel: 'group A. item 3. value 4k. Point 3 of 3.',
-              nextSelectorAriaLabel: 'group A. item 2. value 1k. Point 2 of 3.',
+              selectorAriaLabel: 'group A. item 3. value 4k. Point 3.',
+              nextSelectorAriaLabel: 'group A. item 2. value 1k. Point 2.',
               accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true }
             }
           },
@@ -185,8 +214,8 @@ describe('<scatter-plot>', () => {
             nextTestSelector: '[data-testid=marker][data-id=marker-A-3-4004]',
             keyDownObject: { key: 'ArrowLeft', code: 'ArrowLeft', keyCode: 37 },
             testProps: {
-              selectorAriaLabel: 'A. 1. 2.7k. Point 1 of 3.',
-              nextSelectorAriaLabel: 'A. 3. 4k. Point 3 of 3.'
+              selectorAriaLabel: 'A. 1. 2.7k. Point 1.',
+              nextSelectorAriaLabel: 'A. 3. 4k. Point 3.'
             }
           },
           accessibility_keyboard_nav_up_arrow_cousin: {
@@ -195,8 +224,8 @@ describe('<scatter-plot>', () => {
             nextTestSelector: '[data-testid=marker][data-id=marker-A-1-2700]',
             keyDownObject: { key: 'ArrowUp', code: 'ArrowUp', keyCode: 38 },
             testProps: {
-              selectorAriaLabel: 'B. 4. 2.5k. Point 1 of 3.',
-              nextSelectorAriaLabel: 'A. 1. 2.7k. Point 1 of 3.'
+              selectorAriaLabel: 'B. 4. 2.5k. Point 1.',
+              nextSelectorAriaLabel: 'A. 1. 2.7k. Point 1.'
             }
           },
           accessibility_keyboard_nav_up_arrow_cousin_loop: {
@@ -205,8 +234,8 @@ describe('<scatter-plot>', () => {
             nextTestSelector: '[data-testid=marker][data-id=marker-D-11-8845]',
             keyDownObject: { key: 'ArrowUp', code: 'ArrowUp', keyCode: 38 },
             testProps: {
-              selectorAriaLabel: 'A. 1. 2.7k. Point 1 of 3.',
-              nextSelectorAriaLabel: 'D. 11. 8.8k. Point 1 of 4.'
+              selectorAriaLabel: 'A. 1. 2.7k. Point 1.',
+              nextSelectorAriaLabel: 'D. 11. 8.8k. Point 1.'
             }
           },
           accessibility_keyboard_nav_down_arrow_cousin: {
@@ -215,8 +244,8 @@ describe('<scatter-plot>', () => {
             nextTestSelector: '[data-testid=marker][data-id=marker-B-4-2454]',
             keyDownObject: { key: 'ArrowDown', code: 'ArrowDown', keyCode: 40 },
             testProps: {
-              selectorAriaLabel: 'A. 1. 2.7k. Point 1 of 3.',
-              nextSelectorAriaLabel: 'B. 4. 2.5k. Point 1 of 3.'
+              selectorAriaLabel: 'A. 1. 2.7k. Point 1.',
+              nextSelectorAriaLabel: 'B. 4. 2.5k. Point 1.'
             }
           },
           accessibility_keyboard_nav_down_arrow_cousin_loop: {
@@ -225,8 +254,8 @@ describe('<scatter-plot>', () => {
             nextTestSelector: '[data-testid=marker][data-id=marker-A-1-2700]',
             keyDownObject: { key: 'ArrowDown', code: 'ArrowDown', keyCode: 40 },
             testProps: {
-              selectorAriaLabel: 'D. 11. 8.8k. Point 1 of 4.',
-              nextSelectorAriaLabel: 'A. 1. 2.7k. Point 1 of 3.'
+              selectorAriaLabel: 'D. 11. 8.8k. Point 1.',
+              nextSelectorAriaLabel: 'A. 1. 2.7k. Point 1.'
             }
           },
           accessibility_keyboard_nav_shift_enter_to_group: {
@@ -235,8 +264,8 @@ describe('<scatter-plot>', () => {
             nextTestSelector: '[data-testid=marker-series-group][data-id=marker-series-A]',
             keyDownObject: { key: 'Enter', code: 'Enter', keyCode: 13, shiftKey: true },
             testProps: {
-              selectorAriaLabel: 'A. 1. 2.7k. Point 1 of 3.',
-              nextSelectorAriaLabel: 'A. Scatter group 1 of 4 which contains 3 interactive points.'
+              selectorAriaLabel: 'A. 1. 2.7k. Point 1.',
+              nextSelectorAriaLabel: 'A. scatter group 1.'
             }
           }
           // accessibility_keyboard_nav_enter_group: {
@@ -1427,8 +1456,8 @@ describe('<scatter-plot>', () => {
                 '<p style="margin: 0;"><b>A<br></b>Test Item:<b>1</b><br>Y Axis:<b>2.7k</b></p>'
             };
             const innerAriaContent = {
-              dataKeyNames_custom_on_load: 'group A. Test Item 1. value 2.7k. Point 1 of 3.',
-              dataKeyNames_custom_on_update: 'group A. Test Item 1. value 2.7k. Point 1 of 3.'
+              dataKeyNames_custom_on_load: 'group A. Test Item 1. value 2.7k. Point 1.',
+              dataKeyNames_custom_on_update: 'group A. Test Item 1. value 2.7k. Point 1.'
             };
             const innerTestProps = { ...unitTestTooltip[test].testProps, ...innerTooltipProps[test] };
             const customDataKeyNames = { dataKeyNames: { item: 'Test Item' } };
@@ -1457,7 +1486,7 @@ describe('<scatter-plot>', () => {
                     ...customDataKeyNames,
                     ...customSizeConfig,
                     accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true },
-                    selectorAriaLabel: 'group A. Test Item 1. value $2.7k. Point 1 of 3.'
+                    selectorAriaLabel: 'group A. Test Item 1. value $2.7k. Point 1.'
                   },
                   innerTestSelector,
                   `<p style="margin: 0;"><b>A<br></b>Test Item:<b>1</b><br>Y Axis:<b>2.7k</b><br>Value:<b>$2.7k</b></p>`

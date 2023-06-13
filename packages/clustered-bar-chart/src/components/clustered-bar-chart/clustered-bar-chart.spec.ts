@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -9,9 +9,14 @@ import { newSpecPage, SpecPage } from '@stencil/core/testing';
 import { ClusteredBarChart } from './clustered-bar-chart';
 import { ClusteredBarChartDefaultValues } from './clustered-bar-chart-default-values';
 import { scaleBand, scaleOrdinal, scaleLinear } from 'd3-scale';
+
 // we need to bring in our nested components as well, was required to bring in the source vs dist folder to get it to mount
-import { KeyboardInstructions } from '../../../node_modules/@visa/keyboard-instructions/src/components/keyboard-instructions/keyboard-instructions';
-import { DataTable } from '../../../node_modules/@visa/visa-charts-data-table/src/components/data-table/data-table';
+import { KeyboardInstructions } from '@visa/keyboard-instructions/src/components/keyboard-instructions/keyboard-instructions';
+import { DataTable } from '@visa/visa-charts-data-table/src/components/data-table/data-table';
+
+// importing custom languages and locales
+import { hu } from '@visa/visa-charts-utils/src/utils/localization/languages/hu';
+import { HU } from '@visa/visa-charts-utils/src/utils/localization/numeralLocales/hu';
 
 import Utils from '@visa/visa-charts-utils';
 import UtilsDev from '@visa/visa-charts-utils-dev';
@@ -74,6 +79,7 @@ describe('<clustered-bar-chart>', () => {
 
     // disable accessibility validation to keep output stream(terminal) clean
     const EXPECTEDACCESSIBILITY = { ...ClusteredBarChartDefaultValues.accessibility, disableValidation: true };
+    const EXPECTEDLOCALIZATION = { ...ClusteredBarChartDefaultValues.localization, skipValidation: true };
 
     beforeEach(async () => {
       page = await newSpecPage({
@@ -88,6 +94,7 @@ describe('<clustered-bar-chart>', () => {
       component.groupAccessor = EXPECTEDGROUPACCESSOR;
       component.valueAccessor = EXPECTEDVALUEACCESSOR;
       component.accessibility = EXPECTEDACCESSIBILITY;
+      component.localization = EXPECTEDLOCALIZATION;
     });
 
     it('should build', () => {
@@ -106,6 +113,28 @@ describe('<clustered-bar-chart>', () => {
       });
 
       it('should render with minimal props[data,oridnalAccessor,groupAccessor,valueAccessor] given', async () => {
+        // ACT
+        page.root.appendChild(component);
+        await page.waitForChanges();
+
+        // flush labels for testing to ensure opacity of 1 on initial render
+        const elements = page.doc.querySelectorAll('[data-testid=dataLabel]');
+        await asyncForEach(elements, async element => {
+          flushTransitions(element);
+          await page.waitForChanges();
+        });
+
+        // ASSERT
+        expect(page.root).toMatchSnapshot();
+      });
+
+      it('localization: should render localized with minimal props[data,accessors] given', async () => {
+        component.localization = {
+          language: hu,
+          numeralLocale: HU,
+          skipValidation: true,
+          overwrite: false
+        };
         // ACT
         page.root.appendChild(component);
         await page.waitForChanges();
@@ -178,8 +207,8 @@ describe('<clustered-bar-chart>', () => {
             nextTestSelector: '[data-testid=clustered-bar-wrapper][data-id=clustered-bar-wrapper-2016]',
             keyDownObject: { key: 'Enter', code: 'Enter', keyCode: 13, shiftKey: true },
             testProps: {
-              selectorAriaLabel: 'year 2016. item A. value -30. Bar 1 of 3.',
-              nextSelectorAriaLabel: 'year 2016. Cluster 1 of 3 which contains 3 interactive bars.',
+              selectorAriaLabel: 'year 2016. item A. value -30. Bar 1.',
+              nextSelectorAriaLabel: 'year 2016. cluster 1.',
               accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true }
             }
           },
@@ -201,8 +230,8 @@ describe('<clustered-bar-chart>', () => {
             nextTestSelector: '[data-testid=bar][data-id=bar-2016-B]',
             keyDownObject: { key: 'ArrowRight', code: 'ArrowRight', keyCode: 39 },
             testProps: {
-              selectorAriaLabel: 'year 2016. item A. value -30. Bar 1 of 3.',
-              nextSelectorAriaLabel: 'year 2016. item B. value -5. Bar 2 of 3.',
+              selectorAriaLabel: 'year 2016. item A. value -30. Bar 1.',
+              nextSelectorAriaLabel: 'year 2016. item B. value -5. Bar 2.',
               accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true }
             }
           },
@@ -212,8 +241,8 @@ describe('<clustered-bar-chart>', () => {
             nextTestSelector: '[data-testid=bar][data-id=bar-2016-A]',
             keyDownObject: { key: 'ArrowRight', code: 'ArrowRight', keyCode: 39 },
             testProps: {
-              selectorAriaLabel: '2016. C. 22. Bar 3 of 3.',
-              nextSelectorAriaLabel: '2016. A. -30. Bar 1 of 3.'
+              selectorAriaLabel: '2016. C. 22. Bar 3.',
+              nextSelectorAriaLabel: '2016. A. -30. Bar 1.'
             }
           },
           accessibility_keyboard_nav_left_arrow_sibling: {
@@ -222,8 +251,8 @@ describe('<clustered-bar-chart>', () => {
             nextTestSelector: '[data-testid=bar][data-id=bar-2016-A]',
             keyDownObject: { key: 'ArrowLeft', code: 'ArrowLeft', keyCode: 37 },
             testProps: {
-              selectorAriaLabel: 'year 2016. item B. value -5. Bar 2 of 3.',
-              nextSelectorAriaLabel: 'year 2016. item A. value -30. Bar 1 of 3.',
+              selectorAriaLabel: 'year 2016. item B. value -5. Bar 2.',
+              nextSelectorAriaLabel: 'year 2016. item A. value -30. Bar 1.',
               accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true }
             }
           },
@@ -233,8 +262,8 @@ describe('<clustered-bar-chart>', () => {
             nextTestSelector: '[data-testid=bar][data-id=bar-2016-C]',
             keyDownObject: { key: 'ArrowLeft', code: 'ArrowLeft', keyCode: 37 },
             testProps: {
-              selectorAriaLabel: '2016. A. -30. Bar 1 of 3.',
-              nextSelectorAriaLabel: '2016. C. 22. Bar 3 of 3.'
+              selectorAriaLabel: '2016. A. -30. Bar 1.',
+              nextSelectorAriaLabel: '2016. C. 22. Bar 3.'
             }
           },
           accessibility_keyboard_nav_up_arrow_cousin: {
@@ -243,8 +272,8 @@ describe('<clustered-bar-chart>', () => {
             nextTestSelector: '[data-testid=bar][data-id=bar-2016-A]',
             keyDownObject: { key: 'ArrowUp', code: 'ArrowUp', keyCode: 38 },
             testProps: {
-              selectorAriaLabel: '2017. A. 15. Bar 1 of 3.',
-              nextSelectorAriaLabel: '2016. A. -30. Bar 1 of 3.'
+              selectorAriaLabel: '2017. A. 15. Bar 1.',
+              nextSelectorAriaLabel: '2016. A. -30. Bar 1.'
             }
           },
           accessibility_keyboard_nav_up_arrow_cousin_loop: {
@@ -253,8 +282,8 @@ describe('<clustered-bar-chart>', () => {
             nextTestSelector: '[data-testid=bar][data-id=bar-2018-A]',
             keyDownObject: { key: 'ArrowUp', code: 'ArrowUp', keyCode: 38 },
             testProps: {
-              selectorAriaLabel: '2016. A. -30. Bar 1 of 3.',
-              nextSelectorAriaLabel: '2018. A. 26. Bar 1 of 3.'
+              selectorAriaLabel: '2016. A. -30. Bar 1.',
+              nextSelectorAriaLabel: '2018. A. 26. Bar 1.'
             }
           },
           accessibility_keyboard_nav_down_arrow_cousin: {
@@ -263,8 +292,8 @@ describe('<clustered-bar-chart>', () => {
             nextTestSelector: '[data-testid=bar][data-id=bar-2017-A]',
             keyDownObject: { key: 'ArrowDown', code: 'ArrowDown', keyCode: 40 },
             testProps: {
-              selectorAriaLabel: '2016. A. -30. Bar 1 of 3.',
-              nextSelectorAriaLabel: '2017. A. 15. Bar 1 of 3.'
+              selectorAriaLabel: '2016. A. -30. Bar 1.',
+              nextSelectorAriaLabel: '2017. A. 15. Bar 1.'
             }
           },
           accessibility_keyboard_nav_down_arrow_cousin_loop: {
@@ -273,8 +302,8 @@ describe('<clustered-bar-chart>', () => {
             nextTestSelector: '[data-testid=bar][data-id=bar-2016-A]',
             keyDownObject: { key: 'ArrowDown', code: 'ArrowDown', keyCode: 40 },
             testProps: {
-              selectorAriaLabel: 'year 2018. item A. value 26. Bar 1 of 3.',
-              nextSelectorAriaLabel: 'year 2016. item A. value -30. Bar 1 of 3.',
+              selectorAriaLabel: 'year 2018. item A. value 26. Bar 1.',
+              nextSelectorAriaLabel: 'year 2016. item A. value -30. Bar 1.',
               accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true }
             }
           }
@@ -1269,8 +1298,8 @@ describe('<clustered-bar-chart>', () => {
                 '<p style="margin: 0;"><b>A<br></b>Test Year:<b>2016</b><br>Y Axis:<b>-30</b></p>'
             };
             const innerAriaContent = {
-              dataKeyNames_custom_on_load: 'Test Year 2016. item A. value -30. Bar 1 of 3.',
-              dataKeyNames_custom_on_update: 'Test Year 2016. item A. value -30. Bar 1 of 3.'
+              dataKeyNames_custom_on_load: 'Test Year 2016. item A. value -30. Bar 1.',
+              dataKeyNames_custom_on_update: 'Test Year 2016. item A. value -30. Bar 1.'
             };
             const innerTestProps = { ...unitTestTooltip[test].testProps, ...innerTooltipProps[test] };
             const customDataKeyNames = { dataKeyNames: { year: 'Test Year' } };

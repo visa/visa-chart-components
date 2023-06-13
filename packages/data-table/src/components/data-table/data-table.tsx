@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -11,7 +11,7 @@ import { DataTableDefaultValues } from './data-table-default-values';
 import { select } from 'd3-selection';
 import Utils from '@visa/visa-charts-utils';
 
-const { getLicenses } = Utils;
+const { translate, getLicenses } = Utils;
 
 @Component({
   tag: 'data-table',
@@ -20,6 +20,7 @@ const { getLicenses } = Utils;
 export class DataTable {
   // basic props for the table
   @Prop({ mutable: true }) uniqueID: string;
+  @Prop({ mutable: true }) language: string = DataTableDefaultValues.language;
   @Prop({ mutable: true }) isCompact: boolean = DataTableDefaultValues.isCompact;
   @Prop({ mutable: true }) hideDataTable: boolean = DataTableDefaultValues.hideDataTable;
   @Prop({ mutable: true }) margin: IBoxModelType = DataTableDefaultValues.margin;
@@ -93,19 +94,13 @@ export class DataTable {
         .attr('data-header', 'header');
 
       if (this.secondaryData) {
-        this.table.attr(
-          'aria-label',
-          'You are currently on data table 1 of 2. This table contains data for the chart nodes'
-        );
+        this.table.attr('aria-label', `${translate('dataTable.table1', this.language)}.`);
 
         this.secondaryTable = select(this.dataTableEl)
           .select('#visa-viz-data-table-container-' + this.uniqueID)
           .append('table')
           .attr('class', 'vcc-secondary-data-table vcc-data-table vcc-state--single-select')
-          .attr(
-            'aria-label',
-            'You are currently on data table 2 of 2. This table contains the data for the chart links'
-          )
+          .attr('aria-label', `${translate('dataTable.table2', this.language)}.`)
           .classed('vcc-state--compact', this.isCompact)
           .attr('data-header', 'header');
       }
@@ -239,7 +234,7 @@ export class DataTable {
                 (this.padding.left + this.margin.left - 35 < 0 ? 0 : 35)}px,
                 ${this.padding.left + this.margin.left - 35 < 0 ? 0 : -40}px)`
             }}
-            aria-label="display data table"
+            aria-label={`${translate('dataTable.display', this.language)}`}
             aria-expanded={this.showTable ? 'true' : 'false'}
             role="button"
             tabIndex={0}

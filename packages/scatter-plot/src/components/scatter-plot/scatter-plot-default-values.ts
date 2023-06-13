@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -26,6 +26,9 @@ export class ScatterPlotDefaultValues {
     right: 50,
     left: 60
   };
+
+  static readonly localization = propDefaultValues.localization;
+
   static readonly xAccessor = 'metric';
   static readonly yAccessor = 'value';
   static readonly groupAccessor = 'category';

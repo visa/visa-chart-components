@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -26,6 +26,9 @@ export class CirclePackingDefaultValues {
     right: 400 * 0.01,
     left: 400 * 0.01
   };
+
+  static readonly localization = propDefaultValues.localization;
+
   static readonly dataDepth = 5;
   static readonly displayDepth = 2;
   static readonly parentAccessor = 'parentNode';

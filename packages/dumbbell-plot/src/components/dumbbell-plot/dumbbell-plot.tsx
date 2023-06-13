@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -14,6 +14,7 @@ import { scalePoint, scaleLinear, scaleTime } from 'd3-scale';
 import { nest } from 'd3-collection';
 import {
   IBoxModelType,
+  ILocalizationType,
   IHoverStyleType,
   IClickStyleType,
   IAxisType,
@@ -35,6 +36,9 @@ import 'd3-transition';
 import Utils from '@visa/visa-charts-utils';
 import { v4 as uuid } from 'uuid';
 const {
+  getGlobalInstances,
+  configLocalization,
+  getActiveLanguageString,
   getAccessibleStrokes,
   ensureTextContrast,
   createTextStrokeFilter,
@@ -84,6 +88,7 @@ const {
   visaColors,
   transitionEndAll,
   validateAccessibilityProps,
+  validateLocalizationProps,
   findTagLevel,
   prepareRenderChange,
   roundTo,
@@ -116,6 +121,7 @@ export class DumbbellPlot {
   // Data (2/7)
   @Prop() data: object[];
   @Prop() uniqueID: string;
+  @Prop({ mutable: true }) localization: ILocalizationType = DumbbellPlotDefaultValues.localization;
   @Prop({ mutable: true }) ordinalAccessor: string = DumbbellPlotDefaultValues.ordinalAccessor;
   @Prop({ mutable: true }) valueAccessor: string = DumbbellPlotDefaultValues.valueAccessor;
   @Prop({ mutable: true }) seriesAccessor: string = DumbbellPlotDefaultValues.seriesAccessor;
@@ -171,6 +177,7 @@ export class DumbbellPlot {
   @Element()
   dumbbellPlotEl: HTMLElement;
   shouldValidateAccessibility: boolean = true;
+  shouldValidateLocalization: boolean = true;
   svg: any;
   root: any;
   rootG: any;
@@ -331,6 +338,7 @@ export class DumbbellPlot {
   shouldSetYAxisAccessibility: boolean = false;
   shouldSetXAxisAccessibility: boolean = false;
   shouldSetAnnotationAccessibility: boolean = false;
+  shouldSetLocalizationConfig: boolean = false;
   topLevel: string = 'h2';
   bottomLevel: string = 'p';
   strokes: any = {};
@@ -922,6 +930,45 @@ export class DumbbellPlot {
     }
   }
 
+  @Watch('localization')
+  localizationWatcher(_newVal, _oldVal) {
+    this.shouldValidate = true;
+
+    // language
+    const newLanguage = _newVal && _newVal.language ? _newVal.language : false;
+    const oldLanguage = _oldVal && _oldVal.language ? _oldVal.language : false;
+    if (newLanguage !== oldLanguage) {
+      this.shouldSetLocalizationConfig = true;
+      this.shouldUpdateTableData = true;
+      this.shouldValidateDataLabelAccessor = true;
+      this.shouldRedrawWrapper = true;
+      this.shouldUpdateDescriptionWrapper = true;
+      this.shouldSetChartAccessibilityCount = true;
+      this.shouldSetYAxisAccessibility = true;
+      this.shouldSetXAxisAccessibility = true;
+      this.shouldUpdateDescriptionWrapper = true;
+      this.shouldSetGeometryAriaLabels = true;
+      this.shouldSetParentSVGAccessibility = true;
+    }
+
+    // numeralLocale
+    const newNumeralLocale = _newVal && _newVal.numeralLocale ? _newVal.numeralLocale : false;
+    const oldNumeralLocale = _oldVal && _oldVal.numeralLocale ? _oldVal.numeralLocale : false;
+    if (newNumeralLocale !== oldNumeralLocale) {
+      this.shouldSetLocalizationConfig = true;
+      this.shouldUpdateTableData = true;
+      this.shouldValidateDataLabelAccessor = true;
+      this.shouldRedrawWrapper = true;
+      this.shouldUpdateDescriptionWrapper = true;
+      this.shouldSetChartAccessibilityCount = true;
+      this.shouldSetYAxisAccessibility = true;
+      this.shouldSetXAxisAccessibility = true;
+      this.shouldUpdateDescriptionWrapper = true;
+      this.shouldSetGeometryAriaLabels = true;
+      this.shouldSetParentSVGAccessibility = true;
+    }
+  }
+
   @Watch('legend')
   legendWatcher(_newVal, _oldVal) {
     this.shouldUpdateLegend = true;
@@ -1069,6 +1116,7 @@ export class DumbbellPlot {
       this.duration = 0;
       this.chartID = chartID;
       this.dumbbellPlotEl.id = this.chartID;
+      this.setLocalizationConfig();
       this.setTagLevels();
       this.checkIfSafari();
       this.validateLayout();
@@ -1085,6 +1133,7 @@ export class DumbbellPlot {
       this.validateDataLabelAccessor();
       this.setTableData();
       this.shouldValidateAccessibilityProps();
+      this.shouldValidateLocalizationProps();
       this.setColors();
       resolve('component will load');
     });
@@ -1103,6 +1152,7 @@ export class DumbbellPlot {
     return new Promise(resolve => {
       this.defaults = true;
       this.shouldValidateAccessibilityProps();
+      this.shouldValidateLocalizationProps();
       this.renderRootElements();
       this.setTooltipInitialStyle();
       this.setChartDescriptionWrapper();
@@ -1424,6 +1474,21 @@ export class DumbbellPlot {
     }).then(() => this.drawEndEvent.emit({ chartID: this.chartID }));
   }
 
+  shouldValidateLocalizationProps() {
+    const windowInstances = getGlobalInstances();
+    const languageString = windowInstances.i18Next.language;
+    const languageObject = windowInstances.i18Next.getResourceBundle(languageString);
+    const numeralObject = windowInstances.numeral.localeData();
+    if (this.shouldValidateLocalization && !this.localization.skipValidation) {
+      this.shouldValidateLocalization = false;
+      validateLocalizationProps(this.chartID, {
+        ...this.localization,
+        language: languageObject,
+        numeralLocale: numeralObject
+      });
+    }
+  }
+
   shouldValidateAccessibilityProps() {
     if (this.shouldValidateAccessibility && !this.accessibility.disableValidation) {
       this.shouldValidateAccessibility = false;
@@ -1581,6 +1646,14 @@ export class DumbbellPlot {
   //     this.colorArr = this.rawColors
   //   }
   // }
+
+  getLanguageString() {
+    return getActiveLanguageString(this.localization);
+  }
+
+  setLocalizationConfig() {
+    configLocalization(this.localization);
+  }
 
   setLayoutData() {
     this.padding = typeof this.padding === 'string' ? getPadding(this.padding) : this.padding;
@@ -3555,7 +3628,7 @@ export class DumbbellPlot {
   }
 
   setAnnotationAccessibility() {
-    setAccessAnnotation(this.dumbbellPlotEl, this.annotations);
+    setAccessAnnotation(this.getLanguageString(), this.dumbbellPlotEl, this.annotations);
   }
 
   // new accessibility functions added here
@@ -3566,6 +3639,7 @@ export class DumbbellPlot {
 
   setChartDescriptionWrapper() {
     initializeDescriptionRoot({
+      language: this.getLanguageString(),
       rootEle: this.dumbbellPlotEl,
       title: this.accessibility.title || this.mainTitle,
       chartTag: 'dumbbell-plot',
@@ -3585,8 +3659,9 @@ export class DumbbellPlot {
     const keys = scopeDataKeys(this, chartAccessors, 'dumbbell-plot');
     delete keys[this.ordinalAccessor];
     setAccessibilityController({
-      node: this.svg.node(),
       chartTag: 'dumbbell-plot',
+      language: this.getLanguageString(),
+      node: this.svg.node(),
       title: this.accessibility.title || this.mainTitle,
       description: this.subTitle,
       uniqueID: this.chartID,
@@ -3618,6 +3693,8 @@ export class DumbbellPlot {
     delete keys[this.ordinalAccessor];
     this.update.each((_d, i, n) => {
       setElementFocusHandler({
+        chartTag: 'dumbbell-plot',
+        language: this.getLanguageString(),
         node: n[i],
         geomType: 'dumbbell',
         includeKeyNames: this.accessibility.includeDataKeyNames,
@@ -3655,31 +3732,31 @@ export class DumbbellPlot {
   }
 
   setChartAccessibilityTitle() {
-    setAccessTitle(this.dumbbellPlotEl, this.accessibility.title || this.mainTitle);
+    setAccessTitle(this.getLanguageString(), this.dumbbellPlotEl, this.accessibility.title || this.mainTitle);
   }
 
   setChartAccessibilitySubtitle() {
-    setAccessSubtitle(this.dumbbellPlotEl, this.subTitle);
+    setAccessSubtitle(this.getLanguageString(), this.dumbbellPlotEl, this.subTitle);
   }
 
   setChartAccessibilityLongDescription() {
-    setAccessLongDescription(this.dumbbellPlotEl, this.accessibility.longDescription);
+    setAccessLongDescription(this.getLanguageString(), this.dumbbellPlotEl, this.accessibility.longDescription);
   }
 
   setChartAccessibilityExecutiveSummary() {
-    setAccessExecutiveSummary(this.dumbbellPlotEl, this.accessibility.executiveSummary);
+    setAccessExecutiveSummary(this.getLanguageString(), this.dumbbellPlotEl, this.accessibility.executiveSummary);
   }
 
   setChartAccessibilityPurpose() {
-    setAccessPurpose(this.dumbbellPlotEl, this.accessibility.purpose);
+    setAccessPurpose(this.getLanguageString(), this.dumbbellPlotEl, this.accessibility.purpose);
   }
 
   setChartAccessibilityContext() {
-    setAccessContext(this.dumbbellPlotEl, this.accessibility.contextExplanation);
+    setAccessContext(this.getLanguageString(), this.dumbbellPlotEl, this.accessibility.contextExplanation);
   }
 
   setChartAccessibilityStatisticalNotes() {
-    setAccessStatistics(this.dumbbellPlotEl, this.accessibility.statisticalNotes);
+    setAccessStatistics(this.getLanguageString(), this.dumbbellPlotEl, this.accessibility.statisticalNotes);
   }
 
   setChartCountAccessibility() {
@@ -3694,7 +3771,7 @@ export class DumbbellPlot {
   }
 
   setChartAccessibilityStructureNotes() {
-    setAccessStructure(this.dumbbellPlotEl, this.accessibility.structureNotes);
+    setAccessStructure(this.getLanguageString(), this.dumbbellPlotEl, this.accessibility.structureNotes);
   }
   // new accessibility stuff ends here
 
@@ -3957,12 +4034,17 @@ export class DumbbellPlot {
     // everything between this comment and the third should eventually
     // be moved into componentWillUpdate (if the stenicl bug is fixed)
     this.init();
+    if (this.shouldSetLocalizationConfig) {
+      this.setLocalizationConfig();
+      this.shouldSetLocalizationConfig = false;
+    }
     if (this.shouldSetTagLevels) {
       this.setTagLevels();
       this.shouldSetTagLevels = false;
     }
     if (this.shouldValidate) {
       this.shouldValidateAccessibilityProps();
+      this.shouldValidateLocalizationProps();
       this.shouldValidate = false;
     }
     if (this.shouldValidateLayout) {
@@ -4059,6 +4141,7 @@ export class DumbbellPlot {
           <div class="dumbbell-legend vcl-legend" style={{ display: this.legend.visible ? 'block' : 'none' }} />
           <keyboard-instructions
             uniqueID={this.chartID}
+            language={this.getLanguageString()}
             geomType={'dumbbell'}
             chartTag={'dumbbell-plot'}
             width={this.width - (this.margin ? this.margin.right || 0 : 0)}
@@ -4075,6 +4158,7 @@ export class DumbbellPlot {
           <data-table
             uniqueID={this.chartID}
             unitTest={this.unitTest}
+            language={this.getLanguageString()}
             isCompact
             tableColumns={this.tableColumns}
             data={this.tableData}

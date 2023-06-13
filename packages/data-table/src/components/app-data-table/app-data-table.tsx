@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -12,6 +12,7 @@ import { Component, State, Element, h } from '@stencil/core';
   styleUrl: 'app-data-table.scss'
 })
 export class AppDataTable {
+  @State() language: string = 'en';
   @State() data: any = [];
   @State() hoverElement: any = '';
   @State() clickElement: any = [];
@@ -42,6 +43,7 @@ export class AppDataTable {
         <data-table
           isCompact
           uniqueID="table-1"
+          language={'en'}
           data={[
             { country: 'China', value: '30', region: 'Asia' },
             { country: 'Japan', value: '10', region: 'Asia' },

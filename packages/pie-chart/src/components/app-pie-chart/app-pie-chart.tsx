@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -10,6 +10,12 @@ import '@visa/visa-charts-data-table';
 import '@visa/keyboard-instructions';
 import { select } from 'd3-selection';
 import Utils from '@visa/visa-charts-utils';
+
+// importing custom languages
+// import { hu } from '../../../../utils/src/utils/localization/languages/hu';
+
+// importing numeralLocales
+// import { HU } from '@visa/visa-charts-utils/src/utils/localization/numeralLocales/hu';
 
 const { formatStats } = Utils;
 @Component({
@@ -42,15 +48,21 @@ export class AppPieChart {
   @State() edgeline: any = false;
   @State() access: any = {
     includeDataKeyNames: true,
-    longDescription:
-      'This is a chart template that was made to showcase some of the capabilities of Visa Chart Components',
-    contextExplanation:
-      'This chart current data is determined by the Change Data button above while the props used are set in the props controls below.',
-    purpose:
-      'The purpose of this chart template is to provide an example of how to build a basic pie chart using the chart library',
-    statisticalNotes: 'This chart is using dummy data.',
-    disableValidation: false,
-    keyboardNavConfig: { disabled: false }
+    elementsAreInterface: false,
+    hideTextures: false,
+    disableValidation: true,
+    hideStrokes: false
+    // hideTextures: true,
+    // includeDataKeyNames: true,
+    // longDescription:
+    // 'This is a chart template that was made to showcase some of the capabilities of Visa Chart Components',
+    // contextExplanation:
+    // 'This chart current data is determined by the Change Data button above while the props used are set in the props controls below.',
+    // purpose:
+    // 'The purpose of this chart template is to provide an example of how to build a basic pie chart using the chart library',
+    // statisticalNotes: 'This chart is using dummy data.',
+    // disableValidation: false,
+    // keyboardNavConfig: { disabled: false }
   };
   @State() suppressEvents: boolean = false;
   @State() annotations: any = [
@@ -72,7 +84,7 @@ export class AppPieChart {
     },
     {
       note: {
-        label: 'oasijfoiajsf',
+        label: 'labelExample',
         bgPadding: 0,
         align: 'middle',
         wrap: 210
@@ -95,17 +107,17 @@ export class AppPieChart {
   ];
 
   startData: any = [
-    { label: '2018 Share', value: '3126000', otherValue: '4226000' },
+    { label: '2018 Share', value: '31206000', otherValue: '42026000' },
     { label: 'Total', value: '4324500', otherValue: '5126000' }
   ];
   dataStorage: any = [
     this.startData,
     [
-      { label: '2018 Share', value: '1000', otherValue: '6126000' },
+      { label: '2018 Share', value: '100000', otherValue: '61206000' },
       { label: 'Competitor 1', value: '1000', otherValue: '5126000' },
       { label: 'Competitor 2', value: '1000', otherValue: '4126000' },
-      { label: 'Competitor 3', value: '6000', otherValue: '3126000' },
-      { label: 'Competitor 4', value: '26000', otherValue: '1126000' }
+      { label: 'Competitor 3', value: '1000', otherValue: '3126000' },
+      { label: 'Competitor 4', value: '1000', otherValue: '1126000' }
     ],
     [
       { label: '2018 Share', value: '3126000', otherValue: '8126000' },
@@ -268,6 +280,11 @@ export class AppPieChart {
     console.log('placeannotations');
     const pieSlices = select('.pie-dataLabel-group').selectAll('.pie-dataLabel-highlight');
     console.log('pieSlices', pieSlices.size(), pieSlices);
+    const translateXY = 250;
+    const chartTop = -this.height + translateXY + this.padding.top / 2;
+    const chartBottom = translateXY - this.padding.bottom / 2;
+    const chartMiddle = chartTop + chartBottom - this.padding.bottom / 2;
+    const chartLeft = -this.padding.left / 2;
     const annotations = [];
     const quadrantHash = { 1: [], 2: [], 3: [], 4: [] };
     const quadrantStarts = {
@@ -275,20 +292,32 @@ export class AppPieChart {
         x: this.width - 50 - this.padding.left - this.padding.right,
         y: -(this.height - 50) + this.padding.top + this.padding.bottom
       },
-      2: { x: this.width - 100, y: this.height - 100 },
-      3: { x: -50, y: 50 },
-      4: { x: 0, y: 0 }
+      2: {
+        // x: this.width - 100, y: this.height - 100
+        x: this.width - 50 - this.padding.left - this.padding.right,
+        y: chartMiddle // (-this.height/2) // + this.padding.top + this.padding.bottom
+      },
+      3: { x: chartLeft, y: chartBottom },
+      4: { x: chartLeft, y: chartTop }
     };
-    console.log('we are placing annotations', pieSlices, this.data, this.annotations);
+    console.log(
+      'we are placing annotations',
+      pieSlices,
+      this.data,
+      this.annotations,
+      chartTop,
+      chartBottom,
+      chartMiddle
+    );
 
     pieSlices.each((d, i, n) => {
       const me = select(n[i]);
       const quadrant =
-        d.endAngle - d.startAngle < Math.PI / 2
+        d.startAngle + (d.endAngle - d.startAngle) / 2 < Math.PI / 2
           ? 1
-          : d.endAngle - d.startAngle < Math.PI
+          : d.startAngle + (d.endAngle - d.startAngle) / 2 < Math.PI
           ? 2
-          : d.endAngle - d.startAngle < Math.PI * 1.5
+          : d.startAngle + (d.endAngle - d.startAngle) / 2 < Math.PI * 1.5
           ? 3
           : 4;
       quadrantHash[quadrant].push({ ...d, quadrant });
@@ -307,7 +336,10 @@ export class AppPieChart {
         y: +me.attr('data-y'),
         color: me.attr('fill'),
         nx: quadrantStarts[quadrant].x - 100,
-        ny: quadrantStarts[quadrant].y + quadrantHash[quadrant].length * 50
+        ny:
+          quadrant === 3
+            ? quadrantStarts[quadrant].y - quadrantHash[quadrant].length * 50
+            : quadrantStarts[quadrant].y + quadrantHash[quadrant].length * 50
       });
     });
 
@@ -402,12 +434,18 @@ export class AppPieChart {
         </button>
         <div>
           <pie-chart
+            // localization={{
+            //   language: hu,
+            //   numeralLocale: HU,
+            //   skipValidation: false
+            // }}
             data={this.data}
             animationConfig={this.animations}
             mainTitle={'test'}
             subTitle={''}
             centerSubTitle={''}
             centerTitle={'Pie'}
+            colorPalette={'diverging_RtoG'}
             accessibility={this.access}
             suppressEvents={this.suppressEvents}
             height={this.height}
@@ -420,13 +458,13 @@ export class AppPieChart {
             labelOffset={0.0000001}
             showLabelNote={false}
             // colors={['blue','grey','brown','darkgreen','#eeeeee']}
-            colorPalette={'categorical'}
+            //colorPalette={'categorical'}
             hoverOpacity={0.15}
             cursor={'pointer'}
             sortOrder={'default'}
             showTooltip={true}
-            showPercentage={false}
-            showEdgeLine={this.edgeline}
+            showPercentage={true}
+            showEdgeLine={false}
             annotations={this.annotations}
             // referenceData={this.refData}
             // referenceStyle={{ color: 'supp_purple' }}
