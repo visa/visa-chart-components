@@ -1,6 +1,6 @@
 # @visa/charts-python
 
-This package bundles [visa chart components](../../) web components for use in [pyvisacharts](../). We leverage [stencil's component distribution](https://stenciljs.com/docs/custom-elements) in the creation of @visa/charts-python.
+This package bundles [visa chart components](../../) web components for use in [pyvisacharts](../). We leverage [stencil's component distribution](https://stenciljs.com/docs/custom-elements) in the creation of `@visa/charts-python`.
 
 ---
 
