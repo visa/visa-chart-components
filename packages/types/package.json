@@ -25,6 +25,8 @@
     "access": "public"
   },
   "devDependencies": {
+    "@types/lodash": "4.14.74",
+    "@types/node": "^11.13.5",
     "typescript": "^3.9.10"
   }
 }

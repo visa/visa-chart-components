@@ -42,6 +42,7 @@
     "yup": "^0.28.5"
   },
   "devDependencies": {
+    "@types/lodash": "4.14.74",
     "@types/node": "^11.13.5",
     "rollup": "^1.32.1",
     "rollup-plugin-commonjs": "^9.2.0",
