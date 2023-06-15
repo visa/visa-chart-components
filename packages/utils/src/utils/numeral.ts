@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -23,7 +23,7 @@ var numeral,
   formats = {},
   locales = {},
   defaults = {
-    currentLocale: 'en',
+    currentLocale: 'us',
     zeroFormat: null,
     nullFormat: null,
     defaultFormat: '0,0',
@@ -470,13 +470,14 @@ numeral.defaultFormat = function(format) {
   options.defaultFormat = typeof format === 'string' ? format : '0.0';
 };
 
-numeral.register = function(type, name, format) {
+numeral.register = function(type, name, format, overwrite) {
   name = name.toLowerCase();
 
-  if (this[type + 's'][name]) {
-    throw new TypeError(name + ' ' + type + ' already registered.');
+  if (!overwrite) {
+    if (this[type + 's'][name]) {
+      throw new TypeError(name + ' ' + type + ' already registered.');
+    }
   }
-
   this[type + 's'][name] = format;
 
   return format;
@@ -676,8 +677,8 @@ numeral.fn = Numeral.prototype = {
 /************************************
     Default Locale && Format
 ************************************/
-
-numeral.register('locale', 'en', {
+// note we changed default locale from en to us
+numeral.register('locale', 'us', {
   delimiters: {
     thousands: ',',
     decimal: '.'
