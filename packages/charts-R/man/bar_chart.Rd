@@ -49,7 +49,7 @@ Here is an example of bar-chart in action:
 To see all available options for the chart properties/API see \href{https://github.com/visa/visa-chart-components/tree/master/packages/bar-chart}{@visa/bar-chart}.
 }
 \examples{
-library(tidyverse)
+library(dplyr)
 bar_chart(BOD, "Time", "demand")
 mtcars \%>\%
   sample_n(5) \%>\%

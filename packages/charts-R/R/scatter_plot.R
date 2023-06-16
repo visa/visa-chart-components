@@ -23,7 +23,7 @@
 #' @return a visaChart htmlwidget object for plotting a scatter plot
 #' @export
 #' @examples
-#' library(tidyverse)
+#' library(dplyr)
 #' scatter_plot(mtcars[order(mtcars$cyl),], "wt", "mpg", "cyl")
 scatter_plot = function(data,
                         xAccessor,

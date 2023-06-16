@@ -49,6 +49,6 @@ Here is an example of scatter-plot in action:
 To see all available options for the chart properties/API see \href{https://github.com/visa/visa-chart-components/tree/master/packages/scatter-plot}{@visa/scatter-plot}.
 }
 \examples{
-library(tidyverse)
+library(dplyr)
 scatter_plot(mtcars[order(mtcars$cyl),], "wt", "mpg", "cyl")
 }

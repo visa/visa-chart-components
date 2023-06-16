@@ -47,5 +47,4 @@ Suggests:
     dplyr,
     knitr,
     rmarkdown,
-    tibble,
-    tidyverse
+    tibble

@@ -25,7 +25,7 @@
 #' @return a visaChart htmlwidget object for plotting a pie chart
 #' @export
 #' @examples
-#' library(tidyverse)
+#' library(dplyr)
 #' data.frame (HairEyeColor) %>%
 #'  filter(Hair=="Blond", Sex=="Male") %>%
 #'  mutate(blueEyes = if_else(Eye=="Blue", "Blue","Other")) %>%
