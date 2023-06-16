@@ -185,14 +185,14 @@ expect(parseFloat(transformData['translate'][0])).toBeLessThan(2);
 
 It is vital to the longevity of VCC to understand how the testing suite can be used/modified/extended. The below use case explanation is introducing how testing works in practice.
 
-![Software flow diagram of a testing use case. The numbers on this diagram correspond with the High Level Description section's numbered list of items. The items on the diagram and corresponding High Level Description items describe the testing use case.](./../../docs/test-use-case.png 'Testing Use Case Diagram')
+![Software flow diagram of a testing use case. The numbers on this diagram correspond with the High Level Description section's numbered list of items. The items on the diagram and corresponding High Level Description items describe the testing use case.](./../utils-dev/docs/test-use-case.png 'Testing Use Case Diagram')
 
 Note: the numbers on the above diagram correspond with the numbered list below.
 
 ### High Level Description
 
 1. The `bar-chart-spec.tsx` is rendering the `bar-chart` component which is coded in the `bar-chart.tsx` file. In general, `*-spec.tsx` file is the unit testing file, that renders a component over and over again for every test we choose to run. The `bar-chart` component will be the focus of our unit testing use case.
-2. When the `unitTest` flag is set to true, testing (selection) attributes (like `data-testid=chart-container`) are added to the component's DOM layers to make selection of specific parts of the component easier when the executing tests. For example, the `setTestingAttributes` function within `bar-chart.tsx` is assigning testing related `id`s to the component.
+2. When the `unitTest` flag is set to true, testing (selection) attributes (like `data-testid=chart-container`) are added to the component's DOM layers to make selection of specific parts of the component easier when the execution of the test(s) happen. For example, the `setTestingAttributes` function within `bar-chart.tsx` is assigning testing related `id`s to the component.
 3. The `bar-chart-spec.tsx` (unit testing file) is used to configure and run different tests. Each test defined in this file is configured to run an instance of the `bar-chart` component. We can run tests specific to `bar-chart` in this file, and, we can also reference common (reusable) tests which can be run across a number of components. See Point 4 for details about common tests.
 4. Common tests refer to tests that are grouped together according to focus area. These tests are defined and referenced above in this `README.md` file (e.g., [accessibility tests](#accessibility_tests)). Common tests are written in a reusable way, so they can be referenced by many components. There is an API like structure to these which enables the reuse across a number of components. Here is an example of the unit test for default height which is used across different chart components:
 

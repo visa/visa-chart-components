@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 Visa, Inc.
+ * Copyright (c) 2020, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -31,8 +31,8 @@ export {
   unitTestEvent,
   unitTestGeneric,
   unitTestInteraction,
-  unitTestTooltip,
   unitTestLabel,
+  unitTestTooltip,
   flushTransitions,
   parseTransform,
   asyncForEach
