@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -100,6 +100,8 @@ const buildTooltipContent = ({
           : yAxis.label
         : secondTitle;
     const thirdTitleMapped = dataKeyNames && dataKeyNames[thirdTitle] ? dataKeyNames[thirdTitle] : thirdTitle;
+    const percentageTitleMapped =
+      dataKeyNames && dataKeyNames[`${secondTitle}%`] ? dataKeyNames[`${secondTitle}%`] : undefined;
 
     // bar, pie
     if (chartType === 'bar') {
@@ -115,10 +117,15 @@ const buildTooltipContent = ({
         ${capitalized(firstTitleMapped) + ': <b>' + data[ordinalAccessor]} </b><br/> 
         ${
           normalized
-            ? capitalized(secondTitleMapped) +
-              ' (%): <b>' +
-              formatDataLabel(data, valueAccessor, '0[.][0]%', normalized) +
-              '</b><br/>'
+            ? percentageTitleMapped
+              ? capitalized(percentageTitleMapped) +
+                ': <b>' +
+                formatDataLabel(data, valueAccessor, '0[.][0]%', normalized) +
+                '</b><br/>'
+              : capitalized(secondTitleMapped) +
+                ' (%): <b>' +
+                formatDataLabel(data, valueAccessor, '0[.][0]%', normalized) +
+                '</b><br/>'
             : ''
         }
         ${capitalized(secondTitleMapped) + ': '}
@@ -165,10 +172,15 @@ const buildTooltipContent = ({
         <b>${data[ordinalAccessor]} </b><br/> 
         ${
           normalized
-            ? capitalized(secondTitleMapped) +
-              ' (%): <b>' +
-              formatDataLabel(data, valueAccessor, '0[.][0]%', normalized) +
-              '</b><br/>'
+            ? percentageTitleMapped
+              ? capitalized(percentageTitleMapped) +
+                ': <b>' +
+                formatDataLabel(data, valueAccessor, '0[.][0]%', normalized) +
+                '</b><br/>'
+              : capitalized(secondTitleMapped) +
+                ' (%): <b>' +
+                formatDataLabel(data, valueAccessor, '0[.][0]%', normalized) +
+                '</b><br/>'
             : ''
         }
         ${capitalized(secondTitleMapped) + ': '}

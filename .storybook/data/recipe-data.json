@@ -130,7 +130,59 @@
     "cursor": "pointer",
     "interactionKeys": ["month"],
     "clickHighlight": [],
-    "hoverHighlight": ""
+    "hoverHighlight": "",
+    "localization": {
+      "language": "hu",
+      "numeralLocale": "HU",
+      "skipValidation": false,
+      "overwrite": true
+    }
+  },
+  {
+    "chart": "bar-chart",
+    "name": "Trend",
+    "data": [
+      { "month": "Jan", "value": 1100, "label": "<1.5K" },
+      { "month": "Feb", "value": 2400, "label": "1.5K - 2.5K" },
+      { "month": "Mar", "value": 3300, "label": "2.5K - 3.5K" },
+      { "month": "Apr", "value": 4100, "label": ">3.5K" },
+      { "month": "May", "value": 2100, "label": "1.5K - 2.5K" },
+      { "month": "Jun", "value": 3700, "label": ">3.5K" },
+      { "month": "Jul", "value": 1400, "label": "<1.5K" },
+      { "month": "Aug", "value": 1300, "label": "<1.5K" },
+      { "month": "Sep", "value": 1900, "label": "1.5K - 2.5K" },
+      { "month": "Oct", "value": 2200, "label": "1.5K - 2.5K" },
+      { "month": "Nov", "value": 3100, "label": "2.5K - 3.5K" },
+      { "month": "Dec", "value": 1700, "label": "1.5K - 2.5K" }
+    ],
+    "ordinalAccessor": "month",
+    "valueAccessor": "value",
+    "groupAccessor": "label",
+    "subTitle": "Subtitle lorem ipsum",
+    "mainTitle": "Trend",
+    "height": 350,
+    "width": 675,
+    "layout": "vertical",
+    "padding": { "top": 40, "bottom": 60, "right": 100, "left": 80 },
+    "xAxis": { "visible": true, "gridVisible": false, "label": "", "format": "" },
+    "yAxis": { "visible": true, "gridVisible": true, "label": "Y axis title", "format": "0,0[a]", "tickInterval": 2 },
+    "tooltipLabel": { "labelAccessor": ["month", "value"], "labelTitle": ["", ""], "format": ["", "0,0[.0][a]"] },
+    "colorPalette": "sequential_secBlue",
+    "cursor": "pointer",
+    "dataLabel": { "visible": true, "placement": "top", "labelAccessor": "value", "format": "0,0[.0][a]" },
+    "clickEvent": "onChartClick",
+    "hoverEvent": "onChartHover",
+    "mouseOutEvent": "onMouseOut",
+    "accessibility": {
+      "includeDataKeyNames": true,
+      "longDescription": "This is a chart template that was made to showcase some of the capabilities of Visa Chart Components",
+      "contextExplanation": "This chart's initial view was determined by selecting the Color By Value recipe card. The props used by this chart may be changed using the props controls below.",
+      "structureNotes": "All bars are a shade of blue, but the intensity of the hue scales according to how high the value for that bar is.",
+      "purpose": "The purpose of this chart template is to provide an example of what props are required for using a color scheme that scales with values in a bar chart.",
+      "statisticalNotes": "This chart is using dummy data.",
+      "disableValidation": true,
+      "hideTextures": true
+    }
   },
   {
     "chart": "bar-chart",

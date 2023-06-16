@@ -26,7 +26,7 @@
 #' @return a visaChart htmlwidget object for plotting a bar chart
 #' @export
 #' @examples
-#' library(tidyverse)
+#' library(dplyr)
 #' bar_chart(BOD, "Time", "demand")
 #' mtcars %>%
 #'   sample_n(5) %>%

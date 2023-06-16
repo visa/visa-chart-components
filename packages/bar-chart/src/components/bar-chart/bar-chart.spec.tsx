@@ -11,8 +11,12 @@ import { BarChartDefaultValues } from './bar-chart-default-values';
 import { scaleBand, scaleOrdinal, scaleLinear } from 'd3-scale';
 
 // we need to bring in our nested components as well, was required to bring in the source vs dist folder to get it to mount
-import { KeyboardInstructions } from '../../../node_modules/@visa/keyboard-instructions/src/components/keyboard-instructions/keyboard-instructions';
-import { DataTable } from '../../../node_modules/@visa/visa-charts-data-table/src/components/data-table/data-table';
+import { KeyboardInstructions } from '@visa/keyboard-instructions/src/components/keyboard-instructions/keyboard-instructions';
+import { DataTable } from '@visa/visa-charts-data-table/src/components/data-table/data-table';
+
+// importing custom languages and locales
+import { hu } from '@visa/visa-charts-utils/src/utils/localization/languages/hu';
+import { HU } from '@visa/visa-charts-utils/src/utils/localization/numeralLocales/hu';
 
 import Utils from '@visa/visa-charts-utils';
 import UtilsDev from '@visa/visa-charts-utils-dev';
@@ -75,6 +79,7 @@ describe('<bar-chart>', () => {
 
     // disable accessibility validation to keep output stream(terminal) clean
     const EXPECTEDACCESSIBILITY = { ...BarChartDefaultValues.accessibility, disableValidation: true };
+    const EXPECTEDLOCALIZATION = { ...BarChartDefaultValues.localization, skipValidation: true };
 
     beforeEach(async () => {
       page = await newSpecPage({
@@ -86,6 +91,7 @@ describe('<bar-chart>', () => {
       component.ordinalAccessor = EXPECTEDORDINALACCESSOR;
       component.valueAccessor = EXPECTEDVALUEACCESSOR;
       component.accessibility = EXPECTEDACCESSIBILITY;
+      component.localization = EXPECTEDLOCALIZATION;
       component.uniqueID = 'bar-chart-unit-test';
       component.unitTest = true;
     });
@@ -106,6 +112,28 @@ describe('<bar-chart>', () => {
       });
 
       it('should render with minimal props[data,oridnalAccessor,valueAccessor] given', async () => {
+        // ACT
+        page.root.appendChild(component);
+        await page.waitForChanges();
+
+        // flush labels for testing to ensure opacity of 1 on initial render
+        const elements = page.doc.querySelectorAll('[data-testid=dataLabel]');
+        await asyncForEach(elements, async element => {
+          flushTransitions(element);
+          await page.waitForChanges();
+        });
+
+        // ASSERT
+        expect(page.root).toMatchSnapshot();
+      });
+
+      it('localization: should render localized with minimal props[data,accessors] given', async () => {
+        component.localization = {
+          language: hu,
+          numeralLocale: HU,
+          skipValidation: true,
+          overwrite: false
+        };
         // ACT
         page.root.appendChild(component);
         await page.waitForChanges();
@@ -165,8 +193,8 @@ describe('<bar-chart>', () => {
             nextTestSelector: '[data-testid=bar-group]',
             keyDownObject: { key: 'Enter', code: 'Enter', keyCode: 13, shiftKey: true },
             testProps: {
-              selectorAriaLabel: 'month Apr-17. value 1.4m. Bar 1 of 12.',
-              nextSelectorAriaLabel: 'Bar group which contains 12 interactive bars.',
+              selectorAriaLabel: 'month Apr-17. value 1.4m. Bar 1.',
+              nextSelectorAriaLabel: 'Number of interactive bars: 12.',
               accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true }
             }
           },
@@ -176,8 +204,8 @@ describe('<bar-chart>', () => {
             nextTestSelector: '[data-testid=bar][data-id=bar-May-17]',
             keyDownObject: { key: 'ArrowRight', code: 'ArrowRight', keyCode: 39 },
             testProps: {
-              selectorAriaLabel: 'month Apr-17. value 1.4m. Bar 1 of 12.',
-              nextSelectorAriaLabel: 'month May-17. value 6m. Bar 2 of 12.',
+              selectorAriaLabel: 'month Apr-17. value 1.4m. Bar 1.',
+              nextSelectorAriaLabel: 'month May-17. value 6m. Bar 2.',
               accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true }
             }
           },
@@ -187,8 +215,8 @@ describe('<bar-chart>', () => {
             nextTestSelector: '[data-testid=bar][data-id=bar-Apr-17]',
             keyDownObject: { key: 'ArrowRight', code: 'ArrowRight', keyCode: 39 },
             testProps: {
-              selectorAriaLabel: 'Mar-18. 8.5m. Bar 12 of 12.',
-              nextSelectorAriaLabel: 'Apr-17. 1.4m. Bar 1 of 12.'
+              selectorAriaLabel: 'Mar-18. 8.5m. Bar 12.',
+              nextSelectorAriaLabel: 'Apr-17. 1.4m. Bar 1.'
             }
           },
           accessibility_keyboard_nav_left_arrow_sibling: {
@@ -197,8 +225,8 @@ describe('<bar-chart>', () => {
             nextTestSelector: '[data-testid=bar][data-id=bar-Apr-17]',
             keyDownObject: { key: 'ArrowLeft', code: 'ArrowLeft', keyCode: 37 },
             testProps: {
-              selectorAriaLabel: 'month May-17. value 6m. Bar 2 of 12.',
-              nextSelectorAriaLabel: 'month Apr-17. value 1.4m. Bar 1 of 12.',
+              selectorAriaLabel: 'month May-17. value 6m. Bar 2.',
+              nextSelectorAriaLabel: 'month Apr-17. value 1.4m. Bar 1.',
               accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true }
             }
           },
@@ -208,8 +236,8 @@ describe('<bar-chart>', () => {
             nextTestSelector: '[data-testid=bar][data-id=bar-Mar-18]',
             keyDownObject: { key: 'ArrowLeft', code: 'ArrowLeft', keyCode: 37 },
             testProps: {
-              selectorAriaLabel: 'Apr-17. 1.4m. Bar 1 of 12.',
-              nextSelectorAriaLabel: 'Mar-18. 8.5m. Bar 12 of 12.'
+              selectorAriaLabel: 'Apr-17. 1.4m. Bar 1.',
+              nextSelectorAriaLabel: 'Mar-18. 8.5m. Bar 12.'
             }
           },
           accessibility_keyboard_nav_up_arrow_cousin: {
@@ -219,8 +247,8 @@ describe('<bar-chart>', () => {
             keyDownObject: { key: 'ArrowUp', code: 'ArrowUp', keyCode: 38 },
             testProps: {
               groupAccessor: 'cat',
-              selectorAriaLabel: 'B. Sep-17. 3.8m. Bar 6 of 12.',
-              nextSelectorAriaLabel: 'B. Jul-17. 2.2m. Bar 4 of 12.'
+              selectorAriaLabel: 'B. Sep-17. 3.8m. Bar 6.',
+              nextSelectorAriaLabel: 'B. Jul-17. 2.2m. Bar 4.'
             }
           },
           accessibility_keyboard_nav_up_arrow_cousin_loop: {
@@ -230,8 +258,8 @@ describe('<bar-chart>', () => {
             keyDownObject: { key: 'ArrowUp', code: 'ArrowUp', keyCode: 38 },
             testProps: {
               groupAccessor: 'cat',
-              selectorAriaLabel: 'B. Jul-17. 2.2m. Bar 4 of 12.',
-              nextSelectorAriaLabel: 'B. Mar-18. 8.5m. Bar 12 of 12.'
+              selectorAriaLabel: 'B. Jul-17. 2.2m. Bar 4.',
+              nextSelectorAriaLabel: 'B. Mar-18. 8.5m. Bar 12.'
             }
           },
           accessibility_keyboard_nav_down_arrow_cousin: {
@@ -241,8 +269,8 @@ describe('<bar-chart>', () => {
             keyDownObject: { key: 'ArrowDown', code: 'ArrowDown', keyCode: 40 },
             testProps: {
               groupAccessor: 'cat',
-              selectorAriaLabel: 'cat B. month Jul-17. value 2.2m. Bar 4 of 12.',
-              nextSelectorAriaLabel: 'cat B. month Sep-17. value 3.8m. Bar 6 of 12.',
+              selectorAriaLabel: 'cat B. month Jul-17. value 2.2m. Bar 4.',
+              nextSelectorAriaLabel: 'cat B. month Sep-17. value 3.8m. Bar 6.',
               accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true }
             }
           },
@@ -253,8 +281,8 @@ describe('<bar-chart>', () => {
             keyDownObject: { key: 'ArrowDown', code: 'ArrowDown', keyCode: 40 },
             testProps: {
               groupAccessor: 'cat',
-              selectorAriaLabel: 'cat B. month Mar-18. value 8.5m. Bar 12 of 12.',
-              nextSelectorAriaLabel: 'cat B. month Jul-17. value 2.2m. Bar 4 of 12.',
+              selectorAriaLabel: 'cat B. month Mar-18. value 8.5m. Bar 12.',
+              nextSelectorAriaLabel: 'cat B. month Jul-17. value 2.2m. Bar 4.',
               accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true }
             }
           }
@@ -1475,8 +1503,8 @@ describe('<bar-chart>', () => {
                 '<p style="margin: 0;"><b></b> Test Month: <b>Apr-17 </b><br> Y Axis: <b>1.4m</b></p>'
             };
             const innerAriaContent = {
-              dataKeyNames_custom_on_load: 'Test Month Apr-17. value 1.4m. Bar 1 of 12.',
-              dataKeyNames_custom_on_update: 'Test Month Apr-17. value 1.4m. Bar 1 of 12.'
+              dataKeyNames_custom_on_load: 'Test Month Apr-17. value 1.4m. Bar 1.',
+              dataKeyNames_custom_on_update: 'Test Month Apr-17. value 1.4m. Bar 1.'
             };
             const innerTestProps = { ...unitTestTooltip[test].testProps, ...innerTooltipProps[test] };
             const customDataKeyNames = { dataKeyNames: { month: 'Test Month' } };
@@ -1658,6 +1686,12 @@ describe('<bar-chart>', () => {
               format: '$0[.][0][a]',
               position: 'top'
             };
+            component.localization = {
+              language: 'en',
+              numeralLocale: 'ja',
+              skipValidation: true,
+              overwrite: false
+            };
             registerNumeralLocale('ja', {
               delimiters: {
                 thousands: ',',
@@ -1669,14 +1703,13 @@ describe('<bar-chart>', () => {
                 billion: '十億',
                 trillion: '兆'
               },
-              ordinal: function(number) {
+              ordinal: function(_) {
                 return '.';
               },
               currency: {
                 symbol: '¥'
               }
             });
-            setNumeralLocale('ja');
             const numeral = getNumeralInstance();
 
             // ACT
@@ -1695,7 +1728,7 @@ describe('<bar-chart>', () => {
             });
 
             // now we need to reset the locale to en for future tests
-            setNumeralLocale('en');
+            // setNumeralLocale('en');
           });
         });
         describe('placement', () => {

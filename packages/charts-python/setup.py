@@ -42,15 +42,18 @@ jstargets = [
 ]
 
 data_files_spec = [
-    ('share/jupyter/nbextensions/@visa/charts-python', 'pyvisacharts/nbextension', '*.*'),
-    ('share/jupyter/labextensions/@visa/charts-python', 'pyvisacharts/labextension', '**'),
+    ('share/jupyter/nbextensions/@visa/charts-python',
+     'pyvisacharts/nbextension', '*.*'),
+    ('share/jupyter/labextensions/@visa/charts-python',
+     'pyvisacharts/labextension', '**'),
     ('share/jupyter/labextensions/@visa/charts-python', '.', 'install.json'),
     ('etc/jupyter/nbconfig/notebook.d', '.', 'charts-python.json'),
 ]
 
 cmdclass = create_cmdclass('jsdeps', data_files_spec=data_files_spec)
 cmdclass['jsdeps'] = combine_commands(
-    install_npm(js_dir, npm=['yarn'], build_cmd='build'), ensure_targets(jstargets),
+    install_npm(js_dir, npm=['yarn'],
+                build_cmd='build'), ensure_targets(jstargets),
 )
 
 setup_args = dict(

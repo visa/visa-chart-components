@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2022 Visa, Inc.
+ * Copyright (c) 2020, 2022, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -26,8 +26,8 @@ export const config: Config | any = {
   namespace: 'charts',
   buildEs5: 'prod',
   extras: {
-    appendChildSlotFix: false,
     cssVarsShim: true,
+    appendChildSlotFix: false,
     dynamicImportShim: true,
     safari10: true,
     shadowDomShim: true,

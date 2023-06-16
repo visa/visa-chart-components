@@ -12,8 +12,8 @@ import { rgb, color } from 'd3-color';
 import { extent } from 'd3-array';
 import DisplayChart from './DisplayChart';
 import ChartCards from './chart-cards';
-import RecipeCards from './recipe-cards';
 import { chartGroups } from './utils/constants';
+import RecipeCards from './recipe-cards';
 
 import './ui.css';
 

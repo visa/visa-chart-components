@@ -1,11 +1,18 @@
 /**
- * Copyright (c) 2020, 2021, 2022 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
  *
  **/
 export interface IPieChartProps {
+  /**
+   * @shortDescription Internationalization properties of the chart
+   * @controlName TextArea
+   * @groupName Localization
+   * @sortOrder 1 */
+  localization: ILocalizationType;
+
   /**
    * @shortDescription Sets the heading level (which also sets sublevels) for the chart. "p", "span", and "div" are also valid.
    * @controlName Select
@@ -316,6 +323,13 @@ export interface ITooltipLabelType {
   labelAccessor: string[];
   labelTitle: string[];
   format: string | string[];
+}
+
+export interface ILocalizationType {
+  language?: string | object;
+  numeralLocale?: string | object;
+  skipValidation?: boolean;
+  overwrite?: boolean;
 }
 
 export interface IAccessibilityType {

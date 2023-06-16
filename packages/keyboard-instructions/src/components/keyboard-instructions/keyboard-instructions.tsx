@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2021, 2022 Visa, Inc.
+ * Copyright (c) 2021, 2022, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -9,7 +9,7 @@ import { Component, Prop, Element, State, h, Watch } from '@stencil/core';
 import { KeyboardInstructionsDefaultValues } from './keyboard-instructions-default-values';
 import Utils from '@visa/visa-charts-utils';
 
-const { getLicenses } = Utils;
+const { translate, getLicenses, capitalized } = Utils;
 
 @Component({
   tag: 'keyboard-instructions',
@@ -18,14 +18,13 @@ const { getLicenses } = Utils;
 export class KeyboardInstructions {
   // basic props for the table
   @Prop({ mutable: true }) uniqueID: string;
+  @Prop({ mutable: true }) language: string = KeyboardInstructionsDefaultValues.language;
   @Prop({ mutable: true }) geomType: string = KeyboardInstructionsDefaultValues.geomType;
   @Prop({ mutable: true }) groupName: string = KeyboardInstructionsDefaultValues.groupName;
   @Prop({ mutable: true }) chartTag: string = KeyboardInstructionsDefaultValues.chartTag;
   @Prop({ mutable: true }) width: number | string = KeyboardInstructionsDefaultValues.width;
   @Prop({ mutable: true }) isInteractive: boolean = KeyboardInstructionsDefaultValues.isInteractive;
   @Prop({ mutable: true }) hasCousinNavigation: boolean = KeyboardInstructionsDefaultValues.hasCousinNavigation;
-  @Prop({ mutable: true }) cousinActionOverride: string = KeyboardInstructionsDefaultValues.cousinActionOverride;
-  @Prop({ mutable: true }) cousinResultOverride: string = KeyboardInstructionsDefaultValues.cousinResultOverride;
   @Prop({ mutable: true }) disabled: boolean = KeyboardInstructionsDefaultValues.disabled;
 
   // debugging props
@@ -57,30 +56,10 @@ export class KeyboardInstructions {
 
   componentDidUpdate() {}
 
-  cousinAction = () => {
-    return this.hasCousinNavigation
-      ? !this.cousinActionOverride
-        ? 'on a ' + this.groupName + ' or ' + this.geomType
-        : this.cousinActionOverride
-      : 'are unused';
-  };
-
-  cousinResult = () => {
-    return this.hasCousinNavigation
-      ? !this.cousinResultOverride
-        ? 'Move among ' + this.geomType + 's across ' + this.groupName + 's'
-        : this.cousinResultOverride
-      : 'No effect on this chart';
-  };
-
   instructionsMenu = () => {
     if (this.showInstructions) {
       return (
         <div>
-          <p>
-            Note: for VoiceOver users (mac), press and hold <kbd>Ctrl</kbd> + <kbd>Shift</kbd> when using the arrow keys
-            for the best navigation experience.
-          </p>
           <table
             class="vcc-ki-keyboard-instructions vcc-ki-data-table vcc-ki-state--single-select vcc-ki-state--compact"
             data-header="header"
@@ -88,59 +67,83 @@ export class KeyboardInstructions {
             <thead class="vcc-ki-thead">
               <tr class="vcc-ki-tr">
                 <th class="vcc-ki-th" scope="col">
-                  Action
+                  {capitalized(translate('general.keywords.action', this.language))}
                 </th>
                 <th class="vcc-ki-th" scope="col">
-                  Result
+                  {capitalized(translate('general.keywords.result', this.language))}
                 </th>
               </tr>
             </thead>
             <tbody class="vcc-ki-tbody">
               <tr class="vcc-ki-tr">
                 <th scope="row" class="vcc-ki-td">
-                  <kbd>Enter</kbd> on the chart area or a {this.groupName}.
+                  <kbd>{translate('general.keys.enter', this.language)}</kbd>
                 </th>
-                <td class="vcc-ki-td">Enter the chart area/drill down a level.</td>
+                <td class="vcc-ki-td">{translate(`${this.chartTag}.keyboardInstructions.enter`, this.language)}</td>
               </tr>
               <tr class="vcc-ki-tr">
                 <th scope="row" class="vcc-ki-td">
-                  <kbd>Shift</kbd> + <kbd>Enter</kbd> on a {this.groupName} or {this.geomType}.
-                </th>
-                <td class="vcc-ki-td">Drill up a level.</td>
-              </tr>
-              <tr class="vcc-ki-tr">
-                <th scope="row" class="vcc-ki-td">
-                  <kbd>Tab</kbd> at any time.
-                </th>
-                <td class="vcc-ki-td">Exit the chart.</td>
-              </tr>
-              <tr class={this.isInteractive ? 'vcc-ki-tr' : 'vcc-ki-tr vcc-ki-disabled-row'}>
-                <th scope="row" class="vcc-ki-td">
-                  <kbd>Space</kbd> {this.isInteractive ? 'on a ' + this.geomType : 'is unused'}.
+                  <kbd>{translate('general.keys.shift')}</kbd> +{' '}
+                  <kbd>{translate('general.keys.enter', this.language)}</kbd>
                 </th>
                 <td class="vcc-ki-td">
-                  {this.isInteractive ? 'Select/Deselect a ' + this.geomType : 'No effect on this chart'}.
+                  {translate(`${this.chartTag}.keyboardInstructions.shiftEnter`, this.language)}
                 </td>
               </tr>
               <tr class="vcc-ki-tr">
                 <th scope="row" class="vcc-ki-td">
-                  <kbd>←</kbd> / <kbd>→</kbd> on a {this.groupName} or {this.geomType}.
+                  <kbd>{translate('general.keys.tab', this.language)}</kbd>
                 </th>
-                <td class="vcc-ki-td">
-                  Move among sibling {this.groupName}s or {this.geomType}s.
-                </td>
+                <td class="vcc-ki-td">{translate(`general.expressions.keyboardInstructionsEsc`, this.language)}</td>
               </tr>
-              <tr class={this.hasCousinNavigation ? 'vcc-ki-tr' : 'vcc-ki-tr vcc-ki-disabled-row'}>
-                <th scope="row" class="vcc-ki-td">
-                  <kbd>↑</kbd> / <kbd>↓</kbd> {this.cousinAction()}.
-                </th>
-                <td class="vcc-ki-td">{this.cousinResult()}.</td>
-              </tr>
+              {this.isInteractive && (
+                <tr class="vcc-ki-tr">
+                  <th scope="row" class="vcc-ki-td">
+                    <kbd>{translate('general.keys.space', this.language)}</kbd>
+                  </th>
+                  <td class="vcc-ki-td">{translate(`${this.chartTag}.keyboardInstructions.space`, this.language)}</td>
+                </tr>
+              )}
               <tr class="vcc-ki-tr">
                 <th scope="row" class="vcc-ki-td">
-                  <kbd>Esc</kbd> at any time.
+                  <kbd>←</kbd> / <kbd>→</kbd>
                 </th>
-                <td class="vcc-ki-td">Dismiss the tooltip.</td>
+                <td class="vcc-ki-td">
+                  {translate(`${this.chartTag}.keyboardInstructions.horizontalArrows`, this.language)}
+                </td>
+              </tr>
+              {this.hasCousinNavigation && (
+                <tr class="vcc-ki-tr">
+                  <th scope="row" class="vcc-ki-td">
+                    <kbd>↑</kbd> / <kbd>↓</kbd>
+                  </th>
+                  <td class="vcc-ki-td">
+                    {translate(`${this.chartTag}.keyboardInstructions.verticalArrows`, this.language)}
+                  </td>
+                </tr>
+              )}
+              <tr class="vcc-ki-tr">
+                <th scope="row" class="vcc-ki-td">
+                  <kbd>{translate('general.keys.esc')}</kbd>
+                </th>
+                <td class="vcc-ki-td">{translate(`general.expressions.keyboardInstructionsEsc`, this.language)}</td>
+              </tr>
+            </tbody>
+            <thead class="vcc-ki-thead">
+              <tr class="vcc-ki-tr">
+                <th class="vcc-ki-th" scope="col">
+                  {capitalized(translate(`general.keywords.note`, this.language))}
+                </th>
+                <th class="vcc-ki-th" scope="col" />
+              </tr>
+            </thead>
+            <tbody class="vcc-ki-tbody">
+              <tr class="vcc-ki-tr">
+                <th scope="row" class="vcc-ki-td">
+                  <kbd>{translate('general.keys.ctrl', this.language)}</kbd> +{' '}
+                  <kbd>{translate('general.keys.shift', this.language)}</kbd>
+                </th>
+                <td class="vcc-ki-td">{translate(`general.expressions.keyboardInstructionsNote`, this.language)}</td>
               </tr>
             </tbody>
           </table>
@@ -178,7 +181,9 @@ export class KeyboardInstructions {
             }
           >
             <p class="vcc-ki-keyboard-heading">
-              {this.showInstructions ? 'Keyboard Instructions' : 'Display Keyboard Instructions'}
+              {this.showInstructions
+                ? `${translate(`general.expressions.keyboardInstructions`, this.language)}`
+                : `${translate(`general.expressions.showKeyboardInstructions`, this.language)}`}
             </p>
           </div>
           <div class="visa-viz-keyboard-instructions-button-wrapper">

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -10,6 +10,8 @@ import { getBrowser } from './browser-util';
 import { polyfillMouseEvents } from './customPolyfills';
 import { setHighContrastListener } from './accessibilityUtils';
 import { createLabel, createGroupLabel } from './altTextGenerator';
+import { translate } from './localization';
+import { capitalized } from './calculation';
 
 export const keyCodes = {
   hideTooltip: 27, // ESCAPE
@@ -41,8 +43,9 @@ if (isIE11) {
 // This function initializes and maintains the root-level controller node and is designed
 // to hook into the VCC lifecycle (so that it stays up to date as a chart changes).
 export const setAccessibilityController = ({
-  node,
+  language,
   chartTag,
+  node,
   title,
   description,
   uniqueID,
@@ -54,11 +57,14 @@ export const setAccessibilityController = ({
   nested,
   groupName,
   groupAccessor,
+  valueAccessor,
   recursive,
-  disableKeyNav
+  disableKeyNav,
+  normalized
 }: {
-  node: any;
+  language: string;
   chartTag: string;
+  node: any;
   title: string;
   description: string;
   uniqueID: string;
@@ -70,8 +76,10 @@ export const setAccessibilityController = ({
   nested?: string;
   groupName?: string;
   groupAccessor?: string;
+  valueAccessor?: string;
   recursive?: boolean;
   disableKeyNav?: boolean;
+  normalized?: boolean;
 }) => {
   const svg = select(node);
   const sameGroupCousinKey =
@@ -100,7 +108,10 @@ export const setAccessibilityController = ({
   const getRootAriaLabel = () => {
     const titleText = `${title}. `;
     const subtitle = description ? description + '. ' : '';
-    const descText = `${subtitle} Navigate into the chart area by pressing ENTER.`;
+    const descText = `${subtitle} ${translate(
+      'accessibilityController.navigateToTheChartAreaByPressingEnter',
+      language
+    )}`;
     return titleText + descText;
   };
   if (!controller.size()) {
@@ -124,7 +135,7 @@ export const setAccessibilityController = ({
     .attr('data-sgck', sameGroupCousinKey || null)
     .attr('data-group', groupAccessor)
     .attr('aria-label', !disableKeyNav ? getRootAriaLabel() : null)
-    .text(!disableKeyNav ? `Interactive ${chartTag}.` : '')
+    .text(!disableKeyNav ? `${capitalized(translate('general.keywords.interactive', language))} ${chartTag}.` : '')
     .attr('role', !disableKeyNav ? rootSVGRole : 'presentation')
     .attr('tabindex', !disableKeyNav ? '0' : '-1')
     .on(
@@ -162,7 +173,10 @@ export const setAccessibilityController = ({
                 .node(),
               true
             );
-            controller.attr('aria-label', `Interactive ${chartTag}.`);
+            controller.attr(
+              'aria-label',
+              `${capitalized(translate('general.keywords.interactive', language))} ${chartTag}.`
+            );
           }
         : null
     )
@@ -179,6 +193,8 @@ export const setAccessibilityController = ({
               const targetChild = enterChartArea(e);
               if (targetChild) {
                 prepareControllerNodes({
+                  chartTag,
+                  language,
                   rootNode: controller.node(),
                   nodeID: targetChild.id,
                   geomType,
@@ -189,8 +205,10 @@ export const setAccessibilityController = ({
                   nested,
                   groupName,
                   groupAccessor,
+                  valueAccessor,
                   recursive,
-                  sameGroupCousinKey
+                  sameGroupCousinKey,
+                  normalized
                 });
               }
             }
@@ -222,6 +240,8 @@ export const setAccessibilityController = ({
 };
 
 export const setElementFocusHandler = ({
+  chartTag,
+  language,
   node,
   geomType,
   includeKeyNames,
@@ -232,8 +252,12 @@ export const setElementFocusHandler = ({
   recursive,
   groupName,
   uniqueID,
-  disableKeyNav
+  disableKeyNav,
+  normalized,
+  valueAccessor
 }: {
+  chartTag: string;
+  language: string;
   node: any;
   geomType: string;
   includeKeyNames: boolean;
@@ -245,6 +269,8 @@ export const setElementFocusHandler = ({
   groupName?: string;
   uniqueID?: string;
   disableKeyNav?: boolean;
+  normalized?: boolean;
+  valueAccessor?: string;
 }) => {
   select(node).on(
     'focus',
@@ -256,6 +282,8 @@ export const setElementFocusHandler = ({
             const sameGroupCousinKey = select(rootNode).attr('data-sgck');
             const groupAccessor = select(rootNode).attr('data-group');
             prepareControllerNodes({
+              chartTag,
+              language,
               rootNode,
               nodeID: idOfTarget,
               geomType,
@@ -266,9 +294,11 @@ export const setElementFocusHandler = ({
               nested,
               groupName,
               groupAccessor,
+              valueAccessor,
               recursive,
               sameGroupCousinKey,
-              deleteControllers: false
+              deleteControllers: false,
+              normalized
             });
             hideKeyboardHighlight(n[i]);
           }
@@ -355,6 +385,8 @@ const validKeyCode = keyCode => {
 };
 
 const prepareControllerNodes = ({
+  chartTag,
+  language,
   rootNode,
   nodeID,
   geomType,
@@ -365,10 +397,14 @@ const prepareControllerNodes = ({
   nested,
   groupName,
   groupAccessor,
+  valueAccessor,
   recursive,
   sameGroupCousinKey,
-  deleteControllers
+  deleteControllers,
+  normalized
 }: {
+  chartTag: string;
+  language: string;
   rootNode: any;
   nodeID: any;
   geomType: string;
@@ -379,9 +415,11 @@ const prepareControllerNodes = ({
   nested?: string;
   groupName?: string;
   groupAccessor?: string;
+  valueAccessor?: string;
   recursive?: boolean;
   sameGroupCousinKey?: string;
   deleteControllers?: boolean;
+  normalized?: boolean;
 }) => {
   if (isIE11 || isIEEdge) {
     fired = false;
@@ -393,6 +431,8 @@ const prepareControllerNodes = ({
     if (tabBackNode && tabBackNode.id) {
       drawCount++;
       createControllerNode({
+        chartTag,
+        language,
         rootNode,
         nodeID: tabBackNode.id,
         isTarget: false,
@@ -405,15 +445,19 @@ const prepareControllerNodes = ({
         recursive,
         groupName,
         groupAccessor,
+        valueAccessor,
         direction: 'backward',
         sourceID: nodeID,
-        sameGroupCousinKey
+        sameGroupCousinKey,
+        normalized
       });
     }
     const controllerNodeAlreadyExists = document.getElementById(controllerPrefix + nodeID);
     if (!controllerNodeAlreadyExists) {
       drawCount++;
       createControllerNode({
+        chartTag,
+        language,
         rootNode,
         nodeID,
         isTarget: true,
@@ -426,7 +470,9 @@ const prepareControllerNodes = ({
         recursive,
         groupName,
         groupAccessor,
-        sameGroupCousinKey
+        valueAccessor,
+        sameGroupCousinKey,
+        normalized
       });
     } else {
       drawCount++;
@@ -453,6 +499,8 @@ const prepareControllerNodes = ({
     if (tabForwardNode && tabForwardNode.id) {
       drawCount++;
       createControllerNode({
+        chartTag,
+        language,
         rootNode,
         nodeID: tabForwardNode.id,
         isTarget: false,
@@ -465,9 +513,11 @@ const prepareControllerNodes = ({
         recursive,
         groupName,
         groupAccessor,
+        valueAccessor,
         direction: 'forward',
         sourceID: nodeID,
-        sameGroupCousinKey
+        sameGroupCousinKey,
+        normalized
       });
     }
   }
@@ -508,6 +558,8 @@ const simulateBlur = controllerRoot => {
 };
 
 const createControllerNode = ({
+  chartTag,
+  language,
   rootNode,
   nodeID,
   isTarget,
@@ -520,10 +572,14 @@ const createControllerNode = ({
   recursive,
   groupName,
   groupAccessor,
+  valueAccessor,
   direction,
   sourceID,
-  sameGroupCousinKey
+  sameGroupCousinKey,
+  normalized
 }: {
+  chartTag: string;
+  language: string;
   rootNode: any;
   nodeID: any;
   isTarget: boolean;
@@ -536,9 +592,11 @@ const createControllerNode = ({
   recursive?: boolean;
   groupName?: string;
   groupAccessor?: string;
+  valueAccessor?: string;
   direction?: string;
   sourceID?: string;
   sameGroupCousinKey?: string;
+  normalized?: boolean;
 }) => {
   const sourceNode = document.getElementById(nodeID);
   const isOffsetGroup = select(sourceNode).attr('data-offset-group');
@@ -584,6 +642,8 @@ const createControllerNode = ({
           // this will prepare the controller's nodes and then focus the result.id
           const idOfTarget = result.id || rootNode.id;
           prepareControllerNodes({
+            chartTag,
+            language,
             rootNode,
             nodeID: idOfTarget,
             geomType,
@@ -594,9 +654,11 @@ const createControllerNode = ({
             nested,
             groupName,
             groupAccessor,
+            valueAccessor,
             recursive,
             sameGroupCousinKey,
-            deleteControllers: idOfTarget === rootNode.id
+            deleteControllers: idOfTarget === rootNode.id,
+            normalized
           });
         }
       }
@@ -618,6 +680,8 @@ const createControllerNode = ({
             }
             if (id) {
               prepareControllerNodes({
+                chartTag,
+                language,
                 rootNode,
                 nodeID: id,
                 geomType,
@@ -628,8 +692,10 @@ const createControllerNode = ({
                 nested,
                 groupName,
                 groupAccessor,
+                valueAccessor,
                 recursive,
-                sameGroupCousinKey
+                sameGroupCousinKey,
+                normalized
               });
             }
           }
@@ -650,6 +716,8 @@ const createControllerNode = ({
       const d = targetNode['__data__'] || element.data()[0];
       if (isGroup) {
         label = createGroupLabel({
+          chartTag,
+          language,
           d,
           targetNode,
           index,
@@ -661,10 +729,13 @@ const createControllerNode = ({
           includeKeyNames,
           capitalizedGroupName,
           capitalizedGeomType,
-          geomType
+          geomType,
+          groupName
         });
       } else {
         label = createLabel({
+          chartTag,
+          language,
           d,
           i: index,
           n: siblings,
@@ -675,7 +746,11 @@ const createControllerNode = ({
           dataKeyNames,
           groupKeys,
           nested,
-          recursive
+          recursive,
+          normalized,
+          valueAccessor,
+          geomType,
+          groupName
         });
       }
       select(n[i]).text(label);

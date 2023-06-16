@@ -3,17 +3,6 @@
 exports[`<bar-chart> rendered-html accessibility generic accessibility test suite accessibility: keyboard instruction component displays table in click state 1`] = `
 <div class="visa-viz-keyboard-instructions-container" id="visa-viz-keyboard-instructions-container-bar-chart-unit-test">
   <div>
-    <p>
-      Note: for VoiceOver users (mac), press and hold
-      <kbd>
-        Ctrl
-      </kbd>
-      +
-      <kbd>
-        Shift
-      </kbd>
-      when using the arrow keys for the best navigation experience.
-    </p>
     <table class="vcc-ki-data-table vcc-ki-keyboard-instructions vcc-ki-state--compact vcc-ki-state--single-select" data-header="header">
       <thead class="vcc-ki-thead">
         <tr class="vcc-ki-tr">
@@ -31,10 +20,9 @@ exports[`<bar-chart> rendered-html accessibility generic accessibility test suit
             <kbd>
               Enter
             </kbd>
-            on the chart area or a bar group.
           </th>
           <td class="vcc-ki-td">
-            Enter the chart area/drill down a level.
+            Enter the chart area/drill down a level on the chart area or a bar group.
           </td>
         </tr>
         <tr class="vcc-ki-tr">
@@ -46,10 +34,9 @@ exports[`<bar-chart> rendered-html accessibility generic accessibility test suit
             <kbd>
               Enter
             </kbd>
-            on a bar group or bar.
           </th>
           <td class="vcc-ki-td">
-            Drill up a level.
+            Drill up a level on a bar group or bar.
           </td>
         </tr>
         <tr class="vcc-ki-tr">
@@ -57,21 +44,9 @@ exports[`<bar-chart> rendered-html accessibility generic accessibility test suit
             <kbd>
               Tab
             </kbd>
-            at any time.
           </th>
           <td class="vcc-ki-td">
-            Exit the chart.
-          </td>
-        </tr>
-        <tr class="vcc-ki-disabled-row vcc-ki-tr">
-          <th class="vcc-ki-td" scope="row">
-            <kbd>
-              Space
-            </kbd>
-            is unused.
-          </th>
-          <td class="vcc-ki-td">
-            No effect on this chart.
+            Exit the chart at any time.
           </td>
         </tr>
         <tr class="vcc-ki-tr">
@@ -83,25 +58,9 @@ exports[`<bar-chart> rendered-html accessibility generic accessibility test suit
             <kbd>
               →
             </kbd>
-            on a bar group or bar.
           </th>
           <td class="vcc-ki-td">
-            Move among sibling bar groups or bars.
-          </td>
-        </tr>
-        <tr class="vcc-ki-disabled-row vcc-ki-tr">
-          <th class="vcc-ki-td" scope="row">
-            <kbd>
-              ↑
-            </kbd>
-            /
-            <kbd>
-              ↓
-            </kbd>
-            are unused.
-          </th>
-          <td class="vcc-ki-td">
-            No effect on this chart.
+            Move among sibling bar groups or bars when focusing on a bar group or a bar.
           </td>
         </tr>
         <tr class="vcc-ki-tr">
@@ -109,10 +68,33 @@ exports[`<bar-chart> rendered-html accessibility generic accessibility test suit
             <kbd>
               Esc
             </kbd>
-            at any time.
           </th>
           <td class="vcc-ki-td">
-            Dismiss the tooltip.
+            Exit the chart at any time.
+          </td>
+        </tr>
+      </tbody>
+      <thead class="vcc-ki-thead">
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-th" scope="col">
+            Note
+          </th>
+          <th class="vcc-ki-th" scope="col"></th>
+        </tr>
+      </thead>
+      <tbody class="vcc-ki-tbody">
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Control
+            </kbd>
+            +
+            <kbd>
+              Shift
+            </kbd>
+          </th>
+          <td class="vcc-ki-td">
+            Press and hold when using the arrow keys for the best navigation experience on a Mac (Voiceover).
           </td>
         </tr>
       </tbody>
@@ -124,17 +106,6 @@ exports[`<bar-chart> rendered-html accessibility generic accessibility test suit
 exports[`<bar-chart> rendered-html accessibility generic accessibility test suite accessibility: keyboard instruction component displays table in click state with space enabled 1`] = `
 <div class="visa-viz-keyboard-instructions-container" id="visa-viz-keyboard-instructions-container-bar-chart-unit-test">
   <div>
-    <p>
-      Note: for VoiceOver users (mac), press and hold
-      <kbd>
-        Ctrl
-      </kbd>
-      +
-      <kbd>
-        Shift
-      </kbd>
-      when using the arrow keys for the best navigation experience.
-    </p>
     <table class="vcc-ki-data-table vcc-ki-keyboard-instructions vcc-ki-state--compact vcc-ki-state--single-select" data-header="header">
       <thead class="vcc-ki-thead">
         <tr class="vcc-ki-tr">
@@ -152,10 +123,9 @@ exports[`<bar-chart> rendered-html accessibility generic accessibility test suit
             <kbd>
               Enter
             </kbd>
-            on the chart area or a bar group.
           </th>
           <td class="vcc-ki-td">
-            Enter the chart area/drill down a level.
+            Enter the chart area/drill down a level on the chart area or a bar group.
           </td>
         </tr>
         <tr class="vcc-ki-tr">
@@ -167,10 +137,9 @@ exports[`<bar-chart> rendered-html accessibility generic accessibility test suit
             <kbd>
               Enter
             </kbd>
-            on a bar group or bar.
           </th>
           <td class="vcc-ki-td">
-            Drill up a level.
+            Drill up a level on a bar group or bar.
           </td>
         </tr>
         <tr class="vcc-ki-tr">
@@ -178,10 +147,9 @@ exports[`<bar-chart> rendered-html accessibility generic accessibility test suit
             <kbd>
               Tab
             </kbd>
-            at any time.
           </th>
           <td class="vcc-ki-td">
-            Exit the chart.
+            Exit the chart at any time.
           </td>
         </tr>
         <tr class="vcc-ki-tr">
@@ -189,10 +157,9 @@ exports[`<bar-chart> rendered-html accessibility generic accessibility test suit
             <kbd>
               Space
             </kbd>
-            on a bar.
           </th>
           <td class="vcc-ki-td">
-            Select/Deselect a bar.
+            Select/Deselect a bar on a bar.
           </td>
         </tr>
         <tr class="vcc-ki-tr">
@@ -204,25 +171,9 @@ exports[`<bar-chart> rendered-html accessibility generic accessibility test suit
             <kbd>
               →
             </kbd>
-            on a bar group or bar.
           </th>
           <td class="vcc-ki-td">
-            Move among sibling bar groups or bars.
-          </td>
-        </tr>
-        <tr class="vcc-ki-disabled-row vcc-ki-tr">
-          <th class="vcc-ki-td" scope="row">
-            <kbd>
-              ↑
-            </kbd>
-            /
-            <kbd>
-              ↓
-            </kbd>
-            are unused.
-          </th>
-          <td class="vcc-ki-td">
-            No effect on this chart.
+            Move among sibling bar groups or bars when focusing on a bar group or a bar.
           </td>
         </tr>
         <tr class="vcc-ki-tr">
@@ -230,10 +181,33 @@ exports[`<bar-chart> rendered-html accessibility generic accessibility test suit
             <kbd>
               Esc
             </kbd>
-            at any time.
           </th>
           <td class="vcc-ki-td">
-            Dismiss the tooltip.
+            Exit the chart at any time.
+          </td>
+        </tr>
+      </tbody>
+      <thead class="vcc-ki-thead">
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-th" scope="col">
+            Note
+          </th>
+          <th class="vcc-ki-th" scope="col"></th>
+        </tr>
+      </thead>
+      <tbody class="vcc-ki-tbody">
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Control
+            </kbd>
+            +
+            <kbd>
+              Shift
+            </kbd>
+          </th>
+          <td class="vcc-ki-td">
+            Press and hold when using the arrow keys for the best navigation experience on a Mac (Voiceover).
           </td>
         </tr>
       </tbody>
@@ -342,12 +316,615 @@ exports[`<bar-chart> rendered-html reference line should pass referenceLines pro
 
 exports[`<bar-chart> rendered-html reference line should pass referenceStyle prop 1`] = `null`;
 
+exports[`<bar-chart> rendered-html render localization: should render localized with minimal props[data,accessors] given 1`] = `
+<bar-chart id="bar-chart-unit-test">
+  <div class="is--vertical light o-layout">
+    <div class="vcl-accessibility-instructions" id="chart-instructions-bar-chart-unit-test" style="position: absolute; width: 675px;">
+      <p class="screen-reader-info vcl-region-label">
+        Billentyűzet Interaktív bar-chart, Elnevezés: This is bar chart title. Ez a szekció információkkal szolgál a diagramról. A TAB billentyű lenyomásával a fókusz a billentyűzet instruckciók menüpontra kerül. A TAB újbóli lenyomása a diagram területre való navigálást eredményez.
+      </p>
+      <h2 class="screen-reader-info vcl-access-title">
+        Diagram diagram címe: This is bar chart title
+      </h2>
+      <h3 class="screen-reader-info vcl-access-subtitle">
+        Diagram alcím: This is the bar chart subtitle
+      </h3>
+      <p class="screen-reader-info vcl-access-executive-summary" data-level="h3"></p>
+      <p class="screen-reader-info vcl-access-purpose" data-level="h3"></p>
+      <p class="screen-reader-info vcl-access-long-description" data-level="h3"></p>
+      <p class="screen-reader-info vcl-access-context" data-level="h3"></p>
+      <h3 class="screen-reader-info vcl-access-structure-heading">
+        Struktúra
+      </h3>
+      <p class="screen-reader-info vcl-access-statistics" data-level="h4"></p>
+      <h4 class="screen-reader-info vcl-access-chart-layout-heading">
+        Diagramterület leírása
+      </h4>
+      <p class="screen-reader-info vcl-access-layout">
+        Bar-chart. bar: 12.
+      </p>
+      <p class="screen-reader-info vcl-access-xAxis">
+        A diagram horizontális X tengelyt tartalmaz. Diagram címe X Axis. Kezdeti erték érték Apr-17, végső érték érték Mar-18.
+      </p>
+      <p class="screen-reader-info vcl-access-yAxis">
+        A diagram elsődleges vertikális Y tengelyt tartalmaz. Diagram címe Y Axis. Kezdeti erték érték 0, végső érték érték 8M.
+      </p>
+      <p class="screen-reader-info vcl-access-notes" data-annotationlevel="h3" data-level="h4"></p>
+    </div>
+    <div class="o-layout--chart">
+      <h2 aria-hidden="true" class="bar-main-title vcl-main-title" data-testid="main-title">
+        This is bar chart title
+      </h2>
+      <p aria-hidden="true" class="bar-sub-title vcl-sub-title visa-ui-text--instructions" data-testid="sub-title">
+        This is the bar chart subtitle
+      </p>
+      <div aria-hidden="true" class="bar-legend vcl-legend" role="presentation" style="display: none;">
+        <svg aria-hidden="true" class="vcl-svg" data-testid="legend-container" data-type="bar" focusable="false" height="0" opacity="0" role="presentation" viewBox="0 0 666.5 0" width="666.5" style="display: none;">
+          <g class="legend-padding-wrapper" transform="translate(70.75,24)">
+            <g class="bar legend">
+              <rect class="bar-rect" height="20" opacity="1" stroke="" stroke-dasharray="none" stroke-width="1" width="20" x="0" y="0" style="stroke-width: 1; stroke-dasharray: none;"></rect>
+              <text class="bar-text" dx=".2em" dy="16" filter="url(#VCL-t-s-f-ffffffbar-chart-unit-test-legend)" opacity="1" x="25" y="0"></text>
+            </g>
+          </g>
+          <defs>
+            <filter class="VCL-t-s-f-ffffff" id="VCL-t-s-f-ffffffbar-chart-unit-test-legend">
+              <feMorphology in="SourceAlpha" operator="dilate" radius="1.5" result="dilatedText"></feMorphology>
+              <feFlood flood-color="#ffffff" flood-opacity="1" result="whiteTextFlood"></feFlood>
+              <feComposite in="whiteTextFlood" in2="dilatedText" operator="in" result="textOutline"></feComposite>
+              <feMerge>
+                <feMergeNode in="textOutline"></feMergeNode>
+                <feMergeNode in="textOutline"></feMergeNode>
+                <feMergeNode in="textOutline"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+              </feMerge>
+            </filter>
+          </defs>
+        </svg>
+      </div>
+      <keyboard-instructions>
+        <div class="vcc-ki-keyboard-instructions-root" style="position: relative; width: 668.25px;">
+          <div class="visa-viz-keyboard-instructions-outer-container" style="width: 416px;">
+            <div class="vcc-ki-keyboard-instructions-header vcc-ki-minimize">
+              <p class="vcc-ki-keyboard-heading">
+                Billentyűzet Instrukciók Megjelenítése
+              </p>
+            </div>
+            <div class="visa-viz-keyboard-instructions-button-wrapper">
+              <button aria-expanded="false" aria-label="display keyboard instructions" class="vcc-ki-btn-icon vcc-ki-btn-icon--light-tiny visa-viz-keyboard-instructions-button" id="visa-viz-keyboard-instructions-button-bar-chart-unit-test" role="button" tabindex="0" type="button">
+                <svg class="vcc-ki-icon--tiny" focusable="false" tabindex="-1">
+                  <use href="#visa-viz-keyboard-instructions-info--tiny-bar-chart-unit-test"></use>
+                </svg>
+              </button>
+              <svg class="vcc-ki-icons">
+                <symbol id="visa-viz-keyboard-instructions-info--tiny-bar-chart-unit-test" viewbox="0 0 16 16">
+                  <path d="M8.7,3.8a.68.68,0,0,1,.7.7.79.79,0,0,1-.8.8H8.5c-.4,0-.6-.3-.6-.7A.79.79,0,0,1,8.7,3.8ZM6.6,12.1l1.2-6H9l-1.2,6ZM14,8a6,6,0,1,0-6,6A6,6,0,0,0,14,8Zm2,0A8,8,0,1,1,8,0,8,8,0,0,1,16,8Z"></path>
+                </symbol>
+              </svg>
+            </div>
+            <div class="visa-viz-keyboard-instructions-container" id="visa-viz-keyboard-instructions-container-bar-chart-unit-test"></div>
+          </div>
+        </div>
+      </keyboard-instructions>
+      <div class="visa-viz-d3-bar-container" data-testid="chart-container" style="position: relative;">
+        <div aria-label="This is bar chart title. This is the bar chart subtitle.  Navigálás a diagramterületre az ENTER billentyű lenyomásával." class="VCL-controller" data-group id="chart-area-bar-chart-unit-test" role="application" tabindex="0" style="position: absolute; top: 0; left: 0; opacity: 0; pointer-events: none; width: 0px; height: 0px;">
+          Interaktív bar-chart.
+        </div>
+        <svg class="vcl-svg" data-testid="root-svg" focusable="false" height="325" role="presentation" tabindex="-1" viewBox="0 0 675 325" width="675" style="overflow: hidden;">
+          <g data-testid="margin-container" id="visa-viz-margin-container-g-bar-chart-unit-test" transform="translate(6.75, 3.25)">
+            <g data-testid="padding-container" id="visa-viz-padding-container-g-bar-chart-unit-test" transform="translate(60, 20)">
+              <g aria-hidden="true" class="grid-group" focusable="false" role="presentation">
+                <g class="bottom grid" data-testid="grid-bottom" fill="none" font-family="sans-serif" font-size="10" opacity="0" text-anchor="middle">
+                  <path class="domain" d="M0.5,248.5V0.5H542V248.5" stroke="currentColor"></path>
+                  <g class="tick" opacity="1" transform="translate(26.631147540983584,0)">
+                    <line stroke="currentColor" y2="248.5"></line>
+                    <text dy="0.71em" fill="currentColor" y="251.5"></text>
+                  </g>
+                  <g class="tick" opacity="1" transform="translate(71.01639344262293,0)">
+                    <line stroke="currentColor" y2="248.5"></line>
+                    <text dy="0.71em" fill="currentColor" y="251.5"></text>
+                  </g>
+                  <g class="tick" opacity="1" transform="translate(115.40163934426226,0)">
+                    <line stroke="currentColor" y2="248.5"></line>
+                    <text dy="0.71em" fill="currentColor" y="251.5"></text>
+                  </g>
+                  <g class="tick" opacity="1" transform="translate(159.78688524590163,0)">
+                    <line stroke="currentColor" y2="248.5"></line>
+                    <text dy="0.71em" fill="currentColor" y="251.5"></text>
+                  </g>
+                  <g class="tick" opacity="1" transform="translate(204.17213114754097,0)">
+                    <line stroke="currentColor" y2="248.5"></line>
+                    <text dy="0.71em" fill="currentColor" y="251.5"></text>
+                  </g>
+                  <g class="tick" opacity="1" transform="translate(248.5573770491803,0)">
+                    <line stroke="currentColor" y2="248.5"></line>
+                    <text dy="0.71em" fill="currentColor" y="251.5"></text>
+                  </g>
+                  <g class="tick" opacity="1" transform="translate(292.94262295081967,0)">
+                    <line stroke="currentColor" y2="248.5"></line>
+                    <text dy="0.71em" fill="currentColor" y="251.5"></text>
+                  </g>
+                  <g class="tick" opacity="1" transform="translate(337.327868852459,0)">
+                    <line stroke="currentColor" y2="248.5"></line>
+                    <text dy="0.71em" fill="currentColor" y="251.5"></text>
+                  </g>
+                  <g class="tick" opacity="1" transform="translate(381.71311475409834,0)">
+                    <line stroke="currentColor" y2="248.5"></line>
+                    <text dy="0.71em" fill="currentColor" y="251.5"></text>
+                  </g>
+                  <g class="tick" opacity="1" transform="translate(426.0983606557377,0)">
+                    <line stroke="currentColor" y2="248.5"></line>
+                    <text dy="0.71em" fill="currentColor" y="251.5"></text>
+                  </g>
+                  <g class="tick" opacity="1" transform="translate(470.483606557377,0)">
+                    <line stroke="currentColor" y2="248.5"></line>
+                    <text dy="0.71em" fill="currentColor" y="251.5"></text>
+                  </g>
+                  <g class="tick" opacity="1" transform="translate(514.8688524590164,0)">
+                    <line stroke="currentColor" y2="248.5"></line>
+                    <text dy="0.71em" fill="currentColor" y="251.5"></text>
+                  </g>
+                </g>
+                <g class="grid left" data-testid="grid-left" fill="none" font-family="sans-serif" font-size="10" opacity="1" text-anchor="end">
+                  <path class="domain" d="M541.5,249H0.5V0.5H541.5" stroke="currentColor"></path>
+                  <g class="tick" opacity="1" transform="translate(0,249)">
+                    <line stroke="currentColor" x2="541.5"></line>
+                    <text dy="0.32em" fill="currentColor" x="-3"></text>
+                  </g>
+                  <g class="tick" opacity="1" transform="translate(0,219.77686270746665)">
+                    <line stroke="currentColor" x2="541.5"></line>
+                    <text dy="0.32em" fill="currentColor" x="-3"></text>
+                  </g>
+                  <g class="tick" opacity="1" transform="translate(0,190.55372541493327)">
+                    <line stroke="currentColor" x2="541.5"></line>
+                    <text dy="0.32em" fill="currentColor" x="-3"></text>
+                  </g>
+                  <g class="tick" opacity="1" transform="translate(0,161.3305881223999)">
+                    <line stroke="currentColor" x2="541.5"></line>
+                    <text dy="0.32em" fill="currentColor" x="-3"></text>
+                  </g>
+                  <g class="tick" opacity="1" transform="translate(0,132.10745082986654)">
+                    <line stroke="currentColor" x2="541.5"></line>
+                    <text dy="0.32em" fill="currentColor" x="-3"></text>
+                  </g>
+                  <g class="tick" opacity="1" transform="translate(0,102.88431353733317)">
+                    <line stroke="currentColor" x2="541.5"></line>
+                    <text dy="0.32em" fill="currentColor" x="-3"></text>
+                  </g>
+                  <g class="tick" opacity="1" transform="translate(0,73.66117624479982)">
+                    <line stroke="currentColor" x2="541.5"></line>
+                    <text dy="0.32em" fill="currentColor" x="-3"></text>
+                  </g>
+                  <g class="tick" opacity="1" transform="translate(0,44.43803895226644)">
+                    <line stroke="currentColor" x2="541.5"></line>
+                    <text dy="0.32em" fill="currentColor" x="-3"></text>
+                  </g>
+                  <g class="tick" opacity="1" transform="translate(0,15.21490165973309)">
+                    <line stroke="currentColor" x2="541.5"></line>
+                    <text dy="0.32em" fill="currentColor" x="-3"></text>
+                  </g>
+                </g>
+              </g>
+              <g class="bar-group" data-testid="bar-group" focusable="false" id="bar-chart-unit-test-123457-123457-123457" role="presentation" tabindex="-1">
+                <rect class="bar" cursor="default" data-height="41.132822334144294" data-id="bar-Apr-17" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="8.877049180327845" data-y="207.3671776658557" fill="url(#bar-chart-unit-test_texture_0)" focusable="false" height="41.132822334144294" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="8.877049180327845" y="207.3671776658557"></rect>
+                <rect class="bar" cursor="default" data-height="176.5755469254202" data-id="bar-May-17" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="53.26229508196719" data-y="71.92445307457979" fill="url(#bar-chart-unit-test_texture_0)" focusable="false" height="176.5755469254202" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="53.26229508196719" y="71.92445307457979"></rect>
+                <rect class="bar" cursor="default" data-height="94.5076844503275" data-id="bar-Jun-17" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="97.64754098360653" data-y="153.9923155496725" fill="url(#bar-chart-unit-test_texture_0)" focusable="false" height="94.5076844503275" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="97.64754098360653" y="153.9923155496725"></rect>
+                <rect class="bar" cursor="default" data-height="64.91139691770576" data-id="bar-Jul-17" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="142.03278688524588" data-y="183.58860308229424" fill="url(#bar-chart-unit-test_texture_0)" focusable="false" height="64.91139691770576" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="142.03278688524588" y="183.58860308229424"></rect>
+                <rect class="bar" cursor="default" data-height="130.81214314845025" data-id="bar-Aug-17" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="186.41803278688522" data-y="117.68785685154975" fill="url(#bar-chart-unit-test_texture_0)" focusable="false" height="130.81214314845025" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="186.41803278688522" y="117.68785685154975"></rect>
+                <rect class="bar" cursor="default" data-height="110.73292551475055" data-id="bar-Sep-17" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="230.80327868852456" data-y="137.76707448524945" fill="url(#bar-chart-unit-test_texture_0)" focusable="false" height="110.73292551475055" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="230.80327868852456" y="137.76707448524945"></rect>
+                <rect class="bar" cursor="default" data-height="191.22262168349732" data-id="bar-Oct-17" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="275.1885245901639" data-y="57.27737831650268" fill="url(#bar-chart-unit-test_texture_0)" focusable="false" height="191.22262168349732" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="275.1885245901639" y="57.27737831650268"></rect>
+                <rect class="bar" cursor="default" data-height="217.92955918573168" data-id="bar-Nov-17" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="319.57377049180326" data-y="30.57044081426832" fill="url(#bar-chart-unit-test_texture_0)" focusable="false" height="217.92955918573168" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="319.57377049180326" y="30.57044081426832"></rect>
+                <rect class="bar" cursor="default" data-height="77.04230110862119" data-id="bar-Dec-17" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="363.9590163934426" data-y="171.4576988913788" fill="url(#bar-chart-unit-test_texture_0)" focusable="false" height="77.04230110862119" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="363.9590163934426" y="171.4576988913788"></rect>
+                <rect class="bar" cursor="default" data-height="68.38214126452806" data-id="bar-Jan-18" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="408.34426229508193" data-y="180.11785873547194" fill="url(#bar-chart-unit-test_texture_0)" focusable="false" height="68.38214126452806" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="408.34426229508193" y="180.11785873547194"></rect>
+                <rect class="bar" cursor="default" data-height="93.5824214773713" data-id="bar-Feb-18" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="452.72950819672127" data-y="154.9175785226287" fill="url(#bar-chart-unit-test_texture_0)" focusable="false" height="93.5824214773713" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="452.72950819672127" y="154.9175785226287"></rect>
+                <rect class="bar" cursor="default" data-height="248.5" data-id="bar-Mar-18" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="497.1147540983606" data-y="0" fill="url(#bar-chart-unit-test_texture_0)" focusable="false" height="248.5" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="497.1147540983606" y="0"></rect>
+              </g>
+              <g aria-hidden="true" class="bar-dataLabel-group" data-testid="dataLabel-group" focusable="false" role="presentation">
+                <text class="bar-dataLabel" cursor="default" data-height="41.132822334144294" data-id="label-Apr-17" data-testid="dataLabel" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="8.877049180327845" data-y="207.3671776658557" dy="-.3em" fill="#222222" filter="url(#VCL-t-s-f-ffffffbar-chart-unit-test)" opacity="1" text-anchor="middle" x="26.631147540983584" y="207.3671776658557">
+                  1,4M
+                </text>
+                <text class="bar-dataLabel" cursor="default" data-height="176.5755469254202" data-id="label-May-17" data-testid="dataLabel" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="53.26229508196719" data-y="71.92445307457979" dy="-.3em" fill="#222222" filter="url(#VCL-t-s-f-ffffffbar-chart-unit-test)" opacity="1" text-anchor="middle" x="71.01639344262293" y="71.92445307457979">
+                  6M
+                </text>
+                <text class="bar-dataLabel" cursor="default" data-height="94.5076844503275" data-id="label-Jun-17" data-testid="dataLabel" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="97.64754098360653" data-y="153.9923155496725" dy="-.3em" fill="#222222" filter="url(#VCL-t-s-f-ffffffbar-chart-unit-test)" opacity="1" text-anchor="middle" x="115.40163934426226" y="153.9923155496725">
+                  3,2M
+                </text>
+                <text class="bar-dataLabel" cursor="default" data-height="64.91139691770576" data-id="label-Jul-17" data-testid="dataLabel" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="142.03278688524588" data-y="183.58860308229424" dy="-.3em" fill="#222222" filter="url(#VCL-t-s-f-ffffffbar-chart-unit-test)" opacity="1" text-anchor="middle" x="159.78688524590163" y="183.58860308229424">
+                  2,2M
+                </text>
+                <text class="bar-dataLabel" cursor="default" data-height="130.81214314845025" data-id="label-Aug-17" data-testid="dataLabel" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="186.41803278688522" data-y="117.68785685154975" dy="-.3em" fill="#222222" filter="url(#VCL-t-s-f-ffffffbar-chart-unit-test)" opacity="1" text-anchor="middle" x="204.17213114754097" y="117.68785685154975">
+                  4,5M
+                </text>
+                <text class="bar-dataLabel" cursor="default" data-height="110.73292551475055" data-id="label-Sep-17" data-testid="dataLabel" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="230.80327868852456" data-y="137.76707448524945" dy="-.3em" fill="#222222" filter="url(#VCL-t-s-f-ffffffbar-chart-unit-test)" opacity="1" text-anchor="middle" x="248.5573770491803" y="137.76707448524945">
+                  3,8M
+                </text>
+                <text class="bar-dataLabel" cursor="default" data-height="191.22262168349732" data-id="label-Oct-17" data-testid="dataLabel" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="275.1885245901639" data-y="57.27737831650268" dy="-.3em" fill="#222222" filter="url(#VCL-t-s-f-ffffffbar-chart-unit-test)" opacity="1" text-anchor="middle" x="292.94262295081967" y="57.27737831650268">
+                  6,5M
+                </text>
+                <text class="bar-dataLabel" cursor="default" data-height="217.92955918573168" data-id="label-Nov-17" data-testid="dataLabel" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="319.57377049180326" data-y="30.57044081426832" dy="-.3em" fill="#222222" filter="url(#VCL-t-s-f-ffffffbar-chart-unit-test)" opacity="1" text-anchor="middle" x="337.327868852459" y="30.57044081426832">
+                  7,5M
+                </text>
+                <text class="bar-dataLabel" cursor="default" data-height="77.04230110862119" data-id="label-Dec-17" data-testid="dataLabel" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="363.9590163934426" data-y="171.4576988913788" dy="-.3em" fill="#222222" filter="url(#VCL-t-s-f-ffffffbar-chart-unit-test)" opacity="1" text-anchor="middle" x="381.71311475409834" y="171.4576988913788">
+                  2,6M
+                </text>
+                <text class="bar-dataLabel" cursor="default" data-height="68.38214126452806" data-id="label-Jan-18" data-testid="dataLabel" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="408.34426229508193" data-y="180.11785873547194" dy="-.3em" fill="#222222" filter="url(#VCL-t-s-f-ffffffbar-chart-unit-test)" opacity="1" text-anchor="middle" x="426.0983606557377" y="180.11785873547194">
+                  2,3M
+                </text>
+                <text class="bar-dataLabel" cursor="default" data-height="93.5824214773713" data-id="label-Feb-18" data-testid="dataLabel" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="452.72950819672127" data-y="154.9175785226287" dy="-.3em" fill="#222222" filter="url(#VCL-t-s-f-ffffffbar-chart-unit-test)" opacity="1" text-anchor="middle" x="470.483606557377" y="154.9175785226287">
+                  3,2M
+                </text>
+                <text class="bar-dataLabel" cursor="default" data-height="248.5" data-id="label-Mar-18" data-testid="dataLabel" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="497.1147540983606" data-y="0" dy="-.3em" fill="#222222" filter="url(#VCL-t-s-f-ffffffbar-chart-unit-test)" opacity="1" text-anchor="middle" x="514.8688524590164" y="0">
+                  8,5M
+                </text>
+              </g>
+              <g aria-hidden="true" class="bar-reference-line-group" data-testid="reference-line-group" focusable="false" role="presentation"></g>
+              <g aria-hidden="true" class="axis bottom x" data-testid="x-axis" fill="none" focusable="false" font-family="sans-serif" font-size="10" opacity="1" role="presentation" text-anchor="middle" transform="translate(0, 248.5)">
+                <path class="domain" d="M0.5,0.5H542" stroke="currentColor"></path>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(26.631147540983584,0)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10">
+                    <tspan data-testid="axis-tick-text-tspan" dy="0.71em" x="0" y="10">
+                      Apr-17
+                    </tspan>
+                  </text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(71.01639344262293,0)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10">
+                    <tspan data-testid="axis-tick-text-tspan" dy="0.71em" x="0" y="10">
+                      May-17
+                    </tspan>
+                  </text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(115.40163934426226,0)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10">
+                    <tspan data-testid="axis-tick-text-tspan" dy="0.71em" x="0" y="10">
+                      Jun-17
+                    </tspan>
+                  </text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(159.78688524590163,0)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10">
+                    <tspan data-testid="axis-tick-text-tspan" dy="0.71em" x="0" y="10">
+                      Jul-17
+                    </tspan>
+                  </text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(204.17213114754097,0)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10">
+                    <tspan data-testid="axis-tick-text-tspan" dy="0.71em" x="0" y="10">
+                      Aug-17
+                    </tspan>
+                  </text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(248.5573770491803,0)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10">
+                    <tspan data-testid="axis-tick-text-tspan" dy="0.71em" x="0" y="10">
+                      Sep-17
+                    </tspan>
+                  </text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(292.94262295081967,0)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10">
+                    <tspan data-testid="axis-tick-text-tspan" dy="0.71em" x="0" y="10">
+                      Oct-17
+                    </tspan>
+                  </text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(337.327868852459,0)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10">
+                    <tspan data-testid="axis-tick-text-tspan" dy="0.71em" x="0" y="10">
+                      Nov-17
+                    </tspan>
+                  </text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(381.71311475409834,0)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10">
+                    <tspan data-testid="axis-tick-text-tspan" dy="0.71em" x="0" y="10">
+                      Dec-17
+                    </tspan>
+                  </text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(426.0983606557377,0)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10">
+                    <tspan data-testid="axis-tick-text-tspan" dy="0.71em" x="0" y="10">
+                      Jan-18
+                    </tspan>
+                  </text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(470.483606557377,0)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10">
+                    <tspan data-testid="axis-tick-text-tspan" dy="0.71em" x="0" y="10">
+                      Feb-18
+                    </tspan>
+                  </text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(514.8688524590164,0)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10">
+                    <tspan data-testid="axis-tick-text-tspan" dy="0.71em" x="0" y="10">
+                      Mar-18
+                    </tspan>
+                  </text>
+                </g>
+              </g>
+              <text aria-hidden="true" class="axis-label bottom x" data-testid="x-axis-label" focusable="false" role="presentation" transform="translate(0, 0)" x="270.75" y="298.5">
+                X Axis
+              </text>
+              <g aria-hidden="true" class="axis left y" data-testid="y-axis" fill="none" focusable="false" font-family="sans-serif" font-size="10" opacity="1" role="presentation" text-anchor="end">
+                <path class="domain" d="M0.5,249V0.5" stroke="currentColor"></path>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0,249)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" x2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.32em" fill="currentColor" x="-10">
+                    <tspan data-testid="axis-tick-text-tspan" dy="0.32em" x="-8">
+                      0
+                    </tspan>
+                  </text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0,219.77686270746665)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" x2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.32em" fill="currentColor" x="-10">
+                    <tspan data-testid="axis-tick-text-tspan" dy="0.32em" x="-8">
+                      1M
+                    </tspan>
+                  </text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0,190.55372541493327)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" x2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.32em" fill="currentColor" x="-10">
+                    <tspan data-testid="axis-tick-text-tspan" dy="0.32em" x="-8">
+                      2M
+                    </tspan>
+                  </text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0,161.3305881223999)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" x2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.32em" fill="currentColor" x="-10">
+                    <tspan data-testid="axis-tick-text-tspan" dy="0.32em" x="-8">
+                      3M
+                    </tspan>
+                  </text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0,132.10745082986654)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" x2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.32em" fill="currentColor" x="-10">
+                    <tspan data-testid="axis-tick-text-tspan" dy="0.32em" x="-8">
+                      4M
+                    </tspan>
+                  </text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0,102.88431353733317)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" x2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.32em" fill="currentColor" x="-10">
+                    <tspan data-testid="axis-tick-text-tspan" dy="0.32em" x="-8">
+                      5M
+                    </tspan>
+                  </text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0,73.66117624479982)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" x2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.32em" fill="currentColor" x="-10">
+                    <tspan data-testid="axis-tick-text-tspan" dy="0.32em" x="-8">
+                      6M
+                    </tspan>
+                  </text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0,44.43803895226644)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" x2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.32em" fill="currentColor" x="-10">
+                    <tspan data-testid="axis-tick-text-tspan" dy="0.32em" x="-8">
+                      7M
+                    </tspan>
+                  </text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0,15.21490165973309)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" x2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.32em" fill="currentColor" x="-10">
+                    <tspan data-testid="axis-tick-text-tspan" dy="0.32em" x="-8">
+                      8M
+                    </tspan>
+                  </text>
+                </g>
+              </g>
+              <text aria-hidden="true" class="axis-label left y" data-testid="y-axis-label" dy="1em" focusable="false" role="presentation" transform="rotate(-90)" x="-124.25" y="-60">
+                Y Axis
+              </text>
+              <g aria-hidden="true" class="vcl-annotation-group" data-testid="annotation-group" focusable="false" role="presentation"></g>
+              <g aria-hidden="true" class="editable vcl-annotation-group" data-testid="editable-annotation-group" focusable="false" role="presentation"></g>
+              <g aria-hidden="true" class="axis-mark axis-mark-x" data-testid="x-axis-mark" fill="none" focusable="false" font-family="sans-serif" font-size="10" opacity="1" role="presentation" text-anchor="middle" transform="translate(0, 248.5)">
+                <path class="domain" d="M0.5,0.5H542" stroke="currentColor"></path>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(26.631147540983584,0)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(71.01639344262293,0)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(115.40163934426226,0)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(159.78688524590163,0)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(204.17213114754097,0)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(248.5573770491803,0)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(292.94262295081967,0)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(337.327868852459,0)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(381.71311475409834,0)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(426.0983606557377,0)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(470.483606557377,0)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(514.8688524590164,0)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
+                </g>
+              </g>
+            </g>
+          </g>
+          <defs data-testid="pattern-defs">
+            <filter class="vcl-inversion-filter" color-interpolation-filters="sRGB" id="inversion-bar-chart-unit-test">
+              <feColorMatrix in="SourceGraphic" type="matrix" values="-1 0 0 0 1 
+        0 -1 0 0 1 
+        0 0 -1 0 1
+        0 0 0 1 0"></feColorMatrix>
+              <feColorMatrix type="hueRotate" values="180"></feColorMatrix>
+            </filter>
+            <pattern class="VCL-texture-pattern" height="12" id="bar-chart-unit-test_texture_0" patternContentUnits="userSpaceOnUse" patternUnits="userSpaceOnUse" width="12" x="0" y="0">
+              <rect class="VCL-t-p-e" fill="#226092" height="12" width="12"></rect>
+              <path class="VCL-t-p-e" d="M 0,0 l 12,12 M -3,9 l 6,6 M 9,-3 l 6,6" shape-rendering="auto" stroke="#80b6e1" stroke-linecap="square" stroke-width="1"></path>
+            </pattern>
+            <filter class="VCL-accessibility-stroke-filter" id="VCL-filter-226092-rest-bar-chart-unit-test">
+              <feMorphology in="SourceAlpha" operator="dilate" radius="1" result="outside-morph"></feMorphology>
+              <feFlood flood-color="#ffffff" result="outside-color"></feFlood>
+              <feComposite in="outside-color" in2="outside-morph" operator="in" result="outside-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="0" result="edge-morph"></feMorphology>
+              <feFlood flood-color="#226092" result="edge-color"></feFlood>
+              <feComposite in="edge-color" in2="edge-morph" operator="in" result="edge-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="1" result="primary-morph"></feMorphology>
+              <feFlood flood-color="#226092" result="primary-color"></feFlood>
+              <feComposite in="primary-color" in2="primary-morph" operator="in" result="primary-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="1" result="clean-morph"></feMorphology>
+              <feFlood flood-color="#226092" result="clean-color"></feFlood>
+              <feComposite in="clean-color" in2="clean-morph" operator="in" result="clean-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="2" result="morph-erode-2"></feMorphology>
+              <feComposite in="SourceGraphic" in2="morph-erode-2" operator="in" result="fill"></feComposite>
+              <feMerge>
+                <feMergeNode in="outside-stroke"></feMergeNode>
+                <feMergeNode in="edge-stroke"></feMergeNode>
+                <feMergeNode in="primary-stroke"></feMergeNode>
+                <feMergeNode in="clean-stroke"></feMergeNode>
+                <feMergeNode in="fill"></feMergeNode>
+              </feMerge>
+            </filter>
+            <filter class="VCL-accessibility-stroke-filter" id="VCL-filter-226092-hover-bar-chart-unit-test">
+              <feMorphology in="SourceAlpha" operator="dilate" radius="1" result="outside-morph"></feMorphology>
+              <feFlood flood-color="#ffffff" result="outside-color"></feFlood>
+              <feComposite in="outside-color" in2="outside-morph" operator="in" result="outside-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="0" result="edge-morph"></feMorphology>
+              <feFlood flood-color="#226092" result="edge-color"></feFlood>
+              <feComposite in="edge-color" in2="edge-morph" operator="in" result="edge-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="1" result="primary-morph"></feMorphology>
+              <feFlood flood-color="#226092" result="primary-color"></feFlood>
+              <feComposite in="primary-color" in2="primary-morph" operator="in" result="primary-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="3" result="clean-morph"></feMorphology>
+              <feFlood flood-color="#226092" result="clean-color"></feFlood>
+              <feComposite in="clean-color" in2="clean-morph" operator="in" result="clean-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="4" result="morph-erode-4"></feMorphology>
+              <feComposite in="SourceGraphic" in2="morph-erode-4" operator="in" result="fill"></feComposite>
+              <feMerge>
+                <feMergeNode in="outside-stroke"></feMergeNode>
+                <feMergeNode in="edge-stroke"></feMergeNode>
+                <feMergeNode in="primary-stroke"></feMergeNode>
+                <feMergeNode in="clean-stroke"></feMergeNode>
+                <feMergeNode in="fill"></feMergeNode>
+              </feMerge>
+            </filter>
+            <filter class="VCL-accessibility-stroke-filter" id="VCL-filter-80b6e1-click-bar-chart-unit-test">
+              <feMorphology in="SourceAlpha" operator="dilate" radius="1" result="outside-morph"></feMorphology>
+              <feFlood flood-color="#ffffff" result="outside-color"></feFlood>
+              <feComposite in="outside-color" in2="outside-morph" operator="in" result="outside-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="0" result="edge-morph"></feMorphology>
+              <feFlood flood-color="#226092" result="edge-color"></feFlood>
+              <feComposite in="edge-color" in2="edge-morph" operator="in" result="edge-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="1" result="primary-morph"></feMorphology>
+              <feFlood flood-color="#80b6e1" result="primary-color"></feFlood>
+              <feComposite in="primary-color" in2="primary-morph" operator="in" result="primary-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="3" result="clean-morph"></feMorphology>
+              <feFlood flood-color="#226092" result="clean-color"></feFlood>
+              <feComposite in="clean-color" in2="clean-morph" operator="in" result="clean-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="4" result="morph-erode-4"></feMorphology>
+              <feComposite in="SourceGraphic" in2="morph-erode-4" operator="in" result="fill"></feComposite>
+              <feMerge>
+                <feMergeNode in="outside-stroke"></feMergeNode>
+                <feMergeNode in="edge-stroke"></feMergeNode>
+                <feMergeNode in="primary-stroke"></feMergeNode>
+                <feMergeNode in="clean-stroke"></feMergeNode>
+                <feMergeNode in="fill"></feMergeNode>
+              </feMerge>
+            </filter>
+            <filter class="VCL-t-s-f-ffffff" id="VCL-t-s-f-ffffffbar-chart-unit-test">
+              <feMorphology in="SourceAlpha" operator="dilate" radius="1.5" result="dilatedText"></feMorphology>
+              <feFlood flood-color="#ffffff" flood-opacity="1" result="whiteTextFlood"></feFlood>
+              <feComposite in="whiteTextFlood" in2="dilatedText" operator="in" result="textOutline"></feComposite>
+              <feMerge>
+                <feMergeNode in="textOutline"></feMergeNode>
+                <feMergeNode in="textOutline"></feMergeNode>
+                <feMergeNode in="textOutline"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+              </feMerge>
+            </filter>
+          </defs>
+        </svg>
+      </div>
+      <div class="bar-tooltip vcl-tooltip" data-testid="tooltip-container" style="display: block; position: absolute; padding: 0.5rem; opacity: 0; background-color: #ffffff; font-size: 14px; font-weight: 400; color: #222222; border: 1px solid #565656; border-radius: 3px; pointer-events: none; min-width: 80px; max-width: 300px; z-index: 10;">
+        <p style="margin: 0;"></p>
+      </div>
+      <data-table>
+        <div class="visa-viz-data-table-outer-container" data-testid="data-table-outer-container">
+          <div class="visa-viz-button-wrapper" style="padding-bottom: 0px;">
+            <button aria-expanded="false" aria-label="Adattábla megjelenítése" class="vcc-btn-icon vcc-btn-icon--light-tiny visa-viz-data-table-button" id="visa-viz-data-table-button-bar-chart-unit-test" role="button" tabindex="0" type="button" style="transform: translate(31.75px,
+                -40px);">
+              <svg class="vcc-icon--tiny" focusable="false" tabindex="-1">
+                <use href="#visa-viz-view-grid--tiny-bar-chart-unit-test"></use>
+              </svg>
+            </button>
+            <svg class="vcc-icons">
+              <symbol id="visa-viz-view-grid--tiny-bar-chart-unit-test" viewbox="0 0 16 16">
+                <path d="M5,5 L5,2 L2,2 L2,5 L5,5 Z M5,7 L2,7 C0.894905844,7 0,6.1044757 0,5 L0,2 C0,0.8955243 0.894905844,3.55271368e-15 2,3.55271368e-15 L5,3.55271368e-15 C6.10509416,3.55271368e-15 7,0.8955243 7,2 L7,5 C7,6.1044757 6.10509416,7 5,7 Z M14,5 L14,2 L11,2 L11,5 L14,5 Z M14,7 L11,7 C9.89490584,7 9,6.1044757 9,5 L9,2 C9,0.8955243 9.89490584,3.55271368e-15 11,3.55271368e-15 L14,3.55271368e-15 C15.1050942,3.55271368e-15 16,0.8955243 16,2 L16,5 C16,6.1044757 15.1050942,7 14,7 Z M5,14 L5,11 L2,11 L2,14 L5,14 Z M5,16 L2,16 C0.894905844,16 0,15.1044757 0,14 L0,11 C0,9.8955243 0.894905844,9 2,9 L5,9 C6.10509416,9 7,9.8955243 7,11 L7,14 C7,15.1044757 6.10509416,16 5,16 Z M14,14 L14,11 L11,11 L11,14 L14,14 Z M14,16 L11,16 C9.89490584,16 9,15.1044757 9,14 L9,11 C9,9.8955243 9.89490584,9 11,9 L14,9 C15.1050942,9 16,9.8955243 16,11 L16,14 C16,15.1044757 15.1050942,16 14,16 Z"></path>
+                <g fill="none" fill-rule="evenodd" stroke="none" stroke-width="1">
+                  <mask fill="#fff">
+                    <use xlink:href="#path-1"></use>
+                  </mask>
+                  <use fill="#000" fill-rule="nonzero" xlink:href="#path-1"></use>
+                </g>
+              </symbol>
+            </svg>
+          </div>
+          <div class="visa-viz-data-table-container" data-testid="data-table-container" id="visa-viz-data-table-container-bar-chart-unit-test"></div>
+        </div>
+      </data-table>
+    </div>
+  </div>
+</bar-chart>
+`;
+
 exports[`<bar-chart> rendered-html render should render with minimal props[data,oridnalAccessor,valueAccessor] given 1`] = `
 <bar-chart id="bar-chart-unit-test">
   <div class="is--vertical light o-layout">
     <div class="vcl-accessibility-instructions" id="chart-instructions-bar-chart-unit-test" style="position: absolute; width: 675px;">
       <p class="screen-reader-info vcl-region-label">
-        Keyboard interactive bar-chart, Titled: This is bar chart title. This section contains additional information about this chart. Pressing TAB will focus the keyboard instructions menu. Tabbing again takes you to the chart area.
+        Keyboard Interactive bar-chart, Titled: This is bar chart title. This section contains additional information about this chart. Pressing TAB will focus the keyboard instructions menu. Tabbing again takes you to the chart area.
       </p>
       <h2 class="screen-reader-info vcl-access-title">
         Chart title: This is bar chart title
@@ -367,13 +944,13 @@ exports[`<bar-chart> rendered-html render should render with minimal props[data,
         Chart Layout Description
       </h4>
       <p class="screen-reader-info vcl-access-layout">
-        This is a bar-chart with 12 bars.
+        Bar-chart. bar: 12.
       </p>
       <p class="screen-reader-info vcl-access-xAxis">
-        The chart has a horizontal X Axis, titled X Axis with a range that starts with Apr-17 and ends with Mar-18.
+        The chart has a horizontal X axis. Title X Axis. Start value Apr-17, end value Mar-18.
       </p>
       <p class="screen-reader-info vcl-access-yAxis">
-        The chart has a vertical Y axis, titled Y Axis with a range that starts with 0 and ends with 8m.
+        The chart has a primary vertical Y axis. Title Y Axis. Start value 0, end value 8m.
       </p>
       <p class="screen-reader-info vcl-access-notes" data-annotationlevel="h3" data-level="h4"></p>
     </div>

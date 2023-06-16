@@ -5,18 +5,20 @@
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
  *
  **/
-var plugin = require('./index');
-var base = require('@jupyter-widgets/base');
+import { ChartModel, ChartView, version } from './index';
+import { IJupyterWidgetRegistry } from '@jupyter-widgets/base';
 
-module.exports = {
+export const chartWidgetPlugin = {
   id: '@visa/charts-python:plugin',
-  requires: [base.IJupyterWidgetRegistry],
+  requires: [IJupyterWidgetRegistry],
   activate: function(app, widgets) {
     widgets.registerWidget({
       name: '@visa/charts-python',
-      version: plugin.version,
-      exports: plugin
+      version: version,
+      exports: { ChartModel, ChartView }
     });
   },
   autoStart: true
 };
+
+export default chartWidgetPlugin;

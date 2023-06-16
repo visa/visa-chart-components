@@ -7,6 +7,13 @@
  **/
 export interface IBarChartProps {
   /**
+   * @shortDescription Internationalization properties of the chart
+   * @controlName TextArea
+   * @groupName Localization
+   * @sortOrder 1 */
+  localization: ILocalizationType;
+
+  /**
    * @shortDescription Sets the heading level (which also sets sublevels) for the chart. "p", "span", and "div" are also valid.
    * @controlName Select
    * @groupName Base
@@ -346,6 +353,13 @@ export interface IHoverStyleType {
 export interface IClickStyleType {
   color?: string;
   strokeWidth?: string | number;
+}
+
+export interface ILocalizationType {
+  language?: string | object;
+  numeralLocale?: string | object;
+  skipValidation?: boolean;
+  overwrite?: boolean;
 }
 
 export interface IAccessibilityType {

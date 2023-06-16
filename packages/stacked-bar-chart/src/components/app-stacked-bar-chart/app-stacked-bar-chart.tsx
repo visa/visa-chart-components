@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -9,6 +9,12 @@ import { Component, Element, State, h } from '@stencil/core';
 import Utils from '@visa/visa-charts-utils';
 import '@visa/visa-charts-data-table';
 import '@visa/keyboard-instructions';
+
+// importing custom languages
+// import { hu } from '@visa/visa-charts-utils/src/utils/localization/languages/hu';
+
+// importing numeralLocales
+// import { HU } from '@visa/visa-charts-utils/src/utils/localization/numeralLocales/hu';
 
 const { autoTextColor, getColors, calculateLuminance, calculateRelativeLuminance, fixNestedSparseness } = Utils;
 @Component({
@@ -2521,7 +2527,8 @@ export class AppStackedBarChart {
   dataKeyNames: any = {
     [this.ordinalAccessor]: 'Test Ordinal Name',
     [this.groupAccessor]: 'Test Group Name',
-    [this.valueAccessor]: 'Test Value Name'
+    // [this.valueAccessor]: 'Test Value Name',
+    [`${this.valueAccessor}%`]: 'Test Value Percent'
   };
 
   onClickFunc(d) {
@@ -2769,7 +2776,7 @@ export class AppStackedBarChart {
     return (
       <div>
         {/* multiple chart instances can be tested if the colorBars line is active */}
-        {colorBars}
+        {/* {colorBars} */}
         <br />
         {this.fixedData ? (
           <stacked-bar-chart data={this.fixedData} ordinalAccessor="cat" groupAccessor="group" valueAccessor="val" />
@@ -2885,6 +2892,11 @@ export class AppStackedBarChart {
         </button>
         <br />
         <stacked-bar-chart
+          // localization={{
+          //   language: hu,
+          //   numeralLocale: HU,
+          //   skipValidation: false
+          // }}
           interactionKeys={this.interactionKeys}
           animationConfig={this.animations}
           onClickEvent={d => this.onClickFunc(d)}
@@ -2909,7 +2921,7 @@ export class AppStackedBarChart {
           xAxis={this.xAxis}
           yAxis={this.yAxis}
           data={this.dataStorage[this.stateTrigger]}
-          normalized={false}
+          normalized={true}
           sortOrder={this.sort}
           showZeroLabels={this.zeroLabel}
           barIntervalRatio={0.008}

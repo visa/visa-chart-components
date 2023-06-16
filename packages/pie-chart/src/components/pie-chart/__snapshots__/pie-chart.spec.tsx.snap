@@ -3,17 +3,6 @@
 exports[`<pie-chart> rendered-html accessibility generic accessibility test suite accessibility: keyboard instruction component displays table in click state 1`] = `
 <div class="visa-viz-keyboard-instructions-container" id="visa-viz-keyboard-instructions-container-pie-chart-unit-test">
   <div>
-    <p>
-      Note: for VoiceOver users (mac), press and hold
-      <kbd>
-        Ctrl
-      </kbd>
-      +
-      <kbd>
-        Shift
-      </kbd>
-      when using the arrow keys for the best navigation experience.
-    </p>
     <table class="vcc-ki-data-table vcc-ki-keyboard-instructions vcc-ki-state--compact vcc-ki-state--single-select" data-header="header">
       <thead class="vcc-ki-thead">
         <tr class="vcc-ki-tr">
@@ -31,10 +20,9 @@ exports[`<pie-chart> rendered-html accessibility generic accessibility test suit
             <kbd>
               Enter
             </kbd>
-            on the chart area or a pie.
           </th>
           <td class="vcc-ki-td">
-            Enter the chart area/drill down a level.
+            Enter the chart area/drill down a level on the chart area or a pie.
           </td>
         </tr>
         <tr class="vcc-ki-tr">
@@ -46,10 +34,9 @@ exports[`<pie-chart> rendered-html accessibility generic accessibility test suit
             <kbd>
               Enter
             </kbd>
-            on a pie or slice.
           </th>
           <td class="vcc-ki-td">
-            Drill up a level.
+            Drill up a level on a pie or slice.
           </td>
         </tr>
         <tr class="vcc-ki-tr">
@@ -57,21 +44,9 @@ exports[`<pie-chart> rendered-html accessibility generic accessibility test suit
             <kbd>
               Tab
             </kbd>
-            at any time.
           </th>
           <td class="vcc-ki-td">
-            Exit the chart.
-          </td>
-        </tr>
-        <tr class="vcc-ki-disabled-row vcc-ki-tr">
-          <th class="vcc-ki-td" scope="row">
-            <kbd>
-              Space
-            </kbd>
-            is unused.
-          </th>
-          <td class="vcc-ki-td">
-            No effect on this chart.
+            Exit the chart at any time.
           </td>
         </tr>
         <tr class="vcc-ki-tr">
@@ -83,25 +58,9 @@ exports[`<pie-chart> rendered-html accessibility generic accessibility test suit
             <kbd>
               →
             </kbd>
-            on a pie or slice.
           </th>
           <td class="vcc-ki-td">
-            Move among sibling pies or slices.
-          </td>
-        </tr>
-        <tr class="vcc-ki-disabled-row vcc-ki-tr">
-          <th class="vcc-ki-td" scope="row">
-            <kbd>
-              ↑
-            </kbd>
-            /
-            <kbd>
-              ↓
-            </kbd>
-            are unused.
-          </th>
-          <td class="vcc-ki-td">
-            No effect on this chart.
+            Move among sibling pies or slices on a pie or slice.
           </td>
         </tr>
         <tr class="vcc-ki-tr">
@@ -109,10 +68,33 @@ exports[`<pie-chart> rendered-html accessibility generic accessibility test suit
             <kbd>
               Esc
             </kbd>
-            at any time.
           </th>
           <td class="vcc-ki-td">
-            Dismiss the tooltip.
+            Exit the chart at any time.
+          </td>
+        </tr>
+      </tbody>
+      <thead class="vcc-ki-thead">
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-th" scope="col">
+            Note
+          </th>
+          <th class="vcc-ki-th" scope="col"></th>
+        </tr>
+      </thead>
+      <tbody class="vcc-ki-tbody">
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Control
+            </kbd>
+            +
+            <kbd>
+              Shift
+            </kbd>
+          </th>
+          <td class="vcc-ki-td">
+            Press and hold when using the arrow keys for the best navigation experience on a Mac (Voiceover).
           </td>
         </tr>
       </tbody>
@@ -124,17 +106,6 @@ exports[`<pie-chart> rendered-html accessibility generic accessibility test suit
 exports[`<pie-chart> rendered-html accessibility generic accessibility test suite accessibility: keyboard instruction component displays table in click state with space enabled 1`] = `
 <div class="visa-viz-keyboard-instructions-container" id="visa-viz-keyboard-instructions-container-pie-chart-unit-test">
   <div>
-    <p>
-      Note: for VoiceOver users (mac), press and hold
-      <kbd>
-        Ctrl
-      </kbd>
-      +
-      <kbd>
-        Shift
-      </kbd>
-      when using the arrow keys for the best navigation experience.
-    </p>
     <table class="vcc-ki-data-table vcc-ki-keyboard-instructions vcc-ki-state--compact vcc-ki-state--single-select" data-header="header">
       <thead class="vcc-ki-thead">
         <tr class="vcc-ki-tr">
@@ -152,10 +123,9 @@ exports[`<pie-chart> rendered-html accessibility generic accessibility test suit
             <kbd>
               Enter
             </kbd>
-            on the chart area or a pie.
           </th>
           <td class="vcc-ki-td">
-            Enter the chart area/drill down a level.
+            Enter the chart area/drill down a level on the chart area or a pie.
           </td>
         </tr>
         <tr class="vcc-ki-tr">
@@ -167,10 +137,9 @@ exports[`<pie-chart> rendered-html accessibility generic accessibility test suit
             <kbd>
               Enter
             </kbd>
-            on a pie or slice.
           </th>
           <td class="vcc-ki-td">
-            Drill up a level.
+            Drill up a level on a pie or slice.
           </td>
         </tr>
         <tr class="vcc-ki-tr">
@@ -178,10 +147,9 @@ exports[`<pie-chart> rendered-html accessibility generic accessibility test suit
             <kbd>
               Tab
             </kbd>
-            at any time.
           </th>
           <td class="vcc-ki-td">
-            Exit the chart.
+            Exit the chart at any time.
           </td>
         </tr>
         <tr class="vcc-ki-tr">
@@ -189,10 +157,9 @@ exports[`<pie-chart> rendered-html accessibility generic accessibility test suit
             <kbd>
               Space
             </kbd>
-            on a slice.
           </th>
           <td class="vcc-ki-td">
-            Select/Deselect a slice.
+            Select/Deselect a slice on a slice.
           </td>
         </tr>
         <tr class="vcc-ki-tr">
@@ -204,25 +171,9 @@ exports[`<pie-chart> rendered-html accessibility generic accessibility test suit
             <kbd>
               →
             </kbd>
-            on a pie or slice.
           </th>
           <td class="vcc-ki-td">
-            Move among sibling pies or slices.
-          </td>
-        </tr>
-        <tr class="vcc-ki-disabled-row vcc-ki-tr">
-          <th class="vcc-ki-td" scope="row">
-            <kbd>
-              ↑
-            </kbd>
-            /
-            <kbd>
-              ↓
-            </kbd>
-            are unused.
-          </th>
-          <td class="vcc-ki-td">
-            No effect on this chart.
+            Move among sibling pies or slices on a pie or slice.
           </td>
         </tr>
         <tr class="vcc-ki-tr">
@@ -230,10 +181,33 @@ exports[`<pie-chart> rendered-html accessibility generic accessibility test suit
             <kbd>
               Esc
             </kbd>
-            at any time.
           </th>
           <td class="vcc-ki-td">
-            Dismiss the tooltip.
+            Exit the chart at any time.
+          </td>
+        </tr>
+      </tbody>
+      <thead class="vcc-ki-thead">
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-th" scope="col">
+            Note
+          </th>
+          <th class="vcc-ki-th" scope="col"></th>
+        </tr>
+      </thead>
+      <tbody class="vcc-ki-tbody">
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Control
+            </kbd>
+            +
+            <kbd>
+              Shift
+            </kbd>
+          </th>
+          <td class="vcc-ki-td">
+            Press and hold when using the arrow keys for the best navigation experience on a Mac (Voiceover).
           </td>
         </tr>
       </tbody>
@@ -361,12 +335,525 @@ exports[`<pie-chart> rendered-html reference line should pass referenceStyle pro
 </g>
 `;
 
+exports[`<pie-chart> rendered-html render localization: should render localized with minimal props[data,accessors] given 1`] = `
+<pie-chart id="pie-chart-unit-test">
+  <div class="is--vertical o-layout">
+    <div class="vcl-accessibility-instructions" id="chart-instructions-pie-chart-unit-test" style="position: absolute; width: 600px;">
+      <p class="screen-reader-info vcl-region-label">
+        Billentyűzet Interaktív pie-chart, Elnevezés: Pie Chart Title. Ez a szekció információkkal szolgál a diagramról. A TAB billentyű lenyomásával a fókusz a billentyűzet instruckciók menüpontra kerül. A TAB újbóli lenyomása a diagram területre való navigálást eredményez.
+      </p>
+      <h2 class="screen-reader-info vcl-access-title">
+        Diagram diagram címe: Pie Chart Title
+      </h2>
+      <h3 class="screen-reader-info vcl-access-subtitle">
+        Diagram alcím: This is the pie chart's subtitle
+      </h3>
+      <p class="screen-reader-info vcl-access-executive-summary" data-level="h3"></p>
+      <p class="screen-reader-info vcl-access-purpose" data-level="h3"></p>
+      <p class="screen-reader-info vcl-access-long-description" data-level="h3"></p>
+      <p class="screen-reader-info vcl-access-context" data-level="h3"></p>
+      <h3 class="screen-reader-info vcl-access-structure-heading">
+        Struktúra
+      </h3>
+      <p class="screen-reader-info vcl-access-statistics" data-level="h4"></p>
+      <h4 class="screen-reader-info vcl-access-chart-layout-heading">
+        Diagramterület leírása
+      </h4>
+      <p class="screen-reader-info vcl-access-layout">
+        Pie-chart. Pie: 5, slice: 5.
+      </p>
+      <p class="screen-reader-info vcl-access-xAxis"></p>
+      <p class="screen-reader-info vcl-access-yAxis"></p>
+      <p class="screen-reader-info vcl-access-notes" data-annotationlevel="h3" data-level="h4"></p>
+    </div>
+    <div class="o-layout--chart">
+      <h2 aria-hidden="true" class="pie-main-title vcl-main-title" data-testid="main-title">
+        Pie Chart Title
+      </h2>
+      <p aria-hidden="true" class="pie-sub-title vcl-sub-title visa-ui-text--instructions" data-testid="sub-title">
+        This is the pie chart's subtitle
+      </p>
+      <keyboard-instructions>
+        <div class="vcc-ki-keyboard-instructions-root" style="position: relative; width: 570px;">
+          <div class="visa-viz-keyboard-instructions-outer-container" style="width: 416px;">
+            <div class="vcc-ki-keyboard-instructions-header vcc-ki-minimize">
+              <p class="vcc-ki-keyboard-heading">
+                Billentyűzet Instrukciók Megjelenítése
+              </p>
+            </div>
+            <div class="visa-viz-keyboard-instructions-button-wrapper">
+              <button aria-expanded="false" aria-label="display keyboard instructions" class="vcc-ki-btn-icon vcc-ki-btn-icon--light-tiny visa-viz-keyboard-instructions-button" id="visa-viz-keyboard-instructions-button-pie-chart-unit-test" role="button" tabindex="0" type="button">
+                <svg class="vcc-ki-icon--tiny" focusable="false" tabindex="-1">
+                  <use href="#visa-viz-keyboard-instructions-info--tiny-pie-chart-unit-test"></use>
+                </svg>
+              </button>
+              <svg class="vcc-ki-icons">
+                <symbol id="visa-viz-keyboard-instructions-info--tiny-pie-chart-unit-test" viewbox="0 0 16 16">
+                  <path d="M8.7,3.8a.68.68,0,0,1,.7.7.79.79,0,0,1-.8.8H8.5c-.4,0-.6-.3-.6-.7A.79.79,0,0,1,8.7,3.8ZM6.6,12.1l1.2-6H9l-1.2,6ZM14,8a6,6,0,1,0-6,6A6,6,0,0,0,14,8Zm2,0A8,8,0,1,1,8,0,8,8,0,0,1,16,8Z"></path>
+                </symbol>
+              </svg>
+            </div>
+            <div class="visa-viz-keyboard-instructions-container" id="visa-viz-keyboard-instructions-container-pie-chart-unit-test"></div>
+          </div>
+        </div>
+      </keyboard-instructions>
+      <div class="visa-viz-d3-pie-container" data-testid="chart-container" style="position: relative;">
+        <div aria-label="Pie Chart Title. This is the pie chart's subtitle.  Navigálás a diagramterületre az ENTER billentyű lenyomásával." class="VCL-controller" id="chart-area-pie-chart-unit-test" role="application" tabindex="0" style="position: absolute; top: 0; left: 0; opacity: 0; pointer-events: none; width: 0px; height: 0px;">
+          Interaktív pie-chart.
+        </div>
+        <svg class="vcl-svg" data-testid="root-svg" focusable="false" height="325" role="presentation" tabindex="-1" viewBox="0 0 600 325" width="600" style="isolation: isolate; overflow: hidden;">
+          <g data-testid="margin-container" id="visa-viz-margin-container-g-pie-chart-unit-test" transform="translate(30, 30)">
+            <g data-testid="padding-container" id="visa-viz-padding-container-g-pie-chart-unit-test" transform="translate(167.5, 117.5)">
+              <g class="pie-group" data-testid="pie-group" focusable="false" id="pie-chart-unit-test-123457-123457-123457" role="presentation" tabindex="-1">
+                <path class="arc geometryIsMoving" cursor="default" data-d="M5.970153145843347e-15,-97.5A97.5,97.5,0,0,1,73.7851396762801,-63.73384629027057L51.649597773396074,-44.6136924031894A68.25,68.25,0,0,0,4.1791072020903425e-15,-68.25Z" data-fake-x="50.975275258955634" data-fake-y="-111.39017601329887" data-id="pie-Client-D" data-r="1" data-role="img" data-testid="pie" data-translate-x="197.5" data-translate-y="147.5" focusable="false" id="pie-chart-unit-test-123457-123457-123457" opacity="0" role="presentation" tabindex="-1"></path>
+                <path class="arc geometryIsMoving" cursor="default" data-d="M73.7851396762801,-63.73384629027057A97.5,97.5,0,0,1,91.52424345303956,33.60896993882356L64.06697041712769,23.526278957176494A68.25,68.25,0,0,0,51.649597773396074,-44.6136924031894Z" data-fake-x="120.51524906775575" data-fake-y="-21.961892954315097" data-id="pie-Client-E" data-r="1" data-role="img" data-testid="pie" data-translate-x="197.5" data-translate-y="147.5" focusable="false" id="pie-chart-unit-test-123457-123457-123457" opacity="0" role="presentation" tabindex="-1"></path>
+                <path class="arc geometryIsMoving" cursor="default" data-d="M91.52424345303956,33.60896993882356A97.5,97.5,0,0,1,11.688416249174663,96.79685390334765L8.181891374422264,67.75779773234336A68.25,68.25,0,0,0,64.06697041712769,23.526278957176494Z" data-fake-x="76.02466152385927" data-fake-y="96.05467630564704" data-id="pie-Client-C" data-r="1" data-role="img" data-testid="pie" data-translate-x="197.5" data-translate-y="147.5" focusable="false" id="pie-chart-unit-test-123457-123457-123457" opacity="0" role="presentation" tabindex="-1"></path>
+                <path class="arc geometryIsMoving" cursor="default" data-d="M11.688416249174663,96.79685390334765A97.5,97.5,0,0,1,-95.2637260071267,20.762285693995526L-66.68460820498869,14.533599985796869A68.25,68.25,0,0,0,8.181891374422264,67.75779773234336Z" data-fake-x="-70.97908453005905" data-fake-y="99.8409713458094" data-id="pie-Client-A" data-r="1" data-role="img" data-testid="pie" data-translate-x="197.5" data-translate-y="147.5" focusable="false" id="pie-chart-unit-test-123457-123457-123457" opacity="0" role="presentation" tabindex="-1"></path>
+                <path class="arc geometryIsMoving" cursor="default" data-d="M-95.2637260071267,20.762285693995526A97.5,97.5,0,0,1,-1.791045943753004e-14,-97.5L-1.2537321606271028e-14,-68.25A68.25,68.25,0,0,0,-66.68460820498869,14.533599985796869Z" data-fake-x="-95.39858152725819" data-fake-y="-76.846344367101" data-id="pie-Client-B" data-r="1" data-role="img" data-testid="pie" data-translate-x="197.5" data-translate-y="147.5" focusable="false" id="pie-chart-unit-test-123457-123457-123457" opacity="0" role="presentation" tabindex="-1"></path>
+              </g>
+              <g aria-hidden="true" class="pie-dataLabel-group" data-testid="dataLabel-group" focusable="false" role="presentation">
+                <text class="pie-dataLabel-highlight" cursor="default" data-id="label-Client-D" data-r="1" data-testid="dataLabel" data-translate-x="197.5" data-translate-y="147.5" data-use-dx="true" data-use-dy="true" data-x="50.975275258955634" data-y="-111.39017601329887" dx="0" dy="0" fill="#222222" filter="url(#VCL-t-s-f-ffffffpie-chart-unit-test)" opacity="1" text-anchor="start" x="50.975275258955634" y="-111.39017601329887">
+                  13,7%
+                </text>
+                <text class="pie-dataLabel-highlight" cursor="default" data-id="label-Client-E" data-r="1" data-testid="dataLabel" data-translate-x="197.5" data-translate-y="147.5" data-use-dx="true" data-use-dy="true" data-x="120.51524906775575" data-y="-21.961892954315097" dx="0" dy="0" fill="#222222" filter="url(#VCL-t-s-f-ffffffpie-chart-unit-test)" opacity="1" text-anchor="start" x="120.51524906775575" y="-21.961892954315097">
+                  16,9%
+                </text>
+                <text class="pie-dataLabel-highlight" cursor="default" data-id="label-Client-C" data-r="1" data-testid="dataLabel" data-translate-x="197.5" data-translate-y="147.5" data-use-dx="true" data-use-dy="true" data-x="76.02466152385927" data-y="96.05467630564704" dx="0" dy="0" fill="#222222" filter="url(#VCL-t-s-f-ffffffpie-chart-unit-test)" opacity="1" text-anchor="start" x="76.02466152385927" y="96.05467630564704">
+                  17,5%
+                </text>
+                <text class="pie-dataLabel-highlight" cursor="default" data-id="label-Client-A" data-r="1" data-testid="dataLabel" data-translate-x="197.5" data-translate-y="147.5" data-use-dx="true" data-use-dy="true" data-x="-70.97908453005905" data-y="99.8409713458094" dx="0" dy="0" fill="#222222" filter="url(#VCL-t-s-f-ffffffpie-chart-unit-test)" opacity="1" text-anchor="end" x="-70.97908453005905" y="99.8409713458094">
+                  23,5%
+                </text>
+                <text class="pie-dataLabel-highlight" cursor="default" data-id="label-Client-B" data-r="1" data-testid="dataLabel" data-translate-x="197.5" data-translate-y="147.5" data-use-dx="true" data-use-dy="true" data-x="-95.39858152725819" data-y="-76.846344367101" dx="0" dy="0" fill="#222222" filter="url(#VCL-t-s-f-ffffffpie-chart-unit-test)" opacity="1" text-anchor="end" x="-95.39858152725819" y="-76.846344367101">
+                  28,4%
+                </text>
+                <text class="pie-dataLabel-note" cursor="default" data-id="label-note-Client-D" data-testid="dataLabel-note" data-translate-x="197.5" data-translate-y="152.5" data-use-dx="true" data-use-dy="true" data-x="50.975275258955634" data-y="-111.39017601329887" dx="0" dy="1.4em" opacity="2.220446049250313e-16" text-anchor="start" y="-111.39017601329887">
+                  Client-D
+                </text>
+                <text class="pie-dataLabel-note" cursor="default" data-id="label-note-Client-E" data-testid="dataLabel-note" data-translate-x="197.5" data-translate-y="152.5" data-use-dx="true" data-use-dy="true" data-x="120.51524906775575" data-y="-21.961892954315097" dx="0" dy="1.4em" opacity="2.220446049250313e-16" text-anchor="start" y="-21.961892954315097">
+                  Client-E
+                </text>
+                <text class="pie-dataLabel-note" cursor="default" data-id="label-note-Client-C" data-testid="dataLabel-note" data-translate-x="197.5" data-translate-y="152.5" data-use-dx="true" data-use-dy="true" data-x="76.02466152385927" data-y="96.05467630564704" dx="0" dy="1.4em" opacity="2.220446049250313e-16" text-anchor="start" y="96.05467630564704">
+                  Client-C
+                </text>
+                <text class="pie-dataLabel-note" cursor="default" data-id="label-note-Client-A" data-testid="dataLabel-note" data-translate-x="197.5" data-translate-y="152.5" data-use-dx="true" data-use-dy="true" data-x="-70.97908453005905" data-y="99.8409713458094" dx="0" dy="1.4em" opacity="2.220446049250313e-16" text-anchor="end" y="99.8409713458094">
+                  Client-A
+                </text>
+                <text class="pie-dataLabel-note" cursor="default" data-id="label-note-Client-B" data-testid="dataLabel-note" data-translate-x="197.5" data-translate-y="152.5" data-use-dx="true" data-use-dy="true" data-x="-95.39858152725819" data-y="-76.846344367101" dx="0" dy="1.4em" opacity="2.220446049250313e-16" text-anchor="end" y="-76.846344367101">
+                  Client-B
+                </text>
+              </g>
+              <g aria-hidden="true" class="pie-dataLabel-group" data-testid="refDataLabel-group" focusable="false" role="presentation"></g>
+              <g aria-hidden="true" class="pie-edge-line-group" data-testid="edgeLine-group" focusable="false" role="presentation">
+                <path class="edge-line" data-d="M77.56899299301242,-67.0022486641306L47.86574445666376,-41.34529002932937Z" data-fake-x="62.71736872483809" data-fake-y="-54.17376934672998" data-id="pie-edge-line-Client-D" data-testid="pie-edge-line" data-translate-x="197.5" data-translate-y="147.5" fill="none" opacity="0" stroke="#222222" stroke-width="1"></path>
+                <path class="edge-line" data-d="M96.21779439934927,35.33250685876323L59.37341947081797,21.802742037236825Z" data-fake-x="77.79560693508363" data-fake-y="28.56762444800003" data-id="pie-edge-line-Client-E" data-testid="pie-edge-line" data-translate-x="197.5" data-translate-y="147.5" fill="none" opacity="0" stroke="#222222" stroke-width="1"></path>
+                <path class="edge-line" data-d="M12.2878222106708,101.76079512916036L7.582485412926128,62.79385650653066Z" data-fake-x="9.935153811798465" data-fake-y="82.27732581784551" data-id="pie-edge-line-Client-C" data-testid="pie-edge-line" data-translate-x="197.5" data-translate-y="147.5" fill="none" opacity="0" stroke="#222222" stroke-width="1"></path>
+                <path class="edge-line" data-d="M-100.14904528954345,21.827018293687605L-61.79928892257194,13.46886738610479Z" data-fake-x="-80.97416710605769" data-fake-y="17.647942839896196" data-id="pie-edge-line-Client-A" data-testid="pie-edge-line" data-translate-x="197.5" data-translate-y="147.5" fill="none" opacity="0" stroke="#222222" stroke-width="1"></path>
+                <path class="edge-line" data-d="M-1.8828944536890554e-14,-102.5L-1.1618836506910513e-14,-63.25Z" data-fake-x="-1.5223890521900534e-14" data-fake-y="-82.875" data-id="pie-edge-line-Client-B" data-testid="pie-edge-line" data-translate-x="197.5" data-translate-y="147.5" fill="none" opacity="0" stroke="#222222" stroke-width="1"></path>
+              </g>
+              <g aria-hidden="true" class="pie-reference-line-group" focusable="false" role="presentation"></g>
+              <g aria-hidden="true" class="pie-center-title-group" filter="url(#VCL-t-s-f-ffffffpie-chart-unit-test)" focusable="false" role="presentation" style="opacity: 1;">
+                <text class="visa-ui-header--1 visa-viz-title" data-fill="true" fill="#222222" text-anchor="middle" x="0" y="0"></text>
+                <text class="visa-ui-text--body visa-viz-subtitle" data-fill="true" data-x="0" data-y="10" fill="#222222" text-anchor="middle" x="0" y="10"></text>
+              </g>
+              <g aria-hidden="true" class="vcl-annotation-group" data-testid="annotation-group" focusable="false" role="presentation"></g>
+              <g aria-hidden="true" class="editable vcl-annotation-group" data-testid="editable-annotation-group" focusable="false" role="presentation"></g>
+            </g>
+          </g>
+          <defs data-testid="pattern-defs">
+            <filter class="vcl-inversion-filter" color-interpolation-filters="sRGB" id="inversion-pie-chart-unit-test">
+              <feColorMatrix in="SourceGraphic" type="matrix" values="-1 0 0 0 1 
+        0 -1 0 0 1 
+        0 0 -1 0 1
+        0 0 0 1 0"></feColorMatrix>
+              <feColorMatrix type="hueRotate" values="180"></feColorMatrix>
+            </filter>
+            <pattern class="VCL-texture-pattern" height="12" id="pie-chart-unit-test_texture_0" patternContentUnits="userSpaceOnUse" patternUnits="userSpaceOnUse" width="12" x="0" y="0">
+              <rect class="VCL-t-p-e" fill="#f7fcfd" height="12" width="12"></rect>
+              <path class="VCL-t-p-e" d="M 0,0 l 12,12 M -3,9 l 6,6 M 9,-3 l 6,6" shape-rendering="auto" stroke="#2d9db4" stroke-linecap="square" stroke-width="1"></path>
+            </pattern>
+            <pattern class="VCL-texture-pattern" height="12" id="pie-chart-unit-test_texture_1" patternContentUnits="userSpaceOnUse" patternUnits="userSpaceOnUse" width="12" x="0" y="0">
+              <rect class="VCL-t-p-e" fill="#cebadd" height="12" width="12"></rect>
+              <circle class="VCL-t-p-e" cx="6" cy="6" fill="#8554aa" r="1" stroke="#343434" stroke-width="0"></circle>
+              <circle class="VCL-t-p-e" cx="0" cy="0" fill="#8554aa" r="1" stroke="#343434" stroke-width="0"></circle>
+              <circle class="VCL-t-p-e" cx="0" cy="12" fill="#8554aa" r="1" stroke="#343434" stroke-width="0"></circle>
+              <circle class="VCL-t-p-e" cx="12" cy="0" fill="#8554aa" r="1" stroke="#343434" stroke-width="0"></circle>
+              <circle class="VCL-t-p-e" cx="12" cy="12" fill="#8554aa" r="1" stroke="#343434" stroke-width="0"></circle>
+            </pattern>
+            <pattern class="VCL-texture-pattern" height="24" id="pie-chart-unit-test_texture_2" patternContentUnits="userSpaceOnUse" patternUnits="userSpaceOnUse" width="24" x="0" y="0">
+              <rect class="VCL-t-p-e" fill="#977ebb" height="24" width="24"></rect>
+              <path class="VCL-t-p-e" d="M 0,0 l 24,24 M -6,18 l 12,12 M 18,-6 l 12,12" shape-rendering="auto" stroke="#f3f0f7" stroke-linecap="square" stroke-width="1"></path>
+              <path class="VCL-t-p-e" d="M 0,24 l 24,-24 M -6,6 l 12,-12 M 18,30 l 12,-12" shape-rendering="auto" stroke="#f3f0f7" stroke-linecap="square" stroke-width="1"></path>
+            </pattern>
+            <pattern class="VCL-texture-pattern" height="12" id="pie-chart-unit-test_texture_3" patternContentUnits="userSpaceOnUse" patternUnits="userSpaceOnUse" width="12" x="0" y="0">
+              <rect class="VCL-t-p-e" fill="#554f87" height="12" width="12"></rect>
+              <path class="VCL-t-p-e" d="M 4.5,4.5l3,3M4.5,7.5l3,-3" fill="transparent" shape-rendering="auto" stroke="#a6a2c8" stroke-linecap="square" stroke-width="1"></path>
+            </pattern>
+            <pattern class="VCL-texture-pattern" height="10" id="pie-chart-unit-test_texture_4" patternContentUnits="userSpaceOnUse" patternUnits="userSpaceOnUse" width="10" x="0" y="0">
+              <rect class="VCL-t-p-e" fill="#D7D7DE" height="10" width="10"></rect>
+              <path class="VCL-t-p-e" d="M 5, 0 l 0, 10" shape-rendering="auto" stroke="#787890" stroke-linecap="square" stroke-width="1"></path>
+            </pattern>
+            <filter class="VCL-accessibility-stroke-filter" id="VCL-filter-2d9db4-rest-pie-chart-unit-test">
+              <feMorphology in="SourceAlpha" operator="erode" radius="0" result="outside-morph"></feMorphology>
+              <feFlood flood-color="#ffffff" result="outside-color"></feFlood>
+              <feComposite in="outside-color" in2="outside-morph" operator="in" result="outside-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="0.5" result="primary-morph"></feMorphology>
+              <feFlood flood-color="#2d9db4" result="primary-color"></feFlood>
+              <feComposite in="primary-color" in2="primary-morph" operator="in" result="primary-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="1.5" result="clean-morph"></feMorphology>
+              <feFlood flood-color="#f7fcfd" result="clean-color"></feFlood>
+              <feComposite in="clean-color" in2="clean-morph" operator="in" result="clean-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="2.5" result="morph-erode-2.5"></feMorphology>
+              <feComposite in="SourceGraphic" in2="morph-erode-2.5" operator="in" result="fill"></feComposite>
+              <feMerge>
+                <feMergeNode in="outside-stroke"></feMergeNode>
+                <feMergeNode in="primary-stroke"></feMergeNode>
+                <feMergeNode in="clean-stroke"></feMergeNode>
+                <feMergeNode in="fill"></feMergeNode>
+              </feMerge>
+            </filter>
+            <filter class="VCL-accessibility-stroke-filter" id="VCL-filter-f7fcfd-hover-pie-chart-unit-test">
+              <feMorphology in="SourceAlpha" operator="erode" radius="0" result="outside-morph"></feMorphology>
+              <feFlood flood-color="#ffffff" result="outside-color"></feFlood>
+              <feComposite in="outside-color" in2="outside-morph" operator="in" result="outside-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="0.5" result="primary-morph"></feMorphology>
+              <feFlood flood-color="#f7fcfd" result="primary-color"></feFlood>
+              <feComposite in="primary-color" in2="primary-morph" operator="in" result="primary-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="2.5" result="clean-morph"></feMorphology>
+              <feFlood flood-color="#f7fcfd" result="clean-color"></feFlood>
+              <feComposite in="clean-color" in2="clean-morph" operator="in" result="clean-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="3.5" result="morph-erode-3.5"></feMorphology>
+              <feComposite in="SourceGraphic" in2="morph-erode-3.5" operator="in" result="fill"></feComposite>
+              <feMerge>
+                <feMergeNode in="outside-stroke"></feMergeNode>
+                <feMergeNode in="primary-stroke"></feMergeNode>
+                <feMergeNode in="clean-stroke"></feMergeNode>
+                <feMergeNode in="fill"></feMergeNode>
+              </feMerge>
+            </filter>
+            <filter class="VCL-accessibility-stroke-filter" id="VCL-filter-2d9db4-click-pie-chart-unit-test">
+              <feMorphology in="SourceAlpha" operator="erode" radius="0" result="outside-morph"></feMorphology>
+              <feFlood flood-color="#ffffff" result="outside-color"></feFlood>
+              <feComposite in="outside-color" in2="outside-morph" operator="in" result="outside-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="0.5" result="primary-morph"></feMorphology>
+              <feFlood flood-color="#2d9db4" result="primary-color"></feFlood>
+              <feComposite in="primary-color" in2="primary-morph" operator="in" result="primary-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="2.5" result="clean-morph"></feMorphology>
+              <feFlood flood-color="#f7fcfd" result="clean-color"></feFlood>
+              <feComposite in="clean-color" in2="clean-morph" operator="in" result="clean-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="3.5" result="morph-erode-3.5"></feMorphology>
+              <feComposite in="SourceGraphic" in2="morph-erode-3.5" operator="in" result="fill"></feComposite>
+              <feMerge>
+                <feMergeNode in="outside-stroke"></feMergeNode>
+                <feMergeNode in="primary-stroke"></feMergeNode>
+                <feMergeNode in="clean-stroke"></feMergeNode>
+                <feMergeNode in="fill"></feMergeNode>
+              </feMerge>
+            </filter>
+            <filter class="VCL-accessibility-stroke-filter" id="VCL-filter-8554aa-rest-pie-chart-unit-test">
+              <feMorphology in="SourceAlpha" operator="erode" radius="0" result="outside-morph"></feMorphology>
+              <feFlood flood-color="#ffffff" result="outside-color"></feFlood>
+              <feComposite in="outside-color" in2="outside-morph" operator="in" result="outside-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="0.5" result="primary-morph"></feMorphology>
+              <feFlood flood-color="#8554aa" result="primary-color"></feFlood>
+              <feComposite in="primary-color" in2="primary-morph" operator="in" result="primary-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="1.5" result="clean-morph"></feMorphology>
+              <feFlood flood-color="#cebadd" result="clean-color"></feFlood>
+              <feComposite in="clean-color" in2="clean-morph" operator="in" result="clean-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="2.5" result="morph-erode-2.5"></feMorphology>
+              <feComposite in="SourceGraphic" in2="morph-erode-2.5" operator="in" result="fill"></feComposite>
+              <feMerge>
+                <feMergeNode in="outside-stroke"></feMergeNode>
+                <feMergeNode in="primary-stroke"></feMergeNode>
+                <feMergeNode in="clean-stroke"></feMergeNode>
+                <feMergeNode in="fill"></feMergeNode>
+              </feMerge>
+            </filter>
+            <filter class="VCL-accessibility-stroke-filter" id="VCL-filter-cebadd-hover-pie-chart-unit-test">
+              <feMorphology in="SourceAlpha" operator="erode" radius="0" result="outside-morph"></feMorphology>
+              <feFlood flood-color="#ffffff" result="outside-color"></feFlood>
+              <feComposite in="outside-color" in2="outside-morph" operator="in" result="outside-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="0.5" result="primary-morph"></feMorphology>
+              <feFlood flood-color="#cebadd" result="primary-color"></feFlood>
+              <feComposite in="primary-color" in2="primary-morph" operator="in" result="primary-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="2.5" result="clean-morph"></feMorphology>
+              <feFlood flood-color="#cebadd" result="clean-color"></feFlood>
+              <feComposite in="clean-color" in2="clean-morph" operator="in" result="clean-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="3.5" result="morph-erode-3.5"></feMorphology>
+              <feComposite in="SourceGraphic" in2="morph-erode-3.5" operator="in" result="fill"></feComposite>
+              <feMerge>
+                <feMergeNode in="outside-stroke"></feMergeNode>
+                <feMergeNode in="primary-stroke"></feMergeNode>
+                <feMergeNode in="clean-stroke"></feMergeNode>
+                <feMergeNode in="fill"></feMergeNode>
+              </feMerge>
+            </filter>
+            <filter class="VCL-accessibility-stroke-filter" id="VCL-filter-8554aa-click-pie-chart-unit-test">
+              <feMorphology in="SourceAlpha" operator="erode" radius="0" result="outside-morph"></feMorphology>
+              <feFlood flood-color="#ffffff" result="outside-color"></feFlood>
+              <feComposite in="outside-color" in2="outside-morph" operator="in" result="outside-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="0.5" result="primary-morph"></feMorphology>
+              <feFlood flood-color="#8554aa" result="primary-color"></feFlood>
+              <feComposite in="primary-color" in2="primary-morph" operator="in" result="primary-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="2.5" result="clean-morph"></feMorphology>
+              <feFlood flood-color="#cebadd" result="clean-color"></feFlood>
+              <feComposite in="clean-color" in2="clean-morph" operator="in" result="clean-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="3.5" result="morph-erode-3.5"></feMorphology>
+              <feComposite in="SourceGraphic" in2="morph-erode-3.5" operator="in" result="fill"></feComposite>
+              <feMerge>
+                <feMergeNode in="outside-stroke"></feMergeNode>
+                <feMergeNode in="primary-stroke"></feMergeNode>
+                <feMergeNode in="clean-stroke"></feMergeNode>
+                <feMergeNode in="fill"></feMergeNode>
+              </feMerge>
+            </filter>
+            <filter class="VCL-accessibility-stroke-filter" id="VCL-filter-977ebb-rest-pie-chart-unit-test">
+              <feMorphology in="SourceAlpha" operator="erode" radius="0" result="outside-morph"></feMorphology>
+              <feFlood flood-color="#ffffff" result="outside-color"></feFlood>
+              <feComposite in="outside-color" in2="outside-morph" operator="in" result="outside-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="0.5" result="edge-morph"></feMorphology>
+              <feFlood flood-color="#977ebb" result="edge-color"></feFlood>
+              <feComposite in="edge-color" in2="edge-morph" operator="in" result="edge-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="1.5" result="primary-morph"></feMorphology>
+              <feFlood flood-color="#977ebb" result="primary-color"></feFlood>
+              <feComposite in="primary-color" in2="primary-morph" operator="in" result="primary-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="1.5" result="clean-morph"></feMorphology>
+              <feFlood flood-color="#977ebb" result="clean-color"></feFlood>
+              <feComposite in="clean-color" in2="clean-morph" operator="in" result="clean-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="2.5" result="morph-erode-2.5"></feMorphology>
+              <feComposite in="SourceGraphic" in2="morph-erode-2.5" operator="in" result="fill"></feComposite>
+              <feMerge>
+                <feMergeNode in="outside-stroke"></feMergeNode>
+                <feMergeNode in="edge-stroke"></feMergeNode>
+                <feMergeNode in="primary-stroke"></feMergeNode>
+                <feMergeNode in="clean-stroke"></feMergeNode>
+                <feMergeNode in="fill"></feMergeNode>
+              </feMerge>
+            </filter>
+            <filter class="VCL-accessibility-stroke-filter" id="VCL-filter-977ebb-hover-pie-chart-unit-test">
+              <feMorphology in="SourceAlpha" operator="erode" radius="0" result="outside-morph"></feMorphology>
+              <feFlood flood-color="#ffffff" result="outside-color"></feFlood>
+              <feComposite in="outside-color" in2="outside-morph" operator="in" result="outside-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="0.5" result="edge-morph"></feMorphology>
+              <feFlood flood-color="#977ebb" result="edge-color"></feFlood>
+              <feComposite in="edge-color" in2="edge-morph" operator="in" result="edge-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="1.5" result="primary-morph"></feMorphology>
+              <feFlood flood-color="#977ebb" result="primary-color"></feFlood>
+              <feComposite in="primary-color" in2="primary-morph" operator="in" result="primary-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="3.5" result="clean-morph"></feMorphology>
+              <feFlood flood-color="#977ebb" result="clean-color"></feFlood>
+              <feComposite in="clean-color" in2="clean-morph" operator="in" result="clean-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="4.5" result="morph-erode-4.5"></feMorphology>
+              <feComposite in="SourceGraphic" in2="morph-erode-4.5" operator="in" result="fill"></feComposite>
+              <feMerge>
+                <feMergeNode in="outside-stroke"></feMergeNode>
+                <feMergeNode in="edge-stroke"></feMergeNode>
+                <feMergeNode in="primary-stroke"></feMergeNode>
+                <feMergeNode in="clean-stroke"></feMergeNode>
+                <feMergeNode in="fill"></feMergeNode>
+              </feMerge>
+            </filter>
+            <filter class="VCL-accessibility-stroke-filter" id="VCL-filter-f3f0f7-click-pie-chart-unit-test">
+              <feMorphology in="SourceAlpha" operator="erode" radius="0" result="outside-morph"></feMorphology>
+              <feFlood flood-color="#ffffff" result="outside-color"></feFlood>
+              <feComposite in="outside-color" in2="outside-morph" operator="in" result="outside-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="0.5" result="edge-morph"></feMorphology>
+              <feFlood flood-color="#977ebb" result="edge-color"></feFlood>
+              <feComposite in="edge-color" in2="edge-morph" operator="in" result="edge-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="1.5" result="primary-morph"></feMorphology>
+              <feFlood flood-color="#f3f0f7" result="primary-color"></feFlood>
+              <feComposite in="primary-color" in2="primary-morph" operator="in" result="primary-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="3.5" result="clean-morph"></feMorphology>
+              <feFlood flood-color="#977ebb" result="clean-color"></feFlood>
+              <feComposite in="clean-color" in2="clean-morph" operator="in" result="clean-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="4.5" result="morph-erode-4.5"></feMorphology>
+              <feComposite in="SourceGraphic" in2="morph-erode-4.5" operator="in" result="fill"></feComposite>
+              <feMerge>
+                <feMergeNode in="outside-stroke"></feMergeNode>
+                <feMergeNode in="edge-stroke"></feMergeNode>
+                <feMergeNode in="primary-stroke"></feMergeNode>
+                <feMergeNode in="clean-stroke"></feMergeNode>
+                <feMergeNode in="fill"></feMergeNode>
+              </feMerge>
+            </filter>
+            <filter class="VCL-accessibility-stroke-filter" id="VCL-filter-554f87-rest-pie-chart-unit-test">
+              <feMorphology in="SourceAlpha" operator="erode" radius="0" result="outside-morph"></feMorphology>
+              <feFlood flood-color="#ffffff" result="outside-color"></feFlood>
+              <feComposite in="outside-color" in2="outside-morph" operator="in" result="outside-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="0.5" result="edge-morph"></feMorphology>
+              <feFlood flood-color="#554f87" result="edge-color"></feFlood>
+              <feComposite in="edge-color" in2="edge-morph" operator="in" result="edge-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="1.5" result="primary-morph"></feMorphology>
+              <feFlood flood-color="#554f87" result="primary-color"></feFlood>
+              <feComposite in="primary-color" in2="primary-morph" operator="in" result="primary-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="1.5" result="clean-morph"></feMorphology>
+              <feFlood flood-color="#554f87" result="clean-color"></feFlood>
+              <feComposite in="clean-color" in2="clean-morph" operator="in" result="clean-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="2.5" result="morph-erode-2.5"></feMorphology>
+              <feComposite in="SourceGraphic" in2="morph-erode-2.5" operator="in" result="fill"></feComposite>
+              <feMerge>
+                <feMergeNode in="outside-stroke"></feMergeNode>
+                <feMergeNode in="edge-stroke"></feMergeNode>
+                <feMergeNode in="primary-stroke"></feMergeNode>
+                <feMergeNode in="clean-stroke"></feMergeNode>
+                <feMergeNode in="fill"></feMergeNode>
+              </feMerge>
+            </filter>
+            <filter class="VCL-accessibility-stroke-filter" id="VCL-filter-554f87-hover-pie-chart-unit-test">
+              <feMorphology in="SourceAlpha" operator="erode" radius="0" result="outside-morph"></feMorphology>
+              <feFlood flood-color="#ffffff" result="outside-color"></feFlood>
+              <feComposite in="outside-color" in2="outside-morph" operator="in" result="outside-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="0.5" result="edge-morph"></feMorphology>
+              <feFlood flood-color="#554f87" result="edge-color"></feFlood>
+              <feComposite in="edge-color" in2="edge-morph" operator="in" result="edge-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="1.5" result="primary-morph"></feMorphology>
+              <feFlood flood-color="#554f87" result="primary-color"></feFlood>
+              <feComposite in="primary-color" in2="primary-morph" operator="in" result="primary-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="3.5" result="clean-morph"></feMorphology>
+              <feFlood flood-color="#554f87" result="clean-color"></feFlood>
+              <feComposite in="clean-color" in2="clean-morph" operator="in" result="clean-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="4.5" result="morph-erode-4.5"></feMorphology>
+              <feComposite in="SourceGraphic" in2="morph-erode-4.5" operator="in" result="fill"></feComposite>
+              <feMerge>
+                <feMergeNode in="outside-stroke"></feMergeNode>
+                <feMergeNode in="edge-stroke"></feMergeNode>
+                <feMergeNode in="primary-stroke"></feMergeNode>
+                <feMergeNode in="clean-stroke"></feMergeNode>
+                <feMergeNode in="fill"></feMergeNode>
+              </feMerge>
+            </filter>
+            <filter class="VCL-accessibility-stroke-filter" id="VCL-filter-a6a2c8-click-pie-chart-unit-test">
+              <feMorphology in="SourceAlpha" operator="erode" radius="0" result="outside-morph"></feMorphology>
+              <feFlood flood-color="#ffffff" result="outside-color"></feFlood>
+              <feComposite in="outside-color" in2="outside-morph" operator="in" result="outside-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="0.5" result="edge-morph"></feMorphology>
+              <feFlood flood-color="#554f87" result="edge-color"></feFlood>
+              <feComposite in="edge-color" in2="edge-morph" operator="in" result="edge-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="1.5" result="primary-morph"></feMorphology>
+              <feFlood flood-color="#a6a2c8" result="primary-color"></feFlood>
+              <feComposite in="primary-color" in2="primary-morph" operator="in" result="primary-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="3.5" result="clean-morph"></feMorphology>
+              <feFlood flood-color="#554f87" result="clean-color"></feFlood>
+              <feComposite in="clean-color" in2="clean-morph" operator="in" result="clean-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="4.5" result="morph-erode-4.5"></feMorphology>
+              <feComposite in="SourceGraphic" in2="morph-erode-4.5" operator="in" result="fill"></feComposite>
+              <feMerge>
+                <feMergeNode in="outside-stroke"></feMergeNode>
+                <feMergeNode in="edge-stroke"></feMergeNode>
+                <feMergeNode in="primary-stroke"></feMergeNode>
+                <feMergeNode in="clean-stroke"></feMergeNode>
+                <feMergeNode in="fill"></feMergeNode>
+              </feMerge>
+            </filter>
+            <filter class="VCL-accessibility-stroke-filter" id="VCL-filter-787890-rest-pie-chart-unit-test">
+              <feMorphology in="SourceAlpha" operator="erode" radius="0" result="outside-morph"></feMorphology>
+              <feFlood flood-color="#ffffff" result="outside-color"></feFlood>
+              <feComposite in="outside-color" in2="outside-morph" operator="in" result="outside-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="0.5" result="primary-morph"></feMorphology>
+              <feFlood flood-color="#787890" result="primary-color"></feFlood>
+              <feComposite in="primary-color" in2="primary-morph" operator="in" result="primary-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="1.5" result="clean-morph"></feMorphology>
+              <feFlood flood-color="#D7D7DE" result="clean-color"></feFlood>
+              <feComposite in="clean-color" in2="clean-morph" operator="in" result="clean-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="2.5" result="morph-erode-2.5"></feMorphology>
+              <feComposite in="SourceGraphic" in2="morph-erode-2.5" operator="in" result="fill"></feComposite>
+              <feMerge>
+                <feMergeNode in="outside-stroke"></feMergeNode>
+                <feMergeNode in="primary-stroke"></feMergeNode>
+                <feMergeNode in="clean-stroke"></feMergeNode>
+                <feMergeNode in="fill"></feMergeNode>
+              </feMerge>
+            </filter>
+            <filter class="VCL-accessibility-stroke-filter" id="VCL-filter-D7D7DE-hover-pie-chart-unit-test">
+              <feMorphology in="SourceAlpha" operator="erode" radius="0" result="outside-morph"></feMorphology>
+              <feFlood flood-color="#ffffff" result="outside-color"></feFlood>
+              <feComposite in="outside-color" in2="outside-morph" operator="in" result="outside-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="0.5" result="primary-morph"></feMorphology>
+              <feFlood flood-color="#D7D7DE" result="primary-color"></feFlood>
+              <feComposite in="primary-color" in2="primary-morph" operator="in" result="primary-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="2.5" result="clean-morph"></feMorphology>
+              <feFlood flood-color="#D7D7DE" result="clean-color"></feFlood>
+              <feComposite in="clean-color" in2="clean-morph" operator="in" result="clean-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="3.5" result="morph-erode-3.5"></feMorphology>
+              <feComposite in="SourceGraphic" in2="morph-erode-3.5" operator="in" result="fill"></feComposite>
+              <feMerge>
+                <feMergeNode in="outside-stroke"></feMergeNode>
+                <feMergeNode in="primary-stroke"></feMergeNode>
+                <feMergeNode in="clean-stroke"></feMergeNode>
+                <feMergeNode in="fill"></feMergeNode>
+              </feMerge>
+            </filter>
+            <filter class="VCL-accessibility-stroke-filter" id="VCL-filter-787890-click-pie-chart-unit-test">
+              <feMorphology in="SourceAlpha" operator="erode" radius="0" result="outside-morph"></feMorphology>
+              <feFlood flood-color="#ffffff" result="outside-color"></feFlood>
+              <feComposite in="outside-color" in2="outside-morph" operator="in" result="outside-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="0.5" result="primary-morph"></feMorphology>
+              <feFlood flood-color="#787890" result="primary-color"></feFlood>
+              <feComposite in="primary-color" in2="primary-morph" operator="in" result="primary-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="2.5" result="clean-morph"></feMorphology>
+              <feFlood flood-color="#D7D7DE" result="clean-color"></feFlood>
+              <feComposite in="clean-color" in2="clean-morph" operator="in" result="clean-stroke"></feComposite>
+              <feMorphology in="SourceAlpha" operator="erode" radius="3.5" result="morph-erode-3.5"></feMorphology>
+              <feComposite in="SourceGraphic" in2="morph-erode-3.5" operator="in" result="fill"></feComposite>
+              <feMerge>
+                <feMergeNode in="outside-stroke"></feMergeNode>
+                <feMergeNode in="primary-stroke"></feMergeNode>
+                <feMergeNode in="clean-stroke"></feMergeNode>
+                <feMergeNode in="fill"></feMergeNode>
+              </feMerge>
+            </filter>
+            <filter class="VCL-t-s-f-ffffff" id="VCL-t-s-f-ffffffpie-chart-unit-test">
+              <feMorphology in="SourceAlpha" operator="dilate" radius="1.5" result="dilatedText"></feMorphology>
+              <feFlood flood-color="#ffffff" flood-opacity="1" result="whiteTextFlood"></feFlood>
+              <feComposite in="whiteTextFlood" in2="dilatedText" operator="in" result="textOutline"></feComposite>
+              <feMerge>
+                <feMergeNode in="textOutline"></feMergeNode>
+                <feMergeNode in="textOutline"></feMergeNode>
+                <feMergeNode in="textOutline"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+              </feMerge>
+            </filter>
+          </defs>
+        </svg>
+      </div>
+      <div class="pie-tooltip vcl-tooltip" data-testid="tooltip-container" style="display: block; position: absolute; padding: 0.5rem; opacity: 0; background-color: #ffffff; font-size: 14px; font-weight: 400; color: #222222; border: 1px solid #565656; border-radius: 3px; pointer-events: none; min-width: 80px; max-width: 300px; z-index: 10;">
+        <p style="margin: 0;"></p>
+      </div>
+      <data-table>
+        <div class="visa-viz-data-table-outer-container" data-testid="data-table-outer-container">
+          <div class="visa-viz-button-wrapper" style="padding-bottom: 0px;">
+            <button aria-expanded="false" aria-label="Adattábla megjelenítése" class="vcc-btn-icon vcc-btn-icon--light-tiny visa-viz-data-table-button" id="visa-viz-data-table-button-pie-chart-unit-test" role="button" tabindex="0" type="button" style="transform: translate(65px,
+                -40px);">
+              <svg class="vcc-icon--tiny" focusable="false" tabindex="-1">
+                <use href="#visa-viz-view-grid--tiny-pie-chart-unit-test"></use>
+              </svg>
+            </button>
+            <svg class="vcc-icons">
+              <symbol id="visa-viz-view-grid--tiny-pie-chart-unit-test" viewbox="0 0 16 16">
+                <path d="M5,5 L5,2 L2,2 L2,5 L5,5 Z M5,7 L2,7 C0.894905844,7 0,6.1044757 0,5 L0,2 C0,0.8955243 0.894905844,3.55271368e-15 2,3.55271368e-15 L5,3.55271368e-15 C6.10509416,3.55271368e-15 7,0.8955243 7,2 L7,5 C7,6.1044757 6.10509416,7 5,7 Z M14,5 L14,2 L11,2 L11,5 L14,5 Z M14,7 L11,7 C9.89490584,7 9,6.1044757 9,5 L9,2 C9,0.8955243 9.89490584,3.55271368e-15 11,3.55271368e-15 L14,3.55271368e-15 C15.1050942,3.55271368e-15 16,0.8955243 16,2 L16,5 C16,6.1044757 15.1050942,7 14,7 Z M5,14 L5,11 L2,11 L2,14 L5,14 Z M5,16 L2,16 C0.894905844,16 0,15.1044757 0,14 L0,11 C0,9.8955243 0.894905844,9 2,9 L5,9 C6.10509416,9 7,9.8955243 7,11 L7,14 C7,15.1044757 6.10509416,16 5,16 Z M14,14 L14,11 L11,11 L11,14 L14,14 Z M14,16 L11,16 C9.89490584,16 9,15.1044757 9,14 L9,11 C9,9.8955243 9.89490584,9 11,9 L14,9 C15.1050942,9 16,9.8955243 16,11 L16,14 C16,15.1044757 15.1050942,16 14,16 Z"></path>
+                <g fill="none" fill-rule="evenodd" stroke="none" stroke-width="1">
+                  <mask fill="#fff">
+                    <use xlink:href="#path-1"></use>
+                  </mask>
+                  <use fill="#000" fill-rule="nonzero" xlink:href="#path-1"></use>
+                </g>
+              </symbol>
+            </svg>
+          </div>
+          <div class="visa-viz-data-table-container" data-testid="data-table-container" id="visa-viz-data-table-container-pie-chart-unit-test"></div>
+        </div>
+      </data-table>
+    </div>
+  </div>
+</pie-chart>
+`;
+
 exports[`<pie-chart> rendered-html render should render with minimal props[data,oridnalAccessor,valueAccessor] given 1`] = `
 <pie-chart id="pie-chart-unit-test">
   <div class="is--vertical o-layout">
     <div class="vcl-accessibility-instructions" id="chart-instructions-pie-chart-unit-test" style="position: absolute; width: 600px;">
       <p class="screen-reader-info vcl-region-label">
-        Keyboard interactive pie-chart, Titled: Pie Chart Title. This section contains additional information about this chart. Pressing TAB will focus the keyboard instructions menu. Tabbing again takes you to the chart area.
+        Keyboard Interactive pie-chart, Titled: Pie Chart Title. This section contains additional information about this chart. Pressing TAB will focus the keyboard instructions menu. Tabbing again takes you to the chart area.
       </p>
       <h2 class="screen-reader-info vcl-access-title">
         Chart title: Pie Chart Title
@@ -386,7 +873,7 @@ exports[`<pie-chart> rendered-html render should render with minimal props[data,
         Chart Layout Description
       </h4>
       <p class="screen-reader-info vcl-access-layout">
-        This is a pie-chart with 5 slices.
+        Pie-chart. Pie: 5, slice: 5.
       </p>
       <p class="screen-reader-info vcl-access-xAxis"></p>
       <p class="screen-reader-info vcl-access-yAxis"></p>

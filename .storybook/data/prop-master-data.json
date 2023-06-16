@@ -2042,6 +2042,48 @@
     }
   },
   {
+    "name": "localization",
+    "options": {
+      "enabled": true
+    }
+  },
+  {
+    "name": "language",
+    "options": {
+      "enabled": true,
+      "description": "Language value, can be string value like 'en', or valid translation object",
+      "control": "Select",
+      "choices": [{ "label": "en", "value": "en" }, { "label": "hu", "value": "hu" }],
+      "sortOrder": 2
+    }
+  },
+  {
+    "name": "numeralLocale",
+    "options": {
+      "enabled": true,
+      "description": "Numeral locale value, can be string value like 'US', or validate locale object",
+      "control": "Select",
+      "choices": [{ "label": "us", "value": "US" }, { "label": "hu", "value": "HU" }],
+      "sortOrder": 3
+    }
+  },
+  {
+    "name": "skipValidation",
+    "options": {
+      "enabled": false,
+      "description": "If true, disables validations for this chart",
+      "sortOrder": 4
+    }
+  },
+  {
+    "name": "overwrite",
+    "options": {
+      "enabled": true,
+      "description": "Locale configuration which drives number formatting and translations",
+      "sortOrder": 5
+    }
+  },
+  {
     "name": "accessibility",
     "options": {
       "enabled": true

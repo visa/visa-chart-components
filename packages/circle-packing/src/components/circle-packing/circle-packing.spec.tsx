@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -10,13 +10,19 @@ import { CirclePacking } from './circle-packing';
 import { CirclePackingDefaultValues } from './circle-packing-default-values';
 
 // we need to bring in our nested components as well, was required to bring in the source vs dist folder to get it to mount
-import { KeyboardInstructions } from '../../../node_modules/@visa/keyboard-instructions/src/components/keyboard-instructions/keyboard-instructions';
-import { DataTable } from '../../../node_modules/@visa/visa-charts-data-table/src/components/data-table/data-table';
+import { KeyboardInstructions } from '@visa/keyboard-instructions/src/components/keyboard-instructions/keyboard-instructions';
+import { DataTable } from '@visa/visa-charts-data-table/src/components/data-table/data-table';
+
+// importing custom languages and locales
+import { hu } from '@visa/visa-charts-utils/src/utils/localization/languages/hu';
+import { HU } from '@visa/visa-charts-utils/src/utils/localization/numeralLocales/hu';
 
 import Utils from '@visa/visa-charts-utils';
 import UtilsDev from '@visa/visa-charts-utils-dev';
+
 const { getColors, outlineColor, visaColors, getContrastingStroke } = Utils;
 const {
+  asyncForEach,
   flushTransitions,
   unitTestAccessibility,
   unitTestGeneric,
@@ -74,6 +80,7 @@ describe('<circle-packing>', () => {
 
     // disable accessibility validation to keep output stream(terminal) clean
     const EXPECTEDACCESSIBILITY = { disableValidation: true };
+    const EXPECTEDLOCALIZATION = { ...CirclePackingDefaultValues.localization, skipValidation: true };
 
     beforeEach(async () => {
       page = await newSpecPage({
@@ -87,6 +94,7 @@ describe('<circle-packing>', () => {
       component.parentAccessor = EXPECTEDPARENTACCESSOR;
       component.sizeAccessor = EXPECTEDSIZEACCESSOR;
       component.accessibility = EXPECTEDACCESSIBILITY;
+      component.localization = EXPECTEDLOCALIZATION;
       // component.unitTest = true;
 
       // for circle pack specifically we need
@@ -116,6 +124,28 @@ describe('<circle-packing>', () => {
         // ACT
         page.root.appendChild(component);
         await page.waitForChanges();
+
+        // ASSERT
+        expect(page.root).toMatchSnapshot();
+      });
+
+      it('localization: should render localized with minimal props[data,accessors] given', async () => {
+        component.localization = {
+          language: hu,
+          numeralLocale: HU,
+          skipValidation: true,
+          overwrite: false
+        };
+        // ACT
+        page.root.appendChild(component);
+        await page.waitForChanges();
+
+        // flush labels for testing to ensure opacity of 1 on initial render
+        const elements = page.doc.querySelectorAll('[data-testid=dataLabel]');
+        await asyncForEach(elements, async element => {
+          flushTransitions(element);
+          await page.waitForChanges();
+        });
 
         // ASSERT
         expect(page.root).toMatchSnapshot();
@@ -168,9 +198,8 @@ describe('<circle-packing>', () => {
             nextTestSelector: '[data-testid=circle][data-id=circle-Mexico-B]',
             keyDownObject: { key: 'ArrowRight', code: 'ArrowRight', keyCode: 39 },
             testProps: {
-              selectorAriaLabel: 'Type A. value 64. Country Mexico. Node 1 of 3. This Node contains 0 child elements',
-              nextSelectorAriaLabel:
-                'Type B. value 35. Country Mexico. Node 2 of 3. This Node contains 0 child elements',
+              selectorAriaLabel: 'Type A. value 64. Country Mexico. Node 1. Number of child elements: 0.',
+              nextSelectorAriaLabel: 'Type B. value 35. Country Mexico. Node 2. Number of child elements: 0.',
               accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true },
               focusIndicatorNotGrouped: true
             }
@@ -181,8 +210,8 @@ describe('<circle-packing>', () => {
             nextTestSelector: '[data-testid=circle][data-id=circle-Mexico-A]',
             keyDownObject: { key: 'ArrowRight', code: 'ArrowRight', keyCode: 39 },
             testProps: {
-              selectorAriaLabel: 'E. 25. Mexico. Node 3 of 3. This Node contains 0 child elements',
-              nextSelectorAriaLabel: 'A. 64. Mexico. Node 1 of 3. This Node contains 0 child elements',
+              selectorAriaLabel: 'E. 25. Mexico. Node 3. Number of child elements: 0.',
+              nextSelectorAriaLabel: 'A. 64. Mexico. Node 1. Number of child elements: 0.',
               focusIndicatorNotGrouped: true
             }
           },
@@ -192,9 +221,8 @@ describe('<circle-packing>', () => {
             nextTestSelector: '[data-testid=circle][data-id=circle-Mexico-A]',
             keyDownObject: { key: 'ArrowLeft', code: 'ArrowLeft', keyCode: 37 },
             testProps: {
-              selectorAriaLabel: 'Type B. value 35. Country Mexico. Node 2 of 3. This Node contains 0 child elements',
-              nextSelectorAriaLabel:
-                'Type A. value 64. Country Mexico. Node 1 of 3. This Node contains 0 child elements',
+              selectorAriaLabel: 'Type B. value 35. Country Mexico. Node 2. Number of child elements: 0.',
+              nextSelectorAriaLabel: 'Type A. value 64. Country Mexico. Node 1. Number of child elements: 0.',
               accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true },
               focusIndicatorNotGrouped: true
             }
@@ -205,8 +233,8 @@ describe('<circle-packing>', () => {
             nextTestSelector: '[data-testid=circle][data-id=circle-Mexico-E]',
             keyDownObject: { key: 'ArrowLeft', code: 'ArrowLeft', keyCode: 37 },
             testProps: {
-              selectorAriaLabel: 'A. 64. Mexico. Node 1 of 3. This Node contains 0 child elements',
-              nextSelectorAriaLabel: 'E. 25. Mexico. Node 3 of 3. This Node contains 0 child elements',
+              selectorAriaLabel: 'A. 64. Mexico. Node 1. Number of child elements: 0.',
+              nextSelectorAriaLabel: 'E. 25. Mexico. Node 3. Number of child elements: 0.',
               focusIndicatorNotGrouped: true
             }
           },
@@ -216,8 +244,8 @@ describe('<circle-packing>', () => {
             nextTestSelector: '[data-testid=circle][data-id=circle-World-Mexico]',
             keyDownObject: { key: 'ArrowUp', code: 'ArrowUp', keyCode: 38 },
             testProps: {
-              selectorAriaLabel: 'A. 64. Mexico. Node 1 of 3. This Node contains 0 child elements',
-              nextSelectorAriaLabel: 'Mexico. 73. World. Node 1 of 3. This Node contains 3 child elements',
+              selectorAriaLabel: 'A. 64. Mexico. Node 1. Number of child elements: 0.',
+              nextSelectorAriaLabel: 'Mexico. 73. World. Node 1. Number of child elements: 3.',
               focusIndicatorNotGrouped: true
             }
           },
@@ -227,8 +255,8 @@ describe('<circle-packing>', () => {
             nextTestSelector: '[data-testid=circle][data-id=circle-Mexico-A]',
             keyDownObject: { key: 'ArrowDown', code: 'ArrowDown', keyCode: 40 },
             testProps: {
-              selectorAriaLabel: 'Mexico. 73. World. Node 1 of 3. This Node contains 3 child elements',
-              nextSelectorAriaLabel: 'A. 64. Mexico. Node 1 of 3. This Node contains 0 child elements',
+              selectorAriaLabel: 'Mexico. 73. World. Node 1. Number of child elements: 3.',
+              nextSelectorAriaLabel: 'A. 64. Mexico. Node 1. Number of child elements: 0.',
               focusIndicatorNotGrouped: true
             }
           },
@@ -238,8 +266,8 @@ describe('<circle-packing>', () => {
             nextTestSelector: '[data-testid=circle][data-id=circle-World-Mexico]',
             keyDownObject: { key: 'Enter', code: 'Enter', keyCode: 13, shiftKey: true },
             testProps: {
-              selectorAriaLabel: 'A. 64. Mexico. Node 1 of 3. This Node contains 0 child elements',
-              nextSelectorAriaLabel: 'Mexico. 73. World. Node 1 of 3. This Node contains 3 child elements',
+              selectorAriaLabel: 'A. 64. Mexico. Node 1. Number of child elements: 0.',
+              nextSelectorAriaLabel: 'Mexico. 73. World. Node 1. Number of child elements: 3.',
               focusIndicatorNotGrouped: true
             }
           },
@@ -249,8 +277,8 @@ describe('<circle-packing>', () => {
             nextTestSelector: '[data-testid=circle][data-id=circle-Mexico-A]',
             keyDownObject: { key: 'Enter', code: 'Enter', keyCode: 13 },
             testProps: {
-              selectorAriaLabel: 'Mexico. 73. World. Node 1 of 3. This Node contains 3 child elements',
-              nextSelectorAriaLabel: 'A. 64. Mexico. Node 1 of 3. This Node contains 0 child elements',
+              selectorAriaLabel: 'Mexico. 73. World. Node 1. Number of child elements: 3.',
+              nextSelectorAriaLabel: 'A. 64. Mexico. Node 1. Number of child elements: 0.',
               focusIndicatorNotGrouped: true
             }
           }
@@ -964,9 +992,9 @@ describe('<circle-packing>', () => {
             };
             const innerAriaContent = {
               dataKeyNames_custom_on_load:
-                'Test Destination Mexico. value 73. Test Country World. Node 1 of 3. This Node contains 3 child elements',
+                'Test Destination Mexico. value 73. Test Country World. Node 1. Number of child elements: 3.',
               dataKeyNames_custom_on_update:
-                'Test Destination Mexico. value 73. Test Country World. Node 1 of 3. This Node contains 3 child elements'
+                'Test Destination Mexico. value 73. Test Country World. Node 1. Number of child elements: 3.'
             };
             const innerTestProps = { ...unitTestTooltip[test].testProps, ...innerTooltipProps[test] };
             const customDataKeyNames = { dataKeyNames: { Country: 'Test Country', Type: 'Test Destination' } };

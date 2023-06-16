@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -12,8 +12,12 @@ import { sum } from 'd3-array';
 import { scaleOrdinal } from 'd3-scale';
 
 // we need to bring in our nested components as well, was required to bring in the source vs dist folder to get it to mount
-import { KeyboardInstructions } from '../../../node_modules/@visa/keyboard-instructions/src/components/keyboard-instructions/keyboard-instructions';
-import { DataTable } from '../../../node_modules/@visa/visa-charts-data-table/src/components/data-table/data-table';
+import { KeyboardInstructions } from '@visa/keyboard-instructions/src/components/keyboard-instructions/keyboard-instructions';
+import { DataTable } from '@visa/visa-charts-data-table/src/components/data-table/data-table';
+
+// importing custom languages and locales
+import { hu } from '@visa/visa-charts-utils/src/utils/localization/languages/hu';
+import { HU } from '@visa/visa-charts-utils/src/utils/localization/numeralLocales/hu';
 
 import Utils from '@visa/visa-charts-utils';
 import UtilsDev from '@visa/visa-charts-utils-dev';
@@ -60,6 +64,7 @@ describe('<pie-chart>', () => {
 
     // disable accessibility validation to keep output stream(terminal) clean
     const EXPECTEDACCESSIBILITY = { ...PieChartDefaultValues.accessibility, disableValidation: true };
+    const EXPECTEDLOCALIZATION = { ...PieChartDefaultValues.localization, skipValidation: true };
 
     beforeEach(async () => {
       page = await newSpecPage({
@@ -71,6 +76,7 @@ describe('<pie-chart>', () => {
       component.ordinalAccessor = EXPECTEDORDINALACCESSOR;
       component.valueAccessor = EXPECTEDVALUEACCESSOR;
       component.accessibility = EXPECTEDACCESSIBILITY;
+      component.localization = EXPECTEDLOCALIZATION;
       component.uniqueID = 'pie-chart-unit-test';
       component.unitTest = true;
     });
@@ -91,6 +97,28 @@ describe('<pie-chart>', () => {
       });
 
       it('should render with minimal props[data,oridnalAccessor,valueAccessor] given', async () => {
+        // ACT
+        page.root.appendChild(component);
+        await page.waitForChanges();
+
+        // flush labels for testing to ensure opacity of 1 on initial render
+        const elements = page.doc.querySelectorAll('[data-testid=dataLabel]');
+        await asyncForEach(elements, async element => {
+          flushTransitions(element);
+          await page.waitForChanges();
+        });
+
+        // ASSERT
+        expect(page.root).toMatchSnapshot();
+      });
+
+      it('localization: should render localized with minimal props[data,accessors] given', async () => {
+        component.localization = {
+          language: hu,
+          numeralLocale: HU,
+          skipValidation: true,
+          overwrite: false
+        };
         // ACT
         page.root.appendChild(component);
         await page.waitForChanges();
@@ -223,8 +251,8 @@ describe('<pie-chart>', () => {
             nextTestSelector: '[data-testid=pie-group]',
             keyDownObject: { key: 'Enter', code: 'Enter', keyCode: 13, shiftKey: true },
             testProps: {
-              selectorAriaLabel: 'label Client-A. value 43k. Slice 1 of 5.',
-              nextSelectorAriaLabel: 'Pie which contains 5 interactive slices.',
+              selectorAriaLabel: 'label Client-A. value 43k. value (%) 23.5%. Slice 1.',
+              nextSelectorAriaLabel: 'Number of interactive slices: 5.',
               accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true }
             }
           },
@@ -234,8 +262,8 @@ describe('<pie-chart>', () => {
             nextTestSelector: '[data-testid=pie][data-id=pie-Client-C]',
             keyDownObject: { key: 'ArrowRight', code: 'ArrowRight', keyCode: 39 },
             testProps: {
-              selectorAriaLabel: 'label Client-A. value 43k. Slice 1 of 5.',
-              nextSelectorAriaLabel: 'label Client-C. value 32k. Slice 2 of 5.',
+              selectorAriaLabel: 'label Client-A. value 43k. value (%) 23.5%. Slice 1.',
+              nextSelectorAriaLabel: 'label Client-C. value 32k. value (%) 17.5%. Slice 2.',
               accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true }
             }
           },
@@ -245,8 +273,8 @@ describe('<pie-chart>', () => {
             nextTestSelector: '[data-testid=pie][data-id=pie-Client-A]',
             keyDownObject: { key: 'ArrowRight', code: 'ArrowRight', keyCode: 39 },
             testProps: {
-              selectorAriaLabel: 'Client-E. 31k. Slice 5 of 5.',
-              nextSelectorAriaLabel: 'Client-A. 43k. Slice 1 of 5.'
+              selectorAriaLabel: 'Client-E. 31k. 16.9%. Slice 5.',
+              nextSelectorAriaLabel: 'Client-A. 43k. 23.5%. Slice 1.'
             }
           },
           accessibility_keyboard_nav_left_arrow_sibling: {
@@ -255,8 +283,8 @@ describe('<pie-chart>', () => {
             nextTestSelector: '[data-testid=pie][data-id=pie-Client-A]',
             keyDownObject: { key: 'ArrowLeft', code: 'ArrowLeft', keyCode: 37 },
             testProps: {
-              selectorAriaLabel: 'Client-C. 32k. Slice 2 of 5.',
-              nextSelectorAriaLabel: 'Client-A. 43k. Slice 1 of 5.',
+              selectorAriaLabel: 'Client-C. 32k. 17.5%. Slice 2.',
+              nextSelectorAriaLabel: 'Client-A. 43k. 23.5%. Slice 1.',
               accessibility: { ...EXPECTEDACCESSIBILITY }
             }
           },
@@ -266,8 +294,8 @@ describe('<pie-chart>', () => {
             nextTestSelector: '[data-testid=pie][data-id=pie-Client-E]',
             keyDownObject: { key: 'ArrowLeft', code: 'ArrowLeft', keyCode: 37 },
             testProps: {
-              selectorAriaLabel: 'Client-A. 43k. Slice 1 of 5.',
-              nextSelectorAriaLabel: 'Client-E. 31k. Slice 5 of 5.'
+              selectorAriaLabel: 'Client-A. 43k. 23.5%. Slice 1.',
+              nextSelectorAriaLabel: 'Client-E. 31k. 16.9%. Slice 5.'
             }
           }
           // currently there is no cousin nav on pie chart
@@ -912,8 +940,8 @@ describe('<pie-chart>', () => {
                 '<p style="margin: 0;">Test Label:<b>Client-A</b><br>Value (%):<b>23.5%</b><br>Value:<b>43k</b></p>'
             };
             const innerAriaContent = {
-              dataKeyNames_custom_on_load: 'Test Label Client-A. value 43k. Slice 4 of 5.',
-              dataKeyNames_custom_on_update: 'Test Label Client-A. value 43k. Slice 4 of 5.'
+              dataKeyNames_custom_on_load: 'Test Label Client-A. value 43k. value (%) 23.5%. Slice 4.',
+              dataKeyNames_custom_on_update: 'Test Label Client-A. value 43k. value (%) 23.5%. Slice 4.'
             };
             const innerTestProps = { ...unitTestTooltip[test].testProps, ...innerTooltipProps[test] };
             const customDataKeyNames = { dataKeyNames: { label: 'Test Label' } };

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -8,6 +8,12 @@
 import { Component, State, Event, EventEmitter, Element, h } from '@stencil/core';
 import '@visa/visa-charts-data-table';
 import '@visa/keyboard-instructions';
+
+// importing custom languages
+// import { hu } from '../../../../utils/src/utils/localization/languages/hu';
+
+// importing numeralLocales
+// import { HU } from '@visa/visa-charts-utils/src/utils/localization/numeralLocales/hu';
 
 @Component({
   tag: 'app-heat-map',
@@ -27,8 +33,8 @@ export class AppHeatMap {
   @State() yKeyOrder: any = ['Travel', 'Long Name Restaurant', 'Shopping', 'Other'];
   @State() wrapLabel: any = true;
   @State() interactionKeys: any = ['date'];
-  @State() xAxisPlacement: any = 'bottom';
-  @State() xAxisFormat: any = '%m/%d';
+  // @State() xAxisPlacement: any = 'bottom';
+  // @State() xAxisFormat: any = '%m/%d';
   @State() suppressEvents: boolean = false;
   @State() label: any = {
     labelAccessor: ['category', 'value'],
@@ -1175,11 +1181,17 @@ export class AppHeatMap {
   xAxis: any = {
     visible: true,
     label: '',
-    placement: this.xAxisPlacement,
-    format: this.xAxisFormat,
+    placement: 'bottom', // this.xAxisPlacement,
+    format: '%m/%d', // this.xAxisFormat,
     tickInterval: 1
   };
-  yAxis: any = { visible: true, label: '', format: '' };
+  yAxis: any = {
+    visible: true,
+    gridVisible: true,
+    label: 'Y Axis',
+    format: '0[.][0][0]a',
+    tickInterval: 1
+  };
   @Event() updateComponent: EventEmitter;
 
   @Element()
@@ -1289,12 +1301,12 @@ export class AppHeatMap {
           labels: ['']
         });
   }
-  changeXAxisFormat() {
-    this.xAxisFormat = this.xAxisFormat !== '%d' ? '%d' : '%m/%d';
-  }
-  changeXAxisPlacement() {
-    this.xAxisPlacement = this.xAxisPlacement !== 'bottom' ? 'bottom' : 'top';
-  }
+  // changeXAxisFormat() {
+  //   this.xAxisFormat = this.xAxisFormat !== '%d' ? '%d' : '%m/%d';
+  // }
+  // changeXAxisPlacement() {
+  //   this.xAxisPlacement = this.xAxisPlacement !== 'bottom' ? 'bottom' : 'top';
+  // }
   toggleTextures() {
     const a = { ...this.accessibility, showExperimentalTextures: !this.accessibility.showExperimentalTextures };
     this.accessibility = a;
@@ -1421,20 +1433,20 @@ export class AppHeatMap {
         >
           change interaction key
         </button>
-        <button
+        {/* <button
           onClick={() => {
             this.changeXAxisFormat();
           }}
         >
           change xAxis Format
-        </button>
-        <button
+        </button> */}
+        {/* <button
           onClick={() => {
             this.changeXAxisPlacement();
           }}
         >
           change xAxis Placement
-        </button>
+        </button> */}
         <button
           onClick={() => {
             this.toggleTextures();
@@ -1458,6 +1470,11 @@ export class AppHeatMap {
           toggle animations
         </button>
         <heat-map
+          // localization={{
+          //   language: hu,
+          //   numeralLocale: HU,
+          //   skipValidation: false
+          // }}
           colorPalette={'diverging_GtoP'} // sequential_grey // diverging_GtoP // diverging_GtoP
           // colors={[#ff4000, #555fff, #ff193f]}
           colorSteps={11}

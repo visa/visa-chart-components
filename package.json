@@ -58,10 +58,10 @@
     "ls-scripts": "./node_modules/.bin/ls-scripts",
     "ls-commit-types": "./node_modules/.bin/conventional-commit-types",
     "oss-delete-changelog": "node ./scripts/delete-changelogs-for-oss.js",
-    "storybook": "RENDER_PATH=local start-storybook --port 6006",
-    "build-storybook-gh": "RENDER_PATH=local build-storybook -o storybook",
-    "build-storybook": "RENDER_PATH=/storybook/ build-storybook -o storybook --preview-url=/storybook/iframe.html --force-build-preview",
-    "build-storybook-simple": "build-storybook",
+    "storybook": "NODE_OPTIONS=--openssl-legacy-provider RENDER_PATH=local start-storybook --port 6006",
+    "build-storybook-gh": "NODE_OPTIONS=--openssl-legacy-provider RENDER_PATH=local build-storybook -o storybook",
+    "build-storybook": "NODE_OPTIONS=--openssl-legacy-provider RENDER_PATH=/storybook/ build-storybook -o storybook --preview-url=/storybook/iframe.html --force-build-preview",
+    "build-storybook-simple": "NODE_OPTIONS=--openssl-legacy-provider build-storybook",
     "deploy-storybook-gh": "gh-pages -d storybook",
     "oss-file-copy": "node scripts/oss-move-files.js"
   },
@@ -114,6 +114,8 @@
   },
   "resolutions": {
     "@types/babel__traverse": "7.18.2",
+    "@types/lodash": "4.14.191",
+    "@types/node": "18.11.19",
     "@types/react": "^17.0.43",
     "ansi-regex": "^5.0.1",
     "browserslist": "^4.16.5",
@@ -139,7 +141,8 @@
     "trim-newlines": "^3.0.1",
     "trim-off-newlines": "^1.0.3",
     "ws": "8.4.2",
-    "d3-color": "^3.1.0"
+    "d3-color": "^3.1.0",
+    "webpack": "^4.46.0"
   },
   "config": {
     "scripts": {

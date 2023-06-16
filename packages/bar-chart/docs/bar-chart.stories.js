@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022 Visa, Inc.
+ * Copyright (c) 2022, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -132,6 +132,7 @@ export const Default = Template.bind({});
 export const Category = Template.bind({});
 export const Emphasis = Template.bind({});
 export const Interaction = Template.bind({});
+export const Trend = Template.bind({});
 export const Hidden = Template.bind({});
 
 let args, exclusions;

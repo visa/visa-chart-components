@@ -21,7 +21,8 @@ export default [
 		plugins: [
 			resolve(),
 			commonjs({
-				include:['./node_modules/yup/lib/index.js',
+				include:['./node_modules/deep-keys/index.js',
+						'./node_modules/yup/lib/index.js',
 						'./node_modules/synchronous-promise/index.js',
 						'./node_modules/property-expr/index.js',
 						'node_modules/toposort/index.js',
@@ -45,7 +46,8 @@ export default [
 		plugins: [
 			resolve(),
 			commonjs({
-				include:['./node_modules/yup/lib/index.js',
+				include:['./node_modules/deep-keys/index.js',
+						'./node_modules/yup/lib/index.js',
 						'./node_modules/synchronous-promise/index.js',
 						'./node_modules/property-expr/index.js',
 						'node_modules/toposort/index.js',

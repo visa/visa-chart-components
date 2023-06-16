@@ -1,11 +1,13 @@
 /**
- * Copyright (c) 2020, 2021 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
  *
  **/
+
 export class KeyboardInstructionsDefaultValues {
+  static readonly language = 'en';
   static readonly geomType = 'geometry';
   static readonly groupName = 'group';
   static readonly chartTag = 'chart';
@@ -14,6 +16,4 @@ export class KeyboardInstructionsDefaultValues {
   static readonly hasCousinNavigation = false;
   static readonly disabled = false;
   static readonly unitTest = false;
-  static readonly cousinActionOverride = '';
-  static readonly cousinResultOverride = '';
 }

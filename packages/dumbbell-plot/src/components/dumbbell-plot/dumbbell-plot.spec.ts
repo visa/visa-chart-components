@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -11,9 +11,14 @@ import { DumbbellPlotDefaultValues } from './dumbbell-plot-default-values';
 import { scalePoint, scaleLinear, scaleTime } from 'd3-scale';
 import { timeMonth } from 'd3-time';
 // import { rgb } from 'd3-color'; // this code is commented out now
+
 // we need to bring in our nested components as well, was required to bring in the source vs dist folder to get it to mount
-import { KeyboardInstructions } from '../../../node_modules/@visa/keyboard-instructions/src/components/keyboard-instructions/keyboard-instructions';
-import { DataTable } from '../../../node_modules/@visa/visa-charts-data-table/src/components/data-table/data-table';
+import { KeyboardInstructions } from '@visa/keyboard-instructions/src/components/keyboard-instructions/keyboard-instructions';
+import { DataTable } from '@visa/visa-charts-data-table/src/components/data-table/data-table';
+
+// importing custom languages and locales
+import { hu } from '@visa/visa-charts-utils/src/utils/localization/languages/hu';
+import { HU } from '@visa/visa-charts-utils/src/utils/localization/numeralLocales/hu';
 
 import Utils from '@visa/visa-charts-utils';
 import UtilsDev from '@visa/visa-charts-utils-dev';
@@ -95,6 +100,7 @@ describe('<dumbbell-plot>', () => {
 
     // disable accessibility validation to keep output stream(terminal) clean
     const EXPECTEDACCESSIBILITY = { disableValidation: true };
+    const EXPECTEDLOCALIZATION = { ...DumbbellPlotDefaultValues.localization, skipValidation: true };
 
     beforeEach(async () => {
       page = await newSpecPage({
@@ -109,6 +115,7 @@ describe('<dumbbell-plot>', () => {
       component.seriesAccessor = EXPECTEDSERIESACCESSOR;
       component.valueAccessor = EXPECTEDVALUEACCESSOR;
       component.accessibility = EXPECTEDACCESSIBILITY;
+      component.localization = EXPECTEDLOCALIZATION;
     });
 
     it('should build', () => {
@@ -130,6 +137,27 @@ describe('<dumbbell-plot>', () => {
         // ACT
         page.root.appendChild(component);
         await page.waitForChanges();
+
+        // ASSERT
+        expect(page.root).toMatchSnapshot();
+      });
+      it('localization: should render localized with minimal props[data,accessors] given', async () => {
+        component.localization = {
+          language: hu,
+          numeralLocale: HU,
+          skipValidation: true,
+          overwrite: false
+        };
+        // ACT
+        page.root.appendChild(component);
+        await page.waitForChanges();
+
+        // flush labels for testing to ensure opacity of 1 on initial render
+        const elements = page.doc.querySelectorAll('[data-testid=dataLabel]');
+        await asyncForEach(elements, async element => {
+          flushTransitions(element);
+          await page.waitForChanges();
+        });
 
         // ASSERT
         expect(page.root).toMatchSnapshot();
@@ -264,9 +292,8 @@ describe('<dumbbell-plot>', () => {
             nextTestSelector: '[data-testid=dumbbell-group]',
             keyDownObject: { key: 'Enter', code: 'Enter', keyCode: 13, shiftKey: true },
             testProps: {
-              selectorAriaLabel:
-                'category CatA. value 7.7b. category CatB. value 6.6b. Difference 1.1b. Dumbbell 1 of 12.',
-              nextSelectorAriaLabel: 'Dumbbell group which contains 12 interactive dumbbells.',
+              selectorAriaLabel: 'category CatA. value 7.7b. category CatB. value 6.6b. Difference 1.1b. Dumbbell 1.',
+              nextSelectorAriaLabel: 'Number of interactive dumbbells in this dumbbell plot: 12.',
               accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true }
             }
           },
@@ -276,10 +303,8 @@ describe('<dumbbell-plot>', () => {
             nextTestSelector: '[data-testid=line][data-id=line-Feb-2016]',
             keyDownObject: { key: 'ArrowRight', code: 'ArrowRight', keyCode: 39 },
             testProps: {
-              selectorAriaLabel:
-                'category CatA. value 7.7b. category CatB. value 6.6b. Difference 1.1b. Dumbbell 1 of 12.',
-              nextSelectorAriaLabel:
-                'category CatA. value 7.6b. category CatB. value 4.6b. Difference 3b. Dumbbell 2 of 12.',
+              selectorAriaLabel: 'category CatA. value 7.7b. category CatB. value 6.6b. Difference 1.1b. Dumbbell 1.',
+              nextSelectorAriaLabel: 'category CatA. value 7.6b. category CatB. value 4.6b. Difference 3b. Dumbbell 2.',
               accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true }
             }
           },
@@ -289,10 +314,9 @@ describe('<dumbbell-plot>', () => {
             nextTestSelector: '[data-testid=line][data-id=line-Jan-2016]',
             keyDownObject: { key: 'ArrowRight', code: 'ArrowRight', keyCode: 39 },
             testProps: {
-              selectorAriaLabel:
-                'category CatA. value 9.7b. category CatB. value 5.6b. Difference 4.1b. Dumbbell 12 of 12.',
+              selectorAriaLabel: 'category CatA. value 9.7b. category CatB. value 5.6b. Difference 4.1b. Dumbbell 12.',
               nextSelectorAriaLabel:
-                'category CatA. value 7.7b. category CatB. value 6.6b. Difference 1.1b. Dumbbell 1 of 12.',
+                'category CatA. value 7.7b. category CatB. value 6.6b. Difference 1.1b. Dumbbell 1.',
               accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true }
             }
           },
@@ -302,10 +326,9 @@ describe('<dumbbell-plot>', () => {
             nextTestSelector: '[data-testid=line][data-id=line-Jan-2016]',
             keyDownObject: { key: 'ArrowLeft', code: 'ArrowLeft', keyCode: 37 },
             testProps: {
-              selectorAriaLabel:
-                'category CatA. value 7.6b. category CatB. value 4.6b. Difference 3b. Dumbbell 2 of 12.',
+              selectorAriaLabel: 'category CatA. value 7.6b. category CatB. value 4.6b. Difference 3b. Dumbbell 2.',
               nextSelectorAriaLabel:
-                'category CatA. value 7.7b. category CatB. value 6.6b. Difference 1.1b. Dumbbell 1 of 12.',
+                'category CatA. value 7.7b. category CatB. value 6.6b. Difference 1.1b. Dumbbell 1.',
               accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true }
             }
           },
@@ -315,8 +338,8 @@ describe('<dumbbell-plot>', () => {
             nextTestSelector: '[data-testid=line][data-id=line-Dec-2016]',
             keyDownObject: { key: 'ArrowLeft', code: 'ArrowLeft', keyCode: 37 },
             testProps: {
-              selectorAriaLabel: 'CatA 7.7b. CatB 6.6b. Difference 1.1b. Dumbbell 1 of 12.',
-              nextSelectorAriaLabel: 'CatA 9.7b. CatB 5.6b. Difference 4.1b. Dumbbell 12 of 12.'
+              selectorAriaLabel: 'CatA 7.7b. CatB 6.6b. Difference 1.1b. Dumbbell 1.',
+              nextSelectorAriaLabel: 'CatA 9.7b. CatB 5.6b. Difference 4.1b. Dumbbell 12.'
             }
           }
         };
@@ -1622,9 +1645,9 @@ describe('<dumbbell-plot>', () => {
             };
             const innerAriaContent = {
               dataKeyNames_custom_on_load:
-                'Test Category CatA. value 7.6b. Test Category CatB. value 4.6b. Difference 3b. Dumbbell 2 of 4.',
+                'Test Category CatA. value 7.6b. Test Category CatB. value 4.6b. Difference 3b. Dumbbell 2.',
               dataKeyNames_custom_on_update:
-                'Test Category CatA. value 7.6b. Test Category CatB. value 4.6b. Difference 3b. Dumbbell 2 of 4.'
+                'Test Category CatA. value 7.6b. Test Category CatB. value 4.6b. Difference 3b. Dumbbell 2.'
             };
             const innerTestProps = {
               ...commonInteractionProps,

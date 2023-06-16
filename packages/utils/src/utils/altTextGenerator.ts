@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2021, 2022 Visa, Inc.
+ * Copyright (c) 2021, 2022, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -7,8 +7,13 @@
  **/
 import { select } from 'd3-selection';
 import { getScopedData } from './dataTransform';
+import { translate } from './localization';
+import { capitalized } from './calculation';
+import { formatStats } from './formatStats';
 
 export const createLabel = ({
+  chartTag,
+  language,
   d,
   i,
   n,
@@ -19,8 +24,14 @@ export const createLabel = ({
   dataKeyNames,
   groupKeys,
   nested,
-  recursive
+  recursive,
+  normalized,
+  valueAccessor,
+  geomType,
+  groupName
 }: {
+  chartTag: string;
+  language: string;
   d: any;
   i: number;
   n: any;
@@ -32,13 +43,17 @@ export const createLabel = ({
   groupKeys?: any;
   nested?: string;
   recursive?: boolean;
+  normalized?: boolean;
+  valueAccessor?: string;
+  geomType: string;
+  groupName: string;
 }) => {
   const datum = !recursive ? d : d.data.data;
   let label = '';
   if (nested) {
     if (datum[nested].length) {
       datum[nested].forEach(child => {
-        label += iterateKeys(child, dataKeys, dataKeyNames, includeKeyNames, true);
+        label += iterateKeys(chartTag, language, child, dataKeys, dataKeyNames, includeKeyNames, true, valueAccessor);
       });
     }
     if (groupKeys && groupKeys.length) {
@@ -47,9 +62,22 @@ export const createLabel = ({
       });
     }
   } else {
-    label += iterateKeys(datum, dataKeys, dataKeyNames, includeKeyNames);
+    label += iterateKeys(chartTag, language, datum, dataKeys, dataKeyNames, includeKeyNames, false, valueAccessor);
   }
-  label += capitalizedGeomType + ' ' + (i + 1) + ' of ' + n.length + '.';
+  if (normalized) {
+    label +=
+      (includeKeyNames
+        ? dataKeyNames
+          ? (dataKeyNames[`${valueAccessor}%`] || (dataKeyNames[`${valueAccessor}`] || valueAccessor) + ' (%)') + ' '
+          : valueAccessor + ' (%) '
+        : '') +
+      formatStats(
+        datum.hasOwnProperty('data') ? datum.data[`${valueAccessor}%`] : datum[`${valueAccessor}%`],
+        '0[.][0][0]%'
+      ) +
+      '. ';
+  }
+  label += `${capitalized(translate(`general.geomTypes.${geomType}`, language))}` + ' ' + (i + 1) + `.`;
   if (recursive) {
     const depth = d.depth;
     const size = select(n[i].parentNode)
@@ -57,16 +85,18 @@ export const createLabel = ({
       .filter(data => (depth === undefined ? true : data && data.depth === depth + 1))
       .size();
     label +=
-      (' This ' + capitalizedGroupName || capitalizedGeomType + ' group') +
-      ' contains ' +
+      ` ${translate(`${chartTag}.altTextGenerator.numberOfChildElements`, language)} ` +
       (size || '0') +
-      ' child elements' +
-      (!size && d.children && d.children.length ? ' (but some may be hidden until you interact with this node)' : '');
+      (!size && d.children && d.children.length
+        ? `${translate('general.expressions.butSomeMayBeHiddenUntilYouInteractWithThisNode', language)}`
+        : '.');
   }
   return label;
 };
 
 export const createGroupLabel = ({
+  chartTag,
+  language,
   d,
   targetNode,
   index,
@@ -78,8 +108,11 @@ export const createGroupLabel = ({
   includeKeyNames,
   capitalizedGroupName,
   capitalizedGeomType,
-  geomType
+  geomType,
+  groupName
 }: {
+  chartTag: string;
+  language: string;
   d: any;
   targetNode: any;
   index: number;
@@ -92,6 +125,7 @@ export const createGroupLabel = ({
   capitalizedGroupName: string;
   capitalizedGeomType: string;
   geomType: string;
+  groupName: string;
 }) => {
   let tabbableSiblings = 0;
   Array.prototype.forEach.call(siblings, sibling => {
@@ -122,38 +156,22 @@ export const createGroupLabel = ({
     const childrenCount = targetRootForChildren
       ? targetRootForChildren.querySelectorAll('*:not(.vcl-accessibility-focus-highlight)').length
       : 0;
-    return (
-      groupData +
-      (capitalizedGroupName || capitalizedGeomType + ' group') +
-      ' ' +
-      (index + 1) +
-      ' of ' +
-      targetNode.parentNode.querySelectorAll('g:not(.vcl-accessibility-focus-highlight)').length +
-      ' which contains ' +
-      childrenCount +
-      ' interactive ' +
-      geomType +
-      (childrenCount !== 1 ? 's.' : '.')
-    );
+    return groupData + `${translate(`general.groupNames.${groupName}`, language)}` + ' ' + (index + 1) + `.`;
   } else {
     const childrenCount = siblings[index].querySelectorAll('*:not(.vcl-accessibility-focus-highlight)').length;
-    return (
-      (capitalizedGroupName || capitalizedGeomType + ' group') +
-      ' which contains ' +
-      childrenCount +
-      ' interactive ' +
-      geomType +
-      (childrenCount !== 1 ? 's.' : '.')
-    );
+    return `${translate(`${chartTag}.altTextGenerator.numberOfInteractiveElements`, language)} ` + childrenCount + '.';
   }
 };
 
 const iterateKeys = (
+  chartTag: string,
+  language: string,
   item: any,
   objectOfDataKeys: any,
   dataKeyNames: object,
   includeKeyNames: boolean,
-  nested?: boolean
+  nested?: boolean,
+  valueAccessor?: string
 ) => {
   const dataKeys = Object.keys(objectOfDataKeys);
   let label = '';
@@ -171,9 +189,9 @@ const iterateKeys = (
       } else {
         label += datum[key] + (keyPosition % 2 ? ' ' : keyEnding);
       }
-      if (datum[key + '%'] !== undefined) {
+      if (datum[key + '%'] !== undefined && key !== valueAccessor) {
         const percentKeyEnding = datum[key + '%'][datum[key + '%'].length - 1] === '.' ? ' ' : '. ';
-        label += includeKeyNames ? mappedKeyName + ' as a percentage ' : '';
+        label += includeKeyNames ? mappedKeyName + ` ${translate('general.expressions.asAPercentage', language)} ` : '';
         label += datum[key + '%'] + percentKeyEnding;
       }
       keyPosition++;

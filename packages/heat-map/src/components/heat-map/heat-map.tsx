@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -13,6 +13,7 @@ import { easeCircleIn } from 'd3-ease';
 import { nest } from 'd3-collection';
 import {
   IBoxModelType,
+  ILocalizationType,
   IHoverStyleType,
   IClickStyleType,
   IAxisType,
@@ -28,6 +29,9 @@ import { v4 as uuid } from 'uuid';
 import Utils from '@visa/visa-charts-utils';
 
 const {
+  getGlobalInstances,
+  configLocalization,
+  getActiveLanguageString,
   calculateLuminance,
   prepareStrokeColorsFromScheme,
   verifyTextHasSpace,
@@ -82,7 +86,8 @@ const {
   placeDataLabels,
   scopeDataKeys,
   transitionEndAll,
-  validateAccessibilityProps
+  validateAccessibilityProps,
+  validateLocalizationProps
 } = Utils;
 
 @Component({
@@ -100,6 +105,7 @@ export class HeatMap {
   @Event() transitionEndEvent: EventEmitter;
 
   // Chart Attributes (1/7)
+  @Prop({ mutable: true }) localization: ILocalizationType = HeatMapDefaultValues.localization;
   @Prop({ mutable: true }) mainTitle: string = HeatMapDefaultValues.mainTitle;
   @Prop({ mutable: true }) subTitle: string = HeatMapDefaultValues.subTitle;
   @Prop({ mutable: true }) height: number = HeatMapDefaultValues.height;
@@ -162,6 +168,7 @@ export class HeatMap {
   @Element()
   heatMapEl: HTMLElement;
   shouldValidateAccessibility: boolean = true;
+  shouldValidateLocalization: boolean = true;
   svg: any;
   root: any;
   rootG: any;
@@ -259,6 +266,7 @@ export class HeatMap {
   shouldSetAnnotationAccessibility: boolean = false;
   shouldSetTextures: boolean = false;
   shouldSetStrokes: boolean = false;
+  shouldSetLocalizationConfig: boolean = false;
   strokes: any = {};
   topLevel: string = 'h2';
   bottomLevel: string = 'p';
@@ -753,6 +761,43 @@ export class HeatMap {
     }
   }
 
+  @Watch('localization')
+  localizationWatcher(_newVal, _oldVal) {
+    this.shouldValidate = true;
+
+    // language
+    const newLanguage = _newVal && _newVal.language ? _newVal.language : false;
+    const oldLanguage = _oldVal && _oldVal.language ? _oldVal.language : false;
+    if (newLanguage !== oldLanguage) {
+      this.shouldSetLocalizationConfig = true;
+      this.shouldUpdateTableData = true;
+      this.shouldRedrawWrapper = true;
+      this.shouldUpdateDescriptionWrapper = true;
+      this.shouldSetChartAccessibilityCount = true;
+      this.shouldSetYAxisAccessibility = true;
+      this.shouldSetXAxisAccessibility = true;
+      this.shouldUpdateDescriptionWrapper = true;
+      this.shouldSetGeometryAriaLabels = true;
+      this.shouldSetParentSVGAccessibility = true;
+    }
+
+    // numeralLocale
+    const newNumeralLocale = _newVal && _newVal.numeralLocale ? _newVal.numeralLocale : false;
+    const oldNumeralLocale = _oldVal && _oldVal.numeralLocale ? _oldVal.numeralLocale : false;
+    if (newNumeralLocale !== oldNumeralLocale) {
+      this.shouldSetLocalizationConfig = true;
+      this.shouldUpdateTableData = true;
+      this.shouldRedrawWrapper = true;
+      this.shouldUpdateDescriptionWrapper = true;
+      this.shouldSetChartAccessibilityCount = true;
+      this.shouldSetYAxisAccessibility = true;
+      this.shouldSetXAxisAccessibility = true;
+      this.shouldUpdateDescriptionWrapper = true;
+      this.shouldSetGeometryAriaLabels = true;
+      this.shouldSetParentSVGAccessibility = true;
+    }
+  }
+
   @Watch('maxValueOverride')
   @Watch('minValueOverride')
   valueOverrideWatcher(_newVal, _oldVal) {
@@ -816,6 +861,7 @@ export class HeatMap {
       this.defaults = true;
       this.chartID = chartID;
       this.heatMapEl.id = this.chartID;
+      this.setLocalizationConfig();
       this.setTagLevels();
       this.prepareData();
       this.setDimensions();
@@ -824,6 +870,7 @@ export class HeatMap {
       this.validateInteractionKeys();
       this.setTableData();
       this.shouldValidateAccessibilityProps();
+      this.shouldValidateLocalizationProps();
       this.formatClickHighlight();
       this.formatHoverHighlight();
       resolve('component will load');
@@ -1047,6 +1094,21 @@ export class HeatMap {
     }).then(() => this.drawEndEvent.emit({ chartID: this.chartID }));
   }
 
+  shouldValidateLocalizationProps() {
+    const windowInstances = getGlobalInstances();
+    const languageString = windowInstances.i18Next.language;
+    const languageObject = windowInstances.i18Next.getResourceBundle(languageString);
+    const numeralObject = windowInstances.numeral.localeData();
+    if (this.shouldValidateLocalization && !this.localization.skipValidation) {
+      this.shouldValidateLocalization = false;
+      validateLocalizationProps(this.chartID, {
+        ...this.localization,
+        language: languageObject,
+        numeralLocale: numeralObject
+      });
+    }
+  }
+
   shouldValidateAccessibilityProps() {
     if (this.shouldValidateAccessibility && !this.accessibility.disableValidation) {
       this.shouldValidateAccessibility = false;
@@ -1113,6 +1175,14 @@ export class HeatMap {
             : this.hoverHighlight[this.yAccessor];
       }
     }
+  }
+
+  getLanguageString() {
+    return getActiveLanguageString(this.localization);
+  }
+
+  setLocalizationConfig() {
+    configLocalization(this.localization);
   }
 
   setDimensions() {
@@ -2137,7 +2207,7 @@ export class HeatMap {
   }
 
   setAnnotationAccessibility() {
-    setAccessAnnotation(this.heatMapEl, this.annotations);
+    setAccessAnnotation(this.getLanguageString(), this.heatMapEl, this.annotations);
   }
   // new accessibility functions added here
   setTagLevels() {
@@ -2148,6 +2218,7 @@ export class HeatMap {
   setChartDescriptionWrapper() {
     // this initializes the accessibility description section of the chart
     initializeDescriptionRoot({
+      language: this.getLanguageString(),
       rootEle: this.heatMapEl,
       title: this.accessibility.title || this.mainTitle,
       chartTag: 'heat-map',
@@ -2166,8 +2237,9 @@ export class HeatMap {
   setParentSVGAccessibility() {
     // this sets the accessibility features of the root SVG element
     setAccessibilityController({
-      node: this.svg.node(),
       chartTag: 'heat-map',
+      language: this.getLanguageString(),
+      node: this.svg.node(),
       title: this.accessibility.title || this.mainTitle,
       description: this.subTitle,
       uniqueID: this.chartID,
@@ -2197,6 +2269,8 @@ export class HeatMap {
     const keys = scopeDataKeys(this, chartAccessors, 'heat-map');
     this.update.each((_d, i, n) => {
       setElementFocusHandler({
+        chartTag: 'heat-map',
+        language: this.getLanguageString(),
         node: n[i],
         geomType: 'cell',
         includeKeyNames: this.accessibility.includeDataKeyNames,
@@ -2228,31 +2302,31 @@ export class HeatMap {
   }
 
   setChartAccessibilityTitle() {
-    setAccessTitle(this.heatMapEl, this.accessibility.title || this.mainTitle);
+    setAccessTitle(this.getLanguageString(), this.heatMapEl, this.accessibility.title || this.mainTitle);
   }
 
   setChartAccessibilitySubtitle() {
-    setAccessSubtitle(this.heatMapEl, this.subTitle);
+    setAccessSubtitle(this.getLanguageString(), this.heatMapEl, this.subTitle);
   }
 
   setChartAccessibilityLongDescription() {
-    setAccessLongDescription(this.heatMapEl, this.accessibility.longDescription);
+    setAccessLongDescription(this.getLanguageString(), this.heatMapEl, this.accessibility.longDescription);
   }
 
   setChartAccessibilityExecutiveSummary() {
-    setAccessExecutiveSummary(this.heatMapEl, this.accessibility.executiveSummary);
+    setAccessExecutiveSummary(this.getLanguageString(), this.heatMapEl, this.accessibility.executiveSummary);
   }
 
   setChartAccessibilityPurpose() {
-    setAccessPurpose(this.heatMapEl, this.accessibility.purpose);
+    setAccessPurpose(this.getLanguageString(), this.heatMapEl, this.accessibility.purpose);
   }
 
   setChartAccessibilityContext() {
-    setAccessContext(this.heatMapEl, this.accessibility.contextExplanation);
+    setAccessContext(this.getLanguageString(), this.heatMapEl, this.accessibility.contextExplanation);
   }
 
   setChartAccessibilityStatisticalNotes() {
-    setAccessStatistics(this.heatMapEl, this.accessibility.statisticalNotes);
+    setAccessStatistics(this.getLanguageString(), this.heatMapEl, this.accessibility.statisticalNotes);
   }
 
   setChartCountAccessibility() {
@@ -2268,7 +2342,7 @@ export class HeatMap {
   }
 
   setChartAccessibilityStructureNotes() {
-    setAccessStructure(this.heatMapEl, this.accessibility.structureNotes);
+    setAccessStructure(this.getLanguageString(), this.heatMapEl, this.accessibility.structureNotes);
   }
   // new accessibility stuff ends here
 
@@ -2335,6 +2409,10 @@ export class HeatMap {
     // everything between this comment and the third should eventually
     // be moved into componentWillUpdate (if the stenicl bug is fixed)
     this.init();
+    if (this.shouldSetLocalizationConfig) {
+      this.setLocalizationConfig();
+      this.shouldSetLocalizationConfig = false;
+    }
     if (this.shouldSetTagLevels) {
       this.setTagLevels();
       this.shouldSetTagLevels = false;
@@ -2373,6 +2451,7 @@ export class HeatMap {
     }
     if (this.shouldValidate) {
       this.shouldValidateAccessibilityProps();
+      this.shouldValidateLocalizationProps();
       this.shouldValidate = false;
     }
     // Everything between this comment and the first should eventually
@@ -2390,6 +2469,7 @@ export class HeatMap {
             uniqueID={this.chartID}
             geomType={'cell'}
             groupName={'row'} // taken from initializeDescriptionRoot, on bar this should be "bar group", stacked bar is "stack", and clustered is "cluster"
+            language={this.getLanguageString()}
             chartTag={'heat-map'}
             width={this.width - (this.margin ? this.margin.right || 0 : 0)}
             isInteractive={this.accessibility.elementsAreInterface}
@@ -2406,6 +2486,7 @@ export class HeatMap {
           <data-table
             uniqueID={this.chartID}
             isCompact
+            language={this.getLanguageString()}
             tableColumns={this.tableColumns}
             data={this.tableData}
             dataKeyNames={this.dataKeyNames}

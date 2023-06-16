@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -8,6 +8,12 @@
 import { Component, State, Event, EventEmitter, Element, h } from '@stencil/core';
 import '@visa/visa-charts-data-table';
 import '@visa/keyboard-instructions';
+
+// importing custom languages
+// import { hu } from '../../../../utils/src/utils/localization/languages/hu';
+
+// importing numeralLocales
+// import { HU } from '@visa/visa-charts-utils/src/utils/localization/numeralLocales/hu';
 
 @Component({
   tag: 'app-circle-packing',
@@ -1106,6 +1112,11 @@ export class AppCirclePacking {
         </button>
         <div style={{ display: 'flex', flexDirection: 'row' }}>
           <circle-packing
+            // localization={{
+            //   language: hu,
+            //   numeralLocale: HU,
+            //   skipValidation: false
+            // }}
             data={this.chartData}
             nodeAccessor={this.nodeAccessor}
             parentAccessor={this.parentAccessor}
@@ -1147,6 +1158,9 @@ export class AppCirclePacking {
         </div>
         <div style={{ display: 'flex', flexDirection: 'row' }}>
           {/* <circle-packing
+            // localization={{
+            //   skipValidation: false
+            // }}
             data={this.circlePackComponentData}
             nodeAccessor="c"
             parentAccessor="p"
@@ -1180,8 +1194,8 @@ export class AppCirclePacking {
             zoomToNode={this.zoomTo}
             // annotations={this.annotations}
             accessibility={{ ...this.accessibility, hideTextures: true }}
-            circlePadding={3}
-          /> */}
+            circlePadding={3} 
+          />*/}
         </div>
       </div>
     );

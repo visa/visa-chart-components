@@ -48,7 +48,7 @@ Here is an example of clustered-bar-chart in action:
 To see all available options for the chart properties/API see \href{https://github.com/visa/visa-chart-components/tree/master/packages/clustered-bar-chart}{@visa/clustered-bar-chart}.
 }
 \examples{
-library(tidyverse)
+library(dplyr)
 data.frame(UCBAdmissions) \%>\%
   filter(Admit == "Rejected") \%>\%
   clustered_bar_chart("Gender","Freq","Dept")

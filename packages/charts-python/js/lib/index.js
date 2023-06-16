@@ -6,5 +6,5 @@
  *
  **/
 // Export widget models and views, and the npm package version number.
-module.exports = require('./charts.js');
-module.exports['version'] = require('../package.json').version;
+export { ChartModel, ChartView } from './charts';
+export { version } from '../package.json';

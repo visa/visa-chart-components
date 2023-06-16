@@ -5,6 +5,19 @@
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
  *
  **/
+
+import {
+  configLocalization,
+  getActiveLanguageString,
+  registerI18NextLanguage,
+  changeI18NextLanguage,
+  translate
+} from './localization/index';
+
+import { getGlobalInstances } from './globalInstances';
+
+import { isUndefined, isObject, isEmpty, xor } from './utilFunctions';
+
 import { drawTooltip, initTooltipStyle, overrideTitleTooltip } from './tooltip';
 
 import { circularFind } from './circular-find';
@@ -109,7 +122,7 @@ import {
 
 import { getTextWidth, verifyTextHasSpace, manuallyWrapText } from './textHelpers';
 
-import { getPadding } from './padding';
+import { getPadding, validationStyle } from './style';
 
 import { leastSquares, capitalized } from './calculation';
 
@@ -136,11 +149,25 @@ import { annotate } from './annotation';
 
 import { validateAccessibilityProps } from './validate-accessibility-props';
 
+import { validateLocalizationProps } from './localization/validate-localization-props';
+
 import * as propDefaultValues from './propDefaultValues';
+
+// import * as en from './i18n/locales/en'
 
 import { Sankey, sankeyLeft, sankeyRight, sankeyJustify, sankeyCenter, sankeyLinkHorizontal } from './sankey';
 
 export {
+  isUndefined,
+  isObject,
+  isEmpty,
+  xor,
+  getGlobalInstances,
+  registerI18NextLanguage,
+  changeI18NextLanguage,
+  getActiveLanguageString,
+  configLocalization,
+  translate,
   autoTextColor,
   buildStrokes,
   checkAttributeTransitions,
@@ -228,6 +255,7 @@ export {
   verifyTextHasSpace,
   manuallyWrapText,
   getPadding,
+  validationStyle,
   interactionStyle,
   initTooltipStyle,
   leastSquares,
@@ -252,6 +280,7 @@ export {
   scopeDataKeys,
   visaColors,
   validateAccessibilityProps,
+  validateLocalizationProps,
   fixNestedSparseness,
   prepareRenderChange
 };

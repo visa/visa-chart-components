@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -18,6 +18,7 @@ import worldSmall from './topodata-small';
 import { d3Projections } from './world-map-projections';
 import {
   IBoxModelType,
+  ILocalizationType,
   IMapMarkerStyleType,
   ICountryStyleType,
   IDataLabelType,
@@ -35,6 +36,9 @@ import 'd3-transition';
 import Utils from '@visa/visa-charts-utils';
 
 const {
+  getGlobalInstances,
+  configLocalization,
+  getActiveLanguageString,
   getContrastingStroke,
   createTextStrokeFilter,
   convertColorsToTextures,
@@ -82,7 +86,8 @@ const {
   scopeDataKeys,
   transitionEndAll,
   visaColors,
-  validateAccessibilityProps
+  validateAccessibilityProps,
+  validateLocalizationProps
 } = Utils;
 @Component({
   tag: 'world-map',
@@ -113,6 +118,7 @@ export class WorldMap {
   // Data (2/7)
   @Prop() data: object[];
   @Prop() uniqueID: string;
+  @Prop({ mutable: true }) localization: ILocalizationType = WorldMapDefaultValues.localization;
   @Prop({ mutable: true }) sortOrder: string = WorldMapDefaultValues.sortOrder;
   @Prop({ mutable: true }) groupAccessor: string = WorldMapDefaultValues.groupAccessor;
   @Prop({ mutable: true }) markerAccessor: string = WorldMapDefaultValues.markerAccessor;
@@ -225,6 +231,7 @@ export class WorldMap {
   exitMarkerSize: number;
   chartID: string;
   shouldValidateAccessibility: boolean = true;
+  shouldValidateLocalization: boolean = true;
   shouldValidate: boolean = false;
   shouldValidateClickStyle: boolean = false;
   shouldValidateHoverStyle: boolean = false;
@@ -281,6 +288,7 @@ export class WorldMap {
   // shouldSetAnnotationAccessibility: boolean = false; // not yet supported
   shouldSetTextures: boolean = false;
   shouldSetStrokes: boolean = false;
+  shouldSetLocalizationConfig: boolean = false;
   strokes: any = {};
   topLevel: string = 'h2';
   bottomLevel: string = 'p';
@@ -702,6 +710,39 @@ export class WorldMap {
     }
   }
 
+  @Watch('localization')
+  localizationWatcher(_newVal, _oldVal) {
+    this.shouldValidate = true;
+
+    // language
+    const newLanguage = _newVal && _newVal.language ? _newVal.language : false;
+    const oldLanguage = _oldVal && _oldVal.language ? _oldVal.language : false;
+    if (newLanguage !== oldLanguage) {
+      this.shouldSetLocalizationConfig = true;
+      this.shouldUpdateTableData = true;
+      this.shouldRedrawWrapper = true;
+      this.shouldUpdateDescriptionWrapper = true;
+      this.shouldSetChartAccessibilityCount = true;
+      this.shouldUpdateDescriptionWrapper = true;
+      this.shouldSetGeometryAriaLabels = true;
+      this.shouldSetParentSVGAccessibility = true;
+    }
+
+    // numeralLocale
+    const newNumeralLocale = _newVal && _newVal.numeralLocale ? _newVal.numeralLocale : false;
+    const oldNumeralLocale = _oldVal && _oldVal.numeralLocale ? _oldVal.numeralLocale : false;
+    if (newNumeralLocale !== oldNumeralLocale) {
+      this.shouldSetLocalizationConfig = true;
+      this.shouldUpdateTableData = true;
+      this.shouldRedrawWrapper = true;
+      this.shouldUpdateDescriptionWrapper = true;
+      this.shouldSetChartAccessibilityCount = true;
+      this.shouldUpdateDescriptionWrapper = true;
+      this.shouldSetGeometryAriaLabels = true;
+      this.shouldSetParentSVGAccessibility = true;
+    }
+  }
+
   @Watch('annotations')
   annotationsWatcher(_newVal, _oldVal) {
     this.shouldValidate = true;
@@ -769,6 +810,7 @@ export class WorldMap {
       this.defaults = true;
       this.chartID = chartID;
       this.worldMapEl.id = this.chartID;
+      this.setLocalizationConfig();
       this.setTagLevels();
       this.updateChartVariable(); // this sets innerPaddedWidth/Height needed by Projection
       this.validateMapProjection();
@@ -784,6 +826,7 @@ export class WorldMap {
       this.validateInteractionKeys();
       this.setTableData();
       this.shouldValidateAccessibilityProps();
+      this.shouldValidateLocalizationProps();
       resolve('component will load');
     });
   }
@@ -1025,6 +1068,21 @@ export class WorldMap {
     }).then(() => this.drawEndEvent.emit({ chartID: this.chartID }));
   }
 
+  shouldValidateLocalizationProps() {
+    const windowInstances = getGlobalInstances();
+    const languageString = windowInstances.i18Next.language;
+    const languageObject = windowInstances.i18Next.getResourceBundle(languageString);
+    const numeralObject = windowInstances.numeral.localeData();
+    if (this.shouldValidateLocalization && !this.localization.skipValidation) {
+      this.shouldValidateLocalization = false;
+      validateLocalizationProps(this.chartID, {
+        ...this.localization,
+        language: languageObject,
+        numeralLocale: numeralObject
+      });
+    }
+  }
+
   shouldValidateAccessibilityProps() {
     if (this.shouldValidateAccessibility && !this.accessibility.disableValidation) {
       this.shouldValidateAccessibility = false;
@@ -1223,6 +1281,14 @@ export class WorldMap {
     this.enteringLabels = dataBoundToLabels.enter().append('text');
     this.exitingLabels = dataBoundToLabels.exit();
     this.updatingLabels = dataBoundToLabels.merge(this.enteringLabels);
+  }
+
+  getLanguageString() {
+    return getActiveLanguageString(this.localization);
+  }
+
+  setLocalizationConfig() {
+    configLocalization(this.localization);
   }
 
   setColors() {
@@ -2514,7 +2580,7 @@ export class WorldMap {
   }
 
   setAnnotationAccessibility() {
-    setAccessAnnotation(this.worldMapEl, this.annotations);
+    setAccessAnnotation(this.getLanguageString(), this.worldMapEl, this.annotations);
   }
 
   // utilize the legend component to draw the map's legend.
@@ -2566,6 +2632,7 @@ export class WorldMap {
   setChartDescriptionWrapper() {
     // this initializes the accessibility description section of the chart
     initializeDescriptionRoot({
+      language: this.getLanguageString(),
       rootEle: this.worldMapEl,
       title: this.accessibility.title || this.mainTitle,
       chartTag: 'world-map',
@@ -2584,8 +2651,9 @@ export class WorldMap {
   setParentSVGAccessibility() {
     // this sets the accessibility features of the root SVG element
     setAccessibilityController({
-      node: this.svg.node(),
       chartTag: 'world-map',
+      language: this.getLanguageString(),
+      node: this.svg.node(),
       title: this.accessibility.title || this.mainTitle,
       description: this.subTitle,
       uniqueID: this.chartID,
@@ -2614,6 +2682,8 @@ export class WorldMap {
     const keys = this.innerScopeDataKeys();
     this.updateMarker.each((_d, i, n) => {
       setElementFocusHandler({
+        chartTag: 'world-map',
+        language: this.getLanguageString(),
         node: n[i],
         geomType: 'marker',
         includeKeyNames: this.accessibility.includeDataKeyNames,
@@ -2650,31 +2720,31 @@ export class WorldMap {
   }
 
   setChartAccessibilityTitle() {
-    setAccessTitle(this.worldMapEl, this.accessibility.title || this.mainTitle);
+    setAccessTitle(this.getLanguageString(), this.worldMapEl, this.accessibility.title || this.mainTitle);
   }
 
   setChartAccessibilitySubtitle() {
-    setAccessSubtitle(this.worldMapEl, this.subTitle);
+    setAccessSubtitle(this.getLanguageString(), this.worldMapEl, this.subTitle);
   }
 
   setChartAccessibilityLongDescription() {
-    setAccessLongDescription(this.worldMapEl, this.accessibility.longDescription);
+    setAccessLongDescription(this.getLanguageString(), this.worldMapEl, this.accessibility.longDescription);
   }
 
   setChartAccessibilityExecutiveSummary() {
-    setAccessExecutiveSummary(this.worldMapEl, this.accessibility.executiveSummary);
+    setAccessExecutiveSummary(this.getLanguageString(), this.worldMapEl, this.accessibility.executiveSummary);
   }
 
   setChartAccessibilityPurpose() {
-    setAccessPurpose(this.worldMapEl, this.accessibility.purpose);
+    setAccessPurpose(this.getLanguageString(), this.worldMapEl, this.accessibility.purpose);
   }
 
   setChartAccessibilityContext() {
-    setAccessContext(this.worldMapEl, this.accessibility.contextExplanation);
+    setAccessContext(this.getLanguageString(), this.worldMapEl, this.accessibility.contextExplanation);
   }
 
   setChartAccessibilityStatisticalNotes() {
-    setAccessStatistics(this.worldMapEl, this.accessibility.statisticalNotes);
+    setAccessStatistics(this.getLanguageString(), this.worldMapEl, this.accessibility.statisticalNotes);
   }
 
   setChartCountAccessibility() {
@@ -2689,7 +2759,7 @@ export class WorldMap {
   }
 
   setChartAccessibilityStructureNotes() {
-    setAccessStructure(this.worldMapEl, this.accessibility.structureNotes);
+    setAccessStructure(this.getLanguageString(), this.worldMapEl, this.accessibility.structureNotes);
   }
   // new accessibility stuff ends here
 
@@ -2771,6 +2841,10 @@ export class WorldMap {
     // everything between this comment and the third should eventually
     // be moved into componentWillUpdate (if the stenicl bug is fixed)
     this.init();
+    if (this.shouldSetLocalizationConfig) {
+      this.setLocalizationConfig();
+      this.shouldSetLocalizationConfig = false;
+    }
     if (this.shouldSetTagLevels) {
       this.setTagLevels();
       this.shouldSetTagLevels = false;
@@ -2830,6 +2904,7 @@ export class WorldMap {
     }
     if (this.shouldValidate) {
       this.shouldValidateAccessibilityProps();
+      this.shouldValidateLocalizationProps();
       this.shouldValidate = false;
     }
     // Everything between this comment and the first should eventually
@@ -2846,7 +2921,8 @@ export class WorldMap {
           <keyboard-instructions
             uniqueID={this.chartID}
             geomType={'marker'}
-            groupName={'marker group'} // taken from initializeDescriptionRoot, on bar this should be "bar group", stacked bar is "stack", and clustered is "cluster"
+            groupName={'marker-group'} // taken from initializeDescriptionRoot, on bar this should be "bar group", stacked bar is "stack", and clustered is "cluster"
+            language={this.getLanguageString()}
             chartTag={'world-map'}
             width={this.width - (this.margin ? this.margin.right || 0 : 0)}
             isInteractive={this.accessibility.elementsAreInterface}
@@ -2863,6 +2939,7 @@ export class WorldMap {
           <data-table
             uniqueID={this.chartID}
             isCompact
+            language={this.getLanguageString()}
             tableColumns={this.tableColumns}
             dataKeyNames={this.dataKeyNames}
             data={this.tableData}

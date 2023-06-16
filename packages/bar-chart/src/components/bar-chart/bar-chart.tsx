@@ -13,6 +13,7 @@ import { easeCircleIn } from 'd3-ease';
 import { nest } from 'd3-collection';
 import {
   IBoxModelType,
+  ILocalizationType,
   IHoverStyleType,
   IClickStyleType,
   IAxisType,
@@ -29,6 +30,9 @@ import 'd3-transition';
 import Utils from '@visa/visa-charts-utils';
 
 const {
+  getGlobalInstances,
+  configLocalization,
+  getActiveLanguageString,
   prepareStrokeColorsFromScheme,
   calculateLuminance,
   verifyTextHasSpace,
@@ -84,6 +88,7 @@ const {
   scopeDataKeys,
   visaColors,
   validateAccessibilityProps,
+  validateLocalizationProps,
   findTagLevel,
   prepareRenderChange,
   roundTo,
@@ -106,6 +111,7 @@ export class BarChart {
   @Event() transitionEndEvent: EventEmitter;
 
   // Chart Attributes (1/7)
+  @Prop({ mutable: true }) localization: ILocalizationType = BarChartDefaultValues.localization;
   @Prop({ mutable: true }) mainTitle: string = BarChartDefaultValues.mainTitle;
   @Prop({ mutable: true }) subTitle: string = BarChartDefaultValues.subTitle;
   @Prop({ mutable: true }) height: number = BarChartDefaultValues.height;
@@ -169,6 +175,7 @@ export class BarChart {
   @Element()
   barChartEl: HTMLElement;
   shouldValidateAccessibility: boolean = true;
+  shouldValidateLocalization: boolean = true;
   svg: any;
   root: any;
   rootG: any;
@@ -270,9 +277,10 @@ export class BarChart {
   shouldSetXAxisAccessibility: boolean = false;
   shouldSetAnnotationAccessibility: boolean = false;
   shouldSetStrokes: boolean = false;
+  shouldSetTextures: boolean = false;
+  shouldSetLocalizationConfig: boolean = false;
   topLevel: string = 'h2';
   bottomLevel: string = 'p';
-  shouldSetTextures: boolean = false;
   strokes: any = {};
   bitmaps: any;
 
@@ -805,6 +813,49 @@ export class BarChart {
     this.shouldSetAnnotationAccessibility = true;
   }
 
+  @Watch('localization')
+  localizationWatcher(_newVal, _oldVal) {
+    this.shouldValidate = true;
+
+    // language
+    const newLanguage = _newVal && _newVal.language ? _newVal.language : false;
+    const oldLanguage = _oldVal && _oldVal.language ? _oldVal.language : false;
+    if (newLanguage !== oldLanguage) {
+      this.shouldSetLocalizationConfig = true;
+      this.shouldUpdateTableData = true;
+      this.shouldValidateDataLabelAccessor = true;
+      this.shouldSetLabelContent = true;
+      this.shouldCheckLabelColor = true;
+      this.shouldRedrawWrapper = true;
+      this.shouldUpdateDescriptionWrapper = true;
+      this.shouldSetChartAccessibilityCount = true;
+      this.shouldSetYAxisAccessibility = true;
+      this.shouldSetXAxisAccessibility = true;
+      this.shouldUpdateDescriptionWrapper = true;
+      this.shouldSetGeometryAriaLabels = true;
+      this.shouldSetParentSVGAccessibility = true;
+    }
+
+    // numeralLocale
+    const newNumeralLocale = _newVal && _newVal.numeralLocale ? _newVal.numeralLocale : false;
+    const oldNumeralLocale = _oldVal && _oldVal.numeralLocale ? _oldVal.numeralLocale : false;
+    if (newNumeralLocale !== oldNumeralLocale) {
+      this.shouldSetLocalizationConfig = true;
+      this.shouldUpdateTableData = true;
+      this.shouldValidateDataLabelAccessor = true;
+      this.shouldSetLabelContent = true;
+      this.shouldCheckLabelColor = true;
+      this.shouldRedrawWrapper = true;
+      this.shouldUpdateDescriptionWrapper = true;
+      this.shouldSetChartAccessibilityCount = true;
+      this.shouldSetYAxisAccessibility = true;
+      this.shouldSetXAxisAccessibility = true;
+      this.shouldUpdateDescriptionWrapper = true;
+      this.shouldSetGeometryAriaLabels = true;
+      this.shouldSetParentSVGAccessibility = true;
+    }
+  }
+
   @Watch('uniqueID')
   idWatcher(newVal, _oldVal) {
     console.error(
@@ -864,6 +915,7 @@ export class BarChart {
       this.defaults = true;
       this.chartID = chartID;
       this.barChartEl.id = this.chartID;
+      this.setLocalizationConfig();
       this.setTagLevels();
       this.prepareData();
       this.prepareLegendData();
@@ -872,6 +924,7 @@ export class BarChart {
       this.validateInteractionKeys();
       this.setTableData();
       this.shouldValidateAccessibilityProps();
+      this.shouldValidateLocalizationProps();
       this.validateClickStyle();
       this.validateHoverStyle();
       this.setColors();
@@ -891,6 +944,7 @@ export class BarChart {
   componentDidLoad() {
     return new Promise(resolve => {
       this.shouldValidateAccessibilityProps();
+      this.shouldValidateLocalizationProps();
       this.renderRootElements();
       this.setTooltipInitialStyle();
       this.setChartDescriptionWrapper();
@@ -1147,6 +1201,21 @@ export class BarChart {
     }).then(() => this.drawEndEvent.emit({ chartID: this.chartID }));
   }
 
+  shouldValidateLocalizationProps() {
+    const windowInstances = getGlobalInstances();
+    const languageString = windowInstances.i18Next.language;
+    const languageObject = windowInstances.i18Next.getResourceBundle(languageString);
+    const numeralObject = windowInstances.numeral.localeData();
+    if (this.shouldValidateLocalization && !this.localization.skipValidation) {
+      this.shouldValidateLocalization = false;
+      validateLocalizationProps(this.chartID, {
+        ...this.localization,
+        language: languageObject,
+        numeralLocale: numeralObject
+      });
+    }
+  }
+
   shouldValidateAccessibilityProps() {
     if (this.shouldValidateAccessibility && !this.accessibility.disableValidation) {
       this.shouldValidateAccessibility = false;
@@ -1175,6 +1244,14 @@ export class BarChart {
 
   validateDataLabelAccessor() {
     this.innerLabelAccessor = this.dataLabel.labelAccessor ? this.dataLabel.labelAccessor : this.valueAccessor;
+  }
+
+  getLanguageString() {
+    return getActiveLanguageString(this.localization);
+  }
+
+  setLocalizationConfig() {
+    configLocalization(this.localization);
   }
 
   setTagLevels() {
@@ -2627,12 +2704,13 @@ export class BarChart {
   }
 
   setAnnotationAccessibility() {
-    setAccessAnnotation(this.barChartEl, this.annotations);
+    setAccessAnnotation(this.getLanguageString(), this.barChartEl, this.annotations);
   }
 
   // new accessibility functions added here
   setChartDescriptionWrapper() {
     initializeDescriptionRoot({
+      language: this.getLanguageString(),
       rootEle: this.barChartEl,
       title: this.accessibility.title || this.mainTitle,
       chartTag: 'bar-chart',
@@ -2650,8 +2728,9 @@ export class BarChart {
 
   setParentSVGAccessibility() {
     setAccessibilityController({
-      node: this.svg.node(),
       chartTag: 'bar-chart',
+      language: this.getLanguageString(),
+      node: this.svg.node(),
       title: this.accessibility.title || this.mainTitle,
       description: this.subTitle,
       uniqueID: this.chartID,
@@ -2682,6 +2761,8 @@ export class BarChart {
     const keys = scopeDataKeys(this, chartAccessors, 'bar-chart');
     this.update.each((_d, i, n) => {
       setElementFocusHandler({
+        chartTag: 'bar-chart',
+        language: this.getLanguageString(),
         node: n[i],
         geomType: 'bar',
         includeKeyNames: this.accessibility.includeDataKeyNames,
@@ -2717,31 +2798,31 @@ export class BarChart {
   }
 
   setChartAccessibilityTitle() {
-    setAccessTitle(this.barChartEl, this.accessibility.title || this.mainTitle);
+    setAccessTitle(this.getLanguageString(), this.barChartEl, this.accessibility.title || this.mainTitle);
   }
 
   setChartAccessibilitySubtitle() {
-    setAccessSubtitle(this.barChartEl, this.subTitle);
+    setAccessSubtitle(this.getLanguageString(), this.barChartEl, this.subTitle);
   }
 
   setChartAccessibilityLongDescription() {
-    setAccessLongDescription(this.barChartEl, this.accessibility.longDescription);
+    setAccessLongDescription(this.getLanguageString(), this.barChartEl, this.accessibility.longDescription);
   }
 
   setChartAccessibilityExecutiveSummary() {
-    setAccessExecutiveSummary(this.barChartEl, this.accessibility.executiveSummary);
+    setAccessExecutiveSummary(this.getLanguageString(), this.barChartEl, this.accessibility.executiveSummary);
   }
 
   setChartAccessibilityPurpose() {
-    setAccessPurpose(this.barChartEl, this.accessibility.purpose);
+    setAccessPurpose(this.getLanguageString(), this.barChartEl, this.accessibility.purpose);
   }
 
   setChartAccessibilityContext() {
-    setAccessContext(this.barChartEl, this.accessibility.contextExplanation);
+    setAccessContext(this.getLanguageString(), this.barChartEl, this.accessibility.contextExplanation);
   }
 
   setChartAccessibilityStatisticalNotes() {
-    setAccessStatistics(this.barChartEl, this.accessibility.statisticalNotes);
+    setAccessStatistics(this.getLanguageString(), this.barChartEl, this.accessibility.statisticalNotes);
   }
 
   setChartCountAccessibility() {
@@ -2756,7 +2837,7 @@ export class BarChart {
   }
 
   setChartAccessibilityStructureNotes() {
-    setAccessStructure(this.barChartEl, this.accessibility.structureNotes);
+    setAccessStructure(this.getLanguageString(), this.barChartEl, this.accessibility.structureNotes);
   }
   // new accessibility stuff ends here
 
@@ -2827,6 +2908,10 @@ export class BarChart {
     // everything between this comment and the third should eventually
     // be moved into componentWillUpdate (if the stenicl bug is fixed)
     this.init();
+    if (this.shouldSetLocalizationConfig) {
+      this.setLocalizationConfig();
+      this.shouldSetLocalizationConfig = false;
+    }
     if (this.shouldSetTagLevels) {
       this.setTagLevels();
       this.shouldSetTagLevels = false;
@@ -2879,6 +2964,7 @@ export class BarChart {
     }
     if (this.shouldValidate) {
       this.shouldValidateAccessibilityProps();
+      this.shouldValidateLocalizationProps();
       this.shouldValidate = false;
     }
     if (this.shouldValidateClickStyle) {
@@ -2918,6 +3004,7 @@ export class BarChart {
             uniqueID={this.chartID}
             geomType={'bar'}
             groupName={'bar group'} // taken from initializeDescriptionRoot, on bar this should be "bar group", stacked bar is "stack", and clustered is "cluster"
+            language={this.getLanguageString()}
             chartTag={'bar-chart'}
             width={this.width - (this.margin ? this.margin.right || 0 : 0)}
             isInteractive={this.accessibility.elementsAreInterface}
@@ -2934,6 +3021,7 @@ export class BarChart {
           <data-table
             uniqueID={this.chartID}
             isCompact
+            language={this.getLanguageString()}
             tableColumns={this.tableColumns}
             dataKeyNames={this.dataKeyNames}
             data={this.tableData}

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -1022,7 +1022,7 @@ export const accessibility_static_controller_initialize = {
 
     // ASSERT
     const titleText = `${component.mainTitle}. `;
-    const regionText = `Static ${component.tagName.toLowerCase()} image, Titled: ${titleText}This section contains additional information about this chart. Pressing TAB will focus the data table button.`;
+    const regionText = `Static ${component.tagName.toLowerCase()} image, Titled: ${titleText} This section contains additional information about this chart. Pressing TAB will focus the data table button.`;
 
     const controller = page.doc.querySelector(testSelector);
     const regionLabel = page.doc.querySelector('.vcl-region-label');
@@ -2036,10 +2036,10 @@ export const accessibility_xaxis_description_set_on_load = {
     const tickCount = xAxisTicks.length;
     const axisLabel = component.xAxis && component.xAxis.label ? component.xAxis.label : '';
 
-    const yAxisTitle = axisLabel ? `, titled ${axisLabel}` : '';
-    const yAxisRange = tickCount ? ` with a range that starts with ${firstTickText} and ends with ${lastTickText}` : '';
+    const yAxisTitle = axisLabel ? ` Title ${axisLabel}.` : '';
+    const yAxisRange = tickCount ? ` Start value ${firstTickText}, end value ${lastTickText}.` : '';
 
-    const expectedText = `The chart has a horizontal X Axis${yAxisTitle}${yAxisRange}.`;
+    const expectedText = `The chart has a horizontal X axis.${yAxisTitle}${yAxisRange}`;
 
     // ASSERT
     // IF IT IS THE FIRST CHILD IT SHOULD BE REGION LABEL
@@ -2143,10 +2143,10 @@ export const accessibility_xaxis_description_added_on_update = {
     const tickCount = xAxisTicks.length;
     const axisLabel = component.xAxis && component.xAxis.label ? component.xAxis.label : '';
 
-    const yAxisTitle = axisLabel ? `, titled ${axisLabel}` : '';
-    const yAxisRange = tickCount ? ` with a range that starts with ${firstTickText} and ends with ${lastTickText}` : '';
+    const yAxisTitle = axisLabel ? ` Title ${axisLabel}.` : '';
+    const yAxisRange = tickCount ? ` Start value ${firstTickText}, end value ${lastTickText}.` : '';
 
-    const expectedText = `The chart has a horizontal X Axis${yAxisTitle}${yAxisRange}.`;
+    const expectedText = `The chart has a horizontal X axis.${yAxisTitle}${yAxisRange}`;
 
     expect(xAxisAccessibilityDescriptionContainer).toEqualText(expectedText);
   }
@@ -2189,10 +2189,10 @@ export const accessibility_yaxis_description_set_on_load = {
     const tickCount = yAxisTicks.length;
     const axisLabel = component.yAxis && component.yAxis.label ? component.yAxis.label : '';
 
-    const yAxisTitle = axisLabel ? `, titled ${axisLabel}` : '';
-    const yAxisRange = tickCount ? ` with a range that starts with ${firstTickText} and ends with ${lastTickText}` : '';
+    const yAxisTitle = axisLabel ? ` Title ${axisLabel}.` : '';
+    const yAxisRange = tickCount ? ` Start value ${firstTickText}, end value ${lastTickText}.` : '';
 
-    const expectedText = `The chart has a vertical Y axis${yAxisTitle}${yAxisRange}.`;
+    const expectedText = `The chart has a primary vertical Y axis.${yAxisTitle}${yAxisRange}`;
 
     // ASSERT
     // IF IT IS THE FIRST CHILD IT SHOULD BE REGION LABEL
@@ -2292,10 +2292,10 @@ export const accessibility_yaxis_description_added_on_update = {
     const tickCount = yAxisTicks.length;
     const axisLabel = component.yAxis && component.yAxis.label ? component.yAxis.label : '';
 
-    const yAxisTitle = axisLabel ? `, titled ${axisLabel}` : '';
-    const yAxisRange = tickCount ? ` with a range that starts with ${firstTickText} and ends with ${lastTickText}` : '';
+    const yAxisTitle = axisLabel ? ` Title ${axisLabel}.` : '';
+    const yAxisRange = tickCount ? ` Start value ${firstTickText}, end value ${lastTickText}.` : '';
 
-    const expectedText = `The chart has a vertical Y axis${yAxisTitle}${yAxisRange}.`;
+    const expectedText = `The chart has a primary vertical Y axis. ${yAxisTitle}${yAxisRange}`;
 
     // ASSERT
     // IF IT IS THE FIRST CHILD IT SHOULD BE REGION LABEL
@@ -2686,9 +2686,7 @@ export const accessibility_annotation_description_set_on_load = {
     const ignoreAnnotationCount = component.annotations.filter(a => a.accessibilityDecorationOnly).length;
     const annotationCount = component.annotations.length - ignoreAnnotationCount;
     expect(annotationCount).toBeGreaterThanOrEqual(1);
-    expect(annotationDescriptionContainer).toEqualText(
-      `${annotationCount} annotation${annotationCount > 1 ? 's' : ''} on the chart`
-    );
+    expect(annotationDescriptionContainer).toEqualText(`Number of annotations: ${annotationCount}.`);
 
     component.annotations.forEach(annotation => {
       if (annotation.note && annotation.note.title) {
@@ -2760,9 +2758,7 @@ export const accessibility_annotation_description_set_on_update = {
     const ignoreAnnotationCount = component.annotations.filter(a => a.accessibilityDecorationOnly).length;
     const annotationCount = component.annotations.length - ignoreAnnotationCount;
     expect(annotationCount).toBeGreaterThanOrEqual(1);
-    expect(annotationDescriptionContainer).toEqualText(
-      `${annotationCount} annotation${annotationCount > 1 ? 's' : ''} on the chart`
-    );
+    expect(annotationDescriptionContainer).toEqualText(`Number of annotations: ${annotationCount}.`);
 
     component.annotations.forEach((annotation, i) => {
       if (annotation.note && annotation.note.title) {

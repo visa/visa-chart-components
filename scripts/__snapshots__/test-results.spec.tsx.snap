@@ -41,6 +41,18 @@ Object {
       "ancestorTitles": Array [
         "<alluvial-diagram>",
         "rendered-html",
+        "render",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<alluvial-diagram> rendered-html render localization: should render localized with minimal props[data,accessors] given",
+      "location": null,
+      "status": "passed",
+      "title": "localization: should render localized with minimal props[data,accessors] given",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<alluvial-diagram>",
+        "rendered-html",
         "generic test suite",
       ],
       "failureMessages": Array [],
@@ -1677,9 +1689,9 @@ Object {
       ],
       "failureMessages": Array [
         "Error: expected attribute stroke \\"none\\" to equal \\"#7c99b1\\"
-    at ./packages/alluvial-diagram/src/components/alluvial-diagram/alluvial-diagram.spec.ts:1123:26
+    at ./packages/alluvial-diagram/src/components/alluvial-diagram/alluvial-diagram.spec.ts:1154:26
     at Array.forEach (<anonymous>)
-    at Object.<anonymous> (./packages/alluvial-diagram/src/components/alluvial-diagram/alluvial-diagram.spec.ts:1122:17)
+    at Object.<anonymous> (./packages/alluvial-diagram/src/components/alluvial-diagram/alluvial-diagram.spec.ts:1153:17)
     at processTicksAndRejections (node:internal/process/task_queues:96:5)",
       ],
       "fullName": "<alluvial-diagram> rendered-html links fillMode should have fillMode of link if passed on load",
@@ -1722,9 +1734,9 @@ Object {
       ],
       "failureMessages": Array [
         "Error: expected attribute stroke \\"#7c99b1\\" to equal \\"#624c48\\"
-    at ./packages/alluvial-diagram/src/components/alluvial-diagram/alluvial-diagram.spec.ts:1199:26
+    at ./packages/alluvial-diagram/src/components/alluvial-diagram/alluvial-diagram.spec.ts:1230:26
     at Array.forEach (<anonymous>)
-    at Object.<anonymous> (./packages/alluvial-diagram/src/components/alluvial-diagram/alluvial-diagram.spec.ts:1197:17)
+    at Object.<anonymous> (./packages/alluvial-diagram/src/components/alluvial-diagram/alluvial-diagram.spec.ts:1228:17)
     at processTicksAndRejections (node:internal/process/task_queues:96:5)",
       ],
       "fullName": "<alluvial-diagram> rendered-html links fillMode should have fillMode of target if passed on load",
@@ -2014,6 +2026,18 @@ Object {
       "location": null,
       "status": "passed",
       "title": "should render with minimal props[data,oridnalAccessor,valueAccessor] given",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<bar-chart>",
+        "rendered-html",
+        "render",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<bar-chart> rendered-html render localization: should render localized with minimal props[data,accessors] given",
+      "location": null,
+      "status": "passed",
+      "title": "localization: should render localized with minimal props[data,accessors] given",
     },
     Object {
       "ancestorTitles": Array [
@@ -4389,6 +4413,18 @@ Object {
       "ancestorTitles": Array [
         "<circle-packing>",
         "rendered-html",
+        "render",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<circle-packing> rendered-html render localization: should render localized with minimal props[data,accessors] given",
+      "location": null,
+      "status": "passed",
+      "title": "localization: should render localized with minimal props[data,accessors] given",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<circle-packing>",
+        "rendered-html",
         "generic test suite",
       ],
       "failureMessages": Array [],
@@ -6173,6 +6209,18 @@ Object {
       "location": null,
       "status": "passed",
       "title": "should render with minimal props[data,oridnalAccessor,groupAccessor,valueAccessor] given",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<clustered-bar-chart>",
+        "rendered-html",
+        "render",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<clustered-bar-chart> rendered-html render localization: should render localized with minimal props[data,accessors] given",
+      "location": null,
+      "status": "passed",
+      "title": "localization: should render localized with minimal props[data,accessors] given",
     },
     Object {
       "ancestorTitles": Array [
@@ -8417,7 +8465,7 @@ Object {
       ],
       "failureMessages": Array [
         "Error: expected textContent \\"$15\\" to equal \\"15\\"
-    at Object.<anonymous> (./packages/clustered-bar-chart/src/components/clustered-bar-chart/clustered-bar-chart.spec.ts:1541:33)
+    at Object.<anonymous> (./packages/clustered-bar-chart/src/components/clustered-bar-chart/clustered-bar-chart.spec.ts:1573:33)
     at processTicksAndRejections (node:internal/process/task_queues:96:5)",
       ],
       "fullName": "<clustered-bar-chart> rendered-html labels legend format should format number if passed as prop",
@@ -8681,6 +8729,18 @@ Object {
       "location": null,
       "status": "passed",
       "title": "should render with minimal props[data,oridnalAccessor,seriesAccessor,valueAccessor] given",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<dumbbell-plot>",
+        "rendered-html",
+        "render",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<dumbbell-plot> rendered-html render localization: should render localized with minimal props[data,accessors] given",
+      "location": null,
+      "status": "passed",
+      "title": "localization: should render localized with minimal props[data,accessors] given",
     },
     Object {
       "ancestorTitles": Array [
@@ -11641,6 +11701,18 @@ Object {
       "ancestorTitles": Array [
         "<heat-map>",
         "rendered-html",
+        "render",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<heat-map> rendered-html render localization: should render localized with minimal props[data,accessors] given",
+      "location": null,
+      "status": "passed",
+      "title": "localization: should render localized with minimal props[data,accessors] given",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<heat-map>",
+        "rendered-html",
         "generic test suite",
       ],
       "failureMessages": Array [],
@@ -12709,9 +12781,9 @@ Object {
       ],
       "failureMessages": Array [
         "Error: expected textContent \\"$2010\\" to equal \\"2010\\"
-    at ./packages/heat-map/src/components/heat-map/heat-map.spec.ts:790:26
+    at ./packages/heat-map/src/components/heat-map/heat-map.spec.ts:822:26
     at Array.forEach (<anonymous>)
-    at Object.<anonymous> (./packages/heat-map/src/components/heat-map/heat-map.spec.ts:789:22)
+    at Object.<anonymous> (./packages/heat-map/src/components/heat-map/heat-map.spec.ts:821:22)
     at processTicksAndRejections (node:internal/process/task_queues:96:5)",
       ],
       "fullName": "<heat-map> rendered-html axes axis.format xAxis should have custom format applied to numbers if passed",
@@ -13534,7 +13606,7 @@ Object {
       ],
       "failureMessages": Array [
         "Error: expected textContent \\"$15\\" to equal \\"15\\"
-    at Object.<anonymous> (./packages/heat-map/src/components/heat-map/heat-map.spec.ts:1535:35)
+    at Object.<anonymous> (./packages/heat-map/src/components/heat-map/heat-map.spec.ts:1567:35)
     at processTicksAndRejections (node:internal/process/task_queues:96:5)",
       ],
       "fullName": "<heat-map> rendered-html labels dataLabel legend format should format number if passed as prop",
@@ -13724,6 +13796,18 @@ Object {
       "location": null,
       "status": "passed",
       "title": "should render with minimal props[data,(series,ordinal,value)Accessor] given",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<line-chart>",
+        "rendered-html",
+        "render",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<line-chart> rendered-html render localization: should render localized with minimal props[data,accessors] given",
+      "location": null,
+      "status": "passed",
+      "title": "localization: should render localized with minimal props[data,accessors] given",
     },
     Object {
       "ancestorTitles": Array [
@@ -15920,7 +16004,7 @@ Received string:    [31m\\"update\\"[39m
       ],
       "failureMessages": Array [
         "Error: expected textContent \\"$15\\" to equal \\"15\\"
-    at Object.<anonymous> (./packages/line-chart/src/components/line-chart/line-chart.spec.tsx:1844:33)
+    at Object.<anonymous> (./packages/line-chart/src/components/line-chart/line-chart.spec.tsx:1876:33)
     at processTicksAndRejections (node:internal/process/task_queues:96:5)",
       ],
       "fullName": "<line-chart> rendered-html labels legend format should format number if passed as prop",
@@ -16313,6 +16397,18 @@ Received string:    [31m\\"update\\"[39m
       "location": null,
       "status": "passed",
       "title": "should render with minimal props[data,(series,ordinal,value)Accessor] given",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<parallel-plot>",
+        "rendered-html",
+        "render",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<parallel-plot> rendered-html render localization: should render localized with minimal props[data,accessors] given",
+      "location": null,
+      "status": "passed",
+      "title": "localization: should render localized with minimal props[data,accessors] given",
     },
     Object {
       "ancestorTitles": Array [
@@ -18491,7 +18587,7 @@ Received string:    [31m\\"update\\"[39m
       ],
       "failureMessages": Array [
         "Error: expected textContent \\"$15\\" to equal \\"15\\"
-    at Object.<anonymous> (./packages/parallel-plot/src/components/parallel-plot/parallel-plot.spec.ts:1847:33)
+    at Object.<anonymous> (./packages/parallel-plot/src/components/parallel-plot/parallel-plot.spec.ts:1879:33)
     at processTicksAndRejections (node:internal/process/task_queues:96:5)",
       ],
       "fullName": "<parallel-plot> rendered-html labels legend format should format number if passed as prop",
@@ -18547,7 +18643,7 @@ Received string:    [31m\\"update\\"[39m
       ],
       "failureMessages": Array [
         "Error: expected attribute opacity \\"1\\" to equal \\"0\\"
-    at Object.<anonymous> (./packages/parallel-plot/src/components/parallel-plot/parallel-plot.spec.ts:1968:31)
+    at Object.<anonymous> (./packages/parallel-plot/src/components/parallel-plot/parallel-plot.spec.ts:2000:31)
     at processTicksAndRejections (node:internal/process/task_queues:96:5)",
       ],
       "fullName": "<parallel-plot> rendered-html reference line should pass referenceLines prop",
@@ -18563,7 +18659,7 @@ Received string:    [31m\\"update\\"[39m
       ],
       "failureMessages": Array [
         "Error: expected attribute opacity \\"1\\" to equal \\"0\\"
-    at Object.<anonymous> (./packages/parallel-plot/src/components/parallel-plot/parallel-plot.spec.ts:1985:31)
+    at Object.<anonymous> (./packages/parallel-plot/src/components/parallel-plot/parallel-plot.spec.ts:2017:31)
     at processTicksAndRejections (node:internal/process/task_queues:96:5)",
       ],
       "fullName": "<parallel-plot> rendered-html reference line should pass referenceStyle prop",
@@ -18892,6 +18988,18 @@ Received string:    [31m\\"update\\"[39m
       "location": null,
       "status": "passed",
       "title": "should render with minimal props[data,oridnalAccessor,valueAccessor] given",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "render",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html render localization: should render localized with minimal props[data,accessors] given",
+      "location": null,
+      "status": "passed",
+      "title": "localization: should render localized with minimal props[data,accessors] given",
     },
     Object {
       "ancestorTitles": Array [
@@ -20767,6 +20875,18 @@ Received: [31m\\"[7m14[27mpx\\"[39m
       "location": null,
       "status": "passed",
       "title": "should render with minimal props[data,(group,x,y)Accessor] given",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<scatter-plot>",
+        "rendered-html",
+        "render",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<scatter-plot> rendered-html render localization: should render localized with minimal props[data,accessors] given",
+      "location": null,
+      "status": "passed",
+      "title": "localization: should render localized with minimal props[data,accessors] given",
     },
     Object {
       "ancestorTitles": Array [
@@ -22855,7 +22975,7 @@ Received: [31m\\"[7m14[27mpx\\"[39m
       ],
       "failureMessages": Array [
         "Error: expected textContent \\"$15\\" to equal \\"15\\"
-    at Object.<anonymous> (./packages/scatter-plot/src/components/scatter-plot/scatter-plot.spec.tsx:1886:33)
+    at Object.<anonymous> (./packages/scatter-plot/src/components/scatter-plot/scatter-plot.spec.tsx:1918:33)
     at processTicksAndRejections (node:internal/process/task_queues:96:5)",
       ],
       "fullName": "<scatter-plot> rendered-html labels legend format should format number if passed as prop",
@@ -23288,6 +23408,18 @@ Received: [31m\\"[7m14[27mpx\\"[39m
       "location": null,
       "status": "passed",
       "title": "should render with minimal props[data,oridnalAccessor,groupAccessor,valueAccessor] given",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<stacked-bar-chart>",
+        "rendered-html",
+        "render",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<stacked-bar-chart> rendered-html render localization: should render localized with minimal props[data,accessors] given",
+      "location": null,
+      "status": "passed",
+      "title": "localization: should render localized with minimal props[data,accessors] given",
     },
     Object {
       "ancestorTitles": Array [
@@ -23964,6 +24096,19 @@ Received: [31m\\"[7m14[27mpx\\"[39m
       "location": null,
       "status": "passed",
       "title": "accessibility: keyboard nav: cousin - down arrow loops to first",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<stacked-bar-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<stacked-bar-chart> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: sibling - right arrow goes to next normalized",
+      "location": null,
+      "status": "passed",
+      "title": "accessibility: keyboard nav: sibling - right arrow goes to next normalized",
     },
     Object {
       "ancestorTitles": Array [
@@ -25318,6 +25463,146 @@ Received: [31m\\"[7m14[27mpx\\"[39m
         "<stacked-bar-chart>",
         "rendered-html",
         "labels",
+        "tooltip",
+        "normalized tooltip tests",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<stacked-bar-chart> rendered-html labels tooltip normalized tooltip tests showTooltip: tooltip should render and have opacity 0 by default on load (before a hover)",
+      "location": null,
+      "status": "passed",
+      "title": "showTooltip: tooltip should render and have opacity 0 by default on load (before a hover)",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<stacked-bar-chart>",
+        "rendered-html",
+        "labels",
+        "tooltip",
+        "normalized tooltip tests",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<stacked-bar-chart> rendered-html labels tooltip normalized tooltip tests showTooltip: tooltip should render and have opacity 1 and be placed on hover",
+      "location": null,
+      "status": "passed",
+      "title": "showTooltip: tooltip should render and have opacity 1 and be placed on hover",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<stacked-bar-chart>",
+        "rendered-html",
+        "labels",
+        "tooltip",
+        "normalized tooltip tests",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<stacked-bar-chart> rendered-html labels tooltip normalized tooltip tests showTooltip: tooltip should not render when event is triggered and showTooltip is false",
+      "location": null,
+      "status": "passed",
+      "title": "showTooltip: tooltip should not render when event is triggered and showTooltip is false",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<stacked-bar-chart>",
+        "rendered-html",
+        "labels",
+        "tooltip",
+        "normalized tooltip tests",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<stacked-bar-chart> rendered-html labels tooltip normalized tooltip tests tooltipLabel: tooltip should render default content on load",
+      "location": null,
+      "status": "passed",
+      "title": "tooltipLabel: tooltip should render default content on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<stacked-bar-chart>",
+        "rendered-html",
+        "labels",
+        "tooltip",
+        "normalized tooltip tests",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<stacked-bar-chart> rendered-html labels tooltip normalized tooltip tests tooltipLabel: tooltip should render custom content on load",
+      "location": null,
+      "status": "passed",
+      "title": "tooltipLabel: tooltip should render custom content on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<stacked-bar-chart>",
+        "rendered-html",
+        "labels",
+        "tooltip",
+        "normalized tooltip tests",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<stacked-bar-chart> rendered-html labels tooltip normalized tooltip tests tooltipLabel: tooltip should render custom content on update",
+      "location": null,
+      "status": "passed",
+      "title": "tooltipLabel: tooltip should render custom content on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<stacked-bar-chart>",
+        "rendered-html",
+        "labels",
+        "tooltip",
+        "normalized tooltip tests",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<stacked-bar-chart> rendered-html labels tooltip normalized tooltip tests tooltipLabel: tooltip should render formatted custom content on load",
+      "location": null,
+      "status": "passed",
+      "title": "tooltipLabel: tooltip should render formatted custom content on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<stacked-bar-chart>",
+        "rendered-html",
+        "labels",
+        "tooltip",
+        "normalized tooltip tests",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<stacked-bar-chart> rendered-html labels tooltip normalized tooltip tests tooltipLabel: tooltip should render formatted custom content on update",
+      "location": null,
+      "status": "passed",
+      "title": "tooltipLabel: tooltip should render formatted custom content on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<stacked-bar-chart>",
+        "rendered-html",
+        "labels",
+        "tooltip",
+        "normalized tooltip tests",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<stacked-bar-chart> rendered-html labels tooltip normalized tooltip tests dataKeyNames: if provided on load, dataKeyNames prop is used for key names across chart",
+      "location": null,
+      "status": "passed",
+      "title": "dataKeyNames: if provided on load, dataKeyNames prop is used for key names across chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<stacked-bar-chart>",
+        "rendered-html",
+        "labels",
+        "tooltip",
+        "normalized tooltip tests",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<stacked-bar-chart> rendered-html labels tooltip normalized tooltip tests dataKeyNames: if provided on update, dataKeyNames prop is used for key names across chart",
+      "location": null,
+      "status": "passed",
+      "title": "dataKeyNames: if provided on update, dataKeyNames prop is used for key names across chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<stacked-bar-chart>",
+        "rendered-html",
+        "labels",
         "dataLabel",
         "visible",
       ],
@@ -25547,7 +25832,7 @@ Received: [31m\\"[7m14[27mpx\\"[39m
       ],
       "failureMessages": Array [
         "Error: expected textContent \\"$15\\" to equal \\"15\\"
-    at Object.<anonymous> (./packages/stacked-bar-chart/src/components/stacked-bar-chart/stacked-bar-chart.spec.ts:1575:33)
+    at Object.<anonymous> (./packages/stacked-bar-chart/src/components/stacked-bar-chart/stacked-bar-chart.spec.ts:1678:33)
     at processTicksAndRejections (node:internal/process/task_queues:96:5)",
       ],
       "fullName": "<stacked-bar-chart> rendered-html labels legend format should format number if passed as prop",
@@ -25811,6 +26096,18 @@ Received: [31m\\"[7m14[27mpx\\"[39m
       "location": null,
       "status": "passed",
       "title": "should render with minimal props given",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<world-map />",
+        "rendered-html",
+        "render",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<world-map /> rendered-html render localization: should render localized with minimal props[data,accessors] given",
+      "location": null,
+      "status": "passed",
+      "title": "localization: should render localized with minimal props[data,accessors] given",
     },
     Object {
       "ancestorTitles": Array [

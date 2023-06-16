@@ -28,7 +28,7 @@
 #' @return a visaNodeLinkChart htmlwidget object for plotting an alluvial diagram
 #' @export
 #' @examples
-#' library(tidyverse)
+#' library(dplyr)
 #' data.frame(HairEyeColor) %>%
 #'   filter(Sex=="Female") %>%
 #'   mutate(newHair = paste(Hair,"-Hair")) %>%

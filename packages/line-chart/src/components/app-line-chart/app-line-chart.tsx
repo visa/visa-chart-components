@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -8,6 +8,12 @@
 import { Component, State, Element, h } from '@stencil/core';
 import '@visa/visa-charts-data-table';
 import '@visa/keyboard-instructions';
+
+// importing custom languages
+// import { hu } from '../../../../utils/src/utils/localization/languages/hu';
+
+// importing numeralLocales
+// import { HU } from '@visa/visa-charts-utils/src/utils/localization/numeralLocales/hu';
 
 @Component({
   tag: 'app-line-chart',
@@ -1950,6 +1956,11 @@ export class AppLineChart {
           toggle animations
         </button>
         <line-chart
+          // localization={{
+          //   language: hu,
+          //   numeralLocale: HU,
+          //   skipValidation: false
+          // }}
           // Chart Attributes (1/7)
           mainTitle={'Line Chart in app'}
           // animationConfig={this.animations}

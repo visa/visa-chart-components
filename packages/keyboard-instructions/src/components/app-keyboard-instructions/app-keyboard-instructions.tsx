@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2021 Visa, Inc.
+ * Copyright (c) 2021, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -12,6 +12,7 @@ import { Component, State, Element, h } from '@stencil/core';
   styleUrl: 'app-keyboard-instructions.scss'
 })
 export class AppDataTable {
+  @State() language: string = 'en';
   @State() data: any = [];
   @State() hoverElement: any = '';
   @State() clickElement: any = [];
@@ -102,6 +103,7 @@ export class AppDataTable {
           <this.headingLevel>Chart Wrapper (Title Goes Here)</this.headingLevel>
           <p>(Chart Subtitle Goes Here)</p>
           <keyboard-instructions
+            language={'en'}
             uniqueID={'test'}
             geomType={'point'}
             groupName={'line'}
