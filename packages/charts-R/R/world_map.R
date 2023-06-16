@@ -30,7 +30,7 @@
 #' @return a visaChart htmlwidget object for plotting a world map
 #' @export
 #' @examples
-#' library(tidyverse)
+#' library(dplyr)
 #' quakes %>%
 #'  sample_n(100) %>%
 #'  tibble::rowid_to_column() %>%

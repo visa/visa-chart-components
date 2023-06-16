@@ -26,7 +26,7 @@
 #' @return a visaChart htmlwidget object for plotting a dumbbell plot
 #' @export
 #' @examples
-#' library(tidyverse)
+#' library(dplyr)
 #' data.frame(UCBAdmissions) %>%
 #'   filter(Admit == "Rejected") %>%
 #'   dumbbell_plot("Dept","Freq","Gender")

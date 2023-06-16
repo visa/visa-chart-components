@@ -26,7 +26,7 @@
 #' @return a visaChart htmlwidget object for plotting a heat map
 #' @export
 #' @examples
-#' library(tidyverse)
+#' library(dplyr)
 #' data.frame(UCBAdmissions) %>%
 #'   filter(Admit == "Rejected") %>%
 #'   heat_map("Dept","Gender", "Freq")

@@ -10,12 +10,31 @@ import '@visa/visa-charts-data-table';
 import '@visa/keyboard-instructions';
 import Utils from '@visa/visa-charts-utils';
 
-const { formatStats, setNumeralLocale, getNumeralInstance, registerNumeralLocale, registerNumeralFormat } = Utils;
+// importing custom languages
+import { hu } from '@visa/visa-charts-utils/src/utils/localization/languages/hu';
+
+// importing numeralLocales
+import { HU } from '@visa/visa-charts-utils/src/utils/localization/numeralLocales/hu';
+
+const {
+  // formatStats,
+  // setNumeralLocale,
+  getNumeralInstance,
+  registerI18NextLanguage,
+  registerNumeralLocale,
+  registerNumeralFormat
+} = Utils;
 @Component({
   tag: 'app-bar-chart',
   styleUrl: 'app-bar-chart.scss'
 })
 export class AppBarChart {
+  @State() localization: any = {
+    language: 'hu',
+    numeralLocale: 'HU',
+    skipValidation: false,
+    overwrite: true
+  };
   @State() data: any;
   @State() stateTrigger: any = 1;
   @State() hoverElement: any = '';
@@ -187,7 +206,7 @@ export class AppBarChart {
       billion: '十億',
       trillion: '兆'
     },
-    ordinal: function(number) {
+    ordinal: function(_) {
       return '.';
     },
     currency: {
@@ -201,9 +220,13 @@ export class AppBarChart {
 
   componentWillLoad() {
     this.data = this.dataStorage[this.stateTrigger];
-    // we can load and set locale, this code is adapted from numeral.js examples
+
+    // how to register language and locales
+    registerI18NextLanguage(hu);
+    registerNumeralLocale('hu', HU, false);
     registerNumeralLocale('ja', this.jpLocale);
-    setNumeralLocale('ja');
+
+    // how to register a custom number format
     const numeral = getNumeralInstance();
     registerNumeralFormat('full-currency-code', {
       regexps: {
@@ -290,17 +313,37 @@ export class AppBarChart {
     }
   }
 
-  changeData() {
-    // this.stateTrigger = this.stateTrigger < this.dataStorage.length - 1 ? this.stateTrigger + 1 : 0;
-    // this.data = this.dataStorage[this.stateTrigger];
+  changeLocale() {
+    if (this.localization.language === 'en' && this.localization.numeralLocale === 'US') {
+      this.localization = {
+        language: 'hu',
+        numeralLocale: 'HU',
+        skipValidation: false,
+        overwrite: false
+      };
+    } else {
+      this.localization = {
+        language: 'en',
+        numeralLocale: 'US',
+        skipValidation: false,
+        overwrite: false
+      };
+    }
+  }
 
-    this.xAxis = { visible: true, centerBaseline: !this.xAxis.centerBaseline };
+  changeData() {
+    this.stateTrigger = this.stateTrigger < this.dataStorage.length - 1 ? this.stateTrigger + 1 : 0;
+    this.data = this.dataStorage[this.stateTrigger];
+
+    // change center baseline
+    // this.xAxis = { visible: true, centerBaseline: !this.xAxis.centerBaseline };
   }
 
   render() {
     return (
       <div>
         <bar-chart
+          localization={this.localization}
           data={this.data}
           height={400}
           width={800}
@@ -391,7 +434,14 @@ export class AppBarChart {
             this.changeData();
           }}
         >
-          change centerBaseline
+          change data
+        </button>
+        <button
+          onClick={() => {
+            this.changeLocale();
+          }}
+        >
+          {`changeLocale (${this.localization.language}-${this.localization.numeralLocale})`}
         </button>
       </div>
     );

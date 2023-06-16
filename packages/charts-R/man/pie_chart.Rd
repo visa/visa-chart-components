@@ -46,7 +46,7 @@ Here is an example of pie-chart in action:
 To see all available options for the chart properties/API see \href{https://github.com/visa/visa-chart-components/tree/master/packages/pie-chart}{@visa/pie-chart}.
 }
 \examples{
-library(tidyverse)
+library(dplyr)
 data.frame (HairEyeColor) \%>\%
  filter(Hair=="Blond", Sex=="Male") \%>\%
  mutate(blueEyes = if_else(Eye=="Blue", "Blue","Other")) \%>\%

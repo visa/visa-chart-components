@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -10,6 +10,7 @@ import { select, event } from 'd3-selection';
 import { arc, pie } from 'd3-shape';
 import {
   IBoxModelType,
+  ILocalizationType,
   IHoverStyleType,
   IClickStyleType,
   IReferenceStyleType,
@@ -26,6 +27,9 @@ import { v4 as uuid } from 'uuid';
 import Utils from '@visa/visa-charts-utils';
 
 const {
+  getGlobalInstances,
+  configLocalization,
+  getActiveLanguageString,
   // verifyTextHasSpace,
   checkAttributeTransitions,
   createTextStrokeFilter,
@@ -72,6 +76,7 @@ const {
   scopeDataKeys,
   visaColors,
   validateAccessibilityProps,
+  validateLocalizationProps,
   findTagLevel,
   prepareRenderChange,
   roundTo,
@@ -93,6 +98,7 @@ export class PieChart {
   @Event() transitionEndEvent: EventEmitter;
 
   // Chart Attributes (1/7)
+  @Prop({ mutable: true }) localization: ILocalizationType = PieChartDefaultValues.localization;
   @Prop({ mutable: true }) mainTitle: string = PieChartDefaultValues.mainTitle;
   @Prop({ mutable: true }) subTitle: string = PieChartDefaultValues.subTitle;
   @Prop({ mutable: true }) centerTitle: string = PieChartDefaultValues.centerTitle;
@@ -150,6 +156,7 @@ export class PieChart {
   @Element()
   pieChartEl: HTMLElement;
   shouldValidateAccessibility: boolean = true;
+  shouldValidateLocalization: boolean = true;
   graphDataMerged: any;
   preppedData: any;
   svg: any;
@@ -226,7 +233,7 @@ export class PieChart {
   shouldUpdateInnerRatio: boolean = false;
   shouldUpdateLayout: boolean = false;
   shouldSetPieRadius: boolean = false;
-  shouldprepareChartData: boolean = false;
+  shouldPrepareChartData: boolean = false;
   shouldUpdateReferenceLines: boolean = false;
   shouldValidateInteractionKeys: boolean = false;
   shouldSetGlobalSelections: boolean = false;
@@ -258,6 +265,7 @@ export class PieChart {
   shouldSetAnnotationAccessibility: boolean = false;
   shouldSetTextures: boolean = false;
   shouldSetStrokes: boolean = false;
+  shouldSetLocalizationConfig: boolean = false;
   strokes: any = {};
   topLevel: string = 'h2';
   bottomLevel: string = 'p';
@@ -518,6 +526,41 @@ export class PieChart {
     this.shouldUpdateLabels = true;
   }
 
+  @Watch('localization')
+  localizationWatcher(_newVal, _oldVal) {
+    this.shouldValidate = true;
+
+    // language
+    const newLanguage = _newVal && _newVal.language ? _newVal.language : false;
+    const oldLanguage = _oldVal && _oldVal.language ? _oldVal.language : false;
+    if (newLanguage !== oldLanguage) {
+      this.shouldSetLocalizationConfig = true;
+      this.shouldUpdateTableData = true;
+      this.shouldCheckLabelColor = true;
+      this.shouldRedrawWrapper = true;
+      this.shouldUpdateDescriptionWrapper = true;
+      this.shouldSetChartAccessibilityCount = true;
+      this.shouldUpdateDescriptionWrapper = true;
+      this.shouldSetGeometryAriaLabels = true;
+      this.shouldSetParentSVGAccessibility = true;
+    }
+
+    // numeralLocale
+    const newNumeralLocale = _newVal && _newVal.numeralLocale ? _newVal.numeralLocale : false;
+    const oldNumeralLocale = _oldVal && _oldVal.numeralLocale ? _oldVal.numeralLocale : false;
+    if (newNumeralLocale !== oldNumeralLocale) {
+      this.shouldSetLocalizationConfig = true;
+      this.shouldUpdateTableData = true;
+      this.shouldCheckLabelColor = true;
+      this.shouldRedrawWrapper = true;
+      this.shouldUpdateDescriptionWrapper = true;
+      this.shouldSetChartAccessibilityCount = true;
+      this.shouldUpdateDescriptionWrapper = true;
+      this.shouldSetGeometryAriaLabels = true;
+      this.shouldSetParentSVGAccessibility = true;
+    }
+  }
+
   @Watch('accessibility')
   accessibilityWatcher(_newVal, _oldVal) {
     this.shouldValidate = true;
@@ -701,6 +744,7 @@ export class PieChart {
     this.shouldSetParentSVGAccessibility = true;
     this.shouldSetGroupAccessibilityLabel = true;
     this.shouldSetGeometryAriaLabels = true;
+    this.shouldUpdateTableData = true;
   }
 
   @Watch('unitTest')
@@ -718,6 +762,7 @@ export class PieChart {
       this.duration = 0;
       this.chartID = chartID;
       this.pieChartEl.id = this.chartID;
+      this.setLocalizationConfig();
       this.setTagLevels();
       this.prepareScales();
       this.prepareData();
@@ -726,6 +771,7 @@ export class PieChart {
       this.validateInteractionKeys();
       this.setTableData();
       this.shouldValidateAccessibilityProps();
+      this.shouldValidateLocalizationProps();
       this.setColors();
       resolve('component will load');
     });
@@ -744,6 +790,7 @@ export class PieChart {
     return new Promise(resolve => {
       this.defaults = true;
       this.shouldValidateAccessibilityProps();
+      this.shouldValidateLocalizationProps();
       this.renderRootElements();
       this.setTooltipInitialStyle();
       this.setChartDescriptionWrapper();
@@ -955,6 +1002,21 @@ export class PieChart {
     }).then(() => this.drawEndEvent.emit({ chartID: this.chartID }));
   }
 
+  shouldValidateLocalizationProps() {
+    const windowInstances = getGlobalInstances();
+    const languageString = windowInstances.i18Next.language;
+    const languageObject = windowInstances.i18Next.getResourceBundle(languageString);
+    const numeralObject = windowInstances.numeral.localeData();
+    if (this.shouldValidateLocalization && !this.localization.skipValidation) {
+      this.shouldValidateLocalization = false;
+      validateLocalizationProps(this.chartID, {
+        ...this.localization,
+        language: languageObject,
+        numeralLocale: numeralObject
+      });
+    }
+  }
+
   shouldValidateAccessibilityProps() {
     if (this.shouldValidateAccessibility && !this.accessibility.disableValidation) {
       this.shouldValidateAccessibility = false;
@@ -981,6 +1043,14 @@ export class PieChart {
     this.innerInteractionKeys =
       // this.interactionKeys ? '' : (this.interactionKeys = [this.ordinalAccessor]);
       this.interactionKeys && this.interactionKeys.length ? this.interactionKeys : [this.ordinalAccessor];
+  }
+
+  getLanguageString() {
+    return getActiveLanguageString(this.localization);
+  }
+
+  setLocalizationConfig() {
+    configLocalization(this.localization);
   }
 
   setLayoutData() {
@@ -1056,6 +1126,16 @@ export class PieChart {
   setTableData() {
     // generate scoped and formatted data for data-table component
     const keys = scopeDataKeys(this, chartAccessors, 'pie-chart');
+    if (this.showPercentage) {
+      const label =
+        this.dataKeyNames && (this.dataKeyNames[`${this.valueAccessor}`] || this.dataKeyNames[`${this.valueAccessor}%`])
+          ? this.dataKeyNames[`${this.valueAccessor}%`] || this.dataKeyNames[`${this.valueAccessor}`] + ' (%)'
+          : `${this.valueAccessor}%`;
+      keys[label] = '0[.][0][0]%';
+      this.preppedData.forEach(i => {
+        i[label] = i[`${this.valueAccessor}`] / i.getSum();
+      });
+    }
     this.tableData = getScopedData(this.preppedData, keys);
     this.tableColumns = Object.keys(keys);
   }
@@ -2423,7 +2503,7 @@ export class PieChart {
   }
 
   setAnnotationAccessibility() {
-    setAccessAnnotation(this.pieChartEl, this.annotations);
+    setAccessAnnotation(this.getLanguageString(), this.pieChartEl, this.annotations);
   }
 
   // new accessibility functions added here
@@ -2434,6 +2514,7 @@ export class PieChart {
 
   setChartDescriptionWrapper() {
     initializeDescriptionRoot({
+      language: this.getLanguageString(),
       rootEle: this.pieChartEl,
       title: this.accessibility.title || this.mainTitle,
       chartTag: 'pie-chart',
@@ -2451,8 +2532,9 @@ export class PieChart {
 
   setParentSVGAccessibility() {
     setAccessibilityController({
-      node: this.svg.node(),
       chartTag: 'pie-chart',
+      language: this.getLanguageString(),
+      node: this.svg.node(),
       title: this.accessibility.title || this.mainTitle,
       description: this.subTitle,
       uniqueID: this.chartID,
@@ -2466,10 +2548,12 @@ export class PieChart {
         this.suppressEvents &&
         this.accessibility.elementsAreInterface === false &&
         this.accessibility.keyboardNavConfig &&
-        this.accessibility.keyboardNavConfig.disabled
+        this.accessibility.keyboardNavConfig.disabled,
       // groupKeys: [], // pie chart does not include these
       // nested: '', // pie chart does not include these
       // recursive: true // pie chart does not include these
+      normalized: this.showPercentage, // adds percentage to aria-label
+      valueAccessor: this.valueAccessor
     });
   }
 
@@ -2486,6 +2570,8 @@ export class PieChart {
     const keys = scopeDataKeys(this, chartAccessors, 'pie-chart');
     this.update.each((_d, i, n) => {
       setElementFocusHandler({
+        chartTag: 'pie-chart',
+        language: this.getLanguageString(),
         node: n[i],
         geomType: 'slice',
         includeKeyNames: this.accessibility.includeDataKeyNames,
@@ -2497,7 +2583,9 @@ export class PieChart {
           this.suppressEvents &&
           this.accessibility.elementsAreInterface === false &&
           this.accessibility.keyboardNavConfig &&
-          this.accessibility.keyboardNavConfig.disabled
+          this.accessibility.keyboardNavConfig.disabled,
+        normalized: this.showPercentage,
+        valueAccessor: this.valueAccessor
       });
       setElementAccessID({
         node: n[i],
@@ -2516,7 +2604,9 @@ export class PieChart {
           this.suppressEvents &&
           this.accessibility.elementsAreInterface === false &&
           this.accessibility.keyboardNavConfig &&
-          this.accessibility.keyboardNavConfig.disabled
+          this.accessibility.keyboardNavConfig.disabled,
+        normalized: this.showPercentage,
+        valueAccessor: this.valueAccessor
       });
       setElementAccessID({
         node: n[i],
@@ -2541,31 +2631,31 @@ export class PieChart {
   }
 
   setChartAccessibilityTitle() {
-    setAccessTitle(this.pieChartEl, this.accessibility.title || this.mainTitle);
+    setAccessTitle(this.getLanguageString(), this.pieChartEl, this.accessibility.title || this.mainTitle);
   }
 
   setChartAccessibilitySubtitle() {
-    setAccessSubtitle(this.pieChartEl, this.subTitle);
+    setAccessSubtitle(this.getLanguageString(), this.pieChartEl, this.subTitle);
   }
 
   setChartAccessibilityLongDescription() {
-    setAccessLongDescription(this.pieChartEl, this.accessibility.longDescription);
+    setAccessLongDescription(this.getLanguageString(), this.pieChartEl, this.accessibility.longDescription);
   }
 
   setChartAccessibilityExecutiveSummary() {
-    setAccessExecutiveSummary(this.pieChartEl, this.accessibility.executiveSummary);
+    setAccessExecutiveSummary(this.getLanguageString(), this.pieChartEl, this.accessibility.executiveSummary);
   }
 
   setChartAccessibilityPurpose() {
-    setAccessPurpose(this.pieChartEl, this.accessibility.purpose);
+    setAccessPurpose(this.getLanguageString(), this.pieChartEl, this.accessibility.purpose);
   }
 
   setChartAccessibilityContext() {
-    setAccessContext(this.pieChartEl, this.accessibility.contextExplanation);
+    setAccessContext(this.getLanguageString(), this.pieChartEl, this.accessibility.contextExplanation);
   }
 
   setChartAccessibilityStatisticalNotes() {
-    setAccessStatistics(this.pieChartEl, this.accessibility.statisticalNotes);
+    setAccessStatistics(this.getLanguageString(), this.pieChartEl, this.accessibility.statisticalNotes);
   }
 
   setChartCountAccessibility() {
@@ -2580,7 +2670,7 @@ export class PieChart {
   }
 
   setChartAccessibilityStructureNotes() {
-    setAccessStructure(this.pieChartEl, this.accessibility.structureNotes);
+    setAccessStructure(this.getLanguageString(), this.pieChartEl, this.accessibility.structureNotes);
   }
 
   onChangeHandler() {
@@ -2665,6 +2755,10 @@ export class PieChart {
     // everything between this comment and the third should eventually
     // be moved into componentWillUpdate (if the stenicl bug is fixed)
     this.init();
+    if (this.shouldSetLocalizationConfig) {
+      this.setLocalizationConfig();
+      this.shouldSetLocalizationConfig = false;
+    }
     if (this.shouldSetTagLevels) {
       this.setTagLevels();
       this.shouldSetTagLevels = false;
@@ -2699,6 +2793,8 @@ export class PieChart {
     }
     if (this.shouldValidate) {
       this.shouldValidateAccessibilityProps();
+      this.shouldValidateLocalizationProps();
+      this.shouldValidateLocalizationProps();
       this.shouldValidate = false;
     }
     if (this.shouldSetColors) {
@@ -2719,6 +2815,7 @@ export class PieChart {
             uniqueID={this.chartID}
             geomType={'slice'}
             groupName={'pie'} // taken from initializeDescriptionRoot, on bar this should be "bar group", stacked bar is "stack", and clustered is "cluster"
+            language={this.getLanguageString()}
             chartTag={'pie-chart'}
             width={this.width - (this.margin ? this.margin.right || 0 : 0)}
             isInteractive={this.accessibility.elementsAreInterface}
@@ -2735,6 +2832,7 @@ export class PieChart {
           <data-table
             uniqueID={this.chartID}
             isCompact
+            language={this.getLanguageString()}
             tableColumns={this.tableColumns}
             dataKeyNames={this.dataKeyNames}
             data={this.tableData}

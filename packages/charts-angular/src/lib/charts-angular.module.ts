@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -12,8 +12,8 @@ import { applyPolyfills, defineCustomElements } from '@visa/charts/dist/loader';
 
 // temporary comment to bump charts with feature commit
 import {
-  AlluvialDiagram,
   CirclePacking,
+  AlluvialDiagram,
   BarChart,
   ClusteredBarChart,
   DataTable as VisaChartsDataTable,

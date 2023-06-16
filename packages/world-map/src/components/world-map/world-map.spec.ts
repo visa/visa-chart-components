@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -11,8 +11,12 @@ import { WorldMapDefaultValues } from './world-map-default-values';
 import { scaleQuantize, scaleOrdinal, scalePow } from 'd3-scale';
 
 // we need to bring in our nested components as well, was required to bring in the source vs dist folder to get it to mount
-import { KeyboardInstructions } from '../../../node_modules/@visa/keyboard-instructions/src/components/keyboard-instructions/keyboard-instructions';
-import { DataTable } from '../../../node_modules/@visa/visa-charts-data-table/src/components/data-table/data-table';
+import { KeyboardInstructions } from '@visa/keyboard-instructions/src/components/keyboard-instructions/keyboard-instructions';
+import { DataTable } from '@visa/visa-charts-data-table/src/components/data-table/data-table';
+
+// importing custom languages and locales
+import { hu } from '@visa/visa-charts-utils/src/utils/localization/languages/hu';
+import { HU } from '@visa/visa-charts-utils/src/utils/localization/numeralLocales/hu';
 
 import Utils from '@visa/visa-charts-utils';
 import UtilsDev from '@visa/visa-charts-utils-dev';
@@ -20,6 +24,7 @@ import UtilsDev from '@visa/visa-charts-utils-dev';
 const { visaColors, getColors } = Utils;
 
 const {
+  asyncForEach,
   flushTransitions,
   unitTestAccessibility,
   unitTestGeneric,
@@ -76,7 +81,7 @@ describe('<world-map />', () => {
 
     // disable accessibility validation to keep output stream(terminal) clean
     const EXPECTEDACCESSIBILITY = { disableValidation: true };
-
+    const EXPECTEDLOCALIZATION = { ...WorldMapDefaultValues.localization, skipValidation: true };
     beforeEach(async () => {
       page = await newSpecPage({
         components: [WorldMap, KeyboardInstructions, DataTable],
@@ -88,6 +93,7 @@ describe('<world-map />', () => {
       component.joinNameAccessor = EXPECTEDJOINNAMEACCESSOR;
       component.valueAccessor = EXPECTEDVALUEACCESSOR;
       component.accessibility = EXPECTEDACCESSIBILITY;
+      component.localization = EXPECTEDLOCALIZATION;
       component.uniqueID = 'snapshot-test-1';
       component.unitTest = true;
     });
@@ -111,6 +117,28 @@ describe('<world-map />', () => {
         // ACT
         page.root.appendChild(component);
         await page.waitForChanges();
+
+        // ASSERT
+        expect(page.root).toMatchSnapshot();
+      });
+
+      it('localization: should render localized with minimal props[data,accessors] given', async () => {
+        component.localization = {
+          language: hu,
+          numeralLocale: HU,
+          skipValidation: true,
+          overwrite: false
+        };
+        // ACT
+        page.root.appendChild(component);
+        await page.waitForChanges();
+
+        // flush labels for testing to ensure opacity of 1 on initial render
+        const elements = page.doc.querySelectorAll('[data-testid=dataLabel]');
+        await asyncForEach(elements, async element => {
+          flushTransitions(element);
+          await page.waitForChanges();
+        });
 
         // ASSERT
         expect(page.root).toMatchSnapshot();
@@ -151,8 +179,8 @@ describe('<world-map />', () => {
             nextTestSelector: '[data-testid=marker][data-id=marker-024]',
             keyDownObject: { key: 'ArrowRight', code: 'ArrowRight', keyCode: 39 },
             testProps: {
-              selectorAriaLabel: 'Name USA. Birth Rate 50. Country Code 840. Marker 1 of 4.',
-              nextSelectorAriaLabel: 'Name Angola. Birth Rate 14.2. Country Code 024. Marker 2 of 4.',
+              selectorAriaLabel: 'Name USA. Birth Rate 50. Country Code 840. Marker 1.',
+              nextSelectorAriaLabel: 'Name Angola. Birth Rate 14.2. Country Code 024. Marker 2.',
               accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true }
             }
           },
@@ -162,8 +190,8 @@ describe('<world-map />', () => {
             nextTestSelector: '[data-testid=marker][data-id=marker-840]',
             keyDownObject: { key: 'ArrowRight', code: 'ArrowRight', keyCode: 39 },
             testProps: {
-              selectorAriaLabel: 'Greenland. 39.2. 304. Marker 4 of 4.',
-              nextSelectorAriaLabel: 'USA. 50. 840. Marker 1 of 4.'
+              selectorAriaLabel: 'Greenland. 39.2. 304. Marker 4.',
+              nextSelectorAriaLabel: 'USA. 50. 840. Marker 1.'
             }
           },
           accessibility_keyboard_nav_left_arrow_sibling: {
@@ -172,8 +200,8 @@ describe('<world-map />', () => {
             nextTestSelector: '[data-testid=marker][data-id=marker-840]',
             keyDownObject: { key: 'ArrowLeft', code: 'ArrowLeft', keyCode: 37 },
             testProps: {
-              selectorAriaLabel: 'Name Angola. Birth Rate 14.2. Country Code 024. Marker 2 of 4.',
-              nextSelectorAriaLabel: 'Name USA. Birth Rate 50. Country Code 840. Marker 1 of 4.',
+              selectorAriaLabel: 'Name Angola. Birth Rate 14.2. Country Code 024. Marker 2.',
+              nextSelectorAriaLabel: 'Name USA. Birth Rate 50. Country Code 840. Marker 1.',
               accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true }
             }
           },
@@ -183,8 +211,8 @@ describe('<world-map />', () => {
             nextTestSelector: '[data-testid=marker][data-id=marker-304]',
             keyDownObject: { key: 'ArrowLeft', code: 'ArrowLeft', keyCode: 37 },
             testProps: {
-              selectorAriaLabel: 'USA. 50. 840. Marker 1 of 4.',
-              nextSelectorAriaLabel: 'Greenland. 39.2. 304. Marker 4 of 4.'
+              selectorAriaLabel: 'USA. 50. 840. Marker 1.',
+              nextSelectorAriaLabel: 'Greenland. 39.2. 304. Marker 4.'
             }
           },
           // accessibility_keyboard_nav_up_arrow_cousin: {
@@ -233,8 +261,8 @@ describe('<world-map />', () => {
             nextTestSelector: '[data-testid=marker-group]',
             keyDownObject: { key: 'Enter', code: 'Enter', keyCode: 13, shiftKey: true },
             testProps: {
-              selectorAriaLabel: 'USA. 50. 840. Marker 1 of 4.',
-              nextSelectorAriaLabel: 'Marker group which contains 4 interactive markers.'
+              selectorAriaLabel: 'USA. 50. 840. Marker 1.',
+              nextSelectorAriaLabel: 'Number of interactive markers on this map: 4.'
             }
           }
           // accessibility_keyboard_nav_enter_group: {
@@ -1601,8 +1629,8 @@ describe('<world-map />', () => {
               '<p style="margin: 0;"><b></b><b>USA (840)</b><br>Test Birth Rate:<b>50</b></p>'
           };
           const innerAriaContent = {
-            dataKeyNames_custom_on_load: 'Name USA. Test Birth Rate 50. Country Code 840. Marker 1 of 4.',
-            dataKeyNames_custom_on_update: 'Name USA. Test Birth Rate 50. Country Code 840. Marker 1 of 4.'
+            dataKeyNames_custom_on_load: 'Name USA. Test Birth Rate 50. Country Code 840. Marker 1.',
+            dataKeyNames_custom_on_update: 'Name USA. Test Birth Rate 50. Country Code 840. Marker 1.'
           };
           const innerTestProps = {
             ...unitTestTooltip[test].testProps,

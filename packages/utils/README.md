@@ -205,6 +205,15 @@
       <a href="#licensing-bundle">License Bundle</a>
     </li>
     <li>
+      <a href="#localization">Localization</a>
+      <ul>
+        <li><a href="#registerI18NextLanguage">registerI18NextLanguage()</a></li>
+      </ul>
+      <ul>
+        <li><a href="#registerNumeralLocale">registerNumeralLocale()</a></li>
+      </ul>
+    </li>
+    <li>
       <a href="#path-manipulations">Path Manipulations</a>
       <ul>
         <li><a href="#equalize-path">equalizePath()</a></li>
@@ -232,7 +241,7 @@
       <a href="#tooltips">Tooltips</a>
     </li>
     <li>
-      <a href="#validation">Validation</a>
+      <a href="#validations">Validations (accessibility and localization)</a>
     </li>
   </ol>
 </details>
@@ -994,7 +1003,7 @@ console.log('registered: locales', numeral.locales, ', formats: ', numeral.forma
 
 <br>
 
-#### <a name='register-numeral-locale' href='#register-numeral-locale'>#</a> `registerNumeralLocale( name: string, locale: object{}) [ functional ]`:
+#### <a name='register-numeral-locale' href='#register-numeral-locale'>#</a> `registerNumeralLocale( name: string, locale: object{}, overwrite: boolean) [ functional ]`:
 
 This function calls `numeral.register` internally to enable the addition of locales to the number formatting provided via [numeral.js](http://numeraljs.com/). See the docs about [locales](http://numeraljs.com/#locales) for more information.
 
@@ -1148,6 +1157,96 @@ const licenses = [
   },
   // {...}, {...}]
 ```
+
+<hr>
+<br>
+
+## <a name="localization" href="#localization">#</a> Localization [<>](./src/utils/localization/index.ts 'Source')
+
+This util handles building and maintaining lifecycle for localization (languages and numerical locales) used in Visa Chart Components. In VCC you can use English and Hungarian out of the box, and you can also create and use your own language to translate charts to your desired language. There are two approaches you can use to enable localization within VCC, (1) chart based and (2) globally, each approach is described in more details below.
+
+Notes:
+
+1. VCC handles languages externally and internally. Chart details that can be overwritten in an external app during usage (like the title of a chart), are expected to be internationalized by the developer in the app that is using VCC. Internal language expressions, like keyboard instructions of a chart, are handled internally.
+2. The fallback language and numerical locale for VCC is `en` (US English) and `US` (US numerical expressions, abbreviations and currency).
+
+<br>
+
+### Chart-based Initialization Process
+
+A single chart can be used with a language and numerical locale by passing the given language and numerical locale directly to the chart via the localization prop object. Internally VCC will leverage the `localization.overwrite` property to either ignore an object passed that has already been provided, or overwrite the existing configurations. Take caution with this approach if you are re-rendering and updating charts frequently as it could cause some unwanted behavior.
+
+```js
+// language import
+import { hu } from './your-language-file-here';
+// numerical locale import
+import { HU } from './your-numeral-locale-file-here';
+```
+
+```js
+<bar-chart
+  localization={{
+    language: hu, // string|object
+    numeralLocale: HU, // string|object
+    overwrite: false // boolean; if true the latest passed language and numeralLocale object will be used
+    skipValidation: false // boolean; if true, disables validations for this chart
+  }}
+  ...
+```
+
+<br>
+
+### Global Initialization Process
+
+In addition to the above, you can also register your localization config before you render a chart and apply this config across one or many charts using the localization property. In this scenario you will use some of VCC's utility functions in combination with string based prop values being sent to each chart.
+
+```js
+// use VCC utility functions to pre-load langauge and numeral locale config objects
+registerI18NextLanguage(hu);
+registerNumeralLocale('hu', HU, false);
+```
+
+```js
+// now only string values are needed to map the chart to the pre-loaded language and locale configurations
+<bar-chart
+  localization={{
+    language: 'hu', // string
+    numeralLocale: 'HU', // string
+    overwrite: false,  // boolean; if true the latest passed language and numeralLocale object will be used
+    skipValidation: false // boolean; if true, disables validations
+  }}
+  ...
+```
+
+<br>
+
+### Enabling Additional Languages and Numerical Locales
+
+To create an additional language file, start with the [English Language Translation Template](./src/utils/localization/languages/en.ts) and update the values to the desired language equivalent. The same type of process can be followed for numeral locales where you can customize the [US Numeral Expressions Template](./src/utils/localization/numeralLocales/en.ts). Note: you can find additional numeral locales on [Numeral's github page](https://github.com/adamwdraper/Numeral-js/tree/master/locales). Note: Any language and locale provided by VCC is provided as-is, without warranty of any kind, reference to our [license](./LICENSE) for more details.
+
+<br>
+
+### **Notable Exports:**
+
+#### <a name='registerI18NextLanguage' href='#registerI18NextLanguage'>#</a> `registerI18NextLanguage(element: string|object{}) [functional]`:
+
+This utility allows to register a language before a single or a series of charts would render. Consequently, a string expression of a language is enough to be passed to chart(s) in order to achieve language localization across one or many charts across an application.
+
+```js
+import Utils from '@visa/visa-charts-utils';
+import { hu } from './your-language-file-here';
+
+const { registerI18NextLanguage } = Utils;
+
+// register this language object to VCC's instance of i18next
+// ...
+registerI18NextLanguage(hu);
+// ...
+```
+
+#### <a name='registerNumeralLocale' href='#registerNumeralLocale'>#</a> `registerNumeralLocale(node: string, numeralLocale: object{}, overwrite: boolean)`:
+
+Read more about <a href="#register-numeral-locale">registerNumeralLocale()</a> in the <a href="#formatting-numbers">Formatting Numbers</a> section of this document.
 
 <hr>
 <br>
@@ -1350,13 +1449,15 @@ This util exports functions that manage and maintain the tooltips shown on a cha
 <hr>
 <br>
 
-## <a name="validation" href="#validation">#</a> Validation [<a>](./src/utils/validate-accessibility-props.ts 'Source')
+## <a name="validations" href="#validations">#</a> Validations [<a>](./src/utils/validate-accessibility-props.ts 'Source')
 
-Accessibility validation is a powerful dev-experience feature that comes baked into the VCC ecosystem. This util will validate the accessibility props passed by the user to a chart and encourage them to make better decisions by posting suggestions and warnings in a browser's JavaScript console. While this util has no notable exports, we want it to stand as an example of a way to encourage accessibility development early on.
+Validations are powerful dev-experience features that come baked into the VCC ecosystem. Validation utils will validate the (1) accessibility props and (2) localization props passed by the user to a chart and encourage them to make better decisions by posting suggestions and warnings in a browser's JavaScript console. While these util have no notable exports, we want it to stand as an example of a way to encourage accessibility and localization development early on.
 
-You can learn more about the accessibility prop and how to turn validation off by checking the props documentation for any chart. Note that validation **should** be disabled before building and deploying but **only** once a chart is considered an accessible data experience.
+You can learn more about the accessibility and localization prop and how to turn validation and localization off by checking the props documentation for any chart. Note that validations **should** be disabled before building and deploying but **only** once a chart is considered an accessible and localized data experience.
 
-![A view of a browser's JavaScript console, with multiple warnings and messages related to accessibility displayed.](./docs/validation.jpg 'Warning devs about accessibility failures in the console')
+![A view of a browser's JavaScript console, with multiple warnings and messages related to accessibility displayed.](./docs/validation-accessibility.jpg 'Warning devs about accessibility failures in the console')
+
+![A view of a browser's JavaScript console, with multiple warnings and messages related to localization displayed.](./docs/validation-localization.png 'Warning devs about localization failures in the console')
 
 <hr>
 <br>

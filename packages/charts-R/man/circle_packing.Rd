@@ -55,7 +55,7 @@ data.frame(parent = c(NA, "A", "A", "C", "C"),
   circle_packing("node", "parent", "size",
                  accessibility = list(hideTextures = TRUE,
                                       hideDataTableButton = TRUE))
-library(tidyverse)
+library(dplyr)
 data.frame(Orange) \%>\%
   mutate(age = as.character(age)) \%>\%
   bind_rows(data.frame(Tree = c(rep("Trees", 5), NA),

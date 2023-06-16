@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -26,6 +26,9 @@ export class LineChartDefaultValues {
     right: 50,
     left: 50
   };
+
+  static readonly localization = propDefaultValues.localization;
+
   static readonly ordinalAccessor = 'label';
   static readonly valueAccessor = 'value';
   static readonly seriesAccessor = 'series';

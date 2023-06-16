@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -9,14 +9,19 @@ import { newSpecPage, SpecPage } from '@stencil/core/testing';
 import { ParallelPlot } from './parallel-plot';
 import { ParallelPlotDefaultValues } from './parallel-plot-default-values';
 import { scaleOrdinal, scaleLinear } from 'd3-scale';
+
 // we need to bring in our nested components as well, was required to bring in the source vs dist folder to get it to mount
-import { KeyboardInstructions } from '../../../node_modules/@visa/keyboard-instructions/src/components/keyboard-instructions/keyboard-instructions';
-import { DataTable } from '../../../node_modules/@visa/visa-charts-data-table/src/components/data-table/data-table';
+import { KeyboardInstructions } from '@visa/keyboard-instructions/src/components/keyboard-instructions/keyboard-instructions';
+import { DataTable } from '@visa/visa-charts-data-table/src/components/data-table/data-table';
+
+// importing custom languages and locales
+import { hu } from '@visa/visa-charts-utils/src/utils/localization/languages/hu';
+import { HU } from '@visa/visa-charts-utils/src/utils/localization/numeralLocales/hu';
 
 import Utils from '@visa/visa-charts-utils';
 import UtilsDev from '@visa/visa-charts-utils-dev';
 
-const { getColors, visaColors, formatStats, symbols, getAccessibleStrokes } = Utils;
+const { getColors, visaColors, formatStats, getAccessibleStrokes } = Utils;
 
 const {
   asyncForEach,
@@ -69,6 +74,7 @@ describe('<parallel-plot>', () => {
 
     // disable accessibility validation to keep output stream(terminal) clean
     const EXPECTEDACCESSIBILITY = { ...ParallelPlotDefaultValues.accessibility, disableValidation: true };
+    const EXPECTEDLOCALIZATION = { ...ParallelPlotDefaultValues.localization, skipValidation: true };
 
     beforeEach(async () => {
       page = await newSpecPage({
@@ -81,6 +87,7 @@ describe('<parallel-plot>', () => {
       component.ordinalAccessor = EXPECTEDORDINALACCESSOR;
       component.valueAccessor = EXPECTEDVALUEACCESSOR;
       component.accessibility = EXPECTEDACCESSIBILITY;
+      component.localization = EXPECTEDLOCALIZATION;
       component.uniqueID = 'parallel-plot-unit-test';
       component.unitTest = true;
     });
@@ -136,6 +143,28 @@ describe('<parallel-plot>', () => {
         // ASSERT
         expect(page.root).toMatchSnapshot();
       });
+
+      it('localization: should render localized with minimal props[data,accessors] given', async () => {
+        component.localization = {
+          language: hu,
+          numeralLocale: HU,
+          skipValidation: true,
+          overwrite: false
+        };
+        // ACT
+        page.root.appendChild(component);
+        await page.waitForChanges();
+
+        // flush labels for testing to ensure opacity of 1 on initial render
+        const elements = page.doc.querySelectorAll('[data-testid=dataLabel]');
+        await asyncForEach(elements, async element => {
+          flushTransitions(element);
+          await page.waitForChanges();
+        });
+
+        // ASSERT
+        expect(page.root).toMatchSnapshot();
+      });
     });
 
     describe('generic test suite', () => {
@@ -185,8 +214,8 @@ describe('<parallel-plot>', () => {
             nextTestSelector: '[data-testid=marker][data-id=marker-North-America-Card-B]',
             keyDownObject: { key: 'ArrowRight', code: 'ArrowRight', keyCode: 39 },
             testProps: {
-              selectorAriaLabel: 'region North-America. category Card-A. value 9.6b. Point 1 of 3.',
-              nextSelectorAriaLabel: 'region North-America. category Card-B. value 9.7b. Point 2 of 3.',
+              selectorAriaLabel: 'region North-America. category Card-A. value 9.6b. Point 1.',
+              nextSelectorAriaLabel: 'region North-America. category Card-B. value 9.7b. Point 2.',
               accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true }
             }
           },
@@ -196,8 +225,8 @@ describe('<parallel-plot>', () => {
             nextTestSelector: '[data-testid=marker][data-id=marker-North-America-Card-A]',
             keyDownObject: { key: 'ArrowRight', code: 'ArrowRight', keyCode: 39 },
             testProps: {
-              selectorAriaLabel: 'North-America. Card-C. 3.8b. Point 3 of 3.',
-              nextSelectorAriaLabel: 'North-America. Card-A. 9.6b. Point 1 of 3.'
+              selectorAriaLabel: 'North-America. Card-C. 3.8b. Point 3.',
+              nextSelectorAriaLabel: 'North-America. Card-A. 9.6b. Point 1.'
             }
           },
           accessibility_keyboard_nav_left_arrow_sibling: {
@@ -206,8 +235,8 @@ describe('<parallel-plot>', () => {
             nextTestSelector: '[data-testid=marker][data-id=marker-North-America-Card-A]',
             keyDownObject: { key: 'ArrowLeft', code: 'ArrowLeft', keyCode: 37 },
             testProps: {
-              selectorAriaLabel: 'region North-America. category Card-B. value 9.7b. Point 2 of 3.',
-              nextSelectorAriaLabel: 'region North-America. category Card-A. value 9.6b. Point 1 of 3.',
+              selectorAriaLabel: 'region North-America. category Card-B. value 9.7b. Point 2.',
+              nextSelectorAriaLabel: 'region North-America. category Card-A. value 9.6b. Point 1.',
               accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true }
             }
           },
@@ -217,8 +246,8 @@ describe('<parallel-plot>', () => {
             nextTestSelector: '[data-testid=marker][data-id=marker-North-America-Card-C]',
             keyDownObject: { key: 'ArrowLeft', code: 'ArrowLeft', keyCode: 37 },
             testProps: {
-              selectorAriaLabel: 'North-America. Card-A. 9.6b. Point 1 of 3.',
-              nextSelectorAriaLabel: 'North-America. Card-C. 3.8b. Point 3 of 3.'
+              selectorAriaLabel: 'North-America. Card-A. 9.6b. Point 1.',
+              nextSelectorAriaLabel: 'North-America. Card-C. 3.8b. Point 3.'
             }
           },
           accessibility_keyboard_nav_up_arrow_cousin_loop: {
@@ -227,8 +256,8 @@ describe('<parallel-plot>', () => {
             nextTestSelector: '[data-testid=marker][data-id=marker-Africa-Card-A]',
             keyDownObject: { key: 'ArrowUp', code: 'ArrowUp', keyCode: 38 },
             testProps: {
-              selectorAriaLabel: 'North-America. Card-A. 9.6b. Point 1 of 3.',
-              nextSelectorAriaLabel: 'Africa. Card-A. 6.6b. Point 1 of 3.'
+              selectorAriaLabel: 'North-America. Card-A. 9.6b. Point 1.',
+              nextSelectorAriaLabel: 'Africa. Card-A. 6.6b. Point 1.'
             }
           },
           accessibility_keyboard_nav_down_arrow_cousin: {
@@ -237,8 +266,8 @@ describe('<parallel-plot>', () => {
             nextTestSelector: '[data-testid=marker][data-id=marker-Asia-Card-A]',
             keyDownObject: { key: 'ArrowDown', code: 'ArrowDown', keyCode: 40 },
             testProps: {
-              selectorAriaLabel: 'North-America. Card-A. 9.6b. Point 1 of 3.',
-              nextSelectorAriaLabel: 'Asia. Card-A. 7.7b. Point 1 of 3.'
+              selectorAriaLabel: 'North-America. Card-A. 9.6b. Point 1.',
+              nextSelectorAriaLabel: 'Asia. Card-A. 7.7b. Point 1.'
             }
           },
           accessibility_keyboard_nav_down_arrow_cousin_loop: {
@@ -247,8 +276,8 @@ describe('<parallel-plot>', () => {
             nextTestSelector: '[data-testid=marker][data-id=marker-North-America-Card-A]',
             keyDownObject: { key: 'ArrowDown', code: 'ArrowDown', keyCode: 40 },
             testProps: {
-              selectorAriaLabel: 'Africa. Card-A. 6.6b. Point 1 of 3.',
-              nextSelectorAriaLabel: 'North-America. Card-A. 9.6b. Point 1 of 3.'
+              selectorAriaLabel: 'Africa. Card-A. 6.6b. Point 1.',
+              nextSelectorAriaLabel: 'North-America. Card-A. 9.6b. Point 1.'
             }
           },
           accessibility_keyboard_nav_shift_enter_to_group: {
@@ -257,8 +286,8 @@ describe('<parallel-plot>', () => {
             nextTestSelector: '[data-testid=marker-series-group][data-id=marker-series-North-America]',
             keyDownObject: { key: 'Enter', code: 'Enter', keyCode: 13, shiftKey: true },
             testProps: {
-              selectorAriaLabel: 'North-America. Card-A. 9.6b. Point 1 of 3.',
-              nextSelectorAriaLabel: 'North-America. Line 1 of 5 which contains 3 interactive points.'
+              selectorAriaLabel: 'North-America. Card-A. 9.6b. Point 1.',
+              nextSelectorAriaLabel: 'North-America. line 1.'
             }
           }
           // the tests below here do not work because the selection of a group (g) kicks
@@ -1262,8 +1291,8 @@ describe('<parallel-plot>', () => {
                 '<p style="margin: 0;"><b>North-America<br></b>Test Category:<b>Card-A</b><br>Y Axis:<b>9.6b</b></p>'
             };
             const innerAriaContent = {
-              dataKeyNames_custom_on_load: 'region North-America. Test Category Card-A. value 9.6b. Point 1 of 3.',
-              dataKeyNames_custom_on_update: 'region North-America. Test Category Card-A. value 9.6b. Point 1 of 3.'
+              dataKeyNames_custom_on_load: 'region North-America. Test Category Card-A. value 9.6b. Point 1.',
+              dataKeyNames_custom_on_update: 'region North-America. Test Category Card-A. value 9.6b. Point 1.'
             };
             const innerTestProps = { ...unitTestTooltip[test].testProps, ...innerTooltipProps[test] };
             const customDataKeyNames = { dataKeyNames: { category: 'Test Category' } };

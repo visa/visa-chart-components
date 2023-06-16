@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2021, 2022 Visa, Inc.
+ * Copyright (c) 2021, 2022, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -8,12 +8,16 @@
 import { newSpecPage, SpecPage } from '@stencil/core/testing';
 import { AlluvialDiagram } from './alluvial-diagram';
 import { AlluvialDiagramDefaultValues } from './alluvial-diagram-default-values';
-import { scaleBand, scaleOrdinal, scaleLinear } from 'd3-scale';
+import { scaleOrdinal } from 'd3-scale';
 import { sum } from 'd3-array';
 
 // we need to bring in our nested components as well, was required to bring in the source vs dist folder to get it to mount
-import { KeyboardInstructions } from '../../../node_modules/@visa/keyboard-instructions/src/components/keyboard-instructions/keyboard-instructions';
-import { DataTable } from '../../../node_modules/@visa/visa-charts-data-table/src/components/data-table/data-table';
+import { KeyboardInstructions } from '@visa/keyboard-instructions/src/components/keyboard-instructions/keyboard-instructions';
+import { DataTable } from '@visa/visa-charts-data-table/src/components/data-table/data-table';
+
+// importing custom languages and locales
+import { hu } from '@visa/visa-charts-utils/src/utils/localization/languages/hu';
+import { HU } from '@visa/visa-charts-utils/src/utils/localization/numeralLocales/hu';
 
 import Utils from '@visa/visa-charts-utils';
 import UtilsDev from '@visa/visa-charts-utils-dev';
@@ -78,6 +82,7 @@ describe('<alluvial-diagram>', () => {
 
     // disable accessibility validation to keep output stream(terminal) clean
     const EXPECTEDACCESSIBILITY = { ...AlluvialDiagramDefaultValues.accessibility, disableValidation: true };
+    const EXPECTEDLOCALIZATION = { ...AlluvialDiagramDefaultValues.localization, skipValidation: true };
 
     beforeEach(async () => {
       page = await newSpecPage({
@@ -93,6 +98,7 @@ describe('<alluvial-diagram>', () => {
       component.groupAccessor = EXPECTEDGROUPACCESSOR;
       component.nodeIDAccessor = EXPECTEDNODEIDACCESSOR;
       component.accessibility = EXPECTEDACCESSIBILITY;
+      component.localization = EXPECTEDLOCALIZATION;
       component.uniqueID = 'alluvial-diagram-unit-test';
       component.unitTest = true;
     });
@@ -113,6 +119,28 @@ describe('<alluvial-diagram>', () => {
       });
 
       it('should render with minimal props[data,accessors] given', async () => {
+        // ACT
+        page.root.appendChild(component);
+        await page.waitForChanges();
+
+        // flush labels for testing to ensure opacity of 1 on initial render
+        const elements = page.doc.querySelectorAll('[data-testid=dataLabel]');
+        await asyncForEach(elements, async element => {
+          flushTransitions(element);
+          await page.waitForChanges();
+        });
+
+        // ASSERT
+        expect(page.root).toMatchSnapshot();
+      });
+
+      it('localization: should render localized with minimal props[data,accessors] given', async () => {
+        component.localization = {
+          language: hu,
+          numeralLocale: HU,
+          skipValidation: true,
+          overwrite: false
+        };
         // ACT
         page.root.appendChild(component);
         await page.waitForChanges();
@@ -242,8 +270,8 @@ describe('<alluvial-diagram>', () => {
             testProps: {
               linkConfig: { visible: true, fillMode: 'source', opacity: 1 },
               groupMarkerOverrideSelector: '[data-testid=node][data-id=node-Cat12018]',
-              selectorAriaLabel: 'value 3k. group Remained. cat Cat12018. target Cat12019. Link 2 of 3.',
-              nextSelectorAriaLabel: 'did Cat12018. Node 1 of 7 which contains 3 interactive links.',
+              selectorAriaLabel: 'value 3k. group Remained. cat Cat12018. target Cat12019. Link 2.',
+              nextSelectorAriaLabel: 'did Cat12018. node 1.',
               accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true }
             }
           },
@@ -254,8 +282,8 @@ describe('<alluvial-diagram>', () => {
             keyDownObject: { key: 'ArrowRight', code: 'ArrowRight', keyCode: 39 },
             testProps: {
               linkConfig: { visible: true, fillMode: 'source', opacity: 1 },
-              selectorAriaLabel: 'value 3k. group Remained. cat Cat12018. target Cat12019. Link 2 of 3.',
-              nextSelectorAriaLabel: 'value 2.8k. group Decreased. cat Cat12018. target Cat32019. Link 3 of 3.',
+              selectorAriaLabel: 'value 3k. group Remained. cat Cat12018. target Cat12019. Link 2.',
+              nextSelectorAriaLabel: 'value 2.8k. group Decreased. cat Cat12018. target Cat32019. Link 3.',
               accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true }
             }
           },
@@ -266,8 +294,8 @@ describe('<alluvial-diagram>', () => {
             keyDownObject: { key: 'ArrowRight', code: 'ArrowRight', keyCode: 39 },
             testProps: {
               linkConfig: { visible: true, fillMode: 'source', opacity: 1 },
-              selectorAriaLabel: '2.8k. Decreased. Cat12018. Cat32019. Link 3 of 3.',
-              nextSelectorAriaLabel: '2.8k. Decreased. Cat12018. Cat22019. Link 1 of 3.'
+              selectorAriaLabel: '2.8k. Decreased. Cat12018. Cat32019. Link 3.',
+              nextSelectorAriaLabel: '2.8k. Decreased. Cat12018. Cat22019. Link 1.'
             }
           },
           accessibility_keyboard_nav_left_arrow_sibling: {
@@ -277,8 +305,8 @@ describe('<alluvial-diagram>', () => {
             keyDownObject: { key: 'ArrowLeft', code: 'ArrowLeft', keyCode: 37 },
             testProps: {
               linkConfig: { visible: true, fillMode: 'source', opacity: 1 },
-              selectorAriaLabel: 'value 2.8k. group Decreased. cat Cat12018. target Cat32019. Link 3 of 3.',
-              nextSelectorAriaLabel: 'value 3k. group Remained. cat Cat12018. target Cat12019. Link 2 of 3.',
+              selectorAriaLabel: 'value 2.8k. group Decreased. cat Cat12018. target Cat32019. Link 3.',
+              nextSelectorAriaLabel: 'value 3k. group Remained. cat Cat12018. target Cat12019. Link 2.',
               accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true }
             }
           },
@@ -289,8 +317,8 @@ describe('<alluvial-diagram>', () => {
             keyDownObject: { key: 'ArrowLeft', code: 'ArrowLeft', keyCode: 37 },
             testProps: {
               linkConfig: { visible: true, fillMode: 'source', opacity: 1 },
-              selectorAriaLabel: '2.8k. Decreased. Cat12018. Cat22019. Link 1 of 3.',
-              nextSelectorAriaLabel: '2.8k. Decreased. Cat12018. Cat32019. Link 3 of 3.'
+              selectorAriaLabel: '2.8k. Decreased. Cat12018. Cat22019. Link 1.',
+              nextSelectorAriaLabel: '2.8k. Decreased. Cat12018. Cat32019. Link 3.'
             }
           },
           accessibility_keyboard_nav_up_arrow_cousin: {
@@ -300,8 +328,8 @@ describe('<alluvial-diagram>', () => {
             keyDownObject: { key: 'ArrowUp', code: 'ArrowUp', keyCode: 38 },
             testProps: {
               linkConfig: { visible: true, fillMode: 'group', opacity: 1 },
-              selectorAriaLabel: '12.7k. Remained. Cat22018. Cat22019. Link 5 of 12.',
-              nextSelectorAriaLabel: '2.8k. Decreased. Cat12018. Cat22019. Link 1 of 3.'
+              selectorAriaLabel: '12.7k. Remained. Cat22018. Cat22019. Link 5.',
+              nextSelectorAriaLabel: '2.8k. Decreased. Cat12018. Cat22019. Link 1.'
             }
           },
           // accessibility_keyboard_nav_up_arrow_cousin_loop: {
@@ -322,8 +350,8 @@ describe('<alluvial-diagram>', () => {
             keyDownObject: { key: 'ArrowDown', code: 'ArrowDown', keyCode: 40 },
             testProps: {
               linkConfig: { visible: true, fillMode: 'group', opacity: 1 },
-              selectorAriaLabel: '2.8k. Decreased. Cat12018. Cat22019. Link 2 of 12.',
-              nextSelectorAriaLabel: '12.7k. Remained. Cat22018. Cat22019. Link 5 of 12.'
+              selectorAriaLabel: '2.8k. Decreased. Cat12018. Cat22019. Link 2.',
+              nextSelectorAriaLabel: '12.7k. Remained. Cat22018. Cat22019. Link 5.'
             }
           }
           // accessibility_keyboard_nav_down_arrow_cousin_loop: {
@@ -834,10 +862,9 @@ describe('<alluvial-diagram>', () => {
                 '<p style="margin: 0;"><b>Remained<br></b><b>Cat12018</b>to<b>Cat12019</b><br>Test Value:<b>3010</b></p>'
             };
             const innerAriaContent = {
-              dataKeyNames_custom_on_load:
-                'Test Value 3k. group Remained. Test Cat Cat12018. target Cat12019. Link 1 of 12.',
+              dataKeyNames_custom_on_load: 'Test Value 3k. group Remained. Test Cat Cat12018. target Cat12019. Link 1.',
               dataKeyNames_custom_on_update:
-                'Test Value 3k. group Remained. Test Cat Cat12018. target Cat12019. Link 1 of 12.'
+                'Test Value 3k. group Remained. Test Cat Cat12018. target Cat12019. Link 1.'
             };
             const innerTestProps = { ...unitTestTooltip[test].testProps, ...innerTooltipProps[test] };
             const customDataKeyNames = { dataKeyNames: { value: 'Test Value', cat: 'Test Cat' } };

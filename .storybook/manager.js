@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022 Visa, Inc.
+ * Copyright (c) 2022, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -31,4 +31,4 @@ addons.setConfig({
 // this is glitchy
 setTimeout(function() {
   addons.elements.tab['storybookjs/notes/panel'].title = 'README';
-}, 0);
+}, 10);

@@ -3,17 +3,6 @@
 exports[`<scatter-plot> rendered-html accessibility generic accessibility test suite accessibility: keyboard instruction component displays table in click state 1`] = `
 <div class="visa-viz-keyboard-instructions-container" id="visa-viz-keyboard-instructions-container-scatter-plot-unit-test">
   <div>
-    <p>
-      Note: for VoiceOver users (mac), press and hold
-      <kbd>
-        Ctrl
-      </kbd>
-      +
-      <kbd>
-        Shift
-      </kbd>
-      when using the arrow keys for the best navigation experience.
-    </p>
     <table class="vcc-ki-data-table vcc-ki-keyboard-instructions vcc-ki-state--compact vcc-ki-state--single-select" data-header="header">
       <thead class="vcc-ki-thead">
         <tr class="vcc-ki-tr">
@@ -31,10 +20,9 @@ exports[`<scatter-plot> rendered-html accessibility generic accessibility test s
             <kbd>
               Enter
             </kbd>
-            on the chart area or a scatter group.
           </th>
           <td class="vcc-ki-td">
-            Enter the chart area/drill down a level.
+            Enter the chart area/drill down a level on the chart area or a scatter group.
           </td>
         </tr>
         <tr class="vcc-ki-tr">
@@ -46,10 +34,9 @@ exports[`<scatter-plot> rendered-html accessibility generic accessibility test s
             <kbd>
               Enter
             </kbd>
-            on a scatter group or point.
           </th>
           <td class="vcc-ki-td">
-            Drill up a level.
+            Drill up a level on a scatter group or point.
           </td>
         </tr>
         <tr class="vcc-ki-tr">
@@ -57,21 +44,9 @@ exports[`<scatter-plot> rendered-html accessibility generic accessibility test s
             <kbd>
               Tab
             </kbd>
-            at any time.
           </th>
           <td class="vcc-ki-td">
-            Exit the chart.
-          </td>
-        </tr>
-        <tr class="vcc-ki-disabled-row vcc-ki-tr">
-          <th class="vcc-ki-td" scope="row">
-            <kbd>
-              Space
-            </kbd>
-            is unused.
-          </th>
-          <td class="vcc-ki-td">
-            No effect on this chart.
+            Exit the chart at any time.
           </td>
         </tr>
         <tr class="vcc-ki-tr">
@@ -83,10 +58,9 @@ exports[`<scatter-plot> rendered-html accessibility generic accessibility test s
             <kbd>
               →
             </kbd>
-            on a scatter group or point.
           </th>
           <td class="vcc-ki-td">
-            Move among sibling scatter groups or points.
+            Move among sibling scatter groups or points on a scatter group or point.
           </td>
         </tr>
         <tr class="vcc-ki-tr">
@@ -98,10 +72,9 @@ exports[`<scatter-plot> rendered-html accessibility generic accessibility test s
             <kbd>
               ↓
             </kbd>
-            on a scatter group or point.
           </th>
           <td class="vcc-ki-td">
-            Move among points across scatter groups.
+            Move among points across scatter groups on a scatter group or point.
           </td>
         </tr>
         <tr class="vcc-ki-tr">
@@ -109,10 +82,33 @@ exports[`<scatter-plot> rendered-html accessibility generic accessibility test s
             <kbd>
               Esc
             </kbd>
-            at any time.
           </th>
           <td class="vcc-ki-td">
-            Dismiss the tooltip.
+            Exit the chart at any time.
+          </td>
+        </tr>
+      </tbody>
+      <thead class="vcc-ki-thead">
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-th" scope="col">
+            Note
+          </th>
+          <th class="vcc-ki-th" scope="col"></th>
+        </tr>
+      </thead>
+      <tbody class="vcc-ki-tbody">
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Control
+            </kbd>
+            +
+            <kbd>
+              Shift
+            </kbd>
+          </th>
+          <td class="vcc-ki-td">
+            Press and hold when using the arrow keys for the best navigation experience on a Mac (Voiceover).
           </td>
         </tr>
       </tbody>
@@ -124,17 +120,6 @@ exports[`<scatter-plot> rendered-html accessibility generic accessibility test s
 exports[`<scatter-plot> rendered-html accessibility generic accessibility test suite accessibility: keyboard instruction component displays table in click state with space enabled 1`] = `
 <div class="visa-viz-keyboard-instructions-container" id="visa-viz-keyboard-instructions-container-scatter-plot-unit-test">
   <div>
-    <p>
-      Note: for VoiceOver users (mac), press and hold
-      <kbd>
-        Ctrl
-      </kbd>
-      +
-      <kbd>
-        Shift
-      </kbd>
-      when using the arrow keys for the best navigation experience.
-    </p>
     <table class="vcc-ki-data-table vcc-ki-keyboard-instructions vcc-ki-state--compact vcc-ki-state--single-select" data-header="header">
       <thead class="vcc-ki-thead">
         <tr class="vcc-ki-tr">
@@ -152,10 +137,9 @@ exports[`<scatter-plot> rendered-html accessibility generic accessibility test s
             <kbd>
               Enter
             </kbd>
-            on the chart area or a scatter group.
           </th>
           <td class="vcc-ki-td">
-            Enter the chart area/drill down a level.
+            Enter the chart area/drill down a level on the chart area or a scatter group.
           </td>
         </tr>
         <tr class="vcc-ki-tr">
@@ -167,10 +151,9 @@ exports[`<scatter-plot> rendered-html accessibility generic accessibility test s
             <kbd>
               Enter
             </kbd>
-            on a scatter group or point.
           </th>
           <td class="vcc-ki-td">
-            Drill up a level.
+            Drill up a level on a scatter group or point.
           </td>
         </tr>
         <tr class="vcc-ki-tr">
@@ -178,10 +161,9 @@ exports[`<scatter-plot> rendered-html accessibility generic accessibility test s
             <kbd>
               Tab
             </kbd>
-            at any time.
           </th>
           <td class="vcc-ki-td">
-            Exit the chart.
+            Exit the chart at any time.
           </td>
         </tr>
         <tr class="vcc-ki-tr">
@@ -189,10 +171,9 @@ exports[`<scatter-plot> rendered-html accessibility generic accessibility test s
             <kbd>
               Space
             </kbd>
-            on a point.
           </th>
           <td class="vcc-ki-td">
-            Select/Deselect a point.
+            Select/Deselect a point on a scatter group or group.
           </td>
         </tr>
         <tr class="vcc-ki-tr">
@@ -204,10 +185,9 @@ exports[`<scatter-plot> rendered-html accessibility generic accessibility test s
             <kbd>
               →
             </kbd>
-            on a scatter group or point.
           </th>
           <td class="vcc-ki-td">
-            Move among sibling scatter groups or points.
+            Move among sibling scatter groups or points on a scatter group or point.
           </td>
         </tr>
         <tr class="vcc-ki-tr">
@@ -219,10 +199,9 @@ exports[`<scatter-plot> rendered-html accessibility generic accessibility test s
             <kbd>
               ↓
             </kbd>
-            on a scatter group or point.
           </th>
           <td class="vcc-ki-td">
-            Move among points across scatter groups.
+            Move among points across scatter groups on a scatter group or point.
           </td>
         </tr>
         <tr class="vcc-ki-tr">
@@ -230,10 +209,33 @@ exports[`<scatter-plot> rendered-html accessibility generic accessibility test s
             <kbd>
               Esc
             </kbd>
-            at any time.
           </th>
           <td class="vcc-ki-td">
-            Dismiss the tooltip.
+            Exit the chart at any time.
+          </td>
+        </tr>
+      </tbody>
+      <thead class="vcc-ki-thead">
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-th" scope="col">
+            Note
+          </th>
+          <th class="vcc-ki-th" scope="col"></th>
+        </tr>
+      </thead>
+      <tbody class="vcc-ki-tbody">
+        <tr class="vcc-ki-tr">
+          <th class="vcc-ki-td" scope="row">
+            <kbd>
+              Control
+            </kbd>
+            +
+            <kbd>
+              Shift
+            </kbd>
+          </th>
+          <td class="vcc-ki-td">
+            Press and hold when using the arrow keys for the best navigation experience on a Mac (Voiceover).
           </td>
         </tr>
       </tbody>
@@ -389,12 +391,597 @@ exports[`<scatter-plot> rendered-html reference line should pass referenceStyle 
 </g>
 `;
 
+exports[`<scatter-plot> rendered-html render localization: should render localized with minimal props[data,accessors] given 1`] = `
+<scatter-plot id="scatter-plot-unit-test">
+  <div class="o-layout">
+    <div class="vcl-accessibility-instructions" id="chart-instructions-scatter-plot-unit-test" style="position: absolute; width: 650px;">
+      <p class="screen-reader-info vcl-region-label">
+        Billentyűzet Interaktív scatter-plot, Elnevezés: Scatter Plot Title. Ez a szekció információkkal szolgál a diagramról. A TAB billentyű lenyomásával a fókusz a billentyűzet instruckciók menüpontra kerül. A TAB újbóli lenyomása a diagram területre való navigálást eredményez.
+      </p>
+      <h2 class="screen-reader-info vcl-access-title">
+        Diagram diagram címe: Scatter Plot Title
+      </h2>
+      <h3 class="screen-reader-info vcl-access-subtitle">
+        Diagram alcím: This is the scatter plot's subtitle
+      </h3>
+      <p class="screen-reader-info vcl-access-executive-summary" data-level="h3"></p>
+      <p class="screen-reader-info vcl-access-purpose" data-level="h3"></p>
+      <p class="screen-reader-info vcl-access-long-description" data-level="h3"></p>
+      <p class="screen-reader-info vcl-access-context" data-level="h3"></p>
+      <h3 class="screen-reader-info vcl-access-structure-heading">
+        Struktúra
+      </h3>
+      <p class="screen-reader-info vcl-access-statistics" data-level="h4"></p>
+      <h4 class="screen-reader-info vcl-access-chart-layout-heading">
+        Diagramterület leírása
+      </h4>
+      <p class="screen-reader-info vcl-access-layout">
+        Scatter-plot. Scatter group: 4, point: 14.
+      </p>
+      <p class="screen-reader-info vcl-access-xAxis">
+        A diagram horizontális X tengelyt tartalmaz. Diagram címe X Axis. Kezdeti erték érték 0, végső érték érték 14.
+      </p>
+      <p class="screen-reader-info vcl-access-yAxis">
+        A diagram elsődleges vertikális Y tengelyt tartalmaz. Diagram címe Y Axis. Kezdeti erték érték 0, végső érték érték 12E.
+      </p>
+      <p class="screen-reader-info vcl-access-notes" data-annotationlevel="h3" data-level="h4"></p>
+    </div>
+    <div class="o-layout--chart">
+      <h2 aria-hidden="true" class="scatter-main-title vcl-main-title" data-testid="main-title">
+        Scatter Plot Title
+      </h2>
+      <p aria-hidden="true" class="scatter-sub-title vcl-sub-title visa-ui-text--instructions" data-testid="sub-title">
+        This is the scatter plot's subtitle
+      </p>
+      <div aria-hidden="true" class="scatter-legend vcl-legend" role="presentation" style="display: block;">
+        <svg aria-hidden="true" class="vcl-svg" data-testid="legend-container" data-type="scatter" focusable="false" height="48" opacity="1" role="presentation" viewBox="0 0 642 48" width="642">
+          <g class="legend-padding-wrapper" transform="translate(73.5,24)">
+            <g class="legend">
+              <path d="M1,0L0.9952487945556641,0.10496900230646133L0.9802308678627014,0.20940586924552917L0.9531400799751282,0.31073155999183655L0.9148818850517273,0.4079720079898834L0.8663365244865417,0.5002545714378357L0.8094649910926819,0.5883480906486511L0.743568480014801,0.6698152422904968L0.6695123314857483,0.7439088225364685L0.5881620049476624,0.8099220395088196L0.5004010796546936,0.867180347442627L0.4069012701511383,0.9140697717666626L0.30910128355026245,0.9513185620307922L0.2079721838235855,0.9784069061279297L0.10456041246652603,0.9948219656944275L9.057112038135529e-8,1L-0.10454819351434708,0.994599461555481L-0.20796485245227814,0.9783451557159424L-0.30910056829452515,0.9513131976127625L-0.40682557225227356,0.9137774109840393L-0.5000651478767395,0.8661796450614929L-0.5878113508224487,0.8090839982032776L-0.6691301465034485,0.7431550621986389L-0.7431550025939941,0.6691302061080933L-0.8090841770172119,0.5878111720085144L-0.8661795258522034,0.5000653266906738L-0.9137775301933289,0.4068255126476288L-0.9513131976127625,0.30910077691078186L-0.9783450961112976,0.20796531438827515L-0.994599461555481,0.10454835742712021L-1,1.5099580252808664e-7L-0.9952487945556641,-0.1049688383936882L-0.9802308082580566,-0.2094057947397232L-0.953140139579773,-0.3107314109802246L-0.9148820638656616,-0.4079718291759491L-0.8663367629051208,-0.5002543926239014L-0.8094651103019714,-0.5883479714393616L-0.7435685396194458,-0.6698151230812073L-0.6695123314857483,-0.7439088225364685L-0.5881620645523071,-0.8099220395088196L-0.5004012584686279,-0.867180347442627L-0.4069012701511383,-0.9140697717666626L-0.30910128355026245,-0.9513185620307922L-0.20797239243984222,-0.9784069061279297L-0.10456059128046036,-0.9948219656944275L-3.026798367500305e-9,-1L0.10454817116260529,-0.994599461555481L0.2079651653766632,-0.9783450961112976L0.30910080671310425,-0.9513131380081177L0.4068260192871094,-0.913777232170105L0.5000655055046082,-0.8661794066429138L0.587811291217804,-0.8090839982032776L0.6691306233406067,-0.7431545853614807L0.7431554198265076,-0.6691297292709351L0.8090841770172119,-0.5878111124038696L0.866179883480072,-0.5000647306442261L0.9137775301933289,-0.4068252444267273L0.9513131976127625,-0.309100478887558L0.9783451557159424,-0.20796477794647217L0.9945995211601257,-0.10454780608415604Z" data-base-color="#35495a" data-fill="#7c99b1" data-stroke="#35495a" data-stroke-width="1" fill="#7c99b1" opacity="1" stroke="#35495a" stroke-dasharray="none" stroke-width="0.25" transform="translate(4,8)  scale(4)" style="fill: #7c99b1; stroke: #35495a; stroke-width: 0.25; stroke-dasharray: none;"></path>
+              <text class="key-text" dx=".2em" dy="13" filter="url(#VCL-t-s-f-ffffffscatter-plot-unit-test-legend)" opacity="1" x="15" y="0">
+                A
+              </text>
+            </g>
+            <g class="legend">
+              <path d="M1,0L0.9952487945556641,0.10496900230646133L0.9802308678627014,0.20940586924552917L0.9531400799751282,0.31073155999183655L0.9148818850517273,0.4079720079898834L0.8663365244865417,0.5002545714378357L0.8094649910926819,0.5883480906486511L0.743568480014801,0.6698152422904968L0.6695123314857483,0.7439088225364685L0.5881620049476624,0.8099220395088196L0.5004010796546936,0.867180347442627L0.4069012701511383,0.9140697717666626L0.30910128355026245,0.9513185620307922L0.2079721838235855,0.9784069061279297L0.10456041246652603,0.9948219656944275L9.057112038135529e-8,1L-0.10454819351434708,0.994599461555481L-0.20796485245227814,0.9783451557159424L-0.30910056829452515,0.9513131976127625L-0.40682557225227356,0.9137774109840393L-0.5000651478767395,0.8661796450614929L-0.5878113508224487,0.8090839982032776L-0.6691301465034485,0.7431550621986389L-0.7431550025939941,0.6691302061080933L-0.8090841770172119,0.5878111720085144L-0.8661795258522034,0.5000653266906738L-0.9137775301933289,0.4068255126476288L-0.9513131976127625,0.30910077691078186L-0.9783450961112976,0.20796531438827515L-0.994599461555481,0.10454835742712021L-1,1.5099580252808664e-7L-0.9952487945556641,-0.1049688383936882L-0.9802308082580566,-0.2094057947397232L-0.953140139579773,-0.3107314109802246L-0.9148820638656616,-0.4079718291759491L-0.8663367629051208,-0.5002543926239014L-0.8094651103019714,-0.5883479714393616L-0.7435685396194458,-0.6698151230812073L-0.6695123314857483,-0.7439088225364685L-0.5881620645523071,-0.8099220395088196L-0.5004012584686279,-0.867180347442627L-0.4069012701511383,-0.9140697717666626L-0.30910128355026245,-0.9513185620307922L-0.20797239243984222,-0.9784069061279297L-0.10456059128046036,-0.9948219656944275L-3.026798367500305e-9,-1L0.10454817116260529,-0.994599461555481L0.2079651653766632,-0.9783450961112976L0.30910080671310425,-0.9513131380081177L0.4068260192871094,-0.913777232170105L0.5000655055046082,-0.8661794066429138L0.587811291217804,-0.8090839982032776L0.6691306233406067,-0.7431545853614807L0.7431554198265076,-0.6691297292709351L0.8090841770172119,-0.5878111124038696L0.866179883480072,-0.5000647306442261L0.9137775301933289,-0.4068252444267273L0.9513131976127625,-0.309100478887558L0.9783451557159424,-0.20796477794647217L0.9945995211601257,-0.10454780608415604Z" data-base-color="#6868ba" data-fill="#cacae7" data-stroke="#6868ba" data-stroke-width="1" fill="#cacae7" opacity="1" stroke="#6868ba" stroke-dasharray="none" stroke-width="0.25" transform="translate(54,8)  scale(4)" style="fill: #cacae7; stroke: #6868ba; stroke-width: 0.25; stroke-dasharray: none;"></path>
+              <text class="key-text" dx=".2em" dy="13" filter="url(#VCL-t-s-f-ffffffscatter-plot-unit-test-legend)" opacity="1" x="65" y="0">
+                B
+              </text>
+            </g>
+            <g class="legend">
+              <path d="M1,0L0.9952487945556641,0.10496900230646133L0.9802308678627014,0.20940586924552917L0.9531400799751282,0.31073155999183655L0.9148818850517273,0.4079720079898834L0.8663365244865417,0.5002545714378357L0.8094649910926819,0.5883480906486511L0.743568480014801,0.6698152422904968L0.6695123314857483,0.7439088225364685L0.5881620049476624,0.8099220395088196L0.5004010796546936,0.867180347442627L0.4069012701511383,0.9140697717666626L0.30910128355026245,0.9513185620307922L0.2079721838235855,0.9784069061279297L0.10456041246652603,0.9948219656944275L9.057112038135529e-8,1L-0.10454819351434708,0.994599461555481L-0.20796485245227814,0.9783451557159424L-0.30910056829452515,0.9513131976127625L-0.40682557225227356,0.9137774109840393L-0.5000651478767395,0.8661796450614929L-0.5878113508224487,0.8090839982032776L-0.6691301465034485,0.7431550621986389L-0.7431550025939941,0.6691302061080933L-0.8090841770172119,0.5878111720085144L-0.8661795258522034,0.5000653266906738L-0.9137775301933289,0.4068255126476288L-0.9513131976127625,0.30910077691078186L-0.9783450961112976,0.20796531438827515L-0.994599461555481,0.10454835742712021L-1,1.5099580252808664e-7L-0.9952487945556641,-0.1049688383936882L-0.9802308082580566,-0.2094057947397232L-0.953140139579773,-0.3107314109802246L-0.9148820638656616,-0.4079718291759491L-0.8663367629051208,-0.5002543926239014L-0.8094651103019714,-0.5883479714393616L-0.7435685396194458,-0.6698151230812073L-0.6695123314857483,-0.7439088225364685L-0.5881620645523071,-0.8099220395088196L-0.5004012584686279,-0.867180347442627L-0.4069012701511383,-0.9140697717666626L-0.30910128355026245,-0.9513185620307922L-0.20797239243984222,-0.9784069061279297L-0.10456059128046036,-0.9948219656944275L-3.026798367500305e-9,-1L0.10454817116260529,-0.994599461555481L0.2079651653766632,-0.9783450961112976L0.30910080671310425,-0.9513131380081177L0.4068260192871094,-0.913777232170105L0.5000655055046082,-0.8661794066429138L0.587811291217804,-0.8090839982032776L0.6691306233406067,-0.7431545853614807L0.7431554198265076,-0.6691297292709351L0.8090841770172119,-0.5878111124038696L0.866179883480072,-0.5000647306442261L0.9137775301933289,-0.4068252444267273L0.9513131976127625,-0.309100478887558L0.9783451557159424,-0.20796477794647217L0.9945995211601257,-0.10454780608415604Z" data-base-color="#576245" data-fill="#abb798" data-stroke="#576245" data-stroke-width="1" fill="#abb798" opacity="1" stroke="#576245" stroke-dasharray="none" stroke-width="0.25" transform="translate(104,8)  scale(4)" style="fill: #abb798; stroke: #576245; stroke-width: 0.25; stroke-dasharray: none;"></path>
+              <text class="key-text" dx=".2em" dy="13" filter="url(#VCL-t-s-f-ffffffscatter-plot-unit-test-legend)" opacity="1" x="115" y="0">
+                C
+              </text>
+            </g>
+            <g class="legend">
+              <path d="M1,0L0.9952487945556641,0.10496900230646133L0.9802308678627014,0.20940586924552917L0.9531400799751282,0.31073155999183655L0.9148818850517273,0.4079720079898834L0.8663365244865417,0.5002545714378357L0.8094649910926819,0.5883480906486511L0.743568480014801,0.6698152422904968L0.6695123314857483,0.7439088225364685L0.5881620049476624,0.8099220395088196L0.5004010796546936,0.867180347442627L0.4069012701511383,0.9140697717666626L0.30910128355026245,0.9513185620307922L0.2079721838235855,0.9784069061279297L0.10456041246652603,0.9948219656944275L9.057112038135529e-8,1L-0.10454819351434708,0.994599461555481L-0.20796485245227814,0.9783451557159424L-0.30910056829452515,0.9513131976127625L-0.40682557225227356,0.9137774109840393L-0.5000651478767395,0.8661796450614929L-0.5878113508224487,0.8090839982032776L-0.6691301465034485,0.7431550621986389L-0.7431550025939941,0.6691302061080933L-0.8090841770172119,0.5878111720085144L-0.8661795258522034,0.5000653266906738L-0.9137775301933289,0.4068255126476288L-0.9513131976127625,0.30910077691078186L-0.9783450961112976,0.20796531438827515L-0.994599461555481,0.10454835742712021L-1,1.5099580252808664e-7L-0.9952487945556641,-0.1049688383936882L-0.9802308082580566,-0.2094057947397232L-0.953140139579773,-0.3107314109802246L-0.9148820638656616,-0.4079718291759491L-0.8663367629051208,-0.5002543926239014L-0.8094651103019714,-0.5883479714393616L-0.7435685396194458,-0.6698151230812073L-0.6695123314857483,-0.7439088225364685L-0.5881620645523071,-0.8099220395088196L-0.5004012584686279,-0.867180347442627L-0.4069012701511383,-0.9140697717666626L-0.30910128355026245,-0.9513185620307922L-0.20797239243984222,-0.9784069061279297L-0.10456059128046036,-0.9948219656944275L-3.026798367500305e-9,-1L0.10454817116260529,-0.994599461555481L0.2079651653766632,-0.9783450961112976L0.30910080671310425,-0.9513131380081177L0.4068260192871094,-0.913777232170105L0.5000655055046082,-0.8661794066429138L0.587811291217804,-0.8090839982032776L0.6691306233406067,-0.7431545853614807L0.7431554198265076,-0.6691297292709351L0.8090841770172119,-0.5878111124038696L0.866179883480072,-0.5000647306442261L0.9137775301933289,-0.4068252444267273L0.9513131976127625,-0.309100478887558L0.9783451557159424,-0.20796477794647217L0.9945995211601257,-0.10454780608415604Z" data-base-color="#504644" data-fill="#a19491" data-stroke="#504644" data-stroke-width="1" fill="#a19491" opacity="1" stroke="#504644" stroke-dasharray="none" stroke-width="0.25" transform="translate(154,8)  scale(4)" style="fill: #a19491; stroke: #504644; stroke-width: 0.25; stroke-dasharray: none;"></path>
+              <text class="key-text" dx=".2em" dy="13" filter="url(#VCL-t-s-f-ffffffscatter-plot-unit-test-legend)" opacity="1" x="165" y="0">
+                D
+              </text>
+            </g>
+          </g>
+          <defs>
+            <filter class="VCL-t-s-f-ffffff" id="VCL-t-s-f-ffffffscatter-plot-unit-test-legend">
+              <feMorphology in="SourceAlpha" operator="dilate" radius="1.5" result="dilatedText"></feMorphology>
+              <feFlood flood-color="#ffffff" flood-opacity="1" result="whiteTextFlood"></feFlood>
+              <feComposite in="whiteTextFlood" in2="dilatedText" operator="in" result="textOutline"></feComposite>
+              <feMerge>
+                <feMergeNode in="textOutline"></feMergeNode>
+                <feMergeNode in="textOutline"></feMergeNode>
+                <feMergeNode in="textOutline"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+              </feMerge>
+            </filter>
+          </defs>
+        </svg>
+      </div>
+      <keyboard-instructions>
+        <div class="vcc-ki-keyboard-instructions-root" style="position: relative; width: 643.5px;">
+          <div class="visa-viz-keyboard-instructions-outer-container" style="width: 416px;">
+            <div class="vcc-ki-keyboard-instructions-header vcc-ki-minimize">
+              <p class="vcc-ki-keyboard-heading">
+                Billentyűzet Instrukciók Megjelenítése
+              </p>
+            </div>
+            <div class="visa-viz-keyboard-instructions-button-wrapper">
+              <button aria-expanded="false" aria-label="display keyboard instructions" class="vcc-ki-btn-icon vcc-ki-btn-icon--light-tiny visa-viz-keyboard-instructions-button" id="visa-viz-keyboard-instructions-button-scatter-plot-unit-test" role="button" tabindex="0" type="button">
+                <svg class="vcc-ki-icon--tiny" focusable="false" tabindex="-1">
+                  <use href="#visa-viz-keyboard-instructions-info--tiny-scatter-plot-unit-test"></use>
+                </svg>
+              </button>
+              <svg class="vcc-ki-icons">
+                <symbol id="visa-viz-keyboard-instructions-info--tiny-scatter-plot-unit-test" viewbox="0 0 16 16">
+                  <path d="M8.7,3.8a.68.68,0,0,1,.7.7.79.79,0,0,1-.8.8H8.5c-.4,0-.6-.3-.6-.7A.79.79,0,0,1,8.7,3.8ZM6.6,12.1l1.2-6H9l-1.2,6ZM14,8a6,6,0,1,0-6,6A6,6,0,0,0,14,8Zm2,0A8,8,0,1,1,8,0,8,8,0,0,1,16,8Z"></path>
+                </symbol>
+              </svg>
+            </div>
+            <div class="visa-viz-keyboard-instructions-container" id="visa-viz-keyboard-instructions-container-scatter-plot-unit-test"></div>
+          </div>
+        </div>
+      </keyboard-instructions>
+      <div class="visa-viz-d3-scatter-container" data-testid="chart-container" style="position: relative;">
+        <div aria-label="Scatter Plot Title. This is the scatter plot's subtitle.  Navigálás a diagramterületre az ENTER billentyű lenyomásával." class="VCL-controller" data-group="group" id="chart-area-scatter-plot-unit-test" role="application" tabindex="0" style="position: absolute; top: 0; left: 0; opacity: 0; pointer-events: none; width: 0px; height: 0px;">
+          Interaktív scatter-plot.
+        </div>
+        <svg class="vcl-svg" data-testid="root-svg" focusable="false" height="300" role="presentation" tabindex="-1" viewBox="0 0 650 300" width="650" style="overflow: hidden;">
+          <g data-testid="margin-container" id="visa-viz-margin-container-g-scatter-plot-unit-test" transform="translate(6.5, 3)">
+            <g data-testid="padding-container" id="visa-viz-padding-container-g-scatter-plot-unit-test" transform="translate(60, 20)">
+              <g aria-hidden="true" class="scatter-grid-group" data-testid="scatter-grid-group" focusable="false" role="presentation">
+                <g class="bottom grid" data-testid="grid-bottom" fill="none" font-family="sans-serif" font-size="10" opacity="1" text-anchor="middle">
+                  <path class="domain" d="M0.5,224V0.5H527.5V224" stroke="currentColor"></path>
+                  <g class="tick" opacity="1" transform="translate(10.634615384615385,0)">
+                    <line stroke="currentColor" y2="224"></line>
+                    <text dy="0.71em" fill="currentColor" y="227"></text>
+                  </g>
+                  <g class="tick" opacity="1" transform="translate(78.19871794871794,0)">
+                    <line stroke="currentColor" y2="224"></line>
+                    <text dy="0.71em" fill="currentColor" y="227"></text>
+                  </g>
+                  <g class="tick" opacity="1" transform="translate(145.7628205128205,0)">
+                    <line stroke="currentColor" y2="224"></line>
+                    <text dy="0.71em" fill="currentColor" y="227"></text>
+                  </g>
+                  <g class="tick" opacity="1" transform="translate(213.32692307692307,0)">
+                    <line stroke="currentColor" y2="224"></line>
+                    <text dy="0.71em" fill="currentColor" y="227"></text>
+                  </g>
+                  <g class="tick" opacity="1" transform="translate(280.89102564102564,0)">
+                    <line stroke="currentColor" y2="224"></line>
+                    <text dy="0.71em" fill="currentColor" y="227"></text>
+                  </g>
+                  <g class="tick" opacity="1" transform="translate(348.4551282051282,0)">
+                    <line stroke="currentColor" y2="224"></line>
+                    <text dy="0.71em" fill="currentColor" y="227"></text>
+                  </g>
+                  <g class="tick" opacity="1" transform="translate(416.0192307692308,0)">
+                    <line stroke="currentColor" y2="224"></line>
+                    <text dy="0.71em" fill="currentColor" y="227"></text>
+                  </g>
+                  <g class="tick" opacity="1" transform="translate(483.5833333333333,0)">
+                    <line stroke="currentColor" y2="224"></line>
+                    <text dy="0.71em" fill="currentColor" y="227"></text>
+                  </g>
+                </g>
+                <g class="grid left" data-testid="grid-left" fill="none" font-family="sans-serif" font-size="10" opacity="1" text-anchor="end">
+                  <path class="domain" d="M527,224.5H0.5V0.5H527" stroke="currentColor"></path>
+                  <g class="tick" opacity="1" transform="translate(0,224.23682999769957)">
+                    <line stroke="currentColor" x2="527"></line>
+                    <text dy="0.32em" fill="currentColor" x="-3"></text>
+                  </g>
+                  <g class="tick" opacity="1" transform="translate(0,205.83333333333331)">
+                    <line stroke="currentColor" x2="527"></line>
+                    <text dy="0.32em" fill="currentColor" x="-3"></text>
+                  </g>
+                  <g class="tick" opacity="1" transform="translate(0,187.42983666896708)">
+                    <line stroke="currentColor" x2="527"></line>
+                    <text dy="0.32em" fill="currentColor" x="-3"></text>
+                  </g>
+                  <g class="tick" opacity="1" transform="translate(0,169.02634000460085)">
+                    <line stroke="currentColor" x2="527"></line>
+                    <text dy="0.32em" fill="currentColor" x="-3"></text>
+                  </g>
+                  <g class="tick" opacity="1" transform="translate(0,150.62284334023462)">
+                    <line stroke="currentColor" x2="527"></line>
+                    <text dy="0.32em" fill="currentColor" x="-3"></text>
+                  </g>
+                  <g class="tick" opacity="1" transform="translate(0,132.2193466758684)">
+                    <line stroke="currentColor" x2="527"></line>
+                    <text dy="0.32em" fill="currentColor" x="-3"></text>
+                  </g>
+                  <g class="tick" opacity="1" transform="translate(0,113.81585001150216)">
+                    <line stroke="currentColor" x2="527"></line>
+                    <text dy="0.32em" fill="currentColor" x="-3"></text>
+                  </g>
+                  <g class="tick" opacity="1" transform="translate(0,95.41235334713593)">
+                    <line stroke="currentColor" x2="527"></line>
+                    <text dy="0.32em" fill="currentColor" x="-3"></text>
+                  </g>
+                  <g class="tick" opacity="1" transform="translate(0,77.00885668276972)">
+                    <line stroke="currentColor" x2="527"></line>
+                    <text dy="0.32em" fill="currentColor" x="-3"></text>
+                  </g>
+                  <g class="tick" opacity="1" transform="translate(0,58.6053600184035)">
+                    <line stroke="currentColor" x2="527"></line>
+                    <text dy="0.32em" fill="currentColor" x="-3"></text>
+                  </g>
+                  <g class="tick" opacity="1" transform="translate(0,40.20186335403726)">
+                    <line stroke="currentColor" x2="527"></line>
+                    <text dy="0.32em" fill="currentColor" x="-3"></text>
+                  </g>
+                  <g class="tick" opacity="1" transform="translate(0,21.798366689671017)">
+                    <line stroke="currentColor" x2="527"></line>
+                    <text dy="0.32em" fill="currentColor" x="-3"></text>
+                  </g>
+                  <g class="tick" opacity="1" transform="translate(0,3.394870025304801)">
+                    <line stroke="currentColor" x2="527"></line>
+                    <text dy="0.32em" fill="currentColor" x="-3"></text>
+                  </g>
+                </g>
+                <g class="axis-mark axis-mark-x" data-testid="x-axis-mark" fill="none" font-family="sans-serif" font-size="10" opacity="1" text-anchor="middle" transform="translate(0, 223.73682999769957)">
+                  <path class="domain" d="M0.5,0.5H527.5" stroke="currentColor"></path>
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(10.634615384615385,0)">
+                    <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                    <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
+                  </g>
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(78.19871794871794,0)">
+                    <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                    <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
+                  </g>
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(145.7628205128205,0)">
+                    <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                    <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
+                  </g>
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(213.32692307692307,0)">
+                    <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                    <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
+                  </g>
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(280.89102564102564,0)">
+                    <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                    <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
+                  </g>
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(348.4551282051282,0)">
+                    <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                    <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
+                  </g>
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(416.0192307692308,0)">
+                    <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                    <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
+                  </g>
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(483.5833333333333,0)">
+                    <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                    <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
+                  </g>
+                </g>
+                <g class="axis-mark axis-mark-y" data-testid="y-axis-mark" fill="none" font-family="sans-serif" font-size="10" opacity="0" text-anchor="end" transform="translate(10.134615384615385, 0)">
+                  <path class="domain" d="M0.5,224.5V0.5" stroke="currentColor"></path>
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0,224.23682999769957)">
+                    <line data-testid="axis-tick-line" stroke="currentColor" x2="0"></line>
+                    <text data-testid="axis-tick-text" dy="0.32em" fill="currentColor" x="-10"></text>
+                  </g>
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0,205.83333333333331)">
+                    <line data-testid="axis-tick-line" stroke="currentColor" x2="0"></line>
+                    <text data-testid="axis-tick-text" dy="0.32em" fill="currentColor" x="-10"></text>
+                  </g>
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0,187.42983666896708)">
+                    <line data-testid="axis-tick-line" stroke="currentColor" x2="0"></line>
+                    <text data-testid="axis-tick-text" dy="0.32em" fill="currentColor" x="-10"></text>
+                  </g>
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0,169.02634000460085)">
+                    <line data-testid="axis-tick-line" stroke="currentColor" x2="0"></line>
+                    <text data-testid="axis-tick-text" dy="0.32em" fill="currentColor" x="-10"></text>
+                  </g>
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0,150.62284334023462)">
+                    <line data-testid="axis-tick-line" stroke="currentColor" x2="0"></line>
+                    <text data-testid="axis-tick-text" dy="0.32em" fill="currentColor" x="-10"></text>
+                  </g>
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0,132.2193466758684)">
+                    <line data-testid="axis-tick-line" stroke="currentColor" x2="0"></line>
+                    <text data-testid="axis-tick-text" dy="0.32em" fill="currentColor" x="-10"></text>
+                  </g>
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0,113.81585001150216)">
+                    <line data-testid="axis-tick-line" stroke="currentColor" x2="0"></line>
+                    <text data-testid="axis-tick-text" dy="0.32em" fill="currentColor" x="-10"></text>
+                  </g>
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0,95.41235334713593)">
+                    <line data-testid="axis-tick-line" stroke="currentColor" x2="0"></line>
+                    <text data-testid="axis-tick-text" dy="0.32em" fill="currentColor" x="-10"></text>
+                  </g>
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0,77.00885668276972)">
+                    <line data-testid="axis-tick-line" stroke="currentColor" x2="0"></line>
+                    <text data-testid="axis-tick-text" dy="0.32em" fill="currentColor" x="-10"></text>
+                  </g>
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0,58.6053600184035)">
+                    <line data-testid="axis-tick-line" stroke="currentColor" x2="0"></line>
+                    <text data-testid="axis-tick-text" dy="0.32em" fill="currentColor" x="-10"></text>
+                  </g>
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0,40.20186335403726)">
+                    <line data-testid="axis-tick-line" stroke="currentColor" x2="0"></line>
+                    <text data-testid="axis-tick-text" dy="0.32em" fill="currentColor" x="-10"></text>
+                  </g>
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0,21.798366689671017)">
+                    <line data-testid="axis-tick-line" stroke="currentColor" x2="0"></line>
+                    <text data-testid="axis-tick-text" dy="0.32em" fill="currentColor" x="-10"></text>
+                  </g>
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0,3.394870025304801)">
+                    <line data-testid="axis-tick-line" stroke="currentColor" x2="0"></line>
+                    <text data-testid="axis-tick-text" dy="0.32em" fill="currentColor" x="-10"></text>
+                  </g>
+                </g>
+              </g>
+              <g class="scatter-dot-group" data-testid="marker-group-container" isolation="isolate" style="isolation: isolate;">
+                <g class="series-point-group" cursor="default" data-id="marker-series-A" data-testid="marker-series-group" focusable="false" id="scatter-plot-unit-test-123457-123457-123457" role="presentation" tabindex="-1">
+                  <path class="data-point moving" d="M1,0L0.9952487945556641,0.10496900230646133L0.9802308678627014,0.20940586924552917L0.9531400799751282,0.31073155999183655L0.9148818850517273,0.4079720079898834L0.8663365244865417,0.5002545714378357L0.8094649910926819,0.5883480906486511L0.743568480014801,0.6698152422904968L0.6695123314857483,0.7439088225364685L0.5881620049476624,0.8099220395088196L0.5004010796546936,0.867180347442627L0.4069012701511383,0.9140697717666626L0.30910128355026245,0.9513185620307922L0.2079721838235855,0.9784069061279297L0.10456041246652603,0.9948219656944275L9.057112038135529e-8,1L-0.10454819351434708,0.994599461555481L-0.20796485245227814,0.9783451557159424L-0.30910056829452515,0.9513131976127625L-0.40682557225227356,0.9137774109840393L-0.5000651478767395,0.8661796450614929L-0.5878113508224487,0.8090839982032776L-0.6691301465034485,0.7431550621986389L-0.7431550025939941,0.6691302061080933L-0.8090841770172119,0.5878111720085144L-0.8661795258522034,0.5000653266906738L-0.9137775301933289,0.4068255126476288L-0.9513131976127625,0.30910077691078186L-0.9783450961112976,0.20796531438827515L-0.994599461555481,0.10454835742712021L-1,1.5099580252808664e-7L-0.9952487945556641,-0.1049688383936882L-0.9802308082580566,-0.2094057947397232L-0.953140139579773,-0.3107314109802246L-0.9148820638656616,-0.4079718291759491L-0.8663367629051208,-0.5002543926239014L-0.8094651103019714,-0.5883479714393616L-0.7435685396194458,-0.6698151230812073L-0.6695123314857483,-0.7439088225364685L-0.5881620645523071,-0.8099220395088196L-0.5004012584686279,-0.867180347442627L-0.4069012701511383,-0.9140697717666626L-0.30910128355026245,-0.9513185620307922L-0.20797239243984222,-0.9784069061279297L-0.10456059128046036,-0.9948219656944275L-3.026798367500305e-9,-1L0.10454817116260529,-0.994599461555481L0.2079651653766632,-0.9783450961112976L0.30910080671310425,-0.9513131380081177L0.4068260192871094,-0.913777232170105L0.5000655055046082,-0.8661794066429138L0.587811291217804,-0.8090839982032776L0.6691306233406067,-0.7431545853614807L0.7431554198265076,-0.6691297292709351L0.8090841770172119,-0.5878111124038696L0.866179883480072,-0.5000647306442261L0.9137775301933289,-0.4068252444267273L0.9513131976127625,-0.309100478887558L0.9783451557159424,-0.20796477794647217L0.9945995211601257,-0.10454780608415604Z" data-d="M1,0A1,1,0,1,1,-1,0A1,1,0,1,1,1,0" data-id="marker-A-1-2700" data-r="6" data-role="img" data-testid="marker" data-translate-x="66.5" data-translate-y="23" data-x="43.916666666666664" data-y="174.04738900391072" fill="#7c99b1" focusable="false" id="scatter-plot-unit-test-123457-123457-123457" opacity="0" role="presentation" stroke="#35495a" stroke-width="0.16666666666666666" tabindex="-1" transform="translate(43.916666666666664,174.04738900391072) scale(1)" style="mix-blend-mode: multiply;"></path>
+                  <path class="data-point moving" d="M1,0L0.9952487945556641,0.10496900230646133L0.9802308678627014,0.20940586924552917L0.9531400799751282,0.31073155999183655L0.9148818850517273,0.4079720079898834L0.8663365244865417,0.5002545714378357L0.8094649910926819,0.5883480906486511L0.743568480014801,0.6698152422904968L0.6695123314857483,0.7439088225364685L0.5881620049476624,0.8099220395088196L0.5004010796546936,0.867180347442627L0.4069012701511383,0.9140697717666626L0.30910128355026245,0.9513185620307922L0.2079721838235855,0.9784069061279297L0.10456041246652603,0.9948219656944275L9.057112038135529e-8,1L-0.10454819351434708,0.994599461555481L-0.20796485245227814,0.9783451557159424L-0.30910056829452515,0.9513131976127625L-0.40682557225227356,0.9137774109840393L-0.5000651478767395,0.8661796450614929L-0.5878113508224487,0.8090839982032776L-0.6691301465034485,0.7431550621986389L-0.7431550025939941,0.6691302061080933L-0.8090841770172119,0.5878111720085144L-0.8661795258522034,0.5000653266906738L-0.9137775301933289,0.4068255126476288L-0.9513131976127625,0.30910077691078186L-0.9783450961112976,0.20796531438827515L-0.994599461555481,0.10454835742712021L-1,1.5099580252808664e-7L-0.9952487945556641,-0.1049688383936882L-0.9802308082580566,-0.2094057947397232L-0.953140139579773,-0.3107314109802246L-0.9148820638656616,-0.4079718291759491L-0.8663367629051208,-0.5002543926239014L-0.8094651103019714,-0.5883479714393616L-0.7435685396194458,-0.6698151230812073L-0.6695123314857483,-0.7439088225364685L-0.5881620645523071,-0.8099220395088196L-0.5004012584686279,-0.867180347442627L-0.4069012701511383,-0.9140697717666626L-0.30910128355026245,-0.9513185620307922L-0.20797239243984222,-0.9784069061279297L-0.10456059128046036,-0.9948219656944275L-3.026798367500305e-9,-1L0.10454817116260529,-0.994599461555481L0.2079651653766632,-0.9783450961112976L0.30910080671310425,-0.9513131380081177L0.4068260192871094,-0.913777232170105L0.5000655055046082,-0.8661794066429138L0.587811291217804,-0.8090839982032776L0.6691306233406067,-0.7431545853614807L0.7431554198265076,-0.6691297292709351L0.8090841770172119,-0.5878111124038696L0.866179883480072,-0.5000647306442261L0.9137775301933289,-0.4068252444267273L0.9513131976127625,-0.309100478887558L0.9783451557159424,-0.20796477794647217L0.9945995211601257,-0.10454780608415604Z" data-d="M1,0A1,1,0,1,1,-1,0A1,1,0,1,1,1,0" data-id="marker-A-2-1000" data-r="6" data-role="img" data-testid="marker" data-translate-x="66.5" data-translate-y="23" data-x="77.69871794871794" data-y="205.33333333333331" fill="#7c99b1" focusable="false" id="scatter-plot-unit-test-123457-123457-123457" opacity="0" role="presentation" stroke="#35495a" stroke-width="0.16666666666666666" tabindex="-1" transform="translate(77.69871794871794,205.33333333333331) scale(1)" style="mix-blend-mode: multiply;"></path>
+                  <path class="data-point moving" d="M1,0L0.9952487945556641,0.10496900230646133L0.9802308678627014,0.20940586924552917L0.9531400799751282,0.31073155999183655L0.9148818850517273,0.4079720079898834L0.8663365244865417,0.5002545714378357L0.8094649910926819,0.5883480906486511L0.743568480014801,0.6698152422904968L0.6695123314857483,0.7439088225364685L0.5881620049476624,0.8099220395088196L0.5004010796546936,0.867180347442627L0.4069012701511383,0.9140697717666626L0.30910128355026245,0.9513185620307922L0.2079721838235855,0.9784069061279297L0.10456041246652603,0.9948219656944275L9.057112038135529e-8,1L-0.10454819351434708,0.994599461555481L-0.20796485245227814,0.9783451557159424L-0.30910056829452515,0.9513131976127625L-0.40682557225227356,0.9137774109840393L-0.5000651478767395,0.8661796450614929L-0.5878113508224487,0.8090839982032776L-0.6691301465034485,0.7431550621986389L-0.7431550025939941,0.6691302061080933L-0.8090841770172119,0.5878111720085144L-0.8661795258522034,0.5000653266906738L-0.9137775301933289,0.4068255126476288L-0.9513131976127625,0.30910077691078186L-0.9783450961112976,0.20796531438827515L-0.994599461555481,0.10454835742712021L-1,1.5099580252808664e-7L-0.9952487945556641,-0.1049688383936882L-0.9802308082580566,-0.2094057947397232L-0.953140139579773,-0.3107314109802246L-0.9148820638656616,-0.4079718291759491L-0.8663367629051208,-0.5002543926239014L-0.8094651103019714,-0.5883479714393616L-0.7435685396194458,-0.6698151230812073L-0.6695123314857483,-0.7439088225364685L-0.5881620645523071,-0.8099220395088196L-0.5004012584686279,-0.867180347442627L-0.4069012701511383,-0.9140697717666626L-0.30910128355026245,-0.9513185620307922L-0.20797239243984222,-0.9784069061279297L-0.10456059128046036,-0.9948219656944275L-3.026798367500305e-9,-1L0.10454817116260529,-0.994599461555481L0.2079651653766632,-0.9783450961112976L0.30910080671310425,-0.9513131380081177L0.4068260192871094,-0.913777232170105L0.5000655055046082,-0.8661794066429138L0.587811291217804,-0.8090839982032776L0.6691306233406067,-0.7431545853614807L0.7431554198265076,-0.6691297292709351L0.8090841770172119,-0.5878111124038696L0.866179883480072,-0.5000647306442261L0.9137775301933289,-0.4068252444267273L0.9513131976127625,-0.309100478887558L0.9783451557159424,-0.20796477794647217L0.9945995211601257,-0.10454780608415604Z" data-d="M1,0A1,1,0,1,1,-1,0A1,1,0,1,1,1,0" data-id="marker-A-3-4004" data-r="6" data-role="img" data-testid="marker" data-translate-x="66.5" data-translate-y="23" data-x="111.48076923076921" data-y="150.04922935357718" fill="#7c99b1" focusable="false" id="scatter-plot-unit-test-123457-123457-123457" opacity="0" role="presentation" stroke="#35495a" stroke-width="0.16666666666666666" tabindex="-1" transform="translate(111.48076923076921,150.04922935357718) scale(1)" style="mix-blend-mode: multiply;"></path>
+                </g>
+                <g class="series-point-group" cursor="default" data-id="marker-series-B" data-testid="marker-series-group" focusable="false" id="scatter-plot-unit-test-123457-123457-123457" role="presentation" tabindex="-1">
+                  <path class="data-point moving" d="M1,0L0.9952487945556641,0.10496900230646133L0.9802308678627014,0.20940586924552917L0.9531400799751282,0.31073155999183655L0.9148818850517273,0.4079720079898834L0.8663365244865417,0.5002545714378357L0.8094649910926819,0.5883480906486511L0.743568480014801,0.6698152422904968L0.6695123314857483,0.7439088225364685L0.5881620049476624,0.8099220395088196L0.5004010796546936,0.867180347442627L0.4069012701511383,0.9140697717666626L0.30910128355026245,0.9513185620307922L0.2079721838235855,0.9784069061279297L0.10456041246652603,0.9948219656944275L9.057112038135529e-8,1L-0.10454819351434708,0.994599461555481L-0.20796485245227814,0.9783451557159424L-0.30910056829452515,0.9513131976127625L-0.40682557225227356,0.9137774109840393L-0.5000651478767395,0.8661796450614929L-0.5878113508224487,0.8090839982032776L-0.6691301465034485,0.7431550621986389L-0.7431550025939941,0.6691302061080933L-0.8090841770172119,0.5878111720085144L-0.8661795258522034,0.5000653266906738L-0.9137775301933289,0.4068255126476288L-0.9513131976127625,0.30910077691078186L-0.9783450961112976,0.20796531438827515L-0.994599461555481,0.10454835742712021L-1,1.5099580252808664e-7L-0.9952487945556641,-0.1049688383936882L-0.9802308082580566,-0.2094057947397232L-0.953140139579773,-0.3107314109802246L-0.9148820638656616,-0.4079718291759491L-0.8663367629051208,-0.5002543926239014L-0.8094651103019714,-0.5883479714393616L-0.7435685396194458,-0.6698151230812073L-0.6695123314857483,-0.7439088225364685L-0.5881620645523071,-0.8099220395088196L-0.5004012584686279,-0.867180347442627L-0.4069012701511383,-0.9140697717666626L-0.30910128355026245,-0.9513185620307922L-0.20797239243984222,-0.9784069061279297L-0.10456059128046036,-0.9948219656944275L-3.026798367500305e-9,-1L0.10454817116260529,-0.994599461555481L0.2079651653766632,-0.9783450961112976L0.30910080671310425,-0.9513131380081177L0.4068260192871094,-0.913777232170105L0.5000655055046082,-0.8661794066429138L0.587811291217804,-0.8090839982032776L0.6691306233406067,-0.7431545853614807L0.7431554198265076,-0.6691297292709351L0.8090841770172119,-0.5878111124038696L0.866179883480072,-0.5000647306442261L0.9137775301933289,-0.4068252444267273L0.9513131976127625,-0.309100478887558L0.9783451557159424,-0.20796477794647217L0.9945995211601257,-0.10454780608415604Z" data-d="M1,0A1,1,0,1,1,-1,0A1,1,0,1,1,1,0" data-id="marker-B-4-2454" data-r="6" data-role="img" data-testid="marker" data-translate-x="66.5" data-translate-y="23" data-x="145.2628205128205" data-y="178.57464918334483" fill="#cacae7" focusable="false" id="scatter-plot-unit-test-123457-123457-123457" opacity="0" role="presentation" stroke="#6868ba" stroke-width="0.16666666666666666" tabindex="-1" transform="translate(145.2628205128205,178.57464918334483) scale(1)" style="mix-blend-mode: multiply;"></path>
+                  <path class="data-point moving" d="M1,0L0.9952487945556641,0.10496900230646133L0.9802308678627014,0.20940586924552917L0.9531400799751282,0.31073155999183655L0.9148818850517273,0.4079720079898834L0.8663365244865417,0.5002545714378357L0.8094649910926819,0.5883480906486511L0.743568480014801,0.6698152422904968L0.6695123314857483,0.7439088225364685L0.5881620049476624,0.8099220395088196L0.5004010796546936,0.867180347442627L0.4069012701511383,0.9140697717666626L0.30910128355026245,0.9513185620307922L0.2079721838235855,0.9784069061279297L0.10456041246652603,0.9948219656944275L9.057112038135529e-8,1L-0.10454819351434708,0.994599461555481L-0.20796485245227814,0.9783451557159424L-0.30910056829452515,0.9513131976127625L-0.40682557225227356,0.9137774109840393L-0.5000651478767395,0.8661796450614929L-0.5878113508224487,0.8090839982032776L-0.6691301465034485,0.7431550621986389L-0.7431550025939941,0.6691302061080933L-0.8090841770172119,0.5878111720085144L-0.8661795258522034,0.5000653266906738L-0.9137775301933289,0.4068255126476288L-0.9513131976127625,0.30910077691078186L-0.9783450961112976,0.20796531438827515L-0.994599461555481,0.10454835742712021L-1,1.5099580252808664e-7L-0.9952487945556641,-0.1049688383936882L-0.9802308082580566,-0.2094057947397232L-0.953140139579773,-0.3107314109802246L-0.9148820638656616,-0.4079718291759491L-0.8663367629051208,-0.5002543926239014L-0.8094651103019714,-0.5883479714393616L-0.7435685396194458,-0.6698151230812073L-0.6695123314857483,-0.7439088225364685L-0.5881620645523071,-0.8099220395088196L-0.5004012584686279,-0.867180347442627L-0.4069012701511383,-0.9140697717666626L-0.30910128355026245,-0.9513185620307922L-0.20797239243984222,-0.9784069061279297L-0.10456059128046036,-0.9948219656944275L-3.026798367500305e-9,-1L0.10454817116260529,-0.994599461555481L0.2079651653766632,-0.9783450961112976L0.30910080671310425,-0.9513131380081177L0.4068260192871094,-0.913777232170105L0.5000655055046082,-0.8661794066429138L0.587811291217804,-0.8090839982032776L0.6691306233406067,-0.7431545853614807L0.7431554198265076,-0.6691297292709351L0.8090841770172119,-0.5878111124038696L0.866179883480072,-0.5000647306442261L0.9137775301933289,-0.4068252444267273L0.9513131976127625,-0.309100478887558L0.9783451557159424,-0.20796477794647217L0.9945995211601257,-0.10454780608415604Z" data-d="M1,0A1,1,0,1,1,-1,0A1,1,0,1,1,1,0" data-id="marker-B-5-2135" data-r="6" data-role="img" data-testid="marker" data-translate-x="66.5" data-translate-y="23" data-x="179.04487179487177" data-y="184.44536461927765" fill="#cacae7" focusable="false" id="scatter-plot-unit-test-123457-123457-123457" opacity="0" role="presentation" stroke="#6868ba" stroke-width="0.16666666666666666" tabindex="-1" transform="translate(179.04487179487177,184.44536461927765) scale(1)" style="mix-blend-mode: multiply;"></path>
+                  <path class="data-point moving" d="M1,0L0.9952487945556641,0.10496900230646133L0.9802308678627014,0.20940586924552917L0.9531400799751282,0.31073155999183655L0.9148818850517273,0.4079720079898834L0.8663365244865417,0.5002545714378357L0.8094649910926819,0.5883480906486511L0.743568480014801,0.6698152422904968L0.6695123314857483,0.7439088225364685L0.5881620049476624,0.8099220395088196L0.5004010796546936,0.867180347442627L0.4069012701511383,0.9140697717666626L0.30910128355026245,0.9513185620307922L0.2079721838235855,0.9784069061279297L0.10456041246652603,0.9948219656944275L9.057112038135529e-8,1L-0.10454819351434708,0.994599461555481L-0.20796485245227814,0.9783451557159424L-0.30910056829452515,0.9513131976127625L-0.40682557225227356,0.9137774109840393L-0.5000651478767395,0.8661796450614929L-0.5878113508224487,0.8090839982032776L-0.6691301465034485,0.7431550621986389L-0.7431550025939941,0.6691302061080933L-0.8090841770172119,0.5878111720085144L-0.8661795258522034,0.5000653266906738L-0.9137775301933289,0.4068255126476288L-0.9513131976127625,0.30910077691078186L-0.9783450961112976,0.20796531438827515L-0.994599461555481,0.10454835742712021L-1,1.5099580252808664e-7L-0.9952487945556641,-0.1049688383936882L-0.9802308082580566,-0.2094057947397232L-0.953140139579773,-0.3107314109802246L-0.9148820638656616,-0.4079718291759491L-0.8663367629051208,-0.5002543926239014L-0.8094651103019714,-0.5883479714393616L-0.7435685396194458,-0.6698151230812073L-0.6695123314857483,-0.7439088225364685L-0.5881620645523071,-0.8099220395088196L-0.5004012584686279,-0.867180347442627L-0.4069012701511383,-0.9140697717666626L-0.30910128355026245,-0.9513185620307922L-0.20797239243984222,-0.9784069061279297L-0.10456059128046036,-0.9948219656944275L-3.026798367500305e-9,-1L0.10454817116260529,-0.994599461555481L0.2079651653766632,-0.9783450961112976L0.30910080671310425,-0.9513131380081177L0.4068260192871094,-0.913777232170105L0.5000655055046082,-0.8661794066429138L0.587811291217804,-0.8090839982032776L0.6691306233406067,-0.7431545853614807L0.7431554198265076,-0.6691297292709351L0.8090841770172119,-0.5878111124038696L0.866179883480072,-0.5000647306442261L0.9137775301933289,-0.4068252444267273L0.9513131976127625,-0.309100478887558L0.9783451557159424,-0.20796477794647217L0.9945995211601257,-0.10454780608415604Z" data-d="M1,0A1,1,0,1,1,-1,0A1,1,0,1,1,1,0" data-id="marker-B-6-11143" data-r="6" data-role="img" data-testid="marker" data-translate-x="66.5" data-translate-y="23" data-x="212.82692307692307" data-y="18.66666666666665" fill="#cacae7" focusable="false" id="scatter-plot-unit-test-123457-123457-123457" opacity="0" role="presentation" stroke="#6868ba" stroke-width="0.16666666666666666" tabindex="-1" transform="translate(212.82692307692307,18.66666666666665) scale(1)" style="mix-blend-mode: multiply;"></path>
+                </g>
+                <g class="series-point-group" cursor="default" data-id="marker-series-C" data-testid="marker-series-group" focusable="false" id="scatter-plot-unit-test-123457-123457-123457" role="presentation" tabindex="-1">
+                  <path class="data-point moving" d="M1,0L0.9952487945556641,0.10496900230646133L0.9802308678627014,0.20940586924552917L0.9531400799751282,0.31073155999183655L0.9148818850517273,0.4079720079898834L0.8663365244865417,0.5002545714378357L0.8094649910926819,0.5883480906486511L0.743568480014801,0.6698152422904968L0.6695123314857483,0.7439088225364685L0.5881620049476624,0.8099220395088196L0.5004010796546936,0.867180347442627L0.4069012701511383,0.9140697717666626L0.30910128355026245,0.9513185620307922L0.2079721838235855,0.9784069061279297L0.10456041246652603,0.9948219656944275L9.057112038135529e-8,1L-0.10454819351434708,0.994599461555481L-0.20796485245227814,0.9783451557159424L-0.30910056829452515,0.9513131976127625L-0.40682557225227356,0.9137774109840393L-0.5000651478767395,0.8661796450614929L-0.5878113508224487,0.8090839982032776L-0.6691301465034485,0.7431550621986389L-0.7431550025939941,0.6691302061080933L-0.8090841770172119,0.5878111720085144L-0.8661795258522034,0.5000653266906738L-0.9137775301933289,0.4068255126476288L-0.9513131976127625,0.30910077691078186L-0.9783450961112976,0.20796531438827515L-0.994599461555481,0.10454835742712021L-1,1.5099580252808664e-7L-0.9952487945556641,-0.1049688383936882L-0.9802308082580566,-0.2094057947397232L-0.953140139579773,-0.3107314109802246L-0.9148820638656616,-0.4079718291759491L-0.8663367629051208,-0.5002543926239014L-0.8094651103019714,-0.5883479714393616L-0.7435685396194458,-0.6698151230812073L-0.6695123314857483,-0.7439088225364685L-0.5881620645523071,-0.8099220395088196L-0.5004012584686279,-0.867180347442627L-0.4069012701511383,-0.9140697717666626L-0.30910128355026245,-0.9513185620307922L-0.20797239243984222,-0.9784069061279297L-0.10456059128046036,-0.9948219656944275L-3.026798367500305e-9,-1L0.10454817116260529,-0.994599461555481L0.2079651653766632,-0.9783450961112976L0.30910080671310425,-0.9513131380081177L0.4068260192871094,-0.913777232170105L0.5000655055046082,-0.8661794066429138L0.587811291217804,-0.8090839982032776L0.6691306233406067,-0.7431545853614807L0.7431554198265076,-0.6691297292709351L0.8090841770172119,-0.5878111124038696L0.866179883480072,-0.5000647306442261L0.9137775301933289,-0.4068252444267273L0.9513131976127625,-0.309100478887558L0.9783451557159424,-0.20796477794647217L0.9945995211601257,-0.10454780608415604Z" data-d="M1,0A1,1,0,1,1,-1,0A1,1,0,1,1,1,0" data-id="marker-C-7-3845" data-r="6" data-role="img" data-testid="marker" data-translate-x="66.5" data-translate-y="23" data-x="246.60897435897434" data-y="152.9753853232114" fill="#abb798" focusable="false" id="scatter-plot-unit-test-123457-123457-123457" opacity="0" role="presentation" stroke="#576245" stroke-width="0.16666666666666666" tabindex="-1" transform="translate(246.60897435897434,152.9753853232114) scale(1)" style="mix-blend-mode: multiply;"></path>
+                  <path class="data-point moving" d="M1,0L0.9952487945556641,0.10496900230646133L0.9802308678627014,0.20940586924552917L0.9531400799751282,0.31073155999183655L0.9148818850517273,0.4079720079898834L0.8663365244865417,0.5002545714378357L0.8094649910926819,0.5883480906486511L0.743568480014801,0.6698152422904968L0.6695123314857483,0.7439088225364685L0.5881620049476624,0.8099220395088196L0.5004010796546936,0.867180347442627L0.4069012701511383,0.9140697717666626L0.30910128355026245,0.9513185620307922L0.2079721838235855,0.9784069061279297L0.10456041246652603,0.9948219656944275L9.057112038135529e-8,1L-0.10454819351434708,0.994599461555481L-0.20796485245227814,0.9783451557159424L-0.30910056829452515,0.9513131976127625L-0.40682557225227356,0.9137774109840393L-0.5000651478767395,0.8661796450614929L-0.5878113508224487,0.8090839982032776L-0.6691301465034485,0.7431550621986389L-0.7431550025939941,0.6691302061080933L-0.8090841770172119,0.5878111720085144L-0.8661795258522034,0.5000653266906738L-0.9137775301933289,0.4068255126476288L-0.9513131976127625,0.30910077691078186L-0.9783450961112976,0.20796531438827515L-0.994599461555481,0.10454835742712021L-1,1.5099580252808664e-7L-0.9952487945556641,-0.1049688383936882L-0.9802308082580566,-0.2094057947397232L-0.953140139579773,-0.3107314109802246L-0.9148820638656616,-0.4079718291759491L-0.8663367629051208,-0.5002543926239014L-0.8094651103019714,-0.5883479714393616L-0.7435685396194458,-0.6698151230812073L-0.6695123314857483,-0.7439088225364685L-0.5881620645523071,-0.8099220395088196L-0.5004012584686279,-0.867180347442627L-0.4069012701511383,-0.9140697717666626L-0.30910128355026245,-0.9513185620307922L-0.20797239243984222,-0.9784069061279297L-0.10456059128046036,-0.9948219656944275L-3.026798367500305e-9,-1L0.10454817116260529,-0.994599461555481L0.2079651653766632,-0.9783450961112976L0.30910080671310425,-0.9513131380081177L0.4068260192871094,-0.913777232170105L0.5000655055046082,-0.8661794066429138L0.587811291217804,-0.8090839982032776L0.6691306233406067,-0.7431545853614807L0.7431554198265076,-0.6691297292709351L0.8090841770172119,-0.5878111124038696L0.866179883480072,-0.5000647306442261L0.9137775301933289,-0.4068252444267273L0.9513131976127625,-0.309100478887558L0.9783451557159424,-0.20796477794647217L0.9945995211601257,-0.10454780608415604Z" data-d="M1,0A1,1,0,1,1,-1,0A1,1,0,1,1,1,0" data-id="marker-C-8-2823" data-r="6" data-role="img" data-testid="marker" data-translate-x="66.5" data-translate-y="23" data-x="280.39102564102564" data-y="171.7837589141937" fill="#abb798" focusable="false" id="scatter-plot-unit-test-123457-123457-123457" opacity="0" role="presentation" stroke="#576245" stroke-width="0.16666666666666666" tabindex="-1" transform="translate(280.39102564102564,171.7837589141937) scale(1)" style="mix-blend-mode: multiply;"></path>
+                  <path class="data-point moving" d="M1,0L0.9952487945556641,0.10496900230646133L0.9802308678627014,0.20940586924552917L0.9531400799751282,0.31073155999183655L0.9148818850517273,0.4079720079898834L0.8663365244865417,0.5002545714378357L0.8094649910926819,0.5883480906486511L0.743568480014801,0.6698152422904968L0.6695123314857483,0.7439088225364685L0.5881620049476624,0.8099220395088196L0.5004010796546936,0.867180347442627L0.4069012701511383,0.9140697717666626L0.30910128355026245,0.9513185620307922L0.2079721838235855,0.9784069061279297L0.10456041246652603,0.9948219656944275L9.057112038135529e-8,1L-0.10454819351434708,0.994599461555481L-0.20796485245227814,0.9783451557159424L-0.30910056829452515,0.9513131976127625L-0.40682557225227356,0.9137774109840393L-0.5000651478767395,0.8661796450614929L-0.5878113508224487,0.8090839982032776L-0.6691301465034485,0.7431550621986389L-0.7431550025939941,0.6691302061080933L-0.8090841770172119,0.5878111720085144L-0.8661795258522034,0.5000653266906738L-0.9137775301933289,0.4068255126476288L-0.9513131976127625,0.30910077691078186L-0.9783450961112976,0.20796531438827515L-0.994599461555481,0.10454835742712021L-1,1.5099580252808664e-7L-0.9952487945556641,-0.1049688383936882L-0.9802308082580566,-0.2094057947397232L-0.953140139579773,-0.3107314109802246L-0.9148820638656616,-0.4079718291759491L-0.8663367629051208,-0.5002543926239014L-0.8094651103019714,-0.5883479714393616L-0.7435685396194458,-0.6698151230812073L-0.6695123314857483,-0.7439088225364685L-0.5881620645523071,-0.8099220395088196L-0.5004012584686279,-0.867180347442627L-0.4069012701511383,-0.9140697717666626L-0.30910128355026245,-0.9513185620307922L-0.20797239243984222,-0.9784069061279297L-0.10456059128046036,-0.9948219656944275L-3.026798367500305e-9,-1L0.10454817116260529,-0.994599461555481L0.2079651653766632,-0.9783450961112976L0.30910080671310425,-0.9513131380081177L0.4068260192871094,-0.913777232170105L0.5000655055046082,-0.8661794066429138L0.587811291217804,-0.8090839982032776L0.6691306233406067,-0.7431545853614807L0.7431554198265076,-0.6691297292709351L0.8090841770172119,-0.5878111124038696L0.866179883480072,-0.5000647306442261L0.9137775301933289,-0.4068252444267273L0.9513131976127625,-0.309100478887558L0.9783451557159424,-0.20796477794647217L0.9945995211601257,-0.10454780608415604Z" data-d="M1,0A1,1,0,1,1,-1,0A1,1,0,1,1,1,0" data-id="marker-C-9-1666" data-r="6" data-role="img" data-testid="marker" data-translate-x="66.5" data-translate-y="23" data-x="314.1730769230769" data-y="193.0766045548654" fill="#abb798" focusable="false" id="scatter-plot-unit-test-123457-123457-123457" opacity="0" role="presentation" stroke="#576245" stroke-width="0.16666666666666666" tabindex="-1" transform="translate(314.1730769230769,193.0766045548654) scale(1)" style="mix-blend-mode: multiply;"></path>
+                  <path class="data-point moving" d="M1,0L0.9952487945556641,0.10496900230646133L0.9802308678627014,0.20940586924552917L0.9531400799751282,0.31073155999183655L0.9148818850517273,0.4079720079898834L0.8663365244865417,0.5002545714378357L0.8094649910926819,0.5883480906486511L0.743568480014801,0.6698152422904968L0.6695123314857483,0.7439088225364685L0.5881620049476624,0.8099220395088196L0.5004010796546936,0.867180347442627L0.4069012701511383,0.9140697717666626L0.30910128355026245,0.9513185620307922L0.2079721838235855,0.9784069061279297L0.10456041246652603,0.9948219656944275L9.057112038135529e-8,1L-0.10454819351434708,0.994599461555481L-0.20796485245227814,0.9783451557159424L-0.30910056829452515,0.9513131976127625L-0.40682557225227356,0.9137774109840393L-0.5000651478767395,0.8661796450614929L-0.5878113508224487,0.8090839982032776L-0.6691301465034485,0.7431550621986389L-0.7431550025939941,0.6691302061080933L-0.8090841770172119,0.5878111720085144L-0.8661795258522034,0.5000653266906738L-0.9137775301933289,0.4068255126476288L-0.9513131976127625,0.30910077691078186L-0.9783450961112976,0.20796531438827515L-0.994599461555481,0.10454835742712021L-1,1.5099580252808664e-7L-0.9952487945556641,-0.1049688383936882L-0.9802308082580566,-0.2094057947397232L-0.953140139579773,-0.3107314109802246L-0.9148820638656616,-0.4079718291759491L-0.8663367629051208,-0.5002543926239014L-0.8094651103019714,-0.5883479714393616L-0.7435685396194458,-0.6698151230812073L-0.6695123314857483,-0.7439088225364685L-0.5881620645523071,-0.8099220395088196L-0.5004012584686279,-0.867180347442627L-0.4069012701511383,-0.9140697717666626L-0.30910128355026245,-0.9513185620307922L-0.20797239243984222,-0.9784069061279297L-0.10456059128046036,-0.9948219656944275L-3.026798367500305e-9,-1L0.10454817116260529,-0.994599461555481L0.2079651653766632,-0.9783450961112976L0.30910080671310425,-0.9513131380081177L0.4068260192871094,-0.913777232170105L0.5000655055046082,-0.8661794066429138L0.587811291217804,-0.8090839982032776L0.6691306233406067,-0.7431545853614807L0.7431554198265076,-0.6691297292709351L0.8090841770172119,-0.5878111124038696L0.866179883480072,-0.5000647306442261L0.9137775301933289,-0.4068252444267273L0.9513131976127625,-0.309100478887558L0.9783451557159424,-0.20796477794647217L0.9945995211601257,-0.10454780608415604Z" data-d="M1,0A1,1,0,1,1,-1,0A1,1,0,1,1,1,0" data-id="marker-C-10-1421" data-r="6" data-role="img" data-testid="marker" data-translate-x="66.5" data-translate-y="23" data-x="347.9551282051282" data-y="197.58546123763514" fill="#abb798" focusable="false" id="scatter-plot-unit-test-123457-123457-123457" opacity="0" role="presentation" stroke="#576245" stroke-width="0.16666666666666666" tabindex="-1" transform="translate(347.9551282051282,197.58546123763514) scale(1)" style="mix-blend-mode: multiply;"></path>
+                </g>
+                <g class="series-point-group" cursor="default" data-id="marker-series-D" data-testid="marker-series-group" focusable="false" id="scatter-plot-unit-test-123457-123457-123457" role="presentation" tabindex="-1">
+                  <path class="data-point moving" d="M1,0L0.9952487945556641,0.10496900230646133L0.9802308678627014,0.20940586924552917L0.9531400799751282,0.31073155999183655L0.9148818850517273,0.4079720079898834L0.8663365244865417,0.5002545714378357L0.8094649910926819,0.5883480906486511L0.743568480014801,0.6698152422904968L0.6695123314857483,0.7439088225364685L0.5881620049476624,0.8099220395088196L0.5004010796546936,0.867180347442627L0.4069012701511383,0.9140697717666626L0.30910128355026245,0.9513185620307922L0.2079721838235855,0.9784069061279297L0.10456041246652603,0.9948219656944275L9.057112038135529e-8,1L-0.10454819351434708,0.994599461555481L-0.20796485245227814,0.9783451557159424L-0.30910056829452515,0.9513131976127625L-0.40682557225227356,0.9137774109840393L-0.5000651478767395,0.8661796450614929L-0.5878113508224487,0.8090839982032776L-0.6691301465034485,0.7431550621986389L-0.7431550025939941,0.6691302061080933L-0.8090841770172119,0.5878111720085144L-0.8661795258522034,0.5000653266906738L-0.9137775301933289,0.4068255126476288L-0.9513131976127625,0.30910077691078186L-0.9783450961112976,0.20796531438827515L-0.994599461555481,0.10454835742712021L-1,1.5099580252808664e-7L-0.9952487945556641,-0.1049688383936882L-0.9802308082580566,-0.2094057947397232L-0.953140139579773,-0.3107314109802246L-0.9148820638656616,-0.4079718291759491L-0.8663367629051208,-0.5002543926239014L-0.8094651103019714,-0.5883479714393616L-0.7435685396194458,-0.6698151230812073L-0.6695123314857483,-0.7439088225364685L-0.5881620645523071,-0.8099220395088196L-0.5004012584686279,-0.867180347442627L-0.4069012701511383,-0.9140697717666626L-0.30910128355026245,-0.9513185620307922L-0.20797239243984222,-0.9784069061279297L-0.10456059128046036,-0.9948219656944275L-3.026798367500305e-9,-1L0.10454817116260529,-0.994599461555481L0.2079651653766632,-0.9783450961112976L0.30910080671310425,-0.9513131380081177L0.4068260192871094,-0.913777232170105L0.5000655055046082,-0.8661794066429138L0.587811291217804,-0.8090839982032776L0.6691306233406067,-0.7431545853614807L0.7431554198265076,-0.6691297292709351L0.8090841770172119,-0.5878111124038696L0.866179883480072,-0.5000647306442261L0.9137775301933289,-0.4068252444267273L0.9513131976127625,-0.309100478887558L0.9783451557159424,-0.20796477794647217L0.9945995211601257,-0.10454780608415604Z" data-d="M1,0A1,1,0,1,1,-1,0A1,1,0,1,1,1,0" data-id="marker-D-11-8845" data-r="6" data-role="img" data-testid="marker" data-translate-x="66.5" data-translate-y="23" data-x="381.7371794871795" data-y="60.95790200138026" fill="#a19491" focusable="false" id="scatter-plot-unit-test-123457-123457-123457" opacity="0" role="presentation" stroke="#504644" stroke-width="0.16666666666666666" tabindex="-1" transform="translate(381.7371794871795,60.95790200138026) scale(1)" style="mix-blend-mode: multiply;"></path>
+                  <path class="data-point moving" d="M1,0L0.9952487945556641,0.10496900230646133L0.9802308678627014,0.20940586924552917L0.9531400799751282,0.31073155999183655L0.9148818850517273,0.4079720079898834L0.8663365244865417,0.5002545714378357L0.8094649910926819,0.5883480906486511L0.743568480014801,0.6698152422904968L0.6695123314857483,0.7439088225364685L0.5881620049476624,0.8099220395088196L0.5004010796546936,0.867180347442627L0.4069012701511383,0.9140697717666626L0.30910128355026245,0.9513185620307922L0.2079721838235855,0.9784069061279297L0.10456041246652603,0.9948219656944275L9.057112038135529e-8,1L-0.10454819351434708,0.994599461555481L-0.20796485245227814,0.9783451557159424L-0.30910056829452515,0.9513131976127625L-0.40682557225227356,0.9137774109840393L-0.5000651478767395,0.8661796450614929L-0.5878113508224487,0.8090839982032776L-0.6691301465034485,0.7431550621986389L-0.7431550025939941,0.6691302061080933L-0.8090841770172119,0.5878111720085144L-0.8661795258522034,0.5000653266906738L-0.9137775301933289,0.4068255126476288L-0.9513131976127625,0.30910077691078186L-0.9783450961112976,0.20796531438827515L-0.994599461555481,0.10454835742712021L-1,1.5099580252808664e-7L-0.9952487945556641,-0.1049688383936882L-0.9802308082580566,-0.2094057947397232L-0.953140139579773,-0.3107314109802246L-0.9148820638656616,-0.4079718291759491L-0.8663367629051208,-0.5002543926239014L-0.8094651103019714,-0.5883479714393616L-0.7435685396194458,-0.6698151230812073L-0.6695123314857483,-0.7439088225364685L-0.5881620645523071,-0.8099220395088196L-0.5004012584686279,-0.867180347442627L-0.4069012701511383,-0.9140697717666626L-0.30910128355026245,-0.9513185620307922L-0.20797239243984222,-0.9784069061279297L-0.10456059128046036,-0.9948219656944275L-3.026798367500305e-9,-1L0.10454817116260529,-0.994599461555481L0.2079651653766632,-0.9783450961112976L0.30910080671310425,-0.9513131380081177L0.4068260192871094,-0.913777232170105L0.5000655055046082,-0.8661794066429138L0.587811291217804,-0.8090839982032776L0.6691306233406067,-0.7431545853614807L0.7431554198265076,-0.6691297292709351L0.8090841770172119,-0.5878111124038696L0.866179883480072,-0.5000647306442261L0.9137775301933289,-0.4068252444267273L0.9513131976127625,-0.309100478887558L0.9783451557159424,-0.20796477794647217L0.9945995211601257,-0.10454780608415604Z" data-d="M1,0A1,1,0,1,1,-1,0A1,1,0,1,1,1,0" data-id="marker-D-12-6865" data-r="6" data-role="img" data-testid="marker" data-translate-x="66.5" data-translate-y="23" data-x="415.5192307692308" data-y="97.39682539682539" fill="#a19491" focusable="false" id="scatter-plot-unit-test-123457-123457-123457" opacity="0" role="presentation" stroke="#504644" stroke-width="0.16666666666666666" tabindex="-1" transform="translate(415.5192307692308,97.39682539682539) scale(1)" style="mix-blend-mode: multiply;"></path>
+                  <path class="data-point moving" d="M1,0L0.9952487945556641,0.10496900230646133L0.9802308678627014,0.20940586924552917L0.9531400799751282,0.31073155999183655L0.9148818850517273,0.4079720079898834L0.8663365244865417,0.5002545714378357L0.8094649910926819,0.5883480906486511L0.743568480014801,0.6698152422904968L0.6695123314857483,0.7439088225364685L0.5881620049476624,0.8099220395088196L0.5004010796546936,0.867180347442627L0.4069012701511383,0.9140697717666626L0.30910128355026245,0.9513185620307922L0.2079721838235855,0.9784069061279297L0.10456041246652603,0.9948219656944275L9.057112038135529e-8,1L-0.10454819351434708,0.994599461555481L-0.20796485245227814,0.9783451557159424L-0.30910056829452515,0.9513131976127625L-0.40682557225227356,0.9137774109840393L-0.5000651478767395,0.8661796450614929L-0.5878113508224487,0.8090839982032776L-0.6691301465034485,0.7431550621986389L-0.7431550025939941,0.6691302061080933L-0.8090841770172119,0.5878111720085144L-0.8661795258522034,0.5000653266906738L-0.9137775301933289,0.4068255126476288L-0.9513131976127625,0.30910077691078186L-0.9783450961112976,0.20796531438827515L-0.994599461555481,0.10454835742712021L-1,1.5099580252808664e-7L-0.9952487945556641,-0.1049688383936882L-0.9802308082580566,-0.2094057947397232L-0.953140139579773,-0.3107314109802246L-0.9148820638656616,-0.4079718291759491L-0.8663367629051208,-0.5002543926239014L-0.8094651103019714,-0.5883479714393616L-0.7435685396194458,-0.6698151230812073L-0.6695123314857483,-0.7439088225364685L-0.5881620645523071,-0.8099220395088196L-0.5004012584686279,-0.867180347442627L-0.4069012701511383,-0.9140697717666626L-0.30910128355026245,-0.9513185620307922L-0.20797239243984222,-0.9784069061279297L-0.10456059128046036,-0.9948219656944275L-3.026798367500305e-9,-1L0.10454817116260529,-0.994599461555481L0.2079651653766632,-0.9783450961112976L0.30910080671310425,-0.9513131380081177L0.4068260192871094,-0.913777232170105L0.5000655055046082,-0.8661794066429138L0.587811291217804,-0.8090839982032776L0.6691306233406067,-0.7431545853614807L0.7431554198265076,-0.6691297292709351L0.8090841770172119,-0.5878111124038696L0.866179883480072,-0.5000647306442261L0.9137775301933289,-0.4068252444267273L0.9513131976127625,-0.309100478887558L0.9783451557159424,-0.20796477794647217L0.9945995211601257,-0.10454780608415604Z" data-d="M1,0A1,1,0,1,1,-1,0A1,1,0,1,1,1,0" data-id="marker-D-13-6154" data-r="6" data-role="img" data-testid="marker" data-translate-x="66.5" data-translate-y="23" data-x="449.30128205128204" data-y="110.48171152518977" fill="#a19491" focusable="false" id="scatter-plot-unit-test-123457-123457-123457" opacity="0" role="presentation" stroke="#504644" stroke-width="0.16666666666666666" tabindex="-1" transform="translate(449.30128205128204,110.48171152518977) scale(1)" style="mix-blend-mode: multiply;"></path>
+                  <path class="data-point moving" d="M1,0L0.9952487945556641,0.10496900230646133L0.9802308678627014,0.20940586924552917L0.9531400799751282,0.31073155999183655L0.9148818850517273,0.4079720079898834L0.8663365244865417,0.5002545714378357L0.8094649910926819,0.5883480906486511L0.743568480014801,0.6698152422904968L0.6695123314857483,0.7439088225364685L0.5881620049476624,0.8099220395088196L0.5004010796546936,0.867180347442627L0.4069012701511383,0.9140697717666626L0.30910128355026245,0.9513185620307922L0.2079721838235855,0.9784069061279297L0.10456041246652603,0.9948219656944275L9.057112038135529e-8,1L-0.10454819351434708,0.994599461555481L-0.20796485245227814,0.9783451557159424L-0.30910056829452515,0.9513131976127625L-0.40682557225227356,0.9137774109840393L-0.5000651478767395,0.8661796450614929L-0.5878113508224487,0.8090839982032776L-0.6691301465034485,0.7431550621986389L-0.7431550025939941,0.6691302061080933L-0.8090841770172119,0.5878111720085144L-0.8661795258522034,0.5000653266906738L-0.9137775301933289,0.4068255126476288L-0.9513131976127625,0.30910077691078186L-0.9783450961112976,0.20796531438827515L-0.994599461555481,0.10454835742712021L-1,1.5099580252808664e-7L-0.9952487945556641,-0.1049688383936882L-0.9802308082580566,-0.2094057947397232L-0.953140139579773,-0.3107314109802246L-0.9148820638656616,-0.4079718291759491L-0.8663367629051208,-0.5002543926239014L-0.8094651103019714,-0.5883479714393616L-0.7435685396194458,-0.6698151230812073L-0.6695123314857483,-0.7439088225364685L-0.5881620645523071,-0.8099220395088196L-0.5004012584686279,-0.867180347442627L-0.4069012701511383,-0.9140697717666626L-0.30910128355026245,-0.9513185620307922L-0.20797239243984222,-0.9784069061279297L-0.10456059128046036,-0.9948219656944275L-3.026798367500305e-9,-1L0.10454817116260529,-0.994599461555481L0.2079651653766632,-0.9783450961112976L0.30910080671310425,-0.9513131380081177L0.4068260192871094,-0.913777232170105L0.5000655055046082,-0.8661794066429138L0.587811291217804,-0.8090839982032776L0.6691306233406067,-0.7431545853614807L0.7431554198265076,-0.6691297292709351L0.8090841770172119,-0.5878111124038696L0.866179883480072,-0.5000647306442261L0.9137775301933289,-0.4068252444267273L0.9513131976127625,-0.309100478887558L0.9783451557159424,-0.20796477794647217L0.9945995211601257,-0.10454780608415604Z" data-d="M1,0A1,1,0,1,1,-1,0A1,1,0,1,1,1,0" data-id="marker-D-14-4109" data-r="6" data-role="img" data-testid="marker" data-translate-x="66.5" data-translate-y="23" data-x="483.0833333333333" data-y="148.1168622038187" fill="#a19491" focusable="false" id="scatter-plot-unit-test-123457-123457-123457" opacity="0" role="presentation" stroke="#504644" stroke-width="0.16666666666666666" tabindex="-1" transform="translate(483.0833333333333,148.1168622038187) scale(1)" style="mix-blend-mode: multiply;"></path>
+                </g>
+              </g>
+              <g aria-hidden="true" class="scatter-fit-line-group" data-testid="scatter-fit-line-group" focusable="false" role="presentation">
+                <line class="trendline" opacity="0"></line>
+                <line class="trendline" opacity="0"></line>
+                <line class="trendline" opacity="0"></line>
+              </g>
+              <g aria-hidden="true" class="scatter-dataLabel-group" data-testid="dataLabel-group-container" focusable="false" role="presentation">
+                <g class="series-dataLabel-group" cursor="default" data-id="label-series-A" data-testid="dataLabel-series-group">
+                  <text class="entering scatter-dataLabel" data-id="label-A-1-2700" data-testid="dataLabel" data-translate-x="66.5" data-translate-y="23" data-x="43.916666666666664" data-y="174.04738900391072" dy="-0.35em" fill="#587893" filter="url(#VCL-t-s-f-ffffffscatter-plot-unit-test)" opacity="1" text-anchor="middle" x="43.916666666666664" y="166.54738900391072">
+                    2,7E
+                  </text>
+                  <text class="entering scatter-dataLabel" data-id="label-A-2-1000" data-testid="dataLabel" data-translate-x="66.5" data-translate-y="23" data-x="77.69871794871794" data-y="205.33333333333331" dy="-0.35em" fill="#587893" filter="url(#VCL-t-s-f-ffffffscatter-plot-unit-test)" opacity="1" text-anchor="middle" x="77.69871794871794" y="197.83333333333331">
+                    1E
+                  </text>
+                  <text class="entering scatter-dataLabel" data-id="label-A-3-4004" data-testid="dataLabel" data-translate-x="66.5" data-translate-y="23" data-x="111.48076923076921" data-y="150.04922935357718" dy="-0.35em" fill="#587893" filter="url(#VCL-t-s-f-ffffffscatter-plot-unit-test)" opacity="1" text-anchor="middle" x="111.48076923076921" y="142.54922935357718">
+                    4E
+                  </text>
+                </g>
+                <g class="series-dataLabel-group" cursor="default" data-id="label-series-B" data-testid="dataLabel-series-group">
+                  <text class="entering scatter-dataLabel" data-id="label-B-4-2454" data-testid="dataLabel" data-translate-x="66.5" data-translate-y="23" data-x="145.2628205128205" data-y="178.57464918334483" dy="-0.35em" fill="#6b6bbc" filter="url(#VCL-t-s-f-ffffffscatter-plot-unit-test)" opacity="1" text-anchor="middle" x="145.2628205128205" y="171.07464918334483">
+                    2,5E
+                  </text>
+                  <text class="entering scatter-dataLabel" data-id="label-B-5-2135" data-testid="dataLabel" data-translate-x="66.5" data-translate-y="23" data-x="179.04487179487177" data-y="184.44536461927765" dy="-0.35em" fill="#6b6bbc" filter="url(#VCL-t-s-f-ffffffscatter-plot-unit-test)" opacity="1" text-anchor="middle" x="179.04487179487177" y="176.94536461927765">
+                    2,1E
+                  </text>
+                  <text class="entering scatter-dataLabel" data-id="label-B-6-11143" data-testid="dataLabel" data-translate-x="66.5" data-translate-y="23" data-x="212.82692307692307" data-y="18.66666666666665" dy="-0.35em" fill="#6b6bbc" filter="url(#VCL-t-s-f-ffffffscatter-plot-unit-test)" opacity="1" text-anchor="middle" x="212.82692307692307" y="11.16666666666665">
+                    11,1E
+                  </text>
+                </g>
+                <g class="series-dataLabel-group" cursor="default" data-id="label-series-C" data-testid="dataLabel-series-group">
+                  <text class="entering scatter-dataLabel" data-id="label-C-7-3845" data-testid="dataLabel" data-translate-x="66.5" data-translate-y="23" data-x="246.60897435897434" data-y="152.9753853232114" dy="-0.35em" fill="#6c7a55" filter="url(#VCL-t-s-f-ffffffscatter-plot-unit-test)" opacity="1" text-anchor="middle" x="246.60897435897434" y="145.4753853232114">
+                    3,8E
+                  </text>
+                  <text class="entering scatter-dataLabel" data-id="label-C-8-2823" data-testid="dataLabel" data-translate-x="66.5" data-translate-y="23" data-x="280.39102564102564" data-y="171.7837589141937" dy="-0.35em" fill="#6c7a55" filter="url(#VCL-t-s-f-ffffffscatter-plot-unit-test)" opacity="1" text-anchor="middle" x="280.39102564102564" y="164.2837589141937">
+                    2,8E
+                  </text>
+                  <text class="entering scatter-dataLabel" data-id="label-C-9-1666" data-testid="dataLabel" data-translate-x="66.5" data-translate-y="23" data-x="314.1730769230769" data-y="193.0766045548654" dy="-0.35em" fill="#6c7a55" filter="url(#VCL-t-s-f-ffffffscatter-plot-unit-test)" opacity="1" text-anchor="middle" x="314.1730769230769" y="185.5766045548654">
+                    1,7E
+                  </text>
+                  <text class="entering scatter-dataLabel" data-id="label-C-10-1421" data-testid="dataLabel" data-translate-x="66.5" data-translate-y="23" data-x="347.9551282051282" data-y="197.58546123763514" dy="-0.35em" fill="#6c7a55" filter="url(#VCL-t-s-f-ffffffscatter-plot-unit-test)" opacity="1" text-anchor="middle" x="347.9551282051282" y="190.08546123763514">
+                    1,4E
+                  </text>
+                </g>
+                <g class="series-dataLabel-group" cursor="default" data-id="label-series-D" data-testid="dataLabel-series-group">
+                  <text class="entering scatter-dataLabel" data-id="label-D-11-8845" data-testid="dataLabel" data-translate-x="66.5" data-translate-y="23" data-x="381.7371794871795" data-y="60.95790200138026" dy="-0.35em" fill="#81726e" filter="url(#VCL-t-s-f-ffffffscatter-plot-unit-test)" opacity="1" text-anchor="middle" x="381.7371794871795" y="53.45790200138026">
+                    8,8E
+                  </text>
+                  <text class="entering scatter-dataLabel" data-id="label-D-12-6865" data-testid="dataLabel" data-translate-x="66.5" data-translate-y="23" data-x="415.5192307692308" data-y="97.39682539682539" dy="-0.35em" fill="#81726e" filter="url(#VCL-t-s-f-ffffffscatter-plot-unit-test)" opacity="1" text-anchor="middle" x="415.5192307692308" y="89.89682539682539">
+                    6,9E
+                  </text>
+                  <text class="entering scatter-dataLabel" data-id="label-D-13-6154" data-testid="dataLabel" data-translate-x="66.5" data-translate-y="23" data-x="449.30128205128204" data-y="110.48171152518977" dy="-0.35em" fill="#81726e" filter="url(#VCL-t-s-f-ffffffscatter-plot-unit-test)" opacity="1" text-anchor="middle" x="449.30128205128204" y="102.98171152518977">
+                    6,2E
+                  </text>
+                  <text class="entering scatter-dataLabel" data-id="label-D-14-4109" data-testid="dataLabel" data-translate-x="66.5" data-translate-y="23" data-x="483.0833333333333" data-y="148.1168622038187" dy="-0.35em" fill="#81726e" filter="url(#VCL-t-s-f-ffffffscatter-plot-unit-test)" opacity="1" text-anchor="middle" x="483.0833333333333" y="140.6168622038187">
+                    4,1E
+                  </text>
+                </g>
+              </g>
+              <g aria-hidden="true" class="scatter-reference-line-group" data-testid="scatter-reference-line-group" focusable="false" role="presentation"></g>
+              <g aria-hidden="true" class="vcl-annotation-group" data-testid="annotation-group" focusable="false" role="presentation"></g>
+              <g aria-hidden="true" class="editable vcl-annotation-group" data-testid="editable-annotation-group" focusable="false" role="presentation"></g>
+              <g aria-hidden="true" class="axis bottom x" data-testid="x-axis" fill="none" focusable="false" font-family="sans-serif" font-size="10" opacity="1" role="presentation" text-anchor="middle" transform="translate(0, 224)">
+                <path class="domain" d="M0.5,0.5H527.5" stroke="currentColor"></path>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(10.634615384615385,0)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10">
+                    0
+                  </text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(78.19871794871794,0)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10">
+                    2
+                  </text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(145.7628205128205,0)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10">
+                    4
+                  </text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(213.32692307692307,0)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10">
+                    6
+                  </text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(280.89102564102564,0)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10">
+                    8
+                  </text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(348.4551282051282,0)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10">
+                    10
+                  </text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(416.0192307692308,0)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10">
+                    12
+                  </text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(483.5833333333333,0)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10">
+                    14
+                  </text>
+                </g>
+              </g>
+              <text aria-hidden="true" class="axis-label bottom x" data-testid="x-axis-label" focusable="false" role="presentation" transform="translate(0, 0)" x="263.5" y="274">
+                X Axis
+              </text>
+              <g aria-hidden="true" class="axis left y" data-testid="y-axis" fill="none" focusable="false" font-family="sans-serif" font-size="10" opacity="1" role="presentation" text-anchor="end">
+                <path class="domain" d="M0.5,224.5V0.5" stroke="currentColor"></path>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0,224.23682999769957)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" x2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.32em" fill="currentColor" x="-10">
+                    0
+                  </text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0,205.83333333333331)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" x2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.32em" fill="currentColor" x="-10">
+                    1E
+                  </text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0,187.42983666896708)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" x2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.32em" fill="currentColor" x="-10">
+                    2E
+                  </text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0,169.02634000460085)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" x2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.32em" fill="currentColor" x="-10">
+                    3E
+                  </text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0,150.62284334023462)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" x2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.32em" fill="currentColor" x="-10">
+                    4E
+                  </text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0,132.2193466758684)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" x2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.32em" fill="currentColor" x="-10">
+                    5E
+                  </text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0,113.81585001150216)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" x2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.32em" fill="currentColor" x="-10">
+                    6E
+                  </text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0,95.41235334713593)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" x2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.32em" fill="currentColor" x="-10">
+                    7E
+                  </text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0,77.00885668276972)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" x2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.32em" fill="currentColor" x="-10">
+                    8E
+                  </text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0,58.6053600184035)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" x2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.32em" fill="currentColor" x="-10">
+                    9E
+                  </text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0,40.20186335403726)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" x2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.32em" fill="currentColor" x="-10">
+                    10E
+                  </text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0,21.798366689671017)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" x2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.32em" fill="currentColor" x="-10">
+                    11E
+                  </text>
+                </g>
+                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0,3.394870025304801)">
+                  <line data-testid="axis-tick-line" stroke="currentColor" x2="0"></line>
+                  <text data-testid="axis-tick-text" dy="0.32em" fill="currentColor" x="-10">
+                    12E
+                  </text>
+                </g>
+              </g>
+              <text aria-hidden="true" class="axis-label left y" data-testid="y-axis-label" dy="1em" focusable="false" role="presentation" transform="rotate(-90)" x="-112" y="-60">
+                Y Axis
+              </text>
+            </g>
+          </g>
+          <defs data-testid="pattern-defs">
+            <filter class="vcl-inversion-filter" color-interpolation-filters="sRGB" id="inversion-scatter-plot-unit-test">
+              <feColorMatrix in="SourceGraphic" type="matrix" values="-1 0 0 0 1 
+        0 -1 0 0 1 
+        0 0 -1 0 1
+        0 0 0 1 0"></feColorMatrix>
+              <feColorMatrix type="hueRotate" values="180"></feColorMatrix>
+            </filter>
+            <filter class="VCL-t-s-f-ffffff" id="VCL-t-s-f-ffffffscatter-plot-unit-test">
+              <feMorphology in="SourceAlpha" operator="dilate" radius="1.5" result="dilatedText"></feMorphology>
+              <feFlood flood-color="#ffffff" flood-opacity="1" result="whiteTextFlood"></feFlood>
+              <feComposite in="whiteTextFlood" in2="dilatedText" operator="in" result="textOutline"></feComposite>
+              <feMerge>
+                <feMergeNode in="textOutline"></feMergeNode>
+                <feMergeNode in="textOutline"></feMergeNode>
+                <feMergeNode in="textOutline"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+              </feMerge>
+            </filter>
+            <filter class="VCL-t-s-f-ffffff0p16666666666666666" id="VCL-t-s-f-ffffff0p16666666666666666scatter-plot-unit-test0p16666666666666666">
+              <feMorphology in="SourceAlpha" operator="dilate" radius="0.16666666666666666" result="dilatedText"></feMorphology>
+              <feFlood flood-color="#ffffff" flood-opacity="1" result="whiteTextFlood"></feFlood>
+              <feComposite in="whiteTextFlood" in2="dilatedText" operator="in" result="textOutline"></feComposite>
+              <feMerge>
+                <feMergeNode in="textOutline"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+              </feMerge>
+            </filter>
+          </defs>
+        </svg>
+      </div>
+      <div class="scatter-tooltip vcl-tooltip" data-testid="tooltip-container" style="display: block; position: absolute; padding: 0.5rem; opacity: 0; background-color: #ffffff; font-size: 14px; font-weight: 400; color: #222222; border: 1px solid #565656; border-radius: 3px; pointer-events: none; min-width: 80px; max-width: 300px; z-index: 10;">
+        <p style="margin: 0;"></p>
+      </div>
+      <data-table>
+        <div class="visa-viz-data-table-outer-container" data-testid="data-table-outer-container">
+          <div class="visa-viz-button-wrapper" style="padding-bottom: 0px;">
+            <button aria-expanded="false" aria-label="Adattábla megjelenítése" class="vcc-btn-icon vcc-btn-icon--light-tiny visa-viz-data-table-button" id="visa-viz-data-table-button-scatter-plot-unit-test" role="button" tabindex="0" type="button" style="transform: translate(31.5px,
+                -40px);">
+              <svg class="vcc-icon--tiny" focusable="false" tabindex="-1">
+                <use href="#visa-viz-view-grid--tiny-scatter-plot-unit-test"></use>
+              </svg>
+            </button>
+            <svg class="vcc-icons">
+              <symbol id="visa-viz-view-grid--tiny-scatter-plot-unit-test" viewbox="0 0 16 16">
+                <path d="M5,5 L5,2 L2,2 L2,5 L5,5 Z M5,7 L2,7 C0.894905844,7 0,6.1044757 0,5 L0,2 C0,0.8955243 0.894905844,3.55271368e-15 2,3.55271368e-15 L5,3.55271368e-15 C6.10509416,3.55271368e-15 7,0.8955243 7,2 L7,5 C7,6.1044757 6.10509416,7 5,7 Z M14,5 L14,2 L11,2 L11,5 L14,5 Z M14,7 L11,7 C9.89490584,7 9,6.1044757 9,5 L9,2 C9,0.8955243 9.89490584,3.55271368e-15 11,3.55271368e-15 L14,3.55271368e-15 C15.1050942,3.55271368e-15 16,0.8955243 16,2 L16,5 C16,6.1044757 15.1050942,7 14,7 Z M5,14 L5,11 L2,11 L2,14 L5,14 Z M5,16 L2,16 C0.894905844,16 0,15.1044757 0,14 L0,11 C0,9.8955243 0.894905844,9 2,9 L5,9 C6.10509416,9 7,9.8955243 7,11 L7,14 C7,15.1044757 6.10509416,16 5,16 Z M14,14 L14,11 L11,11 L11,14 L14,14 Z M14,16 L11,16 C9.89490584,16 9,15.1044757 9,14 L9,11 C9,9.8955243 9.89490584,9 11,9 L14,9 C15.1050942,9 16,9.8955243 16,11 L16,14 C16,15.1044757 15.1050942,16 14,16 Z"></path>
+                <g fill="none" fill-rule="evenodd" stroke="none" stroke-width="1">
+                  <mask fill="#fff">
+                    <use xlink:href="#path-1"></use>
+                  </mask>
+                  <use fill="#000" fill-rule="nonzero" xlink:href="#path-1"></use>
+                </g>
+              </symbol>
+            </svg>
+          </div>
+          <div class="visa-viz-data-table-container" data-testid="data-table-container" id="visa-viz-data-table-container-scatter-plot-unit-test"></div>
+        </div>
+      </data-table>
+    </div>
+  </div>
+</scatter-plot>
+`;
+
 exports[`<scatter-plot> rendered-html render should render with minimal props[data,(group,x,y)Accessor] given 1`] = `
 <scatter-plot id="scatter-plot-unit-test">
   <div class="o-layout">
     <div class="vcl-accessibility-instructions" id="chart-instructions-scatter-plot-unit-test" style="position: absolute; width: 650px;">
       <p class="screen-reader-info vcl-region-label">
-        Keyboard interactive scatter-plot, Titled: Scatter Plot Title. This section contains additional information about this chart. Pressing TAB will focus the keyboard instructions menu. Tabbing again takes you to the chart area.
+        Keyboard Interactive scatter-plot, Titled: Scatter Plot Title. This section contains additional information about this chart. Pressing TAB will focus the keyboard instructions menu. Tabbing again takes you to the chart area.
       </p>
       <h2 class="screen-reader-info vcl-access-title">
         Chart title: Scatter Plot Title
@@ -414,13 +1001,13 @@ exports[`<scatter-plot> rendered-html render should render with minimal props[da
         Chart Layout Description
       </h4>
       <p class="screen-reader-info vcl-access-layout">
-        This is a scatter-plot with 4 scatter groups containing a total 14 points.
+        Scatter-plot. Scatter group: 4, point: 14.
       </p>
       <p class="screen-reader-info vcl-access-xAxis">
-        The chart has a horizontal X Axis, titled X Axis with a range that starts with 0 and ends with 14.
+        The chart has a horizontal X axis. Title X Axis. Start value 0, end value 14.
       </p>
       <p class="screen-reader-info vcl-access-yAxis">
-        The chart has a vertical Y axis, titled Y Axis with a range that starts with 0 and ends with 12k.
+        The chart has a primary vertical Y axis. Title Y Axis. Start value 0, end value 12k.
       </p>
       <p class="screen-reader-info vcl-access-notes" data-annotationlevel="h3" data-level="h4"></p>
     </div>

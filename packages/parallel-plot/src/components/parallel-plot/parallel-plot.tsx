@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -15,6 +15,7 @@ import { line } from 'd3-shape';
 import { nest } from 'd3-collection';
 import {
   IBoxModelType,
+  ILocalizationType,
   IHoverStyleType,
   IClickStyleType,
   IAxisType,
@@ -33,6 +34,9 @@ import 'd3-transition';
 import Utils from '@visa/visa-charts-utils';
 import { v4 as uuid } from 'uuid';
 const {
+  getGlobalInstances,
+  configLocalization,
+  getActiveLanguageString,
   getAccessibleStrokes,
   ensureTextContrast,
   createTextStrokeFilter,
@@ -84,6 +88,7 @@ const {
   transitionEndAll,
   visaColors,
   validateAccessibilityProps,
+  validateLocalizationProps,
   roundTo,
   getTextWidth,
   resolveLabelCollision
@@ -115,6 +120,7 @@ export class ParallelPlot {
   // Data (2/7)
   @Prop() data: object[];
   @Prop() uniqueID: string;
+  @Prop({ mutable: true }) localization: ILocalizationType = ParallelPlotDefaultValues.localization;
   @Prop({ mutable: true }) ordinalAccessor: string = ParallelPlotDefaultValues.ordinalAccessor;
   @Prop({ mutable: true }) valueAccessor: string = ParallelPlotDefaultValues.valueAccessor;
   @Prop({ mutable: true }) seriesAccessor: string = ParallelPlotDefaultValues.seriesAccessor;
@@ -167,6 +173,7 @@ export class ParallelPlot {
   @Element()
   parallelChartEl: HTMLElement;
   shouldValidateAccessibility: boolean = true;
+  shouldValidateLocalization: boolean = true;
   svg: any;
   root: any;
   rootG: any;
@@ -298,6 +305,7 @@ export class ParallelPlot {
   shouldSetAnnotationAccessibility: boolean = false;
   shouldUpdateDashPatterns: boolean = false;
   shouldValidateDataLabelAccessor: boolean = false;
+  shouldSetLocalizationConfig: boolean = false;
   topLevel: string = 'h2';
   bottomLevel: string = 'p';
   strokes: any = {};
@@ -804,6 +812,45 @@ export class ParallelPlot {
     }
   }
 
+  @Watch('localization')
+  localizationWatcher(_newVal, _oldVal) {
+    this.shouldValidate = true;
+
+    // language
+    const newLanguage = _newVal && _newVal.language ? _newVal.language : false;
+    const oldLanguage = _oldVal && _oldVal.language ? _oldVal.language : false;
+    if (newLanguage !== oldLanguage) {
+      this.shouldSetLocalizationConfig = true;
+      this.shouldUpdateTableData = true;
+      this.shouldValidateDataLabelAccessor = true;
+      this.shouldRedrawWrapper = true;
+      this.shouldUpdateDescriptionWrapper = true;
+      this.shouldSetChartAccessibilityCount = true;
+      this.shouldSetYAxisAccessibility = true;
+      this.shouldSetXAxisAccessibility = true;
+      this.shouldUpdateDescriptionWrapper = true;
+      this.shouldSetGeometryAriaLabels = true;
+      this.shouldSetParentSVGAccessibility = true;
+    }
+
+    // numeralLocale
+    const newNumeralLocale = _newVal && _newVal.numeralLocale ? _newVal.numeralLocale : false;
+    const oldNumeralLocale = _oldVal && _oldVal.numeralLocale ? _oldVal.numeralLocale : false;
+    if (newNumeralLocale !== oldNumeralLocale) {
+      this.shouldSetLocalizationConfig = true;
+      this.shouldUpdateTableData = true;
+      this.shouldValidateDataLabelAccessor = true;
+      this.shouldRedrawWrapper = true;
+      this.shouldUpdateDescriptionWrapper = true;
+      this.shouldSetChartAccessibilityCount = true;
+      this.shouldSetYAxisAccessibility = true;
+      this.shouldSetXAxisAccessibility = true;
+      this.shouldUpdateDescriptionWrapper = true;
+      this.shouldSetGeometryAriaLabels = true;
+      this.shouldSetParentSVGAccessibility = true;
+    }
+  }
+
   @Watch('legend')
   legendWatcher(_newVal, _oldVal) {
     this.shouldUpdateLegend = true;
@@ -951,6 +998,7 @@ export class ParallelPlot {
       this.defaults = true;
       this.chartID = chartID;
       this.parallelChartEl.id = this.chartID;
+      this.setLocalizationConfig();
       this.setTagLevels();
       this.setDimensions();
       this.setScaleUsed();
@@ -962,6 +1010,7 @@ export class ParallelPlot {
       this.validateDataLabelAccessor();
       this.setTableData();
       this.shouldValidateAccessibilityProps();
+      this.shouldValidateLocalizationProps();
       this.setColors();
       resolve('component will load');
     });
@@ -1247,6 +1296,21 @@ export class ParallelPlot {
     }).then(() => this.drawEndEvent.emit({ chartID: this.chartID }));
   }
 
+  shouldValidateLocalizationProps() {
+    const windowInstances = getGlobalInstances();
+    const languageString = windowInstances.i18Next.language;
+    const languageObject = windowInstances.i18Next.getResourceBundle(languageString);
+    const numeralObject = windowInstances.numeral.localeData();
+    if (this.shouldValidateLocalization && !this.localization.skipValidation) {
+      this.shouldValidateLocalization = false;
+      validateLocalizationProps(this.chartID, {
+        ...this.localization,
+        language: languageObject,
+        numeralLocale: numeralObject
+      });
+    }
+  }
+
   shouldValidateAccessibilityProps() {
     if (this.shouldValidateAccessibility && !this.accessibility.disableValidation) {
       this.shouldValidateAccessibility = false;
@@ -1281,6 +1345,14 @@ export class ParallelPlot {
 
     this.seriesInteraction =
       this.innerInteractionKeys.length === 1 && this.innerInteractionKeys[0] === this.seriesAccessor;
+  }
+
+  getLanguageString() {
+    return getActiveLanguageString(this.localization);
+  }
+
+  setLocalizationConfig() {
+    configLocalization(this.localization);
   }
 
   setColors() {
@@ -3572,7 +3644,7 @@ export class ParallelPlot {
   }
 
   setAnnotationAccessibility() {
-    setAccessAnnotation(this.parallelChartEl, this.annotations);
+    setAccessAnnotation(this.getLanguageString(), this.parallelChartEl, this.annotations);
   }
 
   // new accessibility functions added here
@@ -3584,6 +3656,7 @@ export class ParallelPlot {
   setChartDescriptionWrapper() {
     // this initializes the accessibility description section of the chart
     initializeDescriptionRoot({
+      language: this.getLanguageString(),
       rootEle: this.parallelChartEl,
       title: this.accessibility.title || this.mainTitle,
       chartTag: 'parallel-plot',
@@ -3602,8 +3675,9 @@ export class ParallelPlot {
   setParentSVGAccessibility() {
     // this sets the accessibility features of the root SVG element
     setAccessibilityController({
-      node: this.svg.node(),
       chartTag: 'parallel-plot',
+      language: this.getLanguageString(),
+      node: this.svg.node(),
       title: this.accessibility.title || this.mainTitle,
       description: this.subTitle,
       uniqueID: this.chartID,
@@ -3633,6 +3707,8 @@ export class ParallelPlot {
     const keys = this.innerScopeDataKeys();
     this.updateDots.each((_d, i, n) => {
       setElementFocusHandler({
+        chartTag: 'parallel-plot',
+        language: this.getLanguageString(),
         node: n[i],
         geomType: 'point',
         includeKeyNames: this.accessibility.includeDataKeyNames,
@@ -3664,31 +3740,31 @@ export class ParallelPlot {
   }
 
   setChartAccessibilityTitle() {
-    setAccessTitle(this.parallelChartEl, this.accessibility.title || this.mainTitle);
+    setAccessTitle(this.getLanguageString(), this.parallelChartEl, this.accessibility.title || this.mainTitle);
   }
 
   setChartAccessibilitySubtitle() {
-    setAccessSubtitle(this.parallelChartEl, this.subTitle);
+    setAccessSubtitle(this.getLanguageString(), this.parallelChartEl, this.subTitle);
   }
 
   setChartAccessibilityLongDescription() {
-    setAccessLongDescription(this.parallelChartEl, this.accessibility.longDescription);
+    setAccessLongDescription(this.getLanguageString(), this.parallelChartEl, this.accessibility.longDescription);
   }
 
   setChartAccessibilityExecutiveSummary() {
-    setAccessExecutiveSummary(this.parallelChartEl, this.accessibility.executiveSummary);
+    setAccessExecutiveSummary(this.getLanguageString(), this.parallelChartEl, this.accessibility.executiveSummary);
   }
 
   setChartAccessibilityPurpose() {
-    setAccessPurpose(this.parallelChartEl, this.accessibility.purpose);
+    setAccessPurpose(this.getLanguageString(), this.parallelChartEl, this.accessibility.purpose);
   }
 
   setChartAccessibilityContext() {
-    setAccessContext(this.parallelChartEl, this.accessibility.contextExplanation);
+    setAccessContext(this.getLanguageString(), this.parallelChartEl, this.accessibility.contextExplanation);
   }
 
   setChartAccessibilityStatisticalNotes() {
-    setAccessStatistics(this.parallelChartEl, this.accessibility.statisticalNotes);
+    setAccessStatistics(this.getLanguageString(), this.parallelChartEl, this.accessibility.statisticalNotes);
   }
 
   setChartCountAccessibility() {
@@ -3705,7 +3781,7 @@ export class ParallelPlot {
   }
 
   setChartAccessibilityStructureNotes() {
-    setAccessStructure(this.parallelChartEl, this.accessibility.structureNotes);
+    setAccessStructure(this.getLanguageString(), this.parallelChartEl, this.accessibility.structureNotes);
   }
   // new accessibility stuff ends here
 
@@ -3843,6 +3919,10 @@ export class ParallelPlot {
     // everything between this comment and the third should eventually
     // be moved into componentWillUpdate (if the stenicl bug is fixed)
     this.init();
+    if (this.shouldSetLocalizationConfig) {
+      this.setLocalizationConfig();
+      this.shouldSetLocalizationConfig = false;
+    }
     if (this.shouldSetTagLevels) {
       this.setTagLevels();
       this.shouldSetTagLevels = false;
@@ -3877,6 +3957,7 @@ export class ParallelPlot {
     }
     if (this.shouldValidate) {
       this.shouldValidateAccessibilityProps();
+      this.shouldValidateLocalizationProps();
       this.shouldValidate = false;
     }
     if (this.shouldValidateDataLabelAccessor) {
@@ -3906,6 +3987,7 @@ export class ParallelPlot {
             uniqueID={this.chartID}
             geomType={'point'}
             groupName={'line'} // taken from initializeDescriptionRoot, on bar this should be "bar group", stacked bar is "stack", and clustered is "cluster"
+            language={this.getLanguageString()}
             chartTag={'parallel-plot'}
             width={this.width - (this.margin ? this.margin.right || 0 : 0)}
             isInteractive={this.accessibility.elementsAreInterface}
@@ -3922,6 +4004,7 @@ export class ParallelPlot {
           <data-table
             uniqueID={this.chartID}
             isCompact
+            language={this.getLanguageString()}
             tableColumns={this.tableColumns}
             dataKeyNames={this.dataKeyNames}
             data={this.tableData}

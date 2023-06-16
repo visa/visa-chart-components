@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -9,6 +9,11 @@ import { Component, State, Event, EventEmitter, Element, h } from '@stencil/core
 import '@visa/visa-charts-data-table';
 import '@visa/keyboard-instructions';
 
+// importing custom languages
+// import { hu } from '../../../../utils/src/utils/localization/languages/hu';
+
+// importing numeralLocales
+// import { HU } from '@visa/visa-charts-utils/src/utils/localization/numeralLocales/hu';
 @Component({
   tag: 'app-dumbbell-plot',
   styleUrl: 'app-dumbbell-plot.scss'
@@ -769,6 +774,11 @@ export class AppDumbbellPlot {
           toggle animations
         </button>
         <dumbbell-plot
+          // localization={{
+          //   language: hu,
+          //   numeralLocale: HU,
+          //   skipValidation: false
+          // }}
           animationConfig={this.animations}
           data={this.data}
           layout={this.layout}

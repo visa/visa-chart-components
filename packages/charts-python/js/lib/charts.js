@@ -6,7 +6,8 @@
  *
  **/
 
-var widgets = require('@jupyter-widgets/base');
+// var widgets = require('@jupyter-widgets/base');
+import { DOMWidgetModel, DOMWidgetView } from '@jupyter-widgets/base';
 var pkg = require('../package.json');
 
 // temporary comment to bump charts with feature commit
@@ -23,8 +24,8 @@ var { ParallelPlot } = require('@visa/charts/dist/components/parallel-plot');
 var { DumbbellPlot } = require('@visa/charts/dist/components/dumbbell-plot');
 var { WorldMap } = require('@visa/charts/dist/components/world-map');
 var { AlluvialDiagram } = require('@visa/charts/dist/components/alluvial-diagram');
-var { KeyboardInstructions } = require('@visa/charts/dist/components/keyboard-instructions');
 var { DataTable } = require('@visa/charts/dist/components/data-table');
+var { KeyboardInstructions } = require('@visa/charts/dist/components/keyboard-instructions');
 
 customElements.define('bar-chart', BarChart);
 customElements.define('clustered-bar-chart', ClusteredBarChart);
@@ -58,50 +59,52 @@ customElements.define('data-table', DataTable);
 
 // When serialiazing the entire widget state for embedding, only values that
 // differ from the defaults will be specified.
-var ChartModel = widgets.DOMWidgetModel.extend({
-  defaults: {
-    ...widgets.DOMWidgetModel.prototype.defaults(),
-    _model_name: 'ChartModel',
-    _view_name: 'ChartView',
-    _model_module: pkg.name,
-    _view_module: pkg.name,
-    _model_module_version: pkg.version,
-    _view_module_version: pkg.version,
+export class ChartModel extends DOMWidgetModel {
+  defaults() {
+    return {
+      ...super.defaults(),
+      _model_name: 'ChartModel',
+      _view_name: 'ChartView',
+      _model_module: pkg.name,
+      _view_module: pkg.name,
+      _model_module_version: pkg.version,
+      _view_module_version: pkg.version,
 
-    data: [],
-    linkData: [],
-    nodeData: [],
-    ordinalAccessor: '',
-    valueAccessor: '',
-    groupAccessor: '',
-    seriesAccessor: '',
-    xAccessor: '',
-    yAccessor: '',
-    nodeAccessor: '',
-    parentAccessor: '',
-    sizeAccessor: '',
-    joinAccessor: '',
-    joinNameAccessor: '',
-    markerAccessor: '',
-    markerNameAccessor: '',
-    latitudeAccessor: '',
-    longitudeAccessor: '',
-    sourceAccessor: '',
-    targetAccessor: '',
-    nodeIDAccessor: '',
-    mainTitle: '',
-    subTitle: '',
-    accessibility: {},
-    config: {}
+      data: [],
+      linkData: [],
+      nodeData: [],
+      ordinalAccessor: '',
+      valueAccessor: '',
+      groupAccessor: '',
+      seriesAccessor: '',
+      xAccessor: '',
+      yAccessor: '',
+      nodeAccessor: '',
+      parentAccessor: '',
+      sizeAccessor: '',
+      joinAccessor: '',
+      joinNameAccessor: '',
+      markerAccessor: '',
+      markerNameAccessor: '',
+      latitudeAccessor: '',
+      longitudeAccessor: '',
+      sourceAccessor: '',
+      targetAccessor: '',
+      nodeIDAccessor: '',
+      mainTitle: '',
+      subTitle: '',
+      accessibility: {},
+      config: {}
+    };
   }
-});
+}
 
 // Custom View. Renders the widget model.
-var ChartView = widgets.DOMWidgetView.extend({
-  _chart: HTMLElement,
+export class ChartView extends DOMWidgetView {
+  // _chart: HTMLElement,
 
   // Defines how the widget gets rendered into the DOM
-  render: function() {
+  render() {
     this._chart = document.createElement(this.model.get('chartType'));
 
     var style = document.createElement('style');
@@ -193,9 +196,9 @@ var ChartView = widgets.DOMWidgetView.extend({
     this.model.on('change:subTitle', this.title_changed, this);
     this.model.on('change:accessibility', this.accessibility_changed, this);
     this.model.on('change:config', this.config_changed, this);
-  },
+  }
 
-  clickHandler: e => {
+  clickHandler(e) {
     let d = e.detail && e.detail.data;
     // let t = e.detail && e.detail.target;
     let targetChart = e.target;
@@ -217,9 +220,9 @@ var ChartView = widgets.DOMWidgetView.extend({
       }
       targetChart.clickHighlight = newClicks;
     }
-  },
+  }
 
-  hoverHandler: e => {
+  hoverHandler(e) {
     let d = e.detail && e.detail.data;
     // let t = e.detail && e.detail.target;
     let targetChart = e.target;
@@ -229,14 +232,14 @@ var ChartView = widgets.DOMWidgetView.extend({
     } else {
       targetChart.hoverHighlight = '';
     }
-  },
+  }
 
-  mouseOutHandler: e => {
+  mouseOutHandler(e) {
     let targetChart = e.target;
     targetChart.hoverHighlight = '';
-  },
+  }
 
-  data_changed: function() {
+  data_changed() {
     this._chart.data = this.model.get('data');
     if (this._chart.data) {
       let regex = /^\d{4}[\/\-](0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])/;
@@ -250,9 +253,9 @@ var ChartView = widgets.DOMWidgetView.extend({
     }
     this._chart.linkData = this.model.get('linkData');
     // this._chart.nodeData = this.model.get('nodeData');
-  },
+  }
 
-  accessor_changed: function() {
+  accessor_changed() {
     this._chart.ordinalAccessor = this.model.get('ordinalAccessor');
     this._chart.valueAccessor = this.model.get('valueAccessor');
     this._chart.groupAccessor = this.model.get('groupAccessor');
@@ -271,25 +274,20 @@ var ChartView = widgets.DOMWidgetView.extend({
     this._chart.sourceAccessor = this.model.get('sourceAccessor');
     this._chart.targetAccessor = this.model.get('targetAccessor');
     this._chart.nodeIDAccessor = this.model.get('nodeIDAccessor');
-  },
+  }
 
-  title_changed: function() {
+  title_changed() {
     this._chart.mainTitle = this.model.get('mainTitle');
     this._chart.subTitle = this.model.get('subTitle');
-  },
+  }
 
-  accessibility_changed: function() {
+  accessibility_changed() {
     this._chart.accessibility = this.model.get('accessibility');
-  },
+  }
 
-  config_changed: function() {
+  config_changed() {
     Object.keys(this.model.get('config')).forEach(prop => {
       this._chart[prop] = this.model.get('config')[prop];
     });
   }
-});
-
-module.exports = {
-  ChartModel: ChartModel,
-  ChartView: ChartView
-};
+}

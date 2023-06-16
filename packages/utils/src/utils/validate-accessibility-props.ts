@@ -1,17 +1,12 @@
 /**
- * Copyright (c) 2020, 2021 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
  *
  **/
 import { string as yupString, addMethod, ref, object as yupObject, array, bool as yupBool } from 'yup';
-
-const validationStyle = {
-  warningStyle: 'color: #C6003F;font-size:medium;',
-  recommendationStyle: 'font-size:medium;',
-  specialRecommendationStyle: 'color: #0061C1;font-size:medium;'
-};
+import { validationStyle } from './style';
 
 const VALIDATIONRULES = {
   TITLE: {
@@ -203,7 +198,7 @@ const validateBySchemaRefBoolean = function(schema, booleanSchema, ref, validati
     test: function(value) {
       const refField = this.resolve(ref);
       return schema.isValidSync(refField, options)
-        ? booleanSchema.isValidSync(value, { abortyEarly: false, strict: true })
+        ? booleanSchema.isValidSync(value, { abortEarly: false, strict: true })
         : true;
     }
   });

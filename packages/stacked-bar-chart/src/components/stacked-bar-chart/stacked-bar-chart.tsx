@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -16,6 +16,7 @@ import { v4 as uuid } from 'uuid';
 import Utils from '@visa/visa-charts-utils';
 import {
   IBoxModelType,
+  ILocalizationType,
   IHoverStyleType,
   IClickStyleType,
   IAxisType,
@@ -28,6 +29,9 @@ import {
 } from '@visa/charts-types';
 import { StackedBarChartDefaultValues } from './stacked-bar-chart-default-values';
 const {
+  getGlobalInstances,
+  configLocalization,
+  getActiveLanguageString,
   getBrowser,
   verifyTextHasSpace,
   checkAttributeTransitions,
@@ -86,6 +90,7 @@ const {
   scopeDataKeys,
   visaColors,
   validateAccessibilityProps,
+  validateLocalizationProps,
   roundTo,
   resolveLabelCollision
 } = Utils;
@@ -115,6 +120,7 @@ export class StackedBarChart {
   // Data (2/7)
   @Prop() data: object[];
   @Prop() uniqueID: string;
+  @Prop({ mutable: true }) localization: ILocalizationType = StackedBarChartDefaultValues.localization;
   @Prop({ mutable: true }) ordinalAccessor: string = StackedBarChartDefaultValues.ordinalAccessor;
   @Prop({ mutable: true }) valueAccessor: string = StackedBarChartDefaultValues.valueAccessor;
   @Prop({ mutable: true }) groupAccessor: string = StackedBarChartDefaultValues.groupAccessor;
@@ -168,6 +174,7 @@ export class StackedBarChart {
   @Element()
   stackedBarChartEl: HTMLElement;
   shouldValidateAccessibility: boolean = true;
+  shouldValidateLocalization: boolean = true;
   svg: any;
   root: any;
   rootG: any;
@@ -280,6 +287,7 @@ export class StackedBarChart {
   shouldSetAnnotationAccessibility: boolean = false;
   shouldSetTextures: boolean = false;
   shouldSetStrokes: boolean = false;
+  shouldSetLocalizationConfig: boolean = false;
   isSafari: boolean = getBrowser() === 'Safari'; // this is necessary for handling redraw when filter attributes change
   strokes: any = {};
   textStrokes: any = {};
@@ -686,6 +694,45 @@ export class StackedBarChart {
     this.shouldSetGeometryAriaLabels = true;
   }
 
+  @Watch('localization')
+  localizationWatcher(_newVal, _oldVal) {
+    // language
+    const newLanguage = _newVal && _newVal.language ? _newVal.language : false;
+    const oldLanguage = _oldVal && _oldVal.language ? _oldVal.language : false;
+    if (newLanguage !== oldLanguage) {
+      this.shouldSetLocalizationConfig = true;
+      this.shouldUpdateTableData = true;
+      this.shouldValidateDataLabelAccessor = true;
+      this.shouldCheckLabelColor = true;
+      this.shouldRedrawWrapper = true;
+      this.shouldUpdateDescriptionWrapper = true;
+      this.shouldSetChartAccessibilityCount = true;
+      this.shouldSetYAxisAccessibility = true;
+      this.shouldSetXAxisAccessibility = true;
+      this.shouldUpdateDescriptionWrapper = true;
+      this.shouldSetGeometryAriaLabels = true;
+      this.shouldSetParentSVGAccessibility = true;
+    }
+
+    // numeralLocale
+    const newNumeralLocale = _newVal && _newVal.numeralLocale ? _newVal.numeralLocale : false;
+    const oldNumeralLocale = _oldVal && _oldVal.numeralLocale ? _oldVal.numeralLocale : false;
+    if (newNumeralLocale !== oldNumeralLocale) {
+      this.shouldSetLocalizationConfig = true;
+      this.shouldUpdateTableData = true;
+      this.shouldValidateDataLabelAccessor = true;
+      this.shouldCheckLabelColor = true;
+      this.shouldRedrawWrapper = true;
+      this.shouldUpdateDescriptionWrapper = true;
+      this.shouldSetChartAccessibilityCount = true;
+      this.shouldSetYAxisAccessibility = true;
+      this.shouldSetXAxisAccessibility = true;
+      this.shouldUpdateDescriptionWrapper = true;
+      this.shouldSetGeometryAriaLabels = true;
+      this.shouldSetParentSVGAccessibility = true;
+    }
+  }
+
   @Watch('accessibility')
   accessibilityWatcher(_newVal, _oldVal) {
     this.shouldValidate = true;
@@ -847,6 +894,7 @@ export class StackedBarChart {
     this.shouldSetParentSVGAccessibility = true;
     this.shouldSetGroupAccessibilityLabel = true;
     this.shouldSetGeometryAriaLabels = true;
+    this.shouldUpdateTableData = true;
   }
 
   @Watch('hoverHighlight')
@@ -900,6 +948,7 @@ export class StackedBarChart {
       this.defaults = true;
       this.chartID = chartID;
       this.stackedBarChartEl.id = this.chartID;
+      this.setLocalizationConfig();
       this.setTagLevels();
       this.prepareData();
       this.prepareLegendData();
@@ -911,6 +960,7 @@ export class StackedBarChart {
       this.validateAxes();
       this.setTableData();
       this.shouldValidateAccessibilityProps();
+      this.shouldValidateLocalizationProps();
       this.setColors();
       resolve('component will load');
     });
@@ -1174,6 +1224,21 @@ export class StackedBarChart {
     }).then(() => this.drawEndEvent.emit({ chartID: this.chartID }));
   }
 
+  shouldValidateLocalizationProps() {
+    const windowInstances = getGlobalInstances();
+    const languageString = windowInstances.i18Next.language;
+    const languageObject = windowInstances.i18Next.getResourceBundle(languageString);
+    const numeralObject = windowInstances.numeral.localeData();
+    if (this.shouldValidateLocalization && !this.localization.skipValidation) {
+      this.shouldValidateLocalization = false;
+      validateLocalizationProps(this.chartID, {
+        ...this.localization,
+        language: languageObject,
+        numeralLocale: numeralObject
+      });
+    }
+  }
+
   shouldValidateAccessibilityProps() {
     if (this.shouldValidateAccessibility && !this.accessibility.disableValidation) {
       this.shouldValidateAccessibility = false;
@@ -1235,6 +1300,14 @@ export class StackedBarChart {
     // check whether we are going to display axis and then update props
     this.innerXAxis = { ...this.xAxis, gridVisible: !(this.layout === 'vertical') && this.xAxis.gridVisible };
     this.innerYAxis = { ...this.yAxis, gridVisible: this.layout === 'vertical' && this.yAxis.gridVisible };
+  }
+
+  getLanguageString() {
+    return getActiveLanguageString(this.localization);
+  }
+
+  setLocalizationConfig() {
+    configLocalization(this.localization);
   }
 
   setDimensions() {
@@ -1411,6 +1484,16 @@ export class StackedBarChart {
     });
     // generate scoped and formatted data for data-table component
     const keys = scopeDataKeys(this, chartAccessors, 'stacked-bar-chart');
+    if (this.normalized) {
+      const label =
+        this.dataKeyNames && (this.dataKeyNames[`${this.valueAccessor}`] || this.dataKeyNames[`${this.valueAccessor}%`])
+          ? this.dataKeyNames[`${this.valueAccessor}%`] || this.dataKeyNames[`${this.valueAccessor}`] + ' (%)'
+          : `${this.valueAccessor}%`;
+      keys[label] = '0[.][0][0]%';
+      flattenedNest.forEach(i => {
+        i[label] = i[`${this.valueAccessor}`] / i.getSum();
+      });
+    }
     this.tableData = getScopedData(flattenedNest, keys);
     this.tableColumns = Object.keys(keys);
   }
@@ -2937,7 +3020,7 @@ export class StackedBarChart {
   }
 
   setAnnotationAccessibility() {
-    setAccessAnnotation(this.stackedBarChartEl, this.annotations);
+    setAccessAnnotation(this.getLanguageString(), this.stackedBarChartEl, this.annotations);
   }
 
   drawLegendElements() {
@@ -3001,6 +3084,7 @@ export class StackedBarChart {
   setChartDescriptionWrapper() {
     // this initializes the accessibility description section of the chart
     initializeDescriptionRoot({
+      language: this.getLanguageString(),
       rootEle: this.stackedBarChartEl,
       title: this.accessibility.title || this.mainTitle,
       chartTag: 'stacked-bar-chart',
@@ -3017,10 +3101,10 @@ export class StackedBarChart {
   }
 
   setParentSVGAccessibility() {
-    // this sets the accessibility features of the root SVG element
     setAccessibilityController({
-      node: this.svg.node(),
       chartTag: 'stacked-bar-chart',
+      language: this.getLanguageString(),
+      node: this.svg.node(),
       title: this.accessibility.title || this.mainTitle,
       description: this.subTitle,
       uniqueID: this.chartID,
@@ -3035,9 +3119,11 @@ export class StackedBarChart {
         this.suppressEvents &&
         this.accessibility.elementsAreInterface === false &&
         this.accessibility.keyboardNavConfig &&
-        this.accessibility.keyboardNavConfig.disabled
+        this.accessibility.keyboardNavConfig.disabled,
       // nested: '', // dumbbell only right now
       // recursive: true // circle-pack only right now
+      normalized: this.normalized,
+      valueAccessor: this.valueAccessor
     });
   }
 
@@ -3053,6 +3139,8 @@ export class StackedBarChart {
     const keys = scopeDataKeys(this, chartAccessors, 'stacked-bar-chart');
     this.update.each((_d, i, n) => {
       setElementFocusHandler({
+        chartTag: 'stacked-bar-chart',
+        language: this.getLanguageString(),
         node: n[i],
         geomType: 'bar',
         includeKeyNames: this.accessibility.includeDataKeyNames,
@@ -3065,7 +3153,9 @@ export class StackedBarChart {
           this.suppressEvents &&
           this.accessibility.elementsAreInterface === false &&
           this.accessibility.keyboardNavConfig &&
-          this.accessibility.keyboardNavConfig.disabled
+          this.accessibility.keyboardNavConfig.disabled,
+        normalized: this.normalized,
+        valueAccessor: this.valueAccessor
       });
       setElementAccessID({
         node: n[i],
@@ -3085,31 +3175,31 @@ export class StackedBarChart {
   }
 
   setChartAccessibilityTitle() {
-    setAccessTitle(this.stackedBarChartEl, this.accessibility.title || this.mainTitle);
+    setAccessTitle(this.getLanguageString(), this.stackedBarChartEl, this.accessibility.title || this.mainTitle);
   }
 
   setChartAccessibilitySubtitle() {
-    setAccessSubtitle(this.stackedBarChartEl, this.subTitle);
+    setAccessSubtitle(this.getLanguageString(), this.stackedBarChartEl, this.subTitle);
   }
 
   setChartAccessibilityLongDescription() {
-    setAccessLongDescription(this.stackedBarChartEl, this.accessibility.longDescription);
+    setAccessLongDescription(this.getLanguageString(), this.stackedBarChartEl, this.accessibility.longDescription);
   }
 
   setChartAccessibilityExecutiveSummary() {
-    setAccessExecutiveSummary(this.stackedBarChartEl, this.accessibility.executiveSummary);
+    setAccessExecutiveSummary(this.getLanguageString(), this.stackedBarChartEl, this.accessibility.executiveSummary);
   }
 
   setChartAccessibilityPurpose() {
-    setAccessPurpose(this.stackedBarChartEl, this.accessibility.purpose);
+    setAccessPurpose(this.getLanguageString(), this.stackedBarChartEl, this.accessibility.purpose);
   }
 
   setChartAccessibilityContext() {
-    setAccessContext(this.stackedBarChartEl, this.accessibility.contextExplanation);
+    setAccessContext(this.getLanguageString(), this.stackedBarChartEl, this.accessibility.contextExplanation);
   }
 
   setChartAccessibilityStatisticalNotes() {
-    setAccessStatistics(this.stackedBarChartEl, this.accessibility.statisticalNotes);
+    setAccessStatistics(this.getLanguageString(), this.stackedBarChartEl, this.accessibility.statisticalNotes);
   }
 
   setChartCountAccessibility() {
@@ -3119,14 +3209,14 @@ export class StackedBarChart {
       rootEle: this.stackedBarChartEl,
       parentGNode: this.barG.node(), // pass the wrapper to <g> or geometries here, should be single node selection
       chartTag: 'stacked-bar-chart',
-      geomType: 'bar',
-      groupName: 'stack'
+      geomType: 'bars',
+      groupName: 'stacks'
       // recursive: true
     });
   }
 
   setChartAccessibilityStructureNotes() {
-    setAccessStructure(this.stackedBarChartEl, this.accessibility.structureNotes);
+    setAccessStructure(this.getLanguageString(), this.stackedBarChartEl, this.accessibility.structureNotes);
   }
   // new accessibility stuff ends here
 
@@ -3198,6 +3288,10 @@ export class StackedBarChart {
     // everything between this comment and the third should eventually
     // be moved into componentWillUpdate (if the stenicl bug is fixed)
     this.init();
+    if (this.shouldSetLocalizationConfig) {
+      this.setLocalizationConfig();
+      this.shouldSetLocalizationConfig = false;
+    }
     if (this.shouldSetTagLevels) {
       this.setTagLevels();
       this.shouldSetTagLevels = false;
@@ -3262,6 +3356,7 @@ export class StackedBarChart {
     }
     if (this.shouldValidate) {
       this.shouldValidateAccessibilityProps();
+      this.shouldValidateLocalizationProps();
       this.shouldValidate = false;
     }
     if (this.shouldSetColors) {
@@ -3272,7 +3367,6 @@ export class StackedBarChart {
       this.validateLabelPlacement();
       this.shouldValidateLabelPlacement = false;
     }
-
     // Everything between this comment and the first should eventually
     // be moved into componentWillUpdate (if the stenicl bug is fixed)
 
@@ -3288,6 +3382,7 @@ export class StackedBarChart {
             uniqueID={this.chartID}
             geomType={'bar'}
             groupName={'stack'} // taken from initializeDescriptionRoot, on bar this should be "bar group", stacked bar is "stack", and clustered is "cluster"
+            language={this.getLanguageString()}
             chartTag={'stacked-bar-chart'}
             width={this.width - (this.margin ? this.margin.right || 0 : 0)}
             isInteractive={this.accessibility.elementsAreInterface}
@@ -3304,6 +3399,7 @@ export class StackedBarChart {
           <data-table
             uniqueID={this.chartID}
             isCompact
+            language={this.getLanguageString()}
             tableColumns={this.tableColumns}
             dataKeyNames={this.dataKeyNames}
             data={this.tableData}

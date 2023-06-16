@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -11,13 +11,17 @@ import { LineChartDefaultValues } from './line-chart-default-values';
 import { scaleOrdinal, scaleLinear } from 'd3-scale';
 
 // we need to bring in our nested components as well, was required to bring in the source vs dist folder to get it to mount
-import { KeyboardInstructions } from '../../../node_modules/@visa/keyboard-instructions/src/components/keyboard-instructions/keyboard-instructions';
-import { DataTable } from '../../../node_modules/@visa/visa-charts-data-table/src/components/data-table/data-table';
+import { KeyboardInstructions } from '@visa/keyboard-instructions/src/components/keyboard-instructions/keyboard-instructions';
+import { DataTable } from '@visa/visa-charts-data-table/src/components/data-table/data-table';
+
+// importing custom languages and locales
+import { hu } from '@visa/visa-charts-utils/src/utils/localization/languages/hu';
+import { HU } from '@visa/visa-charts-utils/src/utils/localization/numeralLocales/hu';
 
 import Utils from '@visa/visa-charts-utils';
 import UtilsDev from '@visa/visa-charts-utils-dev';
 
-const { getColors, visaColors, formatStats, symbols, getAccessibleStrokes } = Utils;
+const { getColors, visaColors, formatStats, getAccessibleStrokes } = Utils;
 
 const {
   asyncForEach,
@@ -112,6 +116,7 @@ describe('<line-chart>', () => {
 
     // disable accessibility validation to keep output stream(terminal) clean
     const EXPECTEDACCESSIBILITY = { ...LineChartDefaultValues.accessibility, disableValidation: true };
+    const EXPECTEDLOCALIZATION = { ...LineChartDefaultValues.localization, skipValidation: true };
 
     beforeEach(async () => {
       page = await newSpecPage({
@@ -124,6 +129,7 @@ describe('<line-chart>', () => {
       component.ordinalAccessor = EXPECTEDORDINALACCESSOR;
       component.valueAccessor = EXPECTEDVALUEACCESSOR;
       component.accessibility = EXPECTEDACCESSIBILITY;
+      component.localization = EXPECTEDLOCALIZATION;
       component.uniqueID = 'line-chart-unit-test';
       component.unitTest = true;
     });
@@ -150,6 +156,28 @@ describe('<line-chart>', () => {
 
         // flush labels for testing to ensure opacity of 1 on initial render
         const elements = page.doc.querySelectorAll('[data-testid=line-series-label]');
+        await asyncForEach(elements, async element => {
+          flushTransitions(element);
+          await page.waitForChanges();
+        });
+
+        // ASSERT
+        expect(page.root).toMatchSnapshot();
+      });
+
+      it('localization: should render localized with minimal props[data,accessors] given', async () => {
+        component.localization = {
+          language: hu,
+          numeralLocale: HU,
+          skipValidation: true,
+          overwrite: false
+        };
+        // ACT
+        page.root.appendChild(component);
+        await page.waitForChanges();
+
+        // flush labels for testing to ensure opacity of 1 on initial render
+        const elements = page.doc.querySelectorAll('[data-testid=dataLabel]');
         await asyncForEach(elements, async element => {
           flushTransitions(element);
           await page.waitForChanges();
@@ -206,8 +234,8 @@ describe('<line-chart>', () => {
             nextTestSelector: '[data-testid=marker][data-id=marker-Card-A-2016-02]',
             keyDownObject: { key: 'ArrowRight', code: 'ArrowRight', keyCode: 39 },
             testProps: {
-              selectorAriaLabel: 'category Card-A. date 2016-01. value 7.7b. Point 1 of 12.',
-              nextSelectorAriaLabel: 'category Card-A. date 2016-02. value 7.6b. Point 2 of 12.',
+              selectorAriaLabel: 'category Card-A. date 2016-01. value 7.7b. Point 1.',
+              nextSelectorAriaLabel: 'category Card-A. date 2016-02. value 7.6b. Point 2.',
               accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true }
             }
           },
@@ -217,8 +245,8 @@ describe('<line-chart>', () => {
             nextTestSelector: '[data-testid=marker][data-id=marker-Card-A-2016-01]',
             keyDownObject: { key: 'ArrowRight', code: 'ArrowRight', keyCode: 39 },
             testProps: {
-              selectorAriaLabel: 'Card-A. 2016-12. 9.7b. Point 12 of 12.',
-              nextSelectorAriaLabel: 'Card-A. 2016-01. 7.7b. Point 1 of 12.'
+              selectorAriaLabel: 'Card-A. 2016-12. 9.7b. Point 12.',
+              nextSelectorAriaLabel: 'Card-A. 2016-01. 7.7b. Point 1.'
             }
           },
           accessibility_keyboard_nav_left_arrow_sibling: {
@@ -227,8 +255,8 @@ describe('<line-chart>', () => {
             nextTestSelector: '[data-testid=marker][data-id=marker-Card-A-2016-01]',
             keyDownObject: { key: 'ArrowLeft', code: 'ArrowLeft', keyCode: 37 },
             testProps: {
-              selectorAriaLabel: 'category Card-A. date 2016-02. value 7.6b. Point 2 of 12.',
-              nextSelectorAriaLabel: 'category Card-A. date 2016-01. value 7.7b. Point 1 of 12.',
+              selectorAriaLabel: 'category Card-A. date 2016-02. value 7.6b. Point 2.',
+              nextSelectorAriaLabel: 'category Card-A. date 2016-01. value 7.7b. Point 1.',
               accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true }
             }
           },
@@ -238,8 +266,8 @@ describe('<line-chart>', () => {
             nextTestSelector: '[data-testid=marker][data-id=marker-Card-A-2016-12]',
             keyDownObject: { key: 'ArrowLeft', code: 'ArrowLeft', keyCode: 37 },
             testProps: {
-              selectorAriaLabel: 'Card-A. 2016-01. 7.7b. Point 1 of 12.',
-              nextSelectorAriaLabel: 'Card-A. 2016-12. 9.7b. Point 12 of 12.'
+              selectorAriaLabel: 'Card-A. 2016-01. 7.7b. Point 1.',
+              nextSelectorAriaLabel: 'Card-A. 2016-12. 9.7b. Point 12.'
             }
           },
           accessibility_keyboard_nav_up_arrow_cousin: {
@@ -248,8 +276,8 @@ describe('<line-chart>', () => {
             nextTestSelector: '[data-testid=marker][data-id=marker-Card-A-2016-01]',
             keyDownObject: { key: 'ArrowUp', code: 'ArrowUp', keyCode: 38 },
             testProps: {
-              selectorAriaLabel: 'Card-B. 2016-01. 8.8b. Point 1 of 6.',
-              nextSelectorAriaLabel: 'Card-A. 2016-01. 7.7b. Point 1 of 6.',
+              selectorAriaLabel: 'Card-B. 2016-01. 8.8b. Point 1.',
+              nextSelectorAriaLabel: 'Card-A. 2016-01. 7.7b. Point 1.',
               data: moreCategoryData
             }
           },
@@ -259,8 +287,8 @@ describe('<line-chart>', () => {
             nextTestSelector: '[data-testid=marker][data-id=marker-Card-E-2016-01]',
             keyDownObject: { key: 'ArrowUp', code: 'ArrowUp', keyCode: 38 },
             testProps: {
-              selectorAriaLabel: 'Card-A. 2016-01. 7.7b. Point 1 of 6.',
-              nextSelectorAriaLabel: 'Card-E. 2016-01. 4.6b. Point 1 of 6.',
+              selectorAriaLabel: 'Card-A. 2016-01. 7.7b. Point 1.',
+              nextSelectorAriaLabel: 'Card-E. 2016-01. 4.6b. Point 1.',
               data: moreCategoryData
             }
           },
@@ -270,8 +298,8 @@ describe('<line-chart>', () => {
             nextTestSelector: '[data-testid=marker][data-id=marker-Card-B-2016-01]',
             keyDownObject: { key: 'ArrowDown', code: 'ArrowDown', keyCode: 40 },
             testProps: {
-              selectorAriaLabel: 'Card-A. 2016-01. 7.7b. Point 1 of 6.',
-              nextSelectorAriaLabel: 'Card-B. 2016-01. 8.8b. Point 1 of 6.',
+              selectorAriaLabel: 'Card-A. 2016-01. 7.7b. Point 1.',
+              nextSelectorAriaLabel: 'Card-B. 2016-01. 8.8b. Point 1.',
               data: moreCategoryData
             }
           },
@@ -281,8 +309,8 @@ describe('<line-chart>', () => {
             nextTestSelector: '[data-testid=marker][data-id=marker-Card-A-2016-01]',
             keyDownObject: { key: 'ArrowDown', code: 'ArrowDown', keyCode: 40 },
             testProps: {
-              selectorAriaLabel: 'Card-E. 2016-01. 4.6b. Point 1 of 6.',
-              nextSelectorAriaLabel: 'Card-A. 2016-01. 7.7b. Point 1 of 6.',
+              selectorAriaLabel: 'Card-E. 2016-01. 4.6b. Point 1.',
+              nextSelectorAriaLabel: 'Card-A. 2016-01. 7.7b. Point 1.',
               data: moreCategoryData
             }
           },
@@ -292,8 +320,8 @@ describe('<line-chart>', () => {
             nextTestSelector: '[data-testid=marker-series-group][data-id=marker-series-Card-A]',
             keyDownObject: { key: 'Enter', code: 'Enter', keyCode: 13, shiftKey: true },
             testProps: {
-              selectorAriaLabel: 'Card-A. 2016-01. 7.7b. Point 1 of 12.',
-              nextSelectorAriaLabel: 'Card-A. Line 1 of 2 which contains 12 interactive points.'
+              selectorAriaLabel: 'Card-A. 2016-01. 7.7b. Point 1.',
+              nextSelectorAriaLabel: 'Card-A. line 1.'
             }
           }
           // the tests below here do not work because the selection of a group (g) kicks
@@ -1297,8 +1325,8 @@ describe('<line-chart>', () => {
                 '<p style="margin: 0;"><b>Card-A<br></b>Test Date:<b>2016-01</b><br>Y Axis:<b>7.7b</b></p>'
             };
             const innerAriaContent = {
-              dataKeyNames_custom_on_load: 'category Card-A. Test Date 2016-01. value 7.7b. Point 1 of 12.',
-              dataKeyNames_custom_on_update: 'category Card-A. Test Date 2016-01. value 7.7b. Point 1 of 12.'
+              dataKeyNames_custom_on_load: 'category Card-A. Test Date 2016-01. value 7.7b. Point 1.',
+              dataKeyNames_custom_on_update: 'category Card-A. Test Date 2016-01. value 7.7b. Point 1.'
             };
             const innerTestProps = { ...unitTestTooltip[test].testProps, ...innerTooltipProps[test] };
             const customDataKeyNames = { dataKeyNames: { date: 'Test Date' } };

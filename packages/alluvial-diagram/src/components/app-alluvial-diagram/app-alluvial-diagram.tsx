@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2021, 2022, 2023 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -9,11 +9,20 @@ import { Component, State, Element, h } from '@stencil/core';
 import '@visa/visa-charts-data-table';
 import '@visa/keyboard-instructions';
 
+// importing custom languages
+// import { hu } from '@visa/visa-charts-utils/src/utils/localization/languages/hu';
+// import { kl } from '@visa/visa-charts-utils/src/utils/localization/languages/kl';
+
+// importing numeralLocales
+// import { FR } from '@visa/visa-charts-utils/src/utils/localization/numeralLocales/fr';
+// import { HU } from '@visa/visa-charts-utils/src/utils/localization/numeralLocales/hu';
 @Component({
   tag: 'app-alluvial-diagram',
   styleUrl: 'app-alluvial-diagram.scss'
 })
 export class AppAlluvialDiagram {
+  // custom language
+  @State() language: string | object = 'en';
   @State() highestHeadingLevel: string | number = 'h3';
   @State() data1: any;
   @State() data2: any;
@@ -778,7 +787,7 @@ export class AppAlluvialDiagram {
     this.hoverElement = '';
   }
   onChangeFunc(d) {
-    console.log(d);
+    // console.log(d);
     if (d.updated && (d.removed || d.added)) {
       let updates = 'The alluvial chart has ';
       if (d.removed) {
@@ -1029,7 +1038,7 @@ export class AppAlluvialDiagram {
   }
 
   changeInteraction() {
-    this.interactionState = this.interactionState[0] !== ['did'] ? ['did'] : ['source'];
+    // this.interactionState = this.interactionState[0] !== ['did'] ? ['did'] : ['source']; // causes error
   }
 
   toggleColors() {
@@ -1062,7 +1071,7 @@ export class AppAlluvialDiagram {
   }
 
   changeInteractionKey() {
-    this.interactionState = this.interactionState[0] === ['group'] ? ['source'] : ['group'];
+    // this.interactionState = this.interactionState[0] === ['group'] ? ['source'] : ['group']; // causes error
   }
 
   toggleTextures() {
@@ -1102,7 +1111,7 @@ export class AppAlluvialDiagram {
     return (
       <div>
         {/* <div role="alert" aria-live="polite"> */}
-        <p>heyyyyy {this.chartUpdates}</p>
+        <p>{this.chartUpdates}</p>
         <div>
           <h4>I. Basic Links</h4>
           <button
@@ -1198,6 +1207,11 @@ export class AppAlluvialDiagram {
           </button>
           <p>{this.nodeID}</p>
           <alluvial-diagram
+            localization={{
+              // language: kl,
+              // numeralLocale: FR,
+              skipValidation: false
+            }}
             linkData={[
               { Hair: 'Black', Eye: 'Brown', Sex: 'Female', Freq: 36, newHair: 'Black -Hair', newEye: 'Brown -Eye' },
               { Hair: 'Brown', Eye: 'Brown', Sex: 'Female', Freq: 66, newHair: 'Brown -Hair', newEye: 'Brown -Eye' },

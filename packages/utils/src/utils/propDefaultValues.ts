@@ -7,6 +7,13 @@
  **/
 // import { darkerColor } from './colors';
 
+export const localization = {
+  language: 'en',
+  numeralLocale: 'US',
+  skipValidation: true,
+  overwrite: false
+};
+
 export const accessibility = {
   longDescription: '',
   executiveSummary: '',

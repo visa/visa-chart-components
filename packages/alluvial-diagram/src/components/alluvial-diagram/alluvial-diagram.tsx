@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2021, 2022 Visa, Inc.
+ * Copyright (c) 2021, 2022, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -11,9 +11,10 @@ import { select, event } from 'd3-selection';
 import { min, max } from 'd3-array';
 import { linkHorizontal } from 'd3-shape';
 import { easeCircleIn } from 'd3-ease';
-// import { IAlluvialDiagramProps } from './alluvial-diagram-props';
+
 import {
   IBoxModelType,
+  ILocalizationType,
   IHoverStyleType,
   IClickStyleType,
   IDataLabelType,
@@ -28,6 +29,9 @@ import { v4 as uuid } from 'uuid';
 import 'd3-transition';
 import Utils from '@visa/visa-charts-utils';
 const {
+  getGlobalInstances,
+  configLocalization,
+  getActiveLanguageString,
   initializeDescriptionRoot,
   setAccessibilityController,
   initializeElementAccess,
@@ -77,7 +81,8 @@ const {
   sankeyRight,
   prepareRenderChange,
   visaColors,
-  validateAccessibilityProps
+  validateAccessibilityProps,
+  validateLocalizationProps
 } = Utils;
 
 @Component({
@@ -107,6 +112,7 @@ export class AlluvialDiagram {
   @Prop() linkData: object[];
   @Prop() nodeData: object[];
   @Prop() uniqueID: string;
+  @Prop({ mutable: true }) localization: ILocalizationType = AlluvialDiagramDefaultValues.localization;
   @Prop({ mutable: true }) sourceAccessor: string = AlluvialDiagramDefaultValues.sourceAccessor;
   @Prop({ mutable: true }) targetAccessor: string = AlluvialDiagramDefaultValues.targetAccessor;
   @Prop({ mutable: true }) valueAccessor: string = AlluvialDiagramDefaultValues.valueAccessor;
@@ -145,6 +151,7 @@ export class AlluvialDiagram {
   @Element()
   alluvialDiagramEl: HTMLElement;
   shouldValidateAccessibility: boolean = true;
+  shouldValidateLocalization: boolean = true;
   svg: any;
   root: any;
   rootG: any;
@@ -259,6 +266,7 @@ export class AlluvialDiagram {
   shouldBindInteractivity: boolean = false;
   shouldResetRoot: boolean = false;
   shouldSetNodeLabelOpacity: boolean = false;
+  shouldSetLocalizationConfig: boolean = false;
   bitmaps: any;
 
   @Watch('nodeData')
@@ -712,6 +720,39 @@ export class AlluvialDiagram {
     }
   }
 
+  @Watch('localization')
+  localizationWatcher(_newVal, _oldVal) {
+    this.shouldValidateLocalization = true;
+
+    // language
+    const newLanguage = _newVal && _newVal.language ? _newVal.language : false;
+    const oldLanguage = _oldVal && _oldVal.language ? _oldVal.language : false;
+    if (newLanguage !== oldLanguage) {
+      this.shouldSetLocalizationConfig = true;
+      this.shouldUpdateTableData = true;
+      this.shouldRedrawWrapper = true;
+      this.shouldUpdateDescriptionWrapper = true;
+      this.shouldSetChartAccessibilityCount = true;
+      this.shouldUpdateDescriptionWrapper = true;
+      this.shouldSetGeometryAriaLabels = true;
+      this.shouldSetParentSVGAccessibility = true;
+    }
+
+    // numeralLocale
+    const newNumeralLocale = _newVal && _newVal.numeralLocale ? _newVal.numeralLocale : false;
+    const oldNumeralLocale = _oldVal && _oldVal.numeralLocale ? _oldVal.numeralLocale : false;
+    if (newNumeralLocale !== oldNumeralLocale) {
+      this.shouldSetLocalizationConfig = true;
+      this.shouldUpdateTableData = true;
+      this.shouldRedrawWrapper = true;
+      this.shouldUpdateDescriptionWrapper = true;
+      this.shouldSetChartAccessibilityCount = true;
+      this.shouldUpdateDescriptionWrapper = true;
+      this.shouldSetGeometryAriaLabels = true;
+      this.shouldSetParentSVGAccessibility = true;
+    }
+  }
+
   @Watch('annotations')
   annotationsWatcher(_newVal, _oldVal) {
     this.shouldValidateAccessibility = true;
@@ -789,6 +830,7 @@ export class AlluvialDiagram {
       this.defaults = true;
       this.chartID = chartID;
       this.alluvialDiagramEl.id = this.chartID;
+      this.setLocalizationConfig();
       this.setTagLevels();
       this.prepareData();
       this.setDimensions();
@@ -799,6 +841,7 @@ export class AlluvialDiagram {
       this.validateInteractionKeys();
       this.validateLinkGroups();
       this.shouldValidateAccessibilityProps();
+      this.shouldValidateLocalizationProps();
       this.setColors();
       this.setNodeDimensions();
       this.callSankeyGenerator();
@@ -819,6 +862,7 @@ export class AlluvialDiagram {
   componentDidLoad() {
     return new Promise(resolve => {
       this.shouldValidateAccessibilityProps();
+      this.shouldValidateLocalizationProps();
       this.renderRootElements();
       this.setTooltipInitialStyle();
       this.setChartDescriptionWrapper();
@@ -1103,6 +1147,21 @@ export class AlluvialDiagram {
     }
   }
 
+  shouldValidateLocalizationProps() {
+    const windowInstances = getGlobalInstances();
+    const languageString = windowInstances.i18Next.language;
+    const languageObject = windowInstances.i18Next.getResourceBundle(languageString);
+    const numeralObject = windowInstances.numeral.localeData();
+    if (this.shouldValidateLocalization && !this.localization.skipValidation) {
+      this.shouldValidateLocalization = false;
+      validateLocalizationProps(this.chartID, {
+        ...this.localization,
+        language: languageObject,
+        numeralLocale: numeralObject
+      });
+    }
+  }
+
   shouldValidateAccessibilityProps() {
     if (this.shouldValidateAccessibility && !this.accessibility.disableValidation) {
       this.shouldValidateAccessibility = false;
@@ -1120,6 +1179,14 @@ export class AlluvialDiagram {
         }
       );
     }
+  }
+
+  getLanguageString() {
+    return getActiveLanguageString(this.localization);
+  }
+
+  setLocalizationConfig() {
+    configLocalization(this.localization);
   }
 
   setTableData() {
@@ -2532,6 +2599,7 @@ export class AlluvialDiagram {
   setChartDescriptionWrapper() {
     // this initializes the accessibility description section of the chart
     initializeDescriptionRoot({
+      language: this.getLanguageString(),
       rootEle: this.alluvialDiagramEl, // this.lineChartEl,
       title: this.accessibility.title || this.mainTitle,
       chartTag: 'alluvial-diagram',
@@ -2551,7 +2619,8 @@ export class AlluvialDiagram {
     // this sets the accessibility features of the root SVG element
     const keys = scopeDataKeys(this, chartAccessors, 'alluvial-diagram');
     setAccessibilityController({
-      node: this.svg.node(), // this.svg.node(),
+      language: this.getLanguageString(),
+      node: this.svg.node(),
       chartTag: 'alluvial-diagram',
       title: this.accessibility.title || this.mainTitle,
       description: this.subTitle,
@@ -2641,39 +2710,39 @@ export class AlluvialDiagram {
   }
 
   setChartAccessibilityTitle() {
-    setAccessTitle(this.alluvialDiagramEl, this.accessibility.title || this.mainTitle);
+    setAccessTitle(this.getLanguageString(), this.alluvialDiagramEl, this.accessibility.title || this.mainTitle);
   }
 
   setChartAccessibilitySubtitle() {
-    setAccessSubtitle(this.alluvialDiagramEl, this.subTitle);
+    setAccessSubtitle(this.getLanguageString(), this.alluvialDiagramEl, this.subTitle);
   }
 
   setChartAccessibilityLongDescription() {
-    setAccessLongDescription(this.alluvialDiagramEl, this.accessibility.longDescription);
+    setAccessLongDescription(this.getLanguageString(), this.alluvialDiagramEl, this.accessibility.longDescription);
   }
 
   setChartAccessibilityExecutiveSummary() {
-    setAccessExecutiveSummary(this.alluvialDiagramEl, this.accessibility.executiveSummary);
+    setAccessExecutiveSummary(this.getLanguageString(), this.alluvialDiagramEl, this.accessibility.executiveSummary);
   }
 
   setChartAccessibilityPurpose() {
-    setAccessPurpose(this.alluvialDiagramEl, this.accessibility.purpose);
+    setAccessPurpose(this.getLanguageString(), this.alluvialDiagramEl, this.accessibility.purpose);
   }
 
   setChartAccessibilityContext() {
-    setAccessContext(this.alluvialDiagramEl, this.accessibility.contextExplanation);
+    setAccessContext(this.getLanguageString(), this.alluvialDiagramEl, this.accessibility.contextExplanation);
   }
 
   setChartAccessibilityStatisticalNotes() {
-    setAccessStatistics(this.alluvialDiagramEl, this.accessibility.statisticalNotes);
+    setAccessStatistics(this.getLanguageString(), this.alluvialDiagramEl, this.accessibility.statisticalNotes);
   }
 
   setChartAccessibilityStructureNotes() {
-    setAccessStructure(this.alluvialDiagramEl, this.accessibility.structureNotes);
+    setAccessStructure(this.getLanguageString(), this.alluvialDiagramEl, this.accessibility.structureNotes);
   }
 
   setAnnotationAccessibility() {
-    setAccessAnnotation(this.alluvialDiagramEl, this.annotations);
+    setAccessAnnotation(this.getLanguageString(), this.alluvialDiagramEl, this.annotations);
   }
 
   onChangeHandler() {
@@ -2738,6 +2807,10 @@ export class AlluvialDiagram {
     // everything between this comment and the third should eventually
     // be moved into componentWillUpdate (if the stenicl bug is fixed)
     this.init();
+    if (this.shouldSetLocalizationConfig) {
+      this.setLocalizationConfig();
+      this.shouldSetLocalizationConfig = false;
+    }
     if (this.shouldSetTagLevels) {
       this.setTagLevels();
       this.shouldSetTagLevels = false;
@@ -2769,6 +2842,10 @@ export class AlluvialDiagram {
     if (this.shouldValidateLinkGroups) {
       this.validateLinkGroups();
       this.shouldValidateLinkGroups = true;
+    }
+    if (this.shouldValidateLocalization) {
+      this.shouldValidateLocalizationProps();
+      this.shouldValidateLocalization = false;
     }
     if (this.shouldValidateAccessibility) {
       this.shouldValidateAccessibilityProps();
@@ -2806,18 +2883,13 @@ export class AlluvialDiagram {
             </this.bottomLevel>
             <keyboard-instructions
               uniqueID={this.chartID}
-              geomType={'link'}
-              groupName={'node'} // taken from initializeDescriptionRoot, on bar this should be "bar group", stacked bar is "stack", and clustered is "cluster"
+              geomType={'node'}
+              groupName={'node collection'} // taken from initializeDescriptionRoot, on bar this should be "bar group", stacked bar is "stack", and clustered is "cluster"
+              language={this.getLanguageString()}
               chartTag={'alluvial-diagram'}
               width={this.width - (this.margin ? this.margin.right || 0 : 0)}
               isInteractive={this.accessibility.elementsAreInterface}
               hasCousinNavigation={this.innerLinkFillMode === 'source' || this.innerLinkFillMode === 'target'}
-              cousinActionOverride={'on a link'}
-              cousinResultOverride={
-                this.innerLinkFillMode === 'source' || this.innerLinkFillMode === 'target'
-                  ? "Drill up to link's Source or Target node"
-                  : ''
-              }
               disabled={
                 this.suppressEvents &&
                 this.accessibility.elementsAreInterface === false &&
@@ -2830,6 +2902,7 @@ export class AlluvialDiagram {
             <data-table
               uniqueID={this.chartID}
               isCompact
+              language={this.getLanguageString()}
               tableColumns={this.tableColumns}
               dataKeyNames={this.dataKeyNames}
               data={this.tableData}

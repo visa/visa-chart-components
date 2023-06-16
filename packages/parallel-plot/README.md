@@ -27,6 +27,7 @@
         <li><a href="#base-props">Base Props </a></li>
         <li><a href="#data-props">Data Props</a></li>
         <li><a href="#accessibility-props">Accessibility Props</a></li>
+        <li><a href="#localization-props">Localization Props</a></li>
         <li><a href="#annotation-props">Annotation Props</a></li>
         <li><a href="#axis-props">Axis Props</a></li>
         <li><a href="#event-props">Event Props</a></li>
@@ -161,6 +162,26 @@ const changeHandler = d => {
   }
 };
 ```
+
+<br>
+<br>
+
+## <a name="localization-props" href="#localization-props">#</a> Localization Props [<>](./src/components/bar-chart/bar-chart.tsx 'Source')
+
+| Name           | Type                 | Default Value(s)                                | Description                                                                          |
+| -------------- | -------------------- | ----------------------------------------------- | ------------------------------------------------------------------------------------ |
+| `localization` | object (custom type) | [ILocalizationType](../types/src/prop-types.ts) | Manages messages and settings for chart localization, _see object definition below_. |
+
+<br>
+
+### ILocalizationType Definition
+
+| Name (localization.) | Type          | Default Value(s) | Description                                                                                                                                                               |
+| -------------------- | ------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `language`           | string/object | en               | Use this to add a language to a chart. This can be string value like `en` or valid translation object.                                                                    |
+| `numeralLocale`      | string/object | US               | Use this to add a numerical locale to a chart. This can be string value like `US` or valid numeralLocale object.                                                          |
+| `overwrite`          | boolean       | false            | Use this to describe the purpose of this particular chart.                                                                                                                |
+| `skipValidation`     | boolean       | false            | If true, disables validations of localization props for this chart. Validation is intended to be used during development; upon completion, validation should be disabled. |
 
 <br>
 <br>

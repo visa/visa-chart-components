@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -17,6 +17,7 @@ import 'd3-transition';
 import { v4 as uuid } from 'uuid';
 import {
   IBoxModelType,
+  ILocalizationType,
   IClickStyleType,
   IHoverStyleType,
   IAxisType,
@@ -31,6 +32,9 @@ import { ScatterPlotDefaultValues } from './scatter-plot-default-values';
 import Utils from '@visa/visa-charts-utils';
 
 const {
+  getGlobalInstances,
+  configLocalization,
+  getActiveLanguageString,
   getAccessibleStrokes,
   ensureTextContrast,
   createTextStrokeFilter,
@@ -81,6 +85,7 @@ const {
   transitionEndAll,
   visaColors,
   validateAccessibilityProps,
+  validateLocalizationProps,
   findTagLevel,
   prepareRenderChange,
   roundTo,
@@ -102,6 +107,7 @@ export class ScatterPlot {
   @Event() transitionEndEvent: EventEmitter;
 
   // Chart Attributes (1/7)
+  @Prop({ mutable: true }) localization: ILocalizationType = ScatterPlotDefaultValues.localization;
   @Prop({ mutable: true }) mainTitle: string = ScatterPlotDefaultValues.mainTitle;
   @Prop({ mutable: true }) subTitle: string = ScatterPlotDefaultValues.subTitle;
   @Prop({ mutable: true }) height: number = ScatterPlotDefaultValues.height;
@@ -168,6 +174,7 @@ export class ScatterPlot {
   @Element()
   scatterChartEl: HTMLElement;
   shouldValidateAccessibility: boolean = true;
+  shouldValidateLocalization: boolean = true;
   svg: any;
   root: any;
   rootG: any;
@@ -286,6 +293,7 @@ export class ScatterPlot {
   shouldSetXAxisAccessibility: boolean = false;
   shouldSetAnnotationAccessibility: boolean = false;
   shouldSetStrokes: boolean = false;
+  shouldSetLocalizationConfig: boolean = false;
   topLevel: string = 'h2';
   bottomLevel: string = 'p';
   filter: any;
@@ -751,6 +759,45 @@ export class ScatterPlot {
     }
   }
 
+  @Watch('localization')
+  localizationWatcher(_newVal, _oldVal) {
+    this.shouldValidate = true;
+
+    // language
+    const newLanguage = _newVal && _newVal.language ? _newVal.language : false;
+    const oldLanguage = _oldVal && _oldVal.language ? _oldVal.language : false;
+    if (newLanguage !== oldLanguage) {
+      this.shouldSetLocalizationConfig = true;
+      this.shouldUpdateTableData = true;
+      this.shouldValidateDataLabelAccessor = true;
+      this.shouldRedrawWrapper = true;
+      this.shouldUpdateDescriptionWrapper = true;
+      this.shouldSetChartAccessibilityCount = true;
+      this.shouldSetYAxisAccessibility = true;
+      this.shouldSetXAxisAccessibility = true;
+      this.shouldUpdateDescriptionWrapper = true;
+      this.shouldSetGeometryAriaLabels = true;
+      this.shouldSetParentSVGAccessibility = true;
+    }
+
+    // numeralLocale
+    const newNumeralLocale = _newVal && _newVal.numeralLocale ? _newVal.numeralLocale : false;
+    const oldNumeralLocale = _oldVal && _oldVal.numeralLocale ? _oldVal.numeralLocale : false;
+    if (newNumeralLocale !== oldNumeralLocale) {
+      this.shouldSetLocalizationConfig = true;
+      this.shouldUpdateTableData = true;
+      this.shouldValidateDataLabelAccessor = true;
+      this.shouldRedrawWrapper = true;
+      this.shouldUpdateDescriptionWrapper = true;
+      this.shouldSetChartAccessibilityCount = true;
+      this.shouldSetYAxisAccessibility = true;
+      this.shouldSetXAxisAccessibility = true;
+      this.shouldUpdateDescriptionWrapper = true;
+      this.shouldSetGeometryAriaLabels = true;
+      this.shouldSetParentSVGAccessibility = true;
+    }
+  }
+
   @Watch('xMaxValueOverride')
   @Watch('xMinValueOverride')
   xValueOverrideWatcher(_newVal, _oldVal) {
@@ -837,6 +884,7 @@ export class ScatterPlot {
       this.defaults = true;
       this.chartID = chartID;
       this.scatterChartEl.id = this.chartID;
+      this.setLocalizationConfig();
       this.setTagLevels();
       this.prepareData();
       this.setLayoutData();
@@ -848,6 +896,7 @@ export class ScatterPlot {
       this.validateDataLabelAccessor();
       this.setTableData();
       this.shouldValidateAccessibilityProps();
+      this.shouldValidateLocalizationProps();
       resolve('component will load');
     });
   }
@@ -863,7 +912,8 @@ export class ScatterPlot {
 
   componentDidLoad() {
     return new Promise(resolve => {
-      // this.shouldValidateAccessibilityProps();
+      this.shouldValidateAccessibilityProps();
+      this.shouldValidateLocalizationProps();
       this.renderRootElements();
       this.setTooltipInitialStyle();
       this.setChartDescriptionWrapper();
@@ -1111,6 +1161,21 @@ export class ScatterPlot {
     }).then(() => this.drawEndEvent.emit({ chartID: this.chartID }));
   }
 
+  shouldValidateLocalizationProps() {
+    const windowInstances = getGlobalInstances();
+    const languageString = windowInstances.i18Next.language;
+    const languageObject = windowInstances.i18Next.getResourceBundle(languageString);
+    const numeralObject = windowInstances.numeral.localeData();
+    if (this.shouldValidateLocalization && !this.localization.skipValidation) {
+      this.shouldValidateLocalization = false;
+      validateLocalizationProps(this.chartID, {
+        ...this.localization,
+        language: languageObject,
+        numeralLocale: numeralObject
+      });
+    }
+  }
+
   shouldValidateAccessibilityProps() {
     if (this.shouldValidateAccessibility && !this.accessibility.disableValidation) {
       this.shouldValidateAccessibility = false;
@@ -1184,6 +1249,14 @@ export class ScatterPlot {
     const keys = this.innerScopeDataKeys();
     this.tableData = getScopedData(this.data, keys);
     this.tableColumns = Object.keys(keys);
+  }
+
+  getLanguageString() {
+    return getActiveLanguageString(this.localization);
+  }
+
+  setLocalizationConfig() {
+    configLocalization(this.localization);
   }
 
   prepareData() {
@@ -2524,7 +2597,7 @@ export class ScatterPlot {
   }
 
   setAnnotationAccessibility() {
-    setAccessAnnotation(this.scatterChartEl, this.annotations);
+    setAccessAnnotation(this.getLanguageString(), this.scatterChartEl, this.annotations);
   }
 
   // new accessibility functions added here
@@ -2535,6 +2608,7 @@ export class ScatterPlot {
 
   setChartDescriptionWrapper() {
     initializeDescriptionRoot({
+      language: this.getLanguageString(),
       rootEle: this.scatterChartEl,
       title: this.accessibility.title || this.mainTitle,
       chartTag: 'scatter-plot',
@@ -2552,8 +2626,9 @@ export class ScatterPlot {
 
   setParentSVGAccessibility() {
     setAccessibilityController({
-      node: this.svg.node(),
       chartTag: 'scatter-plot',
+      language: this.getLanguageString(),
+      node: this.svg.node(),
       title: this.accessibility.title || this.mainTitle,
       description: this.subTitle,
       uniqueID: this.chartID,
@@ -2562,7 +2637,7 @@ export class ScatterPlot {
       dataKeys: this.innerScopeDataKeys(),
       dataKeyNames: this.dataKeyNames,
       groupAccessor: this.groupAccessor,
-      groupName: 'scatter group',
+      groupName: 'scatter-group',
       disableKeyNav:
         this.suppressEvents &&
         this.accessibility.elementsAreInterface === false &&
@@ -2584,12 +2659,14 @@ export class ScatterPlot {
     const keys = this.innerScopeDataKeys();
     this.updatePoints.each((_d, i, n) => {
       setElementFocusHandler({
+        chartTag: 'scatter-plot',
+        language: this.getLanguageString(),
         node: n[i],
         geomType: 'point',
         includeKeyNames: this.accessibility.includeDataKeyNames,
         dataKeys: keys,
         dataKeyNames: this.dataKeyNames,
-        groupName: 'scatter group',
+        groupName: 'scatter-group',
         uniqueID: this.chartID,
         disableKeyNav:
           this.suppressEvents &&
@@ -2614,31 +2691,31 @@ export class ScatterPlot {
   }
 
   setChartAccessibilityTitle() {
-    setAccessTitle(this.scatterChartEl, this.accessibility.title || this.mainTitle);
+    setAccessTitle(this.getLanguageString(), this.scatterChartEl, this.accessibility.title || this.mainTitle);
   }
 
   setChartAccessibilitySubtitle() {
-    setAccessSubtitle(this.scatterChartEl, this.subTitle);
+    setAccessSubtitle(this.getLanguageString(), this.scatterChartEl, this.subTitle);
   }
 
   setChartAccessibilityLongDescription() {
-    setAccessLongDescription(this.scatterChartEl, this.accessibility.longDescription);
+    setAccessLongDescription(this.getLanguageString(), this.scatterChartEl, this.accessibility.longDescription);
   }
 
   setChartAccessibilityExecutiveSummary() {
-    setAccessExecutiveSummary(this.scatterChartEl, this.accessibility.executiveSummary);
+    setAccessExecutiveSummary(this.getLanguageString(), this.scatterChartEl, this.accessibility.executiveSummary);
   }
 
   setChartAccessibilityPurpose() {
-    setAccessPurpose(this.scatterChartEl, this.accessibility.purpose);
+    setAccessPurpose(this.getLanguageString(), this.scatterChartEl, this.accessibility.purpose);
   }
 
   setChartAccessibilityContext() {
-    setAccessContext(this.scatterChartEl, this.accessibility.contextExplanation);
+    setAccessContext(this.getLanguageString(), this.scatterChartEl, this.accessibility.contextExplanation);
   }
 
   setChartAccessibilityStatisticalNotes() {
-    setAccessStatistics(this.scatterChartEl, this.accessibility.statisticalNotes);
+    setAccessStatistics(this.getLanguageString(), this.scatterChartEl, this.accessibility.statisticalNotes);
   }
 
   setChartCountAccessibility() {
@@ -2653,7 +2730,7 @@ export class ScatterPlot {
   }
 
   setChartAccessibilityStructureNotes() {
-    setAccessStructure(this.scatterChartEl, this.accessibility.structureNotes);
+    setAccessStructure(this.getLanguageString(), this.scatterChartEl, this.accessibility.structureNotes);
   }
   // new accessibility stuff ends here
 
@@ -2756,6 +2833,10 @@ export class ScatterPlot {
     // everything between this comment and the third should eventually
     // be moved into componentWillUpdate (if the stenicl bug is fixed)
     this.init();
+    if (this.shouldSetLocalizationConfig) {
+      this.setLocalizationConfig();
+      this.shouldSetLocalizationConfig = false;
+    }
     if (this.shouldSetTagLevels) {
       this.setTagLevels();
       this.shouldSetTagLevels = false;
@@ -2798,6 +2879,7 @@ export class ScatterPlot {
     }
     if (this.shouldValidate) {
       this.shouldValidateAccessibilityProps();
+      this.shouldValidateLocalizationProps();
       this.shouldValidate = false;
     }
     // Everything between this comment and the first should eventually
@@ -2815,6 +2897,7 @@ export class ScatterPlot {
             uniqueID={this.chartID}
             geomType={'point'}
             groupName={'scatter group'} // taken from initializeDescriptionRoot, on bar this should be "bar group", stacked bar is "stack", and clustered is "cluster"
+            language={this.getLanguageString()}
             chartTag={'scatter-plot'}
             width={this.width - (this.margin ? this.margin.right || 0 : 0)}
             isInteractive={this.accessibility.elementsAreInterface}
@@ -2831,6 +2914,7 @@ export class ScatterPlot {
           <data-table
             uniqueID={this.chartID}
             isCompact
+            language={this.getLanguageString()}
             tableColumns={this.tableColumns}
             data={this.tableData}
             dataKeyNames={this.dataKeyNames}

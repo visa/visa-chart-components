@@ -8,17 +8,21 @@
 import { newSpecPage, SpecPage } from '@stencil/core/testing';
 import { HeatMap } from './heat-map';
 import { HeatMapDefaultValues } from './heat-map-default-values';
-import { sum } from 'd3-array';
-import { scaleOrdinal, scaleQuantize } from 'd3-scale';
+// import { sum } from 'd3-array';
+import { scaleQuantize } from 'd3-scale';
 
 // we need to bring in our nested components as well, was required to bring in the source vs dist folder to get it to mount
-import { KeyboardInstructions } from '../../../node_modules/@visa/keyboard-instructions/src/components/keyboard-instructions/keyboard-instructions';
-import { DataTable } from '../../../node_modules/@visa/visa-charts-data-table/src/components/data-table/data-table';
+import { KeyboardInstructions } from '@visa/keyboard-instructions/src/components/keyboard-instructions/keyboard-instructions';
+import { DataTable } from '@visa/visa-charts-data-table/src/components/data-table/data-table';
+
+// importing custom languages and locales
+import { hu } from '@visa/visa-charts-utils/src/utils/localization/languages/hu';
+import { HU } from '@visa/visa-charts-utils/src/utils/localization/numeralLocales/hu';
 
 import Utils from '@visa/visa-charts-utils';
 import UtilsDev from '@visa/visa-charts-utils-dev';
 
-const { getColors, visaColors, formatStats, getContrastingStroke } = Utils;
+const { getColors, visaColors, formatStats } = Utils;
 
 const {
   asyncForEach,
@@ -88,6 +92,7 @@ describe('<heat-map>', () => {
 
     // disable accessibility validation to keep output stream(terminal) clean
     const EXPECTEDACCESSIBILITY = { ...HeatMapDefaultValues.accessibility, disableValidation: true };
+    const EXPECTEDLOCALIZATION = { ...HeatMapDefaultValues.localization, skipValidation: true };
 
     beforeEach(async () => {
       page = await newSpecPage({
@@ -100,6 +105,7 @@ describe('<heat-map>', () => {
       component.yAccessor = EXPECTEDYACCESSOR;
       component.valueAccessor = EXPECTEDVALUEACCESSOR;
       component.accessibility = EXPECTEDACCESSIBILITY;
+      component.localization = EXPECTEDLOCALIZATION;
       component.uniqueID = 'heat-map-unit-test';
       component.unitTest = true;
     });
@@ -120,6 +126,28 @@ describe('<heat-map>', () => {
       });
 
       it('should render with minimal props[data,oridnalAccessor,valueAccessor] given', async () => {
+        // ACT
+        page.root.appendChild(component);
+        await page.waitForChanges();
+
+        // flush labels for testing to ensure opacity of 1 on initial render
+        const elements = page.doc.querySelectorAll('[data-testid=dataLabel]');
+        await asyncForEach(elements, async element => {
+          flushTransitions(element);
+          await page.waitForChanges();
+        });
+
+        // ASSERT
+        expect(page.root).toMatchSnapshot();
+      });
+
+      it('localization: should render localized with minimal props[data,accessors] given', async () => {
+        component.localization = {
+          language: hu,
+          numeralLocale: HU,
+          skipValidation: true,
+          overwrite: false
+        };
         // ACT
         page.root.appendChild(component);
         await page.waitForChanges();
@@ -184,8 +212,8 @@ describe('<heat-map>', () => {
             nextTestSelector: '[data-testid=map-group]',
             keyDownObject: { key: 'Enter', code: 'Enter', keyCode: 13, shiftKey: true },
             testProps: {
-              selectorAriaLabel: 'year 2010. item A. value 40. Cell 1 of 11.',
-              nextSelectorAriaLabel: 'item A. Row 1 of 3 which contains 11 interactive cells.',
+              selectorAriaLabel: 'year 2010. item A. value 40. Cell 1.',
+              nextSelectorAriaLabel: 'item A. row 1.',
               accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true }
             }
           },
@@ -195,8 +223,8 @@ describe('<heat-map>', () => {
             nextTestSelector: '[data-testid=marker][data-id=marker-2011-A]',
             keyDownObject: { key: 'ArrowRight', code: 'ArrowRight', keyCode: 39 },
             testProps: {
-              selectorAriaLabel: 'year 2010. item A. value 40. Cell 1 of 11.',
-              nextSelectorAriaLabel: 'year 2011. item A. value 23. Cell 2 of 11.',
+              selectorAriaLabel: 'year 2010. item A. value 40. Cell 1.',
+              nextSelectorAriaLabel: 'year 2011. item A. value 23. Cell 2.',
               accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true }
             }
           },
@@ -206,8 +234,8 @@ describe('<heat-map>', () => {
             nextTestSelector: '[data-testid=marker][data-id=marker-2010-A]',
             keyDownObject: { key: 'ArrowRight', code: 'ArrowRight', keyCode: 39 },
             testProps: {
-              selectorAriaLabel: '2020. A. 64. Cell 11 of 11.',
-              nextSelectorAriaLabel: '2010. A. 40. Cell 1 of 11.'
+              selectorAriaLabel: '2020. A. 64. Cell 11.',
+              nextSelectorAriaLabel: '2010. A. 40. Cell 1.'
             }
           },
           accessibility_keyboard_nav_left_arrow_sibling: {
@@ -216,8 +244,8 @@ describe('<heat-map>', () => {
             nextTestSelector: '[data-testid=marker][data-id=marker-2010-A]',
             keyDownObject: { key: 'ArrowLeft', code: 'ArrowLeft', keyCode: 37 },
             testProps: {
-              selectorAriaLabel: 'year 2011. item A. value 23. Cell 2 of 11.',
-              nextSelectorAriaLabel: 'year 2010. item A. value 40. Cell 1 of 11.',
+              selectorAriaLabel: 'year 2011. item A. value 23. Cell 2.',
+              nextSelectorAriaLabel: 'year 2010. item A. value 40. Cell 1.',
               accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true }
             }
           },
@@ -227,8 +255,8 @@ describe('<heat-map>', () => {
             nextTestSelector: '[data-testid=marker][data-id=marker-2020-A]',
             keyDownObject: { key: 'ArrowLeft', code: 'ArrowLeft', keyCode: 37 },
             testProps: {
-              selectorAriaLabel: '2010. A. 40. Cell 1 of 11.',
-              nextSelectorAriaLabel: '2020. A. 64. Cell 11 of 11.'
+              selectorAriaLabel: '2010. A. 40. Cell 1.',
+              nextSelectorAriaLabel: '2020. A. 64. Cell 11.'
             }
           },
           accessibility_keyboard_nav_up_arrow_cousin: {
@@ -237,8 +265,8 @@ describe('<heat-map>', () => {
             nextTestSelector: '[data-testid=marker][data-id=marker-2010-B]',
             keyDownObject: { key: 'ArrowUp', code: 'ArrowUp', keyCode: 38 },
             testProps: {
-              selectorAriaLabel: 'year 2010. item C. value 70. Cell 1 of 11.',
-              nextSelectorAriaLabel: 'year 2010. item B. value 20. Cell 1 of 11.',
+              selectorAriaLabel: 'year 2010. item C. value 70. Cell 1.',
+              nextSelectorAriaLabel: 'year 2010. item B. value 20. Cell 1.',
               accessibility: { ...EXPECTEDACCESSIBILITY, includeDataKeyNames: true }
             }
           },
@@ -248,8 +276,8 @@ describe('<heat-map>', () => {
             nextTestSelector: '[data-testid=marker][data-id=marker-2010-C]',
             keyDownObject: { key: 'ArrowUp', code: 'ArrowUp', keyCode: 38 },
             testProps: {
-              selectorAriaLabel: '2010. A. 40. Cell 1 of 11.',
-              nextSelectorAriaLabel: '2010. C. 70. Cell 1 of 11.'
+              selectorAriaLabel: '2010. A. 40. Cell 1.',
+              nextSelectorAriaLabel: '2010. C. 70. Cell 1.'
             }
           },
           accessibility_keyboard_nav_down_arrow_cousin: {
@@ -258,8 +286,8 @@ describe('<heat-map>', () => {
             nextTestSelector: '[data-testid=marker][data-id=marker-2010-C]',
             keyDownObject: { key: 'ArrowDown', code: 'ArrowDown', keyCode: 40 },
             testProps: {
-              selectorAriaLabel: '2010. B. 20. Cell 1 of 11.',
-              nextSelectorAriaLabel: '2010. C. 70. Cell 1 of 11.'
+              selectorAriaLabel: '2010. B. 20. Cell 1.',
+              nextSelectorAriaLabel: '2010. C. 70. Cell 1.'
             }
           },
           accessibility_keyboard_nav_down_arrow_cousin_loop: {
@@ -268,8 +296,8 @@ describe('<heat-map>', () => {
             nextTestSelector: '[data-testid=marker][data-id=marker-2010-A]',
             keyDownObject: { key: 'ArrowDown', code: 'ArrowDown', keyCode: 40 },
             testProps: {
-              selectorAriaLabel: '2010. C. 70. Cell 1 of 11.',
-              nextSelectorAriaLabel: '2010. A. 40. Cell 1 of 11.'
+              selectorAriaLabel: '2010. C. 70. Cell 1.',
+              nextSelectorAriaLabel: '2010. A. 40. Cell 1.'
             }
           }
           // these group tests should work, but getting focus onto the row
@@ -1300,8 +1328,8 @@ describe('<heat-map>', () => {
                 '<p style="margin: 0;">Test Year:<b>2010</b><br>Y Axis:<b>A</b><br>Value:<b>40</b></p>'
             };
             const innerAriaContent = {
-              dataKeyNames_custom_on_load: 'Test Year 2010. item A. value 40. Cell 1 of 11.',
-              dataKeyNames_custom_on_update: 'Test Year 2010. item A. value 40. Cell 1 of 11.'
+              dataKeyNames_custom_on_load: 'Test Year 2010. item A. value 40. Cell 1.',
+              dataKeyNames_custom_on_update: 'Test Year 2010. item A. value 40. Cell 1.'
             };
             const innerTestProps = { ...unitTestTooltip[test].testProps, ...innerTooltipProps[test] };
             const customDataKeyNames = { dataKeyNames: { year: 'Test Year' } };

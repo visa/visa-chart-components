@@ -25,7 +25,7 @@
 #' @return a visaChart htmlwidget object for plotting a clustered bar chart
 #' @export
 #' @examples
-#' library(tidyverse)
+#' library(dplyr)
 #' data.frame(UCBAdmissions) %>%
 #'   filter(Admit == "Rejected") %>%
 #'   clustered_bar_chart("Gender","Freq","Dept")

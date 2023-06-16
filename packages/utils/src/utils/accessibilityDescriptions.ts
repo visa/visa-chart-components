@@ -1,11 +1,14 @@
 /**
- * Copyright (c) 2021, 2022 Visa, Inc.
+ * Copyright (c) 2021, 2022, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
  *
  **/
 import { select } from 'd3-selection';
+import { translate } from './localization';
+import { capitalized } from './calculation';
+
 const emptyDescriptions = {
   'vcl-access-title': '', // 'This chart has no title provided.'
   'vcl-access-subtitle': '', // 'This chart has no subtitle provided.'
@@ -25,6 +28,7 @@ const emptyDescriptions = {
 };
 
 export const initializeDescriptionRoot = ({
+  language,
   rootEle,
   title,
   chartTag,
@@ -33,6 +37,7 @@ export const initializeDescriptionRoot = ({
   redraw,
   disableKeyNav
 }: {
+  language: string;
   rootEle: any;
   title: string;
   chartTag: string;
@@ -114,7 +119,7 @@ export const initializeDescriptionRoot = ({
     instructionsWrapper
       .append(level2)
       .attr('class', 'screen-reader-info vcl-access-structure-heading')
-      .text('Structure');
+      .text(`${capitalized(translate('general.keywords.structure', language))}`);
     instructionsWrapper
       .append(level3)
       .attr('class', 'screen-reader-info vcl-access-statistics-heading')
@@ -127,7 +132,7 @@ export const initializeDescriptionRoot = ({
     instructionsWrapper
       .append(level3)
       .attr('class', 'screen-reader-info vcl-access-chart-layout-heading')
-      .text('Chart Layout Description');
+      .text(`${translate('accessibilityDescriptions.chartLayoutDescription', language)}`);
     instructionsWrapper
       .append(level4)
       .attr('class', 'screen-reader-info vcl-access-layout')
@@ -157,29 +162,50 @@ export const initializeDescriptionRoot = ({
   }
   instructionsWrapper.attr('id', 'chart-instructions-' + uniqueID);
 
-  const chartTitle = title ? ', Titled: ' + title : ', with no title provided.';
-  const fullDescription = `Keyboard interactive ${chartTag}${chartTitle}. This section contains additional information about this chart. Pressing TAB will focus the keyboard instructions menu. Tabbing again takes you to the chart area.`; //  Chart Unique ID: ${uniqueID}.
-  const nonInteractive = `Static ${chartTag} image${chartTitle}. This section contains additional information about this chart. Pressing TAB will focus the data table button.`;
+  const chartTitle = title
+    ? `, ${capitalized(translate('general.keywords.titled', language))}: ` + title
+    : `, ${translate('accessibilityDescriptions.withNoTitleProvided', language)}`;
+  const fullDescription = `${capitalized(translate('general.keywords.keyboard', language))} ${capitalized(
+    translate('general.keywords.interactive', language)
+  )} ${chartTag}${chartTitle}. ${translate('accessibilityDescriptions.fullDescription', language)}`;
+  const nonInteractive = `${capitalized(translate('general.keywords.static', language))} ${chartTag} ${translate(
+    'general.keywords.image',
+    language
+  )}${chartTitle}. ${translate('accessibilityDescriptions.nonInteractive', language)}`;
   instructionsWrapper.select('.vcl-region-label').text(!disableKeyNav ? fullDescription : nonInteractive);
 };
 
-export const setAccessTitle = (rootEle: any, title: string) => {
+export const setAccessTitle = (language: string, rootEle: any, title: string) => {
   select(rootEle)
     .select('.vcl-access-title')
-    .text(title ? 'Chart title: ' + title : emptyDescriptions['vcl-access-title']);
+    .text(
+      title
+        ? `${capitalized(translate('general.keywords.chart', language))} ${translate(
+            'general.keywords.title',
+            language
+          )}: ` + title
+        : emptyDescriptions['vcl-access-title']
+    );
 };
 
-export const setAccessSubtitle = (rootEle: any, subtitle: string) => {
+export const setAccessSubtitle = (language: string, rootEle: any, subtitle: string) => {
   select(rootEle)
     .select('.vcl-access-subtitle')
-    .text(subtitle ? 'Chart subtitle: ' + subtitle : emptyDescriptions['vcl-access-subtitle']);
+    .text(
+      subtitle
+        ? `${capitalized(translate('general.keywords.chart', language))} ${translate(
+            'general.keywords.subtitle',
+            language
+          )}: ` + subtitle
+        : emptyDescriptions['vcl-access-subtitle']
+    );
 };
 
-export const setAccessLongDescription = (rootEle: any, description: string) => {
+export const setAccessLongDescription = (language: string, rootEle: any, description: string) => {
   setDescriptionNode(
     select(rootEle).select('.vcl-accessibility-instructions'),
     description,
-    'Long Description',
+    `${translate('accessibilityDescriptions.longDescription', language)}`,
     'vcl-access-long-description',
     description ||
       select(rootEle)
@@ -188,11 +214,11 @@ export const setAccessLongDescription = (rootEle: any, description: string) => {
   );
 };
 
-export const setAccessContext = (rootEle: any, context: string) => {
+export const setAccessContext = (language: string, rootEle: any, context: string) => {
   setDescriptionNode(
     select(rootEle).select('.vcl-accessibility-instructions'),
     context,
-    'Long Description',
+    `${translate('accessibilityDescriptions.longDescription', language)}`,
     'vcl-access-context',
     context ||
       select(rootEle)
@@ -202,31 +228,31 @@ export const setAccessContext = (rootEle: any, context: string) => {
   );
 };
 
-export const setAccessExecutiveSummary = (rootEle: any, summary: string) => {
+export const setAccessExecutiveSummary = (language: string, rootEle: any, summary: string) => {
   setDescriptionNode(
     select(rootEle).select('.vcl-accessibility-instructions'),
     summary,
-    'Executive Summary',
+    `${translate('accessibilityDescriptions.executiveSummary', language)}`,
     'vcl-access-executive-summary',
     !!summary
   );
 };
 
-export const setAccessPurpose = (rootEle: any, purpose: string) => {
+export const setAccessPurpose = (language: string, rootEle: any, purpose: string) => {
   setDescriptionNode(
     select(rootEle).select('.vcl-accessibility-instructions'),
     purpose,
-    'Purpose',
+    `${capitalized(translate('general.keywords.purpose', language))}`,
     'vcl-access-purpose',
     !!purpose
   );
 };
 
-export const setAccessStatistics = (rootEle: any, statistics: string) => {
+export const setAccessStatistics = (language: string, rootEle: any, statistics: string) => {
   setDescriptionNode(
     select(rootEle).select('.vcl-accessibility-instructions'),
     statistics,
-    'Statistical Information',
+    `${capitalized(translate('accessibilityDescriptions.statisticalInformation', language))}`,
     'vcl-access-statistics',
     !!statistics
   );
@@ -248,61 +274,45 @@ export const setAccessChartCounts = ({
   recursive?: boolean;
 }) => {
   const primaryG = select(parentGNode);
-  const plural =
-    primaryG
-      .selectAll('g')
-      .selectAll('*:not(title)')
-      .size() > 1 ||
-    (primaryG
-      .selectAll('g')
-      .selectAll('*:not(title)')
-      .size() === 0 && primaryG.selectAll('*:not(title)').size()) > 1
-      ? 's'
-      : '';
-  const groupNameString = groupName || geomType + ' group';
-  const groupPlural = primaryG.selectAll('g').size() > 1 ? 's' : '';
-  const count = !recursive
+
+  const countGroup = !recursive
     ? primaryG.selectAll('g').size()
-      ? primaryG.selectAll('g').size() +
-        ' ' +
-        groupNameString +
-        groupPlural +
-        ' containing a total ' +
-        (primaryG
+      ? primaryG.selectAll('g').size()
+      : primaryG.selectAll('*:not(title)').size() - primaryG.selectAll('.vcl-accessibility-focus-highlight').size()
+    : primaryG.selectAll('g').size();
+
+  const countGeom = !recursive
+    ? primaryG.selectAll('g').size()
+      ? primaryG
           .selectAll('g')
           .selectAll('*:not(title)')
           .size() -
-          primaryG
-            .selectAll('g')
-            .selectAll('.vcl-accessibility-focus-highlight')
-            .size()) +
-        ' ' +
-        geomType +
-        plural
-      : primaryG.selectAll('*:not(title)').size() -
-        primaryG.selectAll('.vcl-accessibility-focus-highlight').size() +
-        ' ' +
-        geomType +
-        plural
-    : primaryG.selectAll('g').size() +
-      ' ' +
-      geomType +
-      plural +
-      ' (more ' +
-      geomType +
-      's may be revealed upon interaction)';
+        primaryG
+          .selectAll('g')
+          .selectAll('.vcl-accessibility-focus-highlight')
+          .size()
+      : primaryG.selectAll('*:not(title)').size() - primaryG.selectAll('.vcl-accessibility-focus-highlight').size()
+    : primaryG.selectAll('g').size();
 
   select(rootEle)
     .select('.vcl-access-layout')
-    .text(`This is a ${chartTag} with ${count}.`);
+    .text(
+      `${capitalized(chartTag)}. ${
+        groupName
+          ? `${capitalized(groupName)}: ${countGroup}, ${geomType}: ${countGeom}.`
+          : `${geomType}: ${countGeom}.`
+      }`
+    );
 };
 
 export const setAccessXAxis = ({
+  language,
   rootEle,
   hasXAxis,
   xAxis,
   xAxisLabel
 }: {
+  language: string;
   rootEle: any;
   hasXAxis: boolean;
   xAxis?: any;
@@ -311,11 +321,19 @@ export const setAccessXAxis = ({
   let label = emptyDescriptions['vcl-access-xAxis'];
   if (hasXAxis) {
     const xDomain = xAxis && xAxis.formattedTicks && xAxis.formattedTicks[0] ? xAxis.formattedTicks : [];
-    const xAxisTitle = xAxisLabel ? `, titled ${xAxisLabel}` : '';
-    const xAxisRange = xDomain.length
-      ? ` with a range that starts with ${xDomain[0]} and ends with ${xDomain[xDomain.length - 1]}`
+    const xAxisTitle = xAxisLabel
+      ? `${capitalized(translate('general.keywords.title', language))} ${xAxisLabel}. `
       : '';
-    label = `The chart has a horizontal X Axis${xAxisTitle}${xAxisRange}.`;
+    const xAxisRange = xDomain.length
+      ? `${capitalized(translate('general.keywords.start', language))} ${translate(
+          'general.keywords.value',
+          language
+        )} ${xDomain[0]}, ${translate('general.keywords.end', language)} ${translate(
+          'general.keywords.value',
+          language
+        )} ${xDomain[xDomain.length - 1]}`
+      : '';
+    label = `${translate('accessibilityDescriptions.xAxis', language)} ${xAxisTitle} ${xAxisRange}.`;
   }
   select(rootEle)
     .select('.vcl-access-xAxis')
@@ -323,6 +341,7 @@ export const setAccessXAxis = ({
 };
 
 export const setAccessYAxis = ({
+  language,
   rootEle,
   hasYAxis,
   yAxis,
@@ -331,6 +350,7 @@ export const setAccessYAxis = ({
   secondaryYAxisLabel,
   xAxisLabel
 }: {
+  language: string;
   rootEle: any;
   hasYAxis: boolean;
   yAxis?: any;
@@ -356,18 +376,30 @@ export const setAccessYAxis = ({
   if (hasYAxis) {
     if (secondaryYAxisTicks) {
       // secondary y axis present
-      const yAxis1Title = yAxisLabel ? `, titled ${yAxisLabel}` : '';
+      const yAxis1Title = yAxisLabel ? `${translate('general.keywords.title', language)} ${yAxisLabel}. ` : '';
       const yAxis1Ticks = yAxisTicks
-        ? ` with a range that starts with ${yAxisTicks[0]} and ends with ${yAxisTicks[yAxisTicks.length - 1]}`
+        ? `${capitalized(translate('general.keywords.start', language))} ${translate(
+            'general.keywords.value',
+            language
+          )} ${yAxisTicks[0]}, ${translate('general.keywords.end', language)} ${translate(
+            'general.keywords.value',
+            language
+          )} ${yAxisTicks[yAxisTicks.length - 1]}.`
         : '';
-      const yAxis2Title = secondaryYAxisLabel ? `, titled ${secondaryYAxisLabel}` : '';
+      const yAxis2Title = secondaryYAxisLabel
+        ? `${translate('general.keywords.title', language)} ${secondaryYAxisLabel} `
+        : '';
       const yAxis2Ticks = secondaryYAxisTicks
-        ? ` with a range that starts with ${secondaryYAxisTicks[0]} and ends with ${
-            secondaryYAxisTicks[secondaryYAxisTicks.length - 1]
-          }`
+        ? `${capitalized(translate('general.keywords.start', language))} ${translate(
+            'general.keywords.value',
+            language
+          )} ${secondaryYAxisTicks[0]}, ${translate('general.keywords.end', language)} ${translate(
+            'general.keywords.value',
+            language
+          )} ${secondaryYAxisTicks[secondaryYAxisTicks.length - 1]}.`
         : '';
-      label = `The chart has a primary vertical Y Axis${yAxis1Title}${yAxis1Ticks}. `;
-      label += `The chart has a secondary vertical Y Axis${yAxis2Title}${yAxis2Ticks}.`;
+      label = `${translate('accessibilityController.primaryYAxis', language)} ${yAxis1Title}${yAxis1Ticks}. `;
+      label += `${translate('accessibilityController.secondaryYAxis', language)} ${yAxis2Title}${yAxis2Ticks}.`;
     } else if (!(typeof yAxis === 'function')) {
       // y axis is an object that may contain multiple axes
       // parallel plot uses this
@@ -377,14 +409,25 @@ export const setAccessYAxis = ({
           ? yAxis[yLabels[0]].y.formattedTicks
           : [];
       const y1Range = firstYDomain.length
-        ? `, with a range that starts with ${firstYDomain[0]} and ends with ${firstYDomain[firstYDomain.length - 1]}`
+        ? `${capitalized(translate('general.keywords.start', language))} ${translate(
+            'general.keywords.value',
+            language
+          )} ${firstYDomain[0]}, ${translate('general.keywords.end', language)} ${translate(
+            'general.keywords.value',
+            language
+          )} ${firstYDomain[firstYDomain.length - 1]}.`
         : '';
       label =
         yLabels.length > 1
-          ? `The chart has ${yLabels.length} vertical Y Axis sections, all using different scales${
-              xAxisLabel ? '. This series is titled ' + xAxisLabel : ''
+          ? `${translate('accessibilityDescriptions.multipleYAxisSections', language)} ${translate(
+              'accessibilityDescriptions.numberOfVerticalYAxisSections',
+              language
+            )} ${yLabels.length}. ${translate('accessibilityDescriptions.usingDifferentScales', language)} ${
+              xAxisLabel ? ` ${translate('accessibilityDescriptions.thisSeriesIsTitled', language)}` + xAxisLabel : ''
             }.`
-          : `The chart has a vertical Y Axis, titled ${yLabels[0]}${y1Range}.`;
+          : `${translate('accessibilityDescriptions.yAxis', language)} ${capitalized(
+              translate('general.keywords.title', language)
+            )} ${yLabels[0]}. ${y1Range}`;
       if (yLabels.length > 1) {
         // the yAxis objected *does* contain multiple objects!
         let i = 0;
@@ -393,20 +436,38 @@ export const setAccessYAxis = ({
           const iYDomain =
             labelScale && labelScale.formattedTicks && labelScale.formattedTicks[0] ? labelScale.formattedTicks : [];
           const iYRange = iYDomain.length
-            ? `, with a range that starts with ${iYDomain[0]} and ends with ${iYDomain[iYDomain.length - 1]}`
+            ? `${capitalized(translate('general.keywords.start', language))} ${translate(
+                'general.keywords.value',
+                language
+              )} ${iYDomain[0]}, ${translate('general.keywords.end', language)} ${translate(
+                'general.keywords.value',
+                language
+              )} ${iYDomain[iYDomain.length - 1]}.`
             : '';
-          label += ` Y Axis ${i + 1} of ${yLabels.length}, titled ${yLabels[i]}${iYRange}.`;
+          label += ` ${capitalized(translate('general.keywords.y', language))} ${capitalized(
+            translate('general.keywords.axis', language)
+          )} ${i + 1}/${yLabels.length}. ${capitalized(translate('general.keywords.title', language))} ${
+            yLabels[i]
+          }. ${iYRange}.`;
         }
       }
     } else {
       // only one axis present
       const yDomain = yAxis && yAxis.formattedTicks && yAxis.formattedTicks[0] ? yAxis.formattedTicks : [];
-      const yAxisTitle = yAxisLabel ? `, titled ${yAxisLabel}` : '';
+      const yAxisTitle = yAxisLabel
+        ? `${capitalized(translate('general.keywords.title', language))} ${yAxisLabel}.`
+        : '';
       const yAxisRange = yDomain.length
-        ? ` with a range that starts with ${yDomain[0]} and ends with ${yDomain[yDomain.length - 1]}`
+        ? `${capitalized(translate('general.keywords.start', language))} ${translate(
+            'general.keywords.value',
+            language
+          )} ${yDomain[0]}, ${translate('general.keywords.end', language)} ${translate(
+            'general.keywords.value',
+            language
+          )} ${yDomain[yDomain.length - 1]}.`
         : '';
 
-      label = `The chart has a vertical Y axis${yAxisTitle}${yAxisRange}.`;
+      label = `${translate('accessibilityDescriptions.primaryYAxis', language)} ${yAxisTitle} ${yAxisRange}`;
     }
   }
   select(rootEle)
@@ -414,17 +475,17 @@ export const setAccessYAxis = ({
     .text(label);
 };
 
-export const setAccessStructure = (rootEle: any, structure: string) => {
+export const setAccessStructure = (language: string, rootEle: any, structure: string) => {
   setDescriptionNode(
     select(rootEle).select('.vcl-accessibility-instructions'),
     structure,
-    'Notes about the chart structure',
+    `${translate('accessibilityDescriptions.notesAboutTheChartStructure', language)}`,
     'vcl-access-notes',
     !!structure
   );
 };
 
-export const setAccessAnnotation = (rootEle: any, annotations: any) => {
+export const setAccessAnnotation = (language: string, rootEle: any, annotations: any) => {
   const parent = select(rootEle).select('.vcl-accessibility-instructions');
   const notesNode = parent.select('.vcl-access-notes').node();
   let header = parent.select('.vcl-access-annotations-heading');
@@ -454,7 +515,7 @@ export const setAccessAnnotation = (rootEle: any, annotations: any) => {
             parent
               .insert(level1, instructionsHeading)
               .attr('class', 'screen-reader-info vcl-access-annotation')
-              .text(annotation.note.title || 'Annotation ' + i);
+              .text(annotation.note.title || `${capitalized(translate('general.keywords.annotation', language))} ` + i);
           }
           if (annotation.note.label) {
             count = true;
@@ -478,9 +539,7 @@ export const setAccessAnnotation = (rootEle: any, annotations: any) => {
     });
   }
   if (i - 1) {
-    const plural = i - 2 > 0 ? 's' : '';
-    const headingText = i - 1 + ' annotation' + plural + ' on the chart';
-    header.text(headingText);
+    header.text(`${translate('general.expressions.numberOfAnnotations', language)} ${i - 1}.`);
   } else {
     header.remove();
   }
