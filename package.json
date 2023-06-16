@@ -114,6 +114,8 @@
   },
   "resolutions": {
     "@types/babel__traverse": "7.18.2",
+    "@types/lodash": "4.14.191",
+    "@types/node": "18.11.19",
     "@types/react": "^17.0.43",
     "ansi-regex": "^5.0.1",
     "browserslist": "^4.16.5",
@@ -139,7 +141,8 @@
     "trim-newlines": "^3.0.1",
     "trim-off-newlines": "^1.0.3",
     "ws": "8.4.2",
-    "d3-color": "^3.1.0"
+    "d3-color": "^3.1.0",
+    "webpack": "^4.46.0"
   },
   "config": {
     "scripts": {
