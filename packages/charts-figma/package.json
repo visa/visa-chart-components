@@ -1,6 +1,6 @@
 {
   "name": "@visa/charts-figma",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "A figma plugin to port VCC components into Figma for designers. ",
   "license": "SEE LICENCE IN LICENSE",
   "author": "Visa Data Experience Team",
@@ -42,7 +42,7 @@
   },
   "dependencies": {
     "@figma-plugin/helpers": "0.15.2",
-    "@visa/charts": "^7.0.0",
+    "@visa/charts": "^7.1.0",
     "d3-array": "^1.2.4",
     "d3-color": "^3.1.0",
     "lodash.startcase": "4.4.0",

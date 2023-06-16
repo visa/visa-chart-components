@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.1.0](https://github.com/visa/visa-chart-components/compare/@visa/visa-charts-utils-dev@4.0.0...@visa/visa-charts-utils-dev@4.1.0) (2023-06-16)
+
+### Features
+
+- apply i18n updates to utils-dev unit tests ([e54b17e](https://github.com/visa/visa-chart-components/commit/e54b17e2286ca8fb747c11242031ec49a1ef36bd))
+- utils-dev and charts-python bumps ([35b5657](https://github.com/visa/visa-chart-components/commit/35b565778dde994337f60284bf179b73976cc78b))
+
 # [4.0.0](https://github.com/visa/visa-chart-components/compare/@visa/visa-charts-utils-dev@3.4.0...@visa/visa-charts-utils-dev@4.0.0) (2023-02-01)
 
 ### chore

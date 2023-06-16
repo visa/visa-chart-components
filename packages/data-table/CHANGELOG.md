@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.4.0](https://github.com/visa/visa-chart-components/compare/@visa/visa-charts-data-table@2.3.1...@visa/visa-charts-data-table@2.4.0) (2023-06-16)
+
+### Features
+
+- internationalization i18n validations i18n testing ([5e0325b](https://github.com/visa/visa-chart-components/commit/5e0325b1c6727406d6964459afbd9ac0238e1cc6))
+
 ## [2.3.1](https://github.com/visa/visa-chart-components/compare/@visa/visa-charts-data-table@2.3.0...@visa/visa-charts-data-table@2.3.1) (2023-02-01)
 
 **Note:** Version bump only for package @visa/visa-charts-data-table
