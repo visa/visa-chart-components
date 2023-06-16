@@ -49,20 +49,21 @@
     "watch": "webpack --watch --mode=development"
   },
   "devDependencies": {
-    "@jupyterlab/builder": "^3.0.0",
+    "@jupyterlab/builder": "^3.6.3",
     "@visa/charts-types": "^0.5.1",
     "rimraf": "^2.6.1",
-    "webpack": "^5"
+    "webpack": "^5.76.0"
   },
   "dependencies": {
-    "@jupyter-widgets/base": "^1.1 || ^2 || ^3 || ^4",
+    "@jupyter-widgets/base": "^1.1 || ^2 || ^3 || ^4 || ^6",
     "@visa/charts": "^7.0.0"
   },
   "resolutions": {
     "got": "^11.8.5",
     "loader-utils": "^3.2.1",
     "verdaccio": "^5.19.1",
-    "d3-color": "^3.1.0"
+    "d3-color": "^3.1.0",
+    "webpack": "^5.76.0"
   },
   "jupyterlab": {
     "extension": "lib/labplugin",
