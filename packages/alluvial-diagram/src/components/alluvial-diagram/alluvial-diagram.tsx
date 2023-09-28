@@ -22,7 +22,8 @@ import {
   IAccessibilityType,
   IAnimationConfig,
   INodeConfigType,
-  ILinkConfigType
+  ILinkConfigType,
+  ISubTitleType
 } from '@visa/charts-types';
 import { AlluvialDiagramDefaultValues } from './alluvial-diagram-default-values';
 import { v4 as uuid } from 'uuid';
@@ -82,7 +83,8 @@ const {
   prepareRenderChange,
   visaColors,
   validateAccessibilityProps,
-  validateLocalizationProps
+  validateLocalizationProps,
+  setSubTitle
 } = Utils;
 
 @Component({
@@ -101,7 +103,7 @@ export class AlluvialDiagram {
 
   // Chart Attributes (1/7)
   @Prop({ mutable: true }) mainTitle: string = AlluvialDiagramDefaultValues.mainTitle;
-  @Prop({ mutable: true }) subTitle: string = AlluvialDiagramDefaultValues.subTitle;
+  @Prop({ mutable: true }) subTitle: string | ISubTitleType = AlluvialDiagramDefaultValues.subTitle;
   @Prop({ mutable: true }) height: number = AlluvialDiagramDefaultValues.height;
   @Prop({ mutable: true }) width: number = AlluvialDiagramDefaultValues.width;
   @Prop({ mutable: true }) highestHeadingLevel: string | number = AlluvialDiagramDefaultValues.highestHeadingLevel;
@@ -193,6 +195,7 @@ export class AlluvialDiagram {
   nodeG: any;
   linkG: any;
   labelG: any;
+  subTitleG: any;
   innerLinkFillMode: any;
   innerLabelAccessor: any;
   innerIDAccessor: any;
@@ -225,6 +228,7 @@ export class AlluvialDiagram {
   shouldSetDimensions: boolean = false;
   shouldUpdateData: boolean = false;
   shouldSetColors: boolean = false;
+  shouldSetSubTitle: boolean = false;
   shouldSetTagLevels: boolean = false;
   shouldRedrawWrapper: boolean = false;
   shouldUpdateTableData: boolean = false;
@@ -322,6 +326,7 @@ export class AlluvialDiagram {
     this.shouldSetChartAccessibilityCount = true;
     this.shouldUpdateDescriptionWrapper = true;
     this.shouldSetAnnotationAccessibility = true;
+    this.shouldSetSubTitle = true;
     this.shouldSetChartAccessibilityTitle = true;
     this.shouldSetChartAccessibilitySubtitle = true;
     this.shouldSetChartAccessibilityLongDescription = true;
@@ -342,6 +347,7 @@ export class AlluvialDiagram {
 
   @Watch('subTitle')
   subTitleWatcher(_newVal, _oldVal) {
+    this.shouldSetSubTitle = true;
     this.shouldSetChartAccessibilityTitle = true;
     this.shouldSetChartAccessibilitySubtitle = true;
     this.shouldSetParentSVGAccessibility = true;
@@ -803,6 +809,7 @@ export class AlluvialDiagram {
     this.shouldUpdateDescriptionWrapper = true;
     this.shouldValidateAccessibility = true;
     this.shouldRedrawWrapper = true;
+    this.shouldSetSubTitle = true;
     this.shouldSetChartAccessibilityTitle = true;
     this.shouldSetChartAccessibilitySubtitle = true;
     this.shouldSetChartAccessibilityLongDescription = true;
@@ -876,6 +883,7 @@ export class AlluvialDiagram {
       this.setChartAccessibilityStructureNotes();
       this.setParentSVGAccessibility();
       this.reSetRoot();
+      this.setSubTitleElements();
       this.setGlobalSelections();
       this.setTestingAttributes();
       this.enterLinkGeometries();
@@ -966,6 +974,10 @@ export class AlluvialDiagram {
       if (this.shouldSetTestingAttributes) {
         this.setTestingAttributes();
         this.shouldSetTestingAttributes = false;
+      }
+      if (this.shouldSetSubTitle) {
+        this.setSubTitleElements();
+        this.shouldSetSubTitle = false;
       }
       if (this.shouldEnterUpdateExit) {
         this.enterLinkGeometries();
@@ -1279,6 +1291,7 @@ export class AlluvialDiagram {
     this.linkG = this.rootG.append('g').attr('class', 'alluvial-link-group');
 
     this.labelG = this.rootG.append('g').attr('class', 'alluvial-dataLabel-group');
+    this.subTitleG = select(this.alluvialDiagramEl).select('.alluvial-sub-title');
     this.tooltipG = select(this.alluvialDiagramEl).select('.alluvial-tooltip');
   }
 
@@ -2587,6 +2600,13 @@ export class AlluvialDiagram {
     });
   }
 
+  setSubTitleElements() {
+    setSubTitle({
+      root: this.subTitleG,
+      subTitle: this.subTitle
+    });
+  }
+
   setColors() {
     this.colorArr = this.colors ? convertVisaColor(this.colors) : getColors(this.colorPalette, this.nodeList.length);
   }
@@ -2610,7 +2630,8 @@ export class AlluvialDiagram {
         this.suppressEvents &&
         this.accessibility.elementsAreInterface === false &&
         this.accessibility.keyboardNavConfig &&
-        this.accessibility.keyboardNavConfig.disabled
+        this.accessibility.keyboardNavConfig.disabled,
+      hideDataTable: this.accessibility.hideDataTableButton
     });
     this.shouldRedrawWrapper = false;
   }
@@ -2805,7 +2826,7 @@ export class AlluvialDiagram {
   render() {
     this.drawStartEvent.emit({ chartID: this.chartID });
     // everything between this comment and the third should eventually
-    // be moved into componentWillUpdate (if the stenicl bug is fixed)
+    // be moved into componentWillUpdate (if the Stencil bug is fixed)
     this.init();
     if (this.shouldSetLocalizationConfig) {
       this.setLocalizationConfig();
@@ -2878,9 +2899,7 @@ export class AlluvialDiagram {
         <div class="o-layout">
           <div class="o-layout--chart">
             <this.topLevel class="alluvial-main-title vcl-main-title">{this.mainTitle}</this.topLevel>
-            <this.bottomLevel class="visa-ui-text--instructions alluvial-sub-title vcl-sub-title">
-              {this.subTitle}
-            </this.bottomLevel>
+            <this.bottomLevel class="visa-ui-text--instructions alluvial-sub-title vcl-sub-title" />
             <keyboard-instructions
               uniqueID={this.chartID}
               geomType={'node'}
