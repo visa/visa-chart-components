@@ -17,6 +17,7 @@
   "author": "Visa Data Experience Team",
   "scripts": {
     "audit": "yarn audit --json --level low > yarn-audit.json",
+    "yarn-install": "yarn",
     "build": "stencil build",
     "start-dev": "stencil build --dev --watch --serve",
     "watch": "chokidar -d=4  '**/*.{tsx,ts,scss}' 'node_modules/@visa/keyboard-instructions/src' -i '/^src/(.*)/*.(d|spec|test|e2e).ts$|dist/(.*)/' -c 'npm run build'",
