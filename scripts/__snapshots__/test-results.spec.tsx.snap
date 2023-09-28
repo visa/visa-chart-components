@@ -200,6 +200,30 @@ Object {
         "generic test suite",
       ],
       "failureMessages": Array [],
+      "fullName": "<alluvial-diagram> rendered-html generic test suite subTitle: set legend subTitle on load",
+      "location": null,
+      "status": "passed",
+      "title": "subTitle: set legend subTitle on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<alluvial-diagram>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<alluvial-diagram> rendered-html generic test suite subTitle: set legend subTitle on update",
+      "location": null,
+      "status": "passed",
+      "title": "subTitle: set legend subTitle on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<alluvial-diagram>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
       "fullName": "<alluvial-diagram> rendered-html generic test suite margin: default margin on load",
       "location": null,
       "status": "passed",
@@ -324,6 +348,30 @@ Object {
       "location": null,
       "status": "passed",
       "title": "accessibility: should not print accessibility console warnings and logs when accessibility.disableValidation set to true",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<alluvial-diagram>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<alluvial-diagram> rendered-html generic test suite localization: should print localization console warnings and logs when localization.skipValidation defaults to false",
+      "location": null,
+      "status": "passed",
+      "title": "localization: should print localization console warnings and logs when localization.skipValidation defaults to false",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<alluvial-diagram>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<alluvial-diagram> rendered-html generic test suite localization: should not print localization console warnings and logs when localization.skipValidation set to true",
+      "location": null,
+      "status": "passed",
+      "title": "localization: should not print localization console warnings and logs when localization.skipValidation set to true",
     },
     Object {
       "ancestorTitles": Array [
@@ -1689,9 +1737,9 @@ Object {
       ],
       "failureMessages": Array [
         "Error: expected attribute stroke \\"none\\" to equal \\"#7c99b1\\"
-    at ./packages/alluvial-diagram/src/components/alluvial-diagram/alluvial-diagram.spec.ts:1154:26
+    at ./packages/alluvial-diagram/src/components/alluvial-diagram/alluvial-diagram.spec.ts:1150:26
     at Array.forEach (<anonymous>)
-    at Object.<anonymous> (./packages/alluvial-diagram/src/components/alluvial-diagram/alluvial-diagram.spec.ts:1153:17)
+    at Object.<anonymous> (./packages/alluvial-diagram/src/components/alluvial-diagram/alluvial-diagram.spec.ts:1149:17)
     at processTicksAndRejections (node:internal/process/task_queues:96:5)",
       ],
       "fullName": "<alluvial-diagram> rendered-html links fillMode should have fillMode of link if passed on load",
@@ -1734,9 +1782,9 @@ Object {
       ],
       "failureMessages": Array [
         "Error: expected attribute stroke \\"#7c99b1\\" to equal \\"#624c48\\"
-    at ./packages/alluvial-diagram/src/components/alluvial-diagram/alluvial-diagram.spec.ts:1230:26
+    at ./packages/alluvial-diagram/src/components/alluvial-diagram/alluvial-diagram.spec.ts:1226:26
     at Array.forEach (<anonymous>)
-    at Object.<anonymous> (./packages/alluvial-diagram/src/components/alluvial-diagram/alluvial-diagram.spec.ts:1228:17)
+    at Object.<anonymous> (./packages/alluvial-diagram/src/components/alluvial-diagram/alluvial-diagram.spec.ts:1224:17)
     at processTicksAndRejections (node:internal/process/task_queues:96:5)",
       ],
       "fullName": "<alluvial-diagram> rendered-html links fillMode should have fillMode of target if passed on load",
@@ -2190,6 +2238,30 @@ Object {
         "generic test suite",
       ],
       "failureMessages": Array [],
+      "fullName": "<bar-chart> rendered-html generic test suite subTitle: set legend subTitle on load",
+      "location": null,
+      "status": "passed",
+      "title": "subTitle: set legend subTitle on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<bar-chart>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<bar-chart> rendered-html generic test suite subTitle: set legend subTitle on update",
+      "location": null,
+      "status": "passed",
+      "title": "subTitle: set legend subTitle on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<bar-chart>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
       "fullName": "<bar-chart> rendered-html generic test suite margin: default margin on load",
       "location": null,
       "status": "passed",
@@ -2350,6 +2422,30 @@ Object {
       "location": null,
       "status": "passed",
       "title": "accessibility: should not print accessibility console warnings and logs when accessibility.disableValidation set to true",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<bar-chart>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<bar-chart> rendered-html generic test suite localization: should print localization console warnings and logs when localization.skipValidation defaults to false",
+      "location": null,
+      "status": "passed",
+      "title": "localization: should print localization console warnings and logs when localization.skipValidation defaults to false",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<bar-chart>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<bar-chart> rendered-html generic test suite localization: should not print localization console warnings and logs when localization.skipValidation set to true",
+      "location": null,
+      "status": "passed",
+      "title": "localization: should not print localization console warnings and logs when localization.skipValidation set to true",
     },
     Object {
       "ancestorTitles": Array [
@@ -4572,6 +4668,30 @@ Object {
         "generic test suite",
       ],
       "failureMessages": Array [],
+      "fullName": "<circle-packing> rendered-html generic test suite subTitle: set legend subTitle on load",
+      "location": null,
+      "status": "passed",
+      "title": "subTitle: set legend subTitle on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<circle-packing>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<circle-packing> rendered-html generic test suite subTitle: set legend subTitle on update",
+      "location": null,
+      "status": "passed",
+      "title": "subTitle: set legend subTitle on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<circle-packing>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
       "fullName": "<circle-packing> rendered-html generic test suite margin: default margin on load",
       "location": null,
       "status": "passed",
@@ -4696,6 +4816,30 @@ Object {
       "location": null,
       "status": "passed",
       "title": "accessibility: should not print accessibility console warnings and logs when accessibility.disableValidation set to true",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<circle-packing>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<circle-packing> rendered-html generic test suite localization: should print localization console warnings and logs when localization.skipValidation defaults to false",
+      "location": null,
+      "status": "passed",
+      "title": "localization: should print localization console warnings and logs when localization.skipValidation defaults to false",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<circle-packing>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<circle-packing> rendered-html generic test suite localization: should not print localization console warnings and logs when localization.skipValidation set to true",
+      "location": null,
+      "status": "passed",
+      "title": "localization: should not print localization console warnings and logs when localization.skipValidation set to true",
     },
     Object {
       "ancestorTitles": Array [
@@ -6373,6 +6517,30 @@ Object {
         "generic test suite",
       ],
       "failureMessages": Array [],
+      "fullName": "<clustered-bar-chart> rendered-html generic test suite subTitle: set legend subTitle on load",
+      "location": null,
+      "status": "passed",
+      "title": "subTitle: set legend subTitle on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<clustered-bar-chart>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<clustered-bar-chart> rendered-html generic test suite subTitle: set legend subTitle on update",
+      "location": null,
+      "status": "passed",
+      "title": "subTitle: set legend subTitle on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<clustered-bar-chart>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
       "fullName": "<clustered-bar-chart> rendered-html generic test suite margin: default margin on load",
       "location": null,
       "status": "passed",
@@ -6533,6 +6701,30 @@ Object {
       "location": null,
       "status": "passed",
       "title": "accessibility: should not print accessibility console warnings and logs when accessibility.disableValidation set to true",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<clustered-bar-chart>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<clustered-bar-chart> rendered-html generic test suite localization: should print localization console warnings and logs when localization.skipValidation defaults to false",
+      "location": null,
+      "status": "passed",
+      "title": "localization: should print localization console warnings and logs when localization.skipValidation defaults to false",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<clustered-bar-chart>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<clustered-bar-chart> rendered-html generic test suite localization: should not print localization console warnings and logs when localization.skipValidation set to true",
+      "location": null,
+      "status": "passed",
+      "title": "localization: should not print localization console warnings and logs when localization.skipValidation set to true",
     },
     Object {
       "ancestorTitles": Array [
@@ -8465,7 +8657,7 @@ Object {
       ],
       "failureMessages": Array [
         "Error: expected textContent \\"$15\\" to equal \\"15\\"
-    at Object.<anonymous> (./packages/clustered-bar-chart/src/components/clustered-bar-chart/clustered-bar-chart.spec.ts:1573:33)
+    at Object.<anonymous> (./packages/clustered-bar-chart/src/components/clustered-bar-chart/clustered-bar-chart.spec.ts:1570:33)
     at processTicksAndRejections (node:internal/process/task_queues:96:5)",
       ],
       "fullName": "<clustered-bar-chart> rendered-html labels legend format should format number if passed as prop",
@@ -8893,6 +9085,30 @@ Object {
         "generic test suite",
       ],
       "failureMessages": Array [],
+      "fullName": "<dumbbell-plot> rendered-html generic test suite subTitle: set legend subTitle on load",
+      "location": null,
+      "status": "passed",
+      "title": "subTitle: set legend subTitle on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<dumbbell-plot>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<dumbbell-plot> rendered-html generic test suite subTitle: set legend subTitle on update",
+      "location": null,
+      "status": "passed",
+      "title": "subTitle: set legend subTitle on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<dumbbell-plot>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
       "fullName": "<dumbbell-plot> rendered-html generic test suite margin: default margin on load",
       "location": null,
       "status": "passed",
@@ -9017,6 +9233,30 @@ Object {
       "location": null,
       "status": "passed",
       "title": "accessibility: should not print accessibility console warnings and logs when accessibility.disableValidation set to true",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<dumbbell-plot>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<dumbbell-plot> rendered-html generic test suite localization: should print localization console warnings and logs when localization.skipValidation defaults to false",
+      "location": null,
+      "status": "passed",
+      "title": "localization: should print localization console warnings and logs when localization.skipValidation defaults to false",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<dumbbell-plot>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<dumbbell-plot> rendered-html generic test suite localization: should not print localization console warnings and logs when localization.skipValidation set to true",
+      "location": null,
+      "status": "passed",
+      "title": "localization: should not print localization console warnings and logs when localization.skipValidation set to true",
     },
     Object {
       "ancestorTitles": Array [
@@ -11860,6 +12100,30 @@ Object {
         "generic test suite",
       ],
       "failureMessages": Array [],
+      "fullName": "<heat-map> rendered-html generic test suite subTitle: set legend subTitle on load",
+      "location": null,
+      "status": "passed",
+      "title": "subTitle: set legend subTitle on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<heat-map>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<heat-map> rendered-html generic test suite subTitle: set legend subTitle on update",
+      "location": null,
+      "status": "passed",
+      "title": "subTitle: set legend subTitle on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<heat-map>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
       "fullName": "<heat-map> rendered-html generic test suite margin: default margin on load",
       "location": null,
       "status": "passed",
@@ -12020,6 +12284,30 @@ Object {
       "location": null,
       "status": "passed",
       "title": "accessibility: should not print accessibility console warnings and logs when accessibility.disableValidation set to true",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<heat-map>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<heat-map> rendered-html generic test suite localization: should print localization console warnings and logs when localization.skipValidation defaults to false",
+      "location": null,
+      "status": "passed",
+      "title": "localization: should print localization console warnings and logs when localization.skipValidation defaults to false",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<heat-map>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<heat-map> rendered-html generic test suite localization: should not print localization console warnings and logs when localization.skipValidation set to true",
+      "location": null,
+      "status": "passed",
+      "title": "localization: should not print localization console warnings and logs when localization.skipValidation set to true",
     },
     Object {
       "ancestorTitles": Array [
@@ -12781,9 +13069,9 @@ Object {
       ],
       "failureMessages": Array [
         "Error: expected textContent \\"$2010\\" to equal \\"2010\\"
-    at ./packages/heat-map/src/components/heat-map/heat-map.spec.ts:822:26
+    at ./packages/heat-map/src/components/heat-map/heat-map.spec.ts:818:26
     at Array.forEach (<anonymous>)
-    at Object.<anonymous> (./packages/heat-map/src/components/heat-map/heat-map.spec.ts:821:22)
+    at Object.<anonymous> (./packages/heat-map/src/components/heat-map/heat-map.spec.ts:817:22)
     at processTicksAndRejections (node:internal/process/task_queues:96:5)",
       ],
       "fullName": "<heat-map> rendered-html axes axis.format xAxis should have custom format applied to numbers if passed",
@@ -12904,9 +13192,9 @@ Object {
       ],
       "failureMessages": Array [
         "Error: expected attribute radius \\"1\\" to equal \\"2\\"
-    at forEach (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:5526:43)
+    at forEach (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:5696:43)
     at Array.forEach (<anonymous>)
-    at call (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:5525:44)
+    at call (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:5695:44)
     at step (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:66:23)
     at Object.next (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:47:53)
     at fulfilled (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:37:58)
@@ -12952,9 +13240,9 @@ Object {
       ],
       "failureMessages": Array [
         "Error: expected attribute radius \\"1\\" to equal \\"2\\"
-    at forEach (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:6021:43)
+    at forEach (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:6191:43)
     at Array.forEach (<anonymous>)
-    at call (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:6020:44)
+    at call (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:6190:44)
     at step (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:66:23)
     at Object.next (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:47:53)
     at fulfilled (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:37:58)
@@ -13606,7 +13894,7 @@ Object {
       ],
       "failureMessages": Array [
         "Error: expected textContent \\"$15\\" to equal \\"15\\"
-    at Object.<anonymous> (./packages/heat-map/src/components/heat-map/heat-map.spec.ts:1567:35)
+    at Object.<anonymous> (./packages/heat-map/src/components/heat-map/heat-map.spec.ts:1563:35)
     at processTicksAndRejections (node:internal/process/task_queues:96:5)",
       ],
       "fullName": "<heat-map> rendered-html labels dataLabel legend format should format number if passed as prop",
@@ -13960,6 +14248,30 @@ Object {
         "generic test suite",
       ],
       "failureMessages": Array [],
+      "fullName": "<line-chart> rendered-html generic test suite subTitle: set legend subTitle on load",
+      "location": null,
+      "status": "passed",
+      "title": "subTitle: set legend subTitle on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<line-chart>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<line-chart> rendered-html generic test suite subTitle: set legend subTitle on update",
+      "location": null,
+      "status": "passed",
+      "title": "subTitle: set legend subTitle on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<line-chart>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
       "fullName": "<line-chart> rendered-html generic test suite margin: default margin on load",
       "location": null,
       "status": "passed",
@@ -14096,9 +14408,9 @@ Object {
 
 Expected substring: [32m\\"exit\\"[39m
 Received string:    [31m\\"update\\"[39m
-    at forEach (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:5142:52)
+    at forEach (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:5222:52)
     at Array.forEach (<anonymous>)
-    at call (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:5135:30)
+    at call (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:5215:30)
     at step (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:66:23)
     at Object.next (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:47:53)
     at fulfilled (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:37:58)
@@ -14132,6 +14444,30 @@ Received string:    [31m\\"update\\"[39m
       "location": null,
       "status": "passed",
       "title": "accessibility: should not print accessibility console warnings and logs when accessibility.disableValidation set to true",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<line-chart>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<line-chart> rendered-html generic test suite localization: should print localization console warnings and logs when localization.skipValidation defaults to false",
+      "location": null,
+      "status": "passed",
+      "title": "localization: should print localization console warnings and logs when localization.skipValidation defaults to false",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<line-chart>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<line-chart> rendered-html generic test suite localization: should not print localization console warnings and logs when localization.skipValidation set to true",
+      "location": null,
+      "status": "passed",
+      "title": "localization: should not print localization console warnings and logs when localization.skipValidation set to true",
     },
     Object {
       "ancestorTitles": Array [
@@ -16004,7 +16340,7 @@ Received string:    [31m\\"update\\"[39m
       ],
       "failureMessages": Array [
         "Error: expected textContent \\"$15\\" to equal \\"15\\"
-    at Object.<anonymous> (./packages/line-chart/src/components/line-chart/line-chart.spec.tsx:1876:33)
+    at Object.<anonymous> (./packages/line-chart/src/components/line-chart/line-chart.spec.tsx:1872:33)
     at processTicksAndRejections (node:internal/process/task_queues:96:5)",
       ],
       "fullName": "<line-chart> rendered-html labels legend format should format number if passed as prop",
@@ -16561,6 +16897,30 @@ Received string:    [31m\\"update\\"[39m
         "generic test suite",
       ],
       "failureMessages": Array [],
+      "fullName": "<parallel-plot> rendered-html generic test suite subTitle: set legend subTitle on load",
+      "location": null,
+      "status": "passed",
+      "title": "subTitle: set legend subTitle on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<parallel-plot>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<parallel-plot> rendered-html generic test suite subTitle: set legend subTitle on update",
+      "location": null,
+      "status": "passed",
+      "title": "subTitle: set legend subTitle on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<parallel-plot>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
       "fullName": "<parallel-plot> rendered-html generic test suite margin: default margin on load",
       "location": null,
       "status": "passed",
@@ -16721,6 +17081,30 @@ Received string:    [31m\\"update\\"[39m
       "location": null,
       "status": "passed",
       "title": "accessibility: should not print accessibility console warnings and logs when accessibility.disableValidation set to true",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<parallel-plot>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<parallel-plot> rendered-html generic test suite localization: should print localization console warnings and logs when localization.skipValidation defaults to false",
+      "location": null,
+      "status": "passed",
+      "title": "localization: should print localization console warnings and logs when localization.skipValidation defaults to false",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<parallel-plot>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<parallel-plot> rendered-html generic test suite localization: should not print localization console warnings and logs when localization.skipValidation set to true",
+      "location": null,
+      "status": "passed",
+      "title": "localization: should not print localization console warnings and logs when localization.skipValidation set to true",
     },
     Object {
       "ancestorTitles": Array [
@@ -18587,7 +18971,7 @@ Received string:    [31m\\"update\\"[39m
       ],
       "failureMessages": Array [
         "Error: expected textContent \\"$15\\" to equal \\"15\\"
-    at Object.<anonymous> (./packages/parallel-plot/src/components/parallel-plot/parallel-plot.spec.ts:1879:33)
+    at Object.<anonymous> (./packages/parallel-plot/src/components/parallel-plot/parallel-plot.spec.ts:1876:33)
     at processTicksAndRejections (node:internal/process/task_queues:96:5)",
       ],
       "fullName": "<parallel-plot> rendered-html labels legend format should format number if passed as prop",
@@ -18643,7 +19027,7 @@ Received string:    [31m\\"update\\"[39m
       ],
       "failureMessages": Array [
         "Error: expected attribute opacity \\"1\\" to equal \\"0\\"
-    at Object.<anonymous> (./packages/parallel-plot/src/components/parallel-plot/parallel-plot.spec.ts:2000:31)
+    at Object.<anonymous> (./packages/parallel-plot/src/components/parallel-plot/parallel-plot.spec.ts:1997:31)
     at processTicksAndRejections (node:internal/process/task_queues:96:5)",
       ],
       "fullName": "<parallel-plot> rendered-html reference line should pass referenceLines prop",
@@ -18659,7 +19043,7 @@ Received string:    [31m\\"update\\"[39m
       ],
       "failureMessages": Array [
         "Error: expected attribute opacity \\"1\\" to equal \\"0\\"
-    at Object.<anonymous> (./packages/parallel-plot/src/components/parallel-plot/parallel-plot.spec.ts:2017:31)
+    at Object.<anonymous> (./packages/parallel-plot/src/components/parallel-plot/parallel-plot.spec.ts:2014:31)
     at processTicksAndRejections (node:internal/process/task_queues:96:5)",
       ],
       "fullName": "<parallel-plot> rendered-html reference line should pass referenceStyle prop",
@@ -19152,6 +19536,30 @@ Received string:    [31m\\"update\\"[39m
         "generic test suite",
       ],
       "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html generic test suite subTitle: set legend subTitle on load",
+      "location": null,
+      "status": "passed",
+      "title": "subTitle: set legend subTitle on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html generic test suite subTitle: set legend subTitle on update",
+      "location": null,
+      "status": "passed",
+      "title": "subTitle: set legend subTitle on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
       "fullName": "<pie-chart> rendered-html generic test suite margin: default margin on load",
       "location": null,
       "status": "passed",
@@ -19276,6 +19684,30 @@ Received string:    [31m\\"update\\"[39m
       "location": null,
       "status": "passed",
       "title": "accessibility: should not print accessibility console warnings and logs when accessibility.disableValidation set to true",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html generic test suite localization: should print localization console warnings and logs when localization.skipValidation defaults to false",
+      "location": null,
+      "status": "passed",
+      "title": "localization: should print localization console warnings and logs when localization.skipValidation defaults to false",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html generic test suite localization: should not print localization console warnings and logs when localization.skipValidation set to true",
+      "location": null,
+      "status": "passed",
+      "title": "localization: should not print localization console warnings and logs when localization.skipValidation set to true",
     },
     Object {
       "ancestorTitles": Array [
@@ -21039,6 +21471,30 @@ Received: [31m\\"[7m14[27mpx\\"[39m
         "generic test suite",
       ],
       "failureMessages": Array [],
+      "fullName": "<scatter-plot> rendered-html generic test suite subTitle: set legend subTitle on load",
+      "location": null,
+      "status": "passed",
+      "title": "subTitle: set legend subTitle on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<scatter-plot>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<scatter-plot> rendered-html generic test suite subTitle: set legend subTitle on update",
+      "location": null,
+      "status": "passed",
+      "title": "subTitle: set legend subTitle on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<scatter-plot>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
       "fullName": "<scatter-plot> rendered-html generic test suite margin: default margin on load",
       "location": null,
       "status": "passed",
@@ -21199,6 +21655,30 @@ Received: [31m\\"[7m14[27mpx\\"[39m
       "location": null,
       "status": "passed",
       "title": "accessibility: should not print accessibility console warnings and logs when accessibility.disableValidation set to true",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<scatter-plot>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<scatter-plot> rendered-html generic test suite localization: should print localization console warnings and logs when localization.skipValidation defaults to false",
+      "location": null,
+      "status": "passed",
+      "title": "localization: should print localization console warnings and logs when localization.skipValidation defaults to false",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<scatter-plot>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<scatter-plot> rendered-html generic test suite localization: should not print localization console warnings and logs when localization.skipValidation set to true",
+      "location": null,
+      "status": "passed",
+      "title": "localization: should not print localization console warnings and logs when localization.skipValidation set to true",
     },
     Object {
       "ancestorTitles": Array [
@@ -22975,7 +23455,7 @@ Received: [31m\\"[7m14[27mpx\\"[39m
       ],
       "failureMessages": Array [
         "Error: expected textContent \\"$15\\" to equal \\"15\\"
-    at Object.<anonymous> (./packages/scatter-plot/src/components/scatter-plot/scatter-plot.spec.tsx:1918:33)
+    at Object.<anonymous> (./packages/scatter-plot/src/components/scatter-plot/scatter-plot.spec.tsx:1915:33)
     at processTicksAndRejections (node:internal/process/task_queues:96:5)",
       ],
       "fullName": "<scatter-plot> rendered-html labels legend format should format number if passed as prop",
@@ -23572,6 +24052,30 @@ Received: [31m\\"[7m14[27mpx\\"[39m
         "generic test suite",
       ],
       "failureMessages": Array [],
+      "fullName": "<stacked-bar-chart> rendered-html generic test suite subTitle: set legend subTitle on load",
+      "location": null,
+      "status": "passed",
+      "title": "subTitle: set legend subTitle on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<stacked-bar-chart>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<stacked-bar-chart> rendered-html generic test suite subTitle: set legend subTitle on update",
+      "location": null,
+      "status": "passed",
+      "title": "subTitle: set legend subTitle on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<stacked-bar-chart>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
       "fullName": "<stacked-bar-chart> rendered-html generic test suite margin: default margin on load",
       "location": null,
       "status": "passed",
@@ -23732,6 +24236,30 @@ Received: [31m\\"[7m14[27mpx\\"[39m
       "location": null,
       "status": "passed",
       "title": "accessibility: should not print accessibility console warnings and logs when accessibility.disableValidation set to true",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<stacked-bar-chart>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<stacked-bar-chart> rendered-html generic test suite localization: should print localization console warnings and logs when localization.skipValidation defaults to false",
+      "location": null,
+      "status": "passed",
+      "title": "localization: should print localization console warnings and logs when localization.skipValidation defaults to false",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<stacked-bar-chart>",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<stacked-bar-chart> rendered-html generic test suite localization: should not print localization console warnings and logs when localization.skipValidation set to true",
+      "location": null,
+      "status": "passed",
+      "title": "localization: should not print localization console warnings and logs when localization.skipValidation set to true",
     },
     Object {
       "ancestorTitles": Array [
@@ -25832,7 +26360,7 @@ Received: [31m\\"[7m14[27mpx\\"[39m
       ],
       "failureMessages": Array [
         "Error: expected textContent \\"$15\\" to equal \\"15\\"
-    at Object.<anonymous> (./packages/stacked-bar-chart/src/components/stacked-bar-chart/stacked-bar-chart.spec.ts:1678:33)
+    at Object.<anonymous> (./packages/stacked-bar-chart/src/components/stacked-bar-chart/stacked-bar-chart.spec.ts:1675:33)
     at processTicksAndRejections (node:internal/process/task_queues:96:5)",
       ],
       "fullName": "<stacked-bar-chart> rendered-html labels legend format should format number if passed as prop",
@@ -26260,6 +26788,30 @@ Received: [31m\\"[7m14[27mpx\\"[39m
         "generic test suite",
       ],
       "failureMessages": Array [],
+      "fullName": "<world-map /> rendered-html generic test suite [base] subTitle: set legend subTitle on load",
+      "location": null,
+      "status": "passed",
+      "title": "[base] subTitle: set legend subTitle on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<world-map />",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<world-map /> rendered-html generic test suite [base] subTitle: set legend subTitle on update",
+      "location": null,
+      "status": "passed",
+      "title": "[base] subTitle: set legend subTitle on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<world-map />",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
       "fullName": "<world-map /> rendered-html generic test suite [margin] margin: default margin on load",
       "location": null,
       "status": "passed",
@@ -26420,6 +26972,30 @@ Received: [31m\\"[7m14[27mpx\\"[39m
       "location": null,
       "status": "passed",
       "title": "[accessibility] accessibility: should not print accessibility console warnings and logs when accessibility.disableValidation set to true",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<world-map />",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<world-map /> rendered-html generic test suite [localization] localization: should print localization console warnings and logs when localization.skipValidation defaults to false",
+      "location": null,
+      "status": "passed",
+      "title": "[localization] localization: should print localization console warnings and logs when localization.skipValidation defaults to false",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<world-map />",
+        "rendered-html",
+        "generic test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<world-map /> rendered-html generic test suite [localization] localization: should not print localization console warnings and logs when localization.skipValidation set to true",
+      "location": null,
+      "status": "passed",
+      "title": "[localization] localization: should not print localization console warnings and logs when localization.skipValidation set to true",
     },
     Object {
       "ancestorTitles": Array [
