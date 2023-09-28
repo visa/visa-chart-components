@@ -2,19 +2,30 @@
   {
     "chart": "bar-chart",
     "name": "Default",
-    "accessibility": {
-      "contextExplanation": "This example of a bar chart was selected through example list on the sidebar.",
-      "purpose": "Demonstration of a bar chart built with VCC and minimal properties provided.",
-      "statisticalNotes": "This chart is using dummy data."
-    },
+    "mainTitle": "Chart Title",
+    "subTitle": "Chart Subtitle",
     "data": [
       { "label": "Q1", "value": 1125 },
       { "label": "Q2", "value": 3725 },
       { "label": "Q3", "value": 2125 },
       { "label": "Q4", "value": 4125 }
     ],
+    "tooltipLabel": {
+      "labelAccessor": ["label", "value"],
+      "labelTitle": ["Quarter", "Value"],
+      "format": ["", "0.0[a]"]
+    },
+    "xAxis": { "visible": true, "gridVisible": true, "label": "", "format": "" },
+    "yAxis": { "visible": true, "gridVisible": true, "label": "Y AXIS TITLE", "format": "0.0[a]", "tickInterval": 2 },
     "ordinalAccessor": "label",
-    "valueAccessor": "value"
+    "valueAccessor": "value",
+    "accessibility": {
+      "includeDataKeyNames": true,
+      "purpose": "This chart presents the count by quarter.",
+      "disableValidation": true,
+      "elementsAreInterface": false,
+      "hideTextures": false
+    }
   },
   {
     "chart": "bar-chart",
@@ -26,16 +37,16 @@
       "purpose": "This chart presents the count by quarter and highlights Q4 as it is the only quarter above market.",
       "disableValidation": true,
       "elementsAreInterface": false,
-      "hideTextures": true
+      "hideTextures": false
     },
-    "xAxis": { "visible": false, "gridVisible": false, "format": "" },
+    "xAxis": { "visible": false, "gridVisible": false, "label": "", "format": "" },
     "yAxis": { "visible": false, "gridVisible": false, "label": "Count", "format": "0,0" },
     "mainTitle": "Q4 tops market competition",
     "subTitle": "Count of widgets by quarter for the year.",
     "width": 675,
     "height": 350,
     "layout": "vertical",
-    "dataKeyNames": { "label": "Quarters" },
+    "dataKeyNames": { "label": "" },
     "data": [
       { "label": "Q1", "value": 1125 },
       { "label": "Q2", "value": 1573 },
@@ -62,18 +73,19 @@
     "_transitionEndEvent": "onTransitionEnd",
     "clickHighlight": [{ "label": "Q4", "value": 4125 }],
     "hoverHighlight": "",
-    "dataLabel": { "visible": true, "placement": "bottom", "labelAccessor": "value", "format": "0,0" },
+    "dataLabel": { "visible": true, "placement": "bottom", "labelAccessor": "value", "format": "0[.]0[a]" },
+    "referenceStyle": { "color": "pri_grey", "strokeWidth": "1px", "opacity": 1, "dashed": "6 4" },
     "referenceLines": [
       {
         "label": "Market",
-        "labelPlacementHorizontal": "left",
+        "labelPlacementHorizontal": "right",
         "labelPlacementVertical": "bottom",
         "value": 3000
       }
     ],
     "colors": ["oss_light_grey"],
     "showTooltip": false,
-    "clickStyle": { "color": "#6868ba", "stroke": "2px" }
+    "clickStyle": { "color": "#1A1F71", "stroke": "2px" }
   },
   {
     "chart": "bar-chart",
@@ -86,10 +98,10 @@
       "elementsAreInterface": true,
       "disableValidation": true
     },
-    "xAxis": { "visible": true, "gridVisible": false, "label": "Month", "format": "" },
-    "yAxis": { "visible": false, "gridVisible": true, "label": "Count", "format": "0,0", "tickInterval": 2 },
-    "mainTitle": "Trend of count, last 12 months",
-    "subTitle": "Rolling 12 month trend of count.",
+    "xAxis": { "visible": true, "gridVisible": false, "label": "", "format": "" },
+    "yAxis": { "visible": false, "gridVisible": true, "label": "COUNT", "format": "0,0", "tickInterval": 2 },
+    "mainTitle": "Chart Title",
+    "subTitle": "Chart Subtitle",
     "height": 350,
     "width": 675,
     "data": [
@@ -106,6 +118,11 @@
       { "month": "Nov", "value": 7457432, "season": "Q4" },
       { "month": "Dec", "value": 2636346, "season": "Q4" }
     ],
+    "tooltipLabel": {
+      "labelAccessor": ["month", "value"],
+      "labelTitle": ["Month", "Value"],
+      "format": ["%m", "0.0[a]"]
+    },
     "ordinalAccessor": "month",
     "valueAccessor": "value",
     "clickEvent": true,
@@ -124,19 +141,13 @@
     "_initialLoadEvent": "onInitialLoad",
     "_initialLoadEndEvent": "onInitialLoadEnd",
     "_transitionEndEvent": "onTransitionEnd",
-    "dataLabel": { "visible": true, "placement": "top", "labelAccessor": "value", "format": "0.0[a]" },
+    "dataLabel": { "visible": true, "placement": "top", "labelAccessor": "value", "format": "0[.]0[a]" },
     "layout": "vertical",
     "colorPalette": "single_blue",
     "cursor": "pointer",
     "interactionKeys": ["month"],
     "clickHighlight": [],
-    "hoverHighlight": "",
-    "localization": {
-      "language": "hu",
-      "numeralLocale": "HU",
-      "skipValidation": false,
-      "overwrite": true
-    }
+    "hoverHighlight": ""
   },
   {
     "chart": "bar-chart",
@@ -158,14 +169,15 @@
     "ordinalAccessor": "month",
     "valueAccessor": "value",
     "groupAccessor": "label",
-    "subTitle": "Subtitle lorem ipsum",
-    "mainTitle": "Trend",
+    "mainTitle": "Chart Title",
+    "subTitle": "Chart Subtitle",
     "height": 350,
     "width": 675,
     "layout": "vertical",
-    "padding": { "top": 40, "bottom": 60, "right": 100, "left": 80 },
+    "padding": { "top": 40, "bottom": 60, "right": 0, "left": 80 },
+    "margin": { "top": 0, "bottom": 0, "right": 0, "left": 0 },
     "xAxis": { "visible": true, "gridVisible": false, "label": "", "format": "" },
-    "yAxis": { "visible": true, "gridVisible": true, "label": "Y axis title", "format": "0,0[a]", "tickInterval": 2 },
+    "yAxis": { "visible": true, "gridVisible": false, "label": "", "format": "0,0[a]", "tickInterval": 2 },
     "tooltipLabel": { "labelAccessor": ["month", "value"], "labelTitle": ["", ""], "format": ["", "0,0[.0][a]"] },
     "colorPalette": "sequential_secBlue",
     "cursor": "pointer",
@@ -193,24 +205,25 @@
       "structureNotes": "The chart is laid out horizontally and each bar is colored according to the geographic region the country belongs to. Hovering, focusing, clicking, or selecting a bar will visually emphasize the other bars in that region.",
       "purpose": "This chart presents the amount by country and groups countries within the same region.",
       "elementsAreInterface": true,
-      "disableValidation": true
+      "disableValidation": true,
+      "hideTextures": true
     },
     "xAxis": { "visible": false, "gridVisible": false, "label": "Amount", "format": "0,0[a]" },
     "yAxis": { "visible": true, "gridVisible": false, "label": "", "format": "" },
-    "mainTitle": "Amount by country",
-    "subTitle": "Amount occured by top countries, grouped by region.",
+    "mainTitle": "Chart Title",
+    "subTitle": "Chart Subtitle",
     "height": 315,
     "width": 650,
     "data": [
-      { "country": "China", "value": "27", "region": "Region 1" },
-      { "country": "Japan", "value": "10", "region": "Region 1" },
-      { "country": "Group 2", "value": "114", "region": "Region 2" },
-      { "country": "Group 3", "value": "24", "region": "Region 2" },
-      { "country": "India", "value": "21", "region": "Region 1" },
-      { "country": "Indonesia", "value": "111", "region": "Region 1" },
-      { "country": "Germany", "value": "38", "region": "Region 4" },
-      { "country": "Turkey", "value": "28", "region": "Region 4" },
-      { "country": "Italy", "value": "16", "region": "Region 4" }
+      { "country": "China", "value": "27", "region": "REGION 1" },
+      { "country": "Japan", "value": "10", "region": "REGION 1" },
+      { "country": "Group 2", "value": "114", "region": "REGION 2" },
+      { "country": "Group 3", "value": "24", "region": "REGION 2" },
+      { "country": "India", "value": "21", "region": "REGION 1" },
+      { "country": "Indonesia", "value": "111", "region": "REGION 1" },
+      { "country": "Germany", "value": "38", "region": "REGION 4" },
+      { "country": "Turkey", "value": "28", "region": "REGION 4" },
+      { "country": "Italy", "value": "16", "region": "REGION 4" }
     ],
     "clickEvent": true,
     "hoverEvent": true,
@@ -248,8 +261,8 @@
     "referenceLines": [
       {
         "label": "Average",
-        "labelPlacementHorizontal": "left",
-        "labelPlacementVertical": "top",
+        "labelPlacementHorizontal": "right",
+        "labelPlacementVertical": "bottom",
         "value": 57
       }
     ],
@@ -286,6 +299,8 @@
   {
     "chart": "line-chart",
     "name": "Default",
+    "mainTitle": "Chart Title",
+    "subTitle": "Chart Subtitle",
     "accessibility": {
       "contextExplanation": "This example of a line chart was selected through example list on the sidebar.",
       "purpose": "Demonstration of a line chart built with VCC and minimal properties provided.",
@@ -317,10 +332,25 @@
       { "date": "2016-11-01", "category": "Group B", "value": 6772849978 },
       { "date": "2016-12-01", "category": "Group B", "value": 5609829820 }
     ],
+    "tooltipLabel": {
+      "labelAccessor": ["date", "value"],
+      "labelTitle": ["Date", "Value"],
+      "format": ["%m/%d/%y", "0.0[a]"]
+    },
     "ordinalAccessor": "date",
     "valueAccessor": "value",
     "seriesAccessor": "category",
-    "padding": { "bottom": 50, "left": 50, "right": 90, "top": 20 }
+    "padding": { "bottom": 50, "left": 50, "right": 90, "top": 20 },
+    "xAxis": { "visible": true, "gridVisible": false, "label": "", "unit": "month", "format": "%b", "tickInterval": 2 },
+    "yAxis": {
+      "visible": true,
+      "gridVisible": true,
+      "label": "Y AXIS TITLE",
+      "unit": "month",
+      "format": "0[.][0][0]a",
+      "tickInterval": 2
+    },
+    "referenceStyle": { "color": "pri_grey", "strokeWidth": "1px", "opacity": 0, "dashed": "" }
   },
   {
     "chart": "line-chart",
@@ -332,10 +362,10 @@
       "structureNotes": "A different color is used to represent each line series. Lines break in cases where a month of data is missing.",
       "disableValidation": true
     },
-    "xAxis": { "visible": true, "gridVisible": false, "label": "Month", "unit": "month", "format": "%b" },
+    "xAxis": { "visible": true, "gridVisible": false, "label": "", "unit": "month", "format": "%b" },
     "yAxis": { "visible": true, "gridVisible": true, "label": "Amount", "format": "0,0[.][0][a]", "tickInterval": 2 },
-    "mainTitle": "Monthly count trend by group",
-    "subTitle": "Trend of monthly count by group over the last 12 months.",
+    "mainTitle": "Chart Title",
+    "subTitle": "Chart Subtitle",
     "height": 325,
     "width": 725,
     "padding": { "bottom": 50, "left": 50, "right": 90, "top": 20 },
@@ -401,10 +431,10 @@
       "elementsAreInterface": true,
       "disableValidation": true
     },
-    "xAxis": { "visible": true, "gridVisible": false, "label": "Year", "unit": "month", "format": "%b" },
+    "xAxis": { "visible": true, "gridVisible": false, "label": "", "unit": "month", "format": "%b" },
     "yAxis": { "visible": false, "gridVisible": false, "label": "Amount", "format": "0,0[.][0][a]" },
-    "mainTitle": "Amount by year and group",
-    "subTitle": "",
+    "mainTitle": "Chart Title",
+    "subTitle": "Chart Subtitle",
     "data": [
       { "label": "2010", "series": "Group A", "value": 27 },
       { "label": "2010", "series": "Group B", "value": 4 },
@@ -487,10 +517,10 @@
       "elementsAreInterface": false,
       "disableValidation": true
     },
-    "xAxis": { "visible": true, "gridVisible": false, "label": "2017", "unit": "month", "format": "%b" },
-    "yAxis": { "visible": true, "gridVisible": false, "label": "Amount", "format": "0,0[.][0][a]" },
-    "mainTitle": "Actuals beat prediction in December 2017",
-    "subTitle": "Trend of amount by month with comparison of actual and prediction for month of Dec 2017.",
+    "xAxis": { "visible": true, "gridVisible": false, "label": "", "unit": "month", "format": "%b", "tickInterval": 2 },
+    "yAxis": { "visible": true, "gridVisible": false, "label": "AMOUNT", "format": "0,0[.][0][a]", "tickInterval": 2 },
+    "mainTitle": "Chart Title",
+    "subTitle": "Chart Subtitle",
     "height": 350,
     "width": 675,
     "data": [
@@ -596,31 +626,48 @@
   {
     "chart": "scatter-plot",
     "name": "Default",
+    "mainTitle": "Chart Title",
+    "subTitle": "Chart Subtitle",
     "accessibility": {
       "contextExplanation": "This example of a scatter plot was selected through example list on the sidebar.",
       "purpose": "Demonstration of a scatter plot built with VCC and minimal properties provided.",
       "statisticalNotes": "This chart is using dummy data."
     },
     "data": [
-      { "num": 20, "group": "Group A", "value": 2700 },
-      { "num": 22, "group": "Group A", "value": 1000 },
-      { "num": 33, "group": "Group A", "value": 4004 },
-      { "num": 42, "group": "Group B", "value": 2454 },
-      { "num": 51, "group": "Group B", "value": 2135 },
-      { "num": 36, "group": "Group B", "value": 1114 },
-      { "num": 27, "group": "Group C", "value": 3845 },
-      { "num": 35, "group": "Group C", "value": 2823 },
-      { "num": 49, "group": "Group C", "value": 1666 },
-      { "num": 60, "group": "Group C", "value": 1421 },
-      { "num": 21, "group": "Group D", "value": 8845 },
-      { "num": 36, "group": "Group D", "value": 6865 },
-      { "num": 45, "group": "Group D", "value": 6154 },
-      { "num": 53, "group": "Group D", "value": 4109 }
+      { "item": 1, "group": "Group D", "value": 4300 },
+      { "item": 2, "group": "Group D", "value": 1900 },
+      { "item": 3, "group": "Group D", "value": 2700 },
+      { "item": 4, "group": "Group D", "value": 4900 },
+      { "item": 5, "group": "Group B", "value": 8300 },
+      { "item": 6, "group": "Group B", "value": 9200 },
+      { "item": 7, "group": "Group B", "value": 10200 },
+      { "item": 8, "group": "Group B", "value": 6100 },
+      { "item": 9, "group": "Group B", "value": 7700 },
+      { "item": 10, "group": "Group C", "value": 10100 },
+      { "item": 11, "group": "Group C", "value": 9800 },
+      { "item": 12, "group": "Group C", "value": 7400 },
+      { "item": 13, "group": "Group C", "value": 5900 },
+      { "item": 14, "group": "Group A", "value": 10700 },
+      { "item": 15, "group": "Group A", "value": 9000 },
+      { "item": 16, "group": "Group A", "value": 5000 }
     ],
-    "xAccessor": "num",
+    "dotSymbols": ["square", "circle", "star", "cross"],
+    "padding": { "top": 40, "bottom": 40, "right": 80, "left": 80 },
+    "referenceLines": [
+      { "label": "Average", "placement": "top", "value": 4, "axis": "x" },
+      { "label": "Average", "placement": "right", "value": 6000, "axis": "y" }
+    ],
+    "xAxis": { "visible": true, "gridVisible": true, "label": "X AXIS TITLE", "format": "$0.[0][a]" },
+    "yAxis": { "visible": true, "gridVisible": true, "label": "Y AXIS TITLE", "format": "0.[0][a]" },
+    "xAccessor": "item",
     "yAccessor": "value",
     "groupAccessor": "group",
-    "showBaselineX": false
+    "showBaselineX": false,
+    "dataLabel": {
+      "visible": true,
+      "placement": "top",
+      "collisionHideOnly": true
+    }
   },
   {
     "chart": "scatter-plot",
@@ -681,8 +728,8 @@
     ],
     "xAxis": { "visible": true, "gridVisible": false, "label": "Count", "format": "0.[0][a]" },
     "yAxis": { "visible": true, "gridVisible": false, "label": "Amount", "format": "$0[a]" },
-    "mainTitle": "Items are clustered near zero",
-    "subTitle": "Comparison of count and amount at the item level.",
+    "mainTitle": "Chart Title",
+    "subTitle": "Chart Subtitle",
     "height": 350,
     "width": 700,
     "data": [
@@ -1301,8 +1348,8 @@
     },
     "xAxis": { "visible": true, "gridVisible": false, "label": "num", "format": "0" },
     "yAxis": { "visible": true, "gridVisible": false, "label": "Monthly Spending", "format": "$0[a]" },
-    "mainTitle": "Count and amount by item and group",
-    "subTitle": "",
+    "mainTitle": "Chart Title",
+    "subTitle": "Chart Subtitle",
     "height": 325,
     "width": 650,
     "data": [
@@ -1378,8 +1425,8 @@
     },
     "xAxis": { "visible": true, "gridVisible": true, "label": "Count", "format": "0.[0][a]", "tickInterval": 2 },
     "yAxis": { "visible": true, "gridVisible": true, "label": "Amount", "format": "$0[a]", "tickInterval": 2 },
-    "mainTitle": "Groups of items by count and amount",
-    "subTitle": "Comparison of count and amount across groups of items.",
+    "mainTitle": "Chart Title",
+    "subTitle": "Chart Subtitle",
     "height": 325,
     "width": 650,
     "data": [
@@ -1985,6 +2032,763 @@
   },
   {
     "chart": "scatter-plot",
+    "name": "Outlier",
+    "accessibility": {
+      "includeDataKeyNames": true,
+      "contextExplanation": "This example of a scatter plot was selected through example list on the sidebar.",
+      "purpose": "Demonstration of a scatter plot built with VCC and minimal properties provided.",
+      "structureNotes": "The scatter plot encodes groups by color and shape and positions the marks on the plot by count and amount.",
+      "statisticalNotes": "This chart is using dummy data."
+    },
+    "mainTitle": "Chart Title",
+    "subTitle": "Chart Subtitle",
+    "height": 325,
+    "width": 650,
+    "margin": { "top": 0, "bottom": 0, "right": 86, "left": 0 },
+    "clickStyle": {
+      "color": "supp_red"
+    },
+    "data": [
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 1",
+        "Type": "Group A",
+        "Amount": 16045441.28,
+        "Count": 61031,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 1",
+        "Type": "Group B",
+        "Amount": 1193401.13,
+        "Count": 5454,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 1",
+        "Type": "Group C",
+        "Amount": 130223.13,
+        "Count": 979,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 2",
+        "Type": "Group A",
+        "Amount": 21350560.5,
+        "Count": 188623,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 2",
+        "Type": "Group B",
+        "Amount": 3895899.66,
+        "Count": 51584,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 2",
+        "Type": "Group C",
+        "Amount": 481032.9,
+        "Count": 6589,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 3",
+        "Type": "Group A",
+        "Amount": 5473629.96,
+        "Count": 20165,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 3",
+        "Type": "Group B",
+        "Amount": 621565.76,
+        "Count": 3088,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 3",
+        "Type": "Group C",
+        "Amount": 53928.9,
+        "Count": 417,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 4",
+        "Type": "Group A",
+        "Amount": 24707428.31,
+        "Count": 142980,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 4",
+        "Type": "Group B",
+        "Amount": 1138981.57,
+        "Count": 31395,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 4",
+        "Type": "Group C",
+        "Amount": 220298.67,
+        "Count": 3842,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 5",
+        "Type": "Group A",
+        "Amount": 9378401.15,
+        "Count": 123333,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 5",
+        "Type": "Group B",
+        "Amount": 1677467.71,
+        "Count": 56891,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 5",
+        "Type": "Group C",
+        "Amount": 242878.33,
+        "Count": 5037,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 6",
+        "Type": "Group A",
+        "Amount": 7183112.43,
+        "Count": 110625,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 6",
+        "Type": "Group B",
+        "Amount": 1564836.79,
+        "Count": 49943,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 6",
+        "Type": "Group C",
+        "Amount": 108029.66,
+        "Count": 3362,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 7",
+        "Type": "Group A",
+        "Amount": 8837433.39,
+        "Count": 141861,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 7",
+        "Type": "Group B",
+        "Amount": 1552421.74,
+        "Count": 38539,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 7",
+        "Type": "Group C",
+        "Amount": 215830.19,
+        "Count": 6000,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 8",
+        "Type": "Group A",
+        "Amount": 922087.59,
+        "Count": 26383,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 8",
+        "Type": "Group B",
+        "Amount": 103449.26,
+        "Count": 3773,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 8",
+        "Type": "Group C",
+        "Amount": 37785.74,
+        "Count": 2008,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 9",
+        "Type": "Group A",
+        "Amount": 10594810.85,
+        "Count": 71921,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 9",
+        "Type": "Group B",
+        "Amount": 928383.95,
+        "Count": 11835,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 9",
+        "Type": "Group C",
+        "Amount": 149925.82,
+        "Count": 2024,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 10",
+        "Type": "Group A",
+        "Amount": 12570176.46,
+        "Count": 174130,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 10",
+        "Type": "Group B",
+        "Amount": 1706143.55,
+        "Count": 57214,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 10",
+        "Type": "Group C",
+        "Amount": 318331.23,
+        "Count": 2705,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 11",
+        "Type": "Group A",
+        "Amount": 33765430.8,
+        "Count": 401115,
+        "outlier_bool": true
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 11",
+        "Type": "Group B",
+        "Amount": 20203740.78,
+        "Count": 489756,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 11",
+        "Type": "Group C",
+        "Amount": 321505.83,
+        "Count": 7015,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 12",
+        "Type": "Group A",
+        "Amount": 10257071,
+        "Count": 218639,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 12",
+        "Type": "Group B",
+        "Amount": 1741911.02,
+        "Count": 40025,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 12",
+        "Type": "Group C",
+        "Amount": 481962.62,
+        "Count": 18333,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 13",
+        "Type": "Group A",
+        "Amount": 6078826.43,
+        "Count": 150726,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 13",
+        "Type": "Group B",
+        "Amount": 1077520.55,
+        "Count": 35567,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 13",
+        "Type": "Group C",
+        "Amount": 241810.04,
+        "Count": 7468,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 14",
+        "Type": "Group A",
+        "Amount": 6881648.91,
+        "Count": 18626,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 14",
+        "Type": "Group B",
+        "Amount": 320388.61,
+        "Count": 3634,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 14",
+        "Type": "Group C",
+        "Amount": 44690.07,
+        "Count": 300,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 15",
+        "Type": "Group A",
+        "Amount": 9172912.78,
+        "Count": 35599,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 15",
+        "Type": "Group B",
+        "Amount": 350353.4,
+        "Count": 4096,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 15",
+        "Type": "Group C",
+        "Amount": 102179.88,
+        "Count": 1713,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 16",
+        "Type": "Group A",
+        "Amount": 1214515.43,
+        "Count": 4672,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 16",
+        "Type": "Group B",
+        "Amount": 69558.87,
+        "Count": 572,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 16",
+        "Type": "Group C",
+        "Amount": 6525.07,
+        "Count": 51,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 17",
+        "Type": "Group A",
+        "Amount": 59700574.35,
+        "Count": 184629,
+        "outlier_bool": true
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 17",
+        "Type": "Group B",
+        "Amount": 2202082.46,
+        "Count": 11409,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 17",
+        "Type": "Group C",
+        "Amount": 775853.61,
+        "Count": 5721,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 18",
+        "Type": "Group A",
+        "Amount": 15443678.08,
+        "Count": 76079,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 18",
+        "Type": "Group B",
+        "Amount": 3415262.67,
+        "Count": 36941,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 18",
+        "Type": "Group C",
+        "Amount": 171567.78,
+        "Count": 2319,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 19",
+        "Type": "Group A",
+        "Amount": 1931539.38,
+        "Count": 130913,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 19",
+        "Type": "Group B",
+        "Amount": 271395.14,
+        "Count": 22720,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 19",
+        "Type": "Group C",
+        "Amount": 135527.17,
+        "Count": 10542,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 20",
+        "Type": "Group A",
+        "Amount": 17937372.98,
+        "Count": 337620,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 20",
+        "Type": "Group B",
+        "Amount": 962049.149999999,
+        "Count": 28821,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 20",
+        "Type": "Group C",
+        "Amount": 923044.44,
+        "Count": 25856,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 21",
+        "Type": "Group A",
+        "Amount": 22873283.2,
+        "Count": 413816,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 21",
+        "Type": "Group B",
+        "Amount": 4113639.04,
+        "Count": 196781,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 21",
+        "Type": "Group C",
+        "Amount": 455309.37,
+        "Count": 10365,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 22",
+        "Type": "Group A",
+        "Amount": 5884396.26,
+        "Count": 86071,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 22",
+        "Type": "Group B",
+        "Amount": 779729.59,
+        "Count": 25309,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 22",
+        "Type": "Group C",
+        "Amount": 150877.01,
+        "Count": 3536,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 23",
+        "Type": "Group A",
+        "Amount": 3677772.8,
+        "Count": 139609,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 23",
+        "Type": "Group B",
+        "Amount": 696288.59,
+        "Count": 45503,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 23",
+        "Type": "Group C",
+        "Amount": 48880.19,
+        "Count": 1822,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 24",
+        "Type": "Group A",
+        "Amount": 24354020.19,
+        "Count": 1001505,
+        "outlier_bool": true
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 24",
+        "Type": "Group B",
+        "Amount": 7771634.34,
+        "Count": 661363,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 24",
+        "Type": "Group C",
+        "Amount": 368519.67,
+        "Count": 12572,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 25",
+        "Type": "Group A",
+        "Amount": 15378770.53,
+        "Count": 41881,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 25",
+        "Type": "Group B",
+        "Amount": 827720.15,
+        "Count": 4716,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 25",
+        "Type": "Group C",
+        "Amount": 152328.37,
+        "Count": 1079,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 26",
+        "Type": "Group A",
+        "Amount": 6465416.91000001,
+        "Count": 23560,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 26",
+        "Type": "Group B",
+        "Amount": 124181.8,
+        "Count": 539,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 26",
+        "Type": "Group C",
+        "Amount": 32450.96,
+        "Count": 226,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 27",
+        "Type": "Group A",
+        "Amount": 1910835.05,
+        "Count": 9503,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 27",
+        "Type": "Group B",
+        "Amount": 291379.49,
+        "Count": 2712,
+        "outlier_bool": false
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 27",
+        "Type": "Group C",
+        "Amount": 43101.68,
+        "Count": 424,
+        "outlier_bool": false
+      }
+    ],
+    "colors": ["#5C5C5C"],
+    "clickHighlight": [
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 24",
+        "Type": "Group A",
+        "Amount": 24354020.19,
+        "Count": 1001505
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 11",
+        "Type": "Group A",
+        "Amount": 33765430.8,
+        "Count": 401115
+      },
+      {
+        "Month": "Sep 2018",
+        "Category": "Category 17",
+        "Type": "Group A",
+        "Amount": 59700574.35,
+        "Count": 184629
+      }
+    ],
+    "dataLabel": {
+      "visible": true,
+      "placement": "top",
+      "collisionHideOnly": true
+    },
+    "dotRadius": 4,
+    "dotSymbols": ["circle", "square", "cross", "star"],
+    "fitLineStyle": {
+      "color": "pri_grey",
+      "strokeWidth": "5px",
+      "opacity": 0.1,
+      "dashed": ""
+    },
+    "groupAccessor": "outlier_bool",
+    "interactionKeys": ["Category", "Type"],
+    "legend": {
+      "visible": false,
+      "interactive": false,
+      "format": "",
+      "labels": ""
+    },
+    "referenceLines": [
+      {
+        "label": "High Performance",
+        "placement": "right",
+        "value": 30000000,
+        "axis": "y"
+      },
+      {
+        "label": "Average",
+        "placement": "top",
+        "value": 100000,
+        "axis": "x"
+      }
+    ],
+    "referenceStyle": {
+      "color": "pri_grey",
+      "strokeWidth": "1px",
+      "opacity": 1
+    },
+    "showBaselineX": false,
+    "tooltipLabel": {
+      "labelAccessor": ["Category", "Count", "Amount"],
+      "labelTitle": ["", "Count", "Amount"],
+      "format": ["", "0,0.0[a]", "$0[a]"]
+    },
+    "xAccessor": "Count",
+    "xAxis": {
+      "visible": true,
+      "gridVisible": true,
+      "label": "Count",
+      "format": "0.[0][a]",
+      "tickInterval": 2
+    },
+    "xMinValueOverride": -2000,
+    "yAccessor": "Amount",
+    "yAxis": {
+      "visible": true,
+      "gridVisible": true,
+      "label": "Amount",
+      "format": "$0[a]",
+      "tickInterval": 2
+    },
+    "yMinValueOverride": -2000000
+  },
+  {
+    "chart": "scatter-plot",
     "name": "Hidden",
     "accessibility": {
       "contextExplanation": "This example of a scatter plot was selected through example list on the sidebar.",
@@ -2016,6 +2820,8 @@
   {
     "chart": "pie-chart",
     "name": "Default",
+    "mainTitle": "Chart Title",
+    "subTitle": "Chart Subtitle",
     "accessibility": {
       "contextExplanation": "This example of a pie chart was selected through example list on the sidebar.",
       "purpose": "Demonstration of a pie chart built with VCC and minimal properties provided.",
@@ -2023,7 +2829,9 @@
     },
     "data": [{ "label": "Category A", "value": 3126000 }, { "label": "Others", "value": 4324500 }],
     "ordinalAccessor": "label",
-    "valueAccessor": "value"
+    "valueAccessor": "value",
+    "innerRatio": 0,
+    "colorPalette": "single_secBlue"
   },
   {
     "chart": "pie-chart",
@@ -2036,9 +2844,9 @@
       "elementsAreInterface": true,
       "disableValidation": true
     },
-    "mainTitle": "Category A is almost half of the total",
-    "subTitle": "Category A and others combine to make up the total.",
-    "data": [{ "label": "Category A", "value": 43000 }, { "label": "Others", "value": 57000 }],
+    "mainTitle": "Chart Title",
+    "subTitle": "Chart Subtitle",
+    "data": [{ "label": "Client", "value": 43000 }, { "label": "Others", "value": 57000 }],
     "clickEvent": true,
     "hoverEvent": true,
     "mouseOutEvent": true,
@@ -2064,7 +2872,7 @@
     "ordinalAccessor": "label",
     "valueAccessor": "value",
     "innerRatio": 0.8,
-    "colorPalette": "sequential_suppPurple",
+    "colorPalette": "single_secBlue",
     "hoverOpacity": 0.15,
     "cursor": "pointer"
   },
@@ -2080,18 +2888,15 @@
       "elementsAreInterface": true,
       "disableValidation": true
     },
-    "centerTitle": "Share",
-    "centerSubTitle": "of Market",
-    "mainTitle": "Group share of market",
-    "subTitle": "",
+    "mainTitle": "Chart Title",
+    "subTitle": "Chart Subtitle",
     "height": 325,
     "width": 600,
     "data": [
-      { "label": "Group A", "value": 43000, "location": "US" },
-      { "label": "Group C", "value": 32000, "location": "US" },
-      { "label": "Group D", "value": 25000, "location": "US" },
-      { "label": "Group B", "value": 52000, "location": "Region 4" },
-      { "label": "Group E", "value": 31000, "location": "Region 4" }
+      { "label": "Category A", "value": 22100, "location": "US" },
+      { "label": "Category B", "value": 18400, "location": "Region 4" },
+      { "label": "Category C", "value": 43500, "location": "US" },
+      { "label": "Category D", "value": 16000, "location": "US" }
     ],
     "clickEvent": true,
     "hoverEvent": true,
@@ -2113,7 +2918,82 @@
     "padding": { "top": 10, "bottom": 20, "right": 40, "left": 80 },
     "ordinalAccessor": "label",
     "valueAccessor": "value",
-    "innerRatio": 0.8,
+    "innerRatio": 0,
+    "interactionKeys": ["location"],
+    "colorPalette": "categorical",
+    "showPercentage": true,
+    "tooltipLabel": {
+      "labelAccessor": ["label", "location", "value", "value"],
+      "labelTitle": ["", "Region", "Value%", "Value"],
+      "format": ["", "", "normalized", "$0,0.0[a]"]
+    },
+    "hoverOpacity": 0.5,
+    "sortOrder": "default",
+    "cursor": "pointer"
+  },
+  {
+    "chart": "pie-chart",
+    "name": "Donut Chart",
+    "mainTitle": "Chart Title",
+    "subTitle": "Chart Subtitle",
+    "accessibility": {
+      "contextExplanation": "This example of a pie chart was selected through example list on the sidebar.",
+      "purpose": "Demonstration of a pie chart built with VCC and minimal properties provided.",
+      "statisticalNotes": "This chart is using dummy data."
+    },
+    "data": [{ "label": "Value A", "value": 35600 }, { "label": "Value B", "value": 64400 }],
+    "ordinalAccessor": "label",
+    "valueAccessor": "value",
+    "innerRatio": 0.6,
+    "centerTitle": "2023",
+    "centerSubTitle": "",
+    "colorPalette": "single_secBlue"
+  },
+  {
+    "chart": "pie-chart",
+    "name": "Donut Chart Category",
+    "accessibility": {
+      "includeDataKeyNames": true,
+      "contextExplanation": "This example of a pie chart was selected through example list on the sidebar.",
+      "purpose": "Pie chart depicting share of total across key categories.",
+      "structureNotes": "A different color and pattern is used to represent each category.",
+      "statisticalNotes": "This chart is using dummy data. The spread of share is relatively even across the groups.",
+      "elementsAreInterface": true,
+      "disableValidation": true
+    },
+    "mainTitle": "Chart Title",
+    "subTitle": "Chart Subtitle",
+    "height": 325,
+    "width": 600,
+    "data": [
+      { "label": "Category A", "value": 22100, "location": "US" },
+      { "label": "Category B", "value": 18400, "location": "Region 4" },
+      { "label": "Category C", "value": 43500, "location": "US" },
+      { "label": "Category D", "value": 16000, "location": "US" }
+    ],
+    "clickEvent": true,
+    "hoverEvent": true,
+    "mouseOutEvent": true,
+    "drawStartEvent": false,
+    "drawEndEvent": false,
+    "initialLoadEvent": false,
+    "initialLoadEndEvent": false,
+    "transitionEndEvent": false,
+    "_clickEvent": "onChartClick",
+    "_hoverEvent": "onChartHover",
+    "_mouseOutEvent": "onMouseOuts",
+    "_drawStartEvent": "onDrawStart",
+    "_drawEndEvent": "onDrawEnd",
+    "_initialLoadEvent": "onInitialLoad",
+    "_initialLoadEndEvent": "onInitialLoadEnd",
+    "_transitionEndEvent": "onTransitionEnd",
+    "dataLabel": { "visible": true, "placement": "outside", "labelAccessor": "value", "format": "normalized" },
+    "padding": { "top": 10, "bottom": 20, "right": 40, "left": 80 },
+    "ordinalAccessor": "label",
+    "valueAccessor": "value",
+    "innerRatio": 0.6,
+    "centerTitle": "2023",
+    "centerSubTitle": "",
     "interactionKeys": ["location"],
     "colorPalette": "categorical",
     "showPercentage": true,
@@ -2142,6 +3022,8 @@
   {
     "chart": "stacked-bar-chart",
     "name": "Default",
+    "mainTitle": "Chart Title",
+    "subTitle": "Chart Subtitle",
     "accessibility": {
       "contextExplanation": "This example of a stacked bar chart was selected through example list on the sidebar.",
       "purpose": "Demonstration of a stacked bar chart built with VCC and minimal properties provided.",
@@ -2197,6 +3079,7 @@
       { "date": "2016-11-01", "category": "Other", "value": 96, "count": 412 },
       { "date": "2016-12-01", "category": "Other", "value": 104, "count": 495 }
     ],
+    "xAxis": { "visible": true, "gridVisible": false, "label": "", "format": "" },
     "ordinalAccessor": "category",
     "valueAccessor": "value",
     "groupAccessor": "date"
@@ -2212,10 +3095,10 @@
       "elementsAreInterface": false,
       "disableValidation": true
     },
-    "xAxis": { "visible": true, "gridVisible": false, "label": "Month", "format": "%b" },
+    "xAxis": { "visible": true, "gridVisible": false, "label": "", "format": "%b" },
     "yAxis": { "visible": true, "gridVisible": false, "label": "Percent of Total", "format": "0%", "tickInterval": 2 },
-    "mainTitle": "Share of monthly value by group",
-    "subTitle": "Group share of value by month, normalized as a percent of total.",
+    "mainTitle": "Chart Title",
+    "subTitle": "Chart Subtitle",
     "height": 350,
     "width": 750,
     "data": [
@@ -2306,10 +3189,10 @@
       "elementsAreInterface": true,
       "disableValidation": true
     },
-    "xAxis": { "visible": true, "gridVisible": false, "label": "Year", "format": " " },
+    "xAxis": { "visible": true, "gridVisible": false, "label": "", "format": " " },
     "yAxis": { "visible": false, "gridVisible": false, "label": "Count", "format": "0,0" },
-    "mainTitle": "Group count by year",
-    "subTitle": "Trend of count for groups from 2016 to 2020.",
+    "mainTitle": "Chart Title",
+    "subTitle": "Chart Subtitle",
     "height": 300,
     "width": 675,
     "data": [
@@ -2424,6 +3307,8 @@
   {
     "chart": "clustered-bar-chart",
     "name": "Default",
+    "mainTitle": "Chart Title",
+    "subTitle": "Chart Subtitle",
     "accessibility": {
       "contextExplanation": "This example of a clustered bar chart was selected through example list on the sidebar.",
       "purpose": "Demonstration of a clustered bar chart built with VCC and minimal properties provided.",
@@ -2446,6 +3331,7 @@
       { "year": "2019", "item": "C", "value": 51 },
       { "year": "2020", "item": "C", "value": 8 }
     ],
+    "xAxis": { "visible": true, "gridVisible": true, "label": "", "format": "" },
     "ordinalAccessor": "item",
     "valueAccessor": "value",
     "groupAccessor": "year"
@@ -2497,10 +3383,10 @@
         "type": "annotationCalloutElbow"
       }
     ],
-    "xAxis": { "visible": true, "gridVisible": false, "label": "Year", "format": "" },
+    "xAxis": { "visible": true, "gridVisible": false, "label": "", "format": "" },
     "yAxis": { "visible": true, "gridVisible": true, "label": "Amount", "format": "0,0", "tickInterval": 2 },
-    "mainTitle": "Yearly group amount",
-    "subTitle": "Comparison of group amount within each year from 2016 to 2020.",
+    "mainTitle": "Chart Title",
+    "subTitle": "Chart Subtitle",
     "height": 300,
     "width": 800,
     "data": [
@@ -2563,10 +3449,10 @@
       "elementsAreInterface": "false",
       "disableValidation": true
     },
-    "xAxis": { "visible": true, "gridVisible": false, "label": "2016" },
-    "yAxis": { "visible": false, "gridVisible": false, "label": "Transactions", "format": "0[a]" },
-    "mainTitle": "This is the clustered bar chart title",
-    "subTitle": "This is the clustered bar chart subtitle",
+    "xAxis": { "visible": true, "gridVisible": false, "label": "" },
+    "yAxis": { "visible": false, "gridVisible": true, "label": "Transactions", "format": "0[a]", "tickInterval": 5 },
+    "mainTitle": "Chart Title",
+    "subTitle": "Chart Subtitle",
     "height": 300,
     "width": 700,
     "data": [
@@ -2610,7 +3496,7 @@
     "ordinalAccessor": "category",
     "valueAccessor": "value",
     "groupAccessor": "month",
-    "colorPalette": "categorical",
+    "colorPalette": "single_secBlue",
     "barIntervalRatio": 0.15,
     "groupIntervalRatio": 0.15,
     "hoverHighlight": { "month": "June", "category": "Average", "value": 77, "count": 386 },
@@ -2628,8 +3514,8 @@
     },
     "xAxis": { "visible": true, "gridVisible": false, "label": "Item", "format": "" },
     "yAxis": { "visible": true, "gridVisible": true, "label": "Amount", "format": "0,0", "tickInterval": 2 },
-    "mainTitle": "Yearly trend by item",
-    "subTitle": "Trend of yearly amount, grouped by item.",
+    "mainTitle": "Chart Title",
+    "subTitle": "Chart Subtitle",
     "height": 300,
     "width": 700,
     "data": [
@@ -2713,6 +3599,8 @@
   {
     "chart": "heat-map",
     "name": "Default",
+    "mainTitle": "Chart Title",
+    "subTitle": "Chart Subtitle",
     "accessibility": {
       "contextExplanation": "This example of a heat map was selected through example list on the sidebar.",
       "purpose": "Demonstration of a heat map built with VCC and minimal properties provided.",
@@ -2766,8 +3654,8 @@
     },
     "xAxis": { "visible": true, "placement": "top", "label": "Size", "format": "" },
     "yAxis": { "visible": true, "placement": "left", "label": "Rating", "format": "" },
-    "mainTitle": "Value distribution between Rating and Size",
-    "subTitle": "",
+    "mainTitle": "Chart Title",
+    "subTitle": "Chart Subtitle",
     "height": 300,
     "width": 500,
     "data": [
@@ -2826,8 +3714,8 @@
     },
     "xAxis": { "visible": true, "label": "", "format": "", "tickInterval": 2 },
     "yAxis": { "visible": true, "label": "", "format": "" },
-    "mainTitle": "Ratings for groups over ten years",
-    "subTitle": "Rating classification for each group from 2010 to 2020.",
+    "mainTitle": "Chart Title",
+    "subTitle": "Chart Subtitle",
     "height": 190,
     "width": 525,
     "data": [
@@ -2946,6 +3834,8 @@
   {
     "chart": "parallel-plot",
     "name": "Default",
+    "mainTitle": "Chart Title",
+    "subTitle": "Chart Subtitle",
     "accessibility": {
       "contextExplanation": "This example of a parallel plot was selected through example list on the sidebar.",
       "purpose": "Demonstration of a parallel plot built with VCC and minimal properties provided.",
@@ -2982,8 +3872,8 @@
     },
     "xAxis": { "visible": true, "gridVisible": false, "label": "" },
     "yAxis": { "visible": false, "gridVisible": false, "label": "Count (m)", "format": "0.0[a]" },
-    "mainTitle": "Region value across groups A to C",
-    "subTitle": "Value for each region when measured for groups A, B and C.",
+    "mainTitle": "Chart Title",
+    "subTitle": "Chart Subtitle",
     "data": [
       { "region": "Region 1", "category": "Group A", "value": 7670994739 },
       { "region": "Region 2", "category": "Group A", "value": 9628909842 },
@@ -3067,6 +3957,8 @@
   {
     "chart": "dumbbell-plot",
     "name": "Default",
+    "mainTitle": "Chart Title",
+    "subTitle": "Chart Subtitle",
     "accessibility": {
       "contextExplanation": "This example of a dumbbell plot was selected through example list on the sidebar.",
       "purpose": "Demonstration of a dumbbell plot built with VCC and minimal properties provided.",
@@ -3098,9 +3990,17 @@
       { "date": "2016-11-01", "category": "Group B", "value": 6772849978 },
       { "date": "2016-12-01", "category": "Group B", "value": 5609829820 }
     ],
+    "yAxis": { "visible": true, "gridVisible": false, "label": "Value", "unit": "", "format": "0[.][0]a" },
+    "xAxis": { "visible": true, "gridVisible": false, "label": "", "unit": "month", "format": "%b" },
     "ordinalAccessor": "date",
     "valueAccessor": "value",
-    "seriesAccessor": "category"
+    "seriesAccessor": "category",
+    "padding": {
+      "bottom": 50,
+      "left": 50,
+      "right": 75,
+      "top": 20
+    }
   },
   {
     "chart": "dumbbell-plot",
@@ -3115,8 +4015,8 @@
     },
     "yAxis": { "visible": true, "gridVisible": false, "label": "Value", "format": "0.0%", "tickInterval": 2 },
     "xAxis": { "visible": true, "gridVisible": false, "label": "", "unit": "month", "format": "%b", "tickInterval": 1 },
-    "mainTitle": "Difference between A and B over time",
-    "subTitle": "Difference in amount between group A and B over a 12 month period.",
+    "mainTitle": "Chart Title",
+    "subTitle": "Chart Subtitle",
     "height": 400,
     "width": 800,
     "padding": {
@@ -3189,9 +4089,10 @@
       "elementsAreInterface": true,
       "disableValidation": true
     },
+    "xAxis": { "visible": true, "gridVisible": false, "label": "", "unit": "", "format": "%b" },
     "yAxis": { "visible": true, "gridVisible": true, "label": "Value", "format": "0[.][0][0]a", "tickInterval": 2 },
-    "mainTitle": "Comparison of groups A and B over time",
-    "subTitle": "Monthly value for groups A and B in 2016.",
+    "mainTitle": "Chart Title",
+    "subTitle": "Chart Subtitle",
     "height": 325,
     "width": 650,
     "padding": { "bottom": 50, "left": 50, "right": 75, "top": 20 },
@@ -3291,6 +4192,8 @@
   {
     "chart": "world-map",
     "name": "Default",
+    "mainTitle": "Chart Title",
+    "subTitle": "Chart Subtitle",
     "accessibility": {
       "contextExplanation": "This example of a world map was selected through example list on the sidebar.",
       "purpose": "Demonstration of a world map built with VCC and minimal properties provided.",
@@ -3337,8 +4240,8 @@
       "elementsAreInterface": true,
       "disableValidation": true
     },
-    "mainTitle": "Rate for a subset of countries",
-    "subTitle": "",
+    "mainTitle": "Chart Title",
+    "subTitle": "Chart Subtitle",
     "data": [
       { "ID": 0, "Name": "USA", "Random Rate": 50, "Country Code": "840" },
       { "ID": 1, "Name": "Angola", "Random Rate": 14.2, "Country Code": "024" },
@@ -3423,8 +4326,8 @@
       "elementsAreInterface": false,
       "disableValidation": true
     },
-    "mainTitle": "Rate of USA and Zimbabwe",
-    "subTitle": "Rate by country, highlighting specifically USA and Zimbabwe.",
+    "mainTitle": "Chart Title",
+    "subTitle": "Chart Subtitle",
     "data": [
       { "ID": 0, "Name": "USA", "Random Rate": 50, "Country Code": "840" },
       { "ID": 1, "Name": "Angola", "Random Rate": 14.2, "Country Code": "024" },
@@ -3533,6 +4436,8 @@
   {
     "chart": "circle-packing",
     "name": "Default",
+    "mainTitle": "Chart Title",
+    "subTitle": "Chart Subtitle",
     "accessibility": {
       "contextExplanation": "This example of a circle packing was selected through example list on the sidebar.",
       "purpose": "Demonstration of a circle packing built with VCC and minimal properties provided.",
@@ -3570,8 +4475,8 @@
       "disableValidation": true,
       "hideTextures": true
     },
-    "mainTitle": "Value across group hierarchy",
-    "subTitle": "Summary of value across group hierarchy, note that sizing of nodes is specifically driven by the inner most children.",
+    "mainTitle": "Chart Title",
+    "subTitle": "Chart Subtitle",
     "data": [
       { "Type": "Parent Group", "Country": "", "value": 10 },
       { "Type": "Group 1", "Country": "Parent Group", "value": 73 },
@@ -3665,6 +4570,8 @@
   {
     "chart": "alluvial-diagram",
     "name": "Default",
+    "mainTitle": "Chart Title",
+    "subTitle": "Chart Subtitle",
     "accessibility": {
       "contextExplanation": "This example of a alluvial diagram was selected through example list on the sidebar.",
       "purpose": "Demonstration of a alluvial diagram built with VCC and minimal properties provided.",
@@ -3699,8 +4606,8 @@
       "elementsAreInterface": true,
       "disableValidation": true
     },
-    "mainTitle": "Flow of value between rankings in 2018 and 2019",
-    "subTitle": "Movement of value between rankings across years.",
+    "mainTitle": "Chart Title",
+    "subTitle": "Chart Subtitle",
     "linkData": [
       { "group": "Remained", "source": "High 2018", "target": "High 2019", "value": 3010 },
       { "group": "Decreased", "source": "High 2018", "target": "Medium 2019", "value": 2754 },
@@ -3776,8 +4683,8 @@
       "elementsAreInterface": true,
       "disableValidation": true
     },
-    "mainTitle": "Region to rank mapping",
-    "subTitle": "",
+    "mainTitle": "Chart Title",
+    "subTitle": "Chart Subtitle",
     "linkData": [
       { "source": "Region 1", "target": "High", "value": 50 },
       { "source": "Region 1", "target": "Medium", "value": 100 },
