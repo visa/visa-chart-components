@@ -36,6 +36,9 @@ Default values for all of these types can be found the [propDefaultValues file i
         <li>
           <a href="#IBoxModelType">IBoxModelType</a>
         </li>
+        <li>
+          <a href="#ISubTitleType">ISubTitleType</a>
+        </li>
       </ul>
     </li>
     <li><a href="#dumbbell-specific">Dumbbell Specific</a>
@@ -163,6 +166,17 @@ Used by every chart for both the `padding` and `margin` props.
 | `bottom` | number | height \* 0.01   | Sets the bottom margin/padding for the chart container. |
 | `left`   | number | width \* 0.01    | Sets the top margin/padding for the chart container.    |
 | `right`  | number | width \* 0.01    | Sets the top margin/padding for the chart container.    |
+
+<br>
+
+### <a name="ISubTitleType" href="#ISubTitleType">#</a> ISubTitleType
+
+Used by every chart for to declare subtitles as a simple string, or as an object that allows certain text to be highlighted.
+
+| Name                | Type     | Default Value(s) | Description                                                                                                                                                                                                                                                                                                                                             |
+| ------------------- | -------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `text`              | string   | ''               | Text of the subtitle.                                                                                                                                                                                                                                                                                                                                   |
+| `keywordsHighlight` | object[] | ''               | Data used to create highlighted words in the subtitle, an array of objects which includes `text`, `color` and `index` keys. `text` correspond to one more multiple words/numbers as a single string in the subtitle text. `color` takes a HEX color string. `index` takes a number, if not specified all occurrences of the `text` will be highlighted. |
 
 <br>
 <hr>
