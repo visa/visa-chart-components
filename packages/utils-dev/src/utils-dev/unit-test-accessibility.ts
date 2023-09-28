@@ -1022,7 +1022,7 @@ export const accessibility_static_controller_initialize = {
 
     // ASSERT
     const titleText = `${component.mainTitle}. `;
-    const regionText = `Static ${component.tagName.toLowerCase()} image, Titled: ${titleText} This section contains additional information about this chart. Pressing TAB will focus the data table button.`;
+    const regionText = `Static ${component.tagName.toLowerCase()} image, Titled: ${titleText} This section contains additional information about this chart. To focus on the data table button, press TAB once more.`;
 
     const controller = page.doc.querySelector(testSelector);
     const regionLabel = page.doc.querySelector('.vcl-region-label');

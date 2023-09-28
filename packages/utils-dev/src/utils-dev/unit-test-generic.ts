@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -221,11 +221,11 @@ export const generic_subTitle_default_load = {
   group: 'base',
   name: 'default subTitle on load',
   testDefault: true,
-  testProps: { mainTitle: 'This is a custom sub title which causes an error' },
+  testProps: { subTitle: 'This is a custom sub title' },
   testSelector: '[data-testid=sub-title]',
   testFunc: async (component: any, page: SpecPage, testProps: object, testSelector: string) => {
     // ARRANGE
-    const EXPECTEDSUBTITLE = testProps['subTitle'] || 'This is a custom sub title which causes an error';
+    const EXPECTEDSUBTITLE = testProps['subTitle'] || 'This is a custom sub title';
 
     // ACT
     page.root.appendChild(component);
@@ -283,6 +283,95 @@ export const generic_subTitle_custom_update = {
     // ASSERT
     const subTitleElement = page.doc.querySelector(testSelector);
     expect(subTitleElement).toEqualText(EXPECTEDSUBTITLE);
+  }
+};
+
+export const legend_subTitle_custom_load = {
+  prop: 'subTitle',
+  group: 'base',
+  name: 'set legend subTitle on load',
+  testDefault: true,
+  testProps: {},
+  testSelector: '[data-testid=sub-title]',
+  testFunc: async (component: any, page: SpecPage, testProps: object, testSelector: string) => {
+    // ARRANGE
+    Object.keys(testProps).forEach(prop => {
+      component[prop] = testProps[prop];
+    });
+
+    // set subTitle for testing
+    component.subTitle = {
+      text: 'This is an updated custom sub title',
+      keywordsHighlight: [{ text: 'custom', color: '#FF4F00' }]
+    };
+
+    // render
+    page.root.appendChild(component);
+    await page.waitForChanges();
+
+    // ASSERT
+    const subTitleElement = page.doc.querySelector(testSelector);
+
+    // we need to filter out the chart relevant class name
+    if (subTitleElement.classList.length > 0) {
+      subTitleElement.classList.remove(subTitleElement.classList.item(1)); // remove the first class
+    }
+
+    // note: snapshots flip the order of classes; keep this as is; and the order in the given components as well
+    expect(subTitleElement).toMatchInlineSnapshot(`
+    <p aria-hidden="true" class="vcl-sub-title visa-ui-text--instructions" data-testid="sub-title">
+      This is an updated
+      <span class="vcl-sub-title-keyword" style="background-color: #FF4F00; border: 1px solid #fff4f0; color: #222222;">
+        custom
+      </span>
+      sub title
+    </p>
+  `);
+  }
+};
+
+export const legend_subTitle_custom_update = {
+  prop: 'subTitle',
+  group: 'base',
+  name: 'set legend subTitle on update',
+  testProps: {},
+  testSelector: '[data-testid=sub-title]',
+  testFunc: async (component: any, page: SpecPage, testProps: object, testSelector: string) => {
+    // render
+    page.root.appendChild(component);
+    await page.waitForChanges();
+
+    // ARRANGE
+    Object.keys(testProps).forEach(prop => {
+      component[prop] = testProps[prop];
+    });
+    // set subTitle for testing
+    component.subTitle = {
+      text: 'This is an updated custom sub title',
+      keywordsHighlight: [{ text: 'custom', color: '#FF4F00' }]
+    };
+
+    // ACT
+    await page.waitForChanges();
+
+    // ASSERT
+    const subTitleElement = page.doc.querySelector(testSelector);
+
+    // we need to filter out the chart relevant class name
+    if (subTitleElement.classList.length > 0) {
+      subTitleElement.classList.remove(subTitleElement.classList.item(1)); // remove the first class
+    }
+
+    // note: snapshots flip the order of classes; keep this as is; and the order in the given components as well
+    expect(subTitleElement).toMatchInlineSnapshot(`
+    <p aria-hidden="true" class="vcl-sub-title visa-ui-text--instructions" data-testid="sub-title">
+      This is an updated
+      <span class="vcl-sub-title-keyword" style="background-color: #FF4F00; border: 1px solid #fff4f0; color: #222222;">
+        custom
+      </span>
+      sub title
+    </p>
+  `);
   }
 };
 
@@ -638,15 +727,17 @@ export const generic_accessibility_validation_default_false_load = {
   prop: 'accessibility',
   group: 'accessibility',
   name: 'should print accessibility console warnings and logs when accessibility.disableValidation defaults to false',
-  testProps: { disableValidation: false },
+  testProps: {},
   testSelector: 'N/A',
   testFunc: async (component: any, page: SpecPage, testProps: object, testSelector: string) => {
     // ARRANGE
     const spyWarn = jest.spyOn(console, 'warn').mockImplementation();
     const spyLog = jest.spyOn(console, 'log').mockImplementation();
     const spyGroup = jest.spyOn(console, 'groupCollapsed').mockImplementation();
-    const ENABLEACCESSIBILITYVALIDATION = testProps || { disableValidation: false };
+    const ENABLEACCESSIBILITYVALIDATION = { disableValidation: false };
+    const ENABLELOCALIZATIONVALIDATION = { skipValidation: true };
     component.accessibility = ENABLEACCESSIBILITYVALIDATION;
+    component.localization = ENABLELOCALIZATIONVALIDATION;
 
     // CLEAR
     spyWarn.mockClear();
@@ -676,15 +767,93 @@ export const generic_accessibility_validation_true_load = {
   prop: 'accessibility',
   group: 'accessibility',
   name: 'should not print accessibility console warnings and logs when accessibility.disableValidation set to true',
-  testProps: { disableValidation: true },
+  testProps: {},
   testSelector: 'N/A',
   testFunc: async (component: any, page: SpecPage, testProps: object, testSelector: string) => {
     // ARRANGE
     const spyWarn = jest.spyOn(console, 'warn').mockImplementation();
     const spyLog = jest.spyOn(console, 'log').mockImplementation();
     const spyGroup = jest.spyOn(console, 'groupCollapsed').mockImplementation();
-    const DISABLEACCESSIBILITYVALIDATION = testProps || { disableValidation: true };
-    component.accessibility = DISABLEACCESSIBILITYVALIDATION;
+    const ENABLEACCESSIBILITYVALIDATION = { disableValidation: true };
+    const ENABLELOCALIZATIONVALIDATION = { skipValidation: true };
+    component.accessibility = ENABLEACCESSIBILITYVALIDATION;
+    component.localization = ENABLELOCALIZATIONVALIDATION;
+
+    // CLEAR
+    spyWarn.mockClear();
+    spyLog.mockClear();
+    spyGroup.mockClear();
+
+    // ACT
+    page.root.appendChild(component);
+    await page.waitForChanges();
+
+    // ASSERT
+    expect(spyWarn.mock.calls).toMatchSnapshot();
+    expect(spyWarn.mock.calls.length).toBeLessThanOrEqual(0);
+    expect(spyLog.mock.calls).toMatchSnapshot();
+    expect(spyLog.mock.calls.length).toBeLessThanOrEqual(0);
+    expect(spyGroup.mock.calls).toMatchSnapshot();
+    expect(spyGroup.mock.calls.length).toBeLessThanOrEqual(0);
+
+    // RESTORE
+    spyWarn.mockRestore();
+    spyLog.mockRestore();
+    spyGroup.mockRestore();
+  }
+};
+
+export const generic_localization_validation_default_false_load = {
+  prop: 'localization',
+  group: 'localization',
+  name: 'should print localization console warnings and logs when localization.skipValidation defaults to false',
+  testProps: {},
+  testSelector: 'N/A',
+  testFunc: async (component: any, page: SpecPage, testProps: object, testSelector: string) => {
+    // ARRANGE
+    const spyWarn = jest.spyOn(console, 'warn').mockImplementation();
+    const spyLog = jest.spyOn(console, 'log').mockImplementation();
+    const spyGroup = jest.spyOn(console, 'groupCollapsed').mockImplementation();
+    const ENABLEACCESSIBILITYVALIDATION = { disableValidation: true };
+    const ENABLELOCALIZATIONVALIDATION = { skipValidation: false };
+    component.accessibility = ENABLEACCESSIBILITYVALIDATION;
+    component.localization = ENABLELOCALIZATIONVALIDATION;
+
+    // CLEAR
+    spyWarn.mockClear();
+    spyLog.mockClear();
+    spyGroup.mockClear();
+
+    // ACT
+    page.root.appendChild(component);
+    await page.waitForChanges();
+
+    // ASSERT
+    expect(spyLog.mock.calls).toMatchSnapshot();
+    expect(spyLog.mock.calls.length).toBeGreaterThan(0);
+
+    // RESTORE
+    spyWarn.mockRestore();
+    spyLog.mockRestore();
+    spyGroup.mockRestore();
+  }
+};
+
+export const generic_localization_validation_true_load = {
+  prop: 'localization',
+  group: 'localization',
+  name: 'should not print localization console warnings and logs when localization.skipValidation set to true',
+  testProps: {},
+  testSelector: 'N/A',
+  testFunc: async (component: any, page: SpecPage, testProps: object, testSelector: string) => {
+    // ARRANGE
+    const spyWarn = jest.spyOn(console, 'warn').mockImplementation();
+    const spyLog = jest.spyOn(console, 'log').mockImplementation();
+    const spyGroup = jest.spyOn(console, 'groupCollapsed').mockImplementation();
+    const ENABLEACCESSIBILITYVALIDATION = { disableValidation: true };
+    const ENABLELOCALIZATIONVALIDATION = { skipValidation: true };
+    component.accessibility = ENABLEACCESSIBILITYVALIDATION;
+    component.localization = ENABLELOCALIZATIONVALIDATION;
 
     // CLEAR
     spyWarn.mockClear();
