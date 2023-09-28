@@ -26,6 +26,7 @@
   "author": "Visa Data Experience Team",
   "scripts": {
     "audit": "yarn audit --json --level low > yarn-audit.json",
+    "yarn-install": "yarn",
     "build": "npm run clean && npm run compile",
     "clean": "rm -rf dist",
     "compile": "npm run tsc",
@@ -37,13 +38,13 @@
     "react-dom": ">=16.9.0"
   },
   "dependencies": {
-    "@visa/charts": "^7.1.0"
+    "@visa/charts": "^7.1.0",
+    "@visa/charts-types": "^0.6.0"
   },
   "devDependencies": {
     "@types/node": "^13.7.0",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
-    "@visa/charts-types": "^0.6.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "rollup": "^1.21.2",
