@@ -11,7 +11,7 @@ const { propDefaultValues } = Utils;
 
 export class BarChartDefaultValues {
   static readonly mainTitle = 'This is bar chart title';
-  static readonly subTitle = 'This is the bar chart subtitle';
+  static readonly subTitle = propDefaultValues.subTitle.text;
   static readonly height = 325;
   static readonly width = 675;
   static readonly margin = {

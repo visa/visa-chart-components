@@ -14,7 +14,8 @@ import {
   IDataLabelType,
   ITooltipLabelType,
   IAnimationConfig,
-  IAccessibilityType
+  IAccessibilityType,
+  ISubTitleType
 } from '@visa/charts-types';
 import { CirclePackingDefaultValues } from './circle-packing-default-values';
 import { select, event } from 'd3-selection';
@@ -72,7 +73,8 @@ const {
   validateLocalizationProps,
   findTagLevel,
   prepareRenderChange,
-  resolveLabelCollision
+  resolveLabelCollision,
+  setSubTitle
 } = Utils;
 
 @Component({
@@ -92,7 +94,7 @@ export class CirclePacking {
   // Chart Attributes (1/7)
   @Prop({ mutable: true }) localization: ILocalizationType = CirclePackingDefaultValues.localization;
   @Prop({ mutable: true }) mainTitle: string = CirclePackingDefaultValues.mainTitle;
-  @Prop({ mutable: true }) subTitle: string = CirclePackingDefaultValues.subTitle;
+  @Prop({ mutable: true }) subTitle: string | ISubTitleType = CirclePackingDefaultValues.subTitle;
   @Prop({ mutable: true }) height: number = CirclePackingDefaultValues.height;
   @Prop({ mutable: true }) width: number = CirclePackingDefaultValues.width;
   @Prop({ mutable: true }) margin: IBoxModelType = CirclePackingDefaultValues.margin;
@@ -166,6 +168,7 @@ export class CirclePacking {
   colorArr: any;
   preparedColors: any;
   rootCircle: any;
+  subTitleG: any;
   enter: any;
   holder: any;
   diameter: any;
@@ -191,6 +194,7 @@ export class CirclePacking {
   shouldUpdateAnnotations: boolean = false;
   shouldResetRoot: boolean = false;
   shouldSetColors: boolean = false;
+  shouldSetSubTitle: boolean = false;
   shouldUpdateDisplayDepth: boolean = false;
   shouldUpdateLabels: boolean = false;
   shouldAddStrokeUnder: boolean = false;
@@ -256,6 +260,7 @@ export class CirclePacking {
 
   @Watch('subTitle')
   subtitleWatcher(_new, _old) {
+    this.shouldSetSubTitle = true;
     this.shouldSetChartAccessibilitySubtitle = true;
     this.shouldSetParentSVGAccessibility = true;
   }
@@ -266,6 +271,7 @@ export class CirclePacking {
     this.shouldSetTagLevels = true;
     this.shouldSetChartAccessibilityCount = true;
     this.shouldUpdateDescriptionWrapper = true;
+    this.shouldSetSubTitle = true;
     this.shouldSetChartAccessibilityTitle = true;
     this.shouldSetChartAccessibilitySubtitle = true;
     this.shouldSetChartAccessibilityLongDescription = true;
@@ -582,6 +588,7 @@ export class CirclePacking {
     this.shouldUpdateDescriptionWrapper = true;
     this.shouldRedrawWrapper = true;
     this.shouldValidate = true;
+    this.shouldSetSubTitle = true;
     this.shouldSetChartAccessibilityTitle = true;
     this.shouldSetChartAccessibilitySubtitle = true;
     this.shouldSetChartAccessibilityLongDescription = true;
@@ -638,6 +645,7 @@ export class CirclePacking {
       this.prepareChartForDrawing();
       this.reSetRoot();
       this.setTextures();
+      this.setSubTitleElements();
       this.setStrokes();
       this.setTextStrokes();
       this.updateDisplayDepth();
@@ -774,6 +782,10 @@ export class CirclePacking {
       if (this.shouldDrawInteractionState) {
         this.updateInteractionState();
         this.shouldDrawInteractionState = false;
+      }
+      if (this.shouldSetSubTitle) {
+        this.setSubTitleElements();
+        this.shouldSetSubTitle = false;
       }
       if (this.shouldUpdateCursor) {
         this.updateCursor();
@@ -922,6 +934,7 @@ export class CirclePacking {
       .attr('class', 'circle-pack-text-group')
       .attr('data-testid', 'dataLabel-group');
 
+    this.subTitleG = select(this.circlePackingEl).select('.circle-packing-sub-title');
     this.tooltipG = select(this.circlePackingEl).select('.circle-packing-tooltip');
   }
 
@@ -1353,6 +1366,13 @@ export class CirclePacking {
     setAccessAnnotation(this.getLanguageString(), this.circlePackingEl, this.annotations);
   }
 
+  setSubTitleElements() {
+    setSubTitle({
+      root: this.subTitleG,
+      subTitle: this.subTitle
+    });
+  }
+
   setColors() {
     this.preparedColors = this.colors
       ? convertVisaColor(this.colors)
@@ -1646,7 +1666,8 @@ export class CirclePacking {
         this.suppressEvents &&
         this.accessibility.elementsAreInterface === false &&
         this.accessibility.keyboardNavConfig &&
-        this.accessibility.keyboardNavConfig.disabled
+        this.accessibility.keyboardNavConfig.disabled,
+      hideDataTable: this.accessibility.hideDataTableButton
     });
     this.shouldRedrawWrapper = false;
   }
@@ -1811,9 +1832,10 @@ export class CirclePacking {
       <div class="o-layout" data-testid="outer-layout">
         <div class="o-layout--chart" data-testid="layout-chart">
           <this.topLevel data-testid="main-title">{this.mainTitle}</this.topLevel>
-          <this.bottomLevel class="visa-ui-text--instructions" data-testid="sub-title">
-            {this.subTitle}
-          </this.bottomLevel>
+          <this.bottomLevel
+            class="visa-ui-text--instructions circle-packing-sub-title vcl-sub-title"
+            data-testid="sub-title"
+          />
           <keyboard-instructions
             uniqueID={this.chartID}
             geomType={'node'}

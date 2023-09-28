@@ -1,11 +1,16 @@
 /**
- * Copyright (c) 2020, 2021 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
  *
  **/
 clustered-bar-chart {
+  .vcl-sub-title-keyword {
+    -webkit-padding-before: 1px;
+    padding: 3px 6px 1px 6px;
+  }
+
   .annotations {
     pointer-events: none;
     .handle {
@@ -58,11 +63,11 @@ clustered-bar-chart {
   .light {
     .grid {
       line {
-        stroke: #767676;
+        stroke: #c9c9c9;
         stroke-opacity: 1;
         stroke-width: 0.8;
         // shape-rendering: crispEdges;
-        stroke-dasharray: 4, 4;
+        // stroke-dasharray: 4, 4;
       }
       path {
         stroke-width: 0;
@@ -84,6 +89,12 @@ clustered-bar-chart {
         text-anchor: middle;
         font: 1rem sans-serif;
       }
+
+      &-mark {
+        // axis mark
+        color: #949494;
+        stroke-width: 2px;
+      }
     }
 
     .y.axis {
@@ -94,7 +105,7 @@ clustered-bar-chart {
     }
     .x.axis {
       path {
-        stroke: #767676;
+        stroke: transparent;
       }
     }
   }

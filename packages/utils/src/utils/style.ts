@@ -28,6 +28,8 @@ export function getPadding(padding) {
       right: 70,
       left: 60
     };
+  } else if (padding === 'inlineText') {
+    return '3px 6px 3px 6px';
   }
 
   return paddingSetting;

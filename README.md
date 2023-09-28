@@ -159,9 +159,10 @@ You can find license information for all dependencies included in our build [her
 This project was/is built with tireless efforts from:
 
 - Chris DeMartini ([@visa](https://github.com/chris-demartini) / [personal](https://github.com/demartsc))
-- Stephanie Modica ([@visa](https://github.com/steph-modica) / [personal](https://github.com/stephmod))
 - David Kutas ([@visa](https://github.com/david-kutas))
 - Lilach Manheim ([personal](https://github.com/lmanheim))
+- Tanvi Modi ([@visa](https://github.com/tan-modi))
+- Stephanie Modica ([personal](https://github.com/stephmod))
 - Jaime Tanner ([personal](https://github.com/tannerjaime))
 - Frank Elavsky ([personal](https://github.com/frankelavsky))
 - Tica Lin ([personal](https://github.com/ticahere))

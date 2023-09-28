@@ -12,6 +12,7 @@ import { setHighContrastListener } from './accessibilityUtils';
 import { createLabel, createGroupLabel } from './altTextGenerator';
 import { translate } from './localization';
 import { capitalized } from './calculation';
+import { isObject } from './utilFunctions';
 
 export const keyCodes = {
   hideTooltip: 27, // ESCAPE
@@ -66,7 +67,7 @@ export const setAccessibilityController = ({
   chartTag: string;
   node: any;
   title: string;
-  description: string;
+  description: any;
   uniqueID: string;
   geomType: string;
   includeKeyNames: boolean;
@@ -107,7 +108,8 @@ export const setAccessibilityController = ({
 
   const getRootAriaLabel = () => {
     const titleText = `${title}. `;
-    const subtitle = description ? description + '. ' : '';
+    const parsedSubTitle = isObject(description) ? description.text : description;
+    const subtitle = description ? parsedSubTitle + '. ' : '';
     const descText = `${subtitle} ${translate(
       'accessibilityController.navigateToTheChartAreaByPressingEnter',
       language

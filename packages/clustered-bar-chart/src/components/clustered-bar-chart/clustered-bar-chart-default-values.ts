@@ -11,7 +11,7 @@ const { propDefaultValues } = Utils;
 
 export class ClusteredBarChartDefaultValues {
   static readonly mainTitle = 'Clustered Bar Chart Title';
-  static readonly subTitle = "This is the clustered bar chart's subtitle";
+  static readonly subTitle = propDefaultValues.subTitle.text;
   static readonly height = 250;
   static readonly width = 675;
   static readonly margin = {

@@ -10,7 +10,7 @@ import Utils from '@visa/visa-charts-utils';
 const { propDefaultValues } = Utils;
 export class ParallelPlotDefaultValues {
   static readonly mainTitle = 'Parallel Plot Title';
-  static readonly subTitle = "This is the parallel plot's subtitle";
+  static readonly subTitle = propDefaultValues.subTitle.text;
   static readonly height = 300;
   static readonly width = 500;
   static readonly margin = {

@@ -10,7 +10,7 @@ const { propDefaultValues } = Utils;
 
 export class CirclePackingDefaultValues {
   static readonly mainTitle = 'Circle Packing Title';
-  static readonly subTitle = "This is the circle packing chart's subtitle";
+  static readonly subTitle = propDefaultValues.subTitle.text;
   static readonly height = 400;
   static readonly width = 400;
   static readonly circlePadding = 5;

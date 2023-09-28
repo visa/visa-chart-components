@@ -25,7 +25,8 @@ import {
   ITooltipLabelType,
   IAccessibilityType,
   IAnimationConfig,
-  ILegendType
+  ILegendType,
+  ISubTitleType
 } from '@visa/charts-types';
 import { StackedBarChartDefaultValues } from './stacked-bar-chart-default-values';
 const {
@@ -92,7 +93,8 @@ const {
   validateAccessibilityProps,
   validateLocalizationProps,
   roundTo,
-  resolveLabelCollision
+  resolveLabelCollision,
+  setSubTitle
 } = Utils;
 @Component({
   tag: 'stacked-bar-chart',
@@ -109,7 +111,7 @@ export class StackedBarChart {
   @Event() transitionEndEvent: EventEmitter;
   // Chart Attributes (1/7)
   @Prop({ mutable: true }) mainTitle: string = StackedBarChartDefaultValues.mainTitle;
-  @Prop({ mutable: true }) subTitle: string = StackedBarChartDefaultValues.subTitle;
+  @Prop({ mutable: true }) subTitle: string | ISubTitleType = StackedBarChartDefaultValues.subTitle;
   @Prop({ mutable: true }) height: number = StackedBarChartDefaultValues.height;
   @Prop({ mutable: true }) width: number = StackedBarChartDefaultValues.width;
   @Prop({ mutable: true }) layout: string = StackedBarChartDefaultValues.layout;
@@ -208,6 +210,7 @@ export class StackedBarChart {
   duration: any;
   references: any;
   legendG: any;
+  subTitleG: any;
   tooltipG: any;
   interpolating: any;
   stackOrder: any;
@@ -235,6 +238,7 @@ export class StackedBarChart {
   shouldSetDimensions: boolean = false;
   shouldUpdateTableData: boolean = false;
   shouldSetColors: boolean = false;
+  shouldSetSubTitle: boolean = false;
   shouldValidateAxes: boolean = false;
   shouldValidateClickHighlight: boolean = false;
   shouldUpdateScales: boolean = false;
@@ -360,6 +364,7 @@ export class StackedBarChart {
     this.shouldSetXAxisAccessibility = true;
     this.shouldUpdateDescriptionWrapper = true;
     this.shouldSetAnnotationAccessibility = true;
+    this.shouldSetSubTitle = true;
     this.shouldSetChartAccessibilityTitle = true;
     this.shouldSetChartAccessibilitySubtitle = true;
     this.shouldSetChartAccessibilityLongDescription = true;
@@ -380,6 +385,7 @@ export class StackedBarChart {
 
   @Watch('subTitle')
   subtitleWatcher(_newVal, _oldVal) {
+    this.shouldSetSubTitle = true;
     this.shouldSetChartAccessibilitySubtitle = true;
     this.shouldSetParentSVGAccessibility = true;
   }
@@ -922,6 +928,7 @@ export class StackedBarChart {
     this.shouldUpdateDescriptionWrapper = true;
     this.shouldRedrawWrapper = true;
     this.shouldValidate = true;
+    this.shouldSetSubTitle = true;
     this.shouldSetChartAccessibilityTitle = true;
     this.shouldSetChartAccessibilitySubtitle = true;
     this.shouldSetChartAccessibilityLongDescription = true;
@@ -992,6 +999,7 @@ export class StackedBarChart {
       this.reSetRoot();
       this.setTextures();
       this.setStrokes();
+      this.setSubTitleElements();
       this.drawXGrid();
       this.drawYGrid();
       this.setGlobalSelections();
@@ -1106,6 +1114,10 @@ export class StackedBarChart {
       if (this.shouldSetTestingAttributes) {
         this.setTestingAttributes();
         this.shouldSetTestingAttributes = false;
+      }
+      if (this.shouldSetSubTitle) {
+        this.setSubTitleElements();
+        this.shouldSetSubTitle = false;
       }
       if (this.shouldUpdateXGrid) {
         this.drawXGrid();
@@ -1498,6 +1510,13 @@ export class StackedBarChart {
     this.tableColumns = Object.keys(keys);
   }
 
+  setSubTitleElements() {
+    setSubTitle({
+      root: this.subTitleG,
+      subTitle: this.subTitle
+    });
+  }
+
   setColors() {
     this.preparedColors = this.colors
       ? convertVisaColor(this.colors)
@@ -1629,6 +1648,7 @@ export class StackedBarChart {
       .select('.stacked-bar-legend')
       .append('svg');
 
+    this.subTitleG = select(this.stackedBarChartEl).select('.stacked-bar-sub-title');
     this.tooltipG = select(this.stackedBarChartEl).select('.stacked-bar-tooltip');
     this.references = this.rootG.append('g').attr('class', 'stacked-bar-reference-line-group');
   }
@@ -3095,7 +3115,8 @@ export class StackedBarChart {
         this.suppressEvents &&
         this.accessibility.elementsAreInterface === false &&
         this.accessibility.keyboardNavConfig &&
-        this.accessibility.keyboardNavConfig.disabled
+        this.accessibility.keyboardNavConfig.disabled,
+      hideDataTable: this.accessibility.hideDataTableButton
     });
     this.shouldRedrawWrapper = false;
   }
@@ -3286,7 +3307,7 @@ export class StackedBarChart {
     const theme = 'light';
 
     // everything between this comment and the third should eventually
-    // be moved into componentWillUpdate (if the stenicl bug is fixed)
+    // be moved into componentWillUpdate (if the Stencil bug is fixed)
     this.init();
     if (this.shouldSetLocalizationConfig) {
       this.setLocalizationConfig();
@@ -3368,15 +3389,13 @@ export class StackedBarChart {
       this.shouldValidateLabelPlacement = false;
     }
     // Everything between this comment and the first should eventually
-    // be moved into componentWillUpdate (if the stenicl bug is fixed)
+    // be moved into componentWillUpdate (if the Stencil bug is fixed)
 
     return (
       <div class={`o-layout is--${this.layout} ${theme}`}>
         <div class="o-layout--chart">
           <this.topLevel class="stacked-bar-main-title vcl-main-title">{this.mainTitle}</this.topLevel>
-          <this.bottomLevel class="visa-ui-text--instructions stacked-bar-sub-title vcl-sub-title">
-            {this.subTitle}
-          </this.bottomLevel>
+          <this.bottomLevel class="visa-ui-text--instructions stacked-bar-sub-title vcl-sub-title" />
           <div class="stacked-bar-legend vcl-legend" style={{ display: this.legend.visible ? 'block' : 'none' }} />
           <keyboard-instructions
             uniqueID={this.chartID}

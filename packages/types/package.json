@@ -12,6 +12,7 @@
   ],
   "scripts": {
     "audit": "yarn audit --json --level low > yarn-audit.json",
+    "yarn-install": "yarn",
     "build": "rm -rf dist && tsc",
     "watch": "tsc -w"
   },
@@ -25,8 +26,6 @@
     "access": "public"
   },
   "devDependencies": {
-    "@types/lodash": "4.14.74",
-    "@types/node": "^11.13.5",
     "typescript": "^3.9.10"
   }
 }

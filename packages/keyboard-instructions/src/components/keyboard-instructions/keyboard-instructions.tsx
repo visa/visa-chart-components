@@ -126,7 +126,7 @@ export class KeyboardInstructions {
                 <th scope="row" class="vcc-ki-td">
                   <kbd>{translate('general.keys.esc')}</kbd>
                 </th>
-                <td class="vcc-ki-td">{translate(`general.expressions.keyboardInstructionsEsc`, this.language)}</td>
+                <td class="vcc-ki-td">{translate(`general.expressions.dismissTooltip`, this.language)}</td>
               </tr>
             </tbody>
             <thead class="vcc-ki-thead">

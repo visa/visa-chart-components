@@ -25,8 +25,7 @@ export default [
 						'./node_modules/yup/lib/index.js',
 						'./node_modules/synchronous-promise/index.js',
 						'./node_modules/property-expr/index.js',
-						'node_modules/toposort/index.js',
-						'node_modules/ua-parser-js/src/ua-parser.js'
+						'node_modules/toposort/index.js'
 						]
 					}),  // so Rollup can convert `ms` to an ES module			
 			// typescript2(),
@@ -50,8 +49,7 @@ export default [
 						'./node_modules/yup/lib/index.js',
 						'./node_modules/synchronous-promise/index.js',
 						'./node_modules/property-expr/index.js',
-						'node_modules/toposort/index.js',
-						'node_modules/ua-parser-js/src/ua-parser.js'
+						'node_modules/toposort/index.js'
 						]
 			}),  // so Rollup can convert `ms` to an ES module			
 			// typescript2(),

@@ -1490,6 +1490,15 @@ export class AppHeatMap {
           interactionKeys={this.interactionKeys}
           padding={this.padding}
           subTitle={'Interaction Style'}
+          // subTitle={{
+          //   text:'When was transaction is dummy count below market dummy average?',
+          //   keywordsHighlight: [
+          //     { text: "transaction is dummy", color:'#FF4F00'},
+          //     { text: "dummy", color: '#efefef'},
+          //     {text: "average", color: '#323232'},
+          //   ]
+          // }}
+
           showTooltip={true}
           // tooltipLabel={this.label}
           width={800}

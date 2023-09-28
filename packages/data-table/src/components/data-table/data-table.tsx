@@ -37,7 +37,7 @@ export class DataTable {
   @Prop({ mutable: true }) unitTest: boolean = false;
 
   // state for showing the table
-  @State() showTable: boolean = false;
+  @State() showTable: boolean = this.hideDataTable ? true : false;
 
   // Element
   @Element()
@@ -237,7 +237,7 @@ export class DataTable {
             aria-label={`${translate('dataTable.display', this.language)}`}
             aria-expanded={this.showTable ? 'true' : 'false'}
             role="button"
-            tabIndex={0}
+            tabIndex={this.hideDataTable ? -1 : 0}
             onClick={() => (this.showTable = !this.showTable)}
           >
             <svg class="vcc-icon--tiny" focusable="false" {...svgProps}>

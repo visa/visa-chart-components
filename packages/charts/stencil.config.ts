@@ -9,6 +9,7 @@ import { Config } from '@stencil/core';
 import { sass } from '@stencil/sass';
 import { reactOutputTarget } from '@stencil/react-output-target';
 import { angularOutputTarget } from '@stencil/angular-output-target';
+import { vueOutputTarget } from '@stencil/vue-output-target';
 
 function external(c = {}) {
   const ext = 'external';
@@ -56,6 +57,10 @@ export const config: Config | any = {
       componentCorePackage: '@visa/charts',
       directivesProxyFile: '../charts-angular/src/lib/directives/visa-charts.ts',
       excludeComponents: ['visa-charts']
+    }),
+    vueOutputTarget({
+      componentCorePackage: '@visa/charts',
+      proxiesFile: '../charts-vue/lib/components.ts'
     }),
     { type: 'dist' },
     { type: 'dist-custom-elements', externalRuntime: false },

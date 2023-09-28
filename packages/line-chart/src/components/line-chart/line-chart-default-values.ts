@@ -11,7 +11,7 @@ const { propDefaultValues } = Utils;
 export class LineChartDefaultValues {
   static readonly highestHeadingLevel = propDefaultValues.highestHeadingLevel;
   static readonly mainTitle = 'Line Chart Title';
-  static readonly subTitle = "This is the line chart's subtitle";
+  static readonly subTitle = propDefaultValues.subTitle.text;
   static readonly height = 300;
   static readonly width = 650;
   static readonly margin = {

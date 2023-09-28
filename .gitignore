@@ -19,10 +19,12 @@ packages/charts-react-hooks/src/mono-packages.json
 visa-charts-lib/src/components.d.ts
 *.d.ts
 
-# react/angular binding auto-generated files
+# react/angular/vue binding auto-generated files
 packages/charts-angular/.angular/
 packages/charts-angular/**/src/lib/directives/
 packages/charts-react*/src/components/
+packages/charts-vue/lib/vue-component-lib/
+packages/charts-vue/lib/components.ts
 
 # figma binding auto-generated files
 packages/charts-figma/src/react-component-lib/
@@ -37,7 +39,6 @@ yarn-debug.log*
 yarn-error.log*
 *-lock.json
 *-debug.log
-*yarn.lock
 .yo-rc.json
 yarn-audit.json
 yarn-audit-clean.json

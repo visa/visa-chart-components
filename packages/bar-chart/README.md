@@ -66,14 +66,23 @@
 
 ## <a name="base-props" href="#base-props">#</a> Base Props [<>](./src/components/bar-chart/bar-chart.tsx 'Source')
 
-| Name                  | Type          | Default Value(s)             | Description                                                                                                                                        |
-| --------------------- | ------------- | ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `height`              | number        | 250                          | Height in px of the chart container                                                                                                                |
-| `width`               | number        | 675                          | Width in px of the chart container                                                                                                                 |
-| `mainTitle`           | string        | 'This is bar chart title'    | The `dynamic` tag of title for the chart (or you can create your own separately). See `highestHeadingLevel` prop for how tags get assigned.        |
-| `subTitle`            | string        | 'This is bar chart subtitle' | The `dynamic` tag for a sub title for the chart (or you can create your own separately). See `highestHeadingLevel` prop for how tags get assigned. |
-| `highestHeadingLevel` | string/number | 'h2'                         | Sets the heading level (which also sets sublevels) for the chart. "p", "span", and "div" are also valid.                                           |
-| `layout`              | string        | 'vertical'                   | Displays bars in chart vertically or horizontally. (`vertical` and `horizontal` are only valid inputs)                                             |
+| Name                  | Type                                               | Default Value(s)          | Description                                                                                                                                        |
+| --------------------- | -------------------------------------------------- | ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `height`              | number                                             | 250                       | Height in px of the chart container                                                                                                                |
+| `width`               | number                                             | 675                       | Width in px of the chart container                                                                                                                 |
+| `mainTitle`           | string                                             | 'This is bar chart title' | The `dynamic` tag of title for the chart (or you can create your own separately). See `highestHeadingLevel` prop for how tags get assigned.        |
+| `subTitle`            | string/[ISubTitleType](../types/src/prop-types.ts) | 'This is a subtitle'      | The `dynamic` tag for a sub title for the chart (or you can create your own separately). See `highestHeadingLevel` prop for how tags get assigned. |
+| `highestHeadingLevel` | string/number                                      | 'h2'                      | Sets the heading level (which also sets sublevels) for the chart. "p", "span", and "div" are also valid.                                           |
+| `layout`              | string                                             | 'vertical'                | Displays bars in chart vertically or horizontally. (`vertical` and `horizontal` are only valid inputs)                                             |
+
+<br>
+
+### ISubTitleType Definition
+
+| Name                | Type     | Default Value(s) | Description                                                                                                                                                                                                                                                                                                                                             |
+| ------------------- | -------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `text`              | string   | ''               | Text of the subtitle.                                                                                                                                                                                                                                                                                                                                   |
+| `keywordsHighlight` | object[] | ''               | Data used to create highlighted words in the subtitle, an array of objects which includes `text`, `color` and `index` keys. `text` correspond to one more multiple words/numbers as a single string in the subtitle text. `color` takes a HEX color string. `index` takes a number, if not specified all occurrences of the `text` will be highlighted. |
 
 <br>
 <br>

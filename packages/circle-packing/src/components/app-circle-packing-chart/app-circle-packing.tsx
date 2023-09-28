@@ -1117,6 +1117,15 @@ export class AppCirclePacking {
             //   numeralLocale: HU,
             //   skipValidation: false
             // }}
+            subTitle={'hello world'}
+            // subTitle={{
+            //   text: 'When was transaction is dummy count below market dummy average?',
+            //   keywordsHighlight: [
+            //     { text: 'transaction is dummy', color: '#FF4F00' },
+            //     { text: 'dummy', color: '#efefef', index: 2 },
+            //     { text: 'average', color: '#323232' }
+            //   ]
+            // }}
             data={this.chartData}
             nodeAccessor={this.nodeAccessor}
             parentAccessor={this.parentAccessor}
@@ -1127,7 +1136,6 @@ export class AppCirclePacking {
             // nodeAccessor={'Type'}
             // parentAccessor={'Country'}
             // sizeAccessor={'value'}
-            subTitle={''}
             mainTitle={'Chart Height is ' + this.height + 'px and Width is ' + this.width}
             displayDepth={2}
             // hoverStyle={{

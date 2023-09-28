@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022 Visa, Inc.
+ * Copyright (c) 2022, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -121,6 +121,7 @@ export const Default = Template.bind({});
 export const Annotation = Template.bind({});
 export const LabelCollision = Template.bind({});
 export const Interaction = Template.bind({});
+export const Outlier = Template.bind({});
 export const Hidden = Template.bind({});
 
 let args, exclusions;

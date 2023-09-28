@@ -12,6 +12,10 @@ export interface IBoxModelType {
   left: number;
 }
 
+export interface ISubTitleType {
+  text?: string;
+  keywordsHighlight?: object[];
+}
 export interface IDataLabelType {
   visible: boolean;
   placement?: string;

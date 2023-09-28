@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -10,7 +10,6 @@ import { createUrl } from './accessibilityUtils';
 import { getBrowser } from './browser-util';
 import { transitionEndAll } from './transitionEndAll';
 import { select } from 'd3-selection';
-const isSafari = getBrowser() === 'Safari';
 
 const indices = {
   categorical: [[0], [0], [0, 1], [0, 1, 2], [0, 1, 2, 3], [0, 1, 2, 3, 4], [0, 1, 2, 3, 4, 5]],

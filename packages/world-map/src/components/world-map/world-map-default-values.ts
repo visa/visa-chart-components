@@ -13,7 +13,7 @@ export class WorldMapDefaultValues {
   // base, margin and padding
   static readonly highestHeadingLevel = propDefaultValues.highestHeadingLevel;
   static readonly mainTitle = 'This is the Map title';
-  static readonly subTitle = 'This is the Map subtitle';
+  static readonly subTitle = propDefaultValues.subTitle.text;
   static readonly height = 400;
   static readonly width = 500;
   static readonly margin = {

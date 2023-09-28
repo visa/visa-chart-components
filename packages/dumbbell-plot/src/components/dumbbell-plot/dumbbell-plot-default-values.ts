@@ -10,7 +10,7 @@ import Utils from '@visa/visa-charts-utils';
 const { propDefaultValues } = Utils;
 export class DumbbellPlotDefaultValues {
   static readonly mainTitle = 'Dumbbell Plot Title';
-  static readonly subTitle = "This is the dumbbell plot's subtitle";
+  static readonly subTitle = propDefaultValues.subTitle.text;
   static readonly height = 300;
   static readonly width = 650;
   static readonly margin = {

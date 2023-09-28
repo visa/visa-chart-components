@@ -664,6 +664,14 @@ export class AppD3Map {
             animationConfig={this.animations}
             mainTitle={'WORLD'}
             subTitle="Marker Interaction"
+            // subTitle={{
+            //   text: 'When was transaction is dummy count below market dummy average?',
+            //   keywordsHighlight: [
+            //     { text: 'transaction is dummy', color: '#FF4F00' },
+            //     { text: 'dummy', color: '#efefef' },
+            //     { text: 'average', color: '#323232' }
+            //   ]
+            // }}
             width={400}
             height={250}
             data={this.smallDataState}

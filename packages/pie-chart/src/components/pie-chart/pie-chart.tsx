@@ -17,7 +17,8 @@ import {
   IDataLabelType,
   ITooltipLabelType,
   IAnimationConfig,
-  IAccessibilityType
+  IAccessibilityType,
+  ISubTitleType
 } from '@visa/charts-types';
 import { PieChartDefaultValues } from './pie-chart-default-values';
 import { easeCircleIn } from 'd3-ease';
@@ -81,7 +82,8 @@ const {
   prepareRenderChange,
   roundTo,
   getTextWidth,
-  resolveLabelCollision
+  resolveLabelCollision,
+  setSubTitle
 } = Utils;
 @Component({
   tag: 'pie-chart',
@@ -100,7 +102,7 @@ export class PieChart {
   // Chart Attributes (1/7)
   @Prop({ mutable: true }) localization: ILocalizationType = PieChartDefaultValues.localization;
   @Prop({ mutable: true }) mainTitle: string = PieChartDefaultValues.mainTitle;
-  @Prop({ mutable: true }) subTitle: string = PieChartDefaultValues.subTitle;
+  @Prop({ mutable: true }) subTitle: string | ISubTitleType = PieChartDefaultValues.subTitle;
   @Prop({ mutable: true }) centerTitle: string = PieChartDefaultValues.centerTitle;
   @Prop({ mutable: true }) centerSubTitle: string = PieChartDefaultValues.centerSubTitle;
   @Prop({ mutable: true }) height: number = PieChartDefaultValues.height;
@@ -207,6 +209,7 @@ export class PieChart {
   labelsCurrent: any;
   labelG: any;
   tooltipG: any;
+  subTitleG: any;
   references: any;
   refLabelG: any;
   refLabelsCurrent: any;
@@ -227,6 +230,7 @@ export class PieChart {
   shouldUpdateAnnotations: boolean = false;
   shouldUpdateData: boolean = false;
   shouldSetColors: boolean = false;
+  shouldSetSubTitle: boolean = false;
   shouldUpdateCursor: boolean = false;
   shouldUpdateGeometries: boolean = false;
   shouldUpdateEdgeLines: boolean = false;
@@ -281,6 +285,7 @@ export class PieChart {
 
   @Watch('subTitle')
   subtitleWatcher(_newVal, _oldVal) {
+    this.shouldSetSubTitle = true;
     this.shouldSetChartAccessibilitySubtitle = true;
     this.shouldSetParentSVGAccessibility = true;
   }
@@ -292,6 +297,7 @@ export class PieChart {
     this.shouldSetChartAccessibilityCount = true;
     this.shouldSetAnnotationAccessibility = true;
     this.shouldUpdateDescriptionWrapper = true;
+    this.shouldSetSubTitle = true;
     this.shouldSetChartAccessibilityTitle = true;
     this.shouldSetChartAccessibilitySubtitle = true;
     this.shouldSetChartAccessibilityLongDescription = true;
@@ -688,6 +694,7 @@ export class PieChart {
     this.shouldUpdateDescriptionWrapper = true;
     this.shouldRedrawWrapper = true;
     this.shouldValidate = true;
+    this.shouldSetSubTitle = true;
     this.shouldSetChartAccessibilityTitle = true;
     this.shouldSetChartAccessibilitySubtitle = true;
     this.shouldSetChartAccessibilityLongDescription = true;
@@ -806,6 +813,7 @@ export class PieChart {
       this.reSetRoot();
       this.setTextures();
       this.setStrokes();
+      this.setSubTitleElements();
       this.setGlobalSelections();
       this.setTestingAttributes();
       this.setColors();
@@ -914,6 +922,10 @@ export class PieChart {
       if (this.shouldSetTestingAttributes) {
         this.setTestingAttributes();
         this.shouldSetTestingAttributes = false;
+      }
+      if (this.shouldSetSubTitle) {
+        this.setSubTitleElements();
+        this.shouldSetSubTitle = false;
       }
       if (this.shouldEnterUpdateExit) {
         this.enterGeometries();
@@ -1140,6 +1152,13 @@ export class PieChart {
     this.tableColumns = Object.keys(keys);
   }
 
+  setSubTitleElements() {
+    setSubTitle({
+      root: this.subTitleG,
+      subTitle: this.subTitle
+    });
+  }
+
   setColors() {
     const colorFromProps =
       this.colors && this.colors.length
@@ -1276,6 +1295,8 @@ export class PieChart {
     this.refLabelG = this.rootG.append('g').attr('class', 'pie-dataLabel-group');
 
     this.edgeG = this.rootG.append('g').attr('class', 'pie-edge-line-group');
+
+    this.subTitleG = select(this.pieChartEl).select('.pie-sub-title');
 
     this.tooltipG = select(this.pieChartEl).select('.pie-tooltip');
 
@@ -2525,7 +2546,8 @@ export class PieChart {
         this.suppressEvents &&
         this.accessibility.elementsAreInterface === false &&
         this.accessibility.keyboardNavConfig &&
-        this.accessibility.keyboardNavConfig.disabled
+        this.accessibility.keyboardNavConfig.disabled,
+      hideDataTable: this.accessibility.hideDataTableButton
     });
     this.shouldRedrawWrapper = false;
   }
@@ -2753,7 +2775,7 @@ export class PieChart {
   render() {
     this.drawStartEvent.emit({ chartID: this.chartID });
     // everything between this comment and the third should eventually
-    // be moved into componentWillUpdate (if the stenicl bug is fixed)
+    // be moved into componentWillUpdate (if the Stencil bug is fixed)
     this.init();
     if (this.shouldSetLocalizationConfig) {
       this.setLocalizationConfig();
@@ -2802,15 +2824,13 @@ export class PieChart {
       this.shouldSetColors = false;
     }
     // Everything between this comment and the first should eventually
-    // be moved into componentWillUpdate (if the stenicl bug is fixed)
+    // be moved into componentWillUpdate (if the Stencil bug is fixed)
 
     return (
       <div class="o-layout is--vertical">
         <div class="o-layout--chart">
           <this.topLevel class="pie-main-title vcl-main-title">{this.mainTitle}</this.topLevel>
-          <this.bottomLevel class="visa-ui-text--instructions pie-sub-title vcl-sub-title">
-            {this.subTitle}
-          </this.bottomLevel>
+          <this.bottomLevel class="visa-ui-text--instructions pie-sub-title vcl-sub-title" />
           <keyboard-instructions
             uniqueID={this.chartID}
             geomType={'slice'}

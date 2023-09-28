@@ -11,7 +11,7 @@ const { propDefaultValues } = Utils;
 
 export class ScatterPlotDefaultValues {
   static readonly mainTitle = 'Scatter Plot Title';
-  static readonly subTitle = "This is the scatter plot's subtitle";
+  static readonly subTitle = propDefaultValues.subTitle.text;
   static readonly height = 300;
   static readonly width = 650;
   static readonly margin = {
