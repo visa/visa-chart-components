@@ -21,7 +21,8 @@
   "private": true,
   "scripts": {
     "audit": "yarn audit --json --level low > yarn-audit.json",
-    "build": "npx webpack",
+    "yarn-install": "yarn",
+    "build": "GENERATE_SOURCEMAP=false npx webpack --mode=production",
     "start": "npx webpack --mode=development --watch"
   },
   "devDependencies": {
@@ -29,7 +30,7 @@
     "@types/react": "^17.0.43",
     "@types/react-dom": "17.0.13",
     "babel-loader": "8.2.4",
-    "css-loader": "6.7.1",
+    "css-loader": "6.8.1",
     "html-webpack-inline-source-plugin": "1.0.0-beta.2",
     "html-webpack-plugin": "5.5.0",
     "react-app-polyfill": "2.0.0",
