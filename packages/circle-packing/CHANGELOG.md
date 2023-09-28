@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.2.0](https://github.com/visa/visa-chart-components/compare/@visa/circle-packing@7.1.0...@visa/circle-packing@7.2.0) (2023-09-28)
+
+### Features
+
+- legendSubTitle internal user agent detection testing documentation ([3a3fd00](https://github.com/visa/visa-chart-components/commit/3a3fd003a81353561da911a6dc250e44949757cb))
+
 # [7.1.0](https://github.com/visa/visa-chart-components/compare/@visa/circle-packing@7.0.0...@visa/circle-packing@7.1.0) (2023-06-16)
 
 ### Features

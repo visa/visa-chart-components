@@ -1,6 +1,6 @@
 {
   "name": "@visa/scatter-plot",
-  "version": "7.1.0",
+  "version": "7.2.0",
   "description": "Visa's scatter-plot component",
   "license": "SEE LICENCE IN LICENSE",
   "module": "dist/index.js",
@@ -37,10 +37,10 @@
     "access": "public"
   },
   "dependencies": {
-    "@visa/charts-types": "^0.6.0",
-    "@visa/keyboard-instructions": "^1.3.0",
-    "@visa/visa-charts-data-table": "^2.4.0",
-    "@visa/visa-charts-utils": "^5.1.0",
+    "@visa/charts-types": "^0.6.1",
+    "@visa/keyboard-instructions": "^1.3.1",
+    "@visa/visa-charts-data-table": "^2.4.1",
+    "@visa/visa-charts-utils": "^5.2.0",
     "d3-array": "^1.2.4",
     "d3-collection": "^1.0.7",
     "d3-scale": "^2.2.2",
@@ -49,7 +49,7 @@
     "uuid": "8.3.2"
   },
   "devDependencies": {
-    "@visa/visa-charts-utils-dev": "^4.1.0"
+    "@visa/visa-charts-utils-dev": "^4.1.1"
   },
   "resolutions": {
     "d3-color": "^3.1.0"

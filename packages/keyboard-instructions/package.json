@@ -1,6 +1,6 @@
 {
   "name": "@visa/keyboard-instructions",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "keyboard instructions menu for charts",
   "license": "SEE LICENCE IN LICENSE",
   "module": "dist/index.js",
@@ -34,10 +34,10 @@
     "access": "public"
   },
   "dependencies": {
-    "@visa/visa-charts-utils": "^5.1.0"
+    "@visa/visa-charts-utils": "^5.2.0"
   },
   "devDependencies": {
-    "@visa/visa-charts-utils-dev": "^4.1.0"
+    "@visa/visa-charts-utils-dev": "^4.1.1"
   },
   "resolutions": {
     "d3-color": "^3.1.0"
