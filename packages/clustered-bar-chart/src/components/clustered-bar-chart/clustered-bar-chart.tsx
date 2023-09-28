@@ -22,7 +22,8 @@ import {
   ITooltipLabelType,
   IAccessibilityType,
   IAnimationConfig,
-  ILegendType
+  ILegendType,
+  ISubTitleType
 } from '@visa/charts-types';
 import { ClusteredBarChartDefaultValues } from './clustered-bar-chart-default-values';
 import 'd3-transition';
@@ -90,7 +91,8 @@ const {
   findTagLevel,
   prepareRenderChange,
   roundTo,
-  resolveLabelCollision
+  resolveLabelCollision,
+  setSubTitle
 } = Utils;
 
 @Component({
@@ -109,7 +111,7 @@ export class ClusteredBarChart {
 
   // Chart Attributes (1/7)
   @Prop({ mutable: true }) mainTitle: string = ClusteredBarChartDefaultValues.mainTitle;
-  @Prop({ mutable: true }) subTitle: string = ClusteredBarChartDefaultValues.subTitle;
+  @Prop({ mutable: true }) subTitle: string | ISubTitleType = ClusteredBarChartDefaultValues.subTitle;
   @Prop({ mutable: true }) height: number = ClusteredBarChartDefaultValues.height;
   @Prop({ mutable: true }) width: number = ClusteredBarChartDefaultValues.width;
   @Prop({ mutable: true }) layout: string = ClusteredBarChartDefaultValues.layout;
@@ -211,6 +213,7 @@ export class ClusteredBarChart {
   preparedColors: any;
   duration: number;
   legendG: any;
+  subTitleG: any;
   tooltipG: any;
   updated: boolean = true;
   enterSize: number;
@@ -235,6 +238,7 @@ export class ClusteredBarChart {
   shouldResetRoot: boolean = false;
   shouldUpdateTableData: boolean = false;
   shouldSetColors: boolean = false;
+  shouldSetSubTitle: boolean = false;
   shouldValidateLabelPlacement: boolean = false;
   shouldValidateDataLabelAccessor: boolean = false;
   shouldValidateInteractionKeys: boolean = false;
@@ -351,6 +355,7 @@ export class ClusteredBarChart {
     this.shouldSetXAxisAccessibility = true;
     this.shouldSetAnnotationAccessibility = true;
     this.shouldUpdateDescriptionWrapper = true;
+    this.shouldSetSubTitle = true;
     this.shouldSetChartAccessibilityTitle = true;
     this.shouldSetChartAccessibilitySubtitle = true;
     this.shouldSetChartAccessibilityLongDescription = true;
@@ -371,6 +376,7 @@ export class ClusteredBarChart {
 
   @Watch('subTitle')
   subtitleWatcher(_newVal, _oldVal) {
+    this.shouldSetSubTitle = true;
     this.shouldSetChartAccessibilitySubtitle = true;
     this.shouldSetParentSVGAccessibility = true;
   }
@@ -873,6 +879,7 @@ export class ClusteredBarChart {
     this.shouldUpdateDescriptionWrapper = true;
     this.shouldRedrawWrapper = true;
     this.shouldValidate = true;
+    this.shouldSetSubTitle = true;
     this.shouldSetChartAccessibilityTitle = true;
     this.shouldSetChartAccessibilitySubtitle = true;
     this.shouldSetChartAccessibilityLongDescription = true;
@@ -945,6 +952,7 @@ export class ClusteredBarChart {
       this.reSetRoot();
       this.setTextures();
       this.setStrokes();
+      this.setSubTitleElements();
       this.drawXGrid();
       this.drawYGrid();
       this.setGlobalSelections();
@@ -976,6 +984,7 @@ export class ClusteredBarChart {
       this.setYAxisAccessibility();
       this.drawBaseline();
       this.onChangeHandler();
+
       // we want to hide all child <g> of this.root BUT we want to make sure not to hide the
       // parent<g> that contains our geometries! In a subGroup chart (like stacked bars),
       // we want to pass the PARENT of all the <g>s that contain bars
@@ -1055,6 +1064,10 @@ export class ClusteredBarChart {
       if (this.shouldSetTestingAttributes) {
         this.setTestingAttributes();
         this.shouldSetTestingAttributes = false;
+      }
+      if (this.shouldSetSubTitle) {
+        this.setSubTitleElements();
+        this.shouldSetSubTitle = false;
       }
       if (this.shouldUpdateXGrid) {
         this.drawXGrid();
@@ -1336,6 +1349,13 @@ export class ClusteredBarChart {
     this.innerYAxis = { ...this.yAxis, gridVisible: this.layout === 'vertical' && this.yAxis.gridVisible };
   }
 
+  setSubTitleElements() {
+    setSubTitle({
+      root: this.subTitleG,
+      subTitle: this.subTitle
+    });
+  }
+
   setColors() {
     this.preparedColors = this.colors
       ? convertVisaColor(this.colors)
@@ -1389,6 +1409,7 @@ export class ClusteredBarChart {
       .select('.clustered-bar-legend')
       .append('svg');
 
+    this.subTitleG = select(this.clusteredBarChartEl).select('.clustered-bar-sub-title');
     this.tooltipG = select(this.clusteredBarChartEl).select('.clustered-bar-tooltip');
 
     this.references = this.rootG.append('g').attr('class', 'clustered-bar-reference-line-group');
@@ -2718,7 +2739,8 @@ export class ClusteredBarChart {
         this.suppressEvents &&
         this.accessibility.elementsAreInterface === false &&
         this.accessibility.keyboardNavConfig &&
-        this.accessibility.keyboardNavConfig.disabled
+        this.accessibility.keyboardNavConfig.disabled,
+      hideDataTable: this.accessibility.hideDataTableButton
     });
     this.shouldRedrawWrapper = false;
   }
@@ -2898,7 +2920,7 @@ export class ClusteredBarChart {
     const theme = 'light';
 
     // everything between this comment and the third should eventually
-    // be moved into componentWillUpdate (if the stenicl bug is fixed)
+    // be moved into componentWillUpdate (if the Stencil bug is fixed)
     this.init();
     if (this.shouldSetLocalizationConfig) {
       this.setLocalizationConfig();
@@ -2976,15 +2998,13 @@ export class ClusteredBarChart {
       this.shouldValidateLabelPlacement = false;
     }
     // Everything between this comment and the first should eventually
-    // be moved into componentWillUpdate (if the stenicl bug is fixed)
+    // be moved into componentWillUpdate (if the Stencil bug is fixed)
 
     return (
       <div class={`o-layout is--${this.layout} ${theme}`}>
         <div class="o-layout--chart">
           <this.topLevel class="clustered-bar-main-title vcl-main-title">{this.mainTitle}</this.topLevel>
-          <this.bottomLevel class="visa-ui-text--instructions clustered-bar-sub-title vcl-sub-title">
-            {this.subTitle}
-          </this.bottomLevel>
+          <this.bottomLevel class="visa-ui-text--instructions clustered-bar-sub-title vcl-sub-title" />
           <div class="clustered-bar-legend vcl-legend" style={{ display: this.legend.visible ? 'block' : 'none' }} />
           <keyboard-instructions
             uniqueID={this.chartID}

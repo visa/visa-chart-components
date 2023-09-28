@@ -910,6 +910,14 @@ export class AppParallelPlot {
           mainTitle="Parallel Plot Default"
           animationConfig={this.animations}
           subTitle="Interaction Style"
+          // subTitle={{
+          //   text:'When was transaction is dummy count below market dummy average?',
+          //   keywordsHighlight: [
+          //     { text: "transaction is dummy", color:'#FF4F00'},
+          //     { text: "dummy", color: '#efefef'},
+          //     {text: "average", color: '#323232'},
+          //   ]
+          // }}
           width={500}
           height={this.height}
           data={this.data}

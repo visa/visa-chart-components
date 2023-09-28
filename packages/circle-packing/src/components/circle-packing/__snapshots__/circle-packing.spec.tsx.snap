@@ -84,7 +84,7 @@ exports[`<circle-packing> rendered-html accessibility generic accessibility test
             </kbd>
           </th>
           <td class="vcc-ki-td">
-            Exit the chart at any time.
+            Dismiss the tooltip at any time.
           </td>
         </tr>
       </tbody>
@@ -211,7 +211,7 @@ exports[`<circle-packing> rendered-html accessibility generic accessibility test
             </kbd>
           </th>
           <td class="vcc-ki-td">
-            Exit the chart at any time.
+            Dismiss the tooltip at any time.
           </td>
         </tr>
       </tbody>
@@ -333,19 +333,32 @@ Array [
 ]
 `;
 
+exports[`<circle-packing> rendered-html generic test suite localization: should not print localization console warnings and logs when localization.skipValidation set to true 1`] = `Array []`;
+
+exports[`<circle-packing> rendered-html generic test suite localization: should not print localization console warnings and logs when localization.skipValidation set to true 2`] = `Array []`;
+
+exports[`<circle-packing> rendered-html generic test suite localization: should not print localization console warnings and logs when localization.skipValidation set to true 3`] = `Array []`;
+
+exports[`<circle-packing> rendered-html generic test suite localization: should print localization console warnings and logs when localization.skipValidation defaults to false 1`] = `
+Array [
+  Array [
+    "%c Success! circle-packing-test has met minimum localization, we recommend you disable localization validation by setting localization.skipValidation",
+    "color: #0061C1;font-size:medium;",
+  ],
+]
+`;
+
 exports[`<circle-packing> rendered-html render localization: should render localized with minimal props[data,accessors] given 1`] = `
 <circle-packing id="circle-packing-test">
   <div class="o-layout" data-testid="outer-layout">
     <div class="vcl-accessibility-instructions" id="chart-instructions-circle-packing-test" style="position: absolute; width: 400px;">
       <p class="screen-reader-info vcl-region-label">
-        Billentyűzet Interaktív circle-packing, Elnevezés: Circle Packing Title. Ez a szekció információkkal szolgál a diagramról. A TAB billentyű lenyomásával a fókusz a billentyűzet instruckciók menüpontra kerül. A TAB újbóli lenyomása a diagram területre való navigálást eredményez.
+        Billentyűzet Interaktív circle-packing, Elnevezés: Circle Packing Title. Ez a szekció információkkal szolgál a diagramról. A TAB billentyű lenyomásával a fókusz a billentyűzet instruckciók menüpontra kerül. A TAB újbóli lenyomása a diagram területre való navigálást eredményez. Ezután a TAB újbóli lenyomása a táblázat gombra fókuszálást eredményez.
       </p>
       <h2 class="screen-reader-info vcl-access-title">
         Diagram diagram címe: Circle Packing Title
       </h2>
-      <h3 class="screen-reader-info vcl-access-subtitle">
-        Diagram alcím: This is the circle packing chart's subtitle
-      </h3>
+      <h3 class="screen-reader-info vcl-access-subtitle"></h3>
       <p class="screen-reader-info vcl-access-executive-summary" data-level="h3"></p>
       <p class="screen-reader-info vcl-access-purpose" data-level="h3"></p>
       <p class="screen-reader-info vcl-access-long-description" data-level="h3"></p>
@@ -368,8 +381,8 @@ exports[`<circle-packing> rendered-html render localization: should render local
       <h2 data-testid="main-title">
         Circle Packing Title
       </h2>
-      <p class="visa-ui-text--instructions" data-testid="sub-title">
-        This is the circle packing chart's subtitle
+      <p aria-hidden="true" class="circle-packing-sub-title vcl-sub-title visa-ui-text--instructions" data-testid="sub-title">
+        This is a subtitle
       </p>
       <keyboard-instructions>
         <div class="vcc-ki-keyboard-instructions-root" style="position: relative; width: 396px;">
@@ -396,7 +409,7 @@ exports[`<circle-packing> rendered-html render localization: should render local
         </div>
       </keyboard-instructions>
       <div class="visa-viz-circle-packing-container" data-testid="chart-container" style="position: relative;">
-        <div aria-label="Circle Packing Title. This is the circle packing chart's subtitle.  Navigálás a diagramterületre az ENTER billentyű lenyomásával." class="VCL-controller" data-group="Country" id="chart-area-circle-packing-test" role="application" tabindex="0" style="position: absolute; top: 0; left: 0; opacity: 0; pointer-events: none; width: 0px; height: 0px;">
+        <div aria-label="Circle Packing Title. This is a subtitle.  Navigálás a diagramterületre az ENTER billentyű lenyomásával." class="VCL-controller" data-group="Country" id="chart-area-circle-packing-test" role="application" tabindex="0" style="position: absolute; top: 0; left: 0; opacity: 0; pointer-events: none; width: 0px; height: 0px;">
           Interaktív circle-packing.
         </div>
         <svg class="vcl-svg" data-testid="root-svg" focusable="false" height="400" role="presentation" tabindex="-1" viewBox="0 0 400 400" width="400" style="overflow: hidden;">
@@ -547,14 +560,12 @@ exports[`<circle-packing> rendered-html render should render with minimal props[
   <div class="o-layout" data-testid="outer-layout">
     <div class="vcl-accessibility-instructions" id="chart-instructions-circle-packing-test" style="position: absolute; width: 400px;">
       <p class="screen-reader-info vcl-region-label">
-        Keyboard Interactive circle-packing, Titled: Circle Packing Title. This section contains additional information about this chart. Pressing TAB will focus the keyboard instructions menu. Tabbing again takes you to the chart area.
+        Keyboard Interactive circle-packing, Titled: Circle Packing Title. This section contains additional information about this chart. To access the keyboard instructions menu, press TAB. To navigate to the chart area, press TAB again. To focus on the data table button, press TAB once more.
       </p>
       <h2 class="screen-reader-info vcl-access-title">
         Chart title: Circle Packing Title
       </h2>
-      <h3 class="screen-reader-info vcl-access-subtitle">
-        Chart subtitle: This is the circle packing chart's subtitle
-      </h3>
+      <h3 class="screen-reader-info vcl-access-subtitle"></h3>
       <p class="screen-reader-info vcl-access-executive-summary" data-level="h3"></p>
       <p class="screen-reader-info vcl-access-purpose" data-level="h3"></p>
       <p class="screen-reader-info vcl-access-long-description" data-level="h3"></p>
@@ -577,8 +588,8 @@ exports[`<circle-packing> rendered-html render should render with minimal props[
       <h2 data-testid="main-title">
         Circle Packing Title
       </h2>
-      <p class="visa-ui-text--instructions" data-testid="sub-title">
-        This is the circle packing chart's subtitle
+      <p aria-hidden="true" class="circle-packing-sub-title vcl-sub-title visa-ui-text--instructions" data-testid="sub-title">
+        This is a subtitle
       </p>
       <keyboard-instructions>
         <div class="vcc-ki-keyboard-instructions-root" style="position: relative; width: 396px;">
@@ -605,7 +616,7 @@ exports[`<circle-packing> rendered-html render should render with minimal props[
         </div>
       </keyboard-instructions>
       <div class="visa-viz-circle-packing-container" data-testid="chart-container" style="position: relative;">
-        <div aria-label="Circle Packing Title. This is the circle packing chart's subtitle.  Navigate into the chart area by pressing ENTER." class="VCL-controller" data-group="Country" id="chart-area-circle-packing-test" role="application" tabindex="0" style="position: absolute; top: 0; left: 0; opacity: 0; pointer-events: none; width: 0px; height: 0px;">
+        <div aria-label="Circle Packing Title. This is a subtitle.  Navigate into the chart area by pressing ENTER." class="VCL-controller" data-group="Country" id="chart-area-circle-packing-test" role="application" tabindex="0" style="position: absolute; top: 0; left: 0; opacity: 0; pointer-events: none; width: 0px; height: 0px;">
           Interactive circle-packing.
         </div>
         <svg class="vcl-svg" data-testid="root-svg" focusable="false" height="400" role="presentation" tabindex="-1" viewBox="0 0 400 400" width="400" style="overflow: hidden;">

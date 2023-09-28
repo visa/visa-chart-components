@@ -70,7 +70,7 @@ exports[`<world-map /> rendered-html accessibility generic accessibility test su
             </kbd>
           </th>
           <td class="vcc-ki-td">
-            Exit the chart at any time.
+            Dismiss the tooltip at any time.
           </td>
         </tr>
       </tbody>
@@ -183,7 +183,7 @@ exports[`<world-map /> rendered-html accessibility generic accessibility test su
             </kbd>
           </th>
           <td class="vcc-ki-td">
-            Exit the chart at any time.
+            Dismiss the tooltip at any time.
           </td>
         </tr>
       </tbody>
@@ -339,6 +339,21 @@ Array [
 ]
 `;
 
+exports[`<world-map /> rendered-html generic test suite [localization] localization: should not print localization console warnings and logs when localization.skipValidation set to true 1`] = `Array []`;
+
+exports[`<world-map /> rendered-html generic test suite [localization] localization: should not print localization console warnings and logs when localization.skipValidation set to true 2`] = `Array []`;
+
+exports[`<world-map /> rendered-html generic test suite [localization] localization: should not print localization console warnings and logs when localization.skipValidation set to true 3`] = `Array []`;
+
+exports[`<world-map /> rendered-html generic test suite [localization] localization: should print localization console warnings and logs when localization.skipValidation defaults to false 1`] = `
+Array [
+  Array [
+    "%c Success! snapshot-test-1 has met minimum localization, we recommend you disable localization validation by setting localization.skipValidation",
+    "color: #0061C1;font-size:medium;",
+  ],
+]
+`;
+
 exports[`<world-map /> rendered-html mapOptions mapProjection should render the equal earth mapProjection by default 1`] = `"M275.79848060685583,198.96051388142726L276.339901494106,199.4154016608696L276.8598736057966,199.71456142906916L277.693610936392,200.01515060708505L278.4289607318367,200.55117508548238L279.02756920120845,201.34720200685797L279.30891465140655,202.86024869093524L279.06484513471895,203.34283691927817L278.7407996575215,204.7850720003423L278.9304547354183,206.25693172494135L278.48744452546947,206.8745437211392L278.00955718827674,208.52059414179118L278.6784694034472,208.97891258808392L274.61881431686453,210.43561302740466L274.68027596290494,211.69105401810188L273.6753959718023,211.93227517597782L272.89414656956933,212.6337774743488L272.703748362503,213.24367854576857L272.2284537509744,213.38196082436616L271.01740171973853,214.82611946794543L270.23532252003685,215.96017559963252L269.7932649522163,216.00079245666265L269.3805339369049,215.79912773864837L267.933419573458,215.60735075894704L267.70544474863436,215.4764468829953L267.70273032819307,215.33102465019664L267.2068314116007,214.9358701148222L266.36526357746123,214.83491112568248L265.2790001763218,215.23339257876108L264.4745509896953,214.1375318233191L263.65011159607263,212.6993492518695L263.90548596424,207.07771909794988L266.64881618834005,207.10007731718716L266.5568520401575,206.48776270242556L266.77488816152413,205.82289334928734L266.5688891782563,204.98964350731384L266.74495876545626,204.12724195352976L266.62119635064624,203.57475529874245L267.07604876430605,203.6195505219671L267.1356606808568,204.17265566068718L267.7563654858303,204.12972413387624L268.5904707801353,204.2938097866522L269.00597761991503,205.10105046062688L270.0549182911358,205.34888971264795L270.88149838756397,204.7878280867729L271.1449429058407,205.71891656171653L272.14696090729547,205.96704592404254L272.6037585379164,206.72329910418478L273.1053216346886,207.69903598527847L274.1126000096074,207.71368620271198L274.0809663169235,205.80086926415558L273.7061462710498,206.12374286772274L272.81009665173855,205.4326202086387L272.46505683793424,205.11647922462973L272.69102248246816,203.33096818933996L272.9929488218162,201.22091414910582L272.71919781249846,200.4339341509581L273.1284748746474,199.29387550229848L273.48983220272237,199.08029537583926L275.2806192188063,198.778657498745Z"`;
 
 exports[`<world-map /> rendered-html mapOptions mapProjection should render the natural earth mapProjection upon setting prop 1`] = `"M278.77010981205285,197.78593161390359L279.35602395104866,198.20701565535512L279.91738537740724,198.48403829952906L280.8156272579719,198.76246159118222L281.6114676699908,199.2591552346733L282.26447411082955,199.99725447824096L282.5880394525511,201.40187481666044L282.33311996593943,201.85036923475545L282.00753191283064,203.1922156936726L282.23610818297357,204.56408888158066L281.7705551129341,205.1405317858904L281.28649528006275,206.67926974877105L282.0152130786257,207.10835921675556L277.67192553252727,208.47414271821208L277.762236160765,209.65376011140867L276.6839515359981,209.8806920537151L275.85539321312143,210.54116682423427L275.6620424196771,211.11604858598454L275.15216102692966,211.2464767537444L273.8741002686045,212.61055872133778L273.0525369935085,213.68431058471378L272.5759479023437,213.72281101914524L272.1262300262736,213.53168433555393L270.5599461458553,213.34999785883798L270.3113622299122,213.2260200717838L270.3057472836696,213.0883284879914L269.76325751410457,212.71437231130662L268.8531332841024,212.618874000127L267.68743527701145,212.9959079376705L266.80120030978674,211.9597038549259L265.8899458933276,210.60294426438122L266.09012658602484,205.33026926708652L269.04108535907835,205.35115195924234L268.9343252585124,204.7794770734571L269.16045634771444,204.15926580460078L268.92897463285226,203.38273706770514L269.10820189815735,202.57988913543767L268.9690644802422,202.06599079008646L269.4581897837793,202.10764492095612L269.52851207651884,202.6221458600579L270.19493154615026,202.5821987051907L271.0931120815786,202.73488906402645L271.5496773561806,203.4865128964528L272.6803602857932,203.71742779586108L273.56130414686186,203.19478216940215L273.8571463981255,204.06232176768313L274.937935575214,204.29368988679133L275.44036728909646,204.9993245491161L275.99514205189774,205.91082405776655L277.07905225539406,205.92451924026028L277.0147199714164,204.13873028810661L276.61664758679495,204.43984048248956L275.6430927075358,203.7954568955305L275.2677180558648,203.5008859650687L275.48639939321254,201.8393360610737L275.7847181056037,199.88011738501925L275.4819963636301,199.15049502402752L275.90903441438184,198.09450363896647L276.2945331615489,197.89679536877074L278.212600495987,197.61763667840424Z"`;
@@ -352,14 +367,12 @@ exports[`<world-map /> rendered-html render localization: should render localize
   <div class="light o-layout">
     <div class="vcl-accessibility-instructions" id="chart-instructions-snapshot-test-1" style="position: absolute; width: 200px;">
       <p class="screen-reader-info vcl-region-label">
-        Billentyűzet Interaktív world-map, Elnevezés: This is the Map title. Ez a szekció információkkal szolgál a diagramról. A TAB billentyű lenyomásával a fókusz a billentyűzet instruckciók menüpontra kerül. A TAB újbóli lenyomása a diagram területre való navigálást eredményez.
+        Billentyűzet Interaktív world-map, Elnevezés: This is the Map title. Ez a szekció információkkal szolgál a diagramról. A TAB billentyű lenyomásával a fókusz a billentyűzet instruckciók menüpontra kerül. A TAB újbóli lenyomása a diagram területre való navigálást eredményez. Ezután a TAB újbóli lenyomása a táblázat gombra fókuszálást eredményez.
       </p>
       <h2 class="screen-reader-info vcl-access-title">
         Diagram diagram címe: This is the Map title
       </h2>
-      <h3 class="screen-reader-info vcl-access-subtitle">
-        Diagram alcím: This is the Map subtitle
-      </h3>
+      <h3 class="screen-reader-info vcl-access-subtitle"></h3>
       <p class="screen-reader-info vcl-access-executive-summary" data-level="h3"></p>
       <p class="screen-reader-info vcl-access-purpose" data-level="h3"></p>
       <p class="screen-reader-info vcl-access-long-description" data-level="h3"></p>
@@ -383,7 +396,7 @@ exports[`<world-map /> rendered-html render localization: should render localize
         This is the Map title
       </h2>
       <p aria-hidden="true" class="vcl-sub-title visa-ui-text--instructions world-map-sub-title" data-testid="sub-title">
-        This is the Map subtitle
+        This is a subtitle
       </p>
       <div aria-hidden="true" class="vcl-legend world-map-legend" role="presentation" style="display: block;">
         <svg aria-hidden="true" class="vcl-svg" data-testid="legend-container" data-type="key" focusable="false" height="53" opacity="1" role="presentation" viewBox="0 0 485 53" width="485">
@@ -453,7 +466,7 @@ exports[`<world-map /> rendered-html render localization: should render localize
         </div>
       </keyboard-instructions>
       <div class="visa-viz-world-map-container" data-testid="chart-container" style="position: relative;">
-        <div aria-label="This is the Map title. This is the Map subtitle.  Navigálás a diagramterületre az ENTER billentyű lenyomásával." class="VCL-controller" data-group id="chart-area-snapshot-test-1" role="application" tabindex="0" style="position: absolute; top: 0; left: 0; opacity: 0; pointer-events: none; width: 0px; height: 0px;">
+        <div aria-label="This is the Map title. This is a subtitle.  Navigálás a diagramterületre az ENTER billentyű lenyomásával." class="VCL-controller" data-group id="chart-area-snapshot-test-1" role="application" tabindex="0" style="position: absolute; top: 0; left: 0; opacity: 0; pointer-events: none; width: 0px; height: 0px;">
           Interaktív world-map.
         </div>
         <svg class="vcl-svg" data-testid="root-svg" focusable="false" height="400" role="presentation" tabindex="-1" viewBox="0 0 500 400" width="500" style="overflow: hidden;">
@@ -785,14 +798,12 @@ exports[`<world-map /> rendered-html render should render with minimal props giv
   <div class="light o-layout">
     <div class="vcl-accessibility-instructions" id="chart-instructions-snapshot-test-1" style="position: absolute; width: 200px;">
       <p class="screen-reader-info vcl-region-label">
-        Keyboard Interactive world-map, Titled: This is the Map title. This section contains additional information about this chart. Pressing TAB will focus the keyboard instructions menu. Tabbing again takes you to the chart area.
+        Keyboard Interactive world-map, Titled: This is the Map title. This section contains additional information about this chart. To access the keyboard instructions menu, press TAB. To navigate to the chart area, press TAB again. To focus on the data table button, press TAB once more.
       </p>
       <h2 class="screen-reader-info vcl-access-title">
         Chart title: This is the Map title
       </h2>
-      <h3 class="screen-reader-info vcl-access-subtitle">
-        Chart subtitle: This is the Map subtitle
-      </h3>
+      <h3 class="screen-reader-info vcl-access-subtitle"></h3>
       <p class="screen-reader-info vcl-access-executive-summary" data-level="h3"></p>
       <p class="screen-reader-info vcl-access-purpose" data-level="h3"></p>
       <p class="screen-reader-info vcl-access-long-description" data-level="h3"></p>
@@ -816,7 +827,7 @@ exports[`<world-map /> rendered-html render should render with minimal props giv
         This is the Map title
       </h2>
       <p aria-hidden="true" class="vcl-sub-title visa-ui-text--instructions world-map-sub-title" data-testid="sub-title">
-        This is the Map subtitle
+        This is a subtitle
       </p>
       <div aria-hidden="true" class="vcl-legend world-map-legend" role="presentation" style="display: block;">
         <svg aria-hidden="true" class="vcl-svg" data-testid="legend-container" data-type="key" focusable="false" height="53" opacity="1" role="presentation" viewBox="0 0 485 53" width="485">
@@ -886,7 +897,7 @@ exports[`<world-map /> rendered-html render should render with minimal props giv
         </div>
       </keyboard-instructions>
       <div class="visa-viz-world-map-container" data-testid="chart-container" style="position: relative;">
-        <div aria-label="This is the Map title. This is the Map subtitle.  Navigate into the chart area by pressing ENTER." class="VCL-controller" data-group id="chart-area-snapshot-test-1" role="application" tabindex="0" style="position: absolute; top: 0; left: 0; opacity: 0; pointer-events: none; width: 0px; height: 0px;">
+        <div aria-label="This is the Map title. This is a subtitle.  Navigate into the chart area by pressing ENTER." class="VCL-controller" data-group id="chart-area-snapshot-test-1" role="application" tabindex="0" style="position: absolute; top: 0; left: 0; opacity: 0; pointer-events: none; width: 0px; height: 0px;">
           Interactive world-map.
         </div>
         <svg class="vcl-svg" data-testid="root-svg" focusable="false" height="400" role="presentation" tabindex="-1" viewBox="0 0 500 400" width="500" style="overflow: hidden;">

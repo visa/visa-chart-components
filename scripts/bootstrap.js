@@ -352,7 +352,6 @@ function run() {
       },
       order: 13
     }),
-
     srhd: createTask({
       name: `start charts react hooks demo ${chalk.gray('(start charts react hooks demo)')}`,
       defaultValue: false,
@@ -362,6 +361,15 @@ function run() {
         // spawn(`npm -C ./packages/charts-react-hooks-demo run start`);
       },
       order: 14
+    }),
+    svd: createTask({
+      name: `start charts vue demo ${chalk.gray('(start charts vue demo)')}`,
+      defaultValue: false,
+      option: '--svd',
+      command: () => {
+        spawn(`lerna run --scope charts-vue-demo dev`);
+      },
+      order: 15
     }),
 
     c: createTask({
@@ -388,7 +396,7 @@ function run() {
             break;
         }
       },
-      order: 15
+      order: 16
     })
   };
 

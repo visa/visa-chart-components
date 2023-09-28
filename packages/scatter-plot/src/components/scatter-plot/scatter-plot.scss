@@ -1,11 +1,16 @@
 /**
- * Copyright (c) 2020, 2021 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
  *
  **/
 scatter-plot {
+  .vcl-sub-title-keyword {
+    -webkit-padding-before: 1px;
+    padding: 3px 6px 1px 6px;
+  }
+
   .annotations {
     pointer-events: none;
     .handle {
@@ -44,8 +49,17 @@ scatter-plot {
       text-anchor: middle;
       font: 1rem sans-serif;
     }
+
+    &-mark {
+      path {
+        color: #949494;
+        stroke-width: 0px;
+      }
+    }
+
     path {
-      stroke: #767676;
+      color: #949494;
+      stroke-width: 2px;
     }
   }
 
@@ -58,10 +72,10 @@ scatter-plot {
 
   .grid {
     line {
-      stroke: #767676;
+      stroke: #c9c9c9;
       stroke-opacity: 0.6;
-      shape-rendering: crispEdges;
-      stroke-dasharray: 4, 4;
+      // shape-rendering: crispEdges;
+      // stroke-dasharray: 4, 4;
     }
 
     path {

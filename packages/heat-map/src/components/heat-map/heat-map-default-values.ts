@@ -11,7 +11,7 @@ const { propDefaultValues } = Utils;
 
 export class HeatMapDefaultValues {
   static readonly mainTitle = 'Heat Map Title';
-  static readonly subTitle = "This is the heat map's subtitle";
+  static readonly subTitle = propDefaultValues.subTitle.text;
   static readonly height = 250;
   static readonly width = 500;
   static readonly margin = {

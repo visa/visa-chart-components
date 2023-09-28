@@ -105,8 +105,10 @@ export const hu = {
       withNoTitleProvided: 'cím nélkül.',
       fullDescription:
         'Ez a szekció információkkal szolgál a diagramról. A TAB billentyű lenyomásával a fókusz a billentyűzet instruckciók menüpontra kerül. A TAB újbóli lenyomása a diagram területre való navigálást eredményez.',
-      nonInteractive:
-        'Ez a szekció információkkal szolgál a diagramról. A TAB billentyű lenyomásával a fókusz az adattábla gombra kerül.',
+      nonInteractive: 'Ez a szekció információkkal szolgál a diagramról.',
+      dataTableFocusOnHideDataTableButtonTrue:
+        'Használja a kisegítő szoftver táblához ugrás funkcióját a táblához való ugráshoz.',
+      dataTableFocusOnDataTableButtonFalse: 'Ezután a TAB újbóli lenyomása a táblázat gombra fókuszálást eredményez.',
       longDescription: 'Hosszú leírás',
       executiveSummary: 'Összefoglalás',
       statisticalInformation: 'Statisztikai Információk',

@@ -501,6 +501,14 @@ export class AppScatterPlot {
             animationConfig={this.animations}
             // annotations={this.annotations}
             subTitle={'Interaction Style'}
+            // subTitle={{
+            //   text:'When was transaction is dummy count below market dummy average?',
+            //   keywordsHighlight: [
+            //     { text: "transaction is dummy", color:'#FF4F00'},
+            //     { text: "dummy", color: '#efefef'},
+            //     {text: "average", color: '#323232'},
+            //   ]
+            // }}
             height={600}
             width={800}
             xAxis={this.xAxis}

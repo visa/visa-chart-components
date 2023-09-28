@@ -14,6 +14,11 @@ export const localization = {
   overwrite: false
 };
 
+export const subTitle = {
+  text: 'This is a subtitle',
+  keywordsHighlight: []
+};
+
 export const accessibility = {
   longDescription: '',
   executiveSummary: '',

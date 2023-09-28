@@ -17,6 +17,7 @@
   "author": "Visa Data Experience Team",
   "scripts": {
     "audit": "yarn audit --json --level low > yarn-audit.json",
+    "yarn-install": "yarn",
     "build": "stencil build",
     "start-dev": "stencil build --dev --watch --serve",
     "start-dev-es5": "stencil build --dev --es5 --watch --serve",

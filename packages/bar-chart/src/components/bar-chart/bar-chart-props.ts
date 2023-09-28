@@ -28,11 +28,11 @@ export interface IBarChartProps {
   mainTitle: string;
 
   /**
-   * @shortDescription Subtitle of the chart
+   * @shortDescription Subtitle of the chart. A string or an array of objects. Objects should contain text (one/multiple word(s)/number(s) as a single string) and color (HEX) keys. Optional key: index.
    * @controlName TextField
    * @groupName Base
    * @sortOrder 2 */
-  subTitle: string;
+  subTitle: string | ISubTitleType;
 
   /**
    * @shortDescription Displays bars in chart vertically or horizontally
@@ -400,4 +400,8 @@ export interface ITooltipLabelType {
   labelAccessor: string | string[];
   labelTitle: string | string[];
   format: string | string[];
+}
+export interface ISubTitleType {
+  text?: string;
+  keywordsHighlight?: object[];
 }

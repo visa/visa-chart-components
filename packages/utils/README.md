@@ -129,9 +129,6 @@
       <ul>
         <li><a href="#get-browser">getBrowser()</a></li>
       </ul>
-      <ul>
-        <li><a href="#get-os">getOS()</a></li>
-      </ul>
     </li>
     <li>
       <a href="#calculation">Calculating Stats</a>
@@ -643,7 +640,7 @@ This util adds axes to Visa Chart Components, customizable by props sent to each
 
 ## <a name="browser-util" href="#browser-util">#</a> Browser and OS Detection [<>](./src/utils/browser-util.ts 'Source')
 
-This util can be used to query which browser or operating system is being used, using a simple interface on top of [ua-parser-js](github.com/faisalman/ua-parser-js).
+This util can be used to query which browser or operating system is being used. This utility is able to detect different versions of Chrome, Edge, Internet Explorer, Opera and UCBrowser.
 
 ### **Notable Exports:**
 
@@ -655,16 +652,6 @@ Example use:
 
 ```js
 const browser = getBrowser(); // 'IE', 'Edge', 'Safari', etc
-```
-
-#### <a name='get-os' href='#get-os'>#</a> `getOS()`:
-
-This function returns a string representing the operating system being used.
-
-Example use:
-
-```js
-const os = getOS(); // 'Mac OS', 'Linux', etc
 ```
 
 <hr>

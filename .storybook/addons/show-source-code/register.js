@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022 Visa, Inc.
+ * Copyright (c) 2022, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -40,6 +40,7 @@ const Panel = () => {
 
   function formatter(args, n, src) {
     if ([1, 2].includes(n)) src = `this.props = {`;
+    else if (n === 6) src = `const props = {`;
     else if (n === 3) src = `<${storyID}`;
     else if (n === 5)
       src += `import pyvisacharts as vcc\n\nvcc.${storyID
@@ -226,6 +227,21 @@ const Panel = () => {
       src += `\n></${storyID}>`;
     } else if (n === 3) {
       src += `\n/>`;
+    } else if (n === 6) {
+      src += `\n}\n\n`;
+      src += `<${storyID.charAt(0).toUpperCase() +
+        storyID.split('-')[0].slice(1) +
+        storyID
+          .split('-')[1]
+          .charAt(0)
+          .toUpperCase() +
+        storyID.split('-')[1].slice(1) +
+        (storyID.split('-').length === 3
+          ? storyID
+              .split('-')[2]
+              .charAt(0)
+              .toUpperCase() + storyID.split('-')[2].slice(1)
+          : '')} v-bind="props" />`;
     }
     return src;
   }
@@ -496,6 +512,9 @@ const Panel = () => {
     src5 += `\n)`;
   }
 
+  let src6 = '';
+  src6 += formatter(args, 6, src6);
+
   const [source, setSource] = useState(1);
 
   function selectSource(idx) {
@@ -516,6 +535,7 @@ const Panel = () => {
           <button onClick={() => selectSource(3)}>Web Component</button>
           <button onClick={() => selectSource(4)}>R</button>
           <button onClick={() => selectSource(5)}>Python</button>
+          <button onClick={() => selectSource(6)}>Vue</button>
         </ul>
         {source === 1 ? (
           <Source code={src1} language="" format={false} />
@@ -525,8 +545,10 @@ const Panel = () => {
           <Source code={src3} language="" format={false} />
         ) : source === 4 ? (
           <Source code={src4} language="" format={false} />
-        ) : (
+        ) : source === 5 ? (
           <Source code={src5} language="" format={false} />
+        ) : (
+          <Source code={src6} language="" format={false} />
         )}
       </PanelInner>
     </PanelWrapper>

@@ -84,7 +84,7 @@ exports[`<parallel-plot> rendered-html accessibility generic accessibility test 
             </kbd>
           </th>
           <td class="vcc-ki-td">
-            Exit the chart at any time.
+            Dismiss the tooltip at any time.
           </td>
         </tr>
       </tbody>
@@ -211,7 +211,7 @@ exports[`<parallel-plot> rendered-html accessibility generic accessibility test 
             </kbd>
           </th>
           <td class="vcc-ki-td">
-            Exit the chart at any time.
+            Dismiss the tooltip at any time.
           </td>
         </tr>
       </tbody>
@@ -365,6 +365,21 @@ Array [
 ]
 `;
 
+exports[`<parallel-plot> rendered-html generic test suite localization: should not print localization console warnings and logs when localization.skipValidation set to true 1`] = `Array []`;
+
+exports[`<parallel-plot> rendered-html generic test suite localization: should not print localization console warnings and logs when localization.skipValidation set to true 2`] = `Array []`;
+
+exports[`<parallel-plot> rendered-html generic test suite localization: should not print localization console warnings and logs when localization.skipValidation set to true 3`] = `Array []`;
+
+exports[`<parallel-plot> rendered-html generic test suite localization: should print localization console warnings and logs when localization.skipValidation defaults to false 1`] = `
+Array [
+  Array [
+    "%c Success! parallel-plot-unit-test has met minimum localization, we recommend you disable localization validation by setting localization.skipValidation",
+    "color: #0061C1;font-size:medium;",
+  ],
+]
+`;
+
 exports[`<parallel-plot> rendered-html reference line should pass referenceLines prop 1`] = `
 <g aria-hidden="true" class="parallel-reference-line-group" data-testid="reference-line-group" focusable="false" role="presentation">
   <g class=".parallel-reference" opacity="1" transform="translate(0,56.69235072347699)">
@@ -388,14 +403,12 @@ exports[`<parallel-plot> rendered-html render localization: should render locali
   <div class="o-layout">
     <div class="vcl-accessibility-instructions" id="chart-instructions-parallel-plot-unit-test" style="position: absolute; width: 500px;">
       <p class="screen-reader-info vcl-region-label">
-        Billentyűzet Interaktív parallel-plot, Elnevezés: Parallel Plot Title. Ez a szekció információkkal szolgál a diagramról. A TAB billentyű lenyomásával a fókusz a billentyűzet instruckciók menüpontra kerül. A TAB újbóli lenyomása a diagram területre való navigálást eredményez.
+        Billentyűzet Interaktív parallel-plot, Elnevezés: Parallel Plot Title. Ez a szekció információkkal szolgál a diagramról. A TAB billentyű lenyomásával a fókusz a billentyűzet instruckciók menüpontra kerül. A TAB újbóli lenyomása a diagram területre való navigálást eredményez. Ezután a TAB újbóli lenyomása a táblázat gombra fókuszálást eredményez.
       </p>
       <h2 class="screen-reader-info vcl-access-title">
         Diagram diagram címe: Parallel Plot Title
       </h2>
-      <h3 class="screen-reader-info vcl-access-subtitle">
-        Diagram alcím: This is the parallel plot's subtitle
-      </h3>
+      <h3 class="screen-reader-info vcl-access-subtitle"></h3>
       <p class="screen-reader-info vcl-access-executive-summary" data-level="h3"></p>
       <p class="screen-reader-info vcl-access-purpose" data-level="h3"></p>
       <p class="screen-reader-info vcl-access-long-description" data-level="h3"></p>
@@ -423,7 +436,7 @@ exports[`<parallel-plot> rendered-html render localization: should render locali
         Parallel Plot Title
       </h2>
       <p aria-hidden="true" class="parallel-sub-title vcl-sub-title visa-ui-text--instructions" data-testid="sub-title">
-        This is the parallel plot's subtitle
+        This is a subtitle
       </p>
       <div aria-hidden="true" class="parallel-legend vcl-legend" role="presentation" style="display: none;">
         <svg aria-hidden="true" class="vcl-svg" data-testid="legend-container" data-type="line" focusable="false" height="0" opacity="1" role="presentation" viewBox="0 0 495 0" width="495" style="display: none;">
@@ -499,7 +512,7 @@ exports[`<parallel-plot> rendered-html render localization: should render locali
         </div>
       </keyboard-instructions>
       <div class="visa-viz-d3-parallel-container" data-testid="chart-container" style="position: relative;">
-        <div aria-label="Parallel Plot Title. This is the parallel plot's subtitle.  Navigálás a diagramterületre az ENTER billentyű lenyomásával." class="VCL-controller" data-group="region" id="chart-area-parallel-plot-unit-test" role="application" tabindex="0" style="position: absolute; top: 0; left: 0; opacity: 0; pointer-events: none; width: 0px; height: 0px;">
+        <div aria-label="Parallel Plot Title. This is a subtitle.  Navigálás a diagramterületre az ENTER billentyű lenyomásával." class="VCL-controller" data-group="region" id="chart-area-parallel-plot-unit-test" role="application" tabindex="0" style="position: absolute; top: 0; left: 0; opacity: 0; pointer-events: none; width: 0px; height: 0px;">
           Interaktív parallel-plot.
         </div>
         <svg class="vcl-svg" data-testid="root-svg" focusable="false" height="300" role="presentation" tabindex="-1" viewBox="0 0 500 300" width="500" style="overflow: hidden;">
@@ -574,6 +587,21 @@ exports[`<parallel-plot> rendered-html render localization: should render locali
                   <g class="tick" opacity="1" transform="translate(0,18.47078298973988)">
                     <line data-translate-x="80" data-translate-y="23" data-y1="0" data-y2="224" stroke="currentColor" x2="315"></line>
                     <text dy="0.32em" fill="currentColor" x="-3"></text>
+                  </g>
+                </g>
+                <g class="axis-mark axis-mark-x" data-testid="x-axis-mark" fill="none" font-family="sans-serif" font-size="10" opacity="0" text-anchor="middle" transform="translate(0, 324.5165275484919)">
+                  <path class="domain" d="M0.5,0.5H315.5" stroke="currentColor"></path>
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0.5,0)">
+                    <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                    <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
+                  </g>
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(158,0)">
+                    <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                    <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
+                  </g>
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(315.5,0)">
+                    <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                    <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
                   </g>
                 </g>
               </g>
@@ -1050,21 +1078,6 @@ exports[`<parallel-plot> rendered-html render localization: should render locali
               <text aria-hidden="true" class="axis-label bottom x" data-testid="x-axis-label" focusable="false" role="presentation" transform="translate(0, 0)" x="157.5" y="274">
                 X Axis
               </text>
-              <g aria-hidden="true" class="axis-mark axis-mark-x" data-testid="x-axis-mark" fill="none" focusable="false" font-family="sans-serif" font-size="10" opacity="0" role="presentation" text-anchor="middle" transform="translate(0, 324.5165275484919)">
-                <path class="domain" d="M0.5,0.5H315.5" stroke="currentColor"></path>
-                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0.5,0)">
-                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
-                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
-                </g>
-                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(158,0)">
-                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
-                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
-                </g>
-                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(315.5,0)">
-                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
-                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
-                </g>
-              </g>
               <g aria-hidden="true" class="vcl-annotation-group" data-testid="annotation-group" focusable="false" role="presentation"></g>
               <g aria-hidden="true" class="editable vcl-annotation-group" data-testid="editable-annotation-group" focusable="false" role="presentation"></g>
             </g>
@@ -1128,14 +1141,12 @@ exports[`<parallel-plot> rendered-html render should render with minimal props[d
   <div class="o-layout">
     <div class="vcl-accessibility-instructions" id="chart-instructions-parallel-plot-unit-test" style="position: absolute; width: 500px;">
       <p class="screen-reader-info vcl-region-label">
-        Keyboard Interactive parallel-plot, Titled: Parallel Plot Title. This section contains additional information about this chart. Pressing TAB will focus the keyboard instructions menu. Tabbing again takes you to the chart area.
+        Keyboard Interactive parallel-plot, Titled: Parallel Plot Title. This section contains additional information about this chart. To access the keyboard instructions menu, press TAB. To navigate to the chart area, press TAB again. To focus on the data table button, press TAB once more.
       </p>
       <h2 class="screen-reader-info vcl-access-title">
         Chart title: Parallel Plot Title
       </h2>
-      <h3 class="screen-reader-info vcl-access-subtitle">
-        Chart subtitle: This is the parallel plot's subtitle
-      </h3>
+      <h3 class="screen-reader-info vcl-access-subtitle"></h3>
       <p class="screen-reader-info vcl-access-executive-summary" data-level="h3"></p>
       <p class="screen-reader-info vcl-access-purpose" data-level="h3"></p>
       <p class="screen-reader-info vcl-access-long-description" data-level="h3"></p>
@@ -1163,7 +1174,7 @@ exports[`<parallel-plot> rendered-html render should render with minimal props[d
         Parallel Plot Title
       </h2>
       <p aria-hidden="true" class="parallel-sub-title vcl-sub-title visa-ui-text--instructions" data-testid="sub-title">
-        This is the parallel plot's subtitle
+        This is a subtitle
       </p>
       <div aria-hidden="true" class="parallel-legend vcl-legend" role="presentation" style="display: none;">
         <svg aria-hidden="true" class="vcl-svg" data-testid="legend-container" data-type="line" focusable="false" height="0" opacity="1" role="presentation" viewBox="0 0 495 0" width="495" style="display: none;">
@@ -1239,7 +1250,7 @@ exports[`<parallel-plot> rendered-html render should render with minimal props[d
         </div>
       </keyboard-instructions>
       <div class="visa-viz-d3-parallel-container" data-testid="chart-container" style="position: relative;">
-        <div aria-label="Parallel Plot Title. This is the parallel plot's subtitle.  Navigate into the chart area by pressing ENTER." class="VCL-controller" data-group="region" id="chart-area-parallel-plot-unit-test" role="application" tabindex="0" style="position: absolute; top: 0; left: 0; opacity: 0; pointer-events: none; width: 0px; height: 0px;">
+        <div aria-label="Parallel Plot Title. This is a subtitle.  Navigate into the chart area by pressing ENTER." class="VCL-controller" data-group="region" id="chart-area-parallel-plot-unit-test" role="application" tabindex="0" style="position: absolute; top: 0; left: 0; opacity: 0; pointer-events: none; width: 0px; height: 0px;">
           Interactive parallel-plot.
         </div>
         <svg class="vcl-svg" data-testid="root-svg" focusable="false" height="300" role="presentation" tabindex="-1" viewBox="0 0 500 300" width="500" style="overflow: hidden;">
@@ -1314,6 +1325,21 @@ exports[`<parallel-plot> rendered-html render should render with minimal props[d
                   <g class="tick" opacity="1" transform="translate(0,18.47078298973988)">
                     <line data-translate-x="80" data-translate-y="23" data-y1="0" data-y2="224" stroke="currentColor" x2="315"></line>
                     <text dy="0.32em" fill="currentColor" x="-3"></text>
+                  </g>
+                </g>
+                <g class="axis-mark axis-mark-x" data-testid="x-axis-mark" fill="none" font-family="sans-serif" font-size="10" opacity="0" text-anchor="middle" transform="translate(0, 324.5165275484919)">
+                  <path class="domain" d="M0.5,0.5H315.5" stroke="currentColor"></path>
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0.5,0)">
+                    <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                    <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
+                  </g>
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(158,0)">
+                    <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                    <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
+                  </g>
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(315.5,0)">
+                    <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                    <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
                   </g>
                 </g>
               </g>
@@ -1790,21 +1816,6 @@ exports[`<parallel-plot> rendered-html render should render with minimal props[d
               <text aria-hidden="true" class="axis-label bottom x" data-testid="x-axis-label" focusable="false" role="presentation" transform="translate(0, 0)" x="157.5" y="274">
                 X Axis
               </text>
-              <g aria-hidden="true" class="axis-mark axis-mark-x" data-testid="x-axis-mark" fill="none" focusable="false" font-family="sans-serif" font-size="10" opacity="0" role="presentation" text-anchor="middle" transform="translate(0, 324.5165275484919)">
-                <path class="domain" d="M0.5,0.5H315.5" stroke="currentColor"></path>
-                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(0.5,0)">
-                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
-                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
-                </g>
-                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(158,0)">
-                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
-                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
-                </g>
-                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(315.5,0)">
-                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
-                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
-                </g>
-              </g>
               <g aria-hidden="true" class="vcl-annotation-group" data-testid="annotation-group" focusable="false" role="presentation"></g>
               <g aria-hidden="true" class="editable vcl-annotation-group" data-testid="editable-annotation-group" focusable="false" role="presentation"></g>
             </g>

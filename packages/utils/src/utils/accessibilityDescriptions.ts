@@ -8,6 +8,7 @@
 import { select } from 'd3-selection';
 import { translate } from './localization';
 import { capitalized } from './calculation';
+import { isObject } from './utilFunctions';
 
 const emptyDescriptions = {
   'vcl-access-title': '', // 'This chart has no title provided.'
@@ -35,7 +36,8 @@ export const initializeDescriptionRoot = ({
   uniqueID,
   highestHeadingLevel,
   redraw,
-  disableKeyNav
+  disableKeyNav,
+  hideDataTable
 }: {
   language: string;
   rootEle: any;
@@ -45,6 +47,7 @@ export const initializeDescriptionRoot = ({
   highestHeadingLevel?: any;
   redraw?: boolean;
   disableKeyNav?: boolean;
+  hideDataTable?: boolean;
 }) => {
   let level1 = findTagLevel(highestHeadingLevel, 0);
   level1 = level1 === 'h1' ? 'h2' : level1;
@@ -162,16 +165,23 @@ export const initializeDescriptionRoot = ({
   }
   instructionsWrapper.attr('id', 'chart-instructions-' + uniqueID);
 
+  const dataTableReachInstructions = hideDataTable
+    ? `${translate('accessibilityDescriptions.dataTableFocusOnHideDataTableButtonTrue', language)}`
+    : `${translate('accessibilityDescriptions.dataTableFocusOnDataTableButtonFalse', language)}`;
+
   const chartTitle = title
     ? `, ${capitalized(translate('general.keywords.titled', language))}: ` + title
     : `, ${translate('accessibilityDescriptions.withNoTitleProvided', language)}`;
   const fullDescription = `${capitalized(translate('general.keywords.keyboard', language))} ${capitalized(
     translate('general.keywords.interactive', language)
-  )} ${chartTag}${chartTitle}. ${translate('accessibilityDescriptions.fullDescription', language)}`;
+  )} ${chartTag}${chartTitle}. ${translate(
+    'accessibilityDescriptions.fullDescription',
+    language
+  )} ${dataTableReachInstructions}`;
   const nonInteractive = `${capitalized(translate('general.keywords.static', language))} ${chartTag} ${translate(
     'general.keywords.image',
     language
-  )}${chartTitle}. ${translate('accessibilityDescriptions.nonInteractive', language)}`;
+  )}${chartTitle}. ${translate('accessibilityDescriptions.nonInteractive', language)} ${dataTableReachInstructions}`;
   instructionsWrapper.select('.vcl-region-label').text(!disableKeyNav ? fullDescription : nonInteractive);
 };
 
@@ -188,15 +198,19 @@ export const setAccessTitle = (language: string, rootEle: any, title: string) =>
     );
 };
 
-export const setAccessSubtitle = (language: string, rootEle: any, subtitle: string) => {
+export const setAccessSubtitle = (language: string, rootEle: any, subtitle: any) => {
   select(rootEle)
     .select('.vcl-access-subtitle')
     .text(
-      subtitle
+      isObject(subtitle)
+        ? subtitle.text
+        : subtitle
         ? `${capitalized(translate('general.keywords.chart', language))} ${translate(
             'general.keywords.subtitle',
             language
-          )}: ` + subtitle
+          )}: ` + isObject(subtitle)
+          ? subtitle.text
+          : subtitle
         : emptyDescriptions['vcl-access-subtitle']
     );
 };

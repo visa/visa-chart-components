@@ -1965,6 +1965,14 @@ export class AppLineChart {
           mainTitle={'Line Chart in app'}
           // animationConfig={this.animations}
           subTitle={'example'}
+          // subTitle={{
+          //   text:'When was transaction is dummy count below market dummy average?',
+          //   keywordsHighlight: [
+          //     { text: "transaction is dummy", color:'#FF4F00'},
+          //     { text: "dummy", color: '#efefef'},
+          //     {text: "average", color: '#323232'},
+          //   ]
+          // }}
           height={this.height}
           width={600}
           // xAxis={{ visible: true, gridVisible: true, label: 'Quarter', unit: this.unit, format: '%b' }}

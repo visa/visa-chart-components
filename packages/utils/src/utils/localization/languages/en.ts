@@ -100,9 +100,11 @@ export const en = {
       chartLayoutDescription: 'Chart Layout Description',
       withNoTitleProvided: 'with no title provided.',
       fullDescription:
-        'This section contains additional information about this chart. Pressing TAB will focus the keyboard instructions menu. Tabbing again takes you to the chart area.',
-      nonInteractive:
-        'This section contains additional information about this chart. Pressing TAB will focus the data table button.',
+        'This section contains additional information about this chart. To access the keyboard instructions menu, press TAB. To navigate to the chart area, press TAB again.',
+      nonInteractive: 'This section contains additional information about this chart.',
+      dataTableFocusOnHideDataTableButtonTrue:
+        'To access the data table, use your screen reader go to table shortcut key.',
+      dataTableFocusOnDataTableButtonFalse: 'To focus on the data table button, press TAB once more.',
       longDescription: 'Long Description',
       executiveSummary: 'Executive Summary',
       statisticalInformation: 'Statistical Information',

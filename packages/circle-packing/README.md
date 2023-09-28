@@ -65,12 +65,21 @@
 
 ### <a name="base-props" href="#base-props">#</a> Base Props [<>](./src/components/circle-packing/circle-packing.tsx 'Source')
 
-| Name        | Type   | Default Value(s)                              | Description                                                                                                                                        |
-| ----------- | ------ | --------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `height`    | number | 400                                           | Height in px of the chart container                                                                                                                |
-| `width`     | number | 400                                           | Width in px of the chart container                                                                                                                 |
-| `mainTitle` | string | 'Circle Packing Title'                        | The `dynamic` tag of title for the chart (or you can create your own separately). See `highestHeadingLevel` prop for how tags get assigned.        |
-| `subTitle`  | string | 'This is the circle packing chart's subtitle' | The `dynamic` tag for a sub title for the chart (or you can create your own separately). See `highestHeadingLevel` prop for how tags get assigned. |
+| Name        | Type                                               | Default Value(s)       | Description                                                                                                                                        |
+| ----------- | -------------------------------------------------- | ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `height`    | number                                             | 400                    | Height in px of the chart container                                                                                                                |
+| `width`     | number                                             | 400                    | Width in px of the chart container                                                                                                                 |
+| `mainTitle` | string                                             | 'Circle Packing Title' | The `dynamic` tag of title for the chart (or you can create your own separately). See `highestHeadingLevel` prop for how tags get assigned.        |
+| `subTitle`  | string/[ISubTitleType](../types/src/prop-types.ts) | 'This is a subtitle'   | The `dynamic` tag for a sub title for the chart (or you can create your own separately). See `highestHeadingLevel` prop for how tags get assigned. |
+
+<br>
+
+### ISubTitleType Definition
+
+| Name                | Type     | Default Value(s) | Description                                                                                                                                                                                                                                                                                                                                             |
+| ------------------- | -------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `text`              | string   | ''               | Text of the subtitle.                                                                                                                                                                                                                                                                                                                                   |
+| `keywordsHighlight` | object[] | ''               | Data used to create highlighted words in the subtitle, an array of objects which includes `text`, `color` and `index` keys. `text` correspond to one more multiple words/numbers as a single string in the subtitle text. `color` takes a HEX color string. `index` takes a number, if not specified all occurrences of the `text` will be highlighted. |
 
 <br>
 <br>
