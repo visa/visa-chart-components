@@ -10,7 +10,7 @@ import Utils from '@visa/visa-charts-utils';
 const { propDefaultValues } = Utils;
 export class StackedBarChartDefaultValues {
   static readonly mainTitle = 'Stacked Bar Chart Title';
-  static readonly subTitle = "This is the stacked bar chart's subtitle";
+  static readonly subTitle = propDefaultValues.subTitle.text;
   static readonly height = 280;
   static readonly width = 700;
   static readonly margin = {

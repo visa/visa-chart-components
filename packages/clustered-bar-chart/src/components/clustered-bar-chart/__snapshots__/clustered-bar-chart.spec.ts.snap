@@ -84,7 +84,7 @@ exports[`<clustered-bar-chart> rendered-html accessibility generic accessibility
             </kbd>
           </th>
           <td class="vcc-ki-td">
-            Exit the chart at any time.
+            Dismiss the tooltip at any time.
           </td>
         </tr>
       </tbody>
@@ -211,7 +211,7 @@ exports[`<clustered-bar-chart> rendered-html accessibility generic accessibility
             </kbd>
           </th>
           <td class="vcc-ki-td">
-            Exit the chart at any time.
+            Dismiss the tooltip at any time.
           </td>
         </tr>
       </tbody>
@@ -363,6 +363,21 @@ Array [
 ]
 `;
 
+exports[`<clustered-bar-chart> rendered-html generic test suite localization: should not print localization console warnings and logs when localization.skipValidation set to true 1`] = `Array []`;
+
+exports[`<clustered-bar-chart> rendered-html generic test suite localization: should not print localization console warnings and logs when localization.skipValidation set to true 2`] = `Array []`;
+
+exports[`<clustered-bar-chart> rendered-html generic test suite localization: should not print localization console warnings and logs when localization.skipValidation set to true 3`] = `Array []`;
+
+exports[`<clustered-bar-chart> rendered-html generic test suite localization: should print localization console warnings and logs when localization.skipValidation defaults to false 1`] = `
+Array [
+  Array [
+    "%c Success! clustered-bar-test has met minimum localization, we recommend you disable localization validation by setting localization.skipValidation",
+    "color: #0061C1;font-size:medium;",
+  ],
+]
+`;
+
 exports[`<clustered-bar-chart> rendered-html reference line should pass referenceLines prop 1`] = `
 <g aria-hidden="true" class="clustered-bar-reference-line-group" data-testid="reference-line-group" focusable="false" role="presentation">
   <g class="clustered-bar-reference" opacity="1" transform="translate(0,34.39999999999999)">
@@ -379,14 +394,12 @@ exports[`<clustered-bar-chart> rendered-html render localization: should render 
   <div class="is--vertical light o-layout">
     <div class="vcl-accessibility-instructions" id="chart-instructions-clustered-bar-test" style="position: absolute; width: 675px;">
       <p class="screen-reader-info vcl-region-label">
-        Billentyűzet Interaktív clustered-bar-chart, Elnevezés: Clustered Bar Chart Title. Ez a szekció információkkal szolgál a diagramról. A TAB billentyű lenyomásával a fókusz a billentyűzet instruckciók menüpontra kerül. A TAB újbóli lenyomása a diagram területre való navigálást eredményez.
+        Billentyűzet Interaktív clustered-bar-chart, Elnevezés: Clustered Bar Chart Title. Ez a szekció információkkal szolgál a diagramról. A TAB billentyű lenyomásával a fókusz a billentyűzet instruckciók menüpontra kerül. A TAB újbóli lenyomása a diagram területre való navigálást eredményez. Ezután a TAB újbóli lenyomása a táblázat gombra fókuszálást eredményez.
       </p>
       <h2 class="screen-reader-info vcl-access-title">
         Diagram diagram címe: Clustered Bar Chart Title
       </h2>
-      <h3 class="screen-reader-info vcl-access-subtitle">
-        Diagram alcím: This is the clustered bar chart's subtitle
-      </h3>
+      <h3 class="screen-reader-info vcl-access-subtitle"></h3>
       <p class="screen-reader-info vcl-access-executive-summary" data-level="h3"></p>
       <p class="screen-reader-info vcl-access-purpose" data-level="h3"></p>
       <p class="screen-reader-info vcl-access-long-description" data-level="h3"></p>
@@ -414,7 +427,7 @@ exports[`<clustered-bar-chart> rendered-html render localization: should render 
         Clustered Bar Chart Title
       </h2>
       <p aria-hidden="true" class="clustered-bar-sub-title vcl-sub-title visa-ui-text--instructions" data-testid="sub-title">
-        This is the clustered bar chart's subtitle
+        This is a subtitle
       </p>
       <div aria-hidden="true" class="clustered-bar-legend vcl-legend" role="presentation" style="display: block;">
         <svg aria-hidden="true" class="vcl-svg" data-testid="legend-container" data-type="bar" focusable="false" height="49" opacity="1" role="presentation" viewBox="0 0 672 49" width="672">
@@ -478,7 +491,7 @@ exports[`<clustered-bar-chart> rendered-html render localization: should render 
         </div>
       </keyboard-instructions>
       <div class="visa-viz-d3-clustered-bar-container" data-testid="chart-container" style="position: relative;">
-        <div aria-label="Clustered Bar Chart Title. This is the clustered bar chart's subtitle.  Navigálás a diagramterületre az ENTER billentyű lenyomásával." class="VCL-controller" data-group="year" id="chart-area-clustered-bar-test" role="application" tabindex="0" style="position: absolute; top: 0; left: 0; opacity: 0; pointer-events: none; width: 0px; height: 0px;">
+        <div aria-label="Clustered Bar Chart Title. This is a subtitle.  Navigálás a diagramterületre az ENTER billentyű lenyomásával." class="VCL-controller" data-group="year" id="chart-area-clustered-bar-test" role="application" tabindex="0" style="position: absolute; top: 0; left: 0; opacity: 0; pointer-events: none; width: 0px; height: 0px;">
           Interaktív clustered-bar-chart.
         </div>
         <svg class="vcl-svg" data-testid="root-svg" focusable="false" height="250" role="presentation" tabindex="-1" viewBox="0 0 675 250" width="675" style="overflow: hidden;">
@@ -990,14 +1003,12 @@ exports[`<clustered-bar-chart> rendered-html render should render with minimal p
   <div class="is--vertical light o-layout">
     <div class="vcl-accessibility-instructions" id="chart-instructions-clustered-bar-test" style="position: absolute; width: 675px;">
       <p class="screen-reader-info vcl-region-label">
-        Keyboard Interactive clustered-bar-chart, Titled: Clustered Bar Chart Title. This section contains additional information about this chart. Pressing TAB will focus the keyboard instructions menu. Tabbing again takes you to the chart area.
+        Keyboard Interactive clustered-bar-chart, Titled: Clustered Bar Chart Title. This section contains additional information about this chart. To access the keyboard instructions menu, press TAB. To navigate to the chart area, press TAB again. To focus on the data table button, press TAB once more.
       </p>
       <h2 class="screen-reader-info vcl-access-title">
         Chart title: Clustered Bar Chart Title
       </h2>
-      <h3 class="screen-reader-info vcl-access-subtitle">
-        Chart subtitle: This is the clustered bar chart's subtitle
-      </h3>
+      <h3 class="screen-reader-info vcl-access-subtitle"></h3>
       <p class="screen-reader-info vcl-access-executive-summary" data-level="h3"></p>
       <p class="screen-reader-info vcl-access-purpose" data-level="h3"></p>
       <p class="screen-reader-info vcl-access-long-description" data-level="h3"></p>
@@ -1025,7 +1036,7 @@ exports[`<clustered-bar-chart> rendered-html render should render with minimal p
         Clustered Bar Chart Title
       </h2>
       <p aria-hidden="true" class="clustered-bar-sub-title vcl-sub-title visa-ui-text--instructions" data-testid="sub-title">
-        This is the clustered bar chart's subtitle
+        This is a subtitle
       </p>
       <div aria-hidden="true" class="clustered-bar-legend vcl-legend" role="presentation" style="display: block;">
         <svg aria-hidden="true" class="vcl-svg" data-testid="legend-container" data-type="bar" focusable="false" height="49" opacity="1" role="presentation" viewBox="0 0 672 49" width="672">
@@ -1089,7 +1100,7 @@ exports[`<clustered-bar-chart> rendered-html render should render with minimal p
         </div>
       </keyboard-instructions>
       <div class="visa-viz-d3-clustered-bar-container" data-testid="chart-container" style="position: relative;">
-        <div aria-label="Clustered Bar Chart Title. This is the clustered bar chart's subtitle.  Navigate into the chart area by pressing ENTER." class="VCL-controller" data-group="year" id="chart-area-clustered-bar-test" role="application" tabindex="0" style="position: absolute; top: 0; left: 0; opacity: 0; pointer-events: none; width: 0px; height: 0px;">
+        <div aria-label="Clustered Bar Chart Title. This is a subtitle.  Navigate into the chart area by pressing ENTER." class="VCL-controller" data-group="year" id="chart-area-clustered-bar-test" role="application" tabindex="0" style="position: absolute; top: 0; left: 0; opacity: 0; pointer-events: none; width: 0px; height: 0px;">
           Interactive clustered-bar-chart.
         </div>
         <svg class="vcl-svg" data-testid="root-svg" focusable="false" height="250" role="presentation" tabindex="-1" viewBox="0 0 675 250" width="675" style="overflow: hidden;">

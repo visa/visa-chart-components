@@ -22,7 +22,8 @@ import {
   ITooltipLabelType,
   IAccessibilityType,
   IAnimationConfig,
-  ILegendType
+  ILegendType,
+  ISubTitleType
 } from '@visa/charts-types';
 import { BarChartDefaultValues } from './bar-chart-default-values';
 import { v4 as uuid } from 'uuid';
@@ -74,6 +75,7 @@ const {
   drawAxis,
   drawGrid,
   drawLegend,
+  setSubTitle,
   setLegendInteractionState,
   drawTooltip,
   formatDataLabel,
@@ -113,7 +115,7 @@ export class BarChart {
   // Chart Attributes (1/7)
   @Prop({ mutable: true }) localization: ILocalizationType = BarChartDefaultValues.localization;
   @Prop({ mutable: true }) mainTitle: string = BarChartDefaultValues.mainTitle;
-  @Prop({ mutable: true }) subTitle: string = BarChartDefaultValues.subTitle;
+  @Prop({ mutable: true }) subTitle: string | ISubTitleType = BarChartDefaultValues.subTitle;
   @Prop({ mutable: true }) height: number = BarChartDefaultValues.height;
   @Prop({ mutable: true }) width: number = BarChartDefaultValues.width;
   @Prop({ mutable: true }) layout: string = BarChartDefaultValues.layout;
@@ -202,6 +204,7 @@ export class BarChart {
   preppedData: any;
   placement: string;
   legendG: any;
+  subTitleG: any;
   tooltipG: any;
   legendData: any;
   // these are added for accessibility
@@ -234,6 +237,7 @@ export class BarChart {
   shouldSetSelectionClass: boolean = false;
   shouldUpdateCursor: boolean = false;
   shouldSetColors: boolean = false;
+  shouldSetSubTitle: boolean = false;
   shouldUpdateGeometries: boolean = false;
   shouldUpdateLegend: boolean = false;
   shouldUpdateReferenceLines: boolean = false;
@@ -415,6 +419,7 @@ export class BarChart {
     this.shouldSetAnnotationAccessibility = true;
     this.shouldSetChartAccessibilityTitle = true;
     this.shouldSetChartAccessibilitySubtitle = true;
+    this.shouldSetSubTitle = true;
     this.shouldSetChartAccessibilityLongDescription = true;
     this.shouldSetChartAccessibilityContext = true;
     this.shouldSetChartAccessibilityExecutiveSummary = true;
@@ -433,6 +438,7 @@ export class BarChart {
 
   @Watch('subTitle')
   subtitleWatcher(_newVal, _oldVal) {
+    this.shouldSetSubTitle = true;
     this.shouldSetChartAccessibilitySubtitle = true;
     this.shouldSetParentSVGAccessibility = true;
   }
@@ -889,6 +895,7 @@ export class BarChart {
     this.shouldUpdateDescriptionWrapper = true;
     this.shouldValidate = true;
     this.shouldRedrawWrapper = true;
+    this.shouldSetSubTitle = true;
     this.shouldSetChartAccessibilityTitle = true;
     this.shouldSetChartAccessibilitySubtitle = true;
     this.shouldSetChartAccessibilityLongDescription = true;
@@ -960,6 +967,7 @@ export class BarChart {
       this.reSetRoot();
       this.setTextures();
       this.setStrokes();
+      this.setSubTitleElements();
       this.drawXGrid();
       this.drawYGrid();
       this.setGlobalSelections();
@@ -1075,6 +1083,10 @@ export class BarChart {
       if (this.shouldSetTestingAttributes) {
         this.setTestingAttributes();
         this.shouldSetTestingAttributes = false;
+      }
+      if (this.shouldSetSubTitle) {
+        this.setSubTitleElements();
+        this.shouldSetSubTitle = false;
       }
       if (this.shouldUpdateXGrid) {
         this.drawXGrid();
@@ -1301,6 +1313,13 @@ export class BarChart {
     this.legendData = [];
     nested.forEach(el => {
       this.legendData.push(el.values[0]);
+    });
+  }
+
+  setSubTitleElements() {
+    setSubTitle({
+      root: this.subTitleG,
+      subTitle: this.subTitle
     });
   }
 
@@ -1992,6 +2011,8 @@ export class BarChart {
     this.legendG = select(this.barChartEl)
       .select('.bar-legend')
       .append('svg');
+
+    this.subTitleG = select(this.barChartEl).select('.bar-sub-title');
 
     this.tooltipG = select(this.barChartEl).select('.bar-tooltip');
 
@@ -2721,7 +2742,8 @@ export class BarChart {
         this.suppressEvents &&
         this.accessibility.elementsAreInterface === false &&
         this.accessibility.keyboardNavConfig &&
-        this.accessibility.keyboardNavConfig.disabled
+        this.accessibility.keyboardNavConfig.disabled,
+      hideDataTable: this.accessibility.hideDataTableButton
     });
     this.shouldRedrawWrapper = false;
   }
@@ -2906,7 +2928,7 @@ export class BarChart {
     // theme hardcoded until we re-enable it
     const theme = 'light';
     // everything between this comment and the third should eventually
-    // be moved into componentWillUpdate (if the stenicl bug is fixed)
+    // be moved into componentWillUpdate (if the Stencil bug is fixed)
     this.init();
     if (this.shouldSetLocalizationConfig) {
       this.setLocalizationConfig();
@@ -2987,15 +3009,14 @@ export class BarChart {
       this.validateLabelPlacement();
       this.shouldValidateLabelPlacement = false;
     }
+
     // Everything between this comment and the first should eventually
-    // be moved into componentWillUpdate (if the stenicl bug is fixed)
+    // be moved into componentWillUpdate (if the Stencil bug is fixed)
     return (
       <div class={`o-layout is--${this.layout} ${theme}`}>
         <div class="o-layout--chart">
           <this.topLevel class="bar-main-title vcl-main-title">{this.mainTitle}</this.topLevel>
-          <this.bottomLevel class="visa-ui-text--instructions bar-sub-title vcl-sub-title">
-            {this.subTitle}
-          </this.bottomLevel>
+          <this.bottomLevel class="visa-ui-text--instructions bar-sub-title vcl-sub-title" />
           <div
             class="bar-legend vcl-legend"
             style={{ display: this.legend.visible && this.groupAccessor ? 'block' : 'none' }}

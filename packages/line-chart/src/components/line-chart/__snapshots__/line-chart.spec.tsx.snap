@@ -84,7 +84,7 @@ exports[`<line-chart> rendered-html accessibility generic accessibility test sui
             </kbd>
           </th>
           <td class="vcc-ki-td">
-            Exit the chart at any time.
+            Dismiss the tooltip at any time.
           </td>
         </tr>
       </tbody>
@@ -211,7 +211,7 @@ exports[`<line-chart> rendered-html accessibility generic accessibility test sui
             </kbd>
           </th>
           <td class="vcc-ki-td">
-            Exit the chart at any time.
+            Dismiss the tooltip at any time.
           </td>
         </tr>
       </tbody>
@@ -397,6 +397,21 @@ Array [
 ]
 `;
 
+exports[`<line-chart> rendered-html generic test suite localization: should not print localization console warnings and logs when localization.skipValidation set to true 1`] = `Array []`;
+
+exports[`<line-chart> rendered-html generic test suite localization: should not print localization console warnings and logs when localization.skipValidation set to true 2`] = `Array []`;
+
+exports[`<line-chart> rendered-html generic test suite localization: should not print localization console warnings and logs when localization.skipValidation set to true 3`] = `Array []`;
+
+exports[`<line-chart> rendered-html generic test suite localization: should print localization console warnings and logs when localization.skipValidation defaults to false 1`] = `
+Array [
+  Array [
+    "%c Success! line-chart-unit-test has met minimum localization, we recommend you disable localization validation by setting localization.skipValidation",
+    "color: #0061C1;font-size:medium;",
+  ],
+]
+`;
+
 exports[`<line-chart> rendered-html reference line should pass referenceLines prop 1`] = `
 <g aria-hidden="true" class="line-reference-line-group" data-testid="reference-line-group" focusable="false" role="presentation">
   <g class=".line-reference" opacity="1" transform="translate(0,120.90544788768618)">
@@ -420,14 +435,12 @@ exports[`<line-chart> rendered-html render localization: should render localized
   <div class="o-layout">
     <div class="vcl-accessibility-instructions" id="chart-instructions-line-chart-unit-test" style="position: absolute; width: 650px;">
       <p class="screen-reader-info vcl-region-label">
-        Billentyűzet Interaktív line-chart, Elnevezés: Line Chart Title. Ez a szekció információkkal szolgál a diagramról. A TAB billentyű lenyomásával a fókusz a billentyűzet instruckciók menüpontra kerül. A TAB újbóli lenyomása a diagram területre való navigálást eredményez.
+        Billentyűzet Interaktív line-chart, Elnevezés: Line Chart Title. Ez a szekció információkkal szolgál a diagramról. A TAB billentyű lenyomásával a fókusz a billentyűzet instruckciók menüpontra kerül. A TAB újbóli lenyomása a diagram területre való navigálást eredményez. Ezután a TAB újbóli lenyomása a táblázat gombra fókuszálást eredményez.
       </p>
       <h2 class="screen-reader-info vcl-access-title">
         Diagram diagram címe: Line Chart Title
       </h2>
-      <h3 class="screen-reader-info vcl-access-subtitle">
-        Diagram alcím: This is the line chart's subtitle
-      </h3>
+      <h3 class="screen-reader-info vcl-access-subtitle"></h3>
       <p class="screen-reader-info vcl-access-executive-summary" data-level="h3"></p>
       <p class="screen-reader-info vcl-access-purpose" data-level="h3"></p>
       <p class="screen-reader-info vcl-access-long-description" data-level="h3"></p>
@@ -455,7 +468,7 @@ exports[`<line-chart> rendered-html render localization: should render localized
         Line Chart Title
       </h2>
       <p aria-hidden="true" class="line-sub-title vcl-sub-title visa-ui-text--instructions" data-testid="sub-title">
-        This is the line chart's subtitle
+        This is a subtitle
       </p>
       <div aria-hidden="true" class="line-legend vcl-legend" role="presentation" style="display: block;">
         <svg aria-hidden="true" class="vcl-svg" data-testid="legend-container" data-type="line" focusable="false" height="48" opacity="1" role="presentation" viewBox="0 0 642 48" width="642">
@@ -513,7 +526,7 @@ exports[`<line-chart> rendered-html render localization: should render localized
         </div>
       </keyboard-instructions>
       <div class="visa-viz-d3-line-container" data-testid="chart-container" style="position: relative;">
-        <div aria-label="Line Chart Title. This is the line chart's subtitle.  Navigálás a diagramterületre az ENTER billentyű lenyomásával." class="VCL-controller" data-group="category" id="chart-area-line-chart-unit-test" role="application" tabindex="0" style="position: absolute; top: 0; left: 0; opacity: 0; pointer-events: none; width: 0px; height: 0px;">
+        <div aria-label="Line Chart Title. This is a subtitle.  Navigálás a diagramterületre az ENTER billentyű lenyomásával." class="VCL-controller" data-group="category" id="chart-area-line-chart-unit-test" role="application" tabindex="0" style="position: absolute; top: 0; left: 0; opacity: 0; pointer-events: none; width: 0px; height: 0px;">
           Interaktív line-chart.
         </div>
         <svg class="vcl-svg" data-testid="root-svg" focusable="false" height="300" role="presentation" tabindex="-1" viewBox="0 0 650 300" width="650" style="overflow: hidden;">
@@ -604,6 +617,57 @@ exports[`<line-chart> rendered-html render localization: should render localized
                   <g class="tick" opacity="1" transform="translate(0,10.466336410922754)">
                     <line stroke="currentColor" x2="537"></line>
                     <text dy="0.32em" fill="currentColor" x="-3"></text>
+                  </g>
+                </g>
+                <g class="axis-mark axis-mark-x" data-testid="x-axis-mark" fill="none" font-family="sans-serif" font-size="10" opacity="1" text-anchor="middle" transform="translate(0, 309.8017728346077)">
+                  <path class="domain" d="M0.5,0.5H537.5" stroke="currentColor"></path>
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(22.875,0)">
+                    <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                    <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
+                  </g>
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(67.625,0)">
+                    <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                    <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
+                  </g>
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(112.375,0)">
+                    <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                    <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
+                  </g>
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(157.125,0)">
+                    <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                    <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
+                  </g>
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(201.875,0)">
+                    <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                    <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
+                  </g>
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(246.625,0)">
+                    <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                    <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
+                  </g>
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(291.375,0)">
+                    <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                    <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
+                  </g>
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(336.125,0)">
+                    <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                    <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
+                  </g>
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(380.875,0)">
+                    <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                    <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
+                  </g>
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(425.625,0)">
+                    <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                    <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
+                  </g>
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(470.375,0)">
+                    <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                    <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
+                  </g>
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(515.125,0)">
+                    <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                    <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
                   </g>
                 </g>
               </g>
@@ -900,57 +964,6 @@ exports[`<line-chart> rendered-html render localization: should render localized
               <text aria-hidden="true" class="axis-label left y" data-testid="y-axis-label" dy="1em" focusable="false" role="presentation" transform="rotate(-90)" x="-112" y="-50">
                 Y Axis
               </text>
-              <g aria-hidden="true" class="axis-mark axis-mark-x" data-testid="x-axis-mark" fill="none" focusable="false" font-family="sans-serif" font-size="10" opacity="1" role="presentation" text-anchor="middle" transform="translate(0, 309.8017728346077)">
-                <path class="domain" d="M0.5,0.5H537.5" stroke="currentColor"></path>
-                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(22.875,0)">
-                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
-                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
-                </g>
-                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(67.625,0)">
-                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
-                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
-                </g>
-                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(112.375,0)">
-                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
-                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
-                </g>
-                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(157.125,0)">
-                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
-                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
-                </g>
-                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(201.875,0)">
-                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
-                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
-                </g>
-                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(246.625,0)">
-                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
-                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
-                </g>
-                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(291.375,0)">
-                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
-                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
-                </g>
-                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(336.125,0)">
-                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
-                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
-                </g>
-                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(380.875,0)">
-                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
-                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
-                </g>
-                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(425.625,0)">
-                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
-                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
-                </g>
-                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(470.375,0)">
-                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
-                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
-                </g>
-                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(515.125,0)">
-                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
-                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
-                </g>
-              </g>
               <g aria-hidden="true" class="vcl-annotation-group" data-testid="annotation-group" focusable="false" role="presentation"></g>
               <g aria-hidden="true" class="editable vcl-annotation-group" data-testid="editable-annotation-group" focusable="false" role="presentation"></g>
             </g>
@@ -1014,14 +1027,12 @@ exports[`<line-chart> rendered-html render should render with minimal props[data
   <div class="o-layout">
     <div class="vcl-accessibility-instructions" id="chart-instructions-line-chart-unit-test" style="position: absolute; width: 650px;">
       <p class="screen-reader-info vcl-region-label">
-        Keyboard Interactive line-chart, Titled: Line Chart Title. This section contains additional information about this chart. Pressing TAB will focus the keyboard instructions menu. Tabbing again takes you to the chart area.
+        Keyboard Interactive line-chart, Titled: Line Chart Title. This section contains additional information about this chart. To access the keyboard instructions menu, press TAB. To navigate to the chart area, press TAB again. To focus on the data table button, press TAB once more.
       </p>
       <h2 class="screen-reader-info vcl-access-title">
         Chart title: Line Chart Title
       </h2>
-      <h3 class="screen-reader-info vcl-access-subtitle">
-        Chart subtitle: This is the line chart's subtitle
-      </h3>
+      <h3 class="screen-reader-info vcl-access-subtitle"></h3>
       <p class="screen-reader-info vcl-access-executive-summary" data-level="h3"></p>
       <p class="screen-reader-info vcl-access-purpose" data-level="h3"></p>
       <p class="screen-reader-info vcl-access-long-description" data-level="h3"></p>
@@ -1049,7 +1060,7 @@ exports[`<line-chart> rendered-html render should render with minimal props[data
         Line Chart Title
       </h2>
       <p aria-hidden="true" class="line-sub-title vcl-sub-title visa-ui-text--instructions" data-testid="sub-title">
-        This is the line chart's subtitle
+        This is a subtitle
       </p>
       <div aria-hidden="true" class="line-legend vcl-legend" role="presentation" style="display: block;">
         <svg aria-hidden="true" class="vcl-svg" data-testid="legend-container" data-type="line" focusable="false" height="48" opacity="1" role="presentation" viewBox="0 0 642 48" width="642">
@@ -1107,7 +1118,7 @@ exports[`<line-chart> rendered-html render should render with minimal props[data
         </div>
       </keyboard-instructions>
       <div class="visa-viz-d3-line-container" data-testid="chart-container" style="position: relative;">
-        <div aria-label="Line Chart Title. This is the line chart's subtitle.  Navigate into the chart area by pressing ENTER." class="VCL-controller" data-group="category" id="chart-area-line-chart-unit-test" role="application" tabindex="0" style="position: absolute; top: 0; left: 0; opacity: 0; pointer-events: none; width: 0px; height: 0px;">
+        <div aria-label="Line Chart Title. This is a subtitle.  Navigate into the chart area by pressing ENTER." class="VCL-controller" data-group="category" id="chart-area-line-chart-unit-test" role="application" tabindex="0" style="position: absolute; top: 0; left: 0; opacity: 0; pointer-events: none; width: 0px; height: 0px;">
           Interactive line-chart.
         </div>
         <svg class="vcl-svg" data-testid="root-svg" focusable="false" height="300" role="presentation" tabindex="-1" viewBox="0 0 650 300" width="650" style="overflow: hidden;">
@@ -1198,6 +1209,57 @@ exports[`<line-chart> rendered-html render should render with minimal props[data
                   <g class="tick" opacity="1" transform="translate(0,10.466336410922754)">
                     <line stroke="currentColor" x2="537"></line>
                     <text dy="0.32em" fill="currentColor" x="-3"></text>
+                  </g>
+                </g>
+                <g class="axis-mark axis-mark-x" data-testid="x-axis-mark" fill="none" font-family="sans-serif" font-size="10" opacity="1" text-anchor="middle" transform="translate(0, 309.8017728346077)">
+                  <path class="domain" d="M0.5,0.5H537.5" stroke="currentColor"></path>
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(22.875,0)">
+                    <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                    <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
+                  </g>
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(67.625,0)">
+                    <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                    <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
+                  </g>
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(112.375,0)">
+                    <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                    <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
+                  </g>
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(157.125,0)">
+                    <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                    <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
+                  </g>
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(201.875,0)">
+                    <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                    <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
+                  </g>
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(246.625,0)">
+                    <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                    <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
+                  </g>
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(291.375,0)">
+                    <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                    <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
+                  </g>
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(336.125,0)">
+                    <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                    <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
+                  </g>
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(380.875,0)">
+                    <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                    <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
+                  </g>
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(425.625,0)">
+                    <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                    <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
+                  </g>
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(470.375,0)">
+                    <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                    <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
+                  </g>
+                  <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(515.125,0)">
+                    <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
+                    <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
                   </g>
                 </g>
               </g>
@@ -1494,57 +1556,6 @@ exports[`<line-chart> rendered-html render should render with minimal props[data
               <text aria-hidden="true" class="axis-label left y" data-testid="y-axis-label" dy="1em" focusable="false" role="presentation" transform="rotate(-90)" x="-112" y="-50">
                 Y Axis
               </text>
-              <g aria-hidden="true" class="axis-mark axis-mark-x" data-testid="x-axis-mark" fill="none" focusable="false" font-family="sans-serif" font-size="10" opacity="1" role="presentation" text-anchor="middle" transform="translate(0, 309.8017728346077)">
-                <path class="domain" d="M0.5,0.5H537.5" stroke="currentColor"></path>
-                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(22.875,0)">
-                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
-                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
-                </g>
-                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(67.625,0)">
-                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
-                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
-                </g>
-                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(112.375,0)">
-                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
-                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
-                </g>
-                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(157.125,0)">
-                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
-                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
-                </g>
-                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(201.875,0)">
-                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
-                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
-                </g>
-                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(246.625,0)">
-                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
-                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
-                </g>
-                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(291.375,0)">
-                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
-                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
-                </g>
-                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(336.125,0)">
-                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
-                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
-                </g>
-                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(380.875,0)">
-                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
-                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
-                </g>
-                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(425.625,0)">
-                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
-                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
-                </g>
-                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(470.375,0)">
-                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
-                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
-                </g>
-                <g class="tick" data-testid="axis-tick" opacity="1" transform="translate(515.125,0)">
-                  <line data-testid="axis-tick-line" stroke="currentColor" y2="0"></line>
-                  <text data-testid="axis-tick-text" dy="0.71em" fill="currentColor" y="10"></text>
-                </g>
-              </g>
               <g aria-hidden="true" class="vcl-annotation-group" data-testid="annotation-group" focusable="false" role="presentation"></g>
               <g aria-hidden="true" class="editable vcl-annotation-group" data-testid="editable-annotation-group" focusable="false" role="presentation"></g>
             </g>

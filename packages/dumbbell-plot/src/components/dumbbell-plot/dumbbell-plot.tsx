@@ -28,7 +28,8 @@ import {
   ITooltipLabelType,
   IAccessibilityType,
   IAnimationConfig,
-  ILegendType
+  ILegendType,
+  ISubTitleType
 } from '@visa/charts-types';
 import { DumbbellPlotDefaultValues } from './dumbbell-plot-default-values';
 import { easeCircleIn } from 'd3-ease';
@@ -93,7 +94,8 @@ const {
   prepareRenderChange,
   roundTo,
   getTextWidth,
-  resolveLabelCollision
+  resolveLabelCollision,
+  setSubTitle
 } = Utils;
 
 @Component({
@@ -111,7 +113,7 @@ export class DumbbellPlot {
   @Event() transitionEndEvent: EventEmitter;
   // Chart Attributes (1/7)
   @Prop({ mutable: true }) mainTitle: string = DumbbellPlotDefaultValues.mainTitle;
-  @Prop({ mutable: true }) subTitle: string = DumbbellPlotDefaultValues.subTitle;
+  @Prop({ mutable: true }) subTitle: string | ISubTitleType = DumbbellPlotDefaultValues.subTitle;
   @Prop({ mutable: true }) height: number = DumbbellPlotDefaultValues.height;
   @Prop({ mutable: true }) width: number = DumbbellPlotDefaultValues.width;
   @Prop({ mutable: true }) margin: IBoxModelType = DumbbellPlotDefaultValues.margin;
@@ -221,6 +223,7 @@ export class DumbbellPlot {
   enterSize: number;
   exitSize: number;
   legendG: any;
+  subTitleG: any;
   tooltipG: any;
   legendData: any;
   ordinalLabel: any;
@@ -275,6 +278,7 @@ export class DumbbellPlot {
   shouldCheckValueAxis: boolean = false;
   shouldCheckLabelAxis: boolean = false;
   shouldSetColors: boolean = false;
+  shouldSetSubTitle: boolean = false;
   shouldUpdateLegend: boolean = false;
   shouldSetGlobalSelections: boolean = false;
   shouldSetSeriesSelections: boolean = false;
@@ -354,6 +358,7 @@ export class DumbbellPlot {
 
   @Watch('subTitle')
   subTitleWatcher(_newData, _oldData) {
+    this.shouldSetSubTitle = true;
     this.shouldSetChartAccessibilitySubtitle = true;
     this.shouldSetParentSVGAccessibility = true;
   }
@@ -447,6 +452,7 @@ export class DumbbellPlot {
     this.shouldSetXAxisAccessibility = true;
     this.shouldSetAnnotationAccessibility = true;
     this.shouldUpdateDescriptionWrapper = true;
+    this.shouldSetSubTitle = true;
     this.shouldSetChartAccessibilityTitle = true;
     this.shouldSetChartAccessibilitySubtitle = true;
     this.shouldSetChartAccessibilityLongDescription = true;
@@ -1021,6 +1027,7 @@ export class DumbbellPlot {
     this.shouldUpdateDescriptionWrapper = true;
     this.shouldRedrawWrapper = true;
     this.shouldValidate = true;
+    this.shouldSetSubTitle = true;
     this.shouldSetChartAccessibilityTitle = true;
     this.shouldSetChartAccessibilitySubtitle = true;
     this.shouldSetChartAccessibilityLongDescription = true;
@@ -1166,6 +1173,7 @@ export class DumbbellPlot {
       this.setChartAccessibilityStructureNotes();
       this.setParentSVGAccessibility();
       this.reSetRoot();
+      this.setSubTitleElements();
       this.drawXGrid();
       this.drawYGrid();
       this.renderMarkerGroup();
@@ -1294,6 +1302,10 @@ export class DumbbellPlot {
       if (this.shouldSetTestingAttributes) {
         this.setTestingAttributes();
         this.shouldSetTestingAttributes = false;
+      }
+      if (this.shouldSetSubTitle) {
+        this.setSubTitleElements();
+        this.shouldSetSubTitle = false;
       }
       if (this.shouldUpdateXGrid) {
         this.drawXGrid();
@@ -1593,6 +1605,13 @@ export class DumbbellPlot {
 
   checkIfSafari() {
     this.url = createUrl();
+  }
+
+  setSubTitleElements() {
+    setSubTitle({
+      root: this.subTitleG,
+      subTitle: this.subTitle
+    });
   }
 
   setColors() {
@@ -1962,6 +1981,7 @@ export class DumbbellPlot {
       .select('.dumbbell-legend')
       .append('svg');
 
+    this.subTitleG = select(this.dumbbellPlotEl).select('.dumbbell-sub-title');
     this.tooltipG = select(this.dumbbellPlotEl).select('.dumbbell-tooltip');
 
     this.labels = this.rootG.append('g').attr('class', 'dumbbell-dataLabel-group');
@@ -3650,7 +3670,8 @@ export class DumbbellPlot {
         this.suppressEvents &&
         this.accessibility.elementsAreInterface === false &&
         this.accessibility.keyboardNavConfig &&
-        this.accessibility.keyboardNavConfig.disabled
+        this.accessibility.keyboardNavConfig.disabled,
+      hideDataTable: this.accessibility.hideDataTableButton
     });
     this.shouldRedrawWrapper = false;
   }
@@ -4032,7 +4053,7 @@ export class DumbbellPlot {
   render() {
     this.drawStartEvent.emit({ chartID: this.chartID });
     // everything between this comment and the third should eventually
-    // be moved into componentWillUpdate (if the stenicl bug is fixed)
+    // be moved into componentWillUpdate (if the Stencil bug is fixed)
     this.init();
     if (this.shouldSetLocalizationConfig) {
       this.setLocalizationConfig();
@@ -4127,7 +4148,7 @@ export class DumbbellPlot {
       this.shouldSetColors = false;
     }
     // Everything between this comment and the first should eventually
-    // be moved into componentWillUpdate (if the stenicl bug is fixed)
+    // be moved into componentWillUpdate (if the Stencil bug is fixed)
 
     return (
       <div class="o-layout">
@@ -4135,9 +4156,10 @@ export class DumbbellPlot {
           <this.topLevel class="dumbbell-main-title vcl-main-title" data-testid="main-title">
             {this.mainTitle}
           </this.topLevel>
-          <this.bottomLevel class="visa-ui-text--instructions dumbbell-sub-title vcl-sub-title" data-testid="sub-title">
-            {this.subTitle}
-          </this.bottomLevel>
+          <this.bottomLevel
+            class="visa-ui-text--instructions dumbbell-sub-title vcl-sub-title"
+            data-testid="sub-title"
+          />
           <div class="dumbbell-legend vcl-legend" style={{ display: this.legend.visible ? 'block' : 'none' }} />
           <keyboard-instructions
             uniqueID={this.chartID}

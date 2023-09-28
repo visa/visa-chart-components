@@ -26,7 +26,8 @@ import {
   IAnimationConfig,
   ILegendType,
   ISeriesLabelType,
-  ISecondaryLinesType
+  ISecondaryLinesType,
+  ISubTitleType
 } from '@visa/charts-types';
 import { LineChartDefaultValues } from './line-chart-default-values';
 import { easeCircleIn } from 'd3-ease';
@@ -90,7 +91,8 @@ const {
   validateAccessibilityProps,
   validateLocalizationProps,
   roundTo,
-  resolveLabelCollision
+  resolveLabelCollision,
+  setSubTitle
 } = Utils;
 
 @Component({
@@ -110,7 +112,7 @@ export class LineChart {
   // Chart Attributes (1/7)
   @Prop({ mutable: true }) localization: ILocalizationType = LineChartDefaultValues.localization;
   @Prop({ mutable: true }) mainTitle: string = LineChartDefaultValues.mainTitle;
-  @Prop({ mutable: true }) subTitle: string = LineChartDefaultValues.subTitle;
+  @Prop({ mutable: true }) subTitle: string | ISubTitleType = LineChartDefaultValues.subTitle;
   @Prop({ mutable: true }) height: number = LineChartDefaultValues.height;
   @Prop({ mutable: true }) width: number = LineChartDefaultValues.width;
   @Prop({ mutable: true }) highestHeadingLevel: string | number = LineChartDefaultValues.highestHeadingLevel;
@@ -197,6 +199,7 @@ export class LineChart {
   duration: number;
   legendG: any;
   tooltipG: any;
+  subTitleG: any;
   labels: any;
   colorArr: any;
   rawColors: any;
@@ -255,6 +258,7 @@ export class LineChart {
   shouldSetSelectionClass: boolean = false;
   shouldUpdateCursor: boolean = false;
   shouldSetColors: boolean = false;
+  shouldSetSubTitle: boolean = false;
   shouldUpdateLines: boolean = false;
   shouldUpdatePoints: boolean = false;
   shouldUpdateLegend: boolean = false;
@@ -406,6 +410,7 @@ export class LineChart {
     this.shouldSetXAxisAccessibility = true;
     this.shouldUpdateDescriptionWrapper = true;
     this.shouldSetAnnotationAccessibility = true;
+    this.shouldSetSubTitle = true;
     this.shouldSetChartAccessibilityTitle = true;
     this.shouldSetChartAccessibilitySubtitle = true;
     this.shouldSetChartAccessibilityLongDescription = true;
@@ -426,6 +431,7 @@ export class LineChart {
 
   @Watch('subTitle')
   subtitleWatcher(_newVal, _oldVal) {
+    this.shouldSetSubTitle = true;
     this.shouldSetChartAccessibilitySubtitle = true;
     this.shouldSetParentSVGAccessibility = true;
   }
@@ -959,6 +965,7 @@ export class LineChart {
     this.shouldUpdateDescriptionWrapper = true;
     this.shouldRedrawWrapper = true;
     this.shouldValidate = true;
+    this.shouldSetSubTitle = true;
     this.shouldSetChartAccessibilityTitle = true;
     this.shouldSetChartAccessibilitySubtitle = true;
     this.shouldSetChartAccessibilityLongDescription = true;
@@ -1016,6 +1023,7 @@ export class LineChart {
       this.renderRootElements();
       this.setTooltipInitialStyle();
       this.setChartDescriptionWrapper();
+
       this.setChartAccessibilityTitle();
       this.setChartAccessibilitySubtitle();
       this.setChartAccessibilityLongDescription();
@@ -1028,6 +1036,7 @@ export class LineChart {
       this.reSetRoot();
       this.drawXGrid();
       this.drawYGrid();
+      this.setSubTitleElements();
       this.setGlobalSelections();
       this.setTestingAttributes();
       this.enterLines();
@@ -1131,6 +1140,10 @@ export class LineChart {
       if (this.shouldSetTestingAttributes) {
         this.setTestingAttributes();
         this.shouldSetTestingAttributes = false;
+      }
+      if (this.shouldSetSubTitle) {
+        this.setSubTitleElements();
+        this.shouldSetSubTitle = false;
       }
       if (this.shouldUpdateXGrid) {
         this.drawXGrid();
@@ -1502,6 +1515,13 @@ export class LineChart {
     }
   }
 
+  setSubTitleElements() {
+    setSubTitle({
+      root: this.subTitleG,
+      subTitle: this.subTitle
+    });
+  }
+
   setColors() {
     this.rawColors = this.colors ? convertVisaColor(this.colors) : getColors(this.colorPalette, this.nest.length);
     this.textColors = {};
@@ -1592,6 +1612,7 @@ export class LineChart {
       .select('.line-legend')
       .append('svg');
 
+    this.subTitleG = select(this.lineChartEl).select('.line-sub-title');
     this.tooltipG = select(this.lineChartEl).select('.line-tooltip');
     this.references = this.rootG.append('g').attr('class', 'line-reference-line-group');
   }
@@ -1857,7 +1878,7 @@ export class LineChart {
 
   drawBaseline() {
     drawAxis({
-      root: this.rootG,
+      root: this.gridG,
       height: this.innerPaddedHeight,
       width: this.innerPaddedWidth,
       axisScale: this.x,
@@ -3590,7 +3611,8 @@ export class LineChart {
         this.suppressEvents &&
         this.accessibility.elementsAreInterface === false &&
         this.accessibility.keyboardNavConfig &&
-        this.accessibility.keyboardNavConfig.disabled
+        this.accessibility.keyboardNavConfig.disabled,
+      hideDataTable: this.accessibility.hideDataTableButton
     });
     this.shouldRedrawWrapper = false;
   }
@@ -3770,7 +3792,7 @@ export class LineChart {
   render() {
     this.drawStartEvent.emit({ chartID: this.chartID });
     // everything between this comment and the third should eventually
-    // be moved into componentWillUpdate (if the stenicl bug is fixed)
+    // be moved into componentWillUpdate (if the Stencil bug is fixed)
     this.init();
     if (this.shouldSetLocalizationConfig) {
       this.setLocalizationConfig();
@@ -3822,15 +3844,13 @@ export class LineChart {
       this.shouldValidateSeriesLabels = false;
     }
     // // Everything between this comment and the first should eventually
-    // // be moved into componentWillUpdate (if the stenicl bug is fixed)
+    // // be moved into componentWillUpdate (if the Stencil bug is fixed)
 
     return (
       <div class="o-layout">
         <div class="o-layout--chart">
           <this.topLevel class="line-main-title vcl-main-title">{this.mainTitle}</this.topLevel>
-          <this.bottomLevel class="visa-ui-text--instructions line-sub-title vcl-sub-title">
-            {this.subTitle}
-          </this.bottomLevel>
+          <this.bottomLevel class="visa-ui-text--instructions line-sub-title vcl-sub-title" />
           <div class="line-legend vcl-legend" style={{ display: this.legend.visible ? 'block' : 'none' }} />
           <keyboard-instructions
             uniqueID={this.chartID}

@@ -11,7 +11,7 @@ const { propDefaultValues } = Utils;
 
 export class PieChartDefaultValues {
   static readonly mainTitle = 'Pie Chart Title';
-  static readonly subTitle = "This is the pie chart's subtitle";
+  static readonly subTitle = propDefaultValues.subTitle.text;
   static readonly centerTitle = '';
   static readonly centerSubTitle = '';
   static readonly height = 325;

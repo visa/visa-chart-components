@@ -16,7 +16,7 @@ import {
 
 import { getGlobalInstances } from './globalInstances';
 
-import { isUndefined, isObject, isEmpty, xor } from './utilFunctions';
+import { isUndefined, isObject, isEmpty, xor, has } from './utilFunctions';
 
 import { drawTooltip, initTooltipStyle, overrideTitleTooltip } from './tooltip';
 
@@ -30,11 +30,13 @@ import { checkInteraction, checkClicked, checkHovered, interactionStyle, buildSt
 
 import { drawAxis, wrap, halve } from './axis';
 
-import { getBrowser, getOS } from './browser-util';
+import { getBrowser } from './browser-util';
 
 import { drawGrid } from './grid';
 
 import { drawLegend, setLegendInteractionState } from './legend';
+
+import { setSubTitle } from './subTitle';
 
 import { getLicenses } from './license';
 
@@ -162,6 +164,8 @@ export {
   isObject,
   isEmpty,
   xor,
+  has,
+  setSubTitle,
   getGlobalInstances,
   registerI18NextLanguage,
   changeI18NextLanguage,
@@ -173,7 +177,6 @@ export {
   checkAttributeTransitions,
   createTextStrokeFilter,
   getBrowser,
-  getOS,
   findTagLevel,
   createUrl,
   createMultiStrokeFilter,

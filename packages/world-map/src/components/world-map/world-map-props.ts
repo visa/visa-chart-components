@@ -28,11 +28,11 @@ export interface IWorldMapProps {
   mainTitle: string;
 
   /**
-   * @shortDescription Subtitle of the chart
+   * @shortDescription Subtitle of the chart. A string or an array of objects. Objects should contain text (one/multiple word(s)/number(s) as a single string) and color (HEX) keys. Optional key: index.
    * @controlName TextField
    * @groupName Base
    * @sortOrder 2 */
-  subTitle: string;
+  subTitle: string | ISubTitleType;
 
   /**
    * @shortDescription Height of the chart area in pixels
@@ -435,4 +435,9 @@ export interface IAnimationConfig {
 }
 export interface IKeyConfig {
   disabled?: boolean;
+}
+
+export interface ISubTitleType {
+  text?: string;
+  keywordsHighlight?: object[];
 }

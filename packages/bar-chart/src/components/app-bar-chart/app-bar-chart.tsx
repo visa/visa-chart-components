@@ -351,6 +351,10 @@ export class AppBarChart {
           subTitle={
             'Shows patterns, multi-strokes, annotations, sub-grouping (+ keyboard nav), special screen reader note on a geometry (Indonesia), dynamic (changing) data, automatic label hiding (Japan), and "interactive" element feedback.'
           }
+          // subTitle={{
+          //   text: 'This is a subtitle this?',
+          //   keywordsHighlight: [{ text: 'this', color: '#FF4F00', index: 1 }]
+          // }}
           yAxis={this.yAxis}
           xAxis={this.xAxis}
           // padding={{
@@ -385,6 +389,7 @@ export class AppBarChart {
           // onTransitionEndEvent={e => console.log('transition event', e.detail, e)}
           highestHeadingLevel={3}
           accessibility={{
+            hideDataTableButton: false,
             elementDescriptionAccessor: 'note',
             longDescription:
               'This is a bar chart that shows spending (in millions) on Card A card purchases in select segments, across the top ten countries.',

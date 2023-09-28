@@ -27,7 +27,8 @@ import {
   IHoverStyleType,
   ITooltipLabelType,
   IAnimationConfig,
-  IAccessibilityType
+  IAccessibilityType,
+  ISubTitleType
 } from '@visa/charts-types';
 import { WorldMapDefaultValues } from './world-map-default-values';
 import { v4 as uuid } from 'uuid';
@@ -87,7 +88,8 @@ const {
   transitionEndAll,
   visaColors,
   validateAccessibilityProps,
-  validateLocalizationProps
+  validateLocalizationProps,
+  setSubTitle
 } = Utils;
 @Component({
   tag: 'world-map',
@@ -106,7 +108,7 @@ export class WorldMap {
   @Prop({ mutable: true }) height: number = WorldMapDefaultValues.height;
   @Prop({ mutable: true }) width: number = WorldMapDefaultValues.width;
   @Prop({ mutable: true }) mainTitle: string = WorldMapDefaultValues.mainTitle;
-  @Prop({ mutable: true }) subTitle: string = WorldMapDefaultValues.subTitle;
+  @Prop({ mutable: true }) subTitle: string | ISubTitleType = WorldMapDefaultValues.subTitle;
   @Prop({ mutable: true }) margin: IBoxModelType = WorldMapDefaultValues.margin;
   @Prop({ mutable: true }) padding: IBoxModelType = WorldMapDefaultValues.padding;
 
@@ -221,6 +223,7 @@ export class WorldMap {
   legendData: any;
   legendG: any;
   tooltipG: any;
+  subTitleG: any;
   previousQuality: string;
   tableData: any;
   tableColumns: any;
@@ -268,6 +271,7 @@ export class WorldMap {
   shouldValidateInteractionKeys: boolean = false;
   shouldValidateMarkerAccessor: boolean = false;
   shouldSetColors: boolean = false;
+  shouldSetSubTitle: boolean = false;
   shouldUpdateDescriptionWrapper: boolean = false;
   shouldSetChartAccessibilityTitle: boolean = false;
   shouldSetChartAccessibilitySubtitle: boolean = false;
@@ -420,6 +424,7 @@ export class WorldMap {
     this.shouldSetTagLevels = true;
     this.shouldSetChartAccessibilityCount = true;
     this.shouldUpdateDescriptionWrapper = true;
+    this.shouldSetSubTitle = true;
     this.shouldSetChartAccessibilityTitle = true;
     this.shouldSetChartAccessibilitySubtitle = true;
     this.shouldSetChartAccessibilityLongDescription = true;
@@ -441,6 +446,7 @@ export class WorldMap {
 
   @Watch('subTitle')
   subtitleWatcher(_newVal, _oldVal) {
+    this.shouldSetSubTitle = true;
     this.shouldSetChartAccessibilitySubtitle = true;
     this.shouldSetParentSVGAccessibility = true;
   }
@@ -784,6 +790,7 @@ export class WorldMap {
     this.shouldUpdateDescriptionWrapper = true;
     this.shouldRedrawWrapper = true;
     this.shouldValidate = true;
+    this.shouldSetSubTitle = true;
     this.shouldSetChartAccessibilityTitle = true;
     this.shouldSetChartAccessibilitySubtitle = true;
     this.shouldSetChartAccessibilityLongDescription = true;
@@ -836,6 +843,7 @@ export class WorldMap {
       this.renderRootElements();
       this.reSetRoot();
       this.setTextures();
+
       this.setTooltipInitialStyle();
       this.setChartDescriptionWrapper();
       this.setChartAccessibilityTitle();
@@ -865,6 +873,7 @@ export class WorldMap {
       this.setMarkerSelectedClass();
       this.drawAnnotations();
       this.setAnnotationAccessibility();
+      this.setSubTitleElements();
       // we want to hide all child <g> of this.root BUT we want to make sure not to hide the
       // parent<g> that contains our geometries! In a subGroup chart (like stacked bars),
       // we want to pass the PARENT of all the <g>s that contain bars
@@ -948,6 +957,10 @@ export class WorldMap {
       if (this.shouldSetTestingAttributes) {
         this.setTestingAttributes();
         this.shouldSetTestingAttributes = false;
+      }
+      if (this.shouldSetSubTitle) {
+        this.setSubTitleElements();
+        this.shouldSetSubTitle = false;
       }
       if (this.shouldUpdateLabelStyle) {
         this.updateLabelStyle();
@@ -1289,6 +1302,13 @@ export class WorldMap {
 
   setLocalizationConfig() {
     configLocalization(this.localization);
+  }
+
+  setSubTitleElements() {
+    setSubTitle({
+      root: this.subTitleG,
+      subTitle: this.subTitle
+    });
   }
 
   setColors() {
@@ -1688,6 +1708,7 @@ export class WorldMap {
       .select('.world-map-legend')
       .append('svg');
 
+    this.subTitleG = select(this.worldMapEl).select('.world-map-sub-title');
     this.tooltipG = select(this.worldMapEl).select('.world-map-tooltip');
   }
 
@@ -2643,7 +2664,8 @@ export class WorldMap {
         this.suppressEvents &&
         this.accessibility.elementsAreInterface === false &&
         this.accessibility.keyboardNavConfig &&
-        this.accessibility.keyboardNavConfig.disabled
+        this.accessibility.keyboardNavConfig.disabled,
+      hideDataTable: this.accessibility.hideDataTableButton
     });
     this.shouldRedrawWrapper = false;
   }
@@ -2839,7 +2861,7 @@ export class WorldMap {
     const theme = 'light';
 
     // everything between this comment and the third should eventually
-    // be moved into componentWillUpdate (if the stenicl bug is fixed)
+    // be moved into componentWillUpdate (if the Stencil bug is fixed)
     this.init();
     if (this.shouldSetLocalizationConfig) {
       this.setLocalizationConfig();
@@ -2908,15 +2930,13 @@ export class WorldMap {
       this.shouldValidate = false;
     }
     // Everything between this comment and the first should eventually
-    // be moved into componentWillUpdate (if the stenicl bug is fixed)
+    // be moved into componentWillUpdate (if the Stencil bug is fixed)
 
     return (
       <div class={`o-layout ${theme}`}>
         <div class="o-layout--chart">
           <this.topLevel class="world-map-main-title vcl-main-title">{this.mainTitle}</this.topLevel>
-          <this.bottomLevel class="visa-ui-text--instructions world-map-sub-title vcl-sub-title">
-            {this.subTitle}
-          </this.bottomLevel>
+          <this.bottomLevel class="visa-ui-text--instructions world-map-sub-title vcl-sub-title" />
           <div class="world-map-legend vcl-legend" style={{ display: this.legend.visible ? 'block' : 'none' }} />
           <keyboard-instructions
             uniqueID={this.chartID}

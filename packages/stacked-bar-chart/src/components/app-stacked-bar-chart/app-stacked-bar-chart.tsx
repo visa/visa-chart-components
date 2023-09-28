@@ -2645,6 +2645,7 @@ export class AppStackedBarChart {
       const props = {
         mainTitle: palette,
         subTitle: '',
+
         height: 400,
         width: 100,
         layout: 'vertical',
@@ -2913,6 +2914,14 @@ export class AppStackedBarChart {
           dataKeyNames={this.dataKeyNames}
           mainTitle={'Stacked Bar Chart'}
           subTitle={'test subtitle'}
+          // subTitle={{
+          //   text:'When was transaction is dummy count below market dummy average?',
+          //   keywordsHighlight: [
+          //     { text: "transaction is dummy", color:'#FF4F00'},
+          //     { text: "dummy", color: '#efefef'},
+          //     {text: "average", color: '#323232'},
+          //   ]
+          // }}
           height={500}
           width={1000}
           layout={this.layout}

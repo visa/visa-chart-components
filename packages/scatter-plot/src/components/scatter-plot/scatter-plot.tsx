@@ -26,7 +26,8 @@ import {
   ITooltipLabelType,
   IAccessibilityType,
   IAnimationConfig,
-  ILegendType
+  ILegendType,
+  ISubTitleType
 } from '@visa/charts-types';
 import { ScatterPlotDefaultValues } from './scatter-plot-default-values';
 import Utils from '@visa/visa-charts-utils';
@@ -89,7 +90,8 @@ const {
   findTagLevel,
   prepareRenderChange,
   roundTo,
-  resolveLabelCollision
+  resolveLabelCollision,
+  setSubTitle
 } = Utils;
 
 @Component({
@@ -109,7 +111,7 @@ export class ScatterPlot {
   // Chart Attributes (1/7)
   @Prop({ mutable: true }) localization: ILocalizationType = ScatterPlotDefaultValues.localization;
   @Prop({ mutable: true }) mainTitle: string = ScatterPlotDefaultValues.mainTitle;
-  @Prop({ mutable: true }) subTitle: string = ScatterPlotDefaultValues.subTitle;
+  @Prop({ mutable: true }) subTitle: string | ISubTitleType = ScatterPlotDefaultValues.subTitle;
   @Prop({ mutable: true }) height: number = ScatterPlotDefaultValues.height;
   @Prop({ mutable: true }) width: number = ScatterPlotDefaultValues.width;
   @Prop({ mutable: true }) margin: IBoxModelType = ScatterPlotDefaultValues.margin;
@@ -222,6 +224,7 @@ export class ScatterPlot {
   duration: any;
   labels: any;
   labelG: any;
+  subTitleG: any;
   tableData: any;
   tableColumns: any;
   // these are added for accessibility
@@ -239,6 +242,7 @@ export class ScatterPlot {
   shouldResetRoot: boolean = false;
   shouldUpdateTableData: boolean = false;
   shouldSetColors: boolean = false;
+  shouldSetSubTitle: boolean = false;
   shouldUpdateData: boolean = false;
   shouldUpdateScales: boolean = false;
   shouldValidate: boolean = false;
@@ -361,6 +365,7 @@ export class ScatterPlot {
     this.shouldSetXAxisAccessibility = true;
     this.shouldSetAnnotationAccessibility = true;
     this.shouldUpdateDescriptionWrapper = true;
+    this.shouldSetSubTitle = true;
     this.shouldSetChartAccessibilityTitle = true;
     this.shouldSetChartAccessibilitySubtitle = true;
     this.shouldSetChartAccessibilityLongDescription = true;
@@ -381,6 +386,7 @@ export class ScatterPlot {
 
   @Watch('subTitle')
   subtitleWatcher(_newVal, _oldVal) {
+    this.shouldSetSubTitle = true;
     this.shouldSetChartAccessibilitySubtitle = true;
     this.shouldSetParentSVGAccessibility = true;
   }
@@ -649,6 +655,7 @@ export class ScatterPlot {
     this.shouldUpdateDescriptionWrapper = true;
     this.shouldRedrawWrapper = true;
     this.shouldValidate = true;
+    this.shouldSetSubTitle = true;
     this.shouldSetChartAccessibilityTitle = true;
     this.shouldSetChartAccessibilitySubtitle = true;
     this.shouldSetChartAccessibilityLongDescription = true;
@@ -928,6 +935,7 @@ export class ScatterPlot {
       this.setParentSVGAccessibility();
       this.reSetRoot();
       this.setStrokes();
+      this.setSubTitleElements();
       this.drawXGrid();
       this.drawYGrid();
       this.setGlobalSelections();
@@ -1034,6 +1042,10 @@ export class ScatterPlot {
       if (this.shouldSetTestingAttributes) {
         this.setTestingAttributes();
         this.shouldSetTestingAttributes = false;
+      }
+      if (this.shouldSetSubTitle) {
+        this.setSubTitleElements();
+        this.shouldSetSubTitle = false;
       }
       if (this.shouldUpdateXGrid) {
         this.drawXGrid();
@@ -1265,6 +1277,13 @@ export class ScatterPlot {
           .key(d => d[this.groupAccessor])
           .entries(this.data)
       : [{ key: '', values: this.data }];
+  }
+
+  setSubTitleElements() {
+    setSubTitle({
+      root: this.subTitleG,
+      subTitle: this.subTitle
+    });
   }
 
   setColors = () => {
@@ -1571,6 +1590,7 @@ export class ScatterPlot {
     this.legendG = select(this.scatterChartEl)
       .select('.scatter-legend')
       .append('svg');
+    this.subTitleG = select(this.scatterChartEl).select('.scatter-sub-title');
     this.tooltipG = select(this.scatterChartEl).select('.scatter-tooltip');
     this.references = this.rootG.append('g').attr('class', 'scatter-reference-line-group');
   }
@@ -2619,7 +2639,8 @@ export class ScatterPlot {
         this.suppressEvents &&
         this.accessibility.elementsAreInterface === false &&
         this.accessibility.keyboardNavConfig &&
-        this.accessibility.keyboardNavConfig.disabled
+        this.accessibility.keyboardNavConfig.disabled,
+      hideDataTable: this.accessibility.hideDataTableButton
     });
     this.shouldRedrawWrapper = false;
   }
@@ -2831,7 +2852,7 @@ export class ScatterPlot {
   render() {
     this.drawStartEvent.emit({ chartID: this.chartID });
     // everything between this comment and the third should eventually
-    // be moved into componentWillUpdate (if the stenicl bug is fixed)
+    // be moved into componentWillUpdate (if the Stencil bug is fixed)
     this.init();
     if (this.shouldSetLocalizationConfig) {
       this.setLocalizationConfig();
@@ -2883,15 +2904,13 @@ export class ScatterPlot {
       this.shouldValidate = false;
     }
     // Everything between this comment and the first should eventually
-    // be moved into componentWillUpdate (if the stenicl bug is fixed)
+    // be moved into componentWillUpdate (if the Stencil bug is fixed)
 
     return (
       <div class="o-layout">
         <div class="o-layout--chart">
           <this.topLevel class="scatter-main-title vcl-main-title">{this.mainTitle}</this.topLevel>
-          <this.bottomLevel class="visa-ui-text--instructions scatter-sub-title vcl-sub-title">
-            {this.subTitle}
-          </this.bottomLevel>
+          <this.bottomLevel class="visa-ui-text--instructions scatter-sub-title vcl-sub-title" />
           <div class="scatter-legend vcl-legend" style={{ display: this.legend.visible ? 'block' : 'none' }} />
           <keyboard-instructions
             uniqueID={this.chartID}

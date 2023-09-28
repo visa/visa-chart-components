@@ -21,7 +21,8 @@ import {
   ITooltipLabelType,
   IAccessibilityType,
   IAnimationConfig,
-  ILegendType
+  ILegendType,
+  ISubTitleType
 } from '@visa/charts-types';
 import { HeatMapDefaultValues } from './heat-map-default-values';
 import 'd3-transition';
@@ -87,7 +88,8 @@ const {
   scopeDataKeys,
   transitionEndAll,
   validateAccessibilityProps,
-  validateLocalizationProps
+  validateLocalizationProps,
+  setSubTitle
 } = Utils;
 
 @Component({
@@ -107,7 +109,7 @@ export class HeatMap {
   // Chart Attributes (1/7)
   @Prop({ mutable: true }) localization: ILocalizationType = HeatMapDefaultValues.localization;
   @Prop({ mutable: true }) mainTitle: string = HeatMapDefaultValues.mainTitle;
-  @Prop({ mutable: true }) subTitle: string = HeatMapDefaultValues.subTitle;
+  @Prop({ mutable: true }) subTitle: string | ISubTitleType = HeatMapDefaultValues.subTitle;
   @Prop({ mutable: true }) height: number = HeatMapDefaultValues.height;
   @Prop({ mutable: true }) width: number = HeatMapDefaultValues.width;
   @Prop({ mutable: true }) highestHeadingLevel: string | number = HeatMapDefaultValues.highestHeadingLevel;
@@ -173,6 +175,7 @@ export class HeatMap {
   root: any;
   rootG: any;
   tooltipG: any;
+  subTitleG: any;
   map: any;
   row: any;
   labelG: any;
@@ -226,6 +229,7 @@ export class HeatMap {
   shouldUpdateScales: boolean = false;
   shouldResetRoot: boolean = false;
   shouldSetColors: boolean = false;
+  shouldSetSubTitle: boolean = false;
   shouldValidateInteractionKeys: boolean = false;
   shouldFormatClickHighlight: boolean = false;
   shouldFormatHoverHighlight: boolean = false;
@@ -327,6 +331,7 @@ export class HeatMap {
     this.shouldSetXAxisAccessibility = true;
     this.shouldUpdateDescriptionWrapper = true;
     this.shouldSetAnnotationAccessibility = true;
+    this.shouldSetSubTitle = true;
     this.shouldSetChartAccessibilityTitle = true;
     this.shouldSetChartAccessibilitySubtitle = true;
     this.shouldSetChartAccessibilityLongDescription = true;
@@ -347,6 +352,7 @@ export class HeatMap {
 
   @Watch('subTitle')
   subtitleWatcher(_newVal, _oldVal) {
+    this.shouldSetSubTitle = true;
     this.shouldSetChartAccessibilitySubtitle = true;
     this.shouldSetParentSVGAccessibility = true;
   }
@@ -635,6 +641,7 @@ export class HeatMap {
     this.shouldUpdateDescriptionWrapper = true;
     this.shouldRedrawWrapper = true;
     this.shouldValidate = true;
+    this.shouldSetSubTitle = true;
     this.shouldSetChartAccessibilityTitle = true;
     this.shouldSetChartAccessibilitySubtitle = true;
     this.shouldSetChartAccessibilityLongDescription = true;
@@ -903,6 +910,7 @@ export class HeatMap {
       this.reSetRoot();
       this.setTextures();
       this.setStrokes();
+      this.setSubTitleElements();
       this.setGlobalSelections();
       this.setTestingAttributes();
       this.enterGeometries();
@@ -1003,6 +1011,10 @@ export class HeatMap {
       if (this.shouldSetTestingAttributes) {
         this.setTestingAttributes();
         this.shouldSetTestingAttributes = false;
+      }
+      if (this.shouldSetSubTitle) {
+        this.setSubTitleElements();
+        this.shouldSetSubTitle = false;
       }
       if (this.shouldEnterUpdateExit) {
         this.enterGeometries();
@@ -1290,6 +1302,13 @@ export class HeatMap {
     this.updateCheck = true;
   }
 
+  setSubTitleElements() {
+    setSubTitle({
+      root: this.subTitleG,
+      subTitle: this.subTitle
+    });
+  }
+
   setColors() {
     this.preparedColors = this.colors ? convertVisaColor(this.colors) : getColors(this.colorPalette, this.colorSteps);
   }
@@ -1522,7 +1541,7 @@ export class HeatMap {
     this.legendG = select(this.heatMapEl)
       .select('.heat-map-legend')
       .append('svg');
-
+    this.subTitleG = select(this.heatMapEl).select('.heat-sub-title');
     this.tooltipG = select(this.heatMapEl).select('.heat-map-tooltip');
   }
 
@@ -2229,7 +2248,8 @@ export class HeatMap {
         this.suppressEvents &&
         this.accessibility.elementsAreInterface === false &&
         this.accessibility.keyboardNavConfig &&
-        this.accessibility.keyboardNavConfig.disabled
+        this.accessibility.keyboardNavConfig.disabled,
+      hideDataTable: this.accessibility.hideDataTableButton
     });
     this.shouldRedrawWrapper = false;
   }
@@ -2407,7 +2427,7 @@ export class HeatMap {
   render() {
     this.drawStartEvent.emit({ chartID: this.chartID });
     // everything between this comment and the third should eventually
-    // be moved into componentWillUpdate (if the stenicl bug is fixed)
+    // be moved into componentWillUpdate (if the Stencil bug is fixed)
     this.init();
     if (this.shouldSetLocalizationConfig) {
       this.setLocalizationConfig();
@@ -2455,15 +2475,13 @@ export class HeatMap {
       this.shouldValidate = false;
     }
     // Everything between this comment and the first should eventually
-    // be moved into componentWillUpdate (if the stenicl bug is fixed)
+    // be moved into componentWillUpdate (if the Stencil bug is fixed)
 
     return (
       <div class={`o-layout`}>
         <div class="o-layout--chart">
           <this.topLevel class="heat-main-title vcl-main-title">{this.mainTitle}</this.topLevel>
-          <this.bottomLevel class="visa-ui-text--instructions heat-sub-title vcl-sub-title">
-            {this.subTitle}
-          </this.bottomLevel>
+          <this.bottomLevel class="visa-ui-text--instructions heat-sub-title vcl-sub-title" />
           <div class="heat-map-legend vcl-legend" style={{ display: this.legend.visible ? 'block' : 'none' }} />
           <keyboard-instructions
             uniqueID={this.chartID}

@@ -430,6 +430,14 @@ export class AppClusteredBarChart {
           // }}
           mainTitle={'Bar Chart in app '}
           subTitle={'example'}
+          // subTitle={{
+          //   text: 'When was transaction is dummy count below market dummy average?',
+          //   keywordsHighlight: [
+          //     { text: 'transaction is dummy', color: '#FF4F00' },
+          //     { text: 'dummy', color: '#efefef', index: 2 },
+          //     { text: 'average', color: '#323232' }
+          //   ]
+          // }}
           height={600}
           width={800}
           animationConfig={this.animations}

@@ -26,7 +26,8 @@ import {
   IAnimationConfig,
   ILegendType,
   ISeriesLabelType,
-  ISecondaryLinesType
+  ISecondaryLinesType,
+  ISubTitleType
 } from '@visa/charts-types';
 import { ParallelPlotDefaultValues } from './parallel-plot-default-values';
 import { easeCircleIn } from 'd3-ease';
@@ -91,7 +92,8 @@ const {
   validateLocalizationProps,
   roundTo,
   getTextWidth,
-  resolveLabelCollision
+  resolveLabelCollision,
+  setSubTitle
 } = Utils;
 
 @Component({
@@ -110,7 +112,7 @@ export class ParallelPlot {
 
   // Chart Attributes (1/7)
   @Prop({ mutable: true }) mainTitle: string = ParallelPlotDefaultValues.mainTitle;
-  @Prop({ mutable: true }) subTitle: string = ParallelPlotDefaultValues.subTitle;
+  @Prop({ mutable: true }) subTitle: string | ISubTitleType = ParallelPlotDefaultValues.subTitle;
   @Prop({ mutable: true }) height: number = ParallelPlotDefaultValues.height;
   @Prop({ mutable: true }) width: number = ParallelPlotDefaultValues.width;
   @Prop({ mutable: true }) highestHeadingLevel: string | number = ParallelPlotDefaultValues.highestHeadingLevel;
@@ -202,6 +204,7 @@ export class ParallelPlot {
   duration: number;
   legendG: any;
   tooltipG: any;
+  subTitleG: any;
   labels: any;
   colorArr: any;
   rawColors: any;
@@ -261,6 +264,7 @@ export class ParallelPlot {
   shouldSetSelectionClass: boolean = false;
   shouldUpdateCursor: boolean = false;
   shouldSetColors: boolean = false;
+  shouldSetSubTitle: boolean = false;
   shouldUpdateLines: boolean = false;
   shouldUpdatePoints: boolean = false;
   shouldUpdateLegend: boolean = false;
@@ -413,6 +417,7 @@ export class ParallelPlot {
     this.shouldSetXAxisAccessibility = true;
     this.shouldUpdateDescriptionWrapper = true;
     this.shouldSetAnnotationAccessibility = true;
+    this.shouldSetSubTitle = true;
     this.shouldSetChartAccessibilityTitle = true;
     this.shouldSetChartAccessibilitySubtitle = true;
     this.shouldSetChartAccessibilityLongDescription = true;
@@ -433,6 +438,7 @@ export class ParallelPlot {
 
   @Watch('subTitle')
   subtitleWatcher(_newVal, _oldVal) {
+    this.shouldSetSubTitle = true;
     this.shouldSetChartAccessibilitySubtitle = true;
     this.shouldSetParentSVGAccessibility = true;
   }
@@ -972,6 +978,7 @@ export class ParallelPlot {
     this.shouldUpdateDescriptionWrapper = true;
     this.shouldRedrawWrapper = true;
     this.shouldValidate = true;
+    this.shouldSetSubTitle = true;
     this.shouldSetChartAccessibilityTitle = true;
     this.shouldSetChartAccessibilitySubtitle = true;
     this.shouldSetChartAccessibilityLongDescription = true;
@@ -1040,6 +1047,7 @@ export class ParallelPlot {
       this.setChartAccessibilityStructureNotes();
       this.setParentSVGAccessibility();
       this.reSetRoot();
+      this.setSubTitleElements();
       this.drawXGrid();
       this.drawYGrid();
       this.setGlobalSelections();
@@ -1157,6 +1165,10 @@ export class ParallelPlot {
       if (this.shouldSetTestingAttributes) {
         this.setTestingAttributes();
         this.shouldSetTestingAttributes = false;
+      }
+      if (this.shouldSetSubTitle) {
+        this.setSubTitleElements();
+        this.shouldSetSubTitle = false;
       }
       if (this.shouldEnterUpdateExit) {
         this.enterYAxis();
@@ -1353,6 +1365,13 @@ export class ParallelPlot {
 
   setLocalizationConfig() {
     configLocalization(this.localization);
+  }
+
+  setSubTitleElements() {
+    setSubTitle({
+      root: this.subTitleG,
+      subTitle: this.subTitle
+    });
   }
 
   setColors() {
@@ -1605,6 +1624,7 @@ export class ParallelPlot {
       .select('.parallel-legend')
       .append('svg');
 
+    this.subTitleG = select(this.parallelChartEl).select('.parallel-sub-title');
     this.tooltipG = select(this.parallelChartEl).select('.parallel-tooltip');
 
     this.setTooltipInitialStyle();
@@ -1925,7 +1945,7 @@ export class ParallelPlot {
 
   drawBaseline() {
     drawAxis({
-      root: this.rootG,
+      root: this.gridG,
       height: this.innerPaddedHeight,
       width: this.innerPaddedWidth,
       axisScale: this.x,
@@ -3667,7 +3687,8 @@ export class ParallelPlot {
         this.suppressEvents &&
         this.accessibility.elementsAreInterface === false &&
         this.accessibility.keyboardNavConfig &&
-        this.accessibility.keyboardNavConfig.disabled
+        this.accessibility.keyboardNavConfig.disabled,
+      hideDataTable: this.accessibility.hideDataTableButton
     });
     this.shouldRedrawWrapper = false;
   }
@@ -3917,7 +3938,7 @@ export class ParallelPlot {
   render() {
     this.drawStartEvent.emit({ chartID: this.chartID });
     // everything between this comment and the third should eventually
-    // be moved into componentWillUpdate (if the stenicl bug is fixed)
+    // be moved into componentWillUpdate (if the Stencil bug is fixed)
     this.init();
     if (this.shouldSetLocalizationConfig) {
       this.setLocalizationConfig();
@@ -3973,15 +3994,13 @@ export class ParallelPlot {
       this.shouldValidateSeriesLabels = false;
     }
     // // Everything between this comment and the first should eventually
-    // // be moved into componentWillUpdate (if the stenicl bug is fixed)
+    // // be moved into componentWillUpdate (if the Stencil bug is fixed)
 
     return (
       <div class="o-layout">
         <div class="o-layout--chart">
           <this.topLevel class="parallel-main-title vcl-main-title">{this.mainTitle}</this.topLevel>
-          <this.bottomLevel class="visa-ui-text--instructions parallel-sub-title vcl-sub-title">
-            {this.subTitle}
-          </this.bottomLevel>
+          <this.bottomLevel class="visa-ui-text--instructions parallel-sub-title vcl-sub-title" />
           <div class="parallel-legend vcl-legend" style={{ display: this.legend.visible ? 'block' : 'none' }} />
           <keyboard-instructions
             uniqueID={this.chartID}
