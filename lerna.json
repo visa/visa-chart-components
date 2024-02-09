@@ -7,7 +7,7 @@
     "version": {
       "message": "chore(release): publish",
       "ignoreChanges": ["*.md", "*.txt"],
-      "allowBranch": ["master", "main", "development", "release-7-2-0"]
+      "allowBranch": ["master", "main", "development", "release-7-2-1"]
     },
     "publish": {
       "conventionalCommits": true
