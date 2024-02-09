@@ -22,7 +22,9 @@ const tsFileExclusions = [
   '/**/__snapshots__/**', // auto-generated testing snapshots
   '/**/node_modules/**', // ensure node modules is not included
   '/**/charts-angular/src/directives/**', // auto-generated angular directives/components
-  '/**/charts-react/src/components/**' // auto-generated react components and utilities
+  '/**/charts-react/src/components/**', // auto-generated react components and utilities
+  '/**/charts-vue/lib/vue-component-lib/**', // auto-generated vue components and utilities
+  '/**/charts-vue/lib/components.ts' // auto-generated vue components and utilities
 ];
 
 const licenseFileExclusions = [
@@ -88,6 +90,7 @@ const tsFiles = [
   ...glob.sync(path.join(__dirname, '..', 'packages/*/src') + '/**/*.*ss', {}), // all scss files in package/src directories
   ...glob.sync(path.join(__dirname, '..', 'packages/charts-R/inst/htmlwidgets') + '/**/*.js', {}), // @visa/charts compiled code in charts-R
   ...glob.sync(path.join(__dirname, '..', 'packages/charts-python/js') + '/**/*.js', { ignore: tsFileExclusions }),
+  ...glob.sync(path.join(__dirname, '..', 'packages/charts-vue/lib') + '/**/*.js', { ignore: tsFileExclusions }),
   ...glob.sync(path.join(__dirname, '..', 'scripts') + '/*.js', {}), // all node scripts in the root
   ...glob.sync(path.join(__dirname, '..') + '/*.js', {}), // all js config files in the root
   ...glob.sync(path.join(__dirname, '..', '.storybook') + '/**/*.js', { ignore: tsFileExclusions }) // all storybook js files
