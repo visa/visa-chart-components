@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.1](https://github.com/visa/visa-chart-components/compare/@visa/charts-react@4.1.0...@visa/charts-react@4.1.1) (2023-09-28)
+
+### Bug Fixes
+
+- charts-react package updates ([84ba86e](https://github.com/visa/visa-chart-components/commit/84ba86e235847bcf2888320ff7224800eae0b923))
+
 # [4.1.0](https://github.com/visa/visa-chart-components/compare/@visa/charts-react@4.0.0...@visa/charts-react@4.1.0) (2023-06-16)
 
 ### Features

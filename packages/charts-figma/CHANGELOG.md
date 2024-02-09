@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.1](https://github.com/visa/visa-chart-components/compare/@visa/charts-figma@2.1.0...@visa/charts-figma@2.1.1) (2023-09-28)
+
+### Bug Fixes
+
+- charts-figma package updates ([c4c8130](https://github.com/visa/visa-chart-components/commit/c4c8130ed17c85709c84abd6be61d3145561107a))
+
 # [2.1.0](https://github.com/visa/visa-chart-components/compare/@visa/charts-figma@2.0.0...@visa/charts-figma@2.1.0) (2023-06-16)
 
 ### Features

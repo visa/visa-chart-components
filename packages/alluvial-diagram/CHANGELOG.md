@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.1](https://github.com/visa/visa-chart-components/compare/@visa/alluvial-diagram@3.1.0...@visa/alluvial-diagram@3.1.1) (2023-09-28)
+
+### Bug Fixes
+
+- alluvial-diagram updates ([19561da](https://github.com/visa/visa-chart-components/commit/19561da66498c086fb88a542d77c52bf712a52aa))
+
 # [3.1.0](https://github.com/visa/visa-chart-components/compare/@visa/alluvial-diagram@3.0.0...@visa/alluvial-diagram@3.1.0) (2023-06-16)
 
 ### Features
