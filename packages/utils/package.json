@@ -1,6 +1,6 @@
 {
   "name": "@visa/visa-charts-utils",
-  "version": "5.2.0",
+  "version": "5.2.1",
   "description": "Utilities for charts lib",
   "main": "dist/visa-charts-utils.cjs.js",
   "module": "dist/visa-charts-utils.esm.js",
