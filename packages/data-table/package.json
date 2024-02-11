@@ -1,6 +1,6 @@
 {
   "name": "@visa/visa-charts-data-table",
-  "version": "2.4.1",
+  "version": "2.4.2",
   "description": "simple data table component for chart data",
   "license": "SEE LICENCE IN LICENSE",
   "module": "dist/index.js",
@@ -34,12 +34,12 @@
     "access": "public"
   },
   "dependencies": {
-    "@visa/charts-types": "^0.6.1",
-    "@visa/visa-charts-utils": "^5.2.0",
+    "@visa/charts-types": "^0.6.2",
+    "@visa/visa-charts-utils": "^5.2.1",
     "d3-selection": "^1.4.2"
   },
   "devDependencies": {
-    "@visa/visa-charts-utils-dev": "^4.1.1"
+    "@visa/visa-charts-utils-dev": "^4.1.2"
   },
   "resolutions": {
     "d3-color": "^3.1.0"

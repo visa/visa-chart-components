@@ -1,8 +1,9 @@
 {
   "name": "@visa/charts-vue",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A vue wrapper built with Stencil's bindings for the visa-charts-lib stencil.js based component library. ",
   "license": "SEE LICENCE IN LICENSE",
+  "author": "Visa Data Experience Team",
   "sideEffects": false,
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -16,13 +17,12 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/visa/visa-chart-components.git",
-    "directory": "/packages/charts-react"
+    "directory": "/packages/charts-vue"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public"
   },
-  "author": "Visa Data Experience Team",
   "scripts": {
     "audit": "yarn audit --json --level low > yarn-audit.json",
     "yarn-install": "yarn",
@@ -33,8 +33,8 @@
     "test:es5-check": "es-check es5 'dist/*.js'"
   },
   "dependencies": {
-    "@visa/charts": "^7.2.0",
-    "@visa/charts-types": "^0.6.1"
+    "@visa/charts": "^7.2.1",
+    "@visa/charts-types": "^0.6.2"
   },
   "devDependencies": {
     "@types/node": "18.11.19",

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.2.1](https://github.com/visa/visa-chart-components/compare/@visa/visa-charts-utils@5.2.0...@visa/visa-charts-utils@5.2.1) (2024-02-09)
+
+### Bug Fixes
+
+- package bump for redeploy ([b61f009](https://github.com/visa/visa-chart-components/commit/b61f00995e90cb013aec09c3e4c89ce40f23b6fd))
+
 # [5.2.0](https://github.com/visa/visa-chart-components/compare/@visa/visa-charts-utils@5.1.0...@visa/visa-charts-utils@5.2.0) (2023-09-28)
 
 ### Features
