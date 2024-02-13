@@ -2,41 +2,41 @@
 # yarn lockfile v1
 
 
-"@babel/runtime@^7.20.6", "@babel/runtime@^7.9.6":
-  version "7.23.1"
-  resolved "https://registry.npmjs.org/@babel/runtime/-/runtime-7.23.1.tgz#72741dc4d413338a91dcb044a86f3c0bc402646d"
-  integrity sha512-hC2v6p8ZSI/W0HUzh3V8C5g+NwSKzKPtJwSpTjwl0o297GP9+ZLQSkdvHz46CM3LqyoXxq+5G9komY+eSqSO0g==
+"@babel/runtime@^7.10.5", "@babel/runtime@^7.22.5":
+  version "7.23.9"
+  resolved "https://registry.npmjs.org/@babel/runtime/-/runtime-7.23.9.tgz#47791a15e4603bb5f905bc0753801cf21d6345f7"
+  integrity sha512-0CX6F+BI2s9dkUqr08KFrAIZgNFj75rdBU/DjCyYLIaV/quFjkk6T+EJ2LkZHyZTbEV4L5p97mNkUsHl2wLFAw==
   dependencies:
     regenerator-runtime "^0.14.0"
 
-"@visa/charts-types@^0.6.0":
-  version "0.6.0"
-  resolved "https://registry.npmjs.org/@visa/charts-types/-/charts-types-0.6.0.tgz#e1e95218f1407a8d5f22f1de60186facfd4b4eac"
-  integrity sha512-8+2f/vqaMdP4YAJWyuapQLxwxALdblITBZmrAhicFNIEfZqDEedxU0nP4TfUbkEJZMfwRpxLxJfeITFsCtWJoA==
+"@visa/charts-types@^0.6.2":
+  version "0.6.2"
+  resolved "https://registry.npmjs.org/@visa/charts-types/-/charts-types-0.6.2.tgz#b0e357a2efb7f0974631826326be134d14b592a3"
+  integrity sha512-LEkx7dAeYgAvn577QVh9jgwroU6LEdJvASjhDZLNg8jqHzB9nH2QP6+JD2aGDrcMXxXJuJPr17akhDhFBTd3Mg==
 
-"@visa/keyboard-instructions@^1.3.0":
-  version "1.3.0"
-  resolved "https://registry.npmjs.org/@visa/keyboard-instructions/-/keyboard-instructions-1.3.0.tgz#6328b915030d4ba488d230428200f804938f6297"
-  integrity sha512-Lq3QU4Q44O0UANOdLpXuCJJ0LmSbz9jvwoVNNaxRWJA79HUNa6fpbnt4VDE0BmyHnSCT+TYsfXTdbM2U/GDrXw==
+"@visa/keyboard-instructions@^1.3.2":
+  version "1.3.2"
+  resolved "https://registry.npmjs.org/@visa/keyboard-instructions/-/keyboard-instructions-1.3.2.tgz#abff94d3f5661beccacfeca51e2177369d0091e3"
+  integrity sha512-cslVsRP6LjJmdARrD/4bIyqHB2vbS5MYKM2Zqse35u7nSm9v81f3h5j7z5q87l+DT7DO6t8ATelC3LM+SpYmVg==
   dependencies:
-    "@visa/visa-charts-utils" "^5.1.0"
+    "@visa/visa-charts-utils" "^5.2.1"
 
-"@visa/visa-charts-data-table@^2.4.0":
-  version "2.4.0"
-  resolved "https://registry.npmjs.org/@visa/visa-charts-data-table/-/visa-charts-data-table-2.4.0.tgz#914497c6639d1750a0379ebfbe670ee307192d45"
-  integrity sha512-JDI3gcM9M82eZR6Pf2jKEXJuntX+Es2NzkRtRQrM8eReM9LTGuLivRkfj9YMnsUnEGpI9KD9MGTRilK4VlNxfQ==
+"@visa/visa-charts-data-table@^2.4.2":
+  version "2.4.2"
+  resolved "https://registry.npmjs.org/@visa/visa-charts-data-table/-/visa-charts-data-table-2.4.2.tgz#0cbf26832cc2d4e590aab59a2c28aeb24c9b1645"
+  integrity sha512-hlsH0PJeRlP9Zb3Z3dBCwgNS0tKNi7BQKSvpFnkt+bSWvVWMtLw5X39TwH9SbyPqH5IiFVd0+P9QbPjXz5E0kA==
   dependencies:
-    "@visa/charts-types" "^0.6.0"
-    "@visa/visa-charts-utils" "^5.1.0"
+    "@visa/charts-types" "^0.6.2"
+    "@visa/visa-charts-utils" "^5.2.1"
     d3-selection "^1.4.2"
 
-"@visa/visa-charts-utils-dev@^4.1.0":
-  version "4.1.0"
-  resolved "https://registry.npmjs.org/@visa/visa-charts-utils-dev/-/visa-charts-utils-dev-4.1.0.tgz#7665c7b26ca09c50060cf34862763de8b2f09068"
-  integrity sha512-2hhjdb6NhQZkow1UTNR2HThptepsLKAwb93oSNIAtUcHxkDUC0H1cKL6szumwsXBbczkdKkuKD21te2B6eh71A==
+"@visa/visa-charts-utils-dev@^4.1.2":
+  version "4.1.2"
+  resolved "https://registry.npmjs.org/@visa/visa-charts-utils-dev/-/visa-charts-utils-dev-4.1.2.tgz#200e7d9252b6ff3c39daa1b8a813ccef9ddb3b31"
+  integrity sha512-7hoO94asNqIExMMiPkZwn/MEyula+WMLxhETSFN5nh1kneWx0qoHfYJ9adsjKzr+wymxT55xSVRpfiah8wfGrg==
   dependencies:
-    "@visa/charts-types" "^0.6.0"
-    "@visa/visa-charts-utils" "^5.1.0"
+    "@visa/charts-types" "^0.6.2"
+    "@visa/visa-charts-utils" "^5.2.1"
     d3 "^4.13.0"
     d3-axis "^1.0.12"
     d3-color "^3.1.0"
@@ -49,10 +49,10 @@
     d3-time-format "^2.3.0"
     d3-transition "1.1.3"
 
-"@visa/visa-charts-utils@^5.1.0":
-  version "5.1.0"
-  resolved "https://registry.npmjs.org/@visa/visa-charts-utils/-/visa-charts-utils-5.1.0.tgz#a210464311855afbab0fa589678f5fc729a7ec46"
-  integrity sha512-yI77owF/cmUgvDrPevn2B/B88vMyr0W4E1HTLi5M3vuAY9Rv407n4ucZ11cfhP4upGbK8zNk18LXLoJ+FO8MYw==
+"@visa/visa-charts-utils@^5.2.1":
+  version "5.2.1"
+  resolved "https://registry.npmjs.org/@visa/visa-charts-utils/-/visa-charts-utils-5.2.1.tgz#5bd03b97c4c5756c9f94fc342079497b3f2e5844"
+  integrity sha512-T+asi5vakSuvFHiEjbDZe6yFkM/pEe8B25KZYJQNJOsEkJO8kNVXfziWRffTyfjVYKxQH92Z56kfIFet6RrmSw==
   dependencies:
     d3 "^4.13.0"
     d3-axis "^1.0.12"
@@ -66,10 +66,9 @@
     d3-time-format "^2.3.0"
     d3-transition "1.1.3"
     deep-keys "^0.5.0"
-    i18next "22.4.9"
-    ua-parser-js "^0.7.33"
+    i18next "23.5.1"
     vega-canvas "1.2.6"
-    yup "^0.28.5"
+    yup "^0.30.0"
 
 commander@2:
   version "2.20.3"
@@ -499,17 +498,12 @@ deep-keys@^0.5.0:
   resolved "https://registry.npmjs.org/deep-keys/-/deep-keys-0.5.0.tgz#2e619990c585993c7d522cb85b2f69ac6756448e"
   integrity sha512-/80a4+9lbLj1hRxG0ULtEOGtbM4hN/5u1Vu6kc6ZkYePUq+ZhtboRIsWTVKplc2ET1xY2FMVwhyt46w9vPf9Rg==
 
-fn-name@~3.0.0:
-  version "3.0.0"
-  resolved "https://registry.npmjs.org/fn-name/-/fn-name-3.0.0.tgz#0596707f635929634d791f452309ab41558e3c5c"
-  integrity sha512-eNMNr5exLoavuAMhIUVsOKF79SWd/zG104ef6sxBTSw+cZc6BXdQXDvYcGvp0VbxVVSp1XDUNoz7mg1xMtSznA==
-
-i18next@22.4.9:
-  version "22.4.9"
-  resolved "https://registry.npmjs.org/i18next/-/i18next-22.4.9.tgz#98c8384c6bd41ff937da98b1e809ba03d3b41053"
-  integrity sha512-8gWMmUz460KJDQp/ob3MNUX84cVuDRY9PLFPnV8d+Qezz/6dkjxwOaH70xjrCNDO+JrUL25iXfAIN9wUkInNZw==
+i18next@23.5.1:
+  version "23.5.1"
+  resolved "https://registry.npmjs.org/i18next/-/i18next-23.5.1.tgz#7f7c35ffaa907618d9489f106d5006b09fbca3d3"
+  integrity sha512-JelYzcaCoFDaa+Ysbfz2JsGAKkrHiMG6S61+HLBUEIPaF40WMwW9hCPymlQGrP+wWawKxKPuSuD71WZscCsWHg==
   dependencies:
-    "@babel/runtime" "^7.20.6"
+    "@babel/runtime" "^7.22.5"
 
 iconv-lite@0.4:
   version "0.4.24"
@@ -523,20 +517,20 @@ lodash-es@^4.17.11:
   resolved "https://registry.npmjs.org/lodash-es/-/lodash-es-4.17.21.tgz#43e626c46e6591b7750beb2b50117390c609e3ee"
   integrity sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==
 
-lodash@^4.17.15:
+lodash@^4.17.20:
   version "4.17.21"
   resolved "https://registry.npmjs.org/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
 
-property-expr@^2.0.2:
-  version "2.0.5"
-  resolved "https://registry.npmjs.org/property-expr/-/property-expr-2.0.5.tgz#278bdb15308ae16af3e3b9640024524f4dc02cb4"
-  integrity sha512-IJUkICM5dP5znhCckHSv30Q4b5/JA5enCtkRHYaOVOAocnH/1BQEYTC5NMfT3AVl/iXKdr3aqQbQn9DxyWknwA==
+property-expr@^2.0.4:
+  version "2.0.6"
+  resolved "https://registry.npmjs.org/property-expr/-/property-expr-2.0.6.tgz#f77bc00d5928a6c748414ad12882e83f24aec1e8"
+  integrity sha512-SVtmxhRE/CGkn3eZY1T6pC8Nln6Fr/lu1mKSgRud0eC73whjGfoAogbn78LkD8aFL0zz3bAFerKSnOl7NlErBA==
 
 regenerator-runtime@^0.14.0:
-  version "0.14.0"
-  resolved "https://registry.npmjs.org/regenerator-runtime/-/regenerator-runtime-0.14.0.tgz#5e19d68eb12d486f797e15a3c6a918f7cec5eb45"
-  integrity sha512-srw17NI0TUWHuGa5CFGGmhfNIeja30WMBfbslPNhf6JrqQlLN5gcrvig1oqPxiVaXb0oW0XRKtH6Nngs5lKCIA==
+  version "0.14.1"
+  resolved "https://registry.npmjs.org/regenerator-runtime/-/regenerator-runtime-0.14.1.tgz#356ade10263f685dda125100cd862c1db895327f"
+  integrity sha512-dYnhHh0nJoMfnkZs6GmmhFknAGRrLznOu5nc9ML+EJxGvrx6H7teuevqVqCuPcPK//3eDrrjQhehXVx9cnkGdw==
 
 rw@1:
   version "1.3.3"
@@ -548,20 +542,10 @@ rw@1:
   resolved "https://registry.npmjs.org/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
   integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
 
-synchronous-promise@^2.0.10:
-  version "2.0.17"
-  resolved "https://registry.npmjs.org/synchronous-promise/-/synchronous-promise-2.0.17.tgz#38901319632f946c982152586f2caf8ddc25c032"
-  integrity sha512-AsS729u2RHUfEra9xJrE39peJcc2stq2+poBXX8bcM08Y6g9j/i/PUzwNQqkaJde7Ntg1TO7bSREbR5sdosQ+g==
-
 toposort@^2.0.2:
   version "2.0.2"
   resolved "https://registry.npmjs.org/toposort/-/toposort-2.0.2.tgz#ae21768175d1559d48bef35420b2f4962f09c330"
   integrity sha512-0a5EOkAUp8D4moMi2W8ZF8jcga7BgZd91O/yabJCFY8az+XSzeGyTKs0Aoo897iV1Nj6guFq8orWDS96z91oGg==
-
-ua-parser-js@^0.7.33:
-  version "0.7.36"
-  resolved "https://registry.npmjs.org/ua-parser-js/-/ua-parser-js-0.7.36.tgz#382c5d6fc09141b6541be2cae446ecfcec284db2"
-  integrity sha512-CPPLoCts2p7D8VbybttE3P2ylv0OBZEAy7a12DsulIEcAiMtWJy+PBgMXgWDI80D5UwqE8oQPHYnk13tm38M2Q==
 
 uuid@8.3.2:
   version "8.3.2"
@@ -578,15 +562,13 @@ xmlhttprequest@1:
   resolved "https://registry.npmjs.org/xmlhttprequest/-/xmlhttprequest-1.8.0.tgz#67fe075c5c24fef39f9d65f5f7b7fe75171968fc"
   integrity sha512-58Im/U0mlVBLM38NdZjHyhuMtCqa61469k2YP/AaPbvCoV9aQGUpbJBj1QRm2ytRiVQBD/fsw7L2bJGDVQswBA==
 
-yup@^0.28.5:
-  version "0.28.5"
-  resolved "https://registry.npmjs.org/yup/-/yup-0.28.5.tgz#85cabb4000d3623ef69be81551190692e631a8a5"
-  integrity sha512-7JZcvpUGUxMKoaEtcoMEM8lCWRaueGNH/A3EhL/UWqfbFm3uloiI+x59Yq4nzhbbYWUTwAsCteaZOJ+VbqI1uw==
+yup@^0.30.0:
+  version "0.30.0"
+  resolved "https://registry.npmjs.org/yup/-/yup-0.30.0.tgz#427ee076abb1d7e01e747fb782801f7df252fb76"
+  integrity sha512-GX3vqpC9E+Ow0fmQPgqbEg7UV40XRrN1IOEgKF5v04v6T4ha2vBas/hu0thWgewk8L4wUEBLRO/EnXwYyP+p+A==
   dependencies:
-    "@babel/runtime" "^7.9.6"
-    fn-name "~3.0.0"
-    lodash "^4.17.15"
+    "@babel/runtime" "^7.10.5"
+    lodash "^4.17.20"
     lodash-es "^4.17.11"
-    property-expr "^2.0.2"
-    synchronous-promise "^2.0.10"
+    property-expr "^2.0.4"
     toposort "^2.0.2"

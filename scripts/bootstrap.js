@@ -233,7 +233,7 @@ function run() {
       defaultValue: false,
       option: '--i',
       command: () => {
-        spawn(`npm run bootup`);
+        spawn(`lerna run yarn-install && npm run bootup`);
       },
       order: 7
     }),
