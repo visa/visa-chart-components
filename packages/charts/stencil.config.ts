@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2022, 2023 Visa, Inc.
+ * Copyright (c) 2020, 2022, 2023, 2024 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -22,7 +22,6 @@ function external(c = {}) {
   };
 }
 
-// temporary comment to bump charts with feature commit
 export const config: Config | any = {
   namespace: 'charts',
   buildEs5: 'prod',
@@ -40,13 +39,6 @@ export const config: Config | any = {
     reactOutputTarget({
       componentCorePackage: '@visa/charts',
       proxiesFile: '../charts-react/src/components/visa-charts.ts',
-      includeDefineCustomElements: true,
-      includePolyfills: true,
-      excludeComponents: ['visa-charts']
-    }),
-    reactOutputTarget({
-      componentCorePackage: '@visa/charts',
-      proxiesFile: '../charts-figma/src/visa-charts.ts',
       includeDefineCustomElements: false,
       includeImportCustomElements: true,
       includePolyfills: false,
