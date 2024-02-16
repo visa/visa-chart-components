@@ -1961,6 +1961,7 @@ export class AppLineChart {
           //   numeralLocale: HU,
           //   skipValidation: false
           // }}
+          lineCurve={'linear'}
           // Chart Attributes (1/7)
           mainTitle={'Line Chart in app'}
           // animationConfig={this.animations}
@@ -2003,7 +2004,16 @@ export class AppLineChart {
           clickHighlight={this.clickElement}
           hoverHighlight={this.hoverElement}
           interactionKeys={this.interactionKeys}
-          // referenceLines= {[{label:'Average',labelPlacementHorizontal:'right',labelPlacementVertical:'bottom',value:7300000000}]}
+          referenceLines={[
+            {
+              label: 'Average',
+              labelPlacementHorizontal: 'right',
+              labelPlacementVertical: 'top',
+              value: 7300000000,
+              accessibilityDescription: 'This reference line is a callout to the Average value, which is 100.',
+              accessibilityDecorationOnly: false
+            }
+          ]}
           secondaryLines={{
             keys: [this.secondaryKey],
             opacity: this.secondaryOpacity,

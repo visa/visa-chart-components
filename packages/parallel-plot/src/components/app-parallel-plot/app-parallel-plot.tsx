@@ -152,7 +152,7 @@ export class AppParallelPlot {
       {
         otherOrd: 'Q1',
         date: new Date('2012-01-01T00:00:00.000Z'),
-        otherVal: 0.55,
+        otherVal: 0.25,
         otherCat: 'CA',
         them: 'them',
         filter: 'all',
@@ -907,6 +907,7 @@ export class AppParallelPlot {
           //   numeralLocale: HU,
           //   skipValidation: false
           // }}
+          lineCurve={'linear'}
           mainTitle="Parallel Plot Default"
           animationConfig={this.animations}
           subTitle="Interaction Style"

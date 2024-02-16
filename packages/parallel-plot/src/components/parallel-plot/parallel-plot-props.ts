@@ -153,12 +153,6 @@ export interface IParallelPlotProps {
   clickStyle: IClickStyleType;
 
   /**
-   * @shortDescription Sets the styling of the reference line
-   * @controlName TextArea
-   * @groupName Reference_Line */
-  referenceStyle: IReferenceStyleType;
-
-  /**
    * @shortDescription Accepts array of color strings or values to customize line colors
    * @controlName TextArea
    * @groupName Style */
@@ -181,6 +175,12 @@ export interface IParallelPlotProps {
    * @controlName Slider
    * @groupName Style */
   dotRadius: number;
+
+  /**
+   * @shortDescription Sets the curve of the line, default is linear
+   * @controlName Select
+   * @groupName Style */
+  lineCurve: string;
 
   /**
    * @shortDescription Array of values used to classify series as secondary
@@ -241,12 +241,6 @@ export interface IParallelPlotProps {
    * @controlName TextField
    * @groupName Axes */
   minValueOverride: number;
-
-  /**
-   * @shortDescription Data that sets the location and labeling of the reference line
-   * @controlName TextArea
-   * @groupName Reference_Line */
-  referenceLines: object[];
 
   /**
    * @shortDescription Sets the column names of data to interact with
@@ -360,12 +354,6 @@ interface ILegendType {
   visible: boolean;
   label: any;
   interactive: boolean;
-}
-interface IReferenceStyleType {
-  color: string;
-  strokeWidth: string;
-  opacity: number;
-  dashed: string;
 }
 interface IBoxModelType {
   top: number;

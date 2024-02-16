@@ -38,6 +38,8 @@ import { drawLegend, setLegendInteractionState } from './legend';
 
 import { setSubTitle } from './subTitle';
 
+import { setReferenceLine } from './referenceLine';
+
 import { getLicenses } from './license';
 
 import { formatDataLabel, placeDataLabels, getDataSymbol } from './dataLabel';
@@ -157,7 +159,15 @@ import * as propDefaultValues from './propDefaultValues';
 
 // import * as en from './i18n/locales/en'
 
-import { Sankey, sankeyLeft, sankeyRight, sankeyJustify, sankeyCenter, sankeyLinkHorizontal } from './sankey';
+import {
+  Sankey,
+  sankeyLeft,
+  sankeyRight,
+  sankeyJustify,
+  sankeyCenter,
+  sankeyLinkHorizontal,
+  sankeyLinkVertical
+} from './sankey';
 
 export {
   isUndefined,
@@ -166,6 +176,7 @@ export {
   xor,
   has,
   setSubTitle,
+  setReferenceLine,
   getGlobalInstances,
   registerI18NextLanguage,
   changeI18NextLanguage,
@@ -277,6 +288,7 @@ export {
   sankeyJustify,
   sankeyLeft,
   sankeyLinkHorizontal,
+  sankeyLinkVertical,
   sankeyRight,
   transitionEndAll,
   transformData,
