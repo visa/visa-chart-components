@@ -312,17 +312,25 @@ describe('<scatter-plot>', () => {
                       className: 'scatter-annotation',
                       type: 'annotationCalloutCircle',
                       subject: { radius: 18 }
+                    }
+                  ]
+                : [],
+            referenceLines:
+              unitTestAccessibility[test].prop === 'referenceLines'
+                ? [
+                    {
+                      label: 'Mid',
+                      placement: 'bottom',
+                      value: 20,
+                      axis: 'x',
+                      accessibilityDescription: 'accessDesc1'
                     },
                     {
-                      note: {},
-                      accessibilityDecorationOnly: true,
-                      type: 'annotationXYThreshold',
-                      subject: {
-                        x1: 0,
-                        x2: 250
-                      },
-                      color: 'pri_blue',
-                      disable: ['note', 'connector']
+                      label: 'Avg (est)',
+                      placement: 'right',
+                      value: 20000,
+                      axis: 'y',
+                      accessibilityDescription: 'accessDesc2'
                     }
                   ]
                 : []
@@ -1977,7 +1985,15 @@ describe('<scatter-plot>', () => {
         await page.waitForChanges();
 
         // ASSERT
-        const referenceLinesGroup = page.doc.querySelector('[data-testid=scatter-reference-line-group]');
+        const referenceLinesGroup = page.doc.querySelector('[data-testid=reference-line-group]');
+        const referenceLineG = page.doc.querySelector('[data-testid=reference-g]');
+        const referenceLine = page.doc.querySelector('[data-testid=reference-line]');
+        const referenceLineLabel = page.doc.querySelector('[data-testid=reference-line-label]');
+        flushTransitions(referenceLinesGroup);
+        flushTransitions(referenceLineG);
+        flushTransitions(referenceLine);
+        flushTransitions(referenceLineLabel);
+        await page.waitForChanges();
         expect(referenceLinesGroup).toMatchSnapshot();
       });
 
@@ -1996,8 +2012,16 @@ describe('<scatter-plot>', () => {
         await page.waitForChanges();
 
         // ASSERT
-        const referenceLine = page.doc.querySelector('[data-testid=scatter-reference-line-group]');
-        expect(referenceLine).toMatchSnapshot();
+        const referenceLinesGroup = page.doc.querySelector('[data-testid=reference-line-group]');
+        const referenceLineG = page.doc.querySelector('[data-testid=reference-g]');
+        const referenceLine = page.doc.querySelector('[data-testid=reference-line]');
+        const referenceLineLabel = page.doc.querySelector('[data-testid=reference-line-label]');
+        flushTransitions(referenceLinesGroup);
+        flushTransitions(referenceLineG);
+        flushTransitions(referenceLine);
+        flushTransitions(referenceLineLabel);
+        await page.waitForChanges();
+        expect(referenceLinesGroup).toMatchSnapshot();
       });
     });
 

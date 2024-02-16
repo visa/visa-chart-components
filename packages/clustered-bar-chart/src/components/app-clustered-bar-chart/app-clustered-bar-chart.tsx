@@ -438,6 +438,16 @@ export class AppClusteredBarChart {
           //     { text: 'average', color: '#323232' }
           //   ]
           // }}
+          referenceLines={[
+            {
+              label: 'Average',
+              labelPlacementHorizontal: 'right',
+              labelPlacementVertical: 'top',
+              value: 50,
+              accessibilityDescription: 'This reference line is a callout to the Average value, which is 100.',
+              accessibilityDecorationOnly: false
+            }
+          ]}
           height={600}
           width={800}
           animationConfig={this.animations}

@@ -788,6 +788,16 @@ export class AppDumbbellPlot {
           //     {text: "average", color: '#323232'},
           //   ]
           // }}
+          referenceLines={[
+            {
+              label: 'Average',
+              labelPlacementHorizontal: 'right',
+              labelPlacementVertical: 'bottom',
+              value: '0.007628909842',
+              accessibilityDescription: 'This reference line is a callout to the Average value, which is 100.',
+              accessibilityDecorationOnly: false
+            }
+          ]}
           animationConfig={this.animations}
           data={this.data}
           layout={this.layout}

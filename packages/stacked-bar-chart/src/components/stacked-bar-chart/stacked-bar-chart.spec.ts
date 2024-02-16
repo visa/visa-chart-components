@@ -342,25 +342,29 @@ describe('<stacked-bar-chart>', () => {
                     },
                     {
                       note: {
-                        label: 'Annotation #2'
+                        title: 'Annotation #2',
+                        label: 'Annotation #2 label.'
                       },
+                      accessibilityDescription: 'This annotation points to Annotation #2',
                       y: [45],
                       x: '33.6%',
                       dy: [56.5],
                       dx: ['2017', '2016'],
                       className: 'stacked-chart-annotation',
                       type: 'annotationCalloutElbow'
-                    },
+                    }
+                  ]
+                : [],
+            referenceLines:
+              unitTestAccessibility[test].prop === 'referenceLines'
+                ? [
                     {
-                      note: {},
-                      accessibilityDecorationOnly: true,
-                      type: 'annotationXYThreshold',
-                      subject: {
-                        x1: 0,
-                        x2: 250
-                      },
-                      color: 'pri_blue',
-                      disable: ['note', 'connector']
+                      label: 'Average',
+                      labelPlacementHorizontal: 'middle',
+                      labelPlacementVertical: 'left',
+                      value: 0.75,
+                      accessibilityDescription: 'This reference line is a callout to the Average value, which is 100.',
+                      accessibilityDecorationOnly: false
                     }
                   ]
                 : []
@@ -1731,7 +1735,15 @@ describe('<stacked-bar-chart>', () => {
         await page.waitForChanges();
 
         // ASSERT
-        const referenceLinesGroup = await page.doc.querySelector('[data-testid=reference-line-group]');
+        const referenceLinesGroup = page.doc.querySelector('[data-testid=reference-line-group]');
+        const referenceLineG = page.doc.querySelector('[data-testid=reference-g]');
+        const referenceLine = page.doc.querySelector('[data-testid=reference-line]');
+        const referenceLineLabel = page.doc.querySelector('[data-testid=reference-line-label]');
+        flushTransitions(referenceLinesGroup);
+        flushTransitions(referenceLineG);
+        flushTransitions(referenceLine);
+        flushTransitions(referenceLineLabel);
+        await page.waitForChanges();
         expect(referenceLinesGroup).toMatchSnapshot();
       });
 
@@ -1749,8 +1761,16 @@ describe('<stacked-bar-chart>', () => {
         await page.waitForChanges();
 
         // ASSERT
-        const referenceLine = await page.doc.querySelector('.stacked-bar-reference-line');
-        expect(referenceLine).toMatchSnapshot();
+        const referenceLinesGroup = page.doc.querySelector('[data-testid=reference-line-group]');
+        const referenceLineG = page.doc.querySelector('[data-testid=reference-g]');
+        const referenceLine = page.doc.querySelector('[data-testid=reference-line]');
+        const referenceLineLabel = page.doc.querySelector('[data-testid=reference-line-label]');
+        flushTransitions(referenceLinesGroup);
+        flushTransitions(referenceLineG);
+        flushTransitions(referenceLine);
+        flushTransitions(referenceLineLabel);
+        await page.waitForChanges();
+        expect(referenceLinesGroup).toMatchSnapshot();
       });
     });
 

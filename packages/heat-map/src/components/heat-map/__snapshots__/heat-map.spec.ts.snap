@@ -378,6 +378,9 @@ exports[`<heat-map> rendered-html render localization: should render localized w
         A diagram elsődleges vertikális Y tengelyt tartalmaz. Diagram címe Y Axis. Kezdeti erték érték A, végső érték érték C.
       </p>
       <p class="screen-reader-info vcl-access-notes" data-annotationlevel="h3" data-level="h4"></p>
+      <h3 class="screen-reader-info vcl-access-annotations-heading">
+        Diagram referencia vonalak száma: 0. Diagram magyarázatok száma: 0.
+      </h3>
     </div>
     <div class="o-layout--chart">
       <h2 aria-hidden="true" class="heat-main-title vcl-main-title" data-testid="main-title">
@@ -1187,6 +1190,9 @@ exports[`<heat-map> rendered-html render should render with minimal props[data,o
         The chart has a primary vertical Y axis. Title Y Axis. Start value A, end value C.
       </p>
       <p class="screen-reader-info vcl-access-notes" data-annotationlevel="h3" data-level="h4"></p>
+      <h3 class="screen-reader-info vcl-access-annotations-heading">
+        Number of reference lines: 0. Number of annotations: 0.
+      </h3>
     </div>
     <div class="o-layout--chart">
       <h2 aria-hidden="true" class="heat-main-title vcl-main-title" data-testid="main-title">

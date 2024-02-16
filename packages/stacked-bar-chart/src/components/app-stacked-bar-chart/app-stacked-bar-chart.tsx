@@ -2898,6 +2898,16 @@ export class AppStackedBarChart {
           //   numeralLocale: HU,
           //   skipValidation: false
           // }}
+          referenceLines={[
+            {
+              label: 'Average',
+              labelPlacementHorizontal: 'right',
+              labelPlacementVertical: 'top',
+              value: 0.75,
+              accessibilityDescription: 'This reference line is a callout to the Average value, which is 100.',
+              accessibilityDecorationOnly: false
+            }
+          ]}
           interactionKeys={this.interactionKeys}
           animationConfig={this.animations}
           onClickEvent={d => this.onClickFunc(d)}

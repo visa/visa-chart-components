@@ -1363,7 +1363,7 @@ export class CirclePacking {
   }
 
   setAnnotationAccessibility() {
-    setAccessAnnotation(this.getLanguageString(), this.circlePackingEl, this.annotations);
+    setAccessAnnotation(this.getLanguageString(), this.circlePackingEl, this.annotations, undefined);
   }
 
   setSubTitleElements() {
