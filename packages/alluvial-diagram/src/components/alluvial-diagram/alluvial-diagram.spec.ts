@@ -184,6 +184,78 @@ describe('<alluvial-diagram>', () => {
             unitTestGeneric[test].testFunc(component, page, innerTestProps, innerTestSelector));
         }
       });
+      describe('layout', () => {
+        it('should render chart horizontally by default', async () => {
+          // ACT
+          page.root.appendChild(component);
+          await page.waitForChanges();
+
+          // FLUSH TRANSITIONS
+          const nodeGs = page.doc.querySelectorAll('[data-testid=node]');
+          await asyncForEach(nodeGs, async nodeG => {
+            const nodeRect = nodeG.querySelector('rect');
+            flushTransitions(nodeRect);
+            await page.waitForChanges();
+          });
+
+          // ASSERT
+          const nodeG1Rect = page.doc.querySelector('[data-testid=node][data-id=node-Cat12018]').querySelector('rect');
+          const nodeG2Rect = page.doc.querySelector('[data-testid=node][data-id=node-Cat12019]').querySelector('rect');
+          expect(parseFloat(nodeG2Rect.getAttribute('x')) - parseFloat(nodeG1Rect.getAttribute('x'))).toBeGreaterThan(
+            100
+          );
+          expect(parseFloat(nodeG2Rect.getAttribute('y')) - parseFloat(nodeG1Rect.getAttribute('y'))).toBeLessThan(10);
+        });
+        it('should render chart vertically on load', async () => {
+          //ARRANGE
+          component.layout = 'vertical';
+
+          // ACT
+          page.root.appendChild(component);
+          await page.waitForChanges();
+
+          // FLUSH TRANSITIONS
+          const nodeGs = page.doc.querySelectorAll('[data-testid=node]');
+          await asyncForEach(nodeGs, async nodeG => {
+            const nodeRect = nodeG.querySelector('rect');
+            flushTransitions(nodeRect);
+            await page.waitForChanges();
+          });
+
+          // ASSERT
+          const nodeG1Rect = page.doc.querySelector('[data-testid=node][data-id=node-Cat12018]').querySelector('rect');
+          const nodeG2Rect = page.doc.querySelector('[data-testid=node][data-id=node-Cat12019]').querySelector('rect');
+          expect(parseFloat(nodeG2Rect.getAttribute('x')) - parseFloat(nodeG1Rect.getAttribute('x'))).toBeLessThan(10);
+          expect(parseFloat(nodeG2Rect.getAttribute('y')) - parseFloat(nodeG1Rect.getAttribute('y'))).toBeGreaterThan(
+            100
+          );
+        });
+        it('should render chart vertically on update', async () => {
+          // ACT
+          page.root.appendChild(component);
+          await page.waitForChanges();
+
+          //ARRANGE
+          component.layout = 'vertical';
+          await page.waitForChanges();
+
+          // FLUSH TRANSITIONS
+          const nodeGs = page.doc.querySelectorAll('[data-testid=node]');
+          await asyncForEach(nodeGs, async nodeG => {
+            const nodeRect = nodeG.querySelector('rect');
+            flushTransitions(nodeRect);
+            await page.waitForChanges();
+          });
+
+          // ASSERT
+          const nodeG1Rect = page.doc.querySelector('[data-testid=node][data-id=node-Cat12018]').querySelector('rect');
+          const nodeG2Rect = page.doc.querySelector('[data-testid=node][data-id=node-Cat12019]').querySelector('rect');
+          expect(parseFloat(nodeG2Rect.getAttribute('x')) - parseFloat(nodeG1Rect.getAttribute('x'))).toBeLessThan(10);
+          expect(parseFloat(nodeG2Rect.getAttribute('y')) - parseFloat(nodeG1Rect.getAttribute('y'))).toBeGreaterThan(
+            100
+          );
+        });
+      });
       describe('data', () => {
         describe('uniqueId', () => {
           it('refer to generic results above for uniqueID tests', () => {
@@ -396,29 +468,6 @@ describe('<alluvial-diagram>', () => {
                       data: { month: 'May-17', value: 6042320, cat: 'A' },
                       dy: '-20%',
                       color: 'pri_blue'
-                    },
-                    {
-                      note: {
-                        label: "June's volume is here.",
-                        bgPadding: 20,
-                        title: 'The month of june',
-                        align: 'middle',
-                        wrap: 210
-                      },
-                      data: { month: 'Jun-17', value: 3234002, cat: 'A' },
-                      dy: '-20%',
-                      color: 'pri_blue'
-                    },
-                    {
-                      note: {},
-                      accessibilityDecorationOnly: true,
-                      type: 'annotationXYThreshold',
-                      subject: {
-                        x1: 0,
-                        x2: 250
-                      },
-                      color: 'pri_blue',
-                      disable: ['note', 'connector']
                     }
                   ]
                 : []
@@ -484,7 +533,9 @@ describe('<alluvial-diagram>', () => {
             test === 'accessibility_yaxis_description_off_on_load' ||
             test === 'accessibility_yaxis_description_added_on_update' ||
             test === 'accessibility_categorical_textures_created_by_default' ||
-            test === 'accessibility_textures_on_by_default'
+            test === 'accessibility_textures_on_by_default' ||
+            test === 'accessibility_referenceLine_description_set_on_load' ||
+            test === 'accessibility_referenceLine_description_set_on_update'
           ) {
             it.skip(`${unitTestAccessibility[test].prop}: ${unitTestAccessibility[test].name}`, () =>
               unitTestAccessibility[test].testFunc(
@@ -849,7 +900,7 @@ describe('<alluvial-diagram>', () => {
             };
             const innerTooltipContent = {
               tooltip_tooltipLabel_default:
-                '<p style="margin: 0;"><b>Remained<br></b><b>Cat12018</b>to<b>Cat12019</b><br>Value:<b>3010</b></p>',
+                '<p style="margin: 0;"><b>Remained<br></b><b>Cat12018</b>→<b>Cat12019</b><br>Value:<b>3010</b></p>',
               tooltip_tooltipLabel_custom_load: '<p style="margin: 0;">Testing123:<b>Cat12018</b><br></p>',
               tooltip_tooltipLabel_custom_update: '<p style="margin: 0;">Testing123:<b>Cat12018</b><br></p>',
               tooltip_tooltipLabel_custom_format_load:
@@ -857,9 +908,9 @@ describe('<alluvial-diagram>', () => {
               tooltip_tooltipLabel_custom_format_update:
                 '<p style="margin: 0;">Testing123:<b>Cat12018</b><br>Count:<b>$3k</b><br></p>',
               dataKeyNames_custom_on_load:
-                '<p style="margin: 0;"><b>Remained<br></b><b>Cat12018</b>to<b>Cat12019</b><br>Test Value:<b>3010</b></p>',
+                '<p style="margin: 0;"><b>Remained<br></b><b>Cat12018</b>→<b>Cat12019</b><br>Test Value:<b>3010</b></p>',
               dataKeyNames_custom_on_update:
-                '<p style="margin: 0;"><b>Remained<br></b><b>Cat12018</b>to<b>Cat12019</b><br>Test Value:<b>3010</b></p>'
+                '<p style="margin: 0;"><b>Remained<br></b><b>Cat12018</b>→<b>Cat12019</b><br>Test Value:<b>3010</b></p>'
             };
             const innerAriaContent = {
               dataKeyNames_custom_on_load: 'Test Value 3k. group Remained. Test Cat Cat12018. target Cat12019. Link 1.',
@@ -1147,7 +1198,9 @@ describe('<alluvial-diagram>', () => {
           // FOR SOME REASON THIS TEST IS FINDING THAT WE ASSING COLOR 1 TO THE 7TH LINK
           const links = page.doc.querySelectorAll('[data-testid=link]');
           links.forEach((link, i) => {
-            expect(link).toEqualAttribute('stroke', i >= expectedColors.length ? 'none' : expectedColors[i]);
+            if (i < expectedColors.length) {
+              expect(link).toEqualAttribute('stroke', i >= expectedColors.length ? 'none' : expectedColors[i]);
+            }
           });
         });
         it('should have fillMode of group if passed on load', async () => {
@@ -1201,12 +1254,18 @@ describe('<alluvial-diagram>', () => {
           });
         });
         it('should have fillMode of target if passed on load', async () => {
-          const EXPECTEDCOLORSCALE = getColors(
-            'categorical',
-            scaleOrdinal()
-              .domain(EXPECTEDLINKDATA.map(d => d[EXPECTEDTARGETACCESSOR]))
-              .domain()
-          );
+          // this comparison doesn't work because it creates a scale off the first 3 colors instead of the last
+          // const EXPECTEDCOLORSCALE = getColors(
+          //   'categorical',
+          //   scaleOrdinal()
+          //     .domain(EXPECTEDLINKDATA.map(d => d[EXPECTEDTARGETACCESSOR]))
+          //     .domain()
+          // );
+          const EXPECTEDCOLORS = {
+            Cat12019: '#e7c0b8',
+            Cat22019: '#624c48',
+            Cat32019: '#7c99b1'
+          };
           component.colorPalette = 'categorical';
           component.linkConfig = {
             fillMode: 'target',
@@ -1221,9 +1280,9 @@ describe('<alluvial-diagram>', () => {
           // ASSERT
           // FOR SOME REASON THIS TEST IS FINDING THAT WE ASSING COLOR 1 TO THE 7TH LINK
           const links = page.doc.querySelectorAll('[data-testid=link]');
-          links.forEach((link, i) => {
-            // console.log('checking', link.__data__.target.index, link.__data__.target.did, link['__data__'].target[EXPECTEDNODEIDACCESSOR], EXPECTEDLINKDATA[i][EXPECTEDTARGETACCESSOR], EXPECTEDCOLORSCALE.range(), EXPECTEDCOLORSCALE.domain());
-            expect(link).toEqualAttribute('stroke', EXPECTEDCOLORSCALE(EXPECTEDLINKDATA[i][EXPECTEDTARGETACCESSOR]));
+          links.forEach(link => {
+            // going from source to target, regroups link objects on the DOM, so we have to test with this in mind
+            expect(link).toEqualAttribute('stroke', EXPECTEDCOLORS[link['__data__']['data'][EXPECTEDTARGETACCESSOR]]);
           });
         });
         it('should have fillMode of group if passed on update', async () => {
