@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.3.0](https://github.com/visa/visa-chart-components/compare/@visa/line-chart@6.2.0...@visa/line-chart@6.3.0) (2024-02-16)
+
+### Features
+
+- lineCurve for parallel plot and line chart referenceLine utils a11y additions ([405a67e](https://github.com/visa/visa-chart-components/commit/405a67ec4dd492e965abfbeae8daedb02be67ac7))
+
 ## [6.2.1](https://github.com/visa/visa-chart-components/compare/@visa/line-chart@6.2.0...@visa/line-chart@6.2.1) (2024-02-09)
 
 **Note:** Version bump only for package @visa/line-chart
