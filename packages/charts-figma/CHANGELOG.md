@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0](https://github.com/visa/visa-chart-components/compare/@visa/charts-figma@2.1.1...@visa/charts-figma@2.2.0) (2024-02-16)
+
+### Features
+
+- version bump for charts angular vue react ([2a75bb0](https://github.com/visa/visa-chart-components/commit/2a75bb0e33f3f42484e5bb50d3a5abe9d2592807))
+
 ## [2.1.2](https://github.com/visa/visa-chart-components/compare/@visa/charts-figma@2.1.1...@visa/charts-figma@2.1.2) (2024-02-09)
 
 **Note:** Version bump only for package @visa/charts-figma
