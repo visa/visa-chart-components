@@ -119,7 +119,8 @@ const categories = {
     'strokeWidth',
     'shape',
     'innerRatio',
-    'showEdgeLine'
+    'showEdgeLine',
+    'lineCurve'
   ]
 };
 

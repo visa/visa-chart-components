@@ -360,6 +360,20 @@
     }
   },
   {
+    "name": "lineCurve",
+    "options": {
+      "enabled": true,
+      "description": "Sets the d3 curve of the line",
+      "control": "Select",
+      "choices": [
+        { "label": "Linear", "value": "linear" },
+        { "label": "Step", "value": "step" },
+        { "label": "BumpX", "value": "bumpX" }
+      ],
+      "sortOrder": 9
+    }
+  },
+  {
     "name": "dotOpacity",
     "options": {
       "enabled": true,
@@ -776,7 +790,10 @@
         { "label": "right", "value": "right" },
         { "label": "left", "value": "left" },
         { "label": "center", "value": "center" },
-        { "label": "justify", "value": "justify" }
+        { "label": "justify", "value": "justify" },
+        { "label": "top", "value": "top" },
+        { "label": "middle", "value": "middle" },
+        { "label": "bottom", "value": "bottom" }
       ],
       "sortOrder": 4
     }
