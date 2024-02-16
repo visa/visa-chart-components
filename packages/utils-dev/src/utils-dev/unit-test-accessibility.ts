@@ -10,7 +10,7 @@ import { SpecPage } from '@stencil/core/testing';
 import { asyncForEach, flushTransitions, getTransitionDurations } from './unit-test-utils';
 import Utils from '@visa/visa-charts-utils';
 
-const { formatStats, visaColors, getTexture, getContrastingStroke, getColors, roundTo } = Utils;
+const { visaColors, getTexture, getContrastingStroke, getColors, roundTo, has } = Utils;
 
 const mockFocusEvent = new Event('focus');
 const mockKeyUpEvent = new KeyboardEvent('keyup');
@@ -2641,7 +2641,6 @@ export const animationConfig_disabled_true_on_update = {
   }
 };
 
-// Accessibility annotation test does not run due to jsdom not supporting annotations util to date
 export const accessibility_annotation_description_set_on_load = {
   prop: 'annotations',
   group: 'accessibility',
@@ -2674,32 +2673,35 @@ export const accessibility_annotation_description_set_on_load = {
     // ASSERT
     const annotationDescriptionContainer = page.doc.querySelector(testSelector);
     let headerCount = 0;
-    let detailCount = 0;
     const annotationDetailsHeaders = Array.from(page.doc.querySelectorAll(nextTestSelector)).filter(
       o => o.tagName.toUpperCase() === 'H6'
     );
-    const annotationDetailsContent = Array.from(page.doc.querySelectorAll(nextTestSelector)).filter(
-      o => o.tagName.toUpperCase() === 'P'
-    );
 
     // ASSERT
+
+    // annotation
     const ignoreAnnotationCount = component.annotations.filter(a => a.accessibilityDecorationOnly).length;
     const annotationCount = component.annotations.length - ignoreAnnotationCount;
-    expect(annotationCount).toBeGreaterThanOrEqual(1);
-    expect(annotationDescriptionContainer).toEqualText(`Number of annotations: ${annotationCount}.`);
 
+    expect(annotationCount).toBeGreaterThanOrEqual(1);
+
+    // we handle the reference lines in its separate function so we zero it out here
+    expect(annotationDescriptionContainer).toEqualText(
+      `Number of reference lines: 0. Number of annotations: ${annotationCount}.`
+    );
+
+    // annotation
     component.annotations.forEach(annotation => {
-      if (annotation.note && annotation.note.title) {
-        expect(annotationDetailsHeaders[headerCount]).toEqualText(annotation.note.title);
+      if (annotation.note) {
+        expect(annotationDetailsHeaders[headerCount]).toEqualText(
+          'Annotation title: ' +
+            annotation.note.title +
+            '. ' +
+            annotation.note.label +
+            ' ' +
+            annotation.accessibilityDescription
+        );
         headerCount++;
-      }
-      if (annotation.note && annotation.note.label) {
-        expect(annotationDetailsContent[detailCount]).toEqualText(annotation.note.label);
-        detailCount++;
-      }
-      if (annotation.accessibilityDescription) {
-        expect(annotationDetailsContent[detailCount]).toEqualText(annotation.accessibilityDescription);
-        detailCount++;
       }
     });
   }
@@ -2746,32 +2748,160 @@ export const accessibility_annotation_description_set_on_update = {
     // ASSERT
     const annotationDescriptionContainer = page.doc.querySelector(testSelector);
     let headerCount = 0;
-    let detailCount = 0;
     const annotationDetailsHeaders = Array.from(page.doc.querySelectorAll(nextTestSelector)).filter(
       o => o.tagName.toUpperCase() === 'H6'
-    );
-    const annotationDetailsContent = Array.from(page.doc.querySelectorAll(nextTestSelector)).filter(
-      o => o.tagName.toUpperCase() === 'P'
     );
 
     // ASSERT
     const ignoreAnnotationCount = component.annotations.filter(a => a.accessibilityDecorationOnly).length;
     const annotationCount = component.annotations.length - ignoreAnnotationCount;
-    expect(annotationCount).toBeGreaterThanOrEqual(1);
-    expect(annotationDescriptionContainer).toEqualText(`Number of annotations: ${annotationCount}.`);
 
+    expect(annotationCount).toBeGreaterThanOrEqual(1);
+
+    // we handle reference lines in a separate test so we zero it out here.
+    expect(annotationDescriptionContainer).toEqualText(
+      `Number of reference lines: 0. Number of annotations: ${annotationCount}.`
+    );
+
+    // annotation
     component.annotations.forEach((annotation, i) => {
-      if (annotation.note && annotation.note.title) {
-        expect(annotationDetailsHeaders[headerCount]).toEqualText(annotation.note.title);
+      if (annotation.note) {
+        expect(annotationDetailsHeaders[headerCount]).toEqualText(
+          'Annotation title: ' +
+            annotation.note.title +
+            '. ' +
+            annotation.note.label +
+            ' ' +
+            annotation.accessibilityDescription
+        );
         headerCount++;
       }
-      if (annotation.note && annotation.note.label) {
-        expect(annotationDetailsContent[detailCount]).toEqualText(annotation.note.label);
-        detailCount++;
+    });
+  }
+};
+
+export const accessibility_referenceLine_description_set_on_load = {
+  prop: 'referenceLines',
+  group: 'accessibility',
+  name: 'instruction elements should contain reference line description on load if reference line exists on chart',
+  testProps: {},
+  testSelector: '.vcl-accessibility-instructions .vcl-access-annotations-heading',
+  nextTestSelector: '.vcl-accessibility-instructions .vcl-access-annotation',
+  testFunc: async (
+    component: any,
+    page: SpecPage,
+    testProps: object,
+    testSelector: string,
+    nextTestSelector: string
+  ) => {
+    // ARRANGE
+    component.wrapLabel = false;
+    component.highestHeadingLevel = 'h4';
+
+    // if we have any testProps apply them
+    if (Object.keys(testProps).length) {
+      Object.keys(testProps).forEach(testProp => {
+        component[testProp] = testProps[testProp];
+      });
+    }
+
+    // ACT RENDER
+    page.root.appendChild(component);
+    await page.waitForChanges();
+
+    // ASSERT
+    const annotationDescriptionContainer = page.doc.querySelector(testSelector);
+    let headerCount = 0;
+    const annotationDetailsHeaders = Array.from(page.doc.querySelectorAll(nextTestSelector)).filter(
+      o => o.tagName.toUpperCase() === 'H6'
+    );
+
+    // ASSERT
+    const ignoreReferenceLineCount = component.referenceLines.filter(a => a.accessibilityDecorationOnly).length;
+    const referenceLineCount = component.referenceLines.length - ignoreReferenceLineCount;
+
+    expect(referenceLineCount).toBeGreaterThanOrEqual(1);
+
+    // we handle the annotations in the annotations test, so we zero it out the value here.
+    expect(annotationDescriptionContainer).toEqualText(
+      `Number of reference lines: ${referenceLineCount}. Number of annotations: 0.`
+    );
+
+    // reference line
+    component.referenceLines.forEach((referenceLine, i) => {
+      if (referenceLine.label) {
+        expect(annotationDetailsHeaders[headerCount]).toEqualText(
+          'Reference line title: ' + referenceLine.label + '. ' + referenceLine.accessibilityDescription
+        );
+        headerCount++;
       }
-      if (annotation.accessibilityDescription) {
-        expect(annotationDetailsContent[detailCount]).toEqualText(annotation.accessibilityDescription);
-        detailCount++;
+    });
+  }
+};
+
+export const accessibility_referenceLine_description_set_on_update = {
+  prop: 'referenceLines',
+  group: 'accessibility',
+  name: 'instruction elements should contain reference line description on update if reference line exists on chart',
+  testProps: {},
+  testSelector: '.vcl-accessibility-instructions .vcl-access-annotations-heading',
+  nextTestSelector: '.vcl-accessibility-instructions .vcl-access-annotation',
+  testFunc: async (
+    component: any,
+    page: SpecPage,
+    testProps: object,
+    testSelector: string,
+    nextTestSelector: string
+  ) => {
+    // ARRANGE
+    component.wrapLabel = false;
+    component.highestHeadingLevel = 'h4';
+
+    // if we have any testProps apply them
+    let innerAnnotations;
+    if (Object.keys(testProps).length) {
+      Object.keys(testProps).forEach(testProp => {
+        if (testProp === 'annotations') {
+          innerAnnotations = testProps[testProp];
+        } else {
+          component[testProp] = testProps[testProp];
+        }
+      });
+    }
+
+    // ACT RENDER
+    page.root.appendChild(component);
+    await page.waitForChanges();
+
+    // ACT UPDATE
+    component.annotations = innerAnnotations;
+    await page.waitForChanges();
+
+    // ASSERT
+    const annotationDescriptionContainer = page.doc.querySelector(testSelector);
+    let headerCount = 0;
+    const annotationDetailsHeaders = Array.from(page.doc.querySelectorAll(nextTestSelector)).filter(
+      o => o.tagName.toUpperCase() === 'H6'
+    );
+
+    // ASSERT
+    const ignoreReferenceLineCount = component.referenceLines.filter(a => a.accessibilityDecorationOnly).length;
+    const referenceLineCount = component.referenceLines.length - ignoreReferenceLineCount;
+
+    expect(referenceLineCount).toBeGreaterThanOrEqual(1);
+
+    // we handle annotation in a different test so we zero it out here.
+    expect(annotationDescriptionContainer).toEqualText(
+      `Number of reference lines: ${referenceLineCount}. Number of annotations: 0.`
+    );
+
+    // reference line
+    component.referenceLines.forEach((referenceLine, i) => {
+      if (referenceLine.label) {
+        expect(annotationDetailsHeaders[headerCount]).toEqualText(
+          'Reference line title: ' + referenceLine.label + '. ' + referenceLine.accessibilityDescription
+        );
+        headerCount++;
       }
     });
   }

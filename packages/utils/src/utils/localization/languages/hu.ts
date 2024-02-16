@@ -75,7 +75,8 @@ export const hu = {
         end: 'végső érték',
         value: 'érték',
         axis: 'tengely',
-        annotation: 'diagram magyarázat'
+        annotation: 'diagram magyarázat',
+        referenceLine: 'referencia vonal'
       },
       expressions: {
         keyboardInstructions: 'Billentyűzet Instrukciók',
@@ -87,7 +88,8 @@ export const hu = {
         butSomeMayBeHiddenUntilYouInteractWithThisNode:
           '(de pár elem rejtve maradhat addig ameddig interakció nem történik ezzel az elemmel).',
         asAPercentage: 'mint százalék',
-        numberOfAnnotations: 'Diagram magyarázatok száma:'
+        numberOfAnnotations: 'Diagram magyarázatok száma:',
+        numberOfReferenceLines: 'Diagram referencia vonalak száma:'
       }
     },
     dataTable: {
@@ -121,7 +123,8 @@ export const hu = {
       usingDifferentScales: 'Az Y tengelyek különböző beosztásúak.',
       thisSeriesIsTitled: 'Ezen sorozat címe:',
       notesAboutTheChartStructure: 'Jegyzetek a diagram struktúrájáról:',
-      numberOfAnnotationsOnTheChart: 'Diagram magyarázatok száma a diagram területen:'
+      referenceLineTitle: 'Referencia vonal címe:',
+      annotationTitle: 'Diagram magyarázat címe:'
     },
     'bar-chart': {
       altTextGenerator: {

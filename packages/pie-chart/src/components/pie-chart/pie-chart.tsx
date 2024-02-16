@@ -680,9 +680,10 @@ export class PieChart {
 
   @Watch('referenceData')
   referenceDataWatcher(_newVal, _oldVal) {
+    this.shouldValidate = true;
     this.shouldUpdateReferenceLines = true;
-    // this.shouldUpdateAccessibility = true;
     this.shouldUpdateTableData = true;
+    this.shouldSetAnnotationAccessibility = true;
   }
 
   @Watch('suppressEvents')
@@ -2524,7 +2525,8 @@ export class PieChart {
   }
 
   setAnnotationAccessibility() {
-    setAccessAnnotation(this.getLanguageString(), this.pieChartEl, this.annotations);
+    // console.log('---------this.refArr', this.refArr);
+    setAccessAnnotation(this.getLanguageString(), this.pieChartEl, this.annotations, this.refArr);
   }
 
   // new accessibility functions added here

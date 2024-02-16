@@ -398,7 +398,13 @@ describe('<line-chart>', () => {
               unitTestAccessibility[test].prop === 'annotations'
                 ? [
                     {
-                      note: { label: 'High Card B in Nov', bgPadding: 0, align: 'left', wrap: 130 },
+                      note: {
+                        title: 'Annotation #1',
+                        label: 'High Card B in Nov',
+                        bgPadding: 0,
+                        align: 'left',
+                        wrap: 130
+                      },
                       parseAsDates: ['date'],
                       data: { date: '2016-11-01T00:00:00.000Z', category: 'Card B', value: 6772849978 },
                       dx: '-25%',
@@ -407,17 +413,19 @@ describe('<line-chart>', () => {
                       type: 'annotationCalloutCircle',
                       subject: { radius: 6 },
                       accessibilityDescription: 'This is a test description for accessibility.'
-                    },
+                    }
+                  ]
+                : [],
+            referenceLines:
+              unitTestAccessibility[test].prop === 'referenceLines'
+                ? [
                     {
-                      note: {},
-                      accessibilityDecorationOnly: true,
-                      type: 'annotationXYThreshold',
-                      subject: {
-                        x1: 0,
-                        x2: 250
-                      },
-                      color: 'pri_blue',
-                      disable: ['note', 'connector']
+                      label: 'Average',
+                      labelPlacementHorizontal: 'right',
+                      labelPlacementVertical: 'bottom',
+                      value: 7300000000,
+                      accessibilityDescription: 'This reference line is a callout to the Average value, which is 100.',
+                      accessibilityDecorationOnly: false
                     }
                   ]
                 : []
@@ -1985,6 +1993,14 @@ describe('<line-chart>', () => {
 
         // ASSERT
         const referenceLinesGroup = page.doc.querySelector('[data-testid=reference-line-group]');
+        const referenceLineG = page.doc.querySelector('[data-testid=reference-g]');
+        const referenceLine = page.doc.querySelector('[data-testid=reference-line]');
+        const referenceLineLabel = page.doc.querySelector('[data-testid=reference-line-label]');
+        flushTransitions(referenceLinesGroup);
+        flushTransitions(referenceLineG);
+        flushTransitions(referenceLine);
+        flushTransitions(referenceLineLabel);
+        await page.waitForChanges();
         expect(referenceLinesGroup).toMatchSnapshot();
       });
 
@@ -1998,8 +2014,16 @@ describe('<line-chart>', () => {
         await page.waitForChanges();
 
         // ASSERT
-        const referenceLine = page.doc.querySelector('[data-testid=reference-line-group]');
-        expect(referenceLine).toMatchSnapshot();
+        const referenceLinesGroup = page.doc.querySelector('[data-testid=reference-line-group]');
+        const referenceLineG = page.doc.querySelector('[data-testid=reference-g]');
+        const referenceLine = page.doc.querySelector('[data-testid=reference-line]');
+        const referenceLineLabel = page.doc.querySelector('[data-testid=reference-line-label]');
+        flushTransitions(referenceLinesGroup);
+        flushTransitions(referenceLineG);
+        flushTransitions(referenceLine);
+        flushTransitions(referenceLineLabel);
+        await page.waitForChanges();
+        expect(referenceLinesGroup).toMatchSnapshot();
       });
     });
 
@@ -2410,6 +2434,78 @@ describe('<line-chart>', () => {
           markers.forEach(marker => {
             expect(marker).toEqualAttribute('r', 4);
           });
+        });
+      });
+      describe('lineCurve', () => {
+        it('should have lineCurve linear by default', async () => {
+          // ACT
+          page.root.appendChild(component);
+          await page.waitForChanges();
+
+          // ASSERT
+          const lines = page.doc.querySelectorAll('[data-testid=line]');
+          await asyncForEach(lines, async line => {
+            flushTransitions(line); // flush transitions to trigger transitionEndAll
+            await page.waitForChanges();
+          });
+
+          // check that each line has linear encoding for d attr
+          expect(lines[0]).toEqualAttribute(
+            'd',
+            'M22.375,79.79816729742207L67.125,81.06002164330614L111.875,59.17420748190012L156.625,59.89364501125863L201.375,52.28510885833761L246.125,55.41561512149087L290.875,46.58715130138242L335.625,45.61187960566501L380.375,56.07656204320423L425.125,38.392732478009854L469.875,43.76228828705635L514.625,18.666666666666675'
+          );
+          expect(lines[1]).toEqualAttribute(
+            'd',
+            'M22.375,112.78006530402743L67.125,171.01065257041165L111.875,179.1083820513741L156.625,143.8475672098904L201.375,178.2159921562853L246.125,205.33333333333334L290.875,202.50157824169858L335.625,117.57238434734938L380.375,152.0239016987834L425.125,170.32032450443123L469.875,106.72772993603019L514.625,141.59919560037747'
+          );
+        });
+        it('should have lineCurve step on load', async () => {
+          component.lineCurve = 'step';
+
+          // ACT
+          page.root.appendChild(component);
+          await page.waitForChanges();
+
+          // ASSERT
+          const lines = page.doc.querySelectorAll('[data-testid=line]');
+          await asyncForEach(lines, async line => {
+            flushTransitions(line); // flush transitions to trigger transitionEndAll
+            await page.waitForChanges();
+          });
+
+          // check that each line has linear encoding for d attr
+          expect(lines[0]).toEqualAttribute(
+            'd',
+            'M22.375,79.79816729742207L44.75,79.79816729742207L44.75,81.06002164330614L89.5,81.06002164330614L89.5,59.17420748190012L134.25,59.17420748190012L134.25,59.89364501125863L179,59.89364501125863L179,52.28510885833761L223.75,52.28510885833761L223.75,55.41561512149087L268.5,55.41561512149087L268.5,46.58715130138242L313.25,46.58715130138242L313.25,45.61187960566501L358,45.61187960566501L358,56.07656204320423L402.75,56.07656204320423L402.75,38.392732478009854L447.5,38.392732478009854L447.5,43.76228828705635L492.25,43.76228828705635L492.25,18.666666666666675L514.625,18.666666666666675'
+          );
+          expect(lines[1]).toEqualAttribute(
+            'd',
+            'M22.375,112.78006530402743L44.75,112.78006530402743L44.75,171.01065257041165L89.5,171.01065257041165L89.5,179.1083820513741L134.25,179.1083820513741L134.25,143.8475672098904L179,143.8475672098904L179,178.2159921562853L223.75,178.2159921562853L223.75,205.33333333333334L268.5,205.33333333333334L268.5,202.50157824169858L313.25,202.50157824169858L313.25,117.57238434734938L358,117.57238434734938L358,152.0239016987834L402.75,152.0239016987834L402.75,170.32032450443123L447.5,170.32032450443123L447.5,106.72772993603019L492.25,106.72772993603019L492.25,141.59919560037747L514.625,141.59919560037747'
+          );
+        });
+        it('should have lineCurve catmull-rom on load', async () => {
+          component.lineCurve = 'catmullRom';
+
+          // ACT
+          page.root.appendChild(component);
+          await page.waitForChanges();
+
+          // ASSERT
+          const lines = page.doc.querySelectorAll('[data-testid=line]');
+          await asyncForEach(lines, async line => {
+            flushTransitions(line); // flush transitions to trigger transitionEndAll
+            await page.waitForChanges();
+          });
+
+          // check that each line has linear encoding for d attr
+          expect(lines[0]).toEqualAttribute(
+            'd',
+            'M22.375,79.79816729742207C22.375,79.79816729742207,52.58591145701745,84.20967443199788,67.125,81.06002164330614C82.46181517802539,77.73755458821464,96.53707410601064,62.594313577996594,111.875,59.17420748190012C126.4131918826637,55.932428963228084,141.76061757385656,61.02803906773683,156.625,59.89364501125863C171.594694383874,58.7512139401571,186.4140385405338,53.02306489689519,201.375,52.28510885833761C216.24789183295175,51.551496893045346,231.2699104281552,56.344829829281906,246.125,55.41561512149087C261.10427763001076,54.47863220943411,275.88735851690296,48.21648476581288,290.875,46.58715130138242C305.7220174678261,44.97310532659747,320.8054310498783,44.0655931303294,335.625,45.61187960566501C350.6413602556549,47.17869945381556,365.62572024125694,57.159739453887866,380.375,56.07656204320423C395.46692105852065,54.968221280685306,409.9563450170814,40.35205652285557,425.125,38.392732478009854C439.8056320158744,36.49644600207471,455.41107745724804,46.631642650893355,469.875,43.76228828705635C485.30704684763776,40.700877329252506,514.625,18.666666666666675,514.625,18.666666666666675'
+          );
+          expect(lines[1]).toEqualAttribute(
+            'd',
+            'M22.375,112.78006530402743C22.375,112.78006530402743,49.94794714027979,160.54325521943306,67.125,171.01065257041165C80.64194299822236,179.2476426110434,97.7084197041359,182.6378058810263,111.875,179.1083820513741C127.73136507700686,175.15796977221655,141.6721188088123,143.9404473868961,156.625,143.8475672098904C171.50580044668686,143.7551347641428,186.16625685832665,167.81416118365001,201.375,178.2159921562853C216.0208116898976,188.2328131543286,230.5867082552935,201.5176311423411,246.125,205.33333333333334C260.5089705231707,208.86557154472672,277.8753711384087,210.9171524221784,290.875,202.50157824169858C309.89588091607044,190.1880240601473,318.14399040077967,121.38759482535973,335.625,117.57238434734938C349.0330629838123,114.64608983928254,364.83220590229865,143.08114884445874,380.375,152.0239016987834C394.7556692012516,160.2980105712422,411.59922548488305,174.2791760020392,425.125,170.32032450443123C442.27878596374904,165.299592332951,453.5847149440759,109.15339022888384,469.875,106.72772993603019C483.78949196149387,104.65583060889391,514.625,141.59919560037747,514.625,141.59919560037747'
+          );
         });
       });
       describe('strokeWidth', () => {

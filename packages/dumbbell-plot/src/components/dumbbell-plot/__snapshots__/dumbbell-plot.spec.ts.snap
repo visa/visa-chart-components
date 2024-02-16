@@ -339,14 +339,25 @@ Array [
 
 exports[`<dumbbell-plot> rendered-html reference line should pass referenceLines prop 1`] = `
 <g aria-hidden="true" class="dumbbell-reference-line-group" data-testid="reference-line-group" focusable="false" role="presentation">
-  <g class=".dumbbell-reference" opacity="1" transform="translate(0,87.00787278477907)">
-    <line class="dumbbell-reference-line" data-testid="reference-line" opacity="0" x1="0" x2="537" y1="0" y2="0"></line>
-    <text class="dumbbell-reference-line-label" dx="0.1em" dy="0.3em" opacity="0" text-anchor="start" x="537" y="0"></text>
+  <g class="dumbbell-reference" data-testid="reference-g" opacity="1" transform="translate(0,87.00787278477907)">
+    <line class="dumbbell-reference-line" data-testid="reference-line" opacity="1" stroke-dasharray="" x1="0" x2="537" y1="0" y2="0" style="stroke: rgb(92, 92, 92); stroke-width: 1px;"></line>
+    <text class="dumbbell-reference-line-label" data-testid="reference-line-label" dx="-0.5em" dy="1em" opacity="1" text-anchor="end" x="537" y="0" style="fill: rgb(92, 92, 92); paint-order: stroke; stroke: rgb(255, 255, 255); stroke-width: 4px;">
+      Market
+    </text>
   </g>
 </g>
 `;
 
-exports[`<dumbbell-plot> rendered-html reference line should pass referenceStyle prop 1`] = `<line class="dumbbell-reference-line" data-testid="reference-line" opacity="0" x1="0" x2="537" y1="0" y2="0"></line>`;
+exports[`<dumbbell-plot> rendered-html reference line should pass referenceStyle prop 1`] = `
+<g aria-hidden="true" class="dumbbell-reference-line-group" data-testid="reference-line-group" focusable="false" role="presentation">
+  <g class="dumbbell-reference" data-testid="reference-g" opacity="1" transform="translate(0,87.00787278477907)">
+    <line class="dumbbell-reference-line" data-testid="reference-line" opacity="0.65" stroke-dasharray="" x1="0" x2="537" y1="0" y2="0" style="stroke: rgb(174, 72, 180); stroke-width: 1px;"></line>
+    <text class="dumbbell-reference-line-label" data-testid="reference-line-label" dx="-0.5em" dy="1em" opacity="1" text-anchor="end" x="537" y="0" style="fill: rgb(174, 72, 180); paint-order: stroke; stroke: rgb(255, 255, 255); stroke-width: 4px;">
+      Market
+    </text>
+  </g>
+</g>
+`;
 
 exports[`<dumbbell-plot> rendered-html render localization: should render localized with minimal props[data,accessors] given 1`] = `
 <dumbbell-plot id="unique-d-plot">
@@ -380,6 +391,9 @@ exports[`<dumbbell-plot> rendered-html render localization: should render locali
         A diagram elsődleges vertikális Y tengelyt tartalmaz. Diagram címe Y Axis. Kezdeti erték érték 3Mrd, végső érték érték 10Mrd.
       </p>
       <p class="screen-reader-info vcl-access-notes" data-annotationlevel="h3" data-level="h4"></p>
+      <h3 class="screen-reader-info vcl-access-annotations-heading">
+        Diagram referencia vonalak száma: 0. Diagram magyarázatok száma: 0.
+      </h3>
     </div>
     <div class="o-layout--chart">
       <h2 aria-hidden="true" class="dumbbell-main-title vcl-main-title" data-testid="main-title">
@@ -1068,6 +1082,9 @@ exports[`<dumbbell-plot> rendered-html render should render with minimal props[d
         The chart has a primary vertical Y axis. Title Y Axis. Start value 3b, end value 10b.
       </p>
       <p class="screen-reader-info vcl-access-notes" data-annotationlevel="h3" data-level="h4"></p>
+      <h3 class="screen-reader-info vcl-access-annotations-heading">
+        Number of reference lines: 0. Number of annotations: 0.
+      </h3>
     </div>
     <div class="o-layout--chart">
       <h2 aria-hidden="true" class="dumbbell-main-title vcl-main-title" data-testid="main-title">

@@ -50,6 +50,7 @@ export const sortOrder = '';
 export const sortOrderAsc = 'asc';
 export const sortOrderDesc = 'desc';
 export const layout = 'vertical';
+export const layoutHorizontal = 'horizontal';
 
 export const xAxis = {
   visible: true,
@@ -152,6 +153,7 @@ export const dotRadius4 = 4;
 export const dotOpacity = 1;
 export const dotSymbols = ['circle'];
 export const showDots = true;
+export const lineCurve = 'linear';
 
 export const showFitLine = false;
 export const showBaselineTrue = true;

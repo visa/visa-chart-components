@@ -7,7 +7,7 @@
  **/
 
 import { Plugin } from 'vue';
-
+// components
 import { BarChart } from '@visa/charts/dist/components/bar-chart';
 import { StackedBarChart } from '@visa/charts/dist/components/stacked-bar-chart';
 import { ClusteredBarChart } from '@visa/charts/dist/components/clustered-bar-chart';

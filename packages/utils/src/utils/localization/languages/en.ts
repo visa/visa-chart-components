@@ -74,7 +74,8 @@ export const en = {
         end: 'end',
         value: 'value',
         axis: 'axis',
-        annotation: 'annotation'
+        annotation: 'annotation',
+        referenceLine: 'reference line'
       },
       expressions: {
         keyboardInstructions: 'Keyboard Instructions',
@@ -85,7 +86,8 @@ export const en = {
         keyboardInstructionsEsc: 'Exit the chart at any time.',
         butSomeMayBeHiddenUntilYouInteractWithThisNode: '(but some may be hidden until you interact with this node).',
         asAPercentage: 'as a percentage',
-        numberOfAnnotations: 'Number of annotations:'
+        numberOfAnnotations: 'Number of annotations:',
+        numberOfReferenceLines: 'Number of reference lines:'
       }
     },
     dataTable: {
@@ -117,7 +119,8 @@ export const en = {
       usingDifferentScales: 'The Y Axes are using different scales.',
       thisSeriesIsTitled: 'This series is titled:',
       notesAboutTheChartStructure: 'Notes about the chart structure',
-      numberOfAnnotationsOnTheChart: 'Number of annotations on the chart:'
+      referenceLineTitle: 'Reference line title:',
+      annotationTitle: 'Annotation title:'
     },
     'bar-chart': {
       altTextGenerator: {

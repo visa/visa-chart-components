@@ -101,9 +101,14 @@ export class AppPieChart {
   ];
 
   refDataStorage: any = [
-    [{ label: 'Dining', value: '6931260' }],
-    [{ label: 'Dining', value: '2931260' }],
-    [{ label: '', value: false }]
+    [
+      {
+        label: 'Dining',
+        value: '41260',
+        accessibilityDescription: 'Reference Line #1 accessibility description.',
+        accessibilityDecorationOnly: false
+      }
+    ]
   ];
 
   startData: any = [
@@ -137,11 +142,12 @@ export class AppPieChart {
     ]
   ];
   dataLabel: any = {
-    visible: false,
-    placement: 'outside',
-    labelAccessor: 'value',
-    format: '$0[.][0]a',
-    collisionHideOnly: false
+    visible: true,
+    placement: 'inside',
+    labelAccessor: 'value%',
+    // format: '$0[.][0]a',
+    format: 'normalized',
+    collisionHideOnly: true
   }; // format: 'normalized' };
   ref = [{ label: 'PY Share', value: '3396000' }];
   style = { color: 'supp_purple' };
@@ -474,8 +480,8 @@ export class AppPieChart {
             showPercentage={true}
             showEdgeLine={false}
             annotations={this.annotations}
-            // referenceData={this.refData}
-            // referenceStyle={{ color: 'supp_purple' }}
+            referenceData={this.refData}
+            referenceStyle={{ color: 'supp_purple' }}
             interactionKeys={this.interactionKeys}
             hoverHighlight={this.hoverElement}
             clickHighlight={this.clickElement}

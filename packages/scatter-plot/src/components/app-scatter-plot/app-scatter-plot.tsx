@@ -509,6 +509,24 @@ export class AppScatterPlot {
             //     {text: "average", color: '#323232'},
             //   ]
             // }}
+            referenceLines={[
+              {
+                label: 'Mid',
+                labelPlacementHorizontal: 'right',
+                labelPlacementVertical: 'top',
+                value: 20,
+                axis: 'x',
+                accessibilityDescription: 'accessDesc1'
+              },
+              {
+                label: 'Avg (est)',
+                labelPlacementHorizontal: 'left',
+                labelPlacementVertical: 'bottom',
+                value: 20000,
+                axis: 'y',
+                accessibilityDescription: 'accessDesc2'
+              }
+            ]}
             height={600}
             width={800}
             xAxis={this.xAxis}

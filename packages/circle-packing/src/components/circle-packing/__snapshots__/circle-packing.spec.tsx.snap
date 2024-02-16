@@ -376,6 +376,9 @@ exports[`<circle-packing> rendered-html render localization: should render local
       <p class="screen-reader-info vcl-access-xAxis"></p>
       <p class="screen-reader-info vcl-access-yAxis"></p>
       <p class="screen-reader-info vcl-access-notes" data-annotationlevel="h3" data-level="h4"></p>
+      <h3 class="screen-reader-info vcl-access-annotations-heading">
+        Diagram referencia vonalak száma: 0. Diagram magyarázatok száma: 0.
+      </h3>
     </div>
     <div class="o-layout--chart" data-testid="layout-chart">
       <h2 data-testid="main-title">
@@ -583,6 +586,9 @@ exports[`<circle-packing> rendered-html render should render with minimal props[
       <p class="screen-reader-info vcl-access-xAxis"></p>
       <p class="screen-reader-info vcl-access-yAxis"></p>
       <p class="screen-reader-info vcl-access-notes" data-annotationlevel="h3" data-level="h4"></p>
+      <h3 class="screen-reader-info vcl-access-annotations-heading">
+        Number of reference lines: 0. Number of annotations: 0.
+      </h3>
     </div>
     <div class="o-layout--chart" data-testid="layout-chart">
       <h2 data-testid="main-title">

@@ -349,6 +349,9 @@ exports[`<alluvial-diagram> rendered-html render localization: should render loc
         <p class="screen-reader-info vcl-access-xAxis"></p>
         <p class="screen-reader-info vcl-access-yAxis"></p>
         <p class="screen-reader-info vcl-access-notes" data-annotationlevel="h3" data-level="h4"></p>
+        <h3 class="screen-reader-info vcl-access-annotations-heading">
+          Diagram referencia vonalak száma: 0. Diagram magyarázatok száma: 0.
+        </h3>
       </div>
       <div class="o-layout--chart">
         <h2 aria-hidden="true" class="alluvial-main-title vcl-main-title" data-testid="main-title">
@@ -426,25 +429,25 @@ exports[`<alluvial-diagram> rendered-html render localization: should render loc
                   <path class="alluvial-link entering" cursor="default" d="M12,217.5780612244898C268.5,217.5780612244898,268.5,176.08792517006793,525,176.08792517006793" data-id="link-CatNew2018-Cat32019" data-role="img" data-testid="link" fill="none" focusable="false" id="alluvial-diagram-unit-test-123457-123457-123457" role="presentation" stroke="#7c99b1" stroke-dasharray="-2 -2" stroke-dashoffset="-2" stroke-opacity="0.3" stroke-width="0.1" tabindex="-1"></path>
                 </g>
                 <g aria-hidden="true" class="alluvial-dataLabel-group" focusable="false" role="presentation">
-                  <text class="alluvial-diagram-dataLabel" cursor="default" data-id="dataLabel-Cat12018" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="12" data-y="14.949659863945548" dx="0.5em" dy="0.4em" filter="url(#VCL-t-s-f-ffffffalluvial-diagram-unit-test)" opacity="1" text-anchor="start" x="12" y="14.949659863945548">
+                  <text class="alluvial-diagram-dataLabel" cursor="default" data-dx="0.5em" data-dy="0.4em" data-id="dataLabel-Cat12018" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="16" data-y="14.949659863945548" dx="0.5em" dy="0.4em" filter="url(#VCL-t-s-f-ffffffalluvial-diagram-unit-test)" opacity="1" text-anchor="start" x="12" y="14.949659863945548">
                     8,6E
                   </text>
-                  <text class="alluvial-diagram-dataLabel" cursor="default" data-id="dataLabel-Cat22018" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="12" data-y="79.51275510204081" dx="0.5em" dy="0.4em" filter="url(#VCL-t-s-f-ffffffalluvial-diagram-unit-test)" opacity="1" text-anchor="start" x="12" y="79.51275510204081">
+                  <text class="alluvial-diagram-dataLabel" cursor="default" data-dx="0.5em" data-dy="0.4em" data-id="dataLabel-Cat22018" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="16" data-y="79.51275510204081" dx="0.5em" dy="0.4em" filter="url(#VCL-t-s-f-ffffffalluvial-diagram-unit-test)" opacity="1" text-anchor="start" x="12" y="79.51275510204081">
                     17E
                   </text>
-                  <text class="alluvial-diagram-dataLabel" cursor="default" data-id="dataLabel-Cat32018" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="12" data-y="141.96483843537416" dx="0.5em" dy="0.4em" filter="url(#VCL-t-s-f-ffffffalluvial-diagram-unit-test)" opacity="1" text-anchor="start" x="12" y="141.96483843537416">
+                  <text class="alluvial-diagram-dataLabel" cursor="default" data-dx="0.5em" data-dy="0.4em" data-id="dataLabel-Cat32018" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="16" data-y="141.96483843537416" dx="0.5em" dy="0.4em" filter="url(#VCL-t-s-f-ffffffalluvial-diagram-unit-test)" opacity="1" text-anchor="start" x="12" y="141.96483843537416">
                     7,4E
                   </text>
-                  <text class="alluvial-diagram-dataLabel" cursor="default" data-id="dataLabel-CatNew2018" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="12" data-y="199.4017431972789" dx="0.5em" dy="0.4em" filter="url(#VCL-t-s-f-ffffffalluvial-diagram-unit-test)" opacity="1" text-anchor="start" x="12" y="199.4017431972789">
+                  <text class="alluvial-diagram-dataLabel" cursor="default" data-dx="0.5em" data-dy="0.4em" data-id="dataLabel-CatNew2018" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="16" data-y="199.4017431972789" dx="0.5em" dy="0.4em" filter="url(#VCL-t-s-f-ffffffalluvial-diagram-unit-test)" opacity="1" text-anchor="start" x="12" y="199.4017431972789">
                     14,1E
                   </text>
-                  <text class="alluvial-diagram-dataLabel" cursor="default" data-id="dataLabel-Cat12019" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="525" data-y="12.437712585034006" dx="-0.5em" dy="0.4em" filter="url(#VCL-t-s-f-ffffffalluvial-diagram-unit-test)" opacity="1" text-anchor="end" x="525" y="12.437712585034006">
+                  <text class="alluvial-diagram-dataLabel" cursor="default" data-dx="-0.5em" data-dy="0.4em" data-id="dataLabel-Cat12019" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="521" data-y="12.437712585034006" dx="-0.5em" dy="0.4em" filter="url(#VCL-t-s-f-ffffffalluvial-diagram-unit-test)" opacity="1" text-anchor="end" x="525" y="12.437712585034006">
                     7,1E
                   </text>
-                  <text class="alluvial-diagram-dataLabel" cursor="default" data-id="dataLabel-Cat22019" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="525" data-y="86.49948979591832" dx="-0.5em" dy="0.4em" filter="url(#VCL-t-s-f-ffffffalluvial-diagram-unit-test)" opacity="1" text-anchor="end" x="525" y="86.49948979591832">
+                  <text class="alluvial-diagram-dataLabel" cursor="default" data-dx="-0.5em" data-dy="0.4em" data-id="dataLabel-Cat22019" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="521" data-y="86.49948979591832" dx="-0.5em" dy="0.4em" filter="url(#VCL-t-s-f-ffffffalluvial-diagram-unit-test)" opacity="1" text-anchor="end" x="525" y="86.49948979591832">
                     23,9E
                   </text>
-                  <text class="alluvial-diagram-dataLabel" cursor="default" data-id="dataLabel-Cat32019" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="525" data-y="176.06177721088426" dx="-0.5em" dy="0.4em" filter="url(#VCL-t-s-f-ffffffalluvial-diagram-unit-test)" opacity="1" text-anchor="end" x="525" y="176.06177721088426">
+                  <text class="alluvial-diagram-dataLabel" cursor="default" data-dx="-0.5em" data-dy="0.4em" data-id="dataLabel-Cat32019" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="521" data-y="176.06177721088426" dx="-0.5em" dy="0.4em" filter="url(#VCL-t-s-f-ffffffalluvial-diagram-unit-test)" opacity="1" text-anchor="end" x="525" y="176.06177721088426">
                     16E
                   </text>
                 </g>
@@ -536,6 +539,9 @@ exports[`<alluvial-diagram> rendered-html render should render with minimal prop
         <p class="screen-reader-info vcl-access-xAxis"></p>
         <p class="screen-reader-info vcl-access-yAxis"></p>
         <p class="screen-reader-info vcl-access-notes" data-annotationlevel="h3" data-level="h4"></p>
+        <h3 class="screen-reader-info vcl-access-annotations-heading">
+          Number of reference lines: 0. Number of annotations: 0.
+        </h3>
       </div>
       <div class="o-layout--chart">
         <h2 aria-hidden="true" class="alluvial-main-title vcl-main-title" data-testid="main-title">
@@ -613,25 +619,25 @@ exports[`<alluvial-diagram> rendered-html render should render with minimal prop
                   <path class="alluvial-link entering" cursor="default" d="M12,217.5780612244898C268.5,217.5780612244898,268.5,176.08792517006793,525,176.08792517006793" data-id="link-CatNew2018-Cat32019" data-role="img" data-testid="link" fill="none" focusable="false" id="alluvial-diagram-unit-test-123457-123457-123457" role="presentation" stroke="#7c99b1" stroke-dasharray="-2 -2" stroke-dashoffset="-2" stroke-opacity="0.3" stroke-width="0.1" tabindex="-1"></path>
                 </g>
                 <g aria-hidden="true" class="alluvial-dataLabel-group" focusable="false" role="presentation">
-                  <text class="alluvial-diagram-dataLabel" cursor="default" data-id="dataLabel-Cat12018" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="12" data-y="14.949659863945548" dx="0.5em" dy="0.4em" filter="url(#VCL-t-s-f-ffffffalluvial-diagram-unit-test)" opacity="1" text-anchor="start" x="12" y="14.949659863945548">
+                  <text class="alluvial-diagram-dataLabel" cursor="default" data-dx="0.5em" data-dy="0.4em" data-id="dataLabel-Cat12018" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="16" data-y="14.949659863945548" dx="0.5em" dy="0.4em" filter="url(#VCL-t-s-f-ffffffalluvial-diagram-unit-test)" opacity="1" text-anchor="start" x="12" y="14.949659863945548">
                     8.6k
                   </text>
-                  <text class="alluvial-diagram-dataLabel" cursor="default" data-id="dataLabel-Cat22018" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="12" data-y="79.51275510204081" dx="0.5em" dy="0.4em" filter="url(#VCL-t-s-f-ffffffalluvial-diagram-unit-test)" opacity="1" text-anchor="start" x="12" y="79.51275510204081">
+                  <text class="alluvial-diagram-dataLabel" cursor="default" data-dx="0.5em" data-dy="0.4em" data-id="dataLabel-Cat22018" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="16" data-y="79.51275510204081" dx="0.5em" dy="0.4em" filter="url(#VCL-t-s-f-ffffffalluvial-diagram-unit-test)" opacity="1" text-anchor="start" x="12" y="79.51275510204081">
                     17k
                   </text>
-                  <text class="alluvial-diagram-dataLabel" cursor="default" data-id="dataLabel-Cat32018" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="12" data-y="141.96483843537416" dx="0.5em" dy="0.4em" filter="url(#VCL-t-s-f-ffffffalluvial-diagram-unit-test)" opacity="1" text-anchor="start" x="12" y="141.96483843537416">
+                  <text class="alluvial-diagram-dataLabel" cursor="default" data-dx="0.5em" data-dy="0.4em" data-id="dataLabel-Cat32018" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="16" data-y="141.96483843537416" dx="0.5em" dy="0.4em" filter="url(#VCL-t-s-f-ffffffalluvial-diagram-unit-test)" opacity="1" text-anchor="start" x="12" y="141.96483843537416">
                     7.4k
                   </text>
-                  <text class="alluvial-diagram-dataLabel" cursor="default" data-id="dataLabel-CatNew2018" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="12" data-y="199.4017431972789" dx="0.5em" dy="0.4em" filter="url(#VCL-t-s-f-ffffffalluvial-diagram-unit-test)" opacity="1" text-anchor="start" x="12" y="199.4017431972789">
+                  <text class="alluvial-diagram-dataLabel" cursor="default" data-dx="0.5em" data-dy="0.4em" data-id="dataLabel-CatNew2018" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="16" data-y="199.4017431972789" dx="0.5em" dy="0.4em" filter="url(#VCL-t-s-f-ffffffalluvial-diagram-unit-test)" opacity="1" text-anchor="start" x="12" y="199.4017431972789">
                     14.1k
                   </text>
-                  <text class="alluvial-diagram-dataLabel" cursor="default" data-id="dataLabel-Cat12019" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="525" data-y="12.437712585034006" dx="-0.5em" dy="0.4em" filter="url(#VCL-t-s-f-ffffffalluvial-diagram-unit-test)" opacity="1" text-anchor="end" x="525" y="12.437712585034006">
+                  <text class="alluvial-diagram-dataLabel" cursor="default" data-dx="-0.5em" data-dy="0.4em" data-id="dataLabel-Cat12019" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="521" data-y="12.437712585034006" dx="-0.5em" dy="0.4em" filter="url(#VCL-t-s-f-ffffffalluvial-diagram-unit-test)" opacity="1" text-anchor="end" x="525" y="12.437712585034006">
                     7.1k
                   </text>
-                  <text class="alluvial-diagram-dataLabel" cursor="default" data-id="dataLabel-Cat22019" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="525" data-y="86.49948979591832" dx="-0.5em" dy="0.4em" filter="url(#VCL-t-s-f-ffffffalluvial-diagram-unit-test)" opacity="1" text-anchor="end" x="525" y="86.49948979591832">
+                  <text class="alluvial-diagram-dataLabel" cursor="default" data-dx="-0.5em" data-dy="0.4em" data-id="dataLabel-Cat22019" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="521" data-y="86.49948979591832" dx="-0.5em" dy="0.4em" filter="url(#VCL-t-s-f-ffffffalluvial-diagram-unit-test)" opacity="1" text-anchor="end" x="525" y="86.49948979591832">
                     23.9k
                   </text>
-                  <text class="alluvial-diagram-dataLabel" cursor="default" data-id="dataLabel-Cat32019" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="525" data-y="176.06177721088426" dx="-0.5em" dy="0.4em" filter="url(#VCL-t-s-f-ffffffalluvial-diagram-unit-test)" opacity="1" text-anchor="end" x="525" y="176.06177721088426">
+                  <text class="alluvial-diagram-dataLabel" cursor="default" data-dx="-0.5em" data-dy="0.4em" data-id="dataLabel-Cat32019" data-testid="dataLabel" data-translate-x="56.5" data-translate-y="23" data-use-dx="false" data-use-dy="false" data-x="521" data-y="176.06177721088426" dx="-0.5em" dy="0.4em" filter="url(#VCL-t-s-f-ffffffalluvial-diagram-unit-test)" opacity="1" text-anchor="end" x="525" y="176.06177721088426">
                     16k
                   </text>
                 </g>

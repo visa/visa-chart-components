@@ -373,18 +373,19 @@ describe('<dumbbell-plot>', () => {
                       data: { month: 'May-17', value: 6042320, cat: 'A' },
                       dy: '-20%',
                       color: 'pri_blue'
-                    },
+                    }
+                  ]
+                : [],
+            referenceLines:
+              unitTestAccessibility[test].prop === 'referenceLines'
+                ? [
                     {
-                      note: {
-                        label: "June's volume is here.",
-                        bgPadding: 20,
-                        title: 'The month of june',
-                        align: 'middle',
-                        wrap: 210
-                      },
-                      data: { month: 'Jun-17', value: 3234002, cat: 'A' },
-                      dy: '-20%',
-                      color: 'pri_blue'
+                      label: 'Average',
+                      labelPlacementHorizontal: 'right',
+                      labelPlacementVertical: 'bottom',
+                      value: '0.017628909842',
+                      accessibilityDescription: 'This reference line is a callout to the Average value, which is 100.',
+                      accessibilityDecorationOnly: false
                     }
                   ]
                 : []
@@ -3000,6 +3001,14 @@ describe('<dumbbell-plot>', () => {
 
         // ASSERT
         const referenceLinesGroup = page.doc.querySelector('[data-testid=reference-line-group]');
+        const referenceLineG = page.doc.querySelector('[data-testid=reference-g]');
+        const referenceLine = page.doc.querySelector('[data-testid=reference-line]');
+        const referenceLineLabel = page.doc.querySelector('[data-testid=reference-line-label]');
+        flushTransitions(referenceLinesGroup);
+        flushTransitions(referenceLineG);
+        flushTransitions(referenceLine);
+        flushTransitions(referenceLineLabel);
+        await page.waitForChanges();
         expect(referenceLinesGroup).toMatchSnapshot();
       });
 
@@ -3013,8 +3022,16 @@ describe('<dumbbell-plot>', () => {
         await page.waitForChanges();
 
         // ASSERT
+        const referenceLinesGroup = page.doc.querySelector('[data-testid=reference-line-group]');
+        const referenceLineG = page.doc.querySelector('[data-testid=reference-g]');
         const referenceLine = page.doc.querySelector('[data-testid=reference-line]');
-        expect(referenceLine).toMatchSnapshot();
+        const referenceLineLabel = page.doc.querySelector('[data-testid=reference-line-label]');
+        flushTransitions(referenceLinesGroup);
+        flushTransitions(referenceLineG);
+        flushTransitions(referenceLine);
+        flushTransitions(referenceLineLabel);
+        await page.waitForChanges();
+        expect(referenceLinesGroup).toMatchSnapshot();
       });
     });
 
