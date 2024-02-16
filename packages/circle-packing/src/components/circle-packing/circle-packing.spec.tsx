@@ -315,17 +315,6 @@ describe('<circle-packing>', () => {
                       className: 'circle-pack-annotation',
                       type: 'annotationCalloutCircle',
                       subject: { radius: 18 }
-                    },
-                    {
-                      note: {},
-                      accessibilityDecorationOnly: true,
-                      type: 'annotationXYThreshold',
-                      subject: {
-                        x1: 0,
-                        x2: 250
-                      },
-                      color: 'pri_blue',
-                      disable: ['note', 'connector']
                     }
                   ]
                 : []
@@ -382,7 +371,9 @@ describe('<circle-packing>', () => {
             test === 'accessibility_xaxis_description_added_on_update' ||
             test === 'accessibility_yaxis_description_set_on_load' ||
             test === 'accessibility_yaxis_description_off_on_load' ||
-            test === 'accessibility_yaxis_description_added_on_update'
+            test === 'accessibility_yaxis_description_added_on_update' ||
+            test === 'accessibility_referenceLine_description_set_on_load' ||
+            test === 'accessibility_referenceLine_description_set_on_update'
             // test === 'accessibility_keyboard_selection_test'
           ) {
             it.skip(`${unitTestAccessibility[test].prop}: ${unitTestAccessibility[test].name}`, () =>

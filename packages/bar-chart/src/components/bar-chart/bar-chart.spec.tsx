@@ -29,7 +29,6 @@ const {
   getNumeralInstance,
   registerNumeralFormat,
   registerNumeralLocale,
-  setNumeralLocale,
   halve
 } = Utils;
 
@@ -319,26 +318,29 @@ describe('<bar-chart>', () => {
                     },
                     {
                       note: {
+                        title: 'The month of june',
                         label: "June's volume is here.",
                         bgPadding: 20,
-                        title: 'The month of june',
                         align: 'middle',
                         wrap: 210
                       },
+                      accessibilityDescription: 'This annotation is a callout to June, which is for testing purposes.',
                       data: { month: 'Jun-17', value: 3234002, cat: 'A' },
                       dy: '-20%',
                       color: 'pri_blue'
-                    },
+                    }
+                  ]
+                : [],
+            referenceLines:
+              unitTestAccessibility[test].prop === 'referenceLines'
+                ? [
                     {
-                      note: {},
-                      accessibilityDecorationOnly: true,
-                      type: 'annotationXYThreshold',
-                      subject: {
-                        x1: 0,
-                        x2: 250
-                      },
-                      color: 'pri_blue',
-                      disable: ['note', 'connector']
+                      label: 'Average',
+                      labelPlacementHorizontal: 'middle',
+                      labelPlacementVertical: 'right',
+                      value: 75,
+                      accessibilityDescription: 'This reference line is a callout to the Average value, which is 100.',
+                      accessibilityDecorationOnly: false
                     }
                   ]
                 : []
@@ -1971,7 +1973,14 @@ describe('<bar-chart>', () => {
       it('should pass referenceLines prop', async () => {
         // ARRANGE
         const referenceLines = [
-          { label: 'Market', labelPlacementHorizontal: 'left', labelPlacementVertical: 'bottom', value: 7000000 }
+          {
+            label: 'Market',
+            labelPlacementHorizontal: 'left',
+            labelPlacementVertical: 'bottom',
+            value: 7000000,
+            accessibilityDescription: 'This is accessibility description for reference line.',
+            accessibilityDecorationOnly: false
+          }
         ];
         component.referenceLines = referenceLines;
 
@@ -1981,13 +1990,28 @@ describe('<bar-chart>', () => {
 
         // ASSERT
         const referenceLinesGroup = page.doc.querySelector('[data-testid=reference-line-group]');
+        const referenceLineG = page.doc.querySelector('[data-testid=reference-g]');
+        const referenceLine = page.doc.querySelector('[data-testid=reference-line]');
+        const referenceLineLabel = page.doc.querySelector('[data-testid=reference-line-label]');
+        flushTransitions(referenceLinesGroup);
+        flushTransitions(referenceLineG);
+        flushTransitions(referenceLine);
+        flushTransitions(referenceLineLabel);
+        await page.waitForChanges();
         expect(referenceLinesGroup).toMatchSnapshot();
       });
 
       it('should pass referenceStyle prop', async () => {
         // ARRANGE
         const referenceLines = [
-          { label: 'Market', labelPlacementHorizontal: 'left', labelPlacementVertical: 'bottom', value: 7000000 }
+          {
+            label: 'Market',
+            labelPlacementHorizontal: 'left',
+            labelPlacementVertical: 'bottom',
+            value: 7000000,
+            accessibilityDescription: 'This is accessibility description for reference line.',
+            accessibilityDecorationOnly: false
+          }
         ];
         const referenceStyle = { color: 'pri_grey', dashed: '', opacity: 0.65, strokeWidth: '1px' };
         component.referenceLines = referenceLines;
@@ -1998,8 +2022,16 @@ describe('<bar-chart>', () => {
         await page.waitForChanges();
 
         // ASSERT
+        const referenceLinesGroup = page.doc.querySelector('[data-testid=reference-line-group]');
+        const referenceLineG = page.doc.querySelector('[data-testid=reference-g]');
         const referenceLine = page.doc.querySelector('[data-testid=reference-line]');
-        expect(referenceLine).toMatchSnapshot();
+        const referenceLineLabel = page.doc.querySelector('[data-testid=reference-line-label]');
+        flushTransitions(referenceLinesGroup);
+        flushTransitions(referenceLineG);
+        flushTransitions(referenceLine);
+        flushTransitions(referenceLineLabel);
+        await page.waitForChanges();
+        expect(referenceLinesGroup).toMatchSnapshot();
       });
     });
 

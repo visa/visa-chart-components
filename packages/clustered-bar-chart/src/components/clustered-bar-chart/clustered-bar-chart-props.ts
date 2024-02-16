@@ -237,7 +237,7 @@ export interface IClusteredBarChartProps {
   minValueOverride: number;
 
   /**
-   * @shortDescription Data that sets the location and labeling of the reference line
+   * @shortDescription Data that sets the location and labeling of the reference line(s)
    * @controlName TextArea
    * @groupName Reference_Line */
   referenceLines: object[];

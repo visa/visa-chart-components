@@ -38,6 +38,13 @@ export interface IAlluvialDiagramProps {
   width: number;
 
   /**
+   * @shortDescription Displays alluvial diagram vertically or horizontally
+   * @controlName Radio
+   * @groupName Base
+   * @sortOrder 3 */
+  layout: string;
+
+  /**
    * @shortDescription Sets the heading level (which also sets sublevels) for the chart. "p", "span", and "div" are also valid.
    * @controlName Select
    * @groupName Base */

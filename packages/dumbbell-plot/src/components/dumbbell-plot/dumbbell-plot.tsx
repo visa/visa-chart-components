@@ -86,7 +86,6 @@ const {
   overrideTitleTooltip,
   placeDataLabels,
   scopeDataKeys,
-  visaColors,
   transitionEndAll,
   validateAccessibilityProps,
   validateLocalizationProps,
@@ -95,7 +94,8 @@ const {
   roundTo,
   getTextWidth,
   resolveLabelCollision,
-  setSubTitle
+  setSubTitle,
+  setReferenceLine
 } = Utils;
 
 @Component({
@@ -196,7 +196,7 @@ export class DumbbellPlot {
   innerXAxis: any;
   innerYAxis: any;
   baselineG: any;
-  references: any;
+  referencesG: any;
   defaults: boolean;
   duration: number;
   enter: any;
@@ -1985,7 +1985,7 @@ export class DumbbellPlot {
     this.tooltipG = select(this.dumbbellPlotEl).select('.dumbbell-tooltip');
 
     this.labels = this.rootG.append('g').attr('class', 'dumbbell-dataLabel-group');
-    this.references = this.rootG.append('g').attr('class', 'dumbbell-reference-line-group');
+    this.referencesG = this.rootG.append('g').attr('class', 'dumbbell-reference-line-group');
   }
 
   renderMarkerGroup() {
@@ -2075,7 +2075,7 @@ export class DumbbellPlot {
       this.dumbbellG.attr('data-testid', 'dumbbell-group');
       this.baselineG.attr('data-testid', 'baseline-group');
 
-      this.references.attr('data-testid', 'reference-line-group');
+      this.referencesG.attr('data-testid', 'reference-line-group');
       this.updateLabels.attr('data-testid', 'dataLabel-wrapper');
       this.updateLabelChildren
         .attr('data-testid', 'dataLabel')
@@ -2102,7 +2102,7 @@ export class DumbbellPlot {
       this.dumbbellG.attr('data-testid', null);
       this.baselineG.attr('data-testid', null);
 
-      this.references.attr('data-testid', null);
+      this.referencesG.attr('data-testid', null);
       this.updateLabels.attr('data-testid', null);
       this.updateLabelChildren.attr('data-testid', null).attr('data-id', null);
       this.updateDiffLabel.attr('data-testid', null).attr('data-id', null);
@@ -3521,102 +3521,19 @@ export class DumbbellPlot {
   }
 
   drawReferenceLines() {
-    const currentReferences = this.references.selectAll('g').data(this.referenceLines, d => d.label);
-
-    const enterReferences = currentReferences
-      .enter()
-      .append('g')
-      .attr('class', '.dumbbell-reference')
-      .attr('opacity', 1);
-
-    const enterLines = enterReferences.append('line');
-
-    enterLines
-      // .attr('id', (_, i) => 'reference-line-' + i)
-      .attr('class', 'dumbbell-reference-line')
-      .attr('data-testid', this.unitTest ? 'reference-line' : null)
-      .attr('opacity', 0);
-
-    const enterLabels = enterReferences.append('text');
-
-    enterLabels
-      // .attr('id', (_, i) => 'reference-line-' + i + '-label')
-      .attr('class', 'dumbbell-reference-line-label')
-      .attr('opacity', 0);
-
-    const mergeReferences = currentReferences.merge(enterReferences);
-
-    const mergeLines = mergeReferences
-      .selectAll('.dumbbell-reference-line')
-      .data(d => [d])
-      .transition('merge')
-      .ease(easeCircleIn)
-      .duration(this.duration);
-
-    const mergeLabels = mergeReferences
-      .selectAll('.dumbbell-reference-line-label')
-      .data(d => [d])
-      .transition('merge')
-      .ease(easeCircleIn)
-      .duration(this.duration)
-      .text(d => d.label);
-
-    const exitReferences = currentReferences.exit();
-
-    exitReferences
-      .transition('exit')
-      .ease(easeCircleIn)
-      .duration(this.duration)
-      .attr('opacity', 0)
-      .remove();
-
-    enterReferences.attr('transform', d => {
-      const scale = !this.isVertical ? 'x' : 'y';
-      return 'translate(0,' + this[scale](d.value) + ')';
+    setReferenceLine({
+      groupName: 'dumbbell',
+      root: this.referencesG,
+      referenceLines: this.referenceLines,
+      referenceStyle: this.referenceStyle,
+      innerPaddedWidth: this.innerPaddedWidth,
+      innerPaddedHeight: this.innerPaddedHeight,
+      duration: this.duration,
+      layout: this.layout,
+      x: this.x,
+      y: this.y,
+      unitTest: this.unitTest
     });
-
-    mergeReferences
-      .transition('merge')
-      .ease(easeCircleIn)
-      .duration(this.duration)
-      .attr('transform', d => {
-        const scale = !this.isVertical ? 'x' : 'y';
-        return 'translate(0,' + this[scale](d.value) + ')';
-      });
-
-    enterLines
-      .attr('x1', 0)
-      .attr('y1', 0)
-      .attr('y2', 0)
-      .attr('x2', this.innerPaddedWidth);
-
-    enterLabels
-      .attr('text-anchor', d => ((d.labelPlacementHorizontal || 'right') === 'right' ? 'start' : 'end'))
-      .attr('x', d => ((d.labelPlacementHorizontal || 'right') === 'right' ? this.innerPaddedWidth : 0))
-      .attr('y', 0)
-      .attr('dx', d => ((d.labelPlacementHorizontal || 'right') === 'right' ? '0.1em' : '-0.1em'))
-      .attr('dy', '0.3em');
-
-    mergeLines
-      .attr('x1', 0)
-      .attr('y1', 0)
-      .attr('y2', 0)
-      .attr('x2', this.innerPaddedWidth);
-
-    mergeLabels
-      .attr('text-anchor', d => ((d.labelPlacementHorizontal || 'right') === 'right' ? 'start' : 'end'))
-      .attr('x', d => ((d.labelPlacementHorizontal || 'right') === 'right' ? this.innerPaddedWidth : 0))
-      .attr('y', 0)
-      .attr('dx', d => ((d.labelPlacementHorizontal || 'right') === 'right' ? '0.1em' : '-0.1em'))
-      .attr('dy', '0.3em');
-
-    mergeLines
-      .style('stroke', visaColors[this.referenceStyle.color] || this.referenceStyle.color)
-      .style('stroke-width', this.referenceStyle.strokeWidth)
-      .attr('stroke-dasharray', this.referenceStyle.dashed ? this.referenceStyle.dashed : '')
-      .attr('opacity', this.referenceStyle.opacity);
-
-    mergeLabels.style('fill', visaColors[this.referenceStyle.color] || this.referenceStyle.color).attr('opacity', 1);
   }
 
   setSelectedClass() {
@@ -3648,7 +3565,7 @@ export class DumbbellPlot {
   }
 
   setAnnotationAccessibility() {
-    setAccessAnnotation(this.getLanguageString(), this.dumbbellPlotEl, this.annotations);
+    setAccessAnnotation(this.getLanguageString(), this.dumbbellPlotEl, this.annotations, this.referenceLines);
   }
 
   // new accessibility functions added here

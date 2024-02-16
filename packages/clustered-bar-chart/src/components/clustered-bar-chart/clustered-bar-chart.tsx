@@ -92,7 +92,8 @@ const {
   prepareRenderChange,
   roundTo,
   resolveLabelCollision,
-  setSubTitle
+  setSubTitle,
+  setReferenceLine
 } = Utils;
 
 @Component({
@@ -183,7 +184,7 @@ export class ClusteredBarChart {
   bars: any;
   labelG: any;
   labels: any;
-  references: any;
+  referencesG: any;
   defaults: boolean;
   current: any;
   enter: any;
@@ -1412,7 +1413,7 @@ export class ClusteredBarChart {
     this.subTitleG = select(this.clusteredBarChartEl).select('.clustered-bar-sub-title');
     this.tooltipG = select(this.clusteredBarChartEl).select('.clustered-bar-tooltip');
 
-    this.references = this.rootG.append('g').attr('class', 'clustered-bar-reference-line-group');
+    this.referencesG = this.rootG.append('g').attr('class', 'clustered-bar-reference-line-group');
   }
 
   setTestingAttributes() {
@@ -1449,13 +1450,13 @@ export class ClusteredBarChart {
         .attr('data-testid', 'dataLabel')
         .attr('data-id', d => `dataLabel-${d[this.groupAccessor]}-${d[this.ordinalAccessor]}`);
 
-      this.references.attr('data-testid', 'reference-line-group');
+      this.referencesG.attr('data-testid', 'reference-line-group');
       this.svg.select('defs').attr('data-testid', 'pattern-defs');
 
       // reference lines do not have global selections
-      this.references.selectAll('.clustered-bar-reference-line').attr('data-testid', 'reference-line');
+      this.referencesG.selectAll('.clustered-bar-reference-line').attr('data-testid', 'reference-line');
 
-      this.references.selectAll('.clustered-bar-reference-line-label').attr('data-testid', 'reference-line-label');
+      this.referencesG.selectAll('.clustered-bar-reference-line-label').attr('data-testid', 'reference-line-label');
     } else {
       select(this.clusteredBarChartEl)
         .select('.visa-viz-d3-clustered-bar-container')
@@ -1480,13 +1481,13 @@ export class ClusteredBarChart {
       this.updateLabelWrappers.attr('data-testid', null).attr('data-id', null);
       this.updateLabels.attr('data-testid', null).attr('data-id', null);
 
-      this.references.attr('data-testid', null);
+      this.referencesG.attr('data-testid', null);
       this.svg.select('defs').attr('data-testid', null);
 
       // reference lines do not have global selections
-      this.references.selectAll('.clustered-bar-reference-line').attr('data-testid', null);
+      this.referencesG.selectAll('.clustered-bar-reference-line').attr('data-testid', null);
 
-      this.references.selectAll('.clustered-bar-reference-line-label').attr('data-testid', null);
+      this.referencesG.selectAll('.clustered-bar-reference-line-label').attr('data-testid', null);
     }
   }
 
@@ -2497,141 +2498,19 @@ export class ClusteredBarChart {
   }
 
   drawReferenceLines() {
-    const currentReferences = this.references.selectAll('g').data(this.referenceLines, d => d.label);
-
-    const enterReferences = currentReferences
-      .enter()
-      .append('g')
-      .attr('class', 'clustered-bar-reference')
-      .attr('opacity', 1);
-
-    const enterLines = enterReferences.append('line');
-
-    enterLines
-      // .attr('id', (_, i) => 'reference-line-' + i)
-      .attr('class', 'clustered-bar-reference-line')
-      .attr('opacity', 0);
-
-    const enterLabels = enterReferences.append('text');
-
-    enterLabels
-      // .attr('id', (_, i) => 'reference-line-' + i + '-label')
-      .attr('class', 'clustered-bar-reference-line-label')
-      .attr('opacity', 0);
-
-    const mergeReferences = currentReferences.merge(enterReferences);
-
-    const mergeLines = mergeReferences
-      .selectAll('.clustered-bar-reference-line')
-      .data(d => [d])
-      .transition('merge')
-      .ease(easeCircleIn)
-      .duration(this.duration);
-
-    const mergeLabels = mergeReferences
-      .selectAll('.clustered-bar-reference-line-label')
-      .data(d => [d])
-      .transition('merge')
-      .ease(easeCircleIn)
-      .duration(this.duration)
-      .text(d => d.label);
-
-    const exitReferences = currentReferences.exit();
-
-    exitReferences
-      .transition('exit')
-      .ease(easeCircleIn)
-      .duration(this.duration)
-      .attr('opacity', 0)
-      .remove();
-
-    if (this.layout === 'vertical') {
-      enterReferences.attr('transform', d => {
-        return 'translate(0,' + this.y(d.value) + ')';
-      });
-
-      mergeReferences
-        .transition('merge')
-        .ease(easeCircleIn)
-        .duration(this.duration)
-        .attr('transform', d => {
-          return 'translate(0,' + this.y(d.value) + ')';
-        });
-
-      enterLines
-        .attr('x1', 0)
-        .attr('y1', 0)
-        .attr('y2', 0)
-        .attr('x2', this.innerPaddedWidth);
-
-      enterLabels
-        .attr('text-anchor', d => ((d.labelPlacementHorizontal || 'right') === 'right' ? 'start' : 'end'))
-        .attr('x', d => ((d.labelPlacementHorizontal || 'right') === 'right' ? this.innerPaddedWidth : 0))
-        .attr('y', 0)
-        .attr('dx', d => ((d.labelPlacementHorizontal || 'right') === 'right' ? '0.1em' : '-0.1em'))
-        .attr('dy', '0.3em');
-
-      mergeLines
-        .attr('x1', 0)
-        .attr('y1', 0)
-        .attr('y2', 0)
-        .attr('x2', this.innerPaddedWidth);
-
-      mergeLabels
-        .attr('text-anchor', d => ((d.labelPlacementHorizontal || 'right') === 'right' ? 'start' : 'end'))
-        .attr('x', d => ((d.labelPlacementHorizontal || 'right') === 'right' ? this.innerPaddedWidth : 0))
-        .attr('y', 0)
-        .attr('dx', d => ((d.labelPlacementHorizontal || 'right') === 'right' ? '0.1em' : '-0.1em'))
-        .attr('dy', '0.3em');
-    } else if (this.layout === 'horizontal') {
-      enterReferences.attr('transform', d => {
-        return 'translate(' + this.x(d.value) + ',0)';
-      });
-
-      mergeReferences
-        .transition('merge')
-        .ease(easeCircleIn)
-        .duration(this.duration)
-        .attr('transform', d => {
-          return 'translate(' + this.x(d.value) + ',0)';
-        });
-
-      enterLines
-        .attr('x1', 0)
-        .attr('y1', this.innerPaddedHeight)
-        .attr('x2', 0)
-        .attr('y2', 0);
-
-      mergeLines
-        .attr('x1', 0)
-        .attr('y1', this.innerPaddedHeight)
-        .attr('x2', 0)
-        .attr('y2', 0);
-
-      enterLabels
-        .attr('text-anchor', 'middle')
-        .attr('x', 0)
-        .attr('y', d => ((d.labelPlacementVertical || 'top') === 'top' ? 0 : this.innerPaddedHeight))
-        .attr('dx', 0)
-        .attr('dy', d => ((d.labelPlacementVertical || 'top') === 'top' ? '-0.3em' : '1em'));
-
-      mergeLabels
-        .attr('text-anchor', 'middle')
-        .attr('x', 0)
-        .attr('y', d => {
-          return (d.labelPlacementVertical || 'top') === 'top' ? 0 : this.innerPaddedHeight;
-        })
-        .attr('dx', 0)
-        .attr('dy', d => ((d.labelPlacementVertical || 'top') === 'top' ? '-0.3em' : '1em'));
-    }
-
-    mergeLines
-      .style('stroke', visaColors[this.referenceStyle.color] || this.referenceStyle.color)
-      .style('stroke-width', this.referenceStyle.strokeWidth)
-      .attr('stroke-dasharray', this.referenceStyle.dashed ? this.referenceStyle.dashed : '')
-      .attr('opacity', this.referenceStyle.opacity);
-
-    mergeLabels.style('fill', visaColors[this.referenceStyle.color] || this.referenceStyle.color).attr('opacity', 1);
+    setReferenceLine({
+      groupName: 'cluster',
+      root: this.referencesG,
+      referenceLines: this.referenceLines,
+      referenceStyle: this.referenceStyle,
+      innerPaddedWidth: this.innerPaddedWidth,
+      innerPaddedHeight: this.innerPaddedHeight,
+      duration: this.duration,
+      layout: this.layout,
+      x: this.x,
+      y: this.y,
+      unitTest: this.unitTest
+    });
   }
 
   prepareLegendData() {
@@ -2717,7 +2596,7 @@ export class ClusteredBarChart {
   }
 
   setAnnotationAccessibility() {
-    setAccessAnnotation(this.getLanguageString(), this.clusteredBarChartEl, this.annotations);
+    setAccessAnnotation(this.getLanguageString(), this.clusteredBarChartEl, this.annotations, this.referenceLines);
   }
 
   // new accessibility functions added here

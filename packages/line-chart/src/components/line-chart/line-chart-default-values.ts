@@ -49,6 +49,7 @@ export class LineChartDefaultValues {
   static readonly strokeWidth = propDefaultValues.strokeWidth2;
   static readonly showDots = propDefaultValues.showDots;
   static readonly dotRadius = propDefaultValues.dotRadius4;
+  static readonly lineCurve = propDefaultValues.lineCurve;
   static readonly hoverOpacity = propDefaultValues.hoverOpacity;
   static readonly cursor = propDefaultValues.cursor;
 

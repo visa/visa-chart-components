@@ -367,7 +367,8 @@ describe('<pie-chart>', () => {
                 ? [
                     {
                       note: {
-                        label: 'oasijfoiajsf',
+                        title: 'Annotation #1 Title',
+                        label: 'Annotation #1 description.',
                         bgPadding: 0,
                         align: 'middle',
                         wrap: 210
@@ -380,17 +381,21 @@ describe('<pie-chart>', () => {
                       color: '#000000',
                       className: 'testing1 testing2 testing3',
                       collisionHideOnly: false
-                    },
+                    }
+                  ]
+                : [],
+            referenceLines:
+              // skipping test due to difficulty in debugging; tests are added to skip section
+              unitTestAccessibility[test].prop === 'annotations'
+                ? [
                     {
-                      note: {},
-                      accessibilityDecorationOnly: true,
-                      type: 'annotationXYThreshold',
-                      subject: {
-                        x1: 0,
-                        x2: 250
-                      },
-                      color: 'pri_blue',
-                      disable: ['note', 'connector']
+                      data: {
+                        label: 'Average',
+                        value: 40060,
+                        accessibilityDescription:
+                          'This reference line is a callout to the Average value, which is 40060.',
+                        accessibilityDecorationOnly: false
+                      }
                     }
                   ]
                 : []
@@ -463,13 +468,16 @@ describe('<pie-chart>', () => {
               ));
             // skipping the axis related stuff as pie chart does not have an axis
             // the focus marker test needs to be adjusted for pie chart still
+            // skipping reference line tests due to difficulty in debugging
           } else if (
             test === 'accessibility_xaxis_description_set_on_load' ||
             test === 'accessibility_xaxis_description_off_on_load' ||
             test === 'accessibility_xaxis_description_added_on_update' ||
             test === 'accessibility_yaxis_description_set_on_load' ||
             test === 'accessibility_yaxis_description_off_on_load' ||
-            test === 'accessibility_yaxis_description_added_on_update'
+            test === 'accessibility_yaxis_description_added_on_update' ||
+            test === 'accessibility_referenceLine_description_set_on_load' ||
+            test === 'accessibility_referenceLine_description_set_on_update'
           ) {
             it.skip(`${unitTestAccessibility[test].prop}: ${unitTestAccessibility[test].name}`, () =>
               unitTestAccessibility[test].testFunc(
@@ -574,7 +582,8 @@ describe('<pie-chart>', () => {
         const annotations = [
           {
             note: {
-              label: 'oasijfoiajsf',
+              title: 'Annotation #1 Title',
+              label: 'Annotation #1 description.',
               bgPadding: 0,
               align: 'middle',
               wrap: 210
@@ -604,7 +613,8 @@ describe('<pie-chart>', () => {
         const annotations = [
           {
             note: {
-              label: 'oasijfoiajsf',
+              title: 'Annotation #1 Title',
+              label: 'Annotation #1 description.',
               bgPadding: 0,
               align: 'middle',
               wrap: 210

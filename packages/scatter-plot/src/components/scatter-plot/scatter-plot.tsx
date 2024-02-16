@@ -91,7 +91,8 @@ const {
   prepareRenderChange,
   roundTo,
   resolveLabelCollision,
-  setSubTitle
+  setSubTitle,
+  setReferenceLine
 } = Utils;
 
 @Component({
@@ -183,7 +184,7 @@ export class ScatterPlot {
   dotG: any;
   gridG: any;
   fitLine: any;
-  references: any;
+  referencesG: any;
   legendG: any;
   tooltipG: any;
   colorArr: any;
@@ -1592,7 +1593,7 @@ export class ScatterPlot {
       .append('svg');
     this.subTitleG = select(this.scatterChartEl).select('.scatter-sub-title');
     this.tooltipG = select(this.scatterChartEl).select('.scatter-tooltip');
-    this.references = this.rootG.append('g').attr('class', 'scatter-reference-line-group');
+    this.referencesG = this.rootG.append('g').attr('class', 'scatter-reference-line-group');
   }
 
   setGlobalSelections() {
@@ -1642,7 +1643,7 @@ export class ScatterPlot {
       this.gridG.attr('data-testid', 'scatter-grid-group');
 
       this.fitLine.attr('data-testid', 'scatter-fit-line-group');
-      this.references.attr('data-testid', 'scatter-reference-line-group');
+      this.referencesG.attr('data-testid', 'reference-line-group');
 
       this.dotG.attr('data-testid', 'marker-group-container');
       this.updatePointWrappers
@@ -1679,7 +1680,7 @@ export class ScatterPlot {
       this.gridG.attr('data-testid', null);
 
       this.fitLine.attr('data-testid', null);
-      this.references.attr('data-testid', null);
+      this.referencesG.attr('data-testid', null);
 
       this.dotG.attr('data-testid', null);
       this.updatePointWrappers.attr('data-testid', null).attr('data-id', null);
@@ -2509,95 +2510,18 @@ export class ScatterPlot {
   }
 
   drawReferenceLines() {
-    const currentReferences = this.references.selectAll('g').data(this.referenceLines, d => d.label);
-
-    const enterReferences = currentReferences
-      .enter()
-      .append('g')
-      .attr('class', 'scatter-reference')
-      .attr('opacity', 1);
-
-    const enterLines = enterReferences.append('line');
-
-    enterLines
-      // .attr('id', (_, i) => 'reference-line-' + i)
-      .attr('class', 'scatter-reference-line')
-      .attr('opacity', 0);
-
-    const enterRefLabels = enterReferences.append('text');
-
-    enterRefLabels
-      // .attr('id', (_, i) => 'reference-line-' + i + '-label')
-      .attr('class', 'scatter-reference-line-label')
-      .attr('opacity', 0);
-
-    const mergeReferences = currentReferences.merge(enterReferences);
-
-    const mergeLines = mergeReferences
-      .selectAll('.scatter-reference-line')
-      .data(d => [d])
-      .transition('merge')
-      .ease(easeCircleIn)
-      .duration(this.duration);
-
-    const mergeRefLabels = mergeReferences
-      .selectAll('.scatter-reference-line-label')
-      .data(d => [d])
-      .transition('merge')
-      .ease(easeCircleIn)
-      .duration(this.duration)
-      .text(d => d.label);
-
-    const exitReferences = currentReferences.exit();
-
-    exitReferences
-      .transition('exit')
-      .ease(easeCircleIn)
-      .duration(this.duration)
-      .attr('opacity', 0)
-      .remove();
-
-    // update reference lines
-    mergeReferences
-      .transition('merge')
-      .ease(easeCircleIn)
-      .duration(this.duration);
-
-    enterLines
-      .attr('x1', d => (d.axis === 'x' ? this.x(d.value) : 0))
-      .attr('x2', d => (d.axis === 'x' ? this.x(d.value) : this.innerPaddedWidth))
-      .attr('y1', d => (d.axis === 'x' ? 0 : this.y(d.value)))
-      .attr('y2', d => (d.axis === 'x' ? this.innerPaddedHeight : this.y(d.value)));
-
-    enterRefLabels
-      .attr('text-anchor', d => (d.placement === 'right' ? 'start' : d.placement === 'left' ? 'end' : 'middle'))
-      .attr('x', d => (d.placement === 'right' ? this.innerPaddedWidth : d.placement === 'left' ? 0 : this.x(d.value)))
-      .attr('dx', d => (d.placement === 'right' ? '0.1em' : d.placement === 'left' ? '-0.1em' : 0))
-      .attr('y', d => (d.placement === 'top' ? 0 : d.placement === 'bottom' ? this.innerPaddedHeight : this.y(d.value)))
-      .attr('dy', d => (d.placement === 'top' ? '-0.3em' : d.placement === 'bottom' ? '1.3em' : '0.3em'));
-
-    mergeLines
-      .attr('x1', d => (d.axis === 'x' ? this.x(d.value) : 0))
-      .attr('x2', d => (d.axis === 'x' ? this.x(d.value) : this.innerPaddedWidth))
-      .attr('y1', d => (d.axis === 'x' ? 0 : this.y(d.value)))
-      .attr('y2', d => (d.axis === 'x' ? this.innerPaddedHeight : this.y(d.value)));
-
-    mergeRefLabels
-      .attr('text-anchor', d => (d.placement === 'right' ? 'start' : d.placement === 'left' ? 'end' : 'middle'))
-      .attr('x', d => (d.placement === 'right' ? this.innerPaddedWidth : d.placement === 'left' ? 0 : this.x(d.value)))
-      .attr('dx', d => (d.placement === 'right' ? '0.1em' : d.placement === 'left' ? '-0.1em' : 0))
-      .attr('y', d => (d.placement === 'top' ? 0 : d.placement === 'bottom' ? this.innerPaddedHeight : this.y(d.value)))
-      .attr('dy', d => (d.placement === 'top' ? '-0.3em' : d.placement === 'bottom' ? '1.3em' : '0.3em'));
-
-    mergeLines
-      .style('stroke', visaColors[this.referenceStyle.color] || this.referenceStyle.color)
-      .style('stroke-width', this.referenceStyle.strokeWidth)
-      .attr('stroke-dasharray', this.referenceStyle.dashed ? this.referenceStyle.dashed : '')
-      .style('opacity', this.referenceStyle.opacity);
-
-    mergeRefLabels
-      .style('fill', visaColors[this.referenceStyle.color] || this.referenceStyle.color)
-      .style('opacity', this.referenceStyle.opacity);
+    setReferenceLine({
+      groupName: 'scatter',
+      root: this.referencesG,
+      referenceLines: this.referenceLines,
+      referenceStyle: this.referenceStyle,
+      innerPaddedWidth: this.innerPaddedWidth,
+      innerPaddedHeight: this.innerPaddedHeight,
+      duration: this.duration,
+      x: this.x,
+      y: this.y,
+      unitTest: this.unitTest
+    });
   }
 
   drawAnnotations() {
@@ -2617,7 +2541,7 @@ export class ScatterPlot {
   }
 
   setAnnotationAccessibility() {
-    setAccessAnnotation(this.getLanguageString(), this.scatterChartEl, this.annotations);
+    setAccessAnnotation(this.getLanguageString(), this.scatterChartEl, this.annotations, this.referenceLines);
   }
 
   // new accessibility functions added here

@@ -76,6 +76,7 @@ const {
   drawGrid,
   drawLegend,
   setSubTitle,
+  setReferenceLine,
   setLegendInteractionState,
   drawTooltip,
   formatDataLabel,
@@ -185,7 +186,7 @@ export class BarChart {
   bars: any;
   labels: any;
   nest: any;
-  references: any;
+  referencesG: any;
   defaults: boolean;
   duration: number;
   enter: any;
@@ -623,12 +624,6 @@ export class BarChart {
     }
   }
 
-  @Watch('referenceLines')
-  @Watch('referenceStyle')
-  referenceWatcher(_newVal, _oldVal) {
-    this.shouldUpdateReferenceLines = true;
-  }
-
   @Watch('tooltipLabel')
   tooltipLabelWatcher(_newVal, _oldVal) {
     this.shouldUpdateTableData = true;
@@ -810,6 +805,15 @@ export class BarChart {
     if (newInterface !== oldInterface) {
       this.shouldSetSelectionClass = true;
     }
+  }
+
+  @Watch('referenceLines')
+  @Watch('referenceStyle')
+  referenceLinesWatcher(_newVal, _oldVal) {
+    this.shouldValidate = true;
+    this.shouldUpdateReferenceLines = true;
+    this.shouldUpdateAnnotations = true;
+    this.shouldSetAnnotationAccessibility = true;
   }
 
   @Watch('annotations')
@@ -1951,16 +1955,16 @@ export class BarChart {
       this.tooltipG.attr('data-testid', 'tooltip-container');
       this.bars.attr('data-testid', 'bar-group');
       this.labels.attr('data-testid', 'dataLabel-group');
-      this.references.attr('data-testid', 'reference-line-group');
+      this.referencesG.attr('data-testid', 'reference-line-group');
       this.svg.select('defs').attr('data-testid', 'pattern-defs');
 
       this.updatingLabels.attr('data-testid', 'dataLabel').attr('data-id', d => `label-${d[this.ordinalAccessor]}`);
       this.update.attr('data-testid', 'bar').attr('data-id', d => `bar-${d[this.ordinalAccessor]}`);
 
       // reference lines do not have global selections
-      this.references.selectAll('.bar-reference-line').attr('data-testid', 'reference-line');
+      this.referencesG.selectAll('.bar-reference-line').attr('data-testid', 'reference-line');
 
-      this.references.selectAll('.bar-reference-line-label').attr('data-testid', 'reference-line-label');
+      this.referencesG.selectAll('.bar-reference-line-label').attr('data-testid', 'reference-line-label');
     } else {
       select(this.barChartEl)
         .select('.visa-viz-d3-bar-container')
@@ -1978,15 +1982,15 @@ export class BarChart {
       this.tooltipG.attr('data-testid', null);
       this.bars.attr('data-testid', null);
       this.labels.attr('data-testid', null);
-      this.references.attr('data-testid', null);
+      this.referencesG.attr('data-testid', null);
       this.svg.select('defs').attr('data-testid', null);
 
       this.updatingLabels.attr('data-testid', null).attr('data-id', null);
       this.update.attr('data-testid', null).attr('data-id', null);
 
-      this.references.selectAll('.bar-reference-line').attr('data-testid', null);
+      this.referencesG.selectAll('.bar-reference-line').attr('data-testid', null);
 
-      this.references.selectAll('.bar-reference-line-label').attr('data-testid', null);
+      this.referencesG.selectAll('.bar-reference-line-label').attr('data-testid', null);
     }
   }
 
@@ -2016,7 +2020,7 @@ export class BarChart {
 
     this.tooltipG = select(this.barChartEl).select('.bar-tooltip');
 
-    this.references = this.rootG.append('g').attr('class', 'bar-reference-line-group');
+    this.referencesG = this.rootG.append('g').attr('class', 'bar-reference-line-group');
   }
 
   setRoundedCorners() {
@@ -2548,135 +2552,19 @@ export class BarChart {
   }
 
   drawReferenceLines() {
-    const currentReferences = this.references.selectAll('g').data(this.referenceLines, d => d.label);
-
-    const enterReferences = currentReferences
-      .enter()
-      .append('g')
-      .attr('class', 'bar-reference')
-      .attr('opacity', 1);
-
-    const enterLines = enterReferences.append('line');
-
-    enterLines.attr('class', 'bar-reference-line').attr('opacity', 0);
-
-    const enterLabels = enterReferences.append('text');
-
-    enterLabels.attr('class', 'bar-reference-line-label').attr('opacity', 0);
-
-    const mergeReferences = currentReferences.merge(enterReferences);
-
-    const mergeLines = mergeReferences
-      .selectAll('.bar-reference-line')
-      .data(d => [d])
-      .transition('merge')
-      .ease(easeCircleIn)
-      .duration(this.duration);
-
-    const mergeLabels = mergeReferences
-      .selectAll('.bar-reference-line-label')
-      .data(d => [d])
-      .transition('merge')
-      .ease(easeCircleIn)
-      .duration(this.duration)
-      .text(d => d.label);
-
-    const exitReferences = currentReferences.exit();
-
-    exitReferences
-      .transition('exit')
-      .ease(easeCircleIn)
-      .duration(this.duration)
-      .attr('opacity', 0)
-      .remove();
-
-    if (this.layout === 'vertical') {
-      enterReferences.attr('transform', d => {
-        return 'translate(0,' + this.y(d.value) + ')';
-      });
-
-      mergeReferences
-        .transition('merge')
-        .ease(easeCircleIn)
-        .duration(this.duration)
-        .attr('transform', d => {
-          return 'translate(0,' + this.y(d.value) + ')';
-        });
-
-      enterLines
-        .attr('x1', 0)
-        .attr('y1', 0)
-        .attr('y2', 0)
-        .attr('x2', this.innerPaddedWidth);
-
-      enterLabels
-        .attr('text-anchor', d => ((d.labelPlacementHorizontal || 'right') === 'right' ? 'start' : 'end'))
-        .attr('x', d => ((d.labelPlacementHorizontal || 'right') === 'right' ? this.innerPaddedWidth : 0))
-        .attr('y', 0)
-        .attr('dx', d => ((d.labelPlacementHorizontal || 'right') === 'right' ? '0.1em' : '-0.1em'))
-        .attr('dy', '0.3em');
-
-      mergeLines
-        .attr('x1', 0)
-        .attr('y1', 0)
-        .attr('y2', 0)
-        .attr('x2', this.innerPaddedWidth);
-
-      mergeLabels
-        .attr('text-anchor', d => ((d.labelPlacementHorizontal || 'right') === 'right' ? 'start' : 'end'))
-        .attr('x', d => ((d.labelPlacementHorizontal || 'right') === 'right' ? this.innerPaddedWidth : 0))
-        .attr('y', 0)
-        .attr('dx', d => ((d.labelPlacementHorizontal || 'right') === 'right' ? '0.1em' : '-0.1em'))
-        .attr('dy', '0.3em');
-    } else if (this.layout === 'horizontal') {
-      enterReferences.attr('transform', d => {
-        return 'translate(' + this.x(d.value) + ',0)';
-      });
-
-      mergeReferences
-        .transition('merge')
-        .ease(easeCircleIn)
-        .duration(this.duration)
-        .attr('transform', d => {
-          return 'translate(' + this.x(d.value) + ',0)';
-        });
-
-      enterLines
-        .attr('x1', 0)
-        .attr('y1', this.innerPaddedHeight)
-        .attr('x2', 0)
-        .attr('y2', 0);
-
-      mergeLines
-        .attr('x1', 0)
-        .attr('y1', this.innerPaddedHeight)
-        .attr('x2', 0)
-        .attr('y2', 0);
-
-      enterLabels
-        .attr('text-anchor', 'middle')
-        .attr('x', 0)
-        .attr('y', d => ((d.labelPlacementVertical || 'top') === 'top' ? 0 : this.innerPaddedHeight))
-        .attr('dx', 0)
-        .attr('dy', d => ((d.labelPlacementVertical || 'top') === 'top' ? '-0.3em' : '1em'));
-
-      mergeLabels
-        .attr('text-anchor', 'middle')
-        .attr('x', 0)
-        .attr('y', d => {
-          return (d.labelPlacementVertical || 'top') === 'top' ? 0 : this.innerPaddedHeight;
-        })
-        .attr('dx', 0)
-        .attr('dy', d => ((d.labelPlacementVertical || 'top') === 'top' ? '-0.3em' : '1em'));
-    }
-
-    mergeLines
-      .style('stroke', visaColors[this.referenceStyle.color] || this.referenceStyle.color)
-      .style('stroke-width', this.referenceStyle.strokeWidth)
-      .attr('stroke-dasharray', this.referenceStyle.dashed ? this.referenceStyle.dashed : '')
-      .attr('opacity', this.referenceStyle.opacity);
-
-    mergeLabels.style('fill', visaColors[this.referenceStyle.color] || this.referenceStyle.color).attr('opacity', 1);
+    setReferenceLine({
+      groupName: 'bar',
+      root: this.referencesG,
+      referenceLines: this.referenceLines,
+      referenceStyle: this.referenceStyle,
+      innerPaddedWidth: this.innerPaddedWidth,
+      innerPaddedHeight: this.innerPaddedHeight,
+      duration: this.duration,
+      layout: this.layout,
+      x: this.x,
+      y: this.y,
+      unitTest: this.unitTest
+    });
   }
 
   drawLegendElements() {
@@ -2725,7 +2613,7 @@ export class BarChart {
   }
 
   setAnnotationAccessibility() {
-    setAccessAnnotation(this.getLanguageString(), this.barChartEl, this.annotations);
+    setAccessAnnotation(this.getLanguageString(), this.barChartEl, this.annotations, this.referenceLines);
   }
 
   // new accessibility functions added here

@@ -34,7 +34,6 @@
         <li><a href="#label-props">Label Props</a></li>
         <li><a href="#margin-and-padding-props">Margin & Padding Props</a></li>
         <li><a href="#style-props">Style Props</a></li>
-        <li><a href="#reference-line-props">Reference Line Props</a></li>
       </ul>
     </li>
   </ol>
@@ -406,44 +405,14 @@ const mouseOutHandler = evt => {
 
 ### <a name="style-props" href="#style-props">#</a> Style Props [<>](./src/components/parallel-plot/parallel-plot.tsx 'Source')
 
-| Name           | Type     | Default Value(s) | Description                                                                                                       |
-| -------------- | -------- | ---------------- | ----------------------------------------------------------------------------------------------------------------- |
-| `colorPalette` | string   | 'single_blue'    | Included color palettes can be found in our [color utility](../utils#colors). Overridden by colors.               |
-| `colors`       | string[] | `undefined`      | Accepts array of color strings or color values to customize colors beyond our palettes. Colors assigned in order. |
-| `dotRadius`    | number   | 4                | Sets the radius of data points, if visible.                                                                       |
-| `showDots`     | boolean  | true             | When selected, makes data point dots visible.                                                                     |
-| `strokeWidth`  | string   | '1'              | Changes stroke width of series lines.                                                                             |
+| Name           | Type     | Default Value(s) | Description                                                                                                                                                                                        |
+| -------------- | -------- | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `colorPalette` | string   | 'single_blue'    | Included color palettes can be found in our [color utility](../utils#colors). Overridden by colors.                                                                                                |
+| `colors`       | string[] | `undefined`      | Accepts array of color strings or color values to customize colors beyond our palettes. Colors assigned in order.                                                                                  |
+| `dotRadius`    | number   | 4                | Sets the radius of data points, if visible.                                                                                                                                                        |
+| `lineCurve`    | string   | 'linear'         | Sets the d3 curve of the line, accepts 'linear' or 'bumpX'. Refer to [d3-shape curve docs](https://d3js.org/d3-shape/curve) for more details. Note: VCC enables only select curve options from D3. |
+| `showDots`     | boolean  | true             | When selected, makes data point dots visible.                                                                                                                                                      |
+| `strokeWidth`  | string   | '1'              | Changes stroke width of series lines.                                                                                                                                                              |
 
 <br>
 <br>
-
-### <a name="reference-line-props" href="#reference-line-props">#</a> Reference Line Props _Deprecated_[<>](./src/components/parallel-plot/parallel-plot.tsx 'Source')
-
-The referenceLines and referenceStyle props are currently deprecated and will ultimately be fully replaced with the annotation prop. For the time being, this prop will work, but will also not pass accessibility requirements.
-
-| Name             | Type                 | Default Value(s)                                  | Description                                                                                                                   |
-| ---------------- | -------------------- | ------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `referenceLines` | object[]             | []                                                | Data that sets the location and labeling of the reference line                                                                |
-| `referenceStyle` | object (custom type) | [IReferenceStyleType](../types/src/prop-types.ts) | Sets the styling of reference line(s) placed on the chart, _see object definition below_. #### IReferenceStyleType Definition |
-
-#### IReferenceStyleType Definition
-
-| Name          | Type   | Default Value(s) | Description                                                             |
-| ------------- | ------ | ---------------- | ----------------------------------------------------------------------- |
-| `color`       | string | 'pri_grey'       | Sets the color of the reference line.                                   |
-| `strokeWidth` | number | 1                | Sets the stroke width of the reference line.                            |
-| `opacity`     | number | 1                | Sets the opacity of the reference line.                                 |
-| `dashed`      | string | ''               | Sets the dash array property of the path element of the reference line. |
-
-<br>
-
-#### referenceLines object definition
-
-`referenceLines` is an array of objects which needs to have the following properties within them.
-
-| Name                       | Type   | Default Value(s) | Description                                                     |
-| -------------------------- | ------ | ---------------- | --------------------------------------------------------------- |
-| `label`                    | string | `undefined`      | Sets the label to show for the reference line.                  |
-| `labelPlacementHorizontal` | string | `undefined`      | Sets the horizontal label placement for the reference line.     |
-| `labelPlacementVertical`   | string | `undefined`      | Sets the vertical label placement for the reference line.       |
-| `value`                    | number | `undefined`      | Sets the value where to place the reference line, per the axis. |

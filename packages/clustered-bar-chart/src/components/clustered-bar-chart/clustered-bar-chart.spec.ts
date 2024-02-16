@@ -342,26 +342,27 @@ describe('<clustered-bar-chart>', () => {
                       dx: ['2017', '2016'],
                       className: 'clustered-chart-annotation',
                       type: 'annotationCalloutElbow'
+                    }
+                  ]
+                : [],
+            referenceLines:
+              unitTestAccessibility[test].prop === 'referenceLines'
+                ? [
+                    {
+                      label: 'Average',
+                      labelPlacementHorizontal: 'right',
+                      labelPlacementVertical: 'top',
+                      value: 50,
+                      accessibilityDescription: 'This reference line is a callout to the Average value, which is 100.',
+                      accessibilityDecorationOnly: false
                     },
                     {
-                      note: {},
-                      y: [45],
-                      x: '33.6%',
-                      dy: [56.5],
-                      dx: ['2017', '2016'],
-                      accessibilityDecorationOnly: true,
-                      className: 'clustered-chart-annotation',
-                      type: 'annotationCalloutElbow'
-                    },
-                    {
-                      note: {},
-                      y: [78],
-                      x: '52.8%',
-                      dy: [56.5],
-                      dx: ['2017', '2016'],
-                      accessibilityDecorationOnly: true,
-                      className: 'clustered-chart-annotation',
-                      type: 'annotationCalloutElbow'
+                      label: 'Low',
+                      labelPlacementHorizontal: 'left',
+                      labelPlacementVertical: 'top',
+                      value: 20,
+                      accessibilityDescription: 'This reference line is a callout to the Low value, which is 20.',
+                      accessibilityDecorationOnly: false
                     }
                   ]
                 : []
@@ -1626,7 +1627,15 @@ describe('<clustered-bar-chart>', () => {
         await page.waitForChanges();
 
         // ASSERT
-        const referenceLinesGroup = await page.doc.querySelector('[data-testid=reference-line-group]');
+        const referenceLinesGroup = page.doc.querySelector('[data-testid=reference-line-group]');
+        const referenceLineG = page.doc.querySelector('[data-testid=reference-g]');
+        const referenceLine = page.doc.querySelector('[data-testid=reference-line]');
+        const referenceLineLabel = page.doc.querySelector('[data-testid=reference-line-label]');
+        flushTransitions(referenceLinesGroup);
+        flushTransitions(referenceLineG);
+        flushTransitions(referenceLine);
+        flushTransitions(referenceLineLabel);
+        await page.waitForChanges();
         expect(referenceLinesGroup).toMatchSnapshot();
       });
 
@@ -1644,8 +1653,16 @@ describe('<clustered-bar-chart>', () => {
         await page.waitForChanges();
 
         // ASSERT
-        const referenceLine = await page.doc.querySelector('.clustered-bar-reference-line');
-        expect(referenceLine).toMatchSnapshot();
+        const referenceLinesGroup = page.doc.querySelector('[data-testid=reference-line-group]');
+        const referenceLineG = page.doc.querySelector('[data-testid=reference-g]');
+        const referenceLine = page.doc.querySelector('[data-testid=reference-line]');
+        const referenceLineLabel = page.doc.querySelector('[data-testid=reference-line-label]');
+        flushTransitions(referenceLinesGroup);
+        flushTransitions(referenceLineG);
+        flushTransitions(referenceLine);
+        flushTransitions(referenceLineLabel);
+        await page.waitForChanges();
+        expect(referenceLinesGroup).toMatchSnapshot();
       });
     });
 

@@ -44,11 +44,10 @@ export class ParallelPlotDefaultValues {
   static readonly hoverStyle = propDefaultValues.hoverStyle;
   static readonly clickStyle = propDefaultValues.clickStyle;
 
-  static readonly referenceStyle = propDefaultValues.referenceStyle;
-
   static readonly strokeWidth = propDefaultValues.strokeWidth1;
   static readonly showDots = propDefaultValues.showDots;
   static readonly dotRadius = propDefaultValues.dotRadius4;
+  static readonly lineCurve = propDefaultValues.lineCurve;
   static readonly hoverOpacity = propDefaultValues.hoverOpacity;
   static readonly cursor = propDefaultValues.cursor;
 
@@ -61,7 +60,6 @@ export class ParallelPlotDefaultValues {
 
   static readonly showTooltip = propDefaultValues.showTooltip;
   static readonly suppressEvents = propDefaultValues.suppressEvents;
-  static readonly referenceLines = propDefaultValues.referenceLines;
   static readonly annotations = propDefaultValues.annotations;
 
   static readonly hoverHighlight;

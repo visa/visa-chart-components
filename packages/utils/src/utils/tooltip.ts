@@ -288,7 +288,7 @@ const buildTooltipContent = ({
     else if (chartType === 'alluvial-diagram') {
       defaultLabel = `
       <b>${groupAccessor && data[groupAccessor] ? data[groupAccessor] + '<br/>' : ''} </b>
-      <b>${capitalized(data[xAccessor])}</b> to <b>${capitalized(data[yAccessor])} </b><br/>
+      <b>${capitalized(data[xAccessor])}</b> → <b>${capitalized(data[yAccessor])} </b><br/>
       ${capitalized(dataKeyNames && dataKeyNames[valueAccessor] ? dataKeyNames[valueAccessor] : valueAccessor) + ':'}
       <b>${
         dataLabel && dataLabel.format ? formatStats(data[valueAccessor], dataLabel.format) : data[valueAccessor]

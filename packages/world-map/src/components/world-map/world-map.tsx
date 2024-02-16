@@ -2601,7 +2601,7 @@ export class WorldMap {
   }
 
   setAnnotationAccessibility() {
-    setAccessAnnotation(this.getLanguageString(), this.worldMapEl, this.annotations);
+    setAccessAnnotation(this.getLanguageString(), this.worldMapEl, this.annotations, undefined);
   }
 
   // utilize the legend component to draw the map's legend.

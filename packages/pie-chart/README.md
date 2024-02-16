@@ -351,13 +351,13 @@ const mouseOutHandler = evt => {
 <br>
 <br>
 
-### <a name="reference-line-props" href="#reference-line-props">#</a> Reference Line Props _Deprecated_[<>](./src/components/pie-chart/pie-chart.tsx 'Source')
+### <a name="reference-line-props" href="#reference-line-props">#</a> Reference Line Props [<>](./src/components/pie-chart/pie-chart.tsx 'Source')
 
 The referenceLines and referenceStyle props are currently deprecated and will ultimately be fully replaced with the annotation prop. For the time being, this prop will work, but will also not pass accessibility requirements.
 
 | Name             | Type                 | Default Value(s)                                  | Description                                                                                                                   |
 | ---------------- | -------------------- | ------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `referenceLines` | object[]             | []                                                | Data that sets the location and labeling of the reference line                                                                |
+| `referenceLines` | object[]             | []                                                | Data that sets the location and labeling of the reference line(s) _see object definition below_. ### IReferenceLineType       |
 | `referenceStyle` | object (custom type) | [IReferenceStyleType](../types/src/prop-types.ts) | Sets the styling of reference line(s) placed on the chart, _see object definition below_. #### IReferenceStyleType Definition |
 
 #### IReferenceStyleType Definition

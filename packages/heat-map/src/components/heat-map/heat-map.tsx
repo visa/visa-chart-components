@@ -2226,7 +2226,7 @@ export class HeatMap {
   }
 
   setAnnotationAccessibility() {
-    setAccessAnnotation(this.getLanguageString(), this.heatMapEl, this.annotations);
+    setAccessAnnotation(this.getLanguageString(), this.heatMapEl, this.annotations, undefined);
   }
   // new accessibility functions added here
   setTagLevels() {

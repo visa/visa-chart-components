@@ -8,7 +8,7 @@
 import { select } from 'd3-selection';
 import { translate } from './localization';
 import { capitalized } from './calculation';
-import { isObject } from './utilFunctions';
+import { isObject, has, isUndefined } from './utilFunctions';
 
 const emptyDescriptions = {
   'vcl-access-title': '', // 'This chart has no title provided.'
@@ -499,7 +499,7 @@ export const setAccessStructure = (language: string, rootEle: any, structure: st
   );
 };
 
-export const setAccessAnnotation = (language: string, rootEle: any, annotations: any) => {
+export const setAccessAnnotation = (language: string, rootEle: any, annotations: any, referenceLines: any) => {
   const parent = select(rootEle).select('.vcl-accessibility-instructions');
   const notesNode = parent.select('.vcl-access-notes').node();
   let header = parent.select('.vcl-access-annotations-heading');
@@ -507,56 +507,121 @@ export const setAccessAnnotation = (language: string, rootEle: any, annotations:
   const instructionsHeading = '.vcl-interaction-instructions';
   const headerLevel = notesNode.dataset.annotationlevel;
   const level1 = findTagLevel(headerLevel, 1);
-  const level2 = findTagLevel(headerLevel, 2);
 
   parent.selectAll('.vcl-access-annotation').remove();
 
-  let i = 1;
-  if (annotations && annotations.length) {
+  let i = 0;
+  let k = 0;
+
+  if ((annotations && annotations.length) || (referenceLines && referenceLines.length)) {
     if (!header.size()) {
       header = parent
         .insert(headerLevel, instructionsHeading)
         .attr('class', 'screen-reader-info vcl-access-annotations-heading');
     }
-    annotations.forEach(annotation => {
+
+    let unionAnnotationAndReferenceLines;
+
+    if (!isUndefined(annotations) && isUndefined(referenceLines)) {
+      unionAnnotationAndReferenceLines = [...annotations];
+    } else if (isUndefined(annotations) && !isUndefined(referenceLines)) {
+      unionAnnotationAndReferenceLines = [...referenceLines];
+    } else {
+      unionAnnotationAndReferenceLines = [...annotations, ...referenceLines];
+    }
+
+    unionAnnotationAndReferenceLines.forEach(item => {
       let count = false;
-      if (annotation.accessibilityDecorationOnly) {
+      if (item.accessibilityDecorationOnly) {
         count = false;
       } else {
-        if (annotation.note) {
-          if (annotation.note.title) {
-            count = true;
-            parent
-              .insert(level1, instructionsHeading)
-              .attr('class', 'screen-reader-info vcl-access-annotation')
-              .text(annotation.note.title || `${capitalized(translate('general.keywords.annotation', language))} ` + i);
+        count = true;
+
+        // annotations
+        if (isObject(item.note)) {
+          i++;
+
+          let annotationTitle = '';
+          let annotationLabelText = '';
+          let annotationAccessibilityDescription = '';
+
+          if (item.note.title) {
+            annotationTitle = `${capitalized(translate('accessibilityDescriptions.annotationTitle', language))} ${
+              item.note.title
+            }.`;
+          } else {
+            annotationTitle = `${capitalized(translate('general.keywords.annotation', language))} ` + i + `:`;
           }
-          if (annotation.note.label) {
-            count = true;
-            parent
-              .insert(level2, instructionsHeading)
-              .attr('class', 'screen-reader-info vcl-access-annotation')
-              .text(annotation.note.label);
+
+          if (item.note.label) {
+            annotationLabelText = `${item.note.label}`;
           }
-        }
-        if (annotation.accessibilityDescription) {
-          count = true;
+
+          if (item.accessibilityDescription) {
+            annotationAccessibilityDescription = `${item.accessibilityDescription}`;
+          } else {
+            annotationAccessibilityDescription = ``;
+          }
+
           parent
-            .insert(level2, instructionsHeading)
+            .insert(level1, instructionsHeading)
             .attr('class', 'screen-reader-info vcl-access-annotation')
-            .text(annotation.accessibilityDescription);
+            .text(`${annotationTitle} ${annotationLabelText} ${annotationAccessibilityDescription}`);
+
+          // reference lines
+        } else {
+          k++;
+
+          let referenceLineLabel;
+          let referenceLineAccessibilityDescription;
+
+          if (has(item, 'data')) {
+            // pie-chart
+            if (item.data.label) {
+              referenceLineLabel = `${capitalized(
+                translate('accessibilityDescriptions.referenceLineTitle', language)
+              )} ${item.data.label}.`;
+            } else {
+              referenceLineLabel = `${capitalized(translate('general.keywords.referenceLine', language))} ` + k + `:`;
+            }
+
+            if (item.data.accessibilityDescription) {
+              referenceLineAccessibilityDescription = `${item.data.accessibilityDescription}`;
+            } else {
+              referenceLineAccessibilityDescription = ``;
+            }
+          } else {
+            // charts other than pie-chart
+            if (item.label) {
+              referenceLineLabel = `${capitalized(
+                translate('accessibilityDescriptions.referenceLineTitle', language)
+              )} ${item.label}.`;
+            } else {
+              referenceLineLabel = `${capitalized(translate('general.keywords.referenceLine', language))} ` + k + `:`;
+            }
+
+            if (item.accessibilityDescription) {
+              referenceLineAccessibilityDescription = `${item.accessibilityDescription}`;
+            } else {
+              referenceLineAccessibilityDescription = ``;
+            }
+          }
+
+          parent
+            .insert(level1, instructionsHeading)
+            .attr('class', 'screen-reader-info vcl-access-annotation')
+            .text(`${referenceLineLabel} ${referenceLineAccessibilityDescription}`);
         }
-      }
-      if (count) {
-        i++;
       }
     });
   }
-  if (i - 1) {
-    header.text(`${translate('general.expressions.numberOfAnnotations', language)} ${i - 1}.`);
-  } else {
-    header.remove();
-  }
+
+  header.text(
+    `${translate('general.expressions.numberOfReferenceLines', language)} ${k}. ${translate(
+      'general.expressions.numberOfAnnotations',
+      language
+    )} ${i}.`
+  );
 };
 
 export const setAccessibilityDescriptionWidth = (uniqueID, width) => {

@@ -378,6 +378,45 @@ Object {
         "<alluvial-diagram>",
         "rendered-html",
         "generic test suite",
+        "layout",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<alluvial-diagram> rendered-html generic test suite layout should render chart horizontally by default",
+      "location": null,
+      "status": "passed",
+      "title": "should render chart horizontally by default",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<alluvial-diagram>",
+        "rendered-html",
+        "generic test suite",
+        "layout",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<alluvial-diagram> rendered-html generic test suite layout should render chart vertically on load",
+      "location": null,
+      "status": "passed",
+      "title": "should render chart vertically on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<alluvial-diagram>",
+        "rendered-html",
+        "generic test suite",
+        "layout",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<alluvial-diagram> rendered-html generic test suite layout should render chart vertically on update",
+      "location": null,
+      "status": "passed",
+      "title": "should render chart vertically on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<alluvial-diagram>",
+        "rendered-html",
+        "generic test suite",
         "data",
         "uniqueId",
       ],
@@ -754,7 +793,7 @@ Object {
     at step (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:66:23)
     at Object.next (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:47:53)
     at fulfilled (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:37:58)
-    at processTicksAndRejections (node:internal/process/task_queues:96:5)",
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)",
       ],
       "fullName": "<alluvial-diagram> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: cousin - up arrow goes to next",
       "location": null,
@@ -774,7 +813,7 @@ Object {
     at step (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:66:23)
     at Object.next (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:47:53)
     at fulfilled (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:37:58)
-    at processTicksAndRejections (node:internal/process/task_queues:96:5)",
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)",
       ],
       "fullName": "<alluvial-diagram> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: cousin - down arrow goes to next",
       "location": null,
@@ -988,6 +1027,32 @@ Object {
       "location": null,
       "status": "passed",
       "title": "annotations: instruction elements should contain annotation description on update if annotation exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<alluvial-diagram>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<alluvial-diagram> rendered-html accessibility generic accessibility test suite referenceLines: instruction elements should contain reference line description on load if reference line exists on chart",
+      "location": null,
+      "status": "pending",
+      "title": "referenceLines: instruction elements should contain reference line description on load if reference line exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<alluvial-diagram>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<alluvial-diagram> rendered-html accessibility generic accessibility test suite referenceLines: instruction elements should contain reference line description on update if reference line exists on chart",
+      "location": null,
+      "status": "pending",
+      "title": "referenceLines: instruction elements should contain reference line description on update if reference line exists on chart",
     },
     Object {
       "ancestorTitles": Array [
@@ -1735,16 +1800,10 @@ Object {
         "links",
         "fillMode",
       ],
-      "failureMessages": Array [
-        "Error: expected attribute stroke \\"none\\" to equal \\"#7c99b1\\"
-    at ./packages/alluvial-diagram/src/components/alluvial-diagram/alluvial-diagram.spec.ts:1150:26
-    at Array.forEach (<anonymous>)
-    at Object.<anonymous> (./packages/alluvial-diagram/src/components/alluvial-diagram/alluvial-diagram.spec.ts:1149:17)
-    at processTicksAndRejections (node:internal/process/task_queues:96:5)",
-      ],
+      "failureMessages": Array [],
       "fullName": "<alluvial-diagram> rendered-html links fillMode should have fillMode of link if passed on load",
       "location": null,
-      "status": "failed",
+      "status": "passed",
       "title": "should have fillMode of link if passed on load",
     },
     Object {
@@ -1780,16 +1839,10 @@ Object {
         "links",
         "fillMode",
       ],
-      "failureMessages": Array [
-        "Error: expected attribute stroke \\"#7c99b1\\" to equal \\"#624c48\\"
-    at ./packages/alluvial-diagram/src/components/alluvial-diagram/alluvial-diagram.spec.ts:1226:26
-    at Array.forEach (<anonymous>)
-    at Object.<anonymous> (./packages/alluvial-diagram/src/components/alluvial-diagram/alluvial-diagram.spec.ts:1224:17)
-    at processTicksAndRejections (node:internal/process/task_queues:96:5)",
-      ],
+      "failureMessages": Array [],
       "fullName": "<alluvial-diagram> rendered-html links fillMode should have fillMode of target if passed on load",
       "location": null,
-      "status": "failed",
+      "status": "passed",
       "title": "should have fillMode of target if passed on load",
     },
     Object {
@@ -3018,6 +3071,32 @@ Object {
       "location": null,
       "status": "passed",
       "title": "annotations: instruction elements should contain annotation description on update if annotation exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<bar-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<bar-chart> rendered-html accessibility generic accessibility test suite referenceLines: instruction elements should contain reference line description on load if reference line exists on chart",
+      "location": null,
+      "status": "passed",
+      "title": "referenceLines: instruction elements should contain reference line description on load if reference line exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<bar-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<bar-chart> rendered-html accessibility generic accessibility test suite referenceLines: instruction elements should contain reference line description on update if reference line exists on chart",
+      "location": null,
+      "status": "passed",
+      "title": "referenceLines: instruction elements should contain reference line description on update if reference line exists on chart",
     },
     Object {
       "ancestorTitles": Array [
@@ -5405,6 +5484,32 @@ Object {
         "<circle-packing>",
         "rendered-html",
         "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<circle-packing> rendered-html accessibility generic accessibility test suite referenceLines: instruction elements should contain reference line description on load if reference line exists on chart",
+      "location": null,
+      "status": "pending",
+      "title": "referenceLines: instruction elements should contain reference line description on load if reference line exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<circle-packing>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<circle-packing> rendered-html accessibility generic accessibility test suite referenceLines: instruction elements should contain reference line description on update if reference line exists on chart",
+      "location": null,
+      "status": "pending",
+      "title": "referenceLines: instruction elements should contain reference line description on update if reference line exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<circle-packing>",
+        "rendered-html",
+        "accessibility",
         "validation",
       ],
       "failureMessages": Array [],
@@ -7303,6 +7408,32 @@ Object {
         "<clustered-bar-chart>",
         "rendered-html",
         "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<clustered-bar-chart> rendered-html accessibility generic accessibility test suite referenceLines: instruction elements should contain reference line description on load if reference line exists on chart",
+      "location": null,
+      "status": "passed",
+      "title": "referenceLines: instruction elements should contain reference line description on load if reference line exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<clustered-bar-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<clustered-bar-chart> rendered-html accessibility generic accessibility test suite referenceLines: instruction elements should contain reference line description on update if reference line exists on chart",
+      "location": null,
+      "status": "passed",
+      "title": "referenceLines: instruction elements should contain reference line description on update if reference line exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<clustered-bar-chart>",
+        "rendered-html",
+        "accessibility",
         "validation",
       ],
       "failureMessages": Array [],
@@ -8657,8 +8788,8 @@ Object {
       ],
       "failureMessages": Array [
         "Error: expected textContent \\"$15\\" to equal \\"15\\"
-    at Object.<anonymous> (./packages/clustered-bar-chart/src/components/clustered-bar-chart/clustered-bar-chart.spec.ts:1570:33)
-    at processTicksAndRejections (node:internal/process/task_queues:96:5)",
+    at Object.<anonymous> (./packages/clustered-bar-chart/src/components/clustered-bar-chart/clustered-bar-chart.spec.ts:1571:33)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)",
       ],
       "fullName": "<clustered-bar-chart> rendered-html labels legend format should format number if passed as prop",
       "location": null,
@@ -9813,6 +9944,32 @@ Object {
       "location": null,
       "status": "passed",
       "title": "annotations: instruction elements should contain annotation description on update if annotation exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<dumbbell-plot>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<dumbbell-plot> rendered-html accessibility generic accessibility test suite referenceLines: instruction elements should contain reference line description on load if reference line exists on chart",
+      "location": null,
+      "status": "passed",
+      "title": "referenceLines: instruction elements should contain reference line description on load if reference line exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<dumbbell-plot>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<dumbbell-plot> rendered-html accessibility generic accessibility test suite referenceLines: instruction elements should contain reference line description on update if reference line exists on chart",
+      "location": null,
+      "status": "passed",
+      "title": "referenceLines: instruction elements should contain reference line description on update if reference line exists on chart",
     },
     Object {
       "ancestorTitles": Array [
@@ -12886,6 +13043,32 @@ Object {
         "<heat-map>",
         "rendered-html",
         "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<heat-map> rendered-html accessibility generic accessibility test suite referenceLines: instruction elements should contain reference line description on load if reference line exists on chart",
+      "location": null,
+      "status": "pending",
+      "title": "referenceLines: instruction elements should contain reference line description on load if reference line exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<heat-map>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<heat-map> rendered-html accessibility generic accessibility test suite referenceLines: instruction elements should contain reference line description on update if reference line exists on chart",
+      "location": null,
+      "status": "pending",
+      "title": "referenceLines: instruction elements should contain reference line description on update if reference line exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<heat-map>",
+        "rendered-html",
+        "accessibility",
         "validation",
       ],
       "failureMessages": Array [],
@@ -13069,10 +13252,10 @@ Object {
       ],
       "failureMessages": Array [
         "Error: expected textContent \\"$2010\\" to equal \\"2010\\"
-    at ./packages/heat-map/src/components/heat-map/heat-map.spec.ts:818:26
+    at ./packages/heat-map/src/components/heat-map/heat-map.spec.ts:815:26
     at Array.forEach (<anonymous>)
-    at Object.<anonymous> (./packages/heat-map/src/components/heat-map/heat-map.spec.ts:817:22)
-    at processTicksAndRejections (node:internal/process/task_queues:96:5)",
+    at Object.<anonymous> (./packages/heat-map/src/components/heat-map/heat-map.spec.ts:814:22)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)",
       ],
       "fullName": "<heat-map> rendered-html axes axis.format xAxis should have custom format applied to numbers if passed",
       "location": null,
@@ -13192,13 +13375,13 @@ Object {
       ],
       "failureMessages": Array [
         "Error: expected attribute radius \\"1\\" to equal \\"2\\"
-    at forEach (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:5696:43)
+    at forEach (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:5792:43)
     at Array.forEach (<anonymous>)
-    at call (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:5695:44)
+    at call (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:5791:44)
     at step (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:66:23)
     at Object.next (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:47:53)
     at fulfilled (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:37:58)
-    at processTicksAndRejections (node:internal/process/task_queues:96:5)",
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)",
       ],
       "fullName": "<heat-map> rendered-html interaction cell based interaction tests [interaction] clickStyle: on click the selected mark should be default clickStyle and others should have hoverOpacity",
       "location": null,
@@ -13240,13 +13423,13 @@ Object {
       ],
       "failureMessages": Array [
         "Error: expected attribute radius \\"1\\" to equal \\"2\\"
-    at forEach (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:6191:43)
+    at forEach (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:6287:43)
     at Array.forEach (<anonymous>)
-    at call (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:6190:44)
+    at call (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:6286:44)
     at step (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:66:23)
     at Object.next (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:47:53)
     at fulfilled (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:37:58)
-    at processTicksAndRejections (node:internal/process/task_queues:96:5)",
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)",
       ],
       "fullName": "<heat-map> rendered-html interaction cell based interaction tests [interaction] hoverStyle: on hover the mark should be default hoverStyle and others should have hoverOpacity",
       "location": null,
@@ -13894,8 +14077,8 @@ Object {
       ],
       "failureMessages": Array [
         "Error: expected textContent \\"$15\\" to equal \\"15\\"
-    at Object.<anonymous> (./packages/heat-map/src/components/heat-map/heat-map.spec.ts:1563:35)
-    at processTicksAndRejections (node:internal/process/task_queues:96:5)",
+    at Object.<anonymous> (./packages/heat-map/src/components/heat-map/heat-map.spec.ts:1560:35)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)",
       ],
       "fullName": "<heat-map> rendered-html labels dataLabel legend format should format number if passed as prop",
       "location": null,
@@ -14408,13 +14591,13 @@ Object {
 
 Expected substring: [32m\\"exit\\"[39m
 Received string:    [31m\\"update\\"[39m
-    at forEach (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:5222:52)
+    at forEach (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:5318:52)
     at Array.forEach (<anonymous>)
-    at call (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:5215:30)
+    at call (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:5311:30)
     at step (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:66:23)
     at Object.next (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:47:53)
     at fulfilled (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:37:58)
-    at processTicksAndRejections (node:internal/process/task_queues:96:5)",
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)",
       ],
       "fullName": "<line-chart> rendered-html generic test suite data: custom data exit on update",
       "location": null,
@@ -15040,6 +15223,32 @@ Received string:    [31m\\"update\\"[39m
       "location": null,
       "status": "passed",
       "title": "annotations: instruction elements should contain annotation description on update if annotation exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<line-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<line-chart> rendered-html accessibility generic accessibility test suite referenceLines: instruction elements should contain reference line description on load if reference line exists on chart",
+      "location": null,
+      "status": "passed",
+      "title": "referenceLines: instruction elements should contain reference line description on load if reference line exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<line-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<line-chart> rendered-html accessibility generic accessibility test suite referenceLines: instruction elements should contain reference line description on update if reference line exists on chart",
+      "location": null,
+      "status": "passed",
+      "title": "referenceLines: instruction elements should contain reference line description on update if reference line exists on chart",
     },
     Object {
       "ancestorTitles": Array [
@@ -16340,8 +16549,8 @@ Received string:    [31m\\"update\\"[39m
       ],
       "failureMessages": Array [
         "Error: expected textContent \\"$15\\" to equal \\"15\\"
-    at Object.<anonymous> (./packages/line-chart/src/components/line-chart/line-chart.spec.tsx:1872:33)
-    at processTicksAndRejections (node:internal/process/task_queues:96:5)",
+    at Object.<anonymous> (./packages/line-chart/src/components/line-chart/line-chart.spec.tsx:1880:33)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)",
       ],
       "fullName": "<line-chart> rendered-html labels legend format should format number if passed as prop",
       "location": null,
@@ -16658,6 +16867,45 @@ Received string:    [31m\\"update\\"[39m
       "location": null,
       "status": "passed",
       "title": "should have dot radius of 3 + 1 = 4 on markers on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<line-chart>",
+        "rendered-html",
+        "style",
+        "lineCurve",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<line-chart> rendered-html style lineCurve should have lineCurve linear by default",
+      "location": null,
+      "status": "passed",
+      "title": "should have lineCurve linear by default",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<line-chart>",
+        "rendered-html",
+        "style",
+        "lineCurve",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<line-chart> rendered-html style lineCurve should have lineCurve step on load",
+      "location": null,
+      "status": "passed",
+      "title": "should have lineCurve step on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<line-chart>",
+        "rendered-html",
+        "style",
+        "lineCurve",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<line-chart> rendered-html style lineCurve should have lineCurve catmull-rom on load",
+      "location": null,
+      "status": "passed",
+      "title": "should have lineCurve catmull-rom on load",
     },
     Object {
       "ancestorTitles": Array [
@@ -17522,7 +17770,7 @@ Received string:    [31m\\"update\\"[39m
     at step (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:66:23)
     at Object.next (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:47:53)
     at fulfilled (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:37:58)
-    at processTicksAndRejections (node:internal/process/task_queues:96:5)",
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)",
       ],
       "fullName": "<parallel-plot> rendered-html accessibility generic accessibility test suite accessibility: instruction elements should contain yAxis description on load if yAxis exists on chart",
       "location": null,
@@ -17671,6 +17919,32 @@ Received string:    [31m\\"update\\"[39m
       "location": null,
       "status": "passed",
       "title": "annotations: instruction elements should contain annotation description on update if annotation exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<parallel-plot>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<parallel-plot> rendered-html accessibility generic accessibility test suite referenceLines: instruction elements should contain reference line description on load if reference line exists on chart",
+      "location": null,
+      "status": "pending",
+      "title": "referenceLines: instruction elements should contain reference line description on load if reference line exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<parallel-plot>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<parallel-plot> rendered-html accessibility generic accessibility test suite referenceLines: instruction elements should contain reference line description on update if reference line exists on chart",
+      "location": null,
+      "status": "pending",
+      "title": "referenceLines: instruction elements should contain reference line description on update if reference line exists on chart",
     },
     Object {
       "ancestorTitles": Array [
@@ -18971,8 +19245,8 @@ Received string:    [31m\\"update\\"[39m
       ],
       "failureMessages": Array [
         "Error: expected textContent \\"$15\\" to equal \\"15\\"
-    at Object.<anonymous> (./packages/parallel-plot/src/components/parallel-plot/parallel-plot.spec.ts:1876:33)
-    at processTicksAndRejections (node:internal/process/task_queues:96:5)",
+    at Object.<anonymous> (./packages/parallel-plot/src/components/parallel-plot/parallel-plot.spec.ts:1867:33)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)",
       ],
       "fullName": "<parallel-plot> rendered-html labels legend format should format number if passed as prop",
       "location": null,
@@ -19018,38 +19292,6 @@ Received string:    [31m\\"update\\"[39m
       "location": null,
       "status": "passed",
       "title": "should pass secondaryLines prop",
-    },
-    Object {
-      "ancestorTitles": Array [
-        "<parallel-plot>",
-        "rendered-html",
-        "reference line",
-      ],
-      "failureMessages": Array [
-        "Error: expected attribute opacity \\"1\\" to equal \\"0\\"
-    at Object.<anonymous> (./packages/parallel-plot/src/components/parallel-plot/parallel-plot.spec.ts:1997:31)
-    at processTicksAndRejections (node:internal/process/task_queues:96:5)",
-      ],
-      "fullName": "<parallel-plot> rendered-html reference line should pass referenceLines prop",
-      "location": null,
-      "status": "failed",
-      "title": "should pass referenceLines prop",
-    },
-    Object {
-      "ancestorTitles": Array [
-        "<parallel-plot>",
-        "rendered-html",
-        "reference line",
-      ],
-      "failureMessages": Array [
-        "Error: expected attribute opacity \\"1\\" to equal \\"0\\"
-    at Object.<anonymous> (./packages/parallel-plot/src/components/parallel-plot/parallel-plot.spec.ts:2014:31)
-    at processTicksAndRejections (node:internal/process/task_queues:96:5)",
-      ],
-      "fullName": "<parallel-plot> rendered-html reference line should pass referenceStyle prop",
-      "location": null,
-      "status": "failed",
-      "title": "should pass referenceStyle prop",
     },
     Object {
       "ancestorTitles": Array [
@@ -19297,6 +19539,45 @@ Received string:    [31m\\"update\\"[39m
       "location": null,
       "status": "passed",
       "title": "should have dot radius of 3 + 0.5 = 3.5 on markers on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<parallel-plot>",
+        "rendered-html",
+        "style",
+        "lineCurve",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<parallel-plot> rendered-html style lineCurve should have lineCurve linear by default",
+      "location": null,
+      "status": "passed",
+      "title": "should have lineCurve linear by default",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<parallel-plot>",
+        "rendered-html",
+        "style",
+        "lineCurve",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<parallel-plot> rendered-html style lineCurve should have lineCurve bumpX on load",
+      "location": null,
+      "status": "passed",
+      "title": "should have lineCurve bumpX on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<parallel-plot>",
+        "rendered-html",
+        "style",
+        "lineCurve",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<parallel-plot> rendered-html style lineCurve should have lineCurve catmull-rom on load",
+      "location": null,
+      "status": "passed",
+      "title": "should have lineCurve catmull-rom on load",
     },
     Object {
       "ancestorTitles": Array [
@@ -19969,7 +20250,7 @@ Received: [31m\\"[7m14[27mpx\\"[39m
     at step (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:66:23)
     at Object.next (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:47:53)
     at fulfilled (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:37:58)
-    at processTicksAndRejections (node:internal/process/task_queues:96:5)",
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)",
       ],
       "fullName": "<pie-chart> rendered-html accessibility generic accessibility test suite accessibility: focus marker style should be applied on focus",
       "location": null,
@@ -20274,6 +20555,32 @@ Received: [31m\\"[7m14[27mpx\\"[39m
       "location": null,
       "status": "passed",
       "title": "annotations: instruction elements should contain annotation description on update if annotation exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html accessibility generic accessibility test suite referenceLines: instruction elements should contain reference line description on load if reference line exists on chart",
+      "location": null,
+      "status": "pending",
+      "title": "referenceLines: instruction elements should contain reference line description on load if reference line exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html accessibility generic accessibility test suite referenceLines: instruction elements should contain reference line description on update if reference line exists on chart",
+      "location": null,
+      "status": "pending",
+      "title": "referenceLines: instruction elements should contain reference line description on update if reference line exists on chart",
     },
     Object {
       "ancestorTitles": Array [
@@ -22257,6 +22564,32 @@ Received: [31m\\"[7m14[27mpx\\"[39m
         "<scatter-plot>",
         "rendered-html",
         "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<scatter-plot> rendered-html accessibility generic accessibility test suite referenceLines: instruction elements should contain reference line description on load if reference line exists on chart",
+      "location": null,
+      "status": "passed",
+      "title": "referenceLines: instruction elements should contain reference line description on load if reference line exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<scatter-plot>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<scatter-plot> rendered-html accessibility generic accessibility test suite referenceLines: instruction elements should contain reference line description on update if reference line exists on chart",
+      "location": null,
+      "status": "passed",
+      "title": "referenceLines: instruction elements should contain reference line description on update if reference line exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<scatter-plot>",
+        "rendered-html",
+        "accessibility",
         "validation",
       ],
       "failureMessages": Array [],
@@ -23455,8 +23788,8 @@ Received: [31m\\"[7m14[27mpx\\"[39m
       ],
       "failureMessages": Array [
         "Error: expected textContent \\"$15\\" to equal \\"15\\"
-    at Object.<anonymous> (./packages/scatter-plot/src/components/scatter-plot/scatter-plot.spec.tsx:1915:33)
-    at processTicksAndRejections (node:internal/process/task_queues:96:5)",
+    at Object.<anonymous> (./packages/scatter-plot/src/components/scatter-plot/scatter-plot.spec.tsx:1923:33)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)",
       ],
       "fullName": "<scatter-plot> rendered-html labels legend format should format number if passed as prop",
       "location": null,
@@ -24845,6 +25178,32 @@ Received: [31m\\"[7m14[27mpx\\"[39m
       "location": null,
       "status": "passed",
       "title": "annotations: instruction elements should contain annotation description on update if annotation exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<stacked-bar-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<stacked-bar-chart> rendered-html accessibility generic accessibility test suite referenceLines: instruction elements should contain reference line description on load if reference line exists on chart",
+      "location": null,
+      "status": "passed",
+      "title": "referenceLines: instruction elements should contain reference line description on load if reference line exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<stacked-bar-chart>",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<stacked-bar-chart> rendered-html accessibility generic accessibility test suite referenceLines: instruction elements should contain reference line description on update if reference line exists on chart",
+      "location": null,
+      "status": "passed",
+      "title": "referenceLines: instruction elements should contain reference line description on update if reference line exists on chart",
     },
     Object {
       "ancestorTitles": Array [
@@ -26360,8 +26719,8 @@ Received: [31m\\"[7m14[27mpx\\"[39m
       ],
       "failureMessages": Array [
         "Error: expected textContent \\"$15\\" to equal \\"15\\"
-    at Object.<anonymous> (./packages/stacked-bar-chart/src/components/stacked-bar-chart/stacked-bar-chart.spec.ts:1675:33)
-    at processTicksAndRejections (node:internal/process/task_queues:96:5)",
+    at Object.<anonymous> (./packages/stacked-bar-chart/src/components/stacked-bar-chart/stacked-bar-chart.spec.ts:1679:33)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)",
       ],
       "fullName": "<stacked-bar-chart> rendered-html labels legend format should format number if passed as prop",
       "location": null,
@@ -27516,6 +27875,32 @@ Received: [31m\\"[7m14[27mpx\\"[39m
       "location": null,
       "status": "passed",
       "title": "annotations: instruction elements should contain annotation description on update if annotation exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<world-map />",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<world-map /> rendered-html accessibility generic accessibility test suite referenceLines: instruction elements should contain reference line description on load if reference line exists on chart",
+      "location": null,
+      "status": "pending",
+      "title": "referenceLines: instruction elements should contain reference line description on load if reference line exists on chart",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<world-map />",
+        "rendered-html",
+        "accessibility",
+        "generic accessibility test suite",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<world-map /> rendered-html accessibility generic accessibility test suite referenceLines: instruction elements should contain reference line description on update if reference line exists on chart",
+      "location": null,
+      "status": "pending",
+      "title": "referenceLines: instruction elements should contain reference line description on update if reference line exists on chart",
     },
     Object {
       "ancestorTitles": Array [

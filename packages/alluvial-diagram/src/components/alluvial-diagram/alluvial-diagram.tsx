@@ -9,7 +9,7 @@ import { Component, Element, Prop, Watch, h, Event, EventEmitter } from '@stenci
 
 import { select, event } from 'd3-selection';
 import { min, max } from 'd3-array';
-import { linkHorizontal } from 'd3-shape';
+import { linkHorizontal, linkVertical } from 'd3-shape';
 import { easeCircleIn } from 'd3-ease';
 
 import {
@@ -79,6 +79,7 @@ const {
   sankeyJustify,
   sankeyLeft,
   sankeyLinkHorizontal,
+  sankeyLinkVertical,
   sankeyRight,
   prepareRenderChange,
   visaColors,
@@ -109,6 +110,7 @@ export class AlluvialDiagram {
   @Prop({ mutable: true }) highestHeadingLevel: string | number = AlluvialDiagramDefaultValues.highestHeadingLevel;
   @Prop({ mutable: true }) margin: IBoxModelType = AlluvialDiagramDefaultValues.margin;
   @Prop({ mutable: true }) padding: IBoxModelType = AlluvialDiagramDefaultValues.padding;
+  @Prop({ mutable: true }) layout: string = AlluvialDiagramDefaultValues.layout;
 
   // Data (2/7)
   @Prop() linkData: object[];
@@ -370,6 +372,28 @@ export class AlluvialDiagram {
     this.shouldUpdateLinkStyle = true;
     this.shouldDrawNodeLabels = true;
     this.shouldUpdateAnnotations = true;
+  }
+
+  @Watch('layout')
+  layoutWatcher(_newVal, _oldVal) {
+    this.shouldSetDimensions = true;
+    this.shouldSetNodeDimensions = true;
+    this.shouldResetRoot = true;
+    this.shouldCallSankeyGenerator = true;
+    this.shouldSetGlobalSelections = true;
+    this.shouldUpdateNodeGeometries = true;
+    this.shouldUpdateNodeStyle = true;
+    this.shouldUpdateLinkGeometries = true;
+    this.shouldUpdateLinkStyle = true;
+    this.shouldDrawNodeLabels = true;
+    this.shouldUpdateAnnotations = true;
+    console.warn(
+      'Change detected in prop layout from value ' +
+        _oldVal +
+        ' to value ' +
+        _newVal +
+        '. Transitions have yet to be designed in VCC for this prop.'
+    );
   }
 
   @Watch('sourceAccessor')
@@ -1058,11 +1082,20 @@ export class AlluvialDiagram {
 
   setDimensions() {
     this.padding = typeof this.padding === 'string' ? getPadding(this.padding) : this.padding;
-    this.innerHeight = this.height - this.margin.top - this.margin.bottom;
-    this.innerWidth = this.width - this.margin.left - this.margin.right;
 
-    this.innerPaddedHeight = this.innerHeight - this.padding.top - this.padding.bottom;
-    this.innerPaddedWidth = this.innerWidth - this.padding.left - this.padding.right;
+    // since we hacked sankey.ts for vertical layout, we have to get a bit weird
+    // on the definition of these dimesions and flip things for vertical layout
+    if (this.layout === 'vertical') {
+      this.innerWidth = this.height - this.margin.top - this.margin.bottom;
+      this.innerHeight = this.width - this.margin.left - this.margin.right;
+      this.innerPaddedHeight = this.innerHeight - this.padding.left - this.padding.right;
+      this.innerPaddedWidth = this.innerWidth - this.padding.top - this.padding.bottom;
+    } else {
+      this.innerWidth = this.width - this.margin.left - this.margin.right;
+      this.innerHeight = this.height - this.margin.top - this.margin.bottom;
+      this.innerPaddedHeight = this.innerHeight - this.padding.top - this.padding.bottom;
+      this.innerPaddedWidth = this.innerWidth - this.padding.left - this.padding.right;
+    }
   }
 
   prepareData() {
@@ -1133,7 +1166,15 @@ export class AlluvialDiagram {
 
   validateNodeAlignment() {
     this.innerNodeAlignment =
-      this.nodeConfig.alignment === 'right'
+      this.layout === 'vertical'
+        ? this.nodeConfig.alignment === 'bottom'
+          ? sankeyRight
+          : this.nodeConfig.alignment === 'middle'
+          ? sankeyCenter
+          : this.nodeConfig.alignment === 'justify'
+          ? sankeyJustify
+          : sankeyLeft
+        : this.nodeConfig.alignment === 'right'
         ? sankeyRight
         : this.nodeConfig.alignment === 'center'
         ? sankeyCenter
@@ -1257,7 +1298,7 @@ export class AlluvialDiagram {
 
   setNodeDimensions() {
     // controls node width and node padding
-    this.alluvialProperties = sankey(this.nodeConfig.compare, this.linkConfig.visible)
+    this.alluvialProperties = sankey(this.nodeConfig.compare, this.linkConfig.visible, this.layout)
       .nodeId(d => d[this.innerIDAccessor])
       .nodeWidth(this.nodeConfig.width)
       .nodePadding(this.nodeConfig.padding)
@@ -1498,6 +1539,24 @@ export class AlluvialDiagram {
       );
   }
 
+  newColumnInterpolationPositionVertical() {
+    return linkVertical()
+      .source(d =>
+        d.target.layer <= this.previousMinNodeLayer
+          ? [d.x0, d.source.y0]
+          : d.source.layer >= this.previousMaxNodeLayer
+          ? [d.x0, d.target.y1]
+          : [d.x0, d.source.y1]
+      )
+      .target(d =>
+        d.target.layer <= this.previousMinNodeLayer
+          ? [d.x0, d.source.y0]
+          : d.source.layer >= this.previousMaxNodeLayer
+          ? [d.x0, d.target.y1]
+          : [d.x1, d.target.y0]
+      );
+  }
+
   enterLinkGeometries() {
     this.enterLinks.interrupt();
     const linkOpacity = this.linkConfig.visible ? this.linkConfig.opacity : 0;
@@ -1509,7 +1568,12 @@ export class AlluvialDiagram {
     this.enterLinks
       .attr('class', 'alluvial-link')
       .classed('entering', true)
-      .attr('d', this.newColumnInterpolationPosition());
+      .attr(
+        'd',
+        this.layout === 'vertical'
+          ? this.newColumnInterpolationPositionVertical()
+          : this.newColumnInterpolationPosition()
+      );
 
     this.enterLinks
       .attr('cursor', !this.suppressEvents ? this.cursor : null)
@@ -1536,7 +1600,7 @@ export class AlluvialDiagram {
       .transition('enter')
       .duration(this.duration)
       .ease(easeCircleIn)
-      .attr('d', sankeyLinkHorizontal())
+      .attr('d', this.layout === 'vertical' ? sankeyLinkVertical() : sankeyLinkHorizontal())
       .attr('stroke-width', d =>
         d.target.layer <= this.previousMinNodeLayer || d.source.layer >= this.previousMaxNodeLayer
           ? Math.max(1, d.width)
@@ -1595,7 +1659,12 @@ export class AlluvialDiagram {
       .transition('exit')
       .ease(easeCircleIn)
       .duration(this.duration)
-      .attr('d', this.newColumnInterpolationPosition())
+      .attr(
+        'd',
+        this.layout === 'vertical'
+          ? this.newColumnInterpolationPositionVertical()
+          : this.newColumnInterpolationPosition()
+      )
       .attr('stroke-opacity', linkOpacity)
       .attr('stroke-dashoffset', d => d.linelength)
       .attr('stroke-width', d =>
@@ -1631,13 +1700,13 @@ export class AlluvialDiagram {
       //     // this.nodeIDAccessor
       //   );
       // })
-      .attr('d', sankeyLinkHorizontal())
+      .attr('d', this.layout === 'vertical' ? sankeyLinkVertical() : sankeyLinkHorizontal())
       .attr('stroke-width', d => Math.max(1, d.width))
       .call(transitionEndAll, () => {
         this.removeTemporaryClickedLinks(this.svg.node());
         this.updateLinks
           .classed('entering', false)
-          .attr('d', sankeyLinkHorizontal())
+          .attr('d', this.layout === 'vertical' ? sankeyLinkVertical() : sankeyLinkHorizontal())
           .attr('stroke-dasharray', '');
 
         this.updateInteractionState();
@@ -1901,6 +1970,115 @@ export class AlluvialDiagram {
     this.updateNodes.select('.alluvial-node').attr('stroke-width', '1px');
   }
 
+  // at some point we could extract this to dataLabel.ts, but not now
+  // the additional selection of this below will skip any transition that
+  // is taking place in the selection, we need to use transition on update
+  // but not on entry, need to look into this more.
+  placeNodeLabels({
+    root,
+    layout,
+    dataLabel,
+    innerPaddedWidth
+  }: {
+    root?: any;
+    layout?: string;
+    dataLabel: any;
+    innerPaddedWidth?: number;
+  }) {
+    // scenarios we need to account for
+    // vertical - top, middle, bottom, auto
+    // horizontal - top, middle, bottom, auto
+    let xPlacement, yPlacement, offsetX, offsetY, textAnchor;
+
+    // note: keep in mind that width/height have been flipped for vertical
+    if (layout === 'vertical') {
+      switch (dataLabel.placement) {
+        case 'outside':
+          xPlacement = d => d.x0 + (d.x1 - d.x0) / 2;
+          yPlacement = d => {
+            return d.y0 < innerPaddedWidth / 2 ? d.y0 : d.y1;
+          };
+          offsetX = '0.0em';
+          offsetY = d => (d.y0 < innerPaddedWidth / 2 ? '-0.5em' : '1.3em');
+          textAnchor = 'middle';
+          break;
+        case 'on-node':
+          xPlacement = d => d.x0 + (d.x1 - d.x0) / 2;
+          yPlacement = d => d.y0 + (d.y1 - d.y0) / 2;
+          offsetX = '0.0em';
+          offsetY = '0.4em';
+          textAnchor = 'middle';
+          break;
+        case 'inside':
+          xPlacement = d => d.x0 + (d.x1 - d.x0) / 2;
+          yPlacement = d => (d.y0 < innerPaddedWidth / 2 ? d.y1 : d.y0);
+          offsetX = '0.0em';
+          offsetY = d => (d.y0 < innerPaddedWidth / 2 ? '1.3em' : '-0.5em');
+          textAnchor = 'middle';
+          break;
+        default:
+          xPlacement = d => d.x0 + (d.x1 - d.x0) / 2;
+          yPlacement = d => (d.y0 < innerPaddedWidth / 2 ? d.y1 : d.y0);
+          offsetX = '0.0em';
+          offsetY = d => (d.y0 < innerPaddedWidth / 2 ? '1.3em' : '-0.5em');
+          textAnchor = 'middle';
+          break;
+      }
+    } else {
+      switch (dataLabel.placement) {
+        case 'outside':
+          xPlacement = d => (d.x0 < innerPaddedWidth / 2 ? d.x0 : d.x1);
+          yPlacement = d => d.y0 + (d.y1 - d.y0) / 2;
+          offsetX = d => (d.x0 < innerPaddedWidth / 2 ? '-0.5em' : '0.5em');
+          offsetY = '0.4em';
+          textAnchor = d => (d.x0 < innerPaddedWidth / 2 ? 'end' : 'start');
+          break;
+        case 'on-node':
+          xPlacement = d => d.x0 + (d.x1 - d.x0) / 2;
+          yPlacement = d => d.y0 + (d.y1 - d.y0) / 2;
+          offsetX = '0.0em';
+          offsetY = '0.4em';
+          textAnchor = 'middle';
+          break;
+        case 'inside':
+          xPlacement = d => (d.x0 < innerPaddedWidth / 2 ? d.x1 : d.x0);
+          yPlacement = d => d.y0 + (d.y1 - d.y0) / 2;
+          offsetX = d => (d.x0 < innerPaddedWidth / 2 ? '0.5em' : '-0.5em');
+          offsetY = '0.4em';
+          textAnchor = d => (d.x0 < innerPaddedWidth / 2 ? 'start' : 'end');
+          break;
+        default:
+          xPlacement = d => (d.x0 < innerPaddedWidth / 2 ? d.x1 : d.x0);
+          yPlacement = d => d.y0 + (d.y1 - d.y0) / 2;
+          offsetX = d => (d.x0 < innerPaddedWidth / 2 ? '0.5em' : '-0.5em');
+          offsetY = '0.4em';
+          textAnchor = d => (d.x0 < innerPaddedWidth / 2 ? 'start' : 'end');
+          break;
+      }
+    }
+
+    // now we use d3 each to call the above accessors for each node label placement
+    // if we need to skip the transition at times we can use the .each() function like below
+    // .each((_, i, n) => {
+    //   select(n[i]) // this new selection will be outside of the transition scope
+    //    .attr(...)
+    // });
+    // the call below will be within the transition scope of the selection passed
+    root
+      .attr('x', xPlacement)
+      .attr('y', yPlacement)
+      .attr('dx', offsetX)
+      .attr('dy', offsetY)
+      .attr('data-dx', offsetX)
+      .attr('data-dy', offsetY)
+      .attr('text-anchor', textAnchor);
+    // we handle these attributes slightly differently in the functions below
+    // .attr('data-x', xPlacement)
+    // .attr('data-use-dx', true)
+    // .attr('data-y', yPlacement)
+    // .attr('data-use-dy', true)
+  }
+
   enterNodeLabels() {
     this.enteringLabels.interrupt();
     const opacity = this.dataLabel.visible ? 1 : 0;
@@ -1944,42 +2122,14 @@ export class AlluvialDiagram {
         } else {
           return d.layer === 0 ? hiddenOpacity : d.layer === this.nodeCount ? hiddenOpacity : 0;
         }
-      })
-      .attr('x', d => {
-        if (this.linkConfig.visible) {
-          return this.dataLabel.placement === 'outside'
-            ? d.x0 < this.innerPaddedWidth / 2
-              ? d.x0
-              : d.x1
-            : d.x0 < this.innerPaddedWidth / 2
-            ? d.x1
-            : d.x0;
-        } else {
-          return d.x0 < this.innerPaddedWidth / 2
-            ? this.noLinksLeftPadding
-            : this.noLinksLeftPadding + this.widthAllNodesNoLinks + this.nodeConfig.width;
-        }
-      })
-      .attr('y', d => (d.y1 + d.y0) / 2)
-      .attr('dx', d =>
-        this.dataLabel.placement === 'outside' || !this.linkConfig.visible
-          ? d.x0 < this.innerPaddedWidth / 2
-            ? '-0.5em'
-            : '0.5em'
-          : d.x0 < this.innerPaddedWidth / 2
-          ? '0.5em'
-          : '-0.5em'
-      )
-      .attr('dy', '0.4em')
-      .attr('text-anchor', d => {
-        return this.dataLabel.placement === 'outside' || !this.linkConfig.visible
-          ? d.x0 < this.innerPaddedWidth / 2
-            ? 'end'
-            : 'start'
-          : d.x0 < this.innerPaddedWidth / 2
-          ? 'start'
-          : 'end';
       });
+
+    this.placeNodeLabels({
+      root: this.enteringLabels,
+      layout: this.layout,
+      dataLabel: this.dataLabel,
+      innerPaddedWidth: this.innerPaddedWidth
+    });
   }
 
   updateNodeLabels() {
@@ -2060,8 +2210,9 @@ export class AlluvialDiagram {
   drawNodeLabels() {
     // const opacity = this.dataLabel.visible ? 1 : 0;
     const hideOnly = this.dataLabel.placement !== 'auto' && this.dataLabel.collisionHideOnly;
+    const cloneAdjustment = hideOnly ? 0 : 4;
 
-    this.widthAllNodesNoLinks = this.nodeCount * this.nodeConfig.width + this.nodeCount * this.nodeConfig.width;
+    this.widthAllNodesNoLinks = this.nodeCount * this.nodeConfig.width * 2;
     this.noLinksLeftPadding = (this.innerPaddedWidth - this.widthAllNodesNoLinks) / 2;
     const nodeLabelUpdate = this.updatingLabels
       .text(d =>
@@ -2069,36 +2220,32 @@ export class AlluvialDiagram {
           ? formatDataLabel(d, this.innerLabelAccessor, this.dataLabel.format)
           : d[this.innerLabelAccessor]
       )
-      .attr('data-x', d => {
-        if (this.linkConfig.visible) {
-          return this.dataLabel.placement === 'outside'
-            ? d.x0 < this.innerPaddedWidth / 2
-              ? d.x0
-              : d.x1
-            : d.x0 < this.innerPaddedWidth / 2
-            ? d.x1
-            : d.x0;
-        } else {
-          return d.x0 < this.innerPaddedWidth / 2
-            ? this.noLinksLeftPadding
-            : this.noLinksLeftPadding + this.widthAllNodesNoLinks + this.nodeConfig.width;
-        }
-      })
-      .attr('data-y', d => (d.y1 + d.y0) / 2)
+      .attr('data-x', d =>
+        this.layout === 'vertical'
+          ? d.x0 + (d.x1 - d.x0) / 2
+          : this.dataLabel.placement === 'outside'
+          ? d.x0 < this.innerPaddedWidth / 2
+            ? d.x0 - cloneAdjustment
+            : d.x1 + cloneAdjustment
+          : d.x0 < this.innerPaddedWidth / 2
+          ? d.x1 + cloneAdjustment
+          : d.x0 - cloneAdjustment
+      ) // note we hacked vertical layout so still have to use width here
+      .attr('data-y', d =>
+        this.layout === 'vertical'
+          ? this.dataLabel.placement === 'outside'
+            ? d.y0 < this.innerPaddedWidth / 2
+              ? d.y0 - cloneAdjustment
+              : d.y1 + cloneAdjustment
+            : d.y0 < this.innerPaddedWidth / 2
+            ? d.y1 + cloneAdjustment
+            : d.y0 - cloneAdjustment
+          : d.y0 + (d.y1 - d.y0) / 2
+      )
       .attr('data-translate-x', this.padding.left + this.margin.left)
       .attr('data-translate-y', this.padding.top + this.margin.top)
       .attr('data-use-dx', hideOnly)
       .attr('data-use-dy', hideOnly)
-      .attr('dx', d =>
-        this.dataLabel.placement === 'outside' || !this.linkConfig.visible
-          ? d.x0 < this.innerPaddedWidth / 2
-            ? '-0.5em'
-            : '0.5em'
-          : d.x0 < this.innerPaddedWidth / 2
-          ? '0.5em'
-          : '-0.5em'
-      )
-      .attr('dy', '0.4em')
       .transition('update_labels')
       .duration((_, i, n) => {
         return select(n[i]).classed('entering') ? this.duration / 3 : this.duration;
@@ -2142,17 +2289,40 @@ export class AlluvialDiagram {
               .attr('tabindex', null)
               .attr(
                 'data-x',
-                collisionPlacement === 'all'
+                this.layout === 'vertical'
+                  ? d.x0
+                  : collisionPlacement === 'all'
                   ? d.x0
                   : collisionPlacement === 'outside'
                   ? d.x0 < this.innerPaddedWidth / 2
-                    ? d.x0
-                    : d.x1
+                    ? d.x0 - cloneAdjustment
+                    : d.x1 + cloneAdjustment
                   : d.x0 < this.innerPaddedWidth / 2
-                  ? d.x1
-                  : d.x0
+                  ? d.x1 + cloneAdjustment
+                  : d.x0 - cloneAdjustment
+              ) // note we hacked vertical layout so still have to use width here
+              .attr(
+                'data-y',
+                this.layout === 'vertical'
+                  ? collisionPlacement === 'all'
+                    ? d.y0
+                    : collisionPlacement === 'outside'
+                    ? d.y0 < this.innerPaddedWidth / 2
+                      ? d.y0 - cloneAdjustment
+                      : d.y1 + cloneAdjustment
+                    : d.y0 < this.innerPaddedWidth / 2
+                    ? d.y1 + cloneAdjustment
+                    : d.y0 - cloneAdjustment
+                  : d.y0
               )
-              .attr('data-width', collisionPlacement === 'all' ? d.x1 - d.x0 : 1);
+              .attr(
+                'data-width',
+                this.layout === 'vertical' ? d.x1 - d.x0 : collisionPlacement === 'all' ? d.x1 - d.x0 : 1
+              )
+              .attr(
+                'data-height',
+                this.layout === 'vertical' ? (collisionPlacement === 'all' ? d.y1 - d.y0 : 1) : d.y1 - d.y0
+              );
 
             // temporarily append these to the parent
             parent.appendChild(sourceCopy);
@@ -2162,7 +2332,7 @@ export class AlluvialDiagram {
       this.bitmaps = resolveLabelCollision({
         labelSelection: nodeLabelUpdate,
         avoidMarks: hideOnly ? [nodeRects] : [nodeRects, clonedRects],
-        validPositions: hideOnly ? ['middle'] : ['left', 'right'],
+        validPositions: hideOnly ? ['middle'] : this.layout === 'vertical' ? ['top', 'bottom'] : ['left', 'right'],
         offsets: hideOnly ? [1] : [4, 4],
         accessors: [this.innerIDAccessor],
         size: [roundTo(this.width, 0), roundTo(this.height, 0)], // we need the whole width for series labels
@@ -2172,114 +2342,20 @@ export class AlluvialDiagram {
 
       // if we are in hide only we need to add attributes back
       if (hideOnly) {
-        nodeLabelUpdate
-          .attr('text-anchor', d => {
-            return this.dataLabel.placement === 'outside' || !this.linkConfig.visible
-              ? d.x0 < this.innerPaddedWidth / 2
-                ? 'end'
-                : 'start'
-              : d.x0 < this.innerPaddedWidth / 2
-              ? 'start'
-              : 'end';
-          })
-          .attr('x', d => {
-            if (this.linkConfig.visible) {
-              return this.dataLabel.placement === 'outside'
-                ? d.x0 < this.innerPaddedWidth / 2
-                  ? d.x0
-                  : d.x1
-                : d.x0 < this.innerPaddedWidth / 2
-                ? d.x1
-                : d.x0;
-            } else {
-              return d.x0 < this.innerPaddedWidth / 2
-                ? this.noLinksLeftPadding
-                : this.noLinksLeftPadding + this.widthAllNodesNoLinks + this.nodeConfig.width;
-            }
-          })
-          .attr('y', d => (d.y1 + d.y0) / 2)
-          .attr('dx', d =>
-            this.dataLabel.placement === 'outside' || !this.linkConfig.visible
-              ? d.x0 < this.innerPaddedWidth / 2
-                ? '-0.5em'
-                : '0.5em'
-              : d.x0 < this.innerPaddedWidth / 2
-              ? '0.5em'
-              : '-0.5em'
-          )
-          .attr('dy', '0.4em');
+        this.placeNodeLabels({
+          root: nodeLabelUpdate,
+          layout: this.layout,
+          dataLabel: this.dataLabel,
+          innerPaddedWidth: this.innerPaddedWidth
+        });
       }
     } else {
-      nodeLabelUpdate
-        .attr('text-anchor', d => {
-          return this.dataLabel.placement === 'outside' || !this.linkConfig.visible
-            ? d.x0 < this.innerPaddedWidth / 2
-              ? 'end'
-              : 'start'
-            : d.x0 < this.innerPaddedWidth / 2
-            ? 'start'
-            : 'end';
-        })
-        // .attr('opacity', d => {
-        //   if (this.linkConfig.visible) {
-        //     let matchHover = true;
-        //     if (d[this.sourceLinksString].length) {
-        //       matchHover = d[this.sourceLinksString].some(
-        //         linkData =>
-        //           checkInteraction(
-        //             linkData.data,
-        //             opacity,
-        //             this.hoverOpacity,
-        //             this.hoverHighlight,
-        //             this.clickHighlight,
-        //             this.innerInteractionKeys
-        //           ) >= 1
-        //       );
-        //     }
-        //     if (d[this.targetLinksString].length) {
-        //       matchHover = d[this.targetLinksString].some(
-        //         linkData =>
-        //           checkInteraction(
-        //             linkData.data,
-        //             opacity,
-        //             this.hoverOpacity,
-        //             this.hoverHighlight,
-        //             this.clickHighlight,
-        //             this.innerInteractionKeys
-        //           ) >= 1
-        //       );
-        //     }
-        //     return matchHover ? 1 : 0;
-        //   } else {
-        //     return d.layer === 0 ? opacity : d.layer === this.nodeCount ? opacity : 0;
-        //   }
-        // })
-        .attr('x', d => {
-          if (this.linkConfig.visible) {
-            return this.dataLabel.placement === 'outside'
-              ? d.x0 < this.innerPaddedWidth / 2
-                ? d.x0
-                : d.x1
-              : d.x0 < this.innerPaddedWidth / 2
-              ? d.x1
-              : d.x0;
-          } else {
-            return d.x0 < this.innerPaddedWidth / 2
-              ? this.noLinksLeftPadding
-              : this.noLinksLeftPadding + this.widthAllNodesNoLinks + this.nodeConfig.width;
-          }
-        })
-        .attr('y', d => (d.y1 + d.y0) / 2)
-        .attr('dx', d =>
-          this.dataLabel.placement === 'outside' || !this.linkConfig.visible
-            ? d.x0 < this.innerPaddedWidth / 2
-              ? '-0.5em'
-              : '0.5em'
-            : d.x0 < this.innerPaddedWidth / 2
-            ? '0.5em'
-            : '-0.5em'
-        )
-        .attr('dy', '0.4em');
+      this.placeNodeLabels({
+        root: nodeLabelUpdate,
+        layout: this.layout,
+        dataLabel: this.dataLabel,
+        innerPaddedWidth: this.innerPaddedWidth
+      });
     }
     // we need to call this after the transitions
     nodeLabelUpdate.call(transitionEndAll, () => {
@@ -2291,6 +2367,7 @@ export class AlluvialDiagram {
   setNodeLabelOpacity() {
     this.updatingLabels.interrupt('label_opacity');
     const hideOnly = this.dataLabel.placement !== 'auto' && this.dataLabel.collisionHideOnly;
+    const cloneAdjustment = hideOnly ? 0 : 4;
     const addCollisionClass =
       this.dataLabel.visible && (this.dataLabel.placement === 'auto' || this.dataLabel.collisionHideOnly);
     const opacity = this.dataLabel.visible ? 1 : 0;
@@ -2406,18 +2483,40 @@ export class AlluvialDiagram {
                 .attr('tabindex', null)
                 .attr(
                   'data-x',
-                  collisionPlacement === 'all'
+                  this.layout === 'vertical'
+                    ? d.x0
+                    : collisionPlacement === 'all'
                     ? d.x0
                     : collisionPlacement === 'outside'
                     ? d.x0 < this.innerPaddedWidth / 2
-                      ? d.x0
-                      : d.x1
+                      ? d.x0 - cloneAdjustment
+                      : d.x1 + cloneAdjustment
                     : d.x0 < this.innerPaddedWidth / 2
-                    ? d.x1
-                    : d.x0
+                    ? d.x1 + cloneAdjustment
+                    : d.x0 - cloneAdjustment
+                ) // note we hacked vertical layout so still have to use width here
+                .attr(
+                  'data-y',
+                  this.layout === 'vertical'
+                    ? collisionPlacement === 'all'
+                      ? d.y0
+                      : collisionPlacement === 'outside'
+                      ? d.y0 < this.innerPaddedWidth / 2
+                        ? d.y0 - cloneAdjustment
+                        : d.y1 + cloneAdjustment
+                      : d.y0 < this.innerPaddedWidth / 2
+                      ? d.y1 + cloneAdjustment
+                      : d.y0 - cloneAdjustment
+                    : d.y0
                 )
-                .attr('data-width', collisionPlacement === 'all' ? d.x1 - d.x0 : 1);
-
+                .attr(
+                  'data-width',
+                  this.layout === 'vertical' ? d.x1 - d.x0 : collisionPlacement === 'all' ? d.x1 - d.x0 : 1
+                )
+                .attr(
+                  'data-height',
+                  this.layout === 'vertical' ? (collisionPlacement === 'all' ? d.y1 - d.y0 : 1) : d.y1 - d.y0
+                );
               // temporarily append these to the parent
               parent.appendChild(sourceCopy);
             }
@@ -2427,7 +2526,7 @@ export class AlluvialDiagram {
           labelSelection: labelsAdded,
           bitmaps: this.bitmaps,
           avoidMarks: hideOnly ? [nodeRects] : [nodeRects, clonedRects],
-          validPositions: hideOnly ? ['middle'] : ['left', 'right'],
+          validPositions: hideOnly ? ['middle'] : this.layout === 'vertical' ? ['top', 'bottom'] : ['left', 'right'],
           offsets: hideOnly ? [1] : [4, 4],
           accessors: [this.innerIDAccessor],
           size: [roundTo(this.width, 0), roundTo(this.height, 0)], // we need the whole width for series labels
@@ -2438,42 +2537,12 @@ export class AlluvialDiagram {
 
         // if we are in hide only we need to add attributes back
         if (hideOnly) {
-          labelsAdded
-            .attr('text-anchor', d => {
-              return this.dataLabel.placement === 'outside' || !this.linkConfig.visible
-                ? d.x0 < this.innerPaddedWidth / 2
-                  ? 'end'
-                  : 'start'
-                : d.x0 < this.innerPaddedWidth / 2
-                ? 'start'
-                : 'end';
-            })
-            .attr('x', d => {
-              if (this.linkConfig.visible) {
-                return this.dataLabel.placement === 'outside'
-                  ? d.x0 < this.innerPaddedWidth / 2
-                    ? d.x0
-                    : d.x1
-                  : d.x0 < this.innerPaddedWidth / 2
-                  ? d.x1
-                  : d.x0;
-              } else {
-                return d.x0 < this.innerPaddedWidth / 2
-                  ? this.noLinksLeftPadding
-                  : this.noLinksLeftPadding + this.widthAllNodesNoLinks + this.nodeConfig.width;
-              }
-            })
-            .attr('y', d => (d.y1 + d.y0) / 2)
-            .attr('dx', d =>
-              this.dataLabel.placement === 'outside' || !this.linkConfig.visible
-                ? d.x0 < this.innerPaddedWidth / 2
-                  ? '-0.5em'
-                  : '0.5em'
-                : d.x0 < this.innerPaddedWidth / 2
-                ? '0.5em'
-                : '-0.5em'
-            )
-            .attr('dy', '0.4em');
+          this.placeNodeLabels({
+            root: labelsAdded,
+            layout: this.layout,
+            dataLabel: this.dataLabel,
+            innerPaddedWidth: this.innerPaddedWidth
+          });
         }
 
         // remove temporary class now
@@ -2544,6 +2613,7 @@ export class AlluvialDiagram {
       .on('mouseout', !this.suppressEvents ? () => this.onMouseOutHandler() : null);
   }
 
+  // positions are broken when dealing with vertical sankey
   drawAnnotations() {
     const positionData = this.preppedData;
     const preppedAnnotations = [];
@@ -2763,7 +2833,7 @@ export class AlluvialDiagram {
   }
 
   setAnnotationAccessibility() {
-    setAccessAnnotation(this.getLanguageString(), this.alluvialDiagramEl, this.annotations);
+    setAccessAnnotation(this.getLanguageString(), this.alluvialDiagramEl, this.annotations, undefined);
   }
 
   onChangeHandler() {

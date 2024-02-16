@@ -378,17 +378,6 @@ describe('<parallel-plot>', () => {
                       color: '#56bec3',
                       type: 'annotationCalloutCircle',
                       subject: { radius: 34 }
-                    },
-                    {
-                      note: {},
-                      accessibilityDecorationOnly: true,
-                      type: 'annotationXYThreshold',
-                      subject: {
-                        x1: 0,
-                        x2: 250
-                      },
-                      color: 'pri_blue',
-                      disable: ['note', 'connector']
                     }
                   ]
                 : []
@@ -440,7 +429,9 @@ describe('<parallel-plot>', () => {
             test === 'accessibility_textures_off_on_load' ||
             test === 'accessibility_textures_off_on_update' ||
             test === 'accessibility_categorical_textures_created_by_default' ||
-            test === 'accessibility_focus_marker_style'
+            test === 'accessibility_focus_marker_style' ||
+            test === 'accessibility_referenceLine_description_set_on_load' ||
+            test === 'accessibility_referenceLine_description_set_on_update'
             // test === 'accessibility_focus_marker_style' ||
             // test === 'accessibility_focus_group_style' ||
             // test === 'accessibility_keyboard_selection_test'
@@ -1978,44 +1969,6 @@ describe('<parallel-plot>', () => {
       });
     });
 
-    describe('reference line', () => {
-      const referenceLines = [{ label: 'Average', labelPlacementHorizontal: 'right', value: 8300000000 }];
-      const referenceStyle = { color: 'categorical_blue', dashed: '', opacity: 0.65, strokeWidth: '2.5px' };
-      it('should pass referenceLines prop', async () => {
-        // ARRANGE
-        component.referenceLines = referenceLines;
-
-        // ACT
-        page.root.appendChild(component);
-        await page.waitForChanges();
-
-        // ASSERT
-        const referenceLinesGroup = page.doc.querySelector('[data-testid=reference-line-group]');
-        const referenceLine = referenceLinesGroup.querySelector('.line-reference-line');
-        expect(referenceLinesGroup).toMatchSnapshot();
-        expect(referenceLine).toBeTruthy();
-        expect(referenceLine).toEqualAttribute('opacity', 1);
-        expect(referenceLine).toEqualAttribute('style', 'stroke: rgb(92, 92, 92)');
-      });
-
-      it('should pass referenceStyle prop', async () => {
-        // ARRANGE
-        component.referenceLines = referenceLines;
-        component.referenceStyle = referenceStyle;
-
-        // ACT
-        page.root.appendChild(component);
-        await page.waitForChanges();
-
-        // ASSERT
-        const referenceLinesGroup = page.doc.querySelector('[data-testid=reference-line-group]');
-        const referenceLine = referenceLinesGroup.querySelector('.line-reference-line');
-        expect(referenceLinesGroup).toMatchSnapshot();
-        expect(referenceLine).toEqualAttribute('opacity', 1);
-        expect(referenceLine).toEqualAttribute('style', 'stroke: rgb(34, 96, 146)');
-      });
-    });
-
     describe('style', () => {
       describe('colorPalette', () => {
         it('should render categorical palette by default', async () => {
@@ -2435,6 +2388,81 @@ describe('<parallel-plot>', () => {
           markers.forEach(marker => {
             expect(marker).toEqualAttribute('r', 3.5);
           });
+        });
+      });
+      describe('lineCurve', () => {
+        it('should have lineCurve linear by default', async () => {
+          // ACT
+          page.root.appendChild(component);
+          await page.waitForChanges();
+
+          // ASSERT
+          const lines = page.doc.querySelectorAll('[data-testid=parallel-line]');
+          await asyncForEach(lines, async line => {
+            flushTransitions(line); // flush transitions to trigger transitionEndAll
+            await page.waitForChanges();
+          });
+
+          // check that each line has linear encoding for d attr
+          expect(lines[0]).toEqualAttribute('d', 'M0,13.811L157.5,11.2L315,202.588');
+          expect(lines[1]).toEqualAttribute('d', 'M0,76.989L157.5,38.208L315,179.821');
+          expect(lines[2]).toEqualAttribute('d', 'M0,54.794L157.5,112.484L315,201.538');
+        });
+        it('should have lineCurve bumpX on load', async () => {
+          component.lineCurve = 'bumpX';
+
+          // ACT
+          page.root.appendChild(component);
+          await page.waitForChanges();
+
+          // ASSERT
+          const lines = page.doc.querySelectorAll('[data-testid=parallel-line]');
+          await asyncForEach(lines, async line => {
+            flushTransitions(line); // flush transitions to trigger transitionEndAll
+            await page.waitForChanges();
+          });
+
+          // check that each line has bumpX encoding for d attr
+          expect(lines[0]).toEqualAttribute(
+            'd',
+            'M0,13.811C78.75,13.811,78.75,11.2,157.5,11.2C236.25,11.2,236.25,202.588,315,202.588'
+          );
+          expect(lines[1]).toEqualAttribute(
+            'd',
+            'M0,76.989C78.75,76.989,78.75,38.208,157.5,38.208C236.25,38.208,236.25,179.821,315,179.821'
+          );
+          expect(lines[2]).toEqualAttribute(
+            'd',
+            'M0,54.794C78.75,54.794,78.75,112.484,157.5,112.484C236.25,112.484,236.25,201.538,315,201.538'
+          );
+        });
+        it('should have lineCurve catmull-rom on load', async () => {
+          component.lineCurve = 'catmullRom';
+
+          // ACT
+          page.root.appendChild(component);
+          await page.waitForChanges();
+
+          // ASSERT
+          const lines = page.doc.querySelectorAll('[data-testid=parallel-line]');
+          await asyncForEach(lines, async line => {
+            flushTransitions(line); // flush transitions to trigger transitionEndAll
+            await page.waitForChanges();
+          });
+
+          // check that each line has catmullRom encoding for d attr
+          expect(lines[0]).toEqualAttribute(
+            'd',
+            'M0,13.811C0,13.811,109.723,-10.875,157.5,11.2C217.431,38.891,315,202.588,315,202.588'
+          );
+          expect(lines[1]).toEqualAttribute(
+            'd',
+            'M0,76.989C0,76.989,108.06,25.823,157.5,38.208C213.996,52.36,315,179.821,315,179.821'
+          );
+          expect(lines[2]).toEqualAttribute(
+            'd',
+            'M0,54.794C0,54.794,105.957,88.667,157.5,112.484C211.033,137.22,315,201.538,315,201.538'
+          );
         });
       });
       describe('strokeWidth', () => {

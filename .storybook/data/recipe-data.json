@@ -80,6 +80,7 @@
         "label": "Market",
         "labelPlacementHorizontal": "right",
         "labelPlacementVertical": "bottom",
+        "accessibilityDescription": "Overall Market average is 3000",
         "value": 3000
       }
     ],
@@ -263,6 +264,7 @@
         "label": "Average",
         "labelPlacementHorizontal": "right",
         "labelPlacementVertical": "bottom",
+        "accessibilityDescription": "Average value across countries and regions is 57",
         "value": 57
       }
     ],
@@ -575,6 +577,7 @@
         "label": "Average",
         "labelPlacementHorizontal": "right",
         "labelPlacementVertical": "bottom",
+        "accessibilityDescription": "Average value over time is 8.2b",
         "value": 8200000000
       }
     ],
@@ -654,8 +657,20 @@
     "dotSymbols": ["square", "circle", "star", "cross"],
     "padding": { "top": 40, "bottom": 40, "right": 80, "left": 80 },
     "referenceLines": [
-      { "label": "Average", "placement": "top", "value": 4, "axis": "x" },
-      { "label": "Average", "placement": "right", "value": 6000, "axis": "y" }
+      {
+        "label": "Average",
+        "labelPlacementVertical": "top",
+        "accessibilityDescription": "Average group item is 4",
+        "value": 4,
+        "axis": "x"
+      },
+      {
+        "label": "Average",
+        "labelPlacementHorizontal": "right",
+        "accessibilityDescription": "Average group value is 6k",
+        "value": 6000,
+        "axis": "y"
+      }
     ],
     "xAxis": { "visible": true, "gridVisible": true, "label": "X AXIS TITLE", "format": "$0.[0][a]" },
     "yAxis": { "visible": true, "gridVisible": true, "label": "Y AXIS TITLE", "format": "0.[0][a]" },
@@ -2746,13 +2761,15 @@
     "referenceLines": [
       {
         "label": "High Performance",
-        "placement": "right",
+        "labelPlacementHorizontal": "right",
+        "accessibilityDescription": "High performance threshold is 30m",
         "value": 30000000,
         "axis": "y"
       },
       {
         "label": "Average",
-        "placement": "top",
+        "labelPlacementVertical": "top",
+        "accessibilityDescription": "Average count is 100k",
         "value": 100000,
         "axis": "x"
       }
