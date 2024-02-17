@@ -11,7 +11,7 @@ import { select, event } from 'd3-selection';
 import { max, min } from 'd3-array';
 import { timeMillisecond, timeSecond, timeMinute, timeHour, timeDay, timeWeek, timeMonth, timeYear } from 'd3-time';
 import { scalePoint, scaleLinear, scaleTime } from 'd3-scale';
-import { line } from 'd3-shape';
+import { line, curveLinear, curveStep, curveCatmullRom } from 'd3-shape';
 import { nest } from 'd3-collection';
 import {
   IBoxModelType,
@@ -92,7 +92,8 @@ const {
   validateLocalizationProps,
   roundTo,
   resolveLabelCollision,
-  setSubTitle
+  setSubTitle,
+  setReferenceLine
 } = Utils;
 
 @Component({
@@ -144,6 +145,7 @@ export class LineChart {
   @Prop({ mutable: true }) strokeWidth: number = LineChartDefaultValues.strokeWidth;
   @Prop({ mutable: true }) showDots: boolean = LineChartDefaultValues.showDots;
   @Prop({ mutable: true }) dotRadius: number = LineChartDefaultValues.dotRadius;
+  @Prop({ mutable: true }) lineCurve: string = LineChartDefaultValues.lineCurve;
 
   // Data label (5/7)
   @Prop({ mutable: true }) dataLabel: IDataLabelType = LineChartDefaultValues.dataLabel;
@@ -194,7 +196,7 @@ export class LineChart {
   innerWidth: number;
   innerPaddedHeight: number;
   innerPaddedWidth: number;
-  references: any;
+  referencesG: any;
   defaults: boolean;
   duration: number;
   legendG: any;
@@ -239,6 +241,11 @@ export class LineChart {
     timeweek: timeWeek,
     timemonth: timeMonth,
     timeyear: timeYear
+  };
+  curveOptions = {
+    linear: curveLinear,
+    step: curveStep,
+    catmullRom: curveCatmullRom
   };
   chartID: string;
   innerInteractionKeys: any;
@@ -651,6 +658,28 @@ export class LineChart {
   @Watch('dotRadius')
   dotRadiusWatcher(_newVal, _oldVal) {
     this.shouldUpdateDotRadius = true;
+  }
+
+  @Watch('lineCurve')
+  lineCurveWatcher(_newLineCurve, _oldLineCurve) {
+    this.shouldUpdateScales = true;
+    this.shouldUpdateInterpolationData = true;
+    this.shouldUpdateLines = true;
+    this.shouldUpdatePoints = true;
+    this.shouldUpdateYAxis = true;
+    this.shouldUpdateYGrid = true;
+    this.shouldUpdateSeriesLabels = true;
+    this.shouldUpdateLabels = true;
+    this.shouldUpdateReferenceLines = true;
+    this.shouldUpdateBaseline = true;
+    this.shouldUpdateAnnotations = true;
+    console.warn(
+      'Change detected in prop lineCurve from value ' +
+        _newLineCurve +
+        ' to value ' +
+        _oldLineCurve +
+        '. Transition effects for this prop have not been implemented.'
+    );
   }
 
   @Watch('hoverOpacity')
@@ -1365,7 +1394,8 @@ export class LineChart {
         .range(oldYRange);
       this.interpolating.line = line()
         .x(d => this.interpolating.x(d[this.ordinalAccessor]))
-        .y(d => this.interpolating.y(d[this.valueAccessor]));
+        .y(d => this.interpolating.y(d[this.valueAccessor]))
+        .curve(this.curveOptions[this.lineCurve] || this.curveOptions['linear']);
       this.interpolating.map = this.map;
     }
 
@@ -1429,7 +1459,8 @@ export class LineChart {
     this.line = line()
       .defined(d => !isNaN(d[this.valueAccessor]) && d[this.valueAccessor] !== null)
       .x(d => this.x(d[this.ordinalAccessor]))
-      .y(d => this.y(d[this.valueAccessor]));
+      .y(d => this.y(d[this.valueAccessor]))
+      .curve(this.curveOptions[this.lineCurve] || this.curveOptions['linear']);
   }
 
   prepareData() {
@@ -1614,7 +1645,7 @@ export class LineChart {
 
     this.subTitleG = select(this.lineChartEl).select('.line-sub-title');
     this.tooltipG = select(this.lineChartEl).select('.line-tooltip');
-    this.references = this.rootG.append('g').attr('class', 'line-reference-line-group');
+    this.referencesG = this.rootG.append('g').attr('class', 'line-reference-line-group');
   }
 
   reSetRoot() {
@@ -1730,7 +1761,7 @@ export class LineChart {
       this.tooltipG.attr('data-testid', 'tooltip-container');
       this.gridG.attr('data-testid', 'grid-group');
 
-      this.references.attr('data-testid', 'reference-line-group');
+      this.referencesG.attr('data-testid', 'reference-line-group');
 
       // add test attributes to lines and series labels
       this.lineG.attr('data-testid', 'line-group');
@@ -1772,7 +1803,7 @@ export class LineChart {
       this.tooltipG.attr('data-testid', null);
       this.gridG.attr('data-testid', null);
 
-      this.references.attr('data-testid', null);
+      this.referencesG.attr('data-testid', null);
 
       // add test attributes to lines and series labels
       this.lineG.attr('data-testid', null);
@@ -3331,99 +3362,18 @@ export class LineChart {
   }
 
   drawReferenceLines() {
-    const currentReferences = this.references.selectAll('g').data(this.referenceLines, d => d.label);
-
-    const enterReferences = currentReferences
-      .enter()
-      .append('g')
-      .attr('class', '.line-reference')
-      .attr('opacity', 1);
-
-    const enterLines = enterReferences.append('line');
-
-    enterLines
-      // .attr('id', (_, i) => 'reference-line-' + i)
-      .attr('class', 'line-reference-line')
-      .attr('opacity', 0);
-
-    const enterLabels = enterReferences.append('text');
-
-    enterLabels
-      // .attr('id', (_, i) => 'reference-line-' + i + '-label')
-      .attr('class', 'line-reference-line-label')
-      .attr('opacity', 0);
-
-    const mergeReferences = currentReferences.merge(enterReferences);
-
-    const mergeLines = mergeReferences
-      .selectAll('.line-reference-line')
-      .data(d => [d])
-      .transition('merge')
-      .ease(easeCircleIn)
-      .duration(this.duration);
-
-    const mergeLabels = mergeReferences
-      .selectAll('.line-reference-line-label')
-      .data(d => [d])
-      .transition('merge')
-      .ease(easeCircleIn)
-      .duration(this.duration)
-      .text(d => d.label);
-
-    const exitReferences = currentReferences.exit();
-
-    exitReferences
-      .transition('exit')
-      .ease(easeCircleIn)
-      .duration(this.duration)
-      .attr('opacity', 0)
-      .remove();
-
-    enterReferences.attr('transform', d => {
-      return 'translate(0,' + this.y(d.value) + ')';
+    setReferenceLine({
+      groupName: 'line',
+      root: this.referencesG,
+      referenceLines: this.referenceLines,
+      referenceStyle: this.referenceStyle,
+      innerPaddedWidth: this.innerPaddedWidth,
+      innerPaddedHeight: this.innerPaddedHeight,
+      duration: this.duration,
+      x: this.x,
+      y: this.y,
+      unitTest: this.unitTest
     });
-
-    mergeReferences
-      .transition('merge')
-      .ease(easeCircleIn)
-      .duration(this.duration)
-      .attr('transform', d => {
-        return 'translate(0,' + this.y(d.value) + ')';
-      });
-
-    enterLines
-      .attr('x1', 0)
-      .attr('y1', 0)
-      .attr('y2', 0)
-      .attr('x2', this.innerPaddedWidth);
-
-    enterLabels
-      .attr('text-anchor', d => ((d.labelPlacementHorizontal || 'right') === 'right' ? 'start' : 'end'))
-      .attr('x', d => ((d.labelPlacementHorizontal || 'right') === 'right' ? this.innerPaddedWidth : 0))
-      .attr('y', 0)
-      .attr('dx', d => ((d.labelPlacementHorizontal || 'right') === 'right' ? '0.1em' : '-0.1em'))
-      .attr('dy', '0.3em');
-
-    mergeLines
-      .attr('x1', 0)
-      .attr('y1', 0)
-      .attr('y2', 0)
-      .attr('x2', this.innerPaddedWidth);
-
-    mergeLabels
-      .attr('text-anchor', d => ((d.labelPlacementHorizontal || 'right') === 'right' ? 'start' : 'end'))
-      .attr('x', d => ((d.labelPlacementHorizontal || 'right') === 'right' ? this.innerPaddedWidth : 0))
-      .attr('y', 0)
-      .attr('dx', d => ((d.labelPlacementHorizontal || 'right') === 'right' ? '0.1em' : '-0.1em'))
-      .attr('dy', '0.3em');
-
-    mergeLines
-      .style('stroke', visaColors[this.referenceStyle.color] || this.referenceStyle.color)
-      .style('stroke-width', this.referenceStyle.strokeWidth)
-      .attr('stroke-dasharray', this.referenceStyle.dashed ? this.referenceStyle.dashed : '')
-      .attr('opacity', this.referenceStyle.opacity);
-
-    mergeLabels.style('fill', visaColors[this.referenceStyle.color] || this.referenceStyle.color).attr('opacity', 1);
   }
 
   drawAnnotations() {
@@ -3443,7 +3393,7 @@ export class LineChart {
   }
 
   setAnnotationAccessibility() {
-    setAccessAnnotation(this.getLanguageString(), this.lineChartEl, this.annotations);
+    setAccessAnnotation(this.getLanguageString(), this.lineChartEl, this.annotations, this.referenceLines);
   }
 
   drawLegendElements() {

@@ -14,6 +14,7 @@ export class AlluvialDiagramDefaultValues {
   static readonly subTitle = propDefaultValues.subTitle.text;
   static readonly height = 300;
   static readonly width = 650;
+  static readonly layout = propDefaultValues.layoutHorizontal;
   static readonly margin = {
     top: 300 * 0.01,
     bottom: 300 * 0.01,

@@ -11,7 +11,7 @@ import { select, event } from 'd3-selection';
 import { max, min } from 'd3-array';
 import { timeHour, timeDay, timeWeek, timeMonth, timeYear } from 'd3-time';
 import { scalePoint, scaleLinear } from 'd3-scale';
-import { line } from 'd3-shape';
+import { line, curveLinear, curveBumpX, curveBumpY, curveCatmullRom } from 'd3-shape';
 import { nest } from 'd3-collection';
 import {
   IBoxModelType,
@@ -19,7 +19,6 @@ import {
   IHoverStyleType,
   IClickStyleType,
   IAxisType,
-  IReferenceStyleType,
   IDataLabelType,
   ITooltipLabelType,
   IAccessibilityType,
@@ -138,13 +137,13 @@ export class ParallelPlot {
   @Prop({ mutable: true }) colors: string[];
   @Prop({ mutable: true }) hoverStyle: IHoverStyleType = ParallelPlotDefaultValues.hoverStyle;
   @Prop({ mutable: true }) clickStyle: IClickStyleType = ParallelPlotDefaultValues.clickStyle;
-  @Prop({ mutable: true }) referenceStyle: IReferenceStyleType = ParallelPlotDefaultValues.referenceStyle;
   @Prop({ mutable: true }) cursor: string = ParallelPlotDefaultValues.cursor;
   @Prop({ mutable: true }) hoverOpacity: number = ParallelPlotDefaultValues.hoverOpacity;
   @Prop({ mutable: true }) animationConfig: IAnimationConfig = ParallelPlotDefaultValues.animationConfig;
   @Prop({ mutable: true }) strokeWidth: number = ParallelPlotDefaultValues.strokeWidth;
   @Prop({ mutable: true }) showDots: boolean = ParallelPlotDefaultValues.showDots;
   @Prop({ mutable: true }) dotRadius: number = ParallelPlotDefaultValues.dotRadius;
+  @Prop({ mutable: true }) lineCurve: string = ParallelPlotDefaultValues.lineCurve;
 
   // Data label (5/7)
   @Prop({ mutable: true }) dataLabel: IDataLabelType = ParallelPlotDefaultValues.dataLabel;
@@ -159,7 +158,6 @@ export class ParallelPlot {
   // Calculation (6/7)
   @Prop() maxValueOverride: number;
   @Prop() minValueOverride: number;
-  @Prop({ mutable: true }) referenceLines: object[] = ParallelPlotDefaultValues.referenceLines;
   @Prop({ mutable: true }) secondaryLines: ISecondaryLinesType = ParallelPlotDefaultValues.secondaryLines;
 
   // Interactivity (7/7)
@@ -199,7 +197,6 @@ export class ParallelPlot {
   innerXAxis: any;
   innerYAxis: any;
   innerLabelAccessor: any;
-  references: any;
   defaults: boolean;
   duration: number;
   legendG: any;
@@ -244,6 +241,12 @@ export class ParallelPlot {
     timemonth: timeMonth,
     timeyear: timeYear
   };
+  curveOptions = {
+    linear: curveLinear,
+    bumpX: curveBumpX,
+    bumpY: curveBumpY,
+    catmullRom: curveCatmullRom
+  };
   chartID: string;
   innerInteractionKeys: any;
   labelDetails: any;
@@ -268,7 +271,6 @@ export class ParallelPlot {
   shouldUpdateLines: boolean = false;
   shouldUpdatePoints: boolean = false;
   shouldUpdateLegend: boolean = false;
-  shouldUpdateReferenceLines: boolean = false;
   shouldBindInteractivity: boolean = false;
   shouldUpdateLegendInteractivity: boolean = false;
   shouldResetRoot: boolean = false;
@@ -382,7 +384,6 @@ export class ParallelPlot {
     this.shouldUpdateLegend = true;
     this.shouldUpdateStrokeWidth = true;
     this.shouldUpdateColors = true;
-    this.shouldUpdateReferenceLines = true;
     this.shouldUpdateBaseline = true;
     this.shouldUpdateAnnotations = true;
     this.shouldSetGeometryAccessibilityAttributes = true;
@@ -462,7 +463,6 @@ export class ParallelPlot {
     this.shouldUpdateSeriesLabels = true;
     this.shouldUpdateLabels = true;
     this.shouldUpdateLegend = true;
-    this.shouldUpdateReferenceLines = true;
     this.shouldUpdateBaseline = true;
     this.shouldUpdateAnnotations = true;
   }
@@ -481,7 +481,6 @@ export class ParallelPlot {
     this.shouldUpdateSeriesLabels = true;
     this.shouldUpdateLegend = true;
     this.shouldUpdateTableData = true;
-    this.shouldUpdateReferenceLines = true;
     this.shouldUpdateBaseline = true;
     this.shouldUpdateAnnotations = true;
     if (!(this.interactionKeys && this.interactionKeys.length)) {
@@ -514,7 +513,6 @@ export class ParallelPlot {
     this.shouldUpdateXGrid = true;
     this.shouldUpdateSeriesLabels = true;
     this.shouldUpdateLabels = true;
-    this.shouldUpdateReferenceLines = true;
     this.shouldUpdateAnnotations = true;
     if (!(this.interactionKeys && this.interactionKeys.length)) {
       this.shouldValidateInteractionKeys = true;
@@ -543,7 +541,6 @@ export class ParallelPlot {
     this.shouldUpdateYGrid = true;
     this.shouldUpdateSeriesLabels = true;
     this.shouldUpdateLabels = true;
-    this.shouldUpdateReferenceLines = true;
     this.shouldUpdateBaseline = true;
     this.shouldUpdateAnnotations = true;
     this.shouldSetGeometryAriaLabels = true;
@@ -634,12 +631,6 @@ export class ParallelPlot {
     this.shouldSetColors = true;
   }
 
-  @Watch('referenceLines')
-  @Watch('referenceStyle')
-  referenceWatcher(_newVal, _oldVal) {
-    this.shouldUpdateReferenceLines = true;
-  }
-
   @Watch('cursor')
   cursorWatcher(_newVal, _oldVal) {
     this.shouldUpdateCursor = true;
@@ -659,6 +650,27 @@ export class ParallelPlot {
   @Watch('dotRadius')
   dotRadiusWatcher(_newVal, _oldVal) {
     this.shouldUpdateDotRadius = true;
+  }
+
+  @Watch('lineCurve')
+  lineCurveWatcher(_newLineCurve, _oldLineCurve) {
+    this.shouldUpdateScales = true;
+    this.shouldUpdateInterpolationData = true;
+    this.shouldUpdateLines = true;
+    this.shouldUpdatePoints = true;
+    this.shouldUpdateYAxis = true;
+    this.shouldUpdateYGrid = true;
+    this.shouldUpdateSeriesLabels = true;
+    this.shouldUpdateLabels = true;
+    this.shouldUpdateBaseline = true;
+    this.shouldUpdateAnnotations = true;
+    console.warn(
+      'Change detected in prop lineCurve from value ' +
+        _newLineCurve +
+        ' to value ' +
+        _oldLineCurve +
+        '. Transition effects for this prop have not been implemented.'
+    );
   }
 
   @Watch('hoverOpacity')
@@ -887,7 +899,6 @@ export class ParallelPlot {
     this.shouldUpdateYGrid = true;
     this.shouldUpdateSeriesLabels = true;
     this.shouldUpdateLabels = true;
-    this.shouldUpdateReferenceLines = true;
     this.shouldUpdateBaseline = true;
     this.shouldUpdateAnnotations = true;
   }
@@ -1079,7 +1090,6 @@ export class ParallelPlot {
       this.drawDataLabels();
       this.drawSeriesLabels();
       this.addStrokeUnder();
-      this.drawReferenceLines();
       this.setSelectedClass();
       // this.updateInteractionState();
       // this.setLabelOpacity();
@@ -1242,10 +1252,6 @@ export class ParallelPlot {
       if (this.addStrokeUnder) {
         this.addStrokeUnder();
         this.shouldAddStrokeUnder = false;
-      }
-      if (this.shouldUpdateReferenceLines) {
-        this.drawReferenceLines();
-        this.shouldUpdateReferenceLines = false;
       }
       if (this.shouldUpdateStrokeWidth) {
         this.updateStrokeWidth();
@@ -1535,7 +1541,8 @@ export class ParallelPlot {
             return this.interpolating.multiYScale[d[this.ordinalAccessor]].y(d[this.valueAccessor]);
           }
           return this.interpolating.y(d[this.valueAccessor]);
-        });
+        })
+        .curve(this.curveOptions[this.lineCurve] || this.curveOptions['linear']);
       this.interpolating.map = this.map;
     }
 
@@ -1575,7 +1582,8 @@ export class ParallelPlot {
           return this.multiYScale[d[this.ordinalAccessor]].y(d[this.valueAccessor]);
         }
         return this.y(d[this.valueAccessor]);
-      });
+      })
+      .curve(this.curveOptions[this.lineCurve] || this.curveOptions['linear']);
   }
 
   validateDataLabelAccessor() {
@@ -1611,7 +1619,6 @@ export class ParallelPlot {
     this.rootG = this.root.append('g').attr('id', 'visa-viz-padding-container-g-' + this.chartID);
 
     this.gridG = this.rootG.append('g').attr('class', 'grid-group');
-    this.references = this.rootG.append('g').attr('class', 'parallel-reference-line-group');
   }
 
   renderChartRootElemets() {
@@ -1747,7 +1754,6 @@ export class ParallelPlot {
       this.legendG.attr('data-testid', 'legend-container');
       this.tooltipG.attr('data-testid', 'tooltip-container');
       this.gridG.attr('data-testid', 'grid-group');
-      this.references.attr('data-testid', 'reference-line-group');
 
       // y axes for parallel (different from any other chart)
       this.yGroup.attr('data-testid', 'y-scales-group');
@@ -1792,7 +1798,6 @@ export class ParallelPlot {
       this.legendG.attr('data-testid', null);
       this.tooltipG.attr('data-testid', null);
       this.gridG.attr('data-testid', null);
-      this.references.attr('data-testid', null);
 
       this.yGroup.attr('data-testid', null);
       this.yUpdate.attr('data-testid', null); // may need to add data-id to this?
@@ -3488,102 +3493,6 @@ export class ParallelPlot {
     this.updatingLabels.attr('cursor', !this.suppressEvents ? this.cursor : null);
   }
 
-  drawReferenceLines() {
-    const currentReferences = this.references.selectAll('g').data(this.referenceLines, d => d.label);
-
-    const enterReferences = currentReferences
-      .enter()
-      .append('g')
-      .attr('class', '.parallel-reference')
-      .attr('opacity', 1);
-
-    const enterLines = enterReferences.append('line');
-
-    enterLines
-      // .attr('id', (_, i) => 'reference-line-' + i)
-      .attr('class', 'line-reference-line')
-      .attr('opacity', 0);
-
-    const enterLabels = enterReferences.append('text');
-
-    enterLabels
-      // .attr('id', (_, i) => 'reference-line-' + i + '-label')
-      .attr('class', 'parallel-reference-line-label')
-      .attr('opacity', 0);
-
-    const mergeReferences = currentReferences.merge(enterReferences);
-
-    const mergeLines = mergeReferences
-      .selectAll('.parallel-reference-line')
-      .data(d => [d])
-      .transition('merge')
-      .ease(easeCircleIn)
-      .duration(this.duration);
-
-    const mergeLabels = mergeReferences
-      .selectAll('.parallel-reference-line-label')
-      .data(d => [d])
-      .transition('merge')
-      .ease(easeCircleIn)
-      .duration(this.duration)
-      .text(d => d.label);
-
-    const exitReferences = currentReferences.exit();
-
-    exitReferences
-      .transition('exit')
-      .ease(easeCircleIn)
-      .duration(this.duration)
-      .attr('opacity', 0)
-      .remove();
-
-    enterReferences.attr('transform', d => {
-      return 'translate(0,' + this.y(d.value) + ')';
-    });
-
-    mergeReferences
-      .transition('merge')
-      .ease(easeCircleIn)
-      .duration(this.duration)
-      .attr('transform', d => {
-        return 'translate(0,' + this.y(d.value) + ')';
-      });
-
-    enterLines
-      .attr('x1', 0)
-      .attr('y1', 0)
-      .attr('y2', 0)
-      .attr('x2', this.innerPaddedWidth);
-
-    enterLabels
-      .attr('text-anchor', d => ((d.labelPlacementHorizontal || 'right') === 'right' ? 'start' : 'end'))
-      .attr('x', d => ((d.labelPlacementHorizontal || 'right') === 'right' ? this.innerPaddedWidth : 0))
-      .attr('y', 0)
-      .attr('dx', d => ((d.labelPlacementHorizontal || 'right') === 'right' ? '0.1em' : '-0.1em'))
-      .attr('dy', '0.3em');
-
-    mergeLines
-      .attr('x1', 0)
-      .attr('y1', 0)
-      .attr('y2', 0)
-      .attr('x2', this.innerPaddedWidth);
-
-    mergeLabels
-      .attr('text-anchor', d => ((d.labelPlacementHorizontal || 'right') === 'right' ? 'start' : 'end'))
-      .attr('x', d => ((d.labelPlacementHorizontal || 'right') === 'right' ? this.innerPaddedWidth : 0))
-      .attr('y', 0)
-      .attr('dx', d => ((d.labelPlacementHorizontal || 'right') === 'right' ? '0.1em' : '-0.1em'))
-      .attr('dy', '0.3em');
-
-    mergeLines
-      .style('stroke', visaColors[this.referenceStyle.color] || this.referenceStyle.color)
-      .style('stroke-width', this.referenceStyle.strokeWidth)
-      .attr('stroke-dasharray', this.referenceStyle.dashed ? this.referenceStyle.dashed : '')
-      .attr('opacity', this.referenceStyle.opacity);
-
-    mergeLabels.style('fill', visaColors[this.referenceStyle.color] || this.referenceStyle.color).attr('opacity', 1);
-  }
-
   updateStrokeWidth() {
     this.updateLines.attr('stroke-width', d => this.calculateStrokeWidth(d, true));
     this.updateDots.attr('stroke', this.handleDotStroke);
@@ -3664,7 +3573,7 @@ export class ParallelPlot {
   }
 
   setAnnotationAccessibility() {
-    setAccessAnnotation(this.getLanguageString(), this.parallelChartEl, this.annotations);
+    setAccessAnnotation(this.getLanguageString(), this.parallelChartEl, this.annotations, undefined);
   }
 
   // new accessibility functions added here

@@ -307,17 +307,6 @@ describe('<world-map />', () => {
                       className: 'world-map-annotation',
                       type: 'annotationCalloutCircle',
                       subject: { radius: 18 }
-                    },
-                    {
-                      note: {},
-                      accessibilityDecorationOnly: true,
-                      type: 'annotationXYThreshold',
-                      subject: {
-                        x1: 0,
-                        x2: 250
-                      },
-                      color: 'pri_blue',
-                      disable: ['note', 'connector']
                     }
                   ]
                 : []
@@ -364,6 +353,7 @@ describe('<world-map />', () => {
                   accessibilityTestMarks[keyboardTest].keyDownObject
                 ));
             });
+            // skipping tests
           } else if (
             test === 'accessibility_textures_on_by_default' ||
             test === 'accessibility_categorical_textures_created_by_default' ||
@@ -374,7 +364,9 @@ describe('<world-map />', () => {
             test === 'accessibility_xaxis_description_added_on_update' ||
             test === 'accessibility_yaxis_description_set_on_load' ||
             test === 'accessibility_yaxis_description_off_on_load' ||
-            test === 'accessibility_yaxis_description_added_on_update'
+            test === 'accessibility_yaxis_description_added_on_update' ||
+            test === 'accessibility_referenceLine_description_set_on_load' ||
+            test === 'accessibility_referenceLine_description_set_on_update'
           ) {
             it.skip(`${unitTestAccessibility[test].prop}: ${unitTestAccessibility[test].name}`, () =>
               unitTestAccessibility[test].testFunc(

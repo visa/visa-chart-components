@@ -75,6 +75,7 @@
 | `width`     | number                                             | 400                      | Width in px of the chart container                                                                                                                 |
 | `mainTitle` | string                                             | 'Alluvial Diagram Title' | The `dynamic` tag of title for the chart (or you can create your own separately). See `highestHeadingLevel` prop for how tags get assigned.        |
 | `subTitle`  | string/[ISubTitleType](../types/src/prop-types.ts) | 'This is a subtitle'     | The `dynamic` tag for a sub title for the chart (or you can create your own separately). See `highestHeadingLevel` prop for how tags get assigned. |
+| `layout`    | string                                             | 'horizontal'             | Displays alluvial diagram vertically or horizontally. (`vertical` and `horizontal` are only valid inputs)                                          |
 
 <br>
 
@@ -299,13 +300,13 @@ const mouseOutHandler = evt => {
 
 #### INodeConfigType Definition
 
-| Name        | Type    | Default Value(s) | Description                                                                                                                                                  |
-| ----------- | ------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `fill`      | boolean | false            | Toggles whether to categorically color nodes.                                                                                                                |
-| `width`     | number  | 24 (from d3)     | Width in px to set the nodes in the alluvial, leverages [d3-sankey's node width](https://github.com/d3/d3-sankey#sankey_nodeWidth).                          |
-| `padding`   | number  | 8 (from d3)      | Spacing in px to add between nodes vertically, leverages [d3-sankey's node padding](https://github.com/d3/d3-sankey#sankey_nodePadding).                     |
-| `alignment` | string  | 'left'           | Leverages [d3-sankey's node alignment](https://github.com/d3/d3-sankey#sankey_nodeAlign) functionality, options are 'left', 'right', 'center', or 'justify'. |
-| `compare`   | boolean | false            | Toggles whether to vertically, bottom align nodes for easier horizontal comparison. The alignment is computed strictly based on node order.                  |
+| Name        | Type    | Default Value(s) | Description                                                                                                                                                                                                                          |
+| ----------- | ------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `fill`      | boolean | false            | Toggles whether to categorically color nodes.                                                                                                                                                                                        |
+| `width`     | number  | 24 (from d3)     | Width in px to set the nodes in the alluvial, leverages [d3-sankey's node width](https://github.com/d3/d3-sankey#sankey_nodeWidth).                                                                                                  |
+| `padding`   | number  | 8 (from d3)      | Spacing in px to add between nodes vertically, leverages [d3-sankey's node padding](https://github.com/d3/d3-sankey#sankey_nodePadding).                                                                                             |
+| `alignment` | string  | 'left'           | Leverages [d3-sankey's node alignment](https://github.com/d3/d3-sankey#sankey_nodeAlign) functionality, options are 'left', 'right', 'center', or 'justify' for horizontal and 'top', 'middle', 'bottom' and 'justify' for vertical. |
+| `compare`   | boolean | false            | Toggles whether to vertically, bottom align nodes for easier horizontal comparison. The alignment is computed strictly based on node order.                                                                                          |
 
 <br>
 <br>

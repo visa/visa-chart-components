@@ -381,27 +381,31 @@ Array [
 `;
 
 exports[`<scatter-plot> rendered-html reference line should pass referenceLines prop 1`] = `
-<g aria-hidden="true" class="scatter-reference-line-group" data-testid="scatter-reference-line-group" focusable="false" role="presentation">
-  <g class="scatter-reference" opacity="1">
-    <line class="scatter-reference-line" opacity="0" x1="145.2628205128205" x2="145.2628205128205" y1="0" y2="224"></line>
-    <text class="scatter-reference-line-label" dx="0" dy="-0.3em" opacity="0" text-anchor="middle" x="145.2628205128205" y="0"></text>
+<g aria-hidden="true" class="scatter-reference-line-group" data-testid="reference-line-group" focusable="false" role="presentation">
+  <g class="scatter-reference" data-testid="reference-g" opacity="1" transform="translate(145.2628205128205,0)">
+    <line class="scatter-reference-line" data-testid="reference-line" opacity="1" stroke-dasharray="" x1="0" x2="0" y1="224" y2="0" style="stroke: rgb(92, 92, 92); stroke-width: 1px;"></line>
+    <text class="scatter-reference-line-label" data-testid="reference-line-label" dx="0em" dy="-0.5em" opacity="1" text-anchor="middle" x="0" y="0" style="fill: rgb(92, 92, 92); paint-order: stroke; stroke: rgb(255, 255, 255); stroke-width: 4px;">
+      Mid
+    </text>
   </g>
-  <g class="scatter-reference" opacity="1">
-    <line class="scatter-reference-line" opacity="0" x1="0" x2="527" y1="113.31585001150216" y2="113.31585001150216"></line>
-    <text class="scatter-reference-line-label" dx="0.1em" dy="0.3em" opacity="0" text-anchor="start" x="527" y="113.31585001150216"></text>
+  <g class="scatter-reference" data-testid="reference-g" opacity="1" transform="translate(0,113.31585001150216)">
+    <line class="scatter-reference-line" data-testid="reference-line" opacity="0" x1="0" x2="527" y1="0" y2="0"></line>
+    <text class="scatter-reference-line-label" data-testid="reference-line-label" dx="0.5em" dy="0.3em" opacity="0" text-anchor="start" x="527" y="0"></text>
   </g>
 </g>
 `;
 
 exports[`<scatter-plot> rendered-html reference line should pass referenceStyle prop 1`] = `
-<g aria-hidden="true" class="scatter-reference-line-group" data-testid="scatter-reference-line-group" focusable="false" role="presentation">
-  <g class="scatter-reference" opacity="1">
-    <line class="scatter-reference-line" opacity="0" x1="145.2628205128205" x2="145.2628205128205" y1="0" y2="224"></line>
-    <text class="scatter-reference-line-label" dx="0" dy="-0.3em" opacity="0" text-anchor="middle" x="145.2628205128205" y="0"></text>
+<g aria-hidden="true" class="scatter-reference-line-group" data-testid="reference-line-group" focusable="false" role="presentation">
+  <g class="scatter-reference" data-testid="reference-g" opacity="1" transform="translate(145.2628205128205,0)">
+    <line class="scatter-reference-line" data-testid="reference-line" opacity="0.65" stroke-dasharray="" x1="0" x2="0" y1="224" y2="0" style="stroke: rgb(34, 96, 146); stroke-width: 2.5px;"></line>
+    <text class="scatter-reference-line-label" data-testid="reference-line-label" dx="0em" dy="-0.5em" opacity="1" text-anchor="middle" x="0" y="0" style="fill: rgb(34, 96, 146); paint-order: stroke; stroke: rgb(255, 255, 255); stroke-width: 4px;">
+      Mid
+    </text>
   </g>
-  <g class="scatter-reference" opacity="1">
-    <line class="scatter-reference-line" opacity="0" x1="0" x2="527" y1="113.31585001150216" y2="113.31585001150216"></line>
-    <text class="scatter-reference-line-label" dx="0.1em" dy="0.3em" opacity="0" text-anchor="start" x="527" y="113.31585001150216"></text>
+  <g class="scatter-reference" data-testid="reference-g" opacity="1" transform="translate(0,113.31585001150216)">
+    <line class="scatter-reference-line" data-testid="reference-line" opacity="0" x1="0" x2="527" y1="0" y2="0"></line>
+    <text class="scatter-reference-line-label" data-testid="reference-line-label" dx="0.5em" dy="0.3em" opacity="0" text-anchor="start" x="527" y="0"></text>
   </g>
 </g>
 `;
@@ -438,6 +442,9 @@ exports[`<scatter-plot> rendered-html render localization: should render localiz
         A diagram elsődleges vertikális Y tengelyt tartalmaz. Diagram címe Y Axis. Kezdeti erték érték 0, végső érték érték 12E.
       </p>
       <p class="screen-reader-info vcl-access-notes" data-annotationlevel="h3" data-level="h4"></p>
+      <h3 class="screen-reader-info vcl-access-annotations-heading">
+        Diagram referencia vonalak száma: 0. Diagram magyarázatok száma: 0.
+      </h3>
     </div>
     <div class="o-layout--chart">
       <h2 aria-hidden="true" class="scatter-main-title vcl-main-title" data-testid="main-title">
@@ -783,7 +790,7 @@ exports[`<scatter-plot> rendered-html render localization: should render localiz
                   </text>
                 </g>
               </g>
-              <g aria-hidden="true" class="scatter-reference-line-group" data-testid="scatter-reference-line-group" focusable="false" role="presentation"></g>
+              <g aria-hidden="true" class="scatter-reference-line-group" data-testid="reference-line-group" focusable="false" role="presentation"></g>
               <g aria-hidden="true" class="vcl-annotation-group" data-testid="annotation-group" focusable="false" role="presentation"></g>
               <g aria-hidden="true" class="editable vcl-annotation-group" data-testid="editable-annotation-group" focusable="false" role="presentation"></g>
               <g aria-hidden="true" class="axis bottom x" data-testid="x-axis" fill="none" focusable="false" font-family="sans-serif" font-size="10" opacity="1" role="presentation" text-anchor="middle" transform="translate(0, 224)">
@@ -1021,6 +1028,9 @@ exports[`<scatter-plot> rendered-html render should render with minimal props[da
         The chart has a primary vertical Y axis. Title Y Axis. Start value 0, end value 12k.
       </p>
       <p class="screen-reader-info vcl-access-notes" data-annotationlevel="h3" data-level="h4"></p>
+      <h3 class="screen-reader-info vcl-access-annotations-heading">
+        Number of reference lines: 0. Number of annotations: 0.
+      </h3>
     </div>
     <div class="o-layout--chart">
       <h2 aria-hidden="true" class="scatter-main-title vcl-main-title" data-testid="main-title">
@@ -1366,7 +1376,7 @@ exports[`<scatter-plot> rendered-html render should render with minimal props[da
                   </text>
                 </g>
               </g>
-              <g aria-hidden="true" class="scatter-reference-line-group" data-testid="scatter-reference-line-group" focusable="false" role="presentation"></g>
+              <g aria-hidden="true" class="scatter-reference-line-group" data-testid="reference-line-group" focusable="false" role="presentation"></g>
               <g aria-hidden="true" class="vcl-annotation-group" data-testid="annotation-group" focusable="false" role="presentation"></g>
               <g aria-hidden="true" class="editable vcl-annotation-group" data-testid="editable-annotation-group" focusable="false" role="presentation"></g>
               <g aria-hidden="true" class="axis bottom x" data-testid="x-axis" fill="none" focusable="false" font-family="sans-serif" font-size="10" opacity="1" role="presentation" text-anchor="middle" transform="translate(0, 224)">

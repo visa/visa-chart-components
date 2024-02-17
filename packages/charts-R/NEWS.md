@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://www.conventionalcommits.org/) for commit guidelines.
 
+# [3.3.0](https://github.com/visa/visa-chart-components/compare/@visa/charts@7.2.0...@visa/charts@7.3.0) (2024-02-16)
+
+### Bug Fixes
+
+- package bump for redeploy ([b61f009](https://github.com/visa/visa-chart-components/commit/b61f00995e90cb013aec09c3e4c89ce40f23b6fd))
+
+### Features
+
+- version bump for charts angular vue react ([2a75bb0](https://github.com/visa/visa-chart-components/commit/2a75bb0e33f3f42484e5bb50d3a5abe9d2592807))
+
+### Bug Fixes
+
+- update charts, charts-react, charts-figma to use module only ([b1219a5](https://stash.trusted.visa.com:7990/projects/VC/repos/visa-charts-lib/commits/b1219a595ad38f2e62e0c13492daa0d6fd89fc8f))
+
 # [3.2.1](https://github.com/visa/visa-chart-components/compare/@visa/charts@7.2.0...@visa/charts@7.2.1) (2024-02-09)
 
 - Version bump only for package @visa/charts

@@ -380,24 +380,6 @@ Array [
 ]
 `;
 
-exports[`<parallel-plot> rendered-html reference line should pass referenceLines prop 1`] = `
-<g aria-hidden="true" class="parallel-reference-line-group" data-testid="reference-line-group" focusable="false" role="presentation">
-  <g class=".parallel-reference" opacity="1" transform="translate(0,56.69235072347699)">
-    <line class="line-reference-line" opacity="0" x1="0" x2="315" y1="0" y2="0"></line>
-    <text class="parallel-reference-line-label" dx="0.1em" dy="0.3em" opacity="0" text-anchor="start" x="315" y="0"></text>
-  </g>
-</g>
-`;
-
-exports[`<parallel-plot> rendered-html reference line should pass referenceStyle prop 1`] = `
-<g aria-hidden="true" class="parallel-reference-line-group" data-testid="reference-line-group" focusable="false" role="presentation">
-  <g class=".parallel-reference" opacity="1" transform="translate(0,56.69235072347699)">
-    <line class="line-reference-line" opacity="0" x1="0" x2="315" y1="0" y2="0"></line>
-    <text class="parallel-reference-line-label" dx="0.1em" dy="0.3em" opacity="0" text-anchor="start" x="315" y="0"></text>
-  </g>
-</g>
-`;
-
 exports[`<parallel-plot> rendered-html render localization: should render localized with minimal props[data,accessors] given 1`] = `
 <parallel-plot id="parallel-plot-unit-test">
   <div class="o-layout">
@@ -430,6 +412,9 @@ exports[`<parallel-plot> rendered-html render localization: should render locali
         A diagram elsődleges vertikális Y tengelyt tartalmaz. Diagram címe Y Axis. Kezdeti erték érték 3,5Mrd, végső érték érték 9,5Mrd.
       </p>
       <p class="screen-reader-info vcl-access-notes" data-annotationlevel="h3" data-level="h4"></p>
+      <h3 class="screen-reader-info vcl-access-annotations-heading">
+        Diagram referencia vonalak száma: 0. Diagram magyarázatok száma: 0.
+      </h3>
     </div>
     <div class="o-layout--chart">
       <h2 aria-hidden="true" class="parallel-main-title vcl-main-title" data-testid="main-title">
@@ -605,7 +590,6 @@ exports[`<parallel-plot> rendered-html render localization: should render locali
                   </g>
                 </g>
               </g>
-              <g aria-hidden="true" class="parallel-reference-line-group" data-testid="reference-line-group" focusable="false" role="presentation"></g>
               <g aria-hidden="true" class="y-scales-group" data-testid="y-scales-group" focusable="false" role="presentation">
                 <g class="y-wrapper" data-testid="y-scale-wrapper" opacity="0" transform="translate(0,0)">
                   <g class="axis left y" data-testid="y-axis" fill="none" font-family="sans-serif" font-size="10" opacity="1" text-anchor="end">
@@ -941,11 +925,11 @@ exports[`<parallel-plot> rendered-html render localization: should render locali
                 </g>
               </g>
               <g aria-hidden="true" class="parallel-group parallel-line-group" data-testid="parallel-line-group" focusable="false" role="presentation">
-                <path class="entering parallel-plot" cursor="default" d="M0,13.811123674282923L157.5,11.200000000000001L315,202.58759634575333" data-d="M0,13.811123674282923L157.5,11.200000000000001L315,202.58759634575333" data-id="parallel-line-North-America" data-testid="parallel-line" data-translate-x="80" data-translate-y="23" fill="none" stroke="#35495a" stroke-dasharray="0 0" stroke-dashoffset="0" stroke-width="1"></path>
-                <path class="entering parallel-plot" cursor="default" d="M0,76.98907557238404L157.5,38.207643036479645L315,179.82072278946643" data-d="M0,76.98907557238404L157.5,38.207643036479645L315,179.82072278946643" data-id="parallel-line-Asia" data-testid="parallel-line" data-translate-x="80" data-translate-y="23" fill="none" stroke="#6868ba" stroke-dasharray="0 0" stroke-dashoffset="0" stroke-width="1"></path>
-                <path class="entering parallel-plot" cursor="default" d="M0,54.793787759956935L157.5,112.48384599497638L315,201.53801924342258" data-d="M0,54.793787759956935L157.5,112.48384599497638L315,201.53801924342258" data-id="parallel-line-South-America" data-testid="parallel-line" data-translate-x="80" data-translate-y="23" fill="none" stroke="#576245" stroke-dasharray="0 0" stroke-dashoffset="0" stroke-width="1"></path>
-                <path class="entering parallel-plot" cursor="default" d="M0,87.83601194491348L157.5,175.1509892315208L315,212.8" data-d="M0,87.83601194491348L157.5,175.1509892315208L315,212.8" data-id="parallel-line-Europe" data-testid="parallel-line" data-translate-x="80" data-translate-y="23" fill="none" stroke="#504644" stroke-dasharray="0 0" stroke-dashoffset="0" stroke-width="1"></path>
-                <path class="entering parallel-plot" cursor="default" d="M0,111.91575877702932L157.5,183.86568020574725L315,129.23290309914455" data-d="M0,111.91575877702932L157.5,183.86568020574725L315,129.23290309914455" data-id="parallel-line-Africa" data-testid="parallel-line" data-translate-x="80" data-translate-y="23" fill="none" stroke="#b5513d" stroke-dasharray="0 0" stroke-dashoffset="0" stroke-width="1"></path>
+                <path class="entering parallel-plot" cursor="default" d="M0,13.811L157.5,11.2L315,202.588" data-d="M0,13.811L157.5,11.2L315,202.588" data-id="parallel-line-North-America" data-testid="parallel-line" data-translate-x="80" data-translate-y="23" fill="none" stroke="#35495a" stroke-dasharray="0 0" stroke-dashoffset="0" stroke-width="1"></path>
+                <path class="entering parallel-plot" cursor="default" d="M0,76.989L157.5,38.208L315,179.821" data-d="M0,76.989L157.5,38.208L315,179.821" data-id="parallel-line-Asia" data-testid="parallel-line" data-translate-x="80" data-translate-y="23" fill="none" stroke="#6868ba" stroke-dasharray="0 0" stroke-dashoffset="0" stroke-width="1"></path>
+                <path class="entering parallel-plot" cursor="default" d="M0,54.794L157.5,112.484L315,201.538" data-d="M0,54.794L157.5,112.484L315,201.538" data-id="parallel-line-South-America" data-testid="parallel-line" data-translate-x="80" data-translate-y="23" fill="none" stroke="#576245" stroke-dasharray="0 0" stroke-dashoffset="0" stroke-width="1"></path>
+                <path class="entering parallel-plot" cursor="default" d="M0,87.836L157.5,175.151L315,212.8" data-d="M0,87.836L157.5,175.151L315,212.8" data-id="parallel-line-Europe" data-testid="parallel-line" data-translate-x="80" data-translate-y="23" fill="none" stroke="#504644" stroke-dasharray="0 0" stroke-dashoffset="0" stroke-width="1"></path>
+                <path class="entering parallel-plot" cursor="default" d="M0,111.916L157.5,183.866L315,129.233" data-d="M0,111.916L157.5,183.866L315,129.233" data-id="parallel-line-Africa" data-testid="parallel-line" data-translate-x="80" data-translate-y="23" fill="none" stroke="#b5513d" stroke-dasharray="0 0" stroke-dashoffset="0" stroke-width="1"></path>
               </g>
               <g class="parallel-group" data-testid="marker-group">
                 <g class="parallel-dot-wrapper" data-id="marker-series-North-America" data-testid="marker-series-group" fill="#7c99b1" focusable="false" id="parallel-plot-unit-test-123457-123457-123457" opacity="1" role="presentation" tabindex="-1">
@@ -1168,6 +1152,9 @@ exports[`<parallel-plot> rendered-html render should render with minimal props[d
         The chart has a primary vertical Y axis. Title Y Axis. Start value 3.5b, end value 9.5b.
       </p>
       <p class="screen-reader-info vcl-access-notes" data-annotationlevel="h3" data-level="h4"></p>
+      <h3 class="screen-reader-info vcl-access-annotations-heading">
+        Number of reference lines: 0. Number of annotations: 0.
+      </h3>
     </div>
     <div class="o-layout--chart">
       <h2 aria-hidden="true" class="parallel-main-title vcl-main-title" data-testid="main-title">
@@ -1343,7 +1330,6 @@ exports[`<parallel-plot> rendered-html render should render with minimal props[d
                   </g>
                 </g>
               </g>
-              <g aria-hidden="true" class="parallel-reference-line-group" data-testid="reference-line-group" focusable="false" role="presentation"></g>
               <g aria-hidden="true" class="y-scales-group" data-testid="y-scales-group" focusable="false" role="presentation">
                 <g class="y-wrapper" data-testid="y-scale-wrapper" opacity="0" transform="translate(0,0)">
                   <g class="axis left y" data-testid="y-axis" fill="none" font-family="sans-serif" font-size="10" opacity="1" text-anchor="end">
@@ -1679,11 +1665,11 @@ exports[`<parallel-plot> rendered-html render should render with minimal props[d
                 </g>
               </g>
               <g aria-hidden="true" class="parallel-group parallel-line-group" data-testid="parallel-line-group" focusable="false" role="presentation">
-                <path class="parallel-plot" cursor="default" d="M0,13.811123674282923L157.5,11.200000000000001L315,202.58759634575333" data-d="M0,13.811123674282923L157.5,11.200000000000001L315,202.58759634575333" data-id="parallel-line-North-America" data-testid="parallel-line" data-translate-x="80" data-translate-y="23" fill="none" opacity="1" stroke="#35495a" stroke-dasharray="" stroke-dashoffset="0" stroke-width="1"></path>
-                <path class="parallel-plot" cursor="default" d="M0,76.98907557238404L157.5,38.207643036479645L315,179.82072278946643" data-d="M0,76.98907557238404L157.5,38.207643036479645L315,179.82072278946643" data-id="parallel-line-Asia" data-testid="parallel-line" data-translate-x="80" data-translate-y="23" fill="none" opacity="1" stroke="#6868ba" stroke-dasharray="8,2" stroke-dashoffset="0" stroke-width="1"></path>
-                <path class="parallel-plot" cursor="default" d="M0,54.793787759956935L157.5,112.48384599497638L315,201.53801924342258" data-d="M0,54.793787759956935L157.5,112.48384599497638L315,201.53801924342258" data-id="parallel-line-South-America" data-testid="parallel-line" data-translate-x="80" data-translate-y="23" fill="none" opacity="1" stroke="#576245" stroke-dasharray="8,2,4,2" stroke-dashoffset="0" stroke-width="1"></path>
-                <path class="parallel-plot" cursor="default" d="M0,87.83601194491348L157.5,175.1509892315208L315,212.8" data-d="M0,87.83601194491348L157.5,175.1509892315208L315,212.8" data-id="parallel-line-Europe" data-testid="parallel-line" data-translate-x="80" data-translate-y="23" fill="none" opacity="1" stroke="#504644" stroke-dasharray="2,2,8,2,8,2" stroke-dashoffset="0" stroke-width="1"></path>
-                <path class="parallel-plot" cursor="default" d="M0,111.91575877702932L157.5,183.86568020574725L315,129.23290309914455" data-d="M0,111.91575877702932L157.5,183.86568020574725L315,129.23290309914455" data-id="parallel-line-Africa" data-testid="parallel-line" data-translate-x="80" data-translate-y="23" fill="none" opacity="1" stroke="#b5513d" stroke-dasharray="2,2,2,2,8,2" stroke-dashoffset="0" stroke-width="1"></path>
+                <path class="parallel-plot" cursor="default" d="M0,13.811L157.5,11.2L315,202.588" data-d="M0,13.811L157.5,11.2L315,202.588" data-id="parallel-line-North-America" data-testid="parallel-line" data-translate-x="80" data-translate-y="23" fill="none" opacity="1" stroke="#35495a" stroke-dasharray="" stroke-dashoffset="0" stroke-width="1"></path>
+                <path class="parallel-plot" cursor="default" d="M0,76.989L157.5,38.208L315,179.821" data-d="M0,76.989L157.5,38.208L315,179.821" data-id="parallel-line-Asia" data-testid="parallel-line" data-translate-x="80" data-translate-y="23" fill="none" opacity="1" stroke="#6868ba" stroke-dasharray="8,2" stroke-dashoffset="0" stroke-width="1"></path>
+                <path class="parallel-plot" cursor="default" d="M0,54.794L157.5,112.484L315,201.538" data-d="M0,54.794L157.5,112.484L315,201.538" data-id="parallel-line-South-America" data-testid="parallel-line" data-translate-x="80" data-translate-y="23" fill="none" opacity="1" stroke="#576245" stroke-dasharray="8,2,4,2" stroke-dashoffset="0" stroke-width="1"></path>
+                <path class="parallel-plot" cursor="default" d="M0,87.836L157.5,175.151L315,212.8" data-d="M0,87.836L157.5,175.151L315,212.8" data-id="parallel-line-Europe" data-testid="parallel-line" data-translate-x="80" data-translate-y="23" fill="none" opacity="1" stroke="#504644" stroke-dasharray="2,2,8,2,8,2" stroke-dashoffset="0" stroke-width="1"></path>
+                <path class="parallel-plot" cursor="default" d="M0,111.916L157.5,183.866L315,129.233" data-d="M0,111.916L157.5,183.866L315,129.233" data-id="parallel-line-Africa" data-testid="parallel-line" data-translate-x="80" data-translate-y="23" fill="none" opacity="1" stroke="#b5513d" stroke-dasharray="2,2,2,2,8,2" stroke-dashoffset="0" stroke-width="1"></path>
               </g>
               <g class="parallel-group" data-testid="marker-group">
                 <g class="parallel-dot-wrapper" data-id="marker-series-North-America" data-testid="marker-series-group" fill="#7c99b1" focusable="false" id="parallel-plot-unit-test-123457-123457-123457" opacity="1" role="presentation" tabindex="-1">

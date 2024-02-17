@@ -22,7 +22,7 @@ export const setSubTitle = ({ root, uniqueID, subTitle }: { root?: any; uniqueID
           let styleBorder = `border: 1px solid ${getContrastingStroke(term.color)};`;
           let counter = 0;
           const regex = new RegExp(`\\b${term.text}\\b`, 'gi');
-          const highlights = {};
+
           sentence = sentence.replace(regex, match => {
             counter++;
             if (!term.index || counter === term.index) {

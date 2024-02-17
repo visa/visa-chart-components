@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2021 Visa, Inc.
+ * Copyright (c) 2021, 2023 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -38,7 +38,7 @@
  **/
 
 import { max, min, sum } from 'd3-array';
-import { linkHorizontal } from 'd3-shape';
+import { linkHorizontal, linkVertical } from 'd3-shape';
 
 function targetDepth(d) {
   return d.target.depth;
@@ -100,6 +100,20 @@ function find(nodeById, id) {
   return node;
 }
 
+function flipNodesVertical({ nodes }) {
+  nodes.map(n => {
+    n.oldX0 = n.x0;
+    n.oldX1 = n.x1;
+    n.oldY0 = n.y0;
+    n.oldY1 = n.y1;
+    n.y0 = n.x0;
+    n.y1 = n.x1;
+    n.x0 = n.oldY0;
+    n.x1 = n.oldY1;
+    return n;
+  });
+}
+
 function computeLinkBreadths({ nodes }) {
   for (const node of nodes) {
     let y0 = node.y0;
@@ -115,8 +129,23 @@ function computeLinkBreadths({ nodes }) {
   }
 }
 
+function computeLinkBreadthsVertical({ nodes }) {
+  for (const node of nodes) {
+    let x0 = node.x0;
+    let x1 = x0;
+    for (const link of node.sourceLinks) {
+      link.x0 = x0 + link.width / 2;
+      x0 += link.width;
+    }
+    for (const link of node.targetLinks) {
+      link.x1 = x1 + link.width / 2;
+      x1 += link.width;
+    }
+  }
+}
+
 // The 'compareNodes' argument here was to the original d3-sankey script in order to allow us to bottom align nodes in VCC's alluvial-diagram
-export function Sankey(compareNodes, showLinks) {
+export function Sankey(compareNodes, showLinks, layout) {
   let x0 = 0,
     y0 = 0,
     x1 = 1,
@@ -139,7 +168,12 @@ export function Sankey(compareNodes, showLinks) {
     computeNodeDepths(graph);
     computeNodeHeights(graph);
     computeNodeBreadths(graph);
-    computeLinkBreadths(graph);
+    if (layout === 'vertical') {
+      flipNodesVertical(graph);
+      computeLinkBreadthsVertical(graph);
+    } else {
+      computeLinkBreadths(graph);
+    }
     return graph;
   }
 
@@ -514,4 +548,18 @@ export function sankeyLinkHorizontal() {
   return linkHorizontal()
     .source(horizontalSource)
     .target(horizontalTarget);
+}
+
+// VCC added link vertical to test out vertical
+function verticalSource(d) {
+  return [d.x1, d.target.y0];
+}
+
+function verticalTarget(d) {
+  return [d.x0, d.source.y1];
+}
+export function sankeyLinkVertical() {
+  return linkVertical()
+    .source(verticalSource)
+    .target(verticalTarget);
 }

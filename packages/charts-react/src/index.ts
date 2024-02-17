@@ -6,7 +6,6 @@
  *
  **/
 
-// temporary comment to bump charts with feature commit
 export { AlluvialDiagram } from './components/visa-charts';
 export { BarChart } from './components/visa-charts';
 export { CirclePacking } from './components/visa-charts';

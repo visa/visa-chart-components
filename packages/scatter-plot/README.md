@@ -436,13 +436,13 @@ const mouseOutHandler = evt => {
 <br>
 <br>
 
-### <a name="reference-line-props" href="#reference-line-props">#</a> Reference Line Props _Deprecated_[<>](./src/components/scatter-plot/scatter-plot.tsx 'Source')
+### <a name="reference-line-props" href="#reference-line-props">#</a> Reference Line Props [<>](./src/components/scatter-plot/scatter-plot.tsx 'Source')
 
 The referenceLines and referenceStyle props are currently deprecated and will ultimately be fully replaced with the annotation prop. For the time being, this prop will work, but will also not pass accessibility requirements.
 
 | Name             | Type                 | Default Value(s)                                  | Description                                                                                                                   |
 | ---------------- | -------------------- | ------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `referenceLines` | object[]             | []                                                | Data that sets the location and labeling of the reference line                                                                |
+| `referenceLines` | object[]             | []                                                | Data that sets the location and labeling of the reference line(s) _see object definition below_. ### IReferenceLineType       |
 | `referenceStyle` | object (custom type) | [IReferenceStyleType](../types/src/prop-types.ts) | Sets the styling of reference line(s) placed on the chart, _see object definition below_. #### IReferenceStyleType Definition |
 
 #### IReferenceStyleType Definition
@@ -460,9 +460,12 @@ The referenceLines and referenceStyle props are currently deprecated and will ul
 
 `referenceLines` is an array of objects which needs to have the following properties within them.
 
-| Name                       | Type   | Default Value(s) | Description                                                     |
-| -------------------------- | ------ | ---------------- | --------------------------------------------------------------- |
-| `label`                    | string | `undefined`      | Sets the label to show for the reference line.                  |
-| `labelPlacementHorizontal` | string | `undefined`      | Sets the horizontal label placement for the reference line.     |
-| `labelPlacementVertical`   | string | `undefined`      | Sets the vertical label placement for the reference line.       |
-| `value`                    | number | `undefined`      | Sets the value where to place the reference line, per the axis. |
+| Name                          | Type    | Default Value(s)                                                                | Description                                                                                                                                                                                                        |
+| ----------------------------- | ------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `label`                       | string  | `undefined`                                                                     | Sets the label to show for the reference line.                                                                                                                                                                     |
+| `labelPlacementHorizontal`    | string  | Axis `x` mode: `left` or `middle` or `right`. Axis `y` mode: `left` or `right`. | Sets the horizontal label placement for the reference line.                                                                                                                                                        |
+| `labelPlacementVertical`      | string  | Axis `x` mode: `left` or `right`. Axis `y` mode: `top` or `middle` or `bottom`. | Sets the vertical label placement for the reference line.                                                                                                                                                          |
+| `value`                       | number  | `undefined`                                                                     | Sets the value where to place the reference line, per the axis.                                                                                                                                                    |
+| `axis`                        | string  | `x` or `y`.                                                                     | Sets the value where to place the reference line, per the axis.                                                                                                                                                    |
+| `accessibilityDescription`    | string  | `undefined`                                                                     | Descriptive text for the reference line which will be provided to screen reader users via VCCs accessibility description's [setAccessAnnotation](../utils#setAccessAnnotation) utility.                            |
+| `accessibilityDecorationOnly` | boolean | `undefined`                                                                     | When the reference line is decorative (e.g., does not provide any additional information), set accessibilityDecorationOnly to true to avoid unnecessary reference line content in VCCs accessibility descriptions. |

@@ -227,12 +227,16 @@ exports[`<pie-chart> rendered-html annotations should pass annotation prop on lo
       <g class="annotation-note" transform="translate(0, 0)">
         <g class="annotation-note-content" transform="translate(-5, 3)">
           <rect class="annotation-note-bg" fill="white" fill-opacity="0" height="10" width="10" x="0" y="0"></rect>
-          <text class="annotation-note-label" dx="0" fill="#000000" y="0">
+          <text class="annotation-note-label" dx="0" fill="#000000" y="11">
             <tspan dy="0.8em" x="0">
-              oasijfoiajsf
+              Annotation #1 description.
             </tspan>
           </text>
-          <text class="annotation-note-title"></text>
+          <text class="annotation-note-title" fill="#000000" font-weight="bold">
+            <tspan dy="0.8em" x="0">
+              Annotation #1 Title
+            </tspan>
+          </text>
         </g>
         <path class="note-line" d="M-5,0L5,0" stroke="#000000"></path>
       </g>
@@ -250,12 +254,16 @@ exports[`<pie-chart> rendered-html annotations should pass annotation prop on up
       <g class="annotation-note" transform="translate(0, 0)">
         <g class="annotation-note-content" transform="translate(-5, 3)">
           <rect class="annotation-note-bg" fill="white" fill-opacity="0" height="10" width="10" x="0" y="0"></rect>
-          <text class="annotation-note-label" dx="0" fill="#000000" y="0">
+          <text class="annotation-note-label" dx="0" fill="#000000" y="11">
             <tspan dy="0.8em" x="0">
-              oasijfoiajsf
+              Annotation #1 description.
             </tspan>
           </text>
-          <text class="annotation-note-title"></text>
+          <text class="annotation-note-title" fill="#000000" font-weight="bold">
+            <tspan dy="0.8em" x="0">
+              Annotation #1 Title
+            </tspan>
+          </text>
         </g>
         <path class="note-line" d="M-5,0L5,0" stroke="#000000"></path>
       </g>
@@ -378,6 +386,9 @@ exports[`<pie-chart> rendered-html render localization: should render localized 
       <p class="screen-reader-info vcl-access-xAxis"></p>
       <p class="screen-reader-info vcl-access-yAxis"></p>
       <p class="screen-reader-info vcl-access-notes" data-annotationlevel="h3" data-level="h4"></p>
+      <h3 class="screen-reader-info vcl-access-annotations-heading">
+        Diagram referencia vonalak száma: 0. Diagram magyarázatok száma: 0.
+      </h3>
     </div>
     <div class="o-layout--chart">
       <h2 aria-hidden="true" class="pie-main-title vcl-main-title" data-testid="main-title">
@@ -889,6 +900,9 @@ exports[`<pie-chart> rendered-html render should render with minimal props[data,
       <p class="screen-reader-info vcl-access-xAxis"></p>
       <p class="screen-reader-info vcl-access-yAxis"></p>
       <p class="screen-reader-info vcl-access-notes" data-annotationlevel="h3" data-level="h4"></p>
+      <h3 class="screen-reader-info vcl-access-annotations-heading">
+        Number of reference lines: 0. Number of annotations: 0.
+      </h3>
     </div>
     <div class="o-layout--chart">
       <h2 aria-hidden="true" class="pie-main-title vcl-main-title" data-testid="main-title">

@@ -31,7 +31,7 @@ const {
 export class AppBarChart {
   @State() localization: any = {
     language: 'hu',
-    numeralLocale: 'HU',
+    numeralLocale: 'US',
     skipValidation: false,
     overwrite: true
   };
@@ -363,6 +363,7 @@ export class AppBarChart {
           //   right: 10,
           //   bottom: 40
           // }}
+
           ordinalAccessor={'country'}
           valueAccessor={'value'}
           groupAccessor={this.groupAccessor}
@@ -381,7 +382,7 @@ export class AppBarChart {
           onClickEvent={d => this.onClickFunc(d)}
           onHoverEvent={d => this.onHoverFunc(d)}
           onMouseOutEvent={() => this.onMouseOut()}
-          // layout={'horizontal'}
+          layout={'vertical'}
           // onInitialLoadEvent={e => console.log('load event', e.detail, e)}
           // onInitialLoadEndEvent={e => console.log('load end event', e.detail, e)}
           // onDrawStartEvent={e => console.log('draw start event', e.detail, e)}
@@ -408,22 +409,55 @@ export class AppBarChart {
               this.onChangeFunc(d);
             }
           }}
-          // annotations={[
-          //   {
-          //     note: {
-          //       label: "China's Amount-per-capita is massively under market performance.",
-          //       bgPadding: 20,
-          //       title: 'Low Amount Per Capita',
-          //       align: 'middle',
-          //       wrap: 210
-          //     },
-          //     accessibilityDescription:
-          //       'This annotation is a callout to China, which only has 27 million amount but 1.3 billion people.',
-          //     data: { country: 'China', value: '27', region: 'Asia' },
-          //     dy: '-10%',
-          //     color: 'categorical_blue'
-          //   }
-          // ]}
+          referenceLines={[
+            {
+              label: 'Average',
+              labelPlacementHorizontal: 'right',
+              labelPlacementVertical: 'top',
+              value: 75,
+              accessibilityDescription: 'This reference line is a callout to the Average value, which is 100.',
+              accessibilityDecorationOnly: false
+            },
+            {
+              label: 'Low',
+              labelPlacementHorizontal: 'right',
+              labelPlacementVertical: 'top',
+              value: 20,
+              // accessibilityDescription: 'This reference line is a callout to the Low value, which is 20.',
+              accessibilityDecorationOnly: false
+            }
+          ]}
+          annotations={[
+            {
+              note: {
+                bgPadding: 20,
+                title: 'India',
+                align: 'middle',
+                wrap: 210,
+                lineType: 'none'
+              },
+              accessibilityDescription: 'India Annotation accessibility description.',
+              data: { country: 'India', value: '21', region: 'Asia' },
+              dy: '-15%',
+              dx: '0%',
+              color: 'categorical_blue'
+            },
+            {
+              note: {
+                bgPadding: 20,
+                title: 'China',
+                align: 'middle',
+                wrap: 210,
+                lineType: 'none'
+              },
+              accessibilityDescription:
+                'This annotation is a callout to China, which only has 27 million amount but 1.3 billion people.',
+              data: { country: 'China', value: '17', region: 'Asia' },
+              dy: '-15%',
+              dx: '0%',
+              color: 'categorical_blue'
+            }
+          ]}
         />
         <span>
           <h4>Status Caption:</h4>

@@ -89,7 +89,9 @@ export const getTransitionDurations = jsDomEle => {
 export const esModules = [
   '@visa/charts-types',
   // 'd3-array',
-  'd3-color'
+  'd3-color',
+  'd3-shape',
+  'd3-path'
   // 'd3-dispatch',
   // 'd3-ease',
   // 'd3-format',

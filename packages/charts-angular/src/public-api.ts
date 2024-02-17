@@ -6,7 +6,7 @@
  *
  **/
 
-// DIRECTIVES
+// DIRECTIVES (components)
 export {
   AlluvialDiagram,
   BarChart,

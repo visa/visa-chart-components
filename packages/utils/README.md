@@ -119,6 +119,7 @@
       <a href="#annotations">Annotations</a>
       <ul>
         <li><a href="#annotate">annotate()</a></li>
+         <li><a href="#referenceLine">setReferenceLine()</a></li>
       </ul>
     </li>
     <li>
@@ -223,6 +224,12 @@
       </ul>
       <ul>
         <li><a href="#resolve-lines">resolveLines()</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#reference-line">Reference Lines</a>
+      <ul>
+        <li><a href="#set-reference-line">setReferenceLine()</a></li>
       </ul>
     </li>
     <li>
@@ -389,9 +396,9 @@ This function will programmatically produce summary information about what is di
 
 This function runs to initialize any value passed to a Visa Chart Component's `accessibility.structureNotes` prop as well as any updates made to that value. This information is added as a text element within the description root. The lifecycle of this is managed internally by each individual Visa Chart Component. See the [accessibility prop](../types/README.md#accessibility) or the [accessibility prop used within a component](../bar-chart/README.md#accessibility-props) for more details.
 
-#### <a name='setAccessAnnotation' href='#setAccessAnnotation'>#</a> `setAccessAnnotation(rootEle: any, annotations: any)`:
+#### <a name='setAccessAnnotation' href='#setAccessAnnotation'>#</a> `setAccessAnnotation(rootEle: any, annotations: any, referenceLines: any)`:
 
-This function runs to initialize any value passed to a Visa Chart Component's `annotations` prop as well as any updates made to that array. The lifecycle of this is managed internally by each individual Visa Chart Component. See an example of the [annotations prop's `accessibilityDescription` used within a component](../bar-chart/README.md#annotation-props) for more details. You can also find more information in the <a href="#annotate">documentation for the annotation util</a> in this README file.
+This function runs to initialize any value passed to a Visa Chart Component's `annotations` as well as `referenceLines` and any updates made to these arrays. The lifecycle of this is managed internally by each individual Visa Chart Component. See an example of the [annotations prop's `accessibilityDescription` used within a component](../bar-chart/README.md#annotation-props) for more details. You can also find more information in the <a href="#annotate">documentation for the annotation util</a> in this README file.
 
 #### <a name='setAccessibilityDescriptionWidth' href='#setAccessibilityDescriptionWidth'>#</a> `setAccessibilityDescriptionWidth(uniqueID, width)`:
 
@@ -523,7 +530,7 @@ This is a wrapper on [d3-svg-annotation](https://d3-annotation.susielu.com/) by 
 
 #### <a name='annotate' href='#annotate'>#</a> `annotate({...})`:
 
-Adds annotations to a chart, based on props sent to the chart. Developers can specify annotations using the documention provided by [d3-svg-annotation](https://d3-annotation.susielu.com/) as well as using data values.
+Adds annotations to a chart, based on props sent to the chart. Developers can specify annotations using the documentation provided by [d3-svg-annotation](https://d3-annotation.susielu.com/) as well as using data values.
 
 Example annotation prop sent to a chart:
 
@@ -1378,6 +1385,69 @@ select(pathElement)
   .transition()
   .duration(750)
   .attr('d', lineGenerator(interpolationData[1]));
+```
+
+<hr>
+<br>
+
+## <a name="reference-lines" href="#reference-lines">#</a> Reference Lines [<>](./src/utils/referenceLines.ts 'Source')
+
+This util is used to place and format reference lines across select Visa Chart Components. This util will leverage consistent placement rules and options across the VCC charts for which it is enabled on. See an example [of the reference line prop used within a component](../bar-chart/README.md#reference-line-props).
+
+![An image depicting an example reference line on a bar-chart component](./docs/referenceLine.png 'Reference line on a chart')
+
+### **Notable Exports:**
+
+#### <a name='set-reference-line' href='#set-reference-line'>#</a> `setReferenceLine({...})`:
+
+Adds reference line to a chart, based on props sent to the chart. Developers can specify reference lines using the documentation provided in each chart component.
+
+Example reference line prop sent to a chart:
+
+```jsx
+<bar-chart
+  {...props}
+  referenceLines = [
+    {
+      /*
+        The label attached to the reference line
+      */
+      "label": "Average",
+      /*
+        note: horizontal options are 'left', 'middle', 'right', vertical options are 'top', 'middle', 'bottom'
+      */
+      "labelPlacementHorizontal": 'right',
+      "labelPlacementVertical": 'top',
+      "value": 75,
+      /*
+        Descriptive text for the reference line which will be provided to screen reader users via
+        VCCs accessibility description's setAccessAnnotation utility.
+      */
+      "accessibilityDescription": 'This reference line is a callout to the Average value, which is 100.',
+      /*
+        When the reference line is decorative (e.g., does not provide any additional information), set accessibilityDecorationOnly to true to avoid unnecessary reference line content in VCCs accessibility descriptions.
+      */
+      "accessibilityDecorationOnly": false
+    }
+  ]
+></bar-chart>
+```
+
+Example use by a Visa Chart Component:
+
+```js
+setReferenceLine({
+  groupName: 'bar',
+  root: this.referencesG,
+  referenceLines: this.referenceLines,
+  referenceStyle: this.referenceStyle,
+  innerPaddedWidth: this.innerPaddedWidth,
+  innerPaddedHeight: this.innerPaddedHeight,
+  duration: this.duration,
+  layout: this.layout,
+  x: this.x,
+  y: this.y
+});
 ```
 
 <hr>

@@ -367,34 +367,29 @@ describe('<heat-map>', () => {
                 ? [
                     {
                       note: {
-                        title: '2011:',
-                        label: 'The year 2011',
-                        bgPadding: 0,
-                        align: 'center',
-                        lineType: 'none',
-                        wrap: 250
+                        label: "May's volume is here.",
+                        bgPadding: 20,
+                        title: 'The month of may',
+                        align: 'middle',
+                        wrap: 210
                       },
-                      y: '0%',
-                      x: ['2010'],
-                      className: 'heatmap-annotation',
-                      type: 'annotationCalloutRect',
-                      accessibilityDescription: 'This annotation is a callout to 2011, which is for testing purposes.',
-                      subject: {
-                        width: ['2011', '2010'],
-                        height: '100%'
-                      },
-                      disable: ['connector']
+                      accessibilityDescription: 'This annotation is a callout to May, which is for testing purposes.',
+                      data: { month: 'May-17', value: 6042320, cat: 'A' },
+                      dy: '-20%',
+                      color: 'pri_blue'
                     },
                     {
-                      note: {},
-                      accessibilityDecorationOnly: true,
-                      type: 'annotationXYThreshold',
-                      subject: {
-                        x1: 0,
-                        x2: 250
+                      note: {
+                        title: 'The month of june',
+                        label: "June's volume is here.",
+                        bgPadding: 20,
+                        align: 'middle',
+                        wrap: 210
                       },
-                      color: 'pri_blue',
-                      disable: ['note', 'connector']
+                      accessibilityDescription: 'This annotation is a callout to June, which is for testing purposes.',
+                      data: { month: 'Jun-17', value: 3234002, cat: 'A' },
+                      dy: '-20%',
+                      color: 'pri_blue'
                     }
                   ]
                 : []
@@ -469,7 +464,9 @@ describe('<heat-map>', () => {
           } else if (
             test === 'accessibility_focus_marker_style' ||
             test === 'accessibility_textures_on_by_default' ||
-            test === 'accessibility_categorical_textures_created_by_default'
+            test === 'accessibility_categorical_textures_created_by_default' ||
+            test === 'accessibility_referenceLine_description_set_on_load' ||
+            test === 'accessibility_referenceLine_description_set_on_update'
           ) {
             it.skip(`${unitTestAccessibility[test].prop}: ${unitTestAccessibility[test].name}`, () =>
               unitTestAccessibility[test].testFunc(

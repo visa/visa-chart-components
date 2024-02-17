@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.3.0](https://github.com/visa/visa-chart-components/compare/@visa/visa-charts-utils@5.2.0...@visa/visa-charts-utils@5.3.0) (2024-02-16)
+
+### Bug Fixes
+
+- package bump for redeploy ([b61f009](https://github.com/visa/visa-chart-components/commit/b61f00995e90cb013aec09c3e4c89ce40f23b6fd))
+
+### Features
+
+- lineCurve for parallel plot and line chart referenceLine utils a11y additions ([405a67e](https://github.com/visa/visa-chart-components/commit/405a67ec4dd492e965abfbeae8daedb02be67ac7))
+
 ## [5.2.1](https://github.com/visa/visa-chart-components/compare/@visa/visa-charts-utils@5.2.0...@visa/visa-charts-utils@5.2.1) (2024-02-09)
 
 ### Bug Fixes

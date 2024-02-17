@@ -322,14 +322,25 @@ Array [
 
 exports[`<bar-chart> rendered-html reference line should pass referenceLines prop 1`] = `
 <g aria-hidden="true" class="bar-reference-line-group" data-testid="reference-line-group" focusable="false" role="presentation">
-  <g class="bar-reference" opacity="1" transform="translate(0,43.93803895226644)">
-    <line class="bar-reference-line" opacity="0" x1="0" x2="541.5" y1="0" y2="0"></line>
-    <text class="bar-reference-line-label" dx="-0.1em" dy="0.3em" opacity="0" text-anchor="end" x="0" y="0"></text>
+  <g class="bar-reference" data-testid="reference-g" opacity="1" transform="translate(0,43.93803895226644)">
+    <line class="bar-reference-line" data-testid="reference-line" opacity="1" stroke-dasharray="" x1="0" x2="541.5" y1="0" y2="0" style="stroke: rgb(92, 92, 92); stroke-width: 1px;"></line>
+    <text class="bar-reference-line-label" data-testid="reference-line-label" dx="0.5em" dy="1em" opacity="1" text-anchor="start" x="0" y="0" style="fill: rgb(92, 92, 92); paint-order: stroke; stroke: rgb(255, 255, 255); stroke-width: 4px;">
+      Market
+    </text>
   </g>
 </g>
 `;
 
-exports[`<bar-chart> rendered-html reference line should pass referenceStyle prop 1`] = `null`;
+exports[`<bar-chart> rendered-html reference line should pass referenceStyle prop 1`] = `
+<g aria-hidden="true" class="bar-reference-line-group" data-testid="reference-line-group" focusable="false" role="presentation">
+  <g class="bar-reference" data-testid="reference-g" opacity="1" transform="translate(0,43.93803895226644)">
+    <line class="bar-reference-line" data-testid="reference-line" opacity="0.65" stroke-dasharray="" x1="0" x2="541.5" y1="0" y2="0" style="stroke: rgb(92, 92, 92); stroke-width: 1px;"></line>
+    <text class="bar-reference-line-label" data-testid="reference-line-label" dx="0.5em" dy="1em" opacity="1" text-anchor="start" x="0" y="0" style="fill: rgb(92, 92, 92); paint-order: stroke; stroke: rgb(255, 255, 255); stroke-width: 4px;">
+      Market
+    </text>
+  </g>
+</g>
+`;
 
 exports[`<bar-chart> rendered-html render localization: should render localized with minimal props[data,accessors] given 1`] = `
 <bar-chart id="bar-chart-unit-test">
@@ -363,6 +374,9 @@ exports[`<bar-chart> rendered-html render localization: should render localized 
         A diagram elsődleges vertikális Y tengelyt tartalmaz. Diagram címe Y Axis. Kezdeti erték érték 0, végső érték érték 8M.
       </p>
       <p class="screen-reader-info vcl-access-notes" data-annotationlevel="h3" data-level="h4"></p>
+      <h3 class="screen-reader-info vcl-access-annotations-heading">
+        Diagram referencia vonalak száma: 0. Diagram magyarázatok száma: 0.
+      </h3>
     </div>
     <div class="o-layout--chart">
       <h2 aria-hidden="true" class="bar-main-title vcl-main-title" data-testid="main-title">
@@ -964,6 +978,9 @@ exports[`<bar-chart> rendered-html render should render with minimal props[data,
         The chart has a primary vertical Y axis. Title Y Axis. Start value 0, end value 8m.
       </p>
       <p class="screen-reader-info vcl-access-notes" data-annotationlevel="h3" data-level="h4"></p>
+      <h3 class="screen-reader-info vcl-access-annotations-heading">
+        Number of reference lines: 0. Number of annotations: 0.
+      </h3>
     </div>
     <div class="o-layout--chart">
       <h2 aria-hidden="true" class="bar-main-title vcl-main-title" data-testid="main-title">
