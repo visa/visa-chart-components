@@ -94,4 +94,4 @@ See [Conventional Commits](https://www.conventionalcommits.org/) for commit guid
 
 ## 1.0.0 (2021-03-19)
 
-**Note:** Initial release of visachartR package, see the [@visa/charts changelog](../charts/CHANGELOG.md 'Changelog') for additional details pre-dating this package.
+**Note:** Initial release of visachartR package, see the [@visa/charts changelog](https://github.com/visa/visa-chart-components/blob/main/packages/charts/CHANGELOG.md 'Changelog') for additional details pre-dating this package.
