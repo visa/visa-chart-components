@@ -1,6 +1,6 @@
 # visachartR
 
-This package wraps [@visa/charts](../charts) web components for use in [R](https://www.r-project.org/), leveraging the [htmlwidgets](https://www.htmlwidgets.org/) R package. You can find visachartR on [CRAN](https://CRAN.R-project.org/package=visachartR), installation steps provided below.
+This package wraps [@visa/charts](https://github.com/visa/visa-chart-components/tree/main/packages/charts) web components for use in [R](https://www.r-project.org/), leveraging the [htmlwidgets](https://www.htmlwidgets.org/) R package. You can find visachartR on [CRAN](https://CRAN.R-project.org/package=visachartR), installation steps provided below.
 
 ---
 
@@ -19,18 +19,18 @@ This package wraps [@visa/charts](../charts) web components for use in [R](https
 
 #### Components with `Ready` status in this bundle
 
-- [@visa/bar-chart](../bar-chart)
-- [@visa/clustered-bar-chart](../clustered-bar-chart)
-- [@visa/stacked-bar-chart](../stacked-bar-chart)
-- [@visa/line-chart](../line-chart)
-- [@visa/pie-chart](../pie-chart)
-- [@visa/scatter-plot](../scatter-plot)
-- [@visa/heat-map](../heat-map)
-- [@visa/circle-packing](../circle-packing)
-- [@visa/parallel-plot](../parallel-plot)
-- [@visa/dumbbell-plot](../dumbbell-plot)
-- [@visa/world-map](../world-map)
-- [@visa/alluvial-diagram](../alluvial-diagram)
+- [@visa/bar-chart](https://github.com/visa/visa-chart-components/tree/main/packages/bar-chart)
+- [@visa/clustered-bar-chart](https://github.com/visa/visa-chart-components/tree/main/packages/clustered-bar-chart)
+- [@visa/stacked-bar-chart](https://github.com/visa/visa-chart-components/tree/main/packages/stacked-bar-chart)
+- [@visa/line-chart](https://github.com/visa/visa-chart-components/tree/main/packages/line-chart)
+- [@visa/pie-chart](https://github.com/visa/visa-chart-components/tree/main/packages/pie-chart)
+- [@visa/scatter-plot](https://github.com/visa/visa-chart-components/tree/main/packages/scatter-plot)
+- [@visa/heat-map](https://github.com/visa/visa-chart-components/tree/main/packages/heat-map)
+- [@visa/circle-packing](https://github.com/visa/visa-chart-components/tree/main/packages/circle-packing)
+- [@visa/parallel-plot](https://github.com/visa/visa-chart-components/tree/main/packages/parallel-plot)
+- [@visa/dumbbell-plot](https://github.com/visa/visa-chart-components/tree/main/packages/dumbbell-plot)
+- [@visa/world-map](https://github.com/visa/visa-chart-components/tree/main/packages/world-map)
+- [@visa/alluvial-diagram](https://github.com/visa/visa-chart-components/tree/main/packages/alluvial-diagram)
 
 <!-- #### Components with `Development` status -->
 <hr>
