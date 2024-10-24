@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023, 2024 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -63,6 +63,22 @@ describe('<scatter-plot>', () => {
       { item: 12, group: 'D', value: 6865 },
       { item: 13, group: 'D', value: 6154 },
       { item: 14, group: 'D', value: 4109 }
+    ];
+    const EXPECTEDDATADATALABELFORMATTEXT = [
+      { item: 1, group: 'A', value: 2700, text: 'customDataLabelText' },
+      { item: 2, group: 'A', value: 1000, text: 'customDataLabelText' },
+      { item: 3, group: 'A', value: 4004, text: 'customDataLabelText' },
+      { item: 4, group: 'B', value: 2454, text: 'customDataLabelText' },
+      { item: 5, group: 'B', value: 2135, text: 'customDataLabelText' },
+      { item: 6, group: 'B', value: 11143, text: 'customDataLabelText' },
+      { item: 7, group: 'C', value: 3845, text: 'customDataLabelText' },
+      { item: 8, group: 'C', value: 2823, text: 'customDataLabelText' },
+      { item: 9, group: 'C', value: 1666, text: 'customDataLabelText' },
+      { item: 10, group: 'C', value: 1421, text: 'customDataLabelText' },
+      { item: 11, group: 'D', value: 8845, text: 'customDataLabelText' },
+      { item: 12, group: 'D', value: 6865, text: 'customDataLabelText' },
+      { item: 13, group: 'D', value: 6154, text: 'customDataLabelText' },
+      { item: 14, group: 'D', value: 4109, text: 'customDataLabelText' }
     ];
     const EXPECTEDGROUPACCESSOR = 'group';
     const EXPECTEDXACCESSOR = 'item';
@@ -1674,6 +1690,26 @@ describe('<scatter-plot>', () => {
               const expectedLabelValue = formatStats(EXPECTEDDATA[i].value, '$0[.][0]a'); // tslint:disable-line: no-string-literal
               expect(label).toEqualText(expectedLabelValue);
             });
+          });
+          it('should pass through label text with no format when passed as prop', async () => {
+            // ARRANGE
+            component.data = EXPECTEDDATADATALABELFORMATTEXT;
+            const customDataLabelText = 'customDataLabelText';
+            component.dataLabel = {
+              visible: true,
+              labelAccessor: 'text',
+              format: 'text'
+            };
+
+            // ACT RENDER
+            page.root.appendChild(component);
+            await page.waitForChanges();
+
+            // ASSERT
+            const label = page.doc.querySelector('[data-testid=dataLabel]');
+            flushTransitions(label);
+            await page.waitForChanges();
+            expect(label.textContent).toBe(customDataLabelText);
           });
         });
         describe('placement', () => {

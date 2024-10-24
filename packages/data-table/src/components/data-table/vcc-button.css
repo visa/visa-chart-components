@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2024 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -34,7 +34,7 @@
 }
 
 .vcc-btn-container {
-  margin-bottom: 1.875rem;
+  margin-bottom: 48px;
 }
 
 .vcc-btn-group {
@@ -47,7 +47,7 @@
 }
 
 .vcc-btn-group > [class^='vcc-btn']:not(.vcc-btn-label) {
-  margin: 0 0.25rem 3px 0.25rem;
+  margin: 0 3px 3px 3px;
 }
 
 .vcc-btn-group > [class^='vcc-btn']:not(.vcc-btn-label):first-child {
@@ -67,13 +67,13 @@
 }
 
 .vcc-btn-group--reverse > [class^='vcc-btn']:not(.vcc-btn-label):first-child {
-  margin-left: 0.25rem;
+  margin-left: 3px;
   margin-right: 0;
 }
 
 .vcc-btn-group--reverse > [class^='vcc-btn']:not(.vcc-btn-label):last-child {
   margin-left: 0;
-  margin-right: 0.25rem;
+  margin-right: 3px;
 }
 
 .vcc-btn-group--right {
@@ -93,23 +93,23 @@
   margin: auto;
   max-width: 100%;
   overflow-wrap: break-word;
-  padding: 0 1rem;
+  padding: 0 16px;
   text-align: center;
   word-break: normal;
   word-wrap: normal;
 }
 
 .vcc-btn-label [class^='vcc-icon']:first-child {
-  margin-right: 0.25rem;
+  margin-right: 3px;
 }
 
 .vcc-btn-label [class^='vcc-icon']:last-child {
-  margin-left: 0.25rem;
+  margin-left: 3px;
 }
 
 @-moz-document url-prefix() {
   .vcc-btn-label {
-    padding: 0 0.6875rem;
+    padding: 0 6px;
   }
 }
 
@@ -133,12 +133,12 @@
   align-items: center;
   background: var(--theme-action-primary, #1f1f1f);
   border: 0;
-  border-radius: 2.5rem;
+  border-radius: 16px;
   box-sizing: border-box;
   color: var(--theme-button--default-text, #fff);
-  height: 3rem;
+  height: 32px;
   justify-content: center;
-  min-width: 3rem;
+  min-width: 32px;
   position: relative;
 }
 
@@ -170,8 +170,8 @@ html:not(.js-focus-visible) .vcc-btn-icon:focus {
 
 .vcc-btn-icon [class^='vcc-icon'] {
   fill: var(--theme-button--default-text, #fff);
-  height: 1.5rem;
-  width: 1.5rem;
+  height: 16px;
+  width: 16px;
 }
 
 .vcc-btn-icon _:-ms-fullscreen,
@@ -182,8 +182,8 @@ html:not(.js-focus-visible) .vcc-btn-icon:focus {
 
 .vcc-btn-icon [class^='vcc-icon'] {
   fill: var(--theme-button--default-text, #fff);
-  height: 1.5rem;
-  width: 1.5rem;
+  height: 16px;
+  width: 16px;
 }
 
 .vcc-btn-icon:hover,
@@ -203,8 +203,8 @@ html:not(.js-focus-visible) .vcc-btn-icon:focus {
 .vcc-btn-icon:active [class^='vcc-icon'],
 .vcc-btn-icon:focus [class^='vcc-icon'] {
   fill: var(--theme-button--default-text--hover, #fff);
-  height: 1.5rem;
-  width: 1.5rem;
+  height: 16px;
+  width: 16px;
 }
 
 .vcc-btn-icon:focus .vcc-btn-label {
@@ -218,9 +218,9 @@ html:not(.js-focus-visible) .vcc-btn-icon:focus {
 
 .vcc-btn-icon[disabled] [class^='vcc-icon'],
 .vcc-btn-icon.vcc-state--disabled [class^='vcc-icon'] {
-  fill: var(--theme-button-icon-light--diabled, #d7d7de);
-  height: 1.5rem;
-  width: 1.5rem;
+  fill: var(--theme-button-icon-light--disabled, #d7d7de);
+  height: 16px;
+  width: 16px;
 }
 
 .vcc-btn-icon.vcc-state--active {
@@ -239,11 +239,11 @@ html:not(.js-focus-visible) .vcc-btn-icon:focus {
 }
 
 .vcc-btn-icon .vcc-btn-label [class^='vcc-icon']:first-child {
-  margin-right: 0;
+  margin-right: 3px;
 }
 
 .vcc-btn-icon .vcc-btn-label [class^='vcc-icon']:last-child {
-  margin-left: 0;
+  margin-left: 3px;
 }
 
 .vcc-btn-icon--light {
@@ -252,8 +252,8 @@ html:not(.js-focus-visible) .vcc-btn-icon:focus {
 
 .vcc-btn-icon--light [class^='vcc-icon'] {
   fill: var(--theme-button-icon, #1f1f1f);
-  height: 1.5rem;
-  width: 1.5rem;
+  height: 16px;
+  width: 16px;
 }
 
 .vcc-btn-icon--light:active {
@@ -262,8 +262,8 @@ html:not(.js-focus-visible) .vcc-btn-icon:focus {
 
 .vcc-btn-icon--light:active [class^='vcc-icon'] {
   fill: var(--theme-button--default-text--hover, #fff);
-  height: 1.5rem;
-  width: 1.5rem;
+  height: 16px;
+  width: 16px;
 }
 
 .vcc-btn-icon--light:hover:not(:active),
@@ -274,8 +274,8 @@ html:not(.js-focus-visible) .vcc-btn-icon:focus {
 .vcc-btn-icon--light:hover:not(:active) [class^='vcc-icon'],
 .vcc-btn-icon--light:focus:not(:active) [class^='vcc-icon'] {
   fill: var(--theme-button--secondary-text--hover, #484848);
-  height: 1.5rem;
-  width: 1.5rem;
+  height: 16px;
+  width: 16px;
 }
 
 .vcc-btn-icon--light:disabled {
@@ -284,8 +284,8 @@ html:not(.js-focus-visible) .vcc-btn-icon:focus {
 
 .vcc-btn-icon--light:disabled [class^='vcc-icon'] {
   fill: var(--theme-button--default-text--disabled-background, #d7d7de);
-  height: 1.5rem;
-  width: 1.5rem;
+  height: 16px;
+  width: 16px;
 }
 
 .vcc-btn-icon--light-outline {
@@ -295,8 +295,8 @@ html:not(.js-focus-visible) .vcc-btn-icon:focus {
 
 .vcc-btn-icon--light-outline [class^='vcc-icon'] {
   fill: var(--theme-button-icon, #1f1f1f);
-  height: 1.5rem;
-  width: 1.5rem;
+  height: 16px;
+  width: 16px;
 }
 
 .vcc-btn-icon--light-outline:active {
@@ -306,8 +306,8 @@ html:not(.js-focus-visible) .vcc-btn-icon:focus {
 
 .vcc-btn-icon--light-outline:active [class^='vcc-icon'] {
   fill: var(--theme-button--default-text--hover, #fff);
-  height: 1.5rem;
-  width: 1.5rem;
+  height: 16px;
+  width: 16px;
 }
 
 .vcc-btn-icon--light-outline:hover:not(:active) {
@@ -317,8 +317,8 @@ html:not(.js-focus-visible) .vcc-btn-icon:focus {
 
 .vcc-btn-icon--light-outline:hover:not(:active) [class^='vcc-icon'] {
   fill: var(--theme-button-icon-light--hover, #484848);
-  height: 1.5rem;
-  width: 1.5rem;
+  height: 16px;
+  width: 16px;
 }
 
 .vcc-btn-icon--light-outline:focus:not(:active) {
@@ -328,8 +328,8 @@ html:not(.js-focus-visible) .vcc-btn-icon:focus {
 
 .vcc-btn-icon--light-outline:focus:not(:active) [class^='vcc-icon'] {
   fill: var(--theme-button-icon-light--hover, #484848);
-  height: 1.5rem;
-  width: 1.5rem;
+  height: 16px;
+  width: 16px;
 }
 
 .vcc-btn-icon--light-outline:disabled {
@@ -339,21 +339,21 @@ html:not(.js-focus-visible) .vcc-btn-icon:focus {
 
 .vcc-btn-icon--light-outline:disabled [class^='vcc-icon'] {
   fill: var(--theme-button--default-text--disabled-background, #d7d7de);
-  height: 1.5rem;
-  width: 1.5rem;
+  height: 16px;
+  width: 16px;
 }
 
 .vcc-btn-icon--light-tiny {
   background-color: var(--theme-transparent, rgba(0, 0, 0, 0));
   color: var(--theme-button-icon-light, #484848);
-  height: 2rem;
-  min-width: 2rem;
+  height: 16px;
+  min-width: 16px;
 }
 
 .vcc-btn-icon--light-tiny [class^='vcc-icon'] {
   fill: currentColor;
-  height: 1rem;
-  width: 1rem;
+  height: 16px;
+  width: 16px;
 }
 
 .vcc-btn-icon--light-tiny:active {
@@ -362,8 +362,8 @@ html:not(.js-focus-visible) .vcc-btn-icon:focus {
 
 .vcc-btn-icon--light-tiny:active [class^='vcc-icon'] {
   fill: currentColor;
-  height: 1rem;
-  width: 1rem;
+  height: 16px;
+  width: 16px;
 }
 
 .vcc-btn-icon--light-tiny:hover:not(:active) {
@@ -373,8 +373,8 @@ html:not(.js-focus-visible) .vcc-btn-icon:focus {
 
 .vcc-btn-icon--light-tiny:hover:not(:active) [class^='vcc-icon'] {
   fill: currentColor;
-  height: 1rem;
-  width: 1rem;
+  height: 16px;
+  width: 16px;
 }
 
 .vcc-btn-icon--light-tiny:focus:not(:active) {
@@ -384,8 +384,8 @@ html:not(.js-focus-visible) .vcc-btn-icon:focus {
 
 .vcc-btn-icon--light-tiny:focus:not(:active) [class^='vcc-icon'] {
   fill: currentColor;
-  height: 1rem;
-  width: 1rem;
+  height: 16px;
+  width: 16px;
 }
 
 .vcc-btn-icon--light-tiny:disabled {
@@ -420,8 +420,8 @@ html:not(.js-focus-visible) .vcc-btn-icon:focus {
 
 .vcc-btn-icon--dark:disabled [class^='vcc-icon'] {
   fill: var(--theme-button--default-text--disabled-background, #d7d7de);
-  height: 1.5rem;
-  width: 1.5rem;
+  height: 16px;
+  width: 16px;
 }
 
 .vcc-btn-icon--dark-outline {
@@ -446,14 +446,14 @@ html:not(.js-focus-visible) .vcc-btn-icon:focus {
 
 .vcc-btn-icon--dark-outline:disabled [class^='vcc-icon'] {
   fill: var(--theme-button--default-text--disabled-background, #d7d7de);
-  height: 1.5rem;
-  width: 1.5rem;
+  height: 16px;
+  width: 16px;
 }
 
 .vcc-btn-icon--dark-tiny {
   background-color: var(--theme-transparent, rgba(0, 0, 0, 0));
-  height: 2rem;
-  min-width: 2rem;
+  height: 16px;
+  min-width: 16px;
 }
 
 .vcc-btn-icon--dark-tiny:focus:not(:active) {
@@ -462,8 +462,8 @@ html:not(.js-focus-visible) .vcc-btn-icon:focus {
 
 .vcc-btn-icon--dark-tiny [class^='vcc-icon'] {
   fill: var(--theme-button--default-text, #fff);
-  height: 1rem;
-  width: 1rem;
+  height: 16px;
+  width: 16px;
 }
 
 .vcc-btn-icon--dark-tiny:active {
@@ -472,8 +472,8 @@ html:not(.js-focus-visible) .vcc-btn-icon:focus {
 
 .vcc-btn-icon--dark-tiny:active [class^='vcc-icon'] {
   fill: var(--theme-button--default-text--hover, #fff);
-  height: 1rem;
-  width: 1rem;
+  height: 16px;
+  width: 16px;
 }
 
 .vcc-btn-icon--dark-tiny:hover:not(:active),
@@ -484,8 +484,8 @@ html:not(.js-focus-visible) .vcc-btn-icon:focus {
 .vcc-btn-icon--dark-tiny:hover:not(:active) [class^='vcc-icon'],
 .vcc-btn-icon--dark-tiny:focus:not(:active) [class^='vcc-icon'] {
   fill: var(--theme-button--default-text--hover, #fff);
-  height: 1rem;
-  width: 1rem;
+  height: 16px;
+  width: 16px;
 }
 
 .vcc-btn-icon--dark-tiny:disabled {
@@ -495,6 +495,6 @@ html:not(.js-focus-visible) .vcc-btn-icon:focus {
 
 .vcc-btn-icon--dark-tiny:disabled [class^='vcc-icon'] {
   fill: var(--theme-button--default-text--disabled-background, #d7d7de);
-  height: 1rem;
-  width: 1rem;
+  height: 16px;
+  width: 16px;
 }

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023, 2024 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -8,7 +8,7 @@
 import { Component, Element, Prop, h, Watch, Event, EventEmitter } from '@stencil/core';
 
 import { select, event } from 'd3-selection';
-import { max, min } from 'd3-array';
+import { max, min, minIndex, maxIndex } from 'd3-array';
 import { timeMillisecond, timeSecond, timeMinute, timeHour, timeDay, timeWeek, timeMonth, timeYear } from 'd3-time';
 import { scalePoint, scaleLinear, scaleTime } from 'd3-scale';
 import { nest } from 'd3-collection';
@@ -72,6 +72,7 @@ const {
   checkInteraction,
   checkClicked,
   checkHovered,
+  checkLabelDisplayOnly,
   convertVisaColor,
   drawAxis,
   drawGrid,
@@ -228,6 +229,7 @@ export class DumbbellPlot {
   legendData: any;
   ordinalLabel: any;
   labels: any;
+  displayOnlyLabelData: any;
   dumbbellG: any;
   colorArr: any;
   rawColors: any;
@@ -292,6 +294,7 @@ export class DumbbellPlot {
   shouldUpdateDifferenceLabels: boolean = false;
   shouldUpdateLabels: boolean = false;
   shouldValidateInteractionKeys: boolean = false;
+  shouldUpdateLabelData: boolean = false;
   shouldUpdateTableData: boolean = false;
   shouldValidateDataLabelPlacement: boolean = false;
   shouldValidateDataLabelAccessor: boolean = false;
@@ -390,6 +393,7 @@ export class DumbbellPlot {
   dataWatcher(_newData, _oldData) {
     this.updated = true;
     this.shouldUpdateData = true;
+    this.shouldUpdateLabelData = true;
     this.shouldUpdateMarkerData = true;
     this.shouldUpdateSeriesData = true;
     this.shouldSetGlobalSelections = true;
@@ -409,10 +413,9 @@ export class DumbbellPlot {
     this.shouldSetYAxisAccessibility = true;
     this.shouldUpdateXGrid = true;
     this.shouldUpdateYGrid = true;
-    this.shouldSetLabelOpacity = true;
-    this.shouldUpdateLabels = true;
     this.shouldUpdateSeriesLabels = true;
     this.shouldUpdateDifferenceLabels = true;
+    this.shouldUpdateLabels = true;
     this.shouldUpdateLegend = true;
     this.shouldUpdateReferenceLines = true;
     this.shouldUpdateBaselineX = true;
@@ -552,6 +555,7 @@ export class DumbbellPlot {
   sortWatcher(_newVal, _oldVal) {
     this.updated = true;
     this.shouldUpdateData = true;
+    this.shouldUpdateLabelData = true;
     this.shouldUpdateMarkerData = true;
     this.shouldUpdateSeriesData = true;
     this.shouldSetGlobalSelections = true;
@@ -566,6 +570,7 @@ export class DumbbellPlot {
     this.shouldUpdateDifferenceLabels = true;
     this.shouldAddStrokeUnder = true;
     this.shouldUpdateAnnotations = true;
+    this.shouldSetLabelOpacity = true;
     this.shouldSetGeometryAccessibilityAttributes = true;
     this.shouldSetGeometryAriaLabels = true;
   }
@@ -780,12 +785,18 @@ export class DumbbellPlot {
     const oldVisibleVal = _oldVal && _oldVal.visible;
     const newAccessor = _newVal && _newVal.labelAccessor ? _newVal.labelAccessor : false;
     const oldAccessor = _oldVal && _oldVal.labelAccessor ? _oldVal.labelAccessor : false;
+    const newDisplayOnlyVal = _newVal && _newVal.displayOnly;
+    const oldDisplayOnlyVal = _oldVal && _oldVal.displayOnly;
     if (newVisibleVal !== oldVisibleVal) {
       this.shouldSetLabelOpacity = true;
     }
     if (newPlacementVal !== oldPlacementVal) {
       this.shouldValidateDataLabelPlacement = true;
       // this.shouldCheckLabelColor = true;
+    }
+    if (newDisplayOnlyVal !== oldDisplayOnlyVal) {
+      this.shouldUpdateLabelData = true;
+      this.shouldSetLabelOpacity = true;
     }
     if (newAccessor !== oldAccessor) {
       this.shouldValidateDataLabelAccessor = true;
@@ -1135,6 +1146,7 @@ export class DumbbellPlot {
       this.prepareMarkerData();
       this.prepareSeriesData();
       this.prepareLegendData();
+      this.prepareLabelData();
       this.setLayoutData();
       this.prepareScales();
       this.validateDataLabelAccessor();
@@ -1863,6 +1875,32 @@ export class DumbbellPlot {
         : this.nest[0].values[1][this.valueAccessor]
     };
     this.seriesData = [first, second];
+  }
+
+  prepareLabelData() {
+    if (this.nest) {
+      // min
+      const minIdx = minIndex(this.nest, d => min(d.values, v => v[this.valueAccessor]));
+      const minArray = this.nest[minIdx].values;
+      // max
+      const maxIdx = maxIndex(this.nest, d => max(d.values, v => v[this.valueAccessor]));
+      const maxArray = this.nest[maxIdx].values;
+      // first
+      const firstNonNullOrUndefined = this.nest.find(item => item.values.find(val => val[this.valueAccessor] !== null));
+      const firstArray = firstNonNullOrUndefined.values;
+      // last
+      const lastNonNullOrUndefined = [...this.nest]
+        .reverse()
+        .find(item => item.values.find(val => val[this.valueAccessor] != null));
+      const lastArray = lastNonNullOrUndefined.values;
+
+      this.displayOnlyLabelData = {
+        first: firstArray,
+        last: lastArray,
+        min: minArray,
+        max: maxArray
+      };
+    }
   }
 
   prepareLegendData() {
@@ -3493,18 +3531,21 @@ export class DumbbellPlot {
 
   setLabelOpacity() {
     this.updateLabels.attr('opacity', this.dataLabel.visible ? 1 : 0);
-
     this.updateLabelChildren.attr('opacity', d => {
       return checkInteraction(
         d,
-        1,
+        checkLabelDisplayOnly(this.dataLabel.visible, this.dataLabel.displayOnly, d, this.displayOnlyLabelData, [
+          this.ordinalAccessor
+        ]),
         this.hoverOpacity,
         this.hoverHighlight,
         this.clickHighlight,
         this.innerInteractionKeys
       ) < 1
         ? 0
-        : 1;
+        : checkLabelDisplayOnly(this.dataLabel.visible, this.dataLabel.displayOnly, d, this.displayOnlyLabelData, [
+            this.ordinalAccessor
+          ]);
     });
   }
 
@@ -4027,6 +4068,10 @@ export class DumbbellPlot {
     if (this.shouldUpdateLegendData) {
       this.prepareLegendData();
       this.shouldUpdateLegendData = false;
+    }
+    if (this.shouldUpdateLabelData) {
+      this.prepareLabelData();
+      this.shouldUpdateLabelData = false;
     }
     if (this.shouldUpdateScales) {
       this.prepareScales();

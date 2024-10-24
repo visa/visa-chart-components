@@ -1,15 +1,15 @@
 /**
- * Copyright (c) 2022 Visa, Inc.
+ * Copyright (c) 2022, 2024 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
  *
  **/
 import React from 'react';
-import { HeatMap } from '../../charts-react/dist/components/visa-charts';
+import { HeatMap } from '../../charts-react/dist';
 import md from '!raw-loader!../README.md';
 import docpage from './heat-map.mdx';
-import { getProperties, setProperties, transformDates } from '../../../.storybook/utils.js';
+import { getProperties, setProperties, transformDates, removeEventBooleans } from '../../../.storybook/utils.js';
 import { useArgs } from '@storybook/client-api';
 
 let { chartRecipes, argTypes, distinctArgs } = getProperties('heat-map');
@@ -102,6 +102,9 @@ const Template = args => {
   // now we can transform dates within the args object
   transformDates(args);
 
+  // we also need to remove the event booleans from the args we use to render the chart
+  const renderArgs = removeEventBooleans(args);
+
   return (
     <HeatMap
       onClickEvent={click}
@@ -112,7 +115,7 @@ const Template = args => {
       onInitialLoadEvent={initialLoad}
       onInitialLoadEndEvent={initialLoadEnd}
       onTransitionEndEvent={transitionEnd}
-      {...args}
+      {...renderArgs}
     />
   );
 };

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023, 2024 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -70,6 +70,7 @@ export class AppDumbbellPlot {
   @State() dataLabel: any = {
     visible: this.dataLabelVisible,
     placement: this.dataLabelPlacement,
+    displayOnly: ['all'], // all | first | last | min | max
     labelAccessor: this.dataLabelAccessor,
     format: '0.0%'
   };

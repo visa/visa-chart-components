@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2021 Visa, Inc.
+ * Copyright (c) 2021, 2024 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -13,6 +13,7 @@ import { prepareBitmap, addToBitmap } from './vega-label/BitMap'; // printBitMap
 import LabelPlacer from './vega-label/LabelPlacers/LabelPlacer';
 import { getBrowser } from './browser-util';
 import { polyfillGetAttributeNames } from './customPolyfills';
+import { isObject } from './utilFunctions';
 
 const browser = getBrowser();
 const isIE11 = browser === 'IE'; // ua.includes('rv:11.0');
@@ -119,6 +120,23 @@ export const resolveLabelCollision = ({
       const style = getComputedStyle(textElement);
       const fontSize = parseFloat(style.fontSize);
       const fontFamily = style.fontFamily;
+
+      // set all existing attributes on the text element to the item
+      textElement.getAttributeNames().forEach(attrName => {
+        item[attrName] = select(textElement).attr(attrName);
+      });
+      // map current opacity to originalOpacity field
+      item['originalOpacity'] = select(textElement).attr('opacity');
+      // check transitions for opacity and use future opacity if it exists
+      // item['opacity'] has already been set by line 125, so safe to assume that here
+      if (isObject(textElement.__transition)) {
+        Object.keys(textElement.__transition).forEach(key => {
+          if (textElement.__transition[key].name === 'opacity') {
+            const transitionOpacity = textElement.__transition[key].value['attr.opacity'];
+            if (transitionOpacity || transitionOpacity === 0) item['opacity'] = transitionOpacity;
+          }
+        });
+      }
       item['node'] = n[i];
       item['i'] = i;
       item['nodeName'] = textElement.nodeName;
@@ -126,11 +144,7 @@ export const resolveLabelCollision = ({
       item['font'] = style.fontFamily;
       item['text'] = textElement.textContent;
       item['sort'] = false;
-      item['originalOpacity'] = 1; // should be opacity of the element ultimately
       item['datum'] = d && d.data && d.data.data ? d.data.data : d && d.data ? d.data : d ? d : {};
-      textElement.getAttributeNames().forEach(attrName => {
-        item[attrName] = select(textElement).attr(attrName);
-      });
       item['textWidth'] =
         textElement.nodeName === 'rect'
           ? +item['width']

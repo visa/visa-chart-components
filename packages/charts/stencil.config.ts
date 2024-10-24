@@ -26,14 +26,8 @@ export const config: Config | any = {
   namespace: 'charts',
   buildEs5: 'prod',
   extras: {
-    cssVarsShim: true,
-    appendChildSlotFix: false,
-    dynamicImportShim: true,
-    safari10: true,
-    shadowDomShim: true,
-    scriptDataOpts: true,
-    cloneNodeFix: false,
-    slotChildNodesFix: true
+    enableImportInjection: true,
+    experimentalSlotFixes: false // we don't use slots, flip to true if we start using them
   },
   outputTargets: [
     reactOutputTarget({
@@ -48,25 +42,28 @@ export const config: Config | any = {
     angularOutputTarget({
       componentCorePackage: '@visa/charts',
       directivesProxyFile: '../charts-angular/src/lib/directives/visa-charts.ts',
-      excludeComponents: ['visa-charts']
+      directivesArrayFile: '../charts-angular/src/lib/directives/index.ts',
+      excludeComponents: ['visa-charts'],
+      outputType: 'standalone',
+      customElementsDir: 'dist/components'
     }),
     vueOutputTarget({
       componentCorePackage: '@visa/charts',
-      proxiesFile: '../charts-vue/lib/components.ts'
+      proxiesFile: '../charts-vue/lib/components.ts',
+      includeImportCustomElements: true,
+      customElementsDir: 'dist/components',
+      excludeComponents: ['visa-charts']
     }),
     { type: 'dist' },
     { type: 'dist-custom-elements', externalRuntime: false },
     { type: 'www' }
   ],
   plugins: [
-    external({
-      external: ['mapbox-gl']
-    }),
     sass({
       injectGlobalPaths: ['scss/objects.scss']
     })
   ],
   commonjs: {
-    include: ['../utils/dist/visa-charts-utils.umd.js', '../dumbbell-plot/node_modules/bowser/es5.js']
+    include: ['../utils/dist/visa-charts-utils.umd.js']
   }
 };

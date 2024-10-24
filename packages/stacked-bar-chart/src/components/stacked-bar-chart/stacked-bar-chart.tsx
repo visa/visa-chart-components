@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023, 2024 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -9,7 +9,7 @@ import { Component, Element, Prop, Watch, h, Event, EventEmitter } from '@stenci
 import { select, event } from 'd3-selection';
 import { scaleBand, scaleLinear, scaleTime } from 'd3-scale';
 import { nest } from 'd3-collection';
-import { max, min } from 'd3-array';
+import { max, min, sum } from 'd3-array';
 import { easeCircleIn } from 'd3-ease';
 import 'd3-transition';
 import { v4 as uuid } from 'uuid';
@@ -1323,6 +1323,11 @@ export class StackedBarChart {
     configLocalization(this.localization);
   }
 
+  // if normalized and not 0 use getSum(), otherwise use 1
+  modifier(d) {
+    return !this.normalized || d.getSum() === 0 ? 1 : d.getSum();
+  }
+
   setDimensions() {
     this.padding = typeof this.padding === 'string' ? getPadding(this.padding) : this.padding;
 
@@ -1376,27 +1381,33 @@ export class StackedBarChart {
       for (i = 0; i < j; i++) {
         const row = { ...nestedArray[i] };
         let k = 0;
-        let sum = 0;
+        let runSum = 0;
         let sumAboveZero = 0;
         const base = {
-          positive: 0,
-          negative: 0
+          positive: 0.0,
+          negative: 0.0
         };
         const v = nestedArray[i].values;
         const l = v.length;
+        const s = sum(v, d => d[this.valueAccessor]);
         row.values = [];
         let previous = 0;
         for (k = 0; k < l; k++) {
           const item = { ...v[k] };
           const value = item[this.valueAccessor];
-          if (value >= 0) {
+          if (value >= 0 && s !== 0) {
             item.stackEnd = base.positive;
             base.positive += value;
             item.stackStart = base.positive;
-          } else {
+          } else if (value < 0) {
             item.stackStart = base.negative;
             base.negative += value;
             item.stackEnd = base.negative;
+          } else {
+            // value === 0 and sum === 0
+            item.stackEnd = base.positive;
+            base.positive += 0.000001; // denominator needs to be bigger than data points we can handle
+            item.stackStart = base.positive;
           }
           let group = this.stackOrder[item[this.groupAccessor]];
           if (!group) {
@@ -1433,7 +1444,7 @@ export class StackedBarChart {
           }
           previous = item[this.ordinalAccessor];
           item.getSum = () => row.sum;
-          sum += value;
+          runSum += value;
           if (value > 0) {
             sumAboveZero += value;
           }
@@ -1448,8 +1459,8 @@ export class StackedBarChart {
         if (base.negative < this.extent[0]) {
           this.extent[0] = base.negative;
         }
-        row.sum = sum;
-        row.sumMessage = 'Sum ' + sum;
+        row.sum = runSum;
+        row.sumMessage = 'Sum ' + runSum;
         row.sumAboveZero = sumAboveZero;
         output.push(row);
       }
@@ -1994,8 +2005,7 @@ export class StackedBarChart {
         if (typeof d.enteringStackStart === 'number') {
           direction = d.enteringStackStart;
         }
-        const modifier = !this.normalized ? 1 : d.getSum();
-        return scale(direction / modifier);
+        return scale(direction / this.modifier(d));
       })
       .attr(valueDimension, 0)
       .attr(ordinalAxis, d => {
@@ -2021,17 +2031,17 @@ export class StackedBarChart {
       })
       .selectAll('.stacked-bar')
       .attr(valueDimension, d => {
-        const modifier = !this.normalized ? 1 : d.getSum();
         return this.layout === 'vertical'
-          ? this.y(d.stackEnd / modifier) - this.y(d.stackStart / modifier)
-          : this.x(d.stackStart / modifier) - this.x(d.stackEnd / modifier);
+          ? this.y(d.stackEnd / this.modifier(d)) - this.y(d.stackStart / this.modifier(d))
+          : this.x(d.stackStart / this.modifier(d)) - this.x(d.stackEnd / this.modifier(d));
       });
 
     this.enterBarWrappers
       .selectAll('.stacked-bar')
       .attr(valueAxis, d => {
-        const modifier = !this.normalized ? 1 : d.getSum();
-        return this.layout === 'vertical' ? this.y(d.stackStart / modifier) : this.x(d.stackEnd / modifier);
+        return this.layout === 'vertical'
+          ? this.y(d.stackStart / this.modifier(d))
+          : this.x(d.stackEnd / this.modifier(d));
       })
       .attr(ordinalAxis, d => {
         let shift = this[ordinalAxis](d[this.groupAccessor]) + this[ordinalAxis].bandwidth() / 2;
@@ -2086,8 +2096,7 @@ export class StackedBarChart {
         if (d.stackEnd < 0) {
           direction = d.stackStart;
         }
-        const modifier = !this.normalized ? 1 : d.getSum();
-        return this[valueAxis](direction / modifier);
+        return this[valueAxis](direction / this.modifier(d));
       })
       .attr(ordinalAxis, d => this[ordinalAxis](d[this.groupAccessor]));
 
@@ -2152,7 +2161,6 @@ export class StackedBarChart {
 
     this.update
       .classed('geometryIsMoving', (d, i, n) => {
-        const modifier = !this.normalized ? 1 : d.getSum();
         const geometryIsUpdating = checkAttributeTransitions(select(n[i]), [
           {
             attr: ordinalAxis,
@@ -2167,15 +2175,18 @@ export class StackedBarChart {
           {
             attr: valueAxis,
             numeric: true,
-            newValue: this.layout === 'vertical' ? this.y(d.stackStart / modifier) : this.x(d.stackEnd / modifier)
+            newValue:
+              this.layout === 'vertical'
+                ? this.y(d.stackStart / this.modifier(d))
+                : this.x(d.stackEnd / this.modifier(d))
           },
           {
             attr: valueDimension,
             numeric: true,
             newValue:
               this.layout === 'vertical'
-                ? this.y(d.stackEnd / modifier) - this.y(d.stackStart / modifier)
-                : this.x(d.stackStart / modifier) - this.x(d.stackEnd / modifier)
+                ? this.y(d.stackEnd / this.modifier(d)) - this.y(d.stackStart / this.modifier(d))
+                : this.x(d.stackStart / this.modifier(d)) - this.x(d.stackEnd / this.modifier(d))
           }
         ]);
         return geometryIsUpdating;
@@ -2183,14 +2194,14 @@ export class StackedBarChart {
       .attr(`data-${ordinalAxis}`, d => this[ordinalAxis](d[this.groupAccessor]))
       .attr(`data-${ordinalDimension}`, this[ordinalAxis].bandwidth())
       .attr(`data-${valueAxis}`, d => {
-        const modifier = !this.normalized ? 1 : d.getSum();
-        return this.layout === 'vertical' ? this.y(d.stackStart / modifier) : this.x(d.stackEnd / modifier);
+        return this.layout === 'vertical'
+          ? this.y(d.stackStart / this.modifier(d))
+          : this.x(d.stackEnd / this.modifier(d));
       })
       .attr(`data-${valueDimension}`, d => {
-        const modifier = !this.normalized ? 1 : d.getSum();
         return this.layout === 'vertical'
-          ? this.y(d.stackEnd / modifier) - this.y(d.stackStart / modifier)
-          : this.x(d.stackStart / modifier) - this.x(d.stackEnd / modifier);
+          ? this.y(d.stackEnd / this.modifier(d)) - this.y(d.stackStart / this.modifier(d))
+          : this.x(d.stackStart / this.modifier(d)) - this.x(d.stackEnd / this.modifier(d));
       })
       .attr('data-translate-x', this.padding.left + this.margin.left)
       .attr('data-translate-y', this.padding.top + this.margin.top)
@@ -2198,14 +2209,14 @@ export class StackedBarChart {
       .duration(this.duration)
       .ease(easeCircleIn)
       .attr(valueAxis, d => {
-        const modifier = !this.normalized ? 1 : d.getSum();
-        return this.layout === 'vertical' ? this.y(d.stackStart / modifier) : this.x(d.stackEnd / modifier);
+        return this.layout === 'vertical'
+          ? this.y(d.stackStart / this.modifier(d))
+          : this.x(d.stackEnd / this.modifier(d));
       })
       .attr(valueDimension, d => {
-        const modifier = !this.normalized ? 1 : d.getSum();
         return this.layout === 'vertical'
-          ? this.y(d.stackEnd / modifier) - this.y(d.stackStart / modifier)
-          : this.x(d.stackStart / modifier) - this.x(d.stackEnd / modifier);
+          ? this.y(d.stackEnd / this.modifier(d)) - this.y(d.stackStart / this.modifier(d))
+          : this.x(d.stackStart / this.modifier(d)) - this.x(d.stackEnd / this.modifier(d));
       })
       .attr(ordinalAxis, d => this[ordinalAxis](d[this.groupAccessor]))
       .attr(ordinalDimension, this[ordinalAxis].bandwidth())
@@ -2446,13 +2457,12 @@ export class StackedBarChart {
     selection.attr('opacity', (d, i, n) => {
       const prevOpacity = +select(n[i]).attr('opacity');
       const styleVisibility = select(n[i]).style('visibility');
-      const modifier = !this.normalized ? 1 : d.getSum();
       const dimensions = {};
       dimensions[ordinalDimension] = this[ordinalAxis].bandwidth();
       dimensions[valueDimension] =
         this.layout === 'vertical'
-          ? this.y(d.stackEnd / modifier) - this.y(d.stackStart / modifier)
-          : this.x(d.stackStart / modifier) - this.x(d.stackEnd / modifier);
+          ? this.y(d.stackEnd / this.modifier(d)) - this.y(d.stackStart / this.modifier(d))
+          : this.x(d.stackStart / this.modifier(d)) - this.x(d.stackEnd / this.modifier(d));
       const hasRoom =
         this.dataLabel.placement === 'auto' || // we ignore show small labels when running collision algorithm
         this.dataLabel.collisionHideOnly ||
@@ -2694,10 +2704,9 @@ export class StackedBarChart {
         if (!this.interpolating) {
           return false;
         }
-        const modifier = !this.normalized ? 1 : d.getSum();
         const textIsMoving =
           this.interpolating[ordinalAxis](d[this.groupAccessor]) !== this[ordinalAxis](d[this.groupAccessor]) ||
-          this.interpolating[valueAxis](d[stack] / modifier) !== this[valueAxis](d[stack] / modifier);
+          this.interpolating[valueAxis](d[stack] / this.modifier(d)) !== this[valueAxis](d[stack] / this.modifier(d));
         return textIsMoving;
       })
       .attr('data-translate-x', this.padding.left + this.margin.left)

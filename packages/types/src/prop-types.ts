@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023, 2024 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -14,13 +14,14 @@ export interface IBoxModelType {
 
 export interface ISubTitleType {
   text?: string;
-  keywordsHighlight?: object[];
+  keywordsHighlight?: IKeywordsHighlightType[];
 }
 export interface IDataLabelType {
   visible: boolean;
   placement?: string;
   labelAccessor?: string;
-  format?: any;
+  displayOnly?: string | string[];
+  format?: string;
   collisionHideOnly?: boolean;
   collisionPlacement?: string;
 }
@@ -69,6 +70,13 @@ export interface IAnimationConfig {
 }
 export interface IKeyConfig {
   disabled?: boolean;
+}
+
+export interface IKeywordsHighlightType {
+  text: string;
+  color: string;
+  mode?: 'text' | 'background';
+  index?: number;
 }
 
 export interface ILocalizationType {

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023, 2024 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -7,7 +7,7 @@
  **/
 import { Component, Element, Prop, Watch, h, Event, EventEmitter } from '@stencil/core';
 import { select, event } from 'd3-selection';
-import { max, min } from 'd3-array';
+import { max, min, minIndex, maxIndex } from 'd3-array';
 import { scaleBand, scaleLinear, scaleOrdinal } from 'd3-scale';
 import { easeCircleIn } from 'd3-ease';
 import { nest } from 'd3-collection';
@@ -71,6 +71,7 @@ const {
   checkInteraction,
   checkClicked,
   checkHovered,
+  checkLabelDisplayOnly,
   convertVisaColor,
   drawAxis,
   drawGrid,
@@ -203,6 +204,7 @@ export class BarChart {
   innerPaddedWidth: number;
   colorArr: any;
   preppedData: any;
+  displayOnlyLabelData: any;
   placement: string;
   legendG: any;
   subTitleG: any;
@@ -247,6 +249,7 @@ export class BarChart {
   shouldResetRoot: boolean = false;
   shouldUpdateBaseline: boolean = false;
   shouldValidateInteractionKeys: boolean = false;
+  shouldUpdateLabelData: boolean = false;
   shouldUpdateLegendData: boolean = false;
   shouldCheckValueAxis: boolean = false;
   shouldCheckLabelAxis: boolean = false;
@@ -293,6 +296,8 @@ export class BarChart {
   dataWatcher(_newVal, _oldVal) {
     this.updated = true;
     this.shouldUpdateData = true;
+    this.shouldUpdateLabelData = true;
+    this.shouldSetLabelPosition = true;
     this.shouldSetColors = true;
     this.shouldSetTextures = true;
     // this.shouldDrawInteractionState = true; // called from updateGeometries
@@ -301,7 +306,6 @@ export class BarChart {
     this.shouldSetTestingAttributes = true;
     this.shouldEnterUpdateExit = true;
     this.shouldSetLabelContent = true;
-    this.shouldSetLabelPosition = true;
     this.shouldSetGeometryAccessibilityAttributes = true;
     this.shouldSetGeometryAriaLabels = true;
     this.shouldUpdateLegendData = true;
@@ -326,6 +330,7 @@ export class BarChart {
   sortWatcher(_newVal, _oldVal) {
     this.updated = true;
     this.shouldUpdateData = true;
+    this.shouldUpdateLabelData = true;
     this.shouldSetGlobalSelections = true;
     this.shouldSetTestingAttributes = true;
     this.shouldEnterUpdateExit = true;
@@ -593,7 +598,13 @@ export class BarChart {
     const oldFormatVal = _oldVal && _oldVal.format ? _oldVal.format : false;
     const newCollisionHideOnlyVal = _newVal && _newVal.collisionHideOnly ? _newVal.collisionHideOnly : false;
     const oldCollisionHideOnlyVal = _oldVal && _oldVal.collisionHideOnly ? _oldVal.collisionHideOnly : false;
+    const newDisplayOnlyVal = _newVal && _newVal.displayOnly;
+    const oldDisplayOnlyVal = _oldVal && _oldVal.displayOnly;
     if (newVisibleVal !== oldVisibleVal) {
+      this.shouldSetLabelOpacity = true;
+    }
+    if (newDisplayOnlyVal !== oldDisplayOnlyVal) {
+      this.shouldUpdateLabelData = true;
       this.shouldSetLabelOpacity = true;
     }
     if (
@@ -930,6 +941,7 @@ export class BarChart {
       this.setTagLevels();
       this.prepareData();
       this.prepareLegendData();
+      this.prepareLabelData();
       this.updateChartVariable();
       this.prepareScales();
       this.validateInteractionKeys();
@@ -1318,6 +1330,28 @@ export class BarChart {
     nested.forEach(el => {
       this.legendData.push(el.values[0]);
     });
+  }
+
+  prepareLabelData() {
+    if (this.preppedData) {
+      // min
+      const minIdx = minIndex(this.preppedData, d => d[this.valueAccessor]);
+      const minItem = this.preppedData[minIdx];
+      // max
+      const maxIdx = maxIndex(this.preppedData, d => d[this.valueAccessor]);
+      const maxItem = this.preppedData[maxIdx];
+      // first
+      const firstItem = this.preppedData.find(val => val[this.valueAccessor] != null);
+      // last
+      const lastItem = [...this.preppedData].reverse().find(val => val[this.valueAccessor] != null);
+
+      this.displayOnlyLabelData = {
+        first: [firstItem],
+        last: [lastItem],
+        min: [minItem],
+        max: [maxItem]
+      };
+    }
   }
 
   setSubTitleElements() {
@@ -2196,7 +2230,6 @@ export class BarChart {
   }
 
   processLabelOpacity(selection, addCollisionClass?) {
-    const opacity = this.dataLabel.visible ? 1 : 0;
     const ordinalAxis = this.layout === 'vertical' ? 'x' : 'y';
     const ordinalDimension = this.layout === 'vertical' ? 'width' : 'height';
     const valueAxis = this.layout === 'vertical' ? 'y' : 'x';
@@ -2229,7 +2262,9 @@ export class BarChart {
       const targetOpacity = hasRoom
         ? checkInteraction(
             d,
-            opacity,
+            checkLabelDisplayOnly(this.dataLabel.visible, this.dataLabel.displayOnly, d, this.displayOnlyLabelData, [
+              this.ordinalAccessor
+            ]),
             this.hoverOpacity,
             this.hoverHighlight,
             this.clickHighlight,
@@ -2367,13 +2402,13 @@ export class BarChart {
   }
 
   enterLabels() {
-    const opacity = this.dataLabel.visible ? 1 : 0;
-
     this.enteringLabels
       .attr('opacity', d => {
         return checkInteraction(
           d,
-          opacity,
+          checkLabelDisplayOnly(this.dataLabel.visible, this.dataLabel.displayOnly, d, this.displayOnlyLabelData, [
+            this.ordinalAccessor
+          ]),
           this.hoverOpacity,
           this.hoverHighlight,
           this.clickHighlight,
@@ -2855,6 +2890,10 @@ export class BarChart {
     if (this.shouldUpdateLegendData) {
       this.prepareLegendData();
       this.shouldUpdateLegendData = false;
+    }
+    if (this.shouldUpdateLabelData) {
+      this.prepareLabelData();
+      this.shouldUpdateLabelData = false;
     }
     if (this.shouldUpdateLayoutVariables) {
       this.updateChartVariable();

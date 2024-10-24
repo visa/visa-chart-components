@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023, 2024 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -1742,12 +1742,14 @@ export class ClusteredBarChart {
       })
       .attr('opacity', 0)
       .attr(valueAxis, d => this[valueAxis](Math[choice](0, d[this.valueAccessor])))
-      .attr(valueDimension, d =>
-        Math.abs(
-          this.layout === 'vertical'
-            ? this[valueAxis](0) - this[valueAxis](d[this.valueAccessor])
-            : this[valueAxis](d[this.valueAccessor]) - this[valueAxis](0)
-        )
+      .attr(
+        valueDimension,
+        d =>
+          Math.abs(
+            this.layout === 'vertical'
+              ? this[valueAxis](0) - this[valueAxis](d[this.valueAccessor])
+              : this[valueAxis](d[this.valueAccessor]) - this[valueAxis](0)
+          ) || 0.000001 // avoiding getBBox dimension and coordinates issues
       )
       .attr(ordinalAxis, d => this[ordinalAxis + '1'](d[this.ordinalAccessor]))
       .attr(ordinalDimension, this[ordinalAxis + '1'].bandwidth());
@@ -1897,11 +1899,12 @@ export class ClusteredBarChart {
           {
             attr: valueDimension,
             numeric: true,
-            newValue: Math.abs(
-              this.layout === 'vertical'
-                ? this[valueAxis](0) - this[valueAxis](d[this.valueAccessor])
-                : this[valueAxis](d[this.valueAccessor]) - this[valueAxis](0)
-            )
+            newValue:
+              Math.abs(
+                this.layout === 'vertical'
+                  ? this[valueAxis](0) - this[valueAxis](d[this.valueAccessor])
+                  : this[valueAxis](d[this.valueAccessor]) - this[valueAxis](0)
+              ) || 0.000001
           }
         ]);
         return geometryIsUpdating;
@@ -1923,12 +1926,14 @@ export class ClusteredBarChart {
       )
       .attr(`data-${ordinalDimension}`, this[ordinalAxis + '1'].bandwidth())
       .attr(`data-${valueAxis}`, d => this[valueAxis](Math[choice](0, d[this.valueAccessor])))
-      .attr(`data-${valueDimension}`, d =>
-        Math.abs(
-          this.layout === 'vertical'
-            ? this[valueAxis](0) - this[valueAxis](d[this.valueAccessor])
-            : this[valueAxis](d[this.valueAccessor]) - this[valueAxis](0)
-        )
+      .attr(
+        `data-${valueDimension}`,
+        d =>
+          Math.abs(
+            this.layout === 'vertical'
+              ? this[valueAxis](0) - this[valueAxis](d[this.valueAccessor])
+              : this[valueAxis](d[this.valueAccessor]) - this[valueAxis](0)
+          ) || 0.000001
       )
       .transition('update')
       .duration((_, i, n) => {
@@ -1939,12 +1944,14 @@ export class ClusteredBarChart {
       })
       .ease(easeCircleIn)
       .attr(valueAxis, d => this[valueAxis](Math[choice](0, d[this.valueAccessor])))
-      .attr(valueDimension, d =>
-        Math.abs(
-          this.layout === 'vertical'
-            ? this[valueAxis](0) - this[valueAxis](d[this.valueAccessor])
-            : this[valueAxis](d[this.valueAccessor]) - this[valueAxis](0)
-        )
+      .attr(
+        valueDimension,
+        d =>
+          Math.abs(
+            this.layout === 'vertical'
+              ? this[valueAxis](0) - this[valueAxis](d[this.valueAccessor])
+              : this[valueAxis](d[this.valueAccessor]) - this[valueAxis](0)
+          ) || 0.000001
       )
       .attr(ordinalAxis, d => this[ordinalAxis + '1'](d[this.ordinalAccessor]))
       .attr(ordinalDimension, this[ordinalAxis + '1'].bandwidth())
@@ -2454,12 +2461,14 @@ export class ClusteredBarChart {
       )
       .attr(`data-${ordinalDimension}`, this[ordinalAxis + '1'].bandwidth())
       .attr(`data-${valueAxis}`, d => this[valueAxis](Math[choice](0, d[this.valueAccessor])))
-      .attr(`data-${valueDimension}`, d =>
-        Math.abs(
-          this.layout === 'vertical'
-            ? this[valueAxis](0) - this[valueAxis](d[this.valueAccessor])
-            : this[valueAxis](d[this.valueAccessor]) - this[valueAxis](0)
-        )
+      .attr(
+        `data-${valueDimension}`,
+        d =>
+          Math.abs(
+            this.layout === 'vertical'
+              ? this[valueAxis](0) - this[valueAxis](d[this.valueAccessor])
+              : this[valueAxis](d[this.valueAccessor]) - this[valueAxis](0)
+          ) || 0.000001
       );
 
     // we use prepareRenderChange to use or not use .transition()

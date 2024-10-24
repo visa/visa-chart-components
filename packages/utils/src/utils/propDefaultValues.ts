@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023, 2024 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -184,9 +184,20 @@ export const dataLabel = {
   collisionPlacement: 'top'
 };
 
+export const dataLabelBar = {
+  visible: true,
+  placement: 'top',
+  displayOnly: ['all'],
+  labelAccessor: '',
+  format: '0[.][0][0]a',
+  collisionHideOnly: false,
+  collisionPlacement: 'top'
+};
+
 export const dataLabelLine = {
   visible: true,
   placement: 'top',
+  displayOnly: ['all'],
   labelAccessor: '',
   format: '0[.][0][0]a',
   collisionHideOnly: false,
@@ -222,6 +233,7 @@ export const dataLabelCenter = {
 export const dataLabelEnds = {
   visible: true,
   placement: 'ends',
+  displayOnly: ['all'],
   labelAccessor: '',
   format: '0[.][0][0]a',
   collisionHideOnly: false

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023, 2024 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -15,8 +15,8 @@ const commonComponents = [
   '@visa/visa-charts-data-table',
   '@visa/keyboard-instructions'
 ].join();
-const ignoreComponents = ['@visa/bivariate-mapbox-map'].join();
-const ignoreAppComponents = ['charts-react-demo', 'charts-react-hooks-demo', 'visa-charts-demo'].join();
+const ignoreComponents = [].join();
+const ignoreAppComponents = ['charts-react-hooks-demo', 'visa-charts-demo', 'charts-vue-demo'].join();
 
 const logger = console;
 let cooldown = 0;
@@ -90,9 +90,6 @@ function run() {
       command: component_name => {
         let bootstrapComponents = `'{${commonComponents},${component_name}}'`;
         switch (component_name) {
-          case '@visa/bivariate-mapbox-map':
-            bootstrapComponents = `'{${commonComponents},'@visa/scatter-plot',${component_name}}'`;
-            break;
           case '@visa/visa-charts-utils':
             bootstrapComponents = `${component_name}`;
             break;
@@ -125,10 +122,6 @@ function run() {
       command: component_name => {
         let tempCommonComp = `'{${commonComponents}'}`;
         switch (component_name) {
-          case '@visa/bivariate-mapbox-map':
-            tempCommonComp = `'{${commonComponents},'@visa/scatter-plot'}'`;
-            spawn(`lerna run --scope ${tempCommonComp} --stream --concurrency 8 build`);
-            break;
           case '@visa/visa-charts-data-table':
           case '@visa/keyboard-instructions':
           default:
@@ -233,7 +226,7 @@ function run() {
       defaultValue: false,
       option: '--i',
       command: () => {
-        spawn(`lerna run yarn-install && npm run bootup`);
+        spawn(`npm run bootup`);
       },
       order: 7
     }),
@@ -341,16 +334,6 @@ function run() {
         spawn(`lerna run --scope @visa/charts-figma start`);
       },
       order: 12
-    }),
-
-    srd: createTask({
-      name: `start charts react demo ${chalk.gray('(start charts react demo)')}`,
-      defaultValue: false,
-      option: '--srd',
-      command: () => {
-        spawn(`lerna run --scope charts-react-demo start`);
-      },
-      order: 13
     }),
     srhd: createTask({
       name: `start charts react hooks demo ${chalk.gray('(start charts react hooks demo)')}`,

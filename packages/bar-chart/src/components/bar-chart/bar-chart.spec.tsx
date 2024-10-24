@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023, 2024 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -69,6 +69,20 @@ describe('<bar-chart>', () => {
       { month: 'Jan-18', value: 2340000, cat: 'C' },
       { month: 'Feb-18', value: 3202340, cat: 'A' },
       { month: 'Mar-18', value: 8503536, cat: 'B' }
+    ];
+    const EXPECTEDDATADATALABELFORMATTEXT = [
+      { month: 'Apr-17', value: 1407543, cat: 'A', text: 'customDataLabelText' },
+      { month: 'May-17', value: 6042320, cat: 'A', text: 'customDataLabelText' },
+      { month: 'Jun-17', value: 3234002, cat: 'A', text: 'customDataLabelText' },
+      { month: 'Jul-17', value: 2221233, cat: 'B', text: 'customDataLabelText' },
+      { month: 'Aug-17', value: 4476321, cat: 'A', text: 'customDataLabelText' },
+      { month: 'Sep-17', value: 3789221, cat: 'B', text: 'customDataLabelText' },
+      { month: 'Oct-17', value: 6543535, cat: 'B', text: 'customDataLabelText' },
+      { month: 'Nov-17', value: 7457432, cat: 'A', text: 'customDataLabelText' },
+      { month: 'Dec-17', value: 2636346, cat: 'B', text: 'customDataLabelText' },
+      { month: 'Jan-18', value: 2340000, cat: 'C', text: 'customDataLabelText' },
+      { month: 'Feb-18', value: 3202340, cat: 'A', text: 'customDataLabelText' },
+      { month: 'Mar-18', value: 8503536, cat: 'B', text: 'customDataLabelText' }
     ];
     const EXPECTEDORDINALACCESSOR = 'month';
     const EXPECTEDVALUEACCESSOR = 'value';
@@ -1732,6 +1746,26 @@ describe('<bar-chart>', () => {
             // now we need to reset the locale to en for future tests
             // setNumeralLocale('en');
           });
+          it('should pass through label text with no format when passed as prop', async () => {
+            // ARRANGE
+            component.data = EXPECTEDDATADATALABELFORMATTEXT;
+            const customDataLabelText = 'customDataLabelText';
+            component.dataLabel = {
+              visible: true,
+              labelAccessor: 'text',
+              format: 'text'
+            };
+
+            // ACT RENDER
+            page.root.appendChild(component);
+            await page.waitForChanges();
+
+            // ASSERT
+            const label = page.doc.querySelector('[data-testid=dataLabel]');
+            flushTransitions(label);
+            await page.waitForChanges();
+            expect(label.textContent).toBe(customDataLabelText);
+          });
         });
         describe('placement', () => {
           it('should place labels on top of bars by default', async () => {
@@ -1766,6 +1800,350 @@ describe('<bar-chart>', () => {
             flushTransitions(label);
             flushTransitions(bar);
             expect(parseFloat(label.getAttribute('y'))).toBeGreaterThan(parseFloat(bar.getAttribute('y')));
+          });
+        });
+        describe('displayOnly', () => {
+          // data
+          const EXPECTEDDATADISPLAYONLY = [
+            { month: 'Oct-17', value: 5 },
+            { month: 'Nov-17', value: 4 },
+            { month: 'Dec-17', value: 1 },
+            { month: 'Jan-18', value: 12 },
+            { month: 'Feb-18', value: 6 }
+          ];
+          // identifying labels
+          const displayOnlyLabelData = {
+            first: 'Oct-17',
+            last: 'Feb-18',
+            min: 'Dec-17',
+            max: 'Jan-18',
+            notSelectedLabelTestSelector: 'Nov-17'
+          };
+
+          it('should only make the first visible on load', async () => {
+            // ARRANGE
+            component.dataLabel = {
+              visible: true,
+              displayOnly: 'first',
+              labelAccessor: 'value',
+              format: '$0[.][0]a',
+              placement: 'bottom'
+            };
+            component.data = EXPECTEDDATADISPLAYONLY;
+
+            // ACT
+            page.root.appendChild(component);
+            await page.waitForChanges();
+
+            // ASSERT
+            const firstLabel = page.doc.querySelector(
+              `[data-testid=dataLabel][data-id=label-${displayOnlyLabelData.first}]`
+            );
+            const notSelectedTestSelector = page.doc.querySelector(
+              `[data-testid=dataLabel][data-id=label-${displayOnlyLabelData.notSelectedLabelTestSelector}]`
+            );
+            flushTransitions(firstLabel);
+            flushTransitions(notSelectedTestSelector);
+            await page.waitForChanges();
+            expect(firstLabel).toEqualAttribute('opacity', 1);
+            expect(notSelectedTestSelector).toEqualAttribute('opacity', 0);
+          });
+          it.skip('should only make the first visible on update', async () => {
+            // ARRANGE
+            component.data = EXPECTEDDATADISPLAYONLY;
+
+            // ACT
+            page.root.appendChild(component);
+            await page.waitForChanges();
+
+            // ACT UPDATE
+            component.dataLabel = {
+              visible: true,
+              displayOnly: 'first',
+              labelAccessor: 'value',
+              format: '$0[.][0]a',
+              placement: 'bottom'
+            };
+            await page.waitForChanges();
+
+            // ASSERT
+            const firstLabel = page.doc.querySelector(
+              `[data-testid=dataLabel][data-id=label-${displayOnlyLabelData.first}]`
+            );
+            const notSelectedTestSelector = page.doc.querySelector(
+              `[data-testid=dataLabel][data-id=label-${displayOnlyLabelData.notSelectedLabelTestSelector}]`
+            );
+            flushTransitions(firstLabel);
+            flushTransitions(notSelectedTestSelector);
+            await page.waitForChanges();
+            expect(firstLabel).toEqualAttribute('opacity', 1);
+            expect(notSelectedTestSelector).toEqualAttribute('opacity', 0);
+          });
+          it('should only make the last visible on load', async () => {
+            // ARRANGE
+            component.dataLabel = {
+              visible: true,
+              displayOnly: 'last',
+              labelAccessor: 'value',
+              format: '$0[.][0]a',
+              placement: 'bottom'
+            };
+            component.data = EXPECTEDDATADISPLAYONLY;
+
+            // ACT
+            page.root.appendChild(component);
+            await page.waitForChanges();
+
+            // ASSERT
+            const lastLabel = page.doc.querySelector(
+              `[data-testid=dataLabel][data-id=label-${displayOnlyLabelData.last}]`
+            );
+            const notSelectedTestSelector = page.doc.querySelector(
+              `[data-testid=dataLabel][data-id=label-${displayOnlyLabelData.notSelectedLabelTestSelector}]`
+            );
+            flushTransitions(lastLabel);
+            flushTransitions(notSelectedTestSelector);
+            await page.waitForChanges();
+            expect(lastLabel).toEqualAttribute('opacity', 1);
+            expect(notSelectedTestSelector).toEqualAttribute('opacity', 0);
+          });
+          it.skip('should only make the last visible on update', async () => {
+            // ARRANGE
+            component.data = EXPECTEDDATADISPLAYONLY;
+
+            // ACT
+            page.root.appendChild(component);
+            await page.waitForChanges();
+
+            // ACT UPDATE
+            component.dataLabel = {
+              visible: true,
+              displayOnly: 'last',
+              labelAccessor: 'value',
+              format: '$0[.][0]a',
+              placement: 'bottom'
+            };
+            await page.waitForChanges();
+
+            // ASSERT
+            const lastLabel = page.doc.querySelector(
+              `[data-testid=dataLabel][data-id=label-${displayOnlyLabelData.last}]`
+            );
+            const notSelectedTestSelector = page.doc.querySelector(
+              `[data-testid=dataLabel][data-id=label-${displayOnlyLabelData.notSelectedLabelTestSelector}]`
+            );
+            flushTransitions(lastLabel);
+            flushTransitions(notSelectedTestSelector);
+            await page.waitForChanges();
+            expect(lastLabel).toEqualAttribute('opacity', 1);
+            expect(notSelectedTestSelector).toEqualAttribute('opacity', 0);
+          });
+          it('should only make the min visible on load', async () => {
+            // ARRANGE
+            component.dataLabel = {
+              visible: true,
+              displayOnly: 'min',
+              labelAccessor: 'value',
+              format: '$0[.][0]a',
+              placement: 'bottom'
+            };
+            component.data = EXPECTEDDATADISPLAYONLY;
+
+            // ACT
+            page.root.appendChild(component);
+            await page.waitForChanges();
+
+            // ASSERT
+            const minLabel = page.doc.querySelector(
+              `[data-testid=dataLabel][data-id=label-${displayOnlyLabelData.min}]`
+            );
+            const notSelectedTestSelector = page.doc.querySelector(
+              `[data-testid=dataLabel][data-id=label-${displayOnlyLabelData.notSelectedLabelTestSelector}]`
+            );
+            flushTransitions(minLabel);
+            flushTransitions(notSelectedTestSelector);
+            await page.waitForChanges();
+            expect(minLabel).toEqualAttribute('opacity', 1);
+            expect(notSelectedTestSelector).toEqualAttribute('opacity', 0);
+          });
+          it.skip('should only make the min visible on update', async () => {
+            // ARRANGE
+            component.data = EXPECTEDDATADISPLAYONLY;
+
+            // ACT
+            page.root.appendChild(component);
+            await page.waitForChanges();
+
+            // ACT UPDATE
+            component.dataLabel = {
+              visible: true,
+              displayOnly: 'min',
+              labelAccessor: 'value',
+              format: '$0[.][0]a',
+              placement: 'bottom'
+            };
+            await page.waitForChanges();
+
+            // ASSERT
+            const minLabel = page.doc.querySelector(
+              `[data-testid=dataLabel][data-id=label-${displayOnlyLabelData.min}]`
+            );
+            const notSelectedTestSelector = page.doc.querySelector(
+              `[data-testid=dataLabel][data-id=label-${displayOnlyLabelData.notSelectedLabelTestSelector}]`
+            );
+            flushTransitions(minLabel);
+            flushTransitions(notSelectedTestSelector);
+            await page.waitForChanges();
+            expect(minLabel).toEqualAttribute('opacity', 1);
+            expect(notSelectedTestSelector).toEqualAttribute('opacity', 0);
+          });
+          it('should only make the max visible on load', async () => {
+            // ARRANGE
+            component.dataLabel = {
+              visible: true,
+              displayOnly: 'max',
+              labelAccessor: 'value',
+              format: '$0[.][0]a',
+              placement: 'bottom'
+            };
+            component.data = EXPECTEDDATADISPLAYONLY;
+
+            // ACT
+            page.root.appendChild(component);
+            await page.waitForChanges();
+
+            // ASSERT
+            const maxLabel = page.doc.querySelector(
+              `[data-testid=dataLabel][data-id=label-${displayOnlyLabelData.max}]`
+            );
+            const notSelectedTestSelector = page.doc.querySelector(
+              `[data-testid=dataLabel][data-id=label-${displayOnlyLabelData.notSelectedLabelTestSelector}]`
+            );
+            flushTransitions(maxLabel);
+            flushTransitions(notSelectedTestSelector);
+            await page.waitForChanges();
+            expect(maxLabel).toEqualAttribute('opacity', 1);
+            expect(notSelectedTestSelector).toEqualAttribute('opacity', 0);
+          });
+          it.skip('should only make the max visible on update', async () => {
+            // ARRANGE
+            component.data = EXPECTEDDATADISPLAYONLY;
+
+            // ACT
+            page.root.appendChild(component);
+            await page.waitForChanges();
+
+            // ACT UPDATE
+            component.dataLabel = {
+              visible: true,
+              displayOnly: 'max',
+              labelAccessor: 'value',
+              format: '$0[.][0]a',
+              placement: 'bottom'
+            };
+            await page.waitForChanges();
+
+            // ASSERT
+            const maxLabel = page.doc.querySelector(
+              `[data-testid=dataLabel][data-id=label-${displayOnlyLabelData.max}]`
+            );
+            const notSelectedTestSelector = page.doc.querySelector(
+              `[data-testid=dataLabel][data-id=label-${displayOnlyLabelData.notSelectedLabelTestSelector}]`
+            );
+            flushTransitions(maxLabel);
+            flushTransitions(notSelectedTestSelector);
+            await page.waitForChanges();
+            expect(maxLabel).toEqualAttribute('opacity', 1);
+            expect(notSelectedTestSelector).toEqualAttribute('opacity', 0);
+          });
+          it('should only make the first, last, min, max visible on load', async () => {
+            // ARRANGE
+            component.dataLabel = {
+              visible: true,
+              displayOnly: ['first', 'last', 'min', 'max'],
+              labelAccessor: 'value',
+              format: '$0[.][0]a',
+              placement: 'bottom'
+            };
+            component.data = EXPECTEDDATADISPLAYONLY;
+
+            // ACT
+            page.root.appendChild(component);
+            await page.waitForChanges();
+
+            // ASSERT
+            const firstLabel = page.doc.querySelector(
+              `[data-testid=dataLabel][data-id=label-${displayOnlyLabelData.first}]`
+            );
+            const lastLabel = page.doc.querySelector(
+              `[data-testid=dataLabel][data-id=label-${displayOnlyLabelData.last}]`
+            );
+            const minLabel = page.doc.querySelector(
+              `[data-testid=dataLabel][data-id=label-${displayOnlyLabelData.min}]`
+            );
+            const maxLabel = page.doc.querySelector(
+              `[data-testid=dataLabel][data-id=label-${displayOnlyLabelData.max}]`
+            );
+            const notSelectedTestSelector = page.doc.querySelector(
+              `[data-testid=dataLabel][data-id=label-${displayOnlyLabelData.notSelectedLabelTestSelector}]`
+            );
+            flushTransitions(firstLabel);
+            flushTransitions(lastLabel);
+            flushTransitions(minLabel);
+            flushTransitions(maxLabel);
+            flushTransitions(notSelectedTestSelector);
+            await page.waitForChanges();
+            expect(firstLabel).toEqualAttribute('opacity', 1);
+            expect(lastLabel).toEqualAttribute('opacity', 1);
+            expect(minLabel).toEqualAttribute('opacity', 1);
+            expect(maxLabel).toEqualAttribute('opacity', 1);
+            expect(notSelectedTestSelector).toEqualAttribute('opacity', 0);
+          });
+          it.skip('should only make the first, last, min, max visible on update', async () => {
+            // ARRANGE
+            component.data = EXPECTEDDATADISPLAYONLY;
+
+            // ACT
+            page.root.appendChild(component);
+            await page.waitForChanges();
+
+            // ACT UPDATE
+            component.dataLabel = {
+              visible: true,
+              displayOnly: ['first', 'last', 'min', 'max'],
+              labelAccessor: 'value',
+              format: '$0[.][0]a',
+              placement: 'bottom'
+            };
+            await page.waitForChanges();
+
+            // ASSERT
+            const firstLabel = page.doc.querySelector(
+              `[data-testid=dataLabel][data-id=label-${displayOnlyLabelData.first}]`
+            );
+            const lastLabel = page.doc.querySelector(
+              `[data-testid=dataLabel][data-id=label-${displayOnlyLabelData.last}]`
+            );
+            const minLabel = page.doc.querySelector(
+              `[data-testid=dataLabel][data-id=label-${displayOnlyLabelData.min}]`
+            );
+            const maxLabel = page.doc.querySelector(
+              `[data-testid=dataLabel][data-id=label-${displayOnlyLabelData.max}]`
+            );
+            const notSelectedTestSelector = page.doc.querySelector(
+              `[data-testid=dataLabel][data-id=label-${displayOnlyLabelData.notSelectedLabelTestSelector}]`
+            );
+            flushTransitions(firstLabel);
+            flushTransitions(lastLabel);
+            flushTransitions(minLabel);
+            flushTransitions(maxLabel);
+            flushTransitions(notSelectedTestSelector);
+            await page.waitForChanges();
+            expect(firstLabel).toEqualAttribute('opacity', 1);
+            expect(lastLabel).toEqualAttribute('opacity', 1);
+            expect(minLabel).toEqualAttribute('opacity', 1);
+            expect(maxLabel).toEqualAttribute('opacity', 1);
+            expect(notSelectedTestSelector).toEqualAttribute('opacity', 0);
           });
         });
       });

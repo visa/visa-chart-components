@@ -1,16 +1,11 @@
 /**
- * Copyright (c) 2021, 2023 Visa, Inc.
+ * Copyright (c) 2021, 2023, 2024 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
  *
  **/
 alluvial-diagram {
-  .vcl-sub-title-keyword {
-    -webkit-padding-before: 1px;
-    padding: 3px 6px 1px 6px;
-  }
-
   .annotations {
     pointer-events: none;
     .handle {

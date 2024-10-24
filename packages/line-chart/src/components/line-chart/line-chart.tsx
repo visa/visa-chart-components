@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023, 2024 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -8,7 +8,7 @@
 import { Component, Element, Prop, Watch, h, Event, EventEmitter } from '@stencil/core';
 
 import { select, event } from 'd3-selection';
-import { max, min } from 'd3-array';
+import { max, min, minIndex, maxIndex } from 'd3-array';
 import { timeMillisecond, timeSecond, timeMinute, timeHour, timeDay, timeWeek, timeMonth, timeYear } from 'd3-time';
 import { scalePoint, scaleLinear, scaleTime } from 'd3-scale';
 import { line, curveLinear, curveStep, curveCatmullRom } from 'd3-shape';
@@ -70,6 +70,7 @@ const {
   checkInteraction,
   checkClicked,
   checkHovered,
+  checkLabelDisplayOnly,
   convertVisaColor,
   drawAxis,
   drawGrid,
@@ -203,6 +204,7 @@ export class LineChart {
   tooltipG: any;
   subTitleG: any;
   labels: any;
+  displayOnlyLabelData: any;
   colorArr: any;
   rawColors: any;
   textColors: any;
@@ -275,6 +277,7 @@ export class LineChart {
   shouldResetRoot: boolean = false;
   shouldUpdateBaseline: boolean = false;
   shouldValidateInteractionKeys: boolean = false;
+  shouldUpdateLabelData: boolean = false;
   shouldValidateDataLabelAccessor: boolean = false;
   shouldEnterUpdateExit: boolean = false;
   shouldSetGlobalSelections: boolean = false;
@@ -358,6 +361,7 @@ export class LineChart {
     this.updated = true;
     this.shouldUpdateScales = true;
     this.shouldUpdateData = true;
+    this.shouldUpdateLabelData = true;
     this.shouldUpdateInterpolationData = true;
     this.shouldSetColors = true;
     this.shouldSetGlobalSelections = true;
@@ -368,7 +372,6 @@ export class LineChart {
     this.shouldUpdateLines = true;
     this.shouldUpdatePoints = true;
     this.shouldDrawInteractionState = true;
-    this.shouldSetLabelOpacity = true;
     this.shouldUpdateDotRadius = true;
     this.shouldUpdateXAxis = true;
     this.shouldSetXAxisAccessibility = true;
@@ -697,7 +700,13 @@ export class LineChart {
     const oldVisibleVal = _oldVal && _oldVal.visible;
     const newAccessor = _newVal && _newVal.labelAccessor ? _newVal.labelAccessor : false;
     const oldAccessor = _oldVal && _oldVal.labelAccessor ? _oldVal.labelAccessor : false;
+    const newDisplayOnlyVal = _newVal && _newVal.displayOnly;
+    const oldDisplayOnlyVal = _oldVal && _oldVal.displayOnly;
     if (newVisibleVal !== oldVisibleVal) {
+      this.shouldSetLabelOpacity = true;
+    }
+    if (newDisplayOnlyVal !== oldDisplayOnlyVal) {
+      this.shouldUpdateLabelData = true;
       this.shouldSetLabelOpacity = true;
     }
     if (newAccessor !== oldAccessor) {
@@ -1026,6 +1035,7 @@ export class LineChart {
       this.setDimensions();
       this.prepareScales();
       this.prepareData();
+      this.prepareLabelData();
       this.updateInterpolationData();
       this.validateInteractionKeys();
       this.validateDataLabelAccessor();
@@ -1491,6 +1501,42 @@ export class LineChart {
     this.map = nest()
       .key(d => d[this.seriesAccessor])
       .map(filteredData);
+  }
+
+  prepareLabelData() {
+    if (this.nest) {
+      let minArray = [];
+      let maxArray = [];
+      let firstArray = [];
+      let lastArray = [];
+
+      this.nest.forEach(item => {
+        const values = item.values;
+        // min
+        const minIdx = minIndex(values, d => d[this.valueAccessor]);
+        const minItem = values[minIdx];
+        // max
+        const maxIdx = maxIndex(values, d => d[this.valueAccessor]);
+        const maxItem = values[maxIdx];
+        // first
+        const firstItem = values.find(val => val[this.valueAccessor] != null);
+        // last
+        const lastItem = [...values].reverse().find(val => val[this.valueAccessor] != null);
+
+        // array creation with tracked items
+        minArray.push(minItem);
+        maxArray.push(maxItem);
+        firstArray.push(firstItem);
+        lastArray.push(lastItem);
+      });
+
+      this.displayOnlyLabelData = {
+        first: firstArray,
+        last: lastArray,
+        min: minArray,
+        max: maxArray
+      };
+    }
   }
 
   updateInterpolationData() {
@@ -2644,14 +2690,20 @@ export class LineChart {
           ? Number.EPSILON
           : checkInteraction(
               d,
-              1,
+              checkLabelDisplayOnly(this.dataLabel.visible, this.dataLabel.displayOnly, d, this.displayOnlyLabelData, [
+                this.ordinalAccessor,
+                this.seriesAccessor
+              ]),
               this.hoverOpacity,
               this.hoverHighlight,
               this.clickHighlight,
               this.innerInteractionKeys
             ) < 1
           ? 0
-          : 1
+          : checkLabelDisplayOnly(this.dataLabel.visible, this.dataLabel.displayOnly, d, this.displayOnlyLabelData, [
+              this.ordinalAccessor,
+              this.seriesAccessor
+            ])
       );
 
       const fullEnter = this.enteringLabelGroups
@@ -2704,7 +2756,6 @@ export class LineChart {
 
   updateDataLabels() {
     this.updatingLabelGroups.interrupt('opacity');
-
     this.updatingLabelGroups.attr('opacity', d => {
       const labelOpacity = !this.dataLabel.visible
         ? 0
@@ -2741,14 +2792,23 @@ export class LineChart {
             ? 0
             : checkInteraction(
                 d,
-                1,
+                checkLabelDisplayOnly(
+                  this.dataLabel.visible,
+                  this.dataLabel.displayOnly,
+                  d,
+                  this.displayOnlyLabelData,
+                  [this.ordinalAccessor, this.seriesAccessor]
+                ),
                 this.hoverOpacity,
                 this.hoverHighlight,
                 this.clickHighlight,
                 this.innerInteractionKeys
               ) < 1
             ? 0
-            : 1;
+            : checkLabelDisplayOnly(this.dataLabel.visible, this.dataLabel.displayOnly, d, this.displayOnlyLabelData, [
+                this.ordinalAccessor,
+                this.seriesAccessor
+              ]);
           const parentOpacity = +select(n[i].parentNode).attr('opacity');
           select(n[i]).attr('data-hidden', parentOpacity === 0 || targetOpacity === 0 ? 'true' : null);
           return targetOpacity;
@@ -2758,14 +2818,20 @@ export class LineChart {
         const targetOpacity =
           checkInteraction(
             d,
-            1,
+            checkLabelDisplayOnly(this.dataLabel.visible, this.dataLabel.displayOnly, d, this.displayOnlyLabelData, [
+              this.ordinalAccessor,
+              this.seriesAccessor
+            ]),
             this.hoverOpacity,
             this.hoverHighlight,
             this.clickHighlight,
             this.innerInteractionKeys
           ) < 1
             ? 0
-            : 1;
+            : checkLabelDisplayOnly(this.dataLabel.visible, this.dataLabel.displayOnly, d, this.displayOnlyLabelData, [
+                this.ordinalAccessor,
+                this.seriesAccessor
+              ]);
         const parentOpacity = +select(n[i].parentNode).attr('opacity');
         select(n[i]).attr('data-hidden', parentOpacity === 0 || targetOpacity === 0 ? 'true' : null);
         return targetOpacity;
@@ -3022,14 +3088,27 @@ export class LineChart {
             const targetOpacity =
               checkInteraction(
                 d,
-                1,
+                checkLabelDisplayOnly(
+                  this.dataLabel.visible,
+                  this.dataLabel.displayOnly,
+                  d,
+                  this.displayOnlyLabelData,
+                  [this.ordinalAccessor, this.seriesAccessor]
+                ),
                 this.hoverOpacity,
                 this.hoverHighlight,
                 this.clickHighlight,
                 this.innerInteractionKeys
               ) < 1
                 ? 0
-                : 1;
+                : checkLabelDisplayOnly(
+                    this.dataLabel.visible,
+                    this.dataLabel.displayOnly,
+                    d,
+                    this.displayOnlyLabelData,
+                    [this.ordinalAccessor, this.seriesAccessor]
+                  );
+
             const parentOpacity = +select(n[i].parentNode).attr('opacity');
             me.attr('data-hidden', parentOpacity === 0 || targetOpacity === 0 ? 'true' : null);
             if (
@@ -3055,14 +3134,20 @@ export class LineChart {
         const targetOpacity =
           checkInteraction(
             d,
-            1,
+            checkLabelDisplayOnly(this.dataLabel.visible, this.dataLabel.displayOnly, d, this.displayOnlyLabelData, [
+              this.ordinalAccessor,
+              this.seriesAccessor
+            ]),
             this.hoverOpacity,
             this.hoverHighlight,
             this.clickHighlight,
             this.innerInteractionKeys
           ) < 1
             ? 0
-            : 1;
+            : checkLabelDisplayOnly(this.dataLabel.visible, this.dataLabel.displayOnly, d, this.displayOnlyLabelData, [
+                this.ordinalAccessor,
+                this.seriesAccessor
+              ]);
         const parentOpacity = +select(n[i].parentNode).attr('opacity');
         select(n[i]).attr('data-hidden', parentOpacity === 0 || targetOpacity === 0 ? 'true' : null);
         if (
@@ -3763,6 +3848,10 @@ export class LineChart {
     if (this.shouldUpdateData) {
       this.prepareData();
       this.shouldUpdateData = false;
+    }
+    if (this.shouldUpdateLabelData) {
+      this.prepareLabelData();
+      this.shouldUpdateLabelData = false;
     }
     if (this.shouldUpdateInterpolationData) {
       this.updateInterpolationData();

@@ -1291,6 +1291,53 @@
     }
   },
   {
+    "name": "dataLabel.displayOnly",
+    "options": {
+      "enabled": true,
+      "description": "Sets the visibility of the labels",
+      "control": "Select",
+      "choices": {
+        "dumbbell-plot": [
+          { "label": "all", "value": "all" },
+          { "label": "first", "value": "first" },
+          { "label": "last", "value": "last" },
+          { "label": "min", "value": "min" },
+          { "label": "max", "value": "max" },
+          { "label": "['first', 'last']", "value": ["first", "last"] },
+          { "label": "['min', 'max']", "value": ["min", "max"] }
+        ],
+        "bar-chart-horizontal": [
+          { "label": "all", "value": "all" },
+          { "label": "first", "value": "first" },
+          { "label": "last", "value": "last" },
+          { "label": "min", "value": "min" },
+          { "label": "max", "value": "max" },
+          { "label": "['first', 'last']", "value": ["first", "last"] },
+          { "label": "['min', 'max']", "value": ["min", "max"] }
+        ],
+        "bar-chart-vertical": [
+          { "label": "all", "value": "all" },
+          { "label": "first", "value": "first" },
+          { "label": "last", "value": "last" },
+          { "label": "min", "value": "min" },
+          { "label": "max", "value": "max" },
+          { "label": "['first', 'last']", "value": ["first", "last"] },
+          { "label": "['min', 'max']", "value": ["min", "max"] }
+        ],
+        "line-chart": [
+          { "label": "all", "value": "all" },
+          { "label": "first", "value": "first" },
+          { "label": "last", "value": "last" },
+          { "label": "min", "value": "min" },
+          { "label": "max", "value": "max" },
+          { "label": "['first', 'last']", "value": ["first", "last"] },
+          { "label": "['min', 'max']", "value": ["min", "max"] }
+        ]
+      },
+      "sortOrder": 2
+    }
+  },
+  {
     "name": "dataLabel.collisionHideOnly",
     "options": {
       "enabled": false,

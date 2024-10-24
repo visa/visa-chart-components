@@ -1,6 +1,6 @@
 {
   "name": "@visa/charts-vue",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "description": "A vue wrapper built with Stencil's bindings for the visa-charts-lib stencil.js based component library. ",
   "license": "SEE LICENCE IN LICENSE",
   "author": "Visa Data Experience Team",
@@ -33,12 +33,12 @@
     "test:es5-check": "es-check es5 'dist/*.js'"
   },
   "dependencies": {
-    "@visa/charts": "^7.3.0",
-    "@visa/charts-types": "^0.6.3"
+    "@visa/charts": "^8.0.0",
+    "@visa/charts-types": "^0.6.4"
   },
   "devDependencies": {
     "@types/node": "18.11.19",
-    "rollup": "^1.21.2",
+    "rollup": "^2.79.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "typescript": "^4.4.4",
     "vue": "3"

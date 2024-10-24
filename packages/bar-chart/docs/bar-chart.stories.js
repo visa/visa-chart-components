@@ -1,19 +1,15 @@
 /**
- * Copyright (c) 2022, 2023 Visa, Inc.
+ * Copyright (c) 2022, 2023, 2024 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
  *
  **/
 import React from 'react';
-import {
-  BarChart,
-  DataTable as VisaChartsDataTable,
-  KeyboardInstructions
-} from '../../charts-react/dist/components/visa-charts';
+import { BarChart, VisaChartsDataTable, KeyboardInstructions } from '../../charts-react/dist';
 import md from '!raw-loader!../README.md';
 import docpage from './bar-chart.mdx';
-import { getProperties, setProperties, transformDates } from '../../../.storybook/utils.js';
+import { getProperties, setProperties, transformDates, removeEventBooleans } from '../../../.storybook/utils.js';
 import { useArgs } from '@storybook/client-api';
 
 let { chartRecipes, argTypes, distinctArgs } = getProperties('bar-chart');
@@ -106,6 +102,9 @@ const Template = args => {
   // now we can transform dates within the args object
   transformDates(args);
 
+  // we also need to remove the event booleans from the args we use to render the chart
+  const renderArgs = removeEventBooleans(args);
+
   // need to force load data table and keyboard instructions to make sure they mount on the DOM
   return (
     <>
@@ -122,7 +121,7 @@ const Template = args => {
         onInitialLoadEvent={initialLoad}
         onInitialLoadEndEvent={initialLoadEnd}
         onTransitionEndEvent={transitionEnd}
-        {...args}
+        {...renderArgs}
       />
     </>
   );
