@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023, 2024 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -43,7 +43,13 @@ export class AppBarChart {
   @State() interactionKeys: any = ['region'];
   @State() groupAccessor: any = 'region';
   @State() clickStatus: any = '';
-  @State() dataLabel: any = { visible: true, placement: 'left', labelAccessor: 'value', format: '0.[a]' };
+  @State() dataLabel: any = {
+    visible: true,
+    displayOnly: ['max'], // all | first | last | min | max
+    placement: 'left',
+    labelAccessor: 'value',
+    format: '0.[a]'
+  };
   @State() tooltipLabel: any = { labelAccessor: ['country', 'value'], labelTitle: ['a', 'b'], format: ['', '0.[a]'] };
   @State() xAxis: any = {
     visible: true,
@@ -348,9 +354,23 @@ export class AppBarChart {
           height={400}
           width={800}
           mainTitle={'Interactive, grouped bar chart using h3 heading override.'}
-          subTitle={
-            'Shows patterns, multi-strokes, annotations, sub-grouping (+ keyboard nav), special screen reader note on a geometry (Indonesia), dynamic (changing) data, automatic label hiding (Japan), and "interactive" element feedback.'
-          }
+          subTitle={{
+            text: 'YoY growth in payment volume for your customers compared to competitors over the last 12 months.',
+            keywordsHighlight: [
+              {
+                text: 'your',
+                mode: 'background', // text | background
+                color: '#003ea9',
+                index: 1
+              },
+              {
+                text: 'last',
+                mode: 'text', // text | background
+                color: '#FFFFFF',
+                index: 1
+              }
+            ]
+          }}
           // subTitle={{
           //   text: 'This is a subtitle this?',
           //   keywordsHighlight: [{ text: 'this', color: '#FF4F00', index: 1 }]

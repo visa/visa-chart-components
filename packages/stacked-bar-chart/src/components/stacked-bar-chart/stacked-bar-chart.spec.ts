@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023, 2024 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -68,6 +68,90 @@ describe('<stacked-bar-chart>', () => {
       { year: '2018', otherCategory: '1992', otherGroup: 'D', otherValue: 43, item: 'A', value: 26 },
       { year: '2018', otherCategory: '1992', otherGroup: 'E', otherValue: 13, item: 'B', value: 28 },
       { year: '2018', otherCategory: '1992', otherGroup: 'F', otherValue: 34, item: 'C', value: 31 }
+    ];
+    const EXPECTEDDATADATALABELFORMATTEXT = [
+      {
+        year: '2016',
+        otherCategory: '1990',
+        otherGroup: 'D',
+        otherValue: 15,
+        item: 'A',
+        value: -30,
+        note: 'Worst performance in history.',
+        text: 'customDataLabelText'
+      },
+      {
+        year: '2016',
+        otherCategory: '1990',
+        otherGroup: 'E',
+        otherValue: 25,
+        item: 'B',
+        value: -5,
+        text: 'customDataLabelText'
+      },
+      {
+        year: '2016',
+        otherCategory: '1990',
+        otherGroup: 'F',
+        otherValue: 48,
+        item: 'C',
+        value: 22,
+        text: 'customDataLabelText'
+      },
+      {
+        year: '2017',
+        otherCategory: '1991',
+        otherGroup: 'D',
+        otherValue: 27,
+        item: 'A',
+        value: 15,
+        text: 'customDataLabelText'
+      },
+      {
+        year: '2017',
+        otherCategory: '1991',
+        otherGroup: 'E',
+        otherValue: 38,
+        item: 'B',
+        value: 40,
+        text: 'customDataLabelText'
+      },
+      {
+        year: '2017',
+        otherCategory: '1991',
+        otherGroup: 'F',
+        otherValue: 31,
+        item: 'C',
+        value: 45,
+        text: 'customDataLabelText'
+      },
+      {
+        year: '2018',
+        otherCategory: '1992',
+        otherGroup: 'D',
+        otherValue: 43,
+        item: 'A',
+        value: 26,
+        text: 'customDataLabelText'
+      },
+      {
+        year: '2018',
+        otherCategory: '1992',
+        otherGroup: 'E',
+        otherValue: 13,
+        item: 'B',
+        value: 28,
+        text: 'customDataLabelText'
+      },
+      {
+        year: '2018',
+        otherCategory: '1992',
+        otherGroup: 'F',
+        otherValue: 34,
+        item: 'C',
+        value: 31,
+        text: 'customDataLabelText'
+      }
     ];
     const EXPECTEDORDINALACCESSOR = 'item';
     const EXPECTEDGROUPACCESSOR = 'year';
@@ -1677,6 +1761,26 @@ describe('<stacked-bar-chart>', () => {
             const legendGText = await page.doc.querySelector('[data-testid=legend-container] g g text');
             flushTransitions(legendGText);
             expect(legendGText).toEqualText('$15');
+          });
+          it('should pass through label text with no format when passed as prop', async () => {
+            // ARRANGE
+            component.data = EXPECTEDDATADATALABELFORMATTEXT;
+            const customDataLabelText = 'customDataLabelText';
+            component.dataLabel = {
+              visible: true,
+              labelAccessor: 'text',
+              format: 'text'
+            };
+
+            // ACT RENDER
+            page.root.appendChild(component);
+            await page.waitForChanges();
+
+            // ASSERT
+            const label = page.doc.querySelector('[data-testid=dataLabel]');
+            flushTransitions(label);
+            await page.waitForChanges();
+            expect(label.textContent).toBe(customDataLabelText);
           });
         });
         describe('labels', () => {

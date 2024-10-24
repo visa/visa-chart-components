@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023, 2024 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -63,6 +63,23 @@ describe('<parallel-plot>', () => {
       { region: 'Africa', category: 'Card-A', value: 6588600035 },
       { region: 'Africa', category: 'Card-B', value: 4358837379 },
       { region: 'Africa', category: 'Card-C', value: 6051933407 }
+    ];
+    const EXPECTEDDATADATALABELFORMATTEXT = [
+      { region: 'North-America', category: 'Card-A', value: 9628909842, text: 'customDataLabelText' },
+      { region: 'North-America', category: 'Card-B', value: 9709829820, text: 'customDataLabelText' },
+      { region: 'North-America', category: 'Card-C', value: 3778636197, text: 'customDataLabelText' },
+      { region: 'Asia', category: 'Card-A', value: 7670994739, text: 'customDataLabelText' },
+      { region: 'Asia', category: 'Card-B', value: 8872849978, text: 'customDataLabelText' },
+      { region: 'Asia', category: 'Card-C', value: 4484192554, text: 'customDataLabelText' },
+      { region: 'South-America', category: 'Card-A', value: 8358837379, text: 'customDataLabelText' },
+      { region: 'South-America', category: 'Card-B', value: 6570994739, text: 'customDataLabelText' },
+      { region: 'South-America', category: 'Card-C', value: 3811163096, text: 'customDataLabelText' },
+      { region: 'Europe', category: 'Card-A', value: 7334842966, text: 'customDataLabelText' },
+      { region: 'Europe', category: 'Card-B', value: 4628909842, text: 'customDataLabelText' },
+      { region: 'Europe', category: 'Card-C', value: 3462148898, text: 'customDataLabelText' },
+      { region: 'Africa', category: 'Card-A', value: 6588600035, text: 'customDataLabelText' },
+      { region: 'Africa', category: 'Card-B', value: 4358837379, text: 'customDataLabelText' },
+      { region: 'Africa', category: 'Card-C', value: 6051933407, text: 'customDataLabelText' }
     ];
 
     const EXPECTEDSERIESACCESSOR = 'region';
@@ -1609,6 +1626,26 @@ describe('<parallel-plot>', () => {
               const expectedLabelValue = formatStats(EXPECTEDDATA[i].value, '$0[.][0]a'); // tslint:disable-line: no-string-literal
               expect(label).toEqualText(expectedLabelValue);
             });
+          });
+          it('should pass through label text with no format when passed as prop', async () => {
+            // ARRANGE
+            component.data = EXPECTEDDATADATALABELFORMATTEXT;
+            const customDataLabelText = 'customDataLabelText';
+            component.dataLabel = {
+              visible: true,
+              labelAccessor: 'text',
+              format: 'text'
+            };
+
+            // ACT RENDER
+            page.root.appendChild(component);
+            await page.waitForChanges();
+
+            // ASSERT
+            const label = page.doc.querySelector('[data-testid=dataLabel]');
+            flushTransitions(label);
+            await page.waitForChanges();
+            expect(label.textContent).toBe(customDataLabelText);
           });
         });
         describe('placement', () => {

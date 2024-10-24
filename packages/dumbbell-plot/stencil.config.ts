@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023, 2024 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -20,21 +20,22 @@ export const config: Config | any = {
   tsconfig: dev ? './tsconfig.dev.json' : './tsconfig.prod.json',
   buildEs5: 'prod',
   extras: {
-    cssVarsShim: true,
-    dynamicImportShim: true,
-    safari10: true,
-    shadowDomShim: true,
-    scriptDataOpts: true,
-    appendChildSlotFix: false,
-    cloneNodeFix: false,
-    slotChildNodesFix: true
+    enableImportInjection: true,
+    experimentalSlotFixes: false // we don't use slots, flip to true if we start using them
   },
   outputTargets: [
     { type: 'dist' },
+    { type: 'dist-custom-elements', externalRuntime: false },
     {
       // we also use this output to copy the source code to our bundle package at @visa/charts
       type: 'www',
-      copy: [{ src: 'components/dumbbell-plot', dest: '../../charts/src/components/dumbbell-plot', warn: true }]
+      copy: [
+        {
+          src: 'components/dumbbell-plot/**/!(*spec).{js,ts,tsx,jsx,scss,css}',
+          dest: '../../charts/src/components/dumbbell-plot',
+          warn: true
+        }
+      ]
     }
   ],
   plugins: [
@@ -43,7 +44,7 @@ export const config: Config | any = {
     })
   ],
   commonjs: {
-    include: ['../utils/dist/visa-charts-utils.umd.js', 'node_modules/bowser/es5.js']
+    include: ['../utils/dist/visa-charts-utils.umd.js']
   },
   testing: {
     reporters: ['default', '../../node_modules/jest-html-reporter'],
