@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023, 2024 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -264,7 +264,7 @@ export const generic_subTitle_custom_update = {
   prop: 'subTitle',
   group: 'base',
   name: 'set subTitle on update',
-  testProps: { subTitle: 'This is an updated custom sub title' },
+  testProps: { subTitle: 'This is an updated custom sub title custom.' },
   testSelector: '[data-testid=sub-title]',
   testFunc: async (component: any, page: SpecPage, testProps: object, testSelector: string) => {
     // render
@@ -301,8 +301,8 @@ export const legend_subTitle_custom_load = {
 
     // set subTitle for testing
     component.subTitle = {
-      text: 'This is an updated custom sub title',
-      keywordsHighlight: [{ text: 'custom', color: '#FF4F00' }]
+      text: 'This is an updated custom sub title custom.',
+      keywordsHighlight: [{ text: 'custom', color: '#FF4F00', index: 1 }]
     };
 
     // render
@@ -318,15 +318,16 @@ export const legend_subTitle_custom_load = {
     }
 
     // note: snapshots flip the order of classes; keep this as is; and the order in the given components as well
-    expect(subTitleElement).toMatchInlineSnapshot(`
-    <p aria-hidden="true" class="vcl-sub-title visa-ui-text--instructions" data-testid="sub-title">
-      This is an updated
-      <span class="vcl-sub-title-keyword" style="background-color: #FF4F00; border: 1px solid #fff4f0; color: #222222;">
+    expect(subTitleElement.hasChildNodes()).toBeTruthy();
+    expect(subTitleElement.childNodes).toMatchInlineSnapshot(`
+      Array [
+        This is an updated,
+        <span style="color: #222222; padding: 2px 4px; background-color: #FF4F00; border: 1px solid #fff4f0;">
         custom
-      </span>
-      sub title
-    </p>
-  `);
+      </span>,
+        sub title custom.,
+      ]
+    `);
   }
 };
 
@@ -363,15 +364,107 @@ export const legend_subTitle_custom_update = {
     }
 
     // note: snapshots flip the order of classes; keep this as is; and the order in the given components as well
-    expect(subTitleElement).toMatchInlineSnapshot(`
-    <p aria-hidden="true" class="vcl-sub-title visa-ui-text--instructions" data-testid="sub-title">
-      This is an updated
-      <span class="vcl-sub-title-keyword" style="background-color: #FF4F00; border: 1px solid #fff4f0; color: #222222;">
+    expect(subTitleElement.hasChildNodes()).toBeTruthy();
+    expect(subTitleElement.childNodes).toMatchInlineSnapshot(`
+      Array [
+        This is an updated,
+        <span style="color: #222222; padding: 2px 4px; background-color: #FF4F00; border: 1px solid #fff4f0;">
         custom
-      </span>
-      sub title
-    </p>
-  `);
+      </span>,
+        sub title,
+      ]
+    `);
+  }
+};
+
+export const legend_subTitle_text_mode_load = {
+  prop: 'subTitle',
+  group: 'base',
+  name: 'set legend subTitle with text mode on load',
+  testDefault: true,
+  testProps: {},
+  testSelector: '[data-testid=sub-title]',
+  testFunc: async (component: any, page: SpecPage, testProps: object, testSelector: string) => {
+    // ARRANGE
+    Object.keys(testProps).forEach(prop => {
+      component[prop] = testProps[prop];
+    });
+
+    // set subTitle for testing
+    component.subTitle = {
+      text: 'This is an updated custom sub title custom.',
+      keywordsHighlight: [{ text: 'custom', mode: 'text', color: '#FFFEFF', index: 1 }]
+    };
+
+    // render
+    page.root.appendChild(component);
+    await page.waitForChanges();
+
+    // ASSERT
+    const subTitleElement = page.doc.querySelector(testSelector);
+
+    // we need to filter out the chart relevant class name
+    if (subTitleElement.classList.length > 0) {
+      subTitleElement.classList.remove(subTitleElement.classList.item(1)); // remove the first class
+    }
+
+    // note: snapshots flip the order of classes; keep this as is; and the order in the given components as well
+    expect(subTitleElement.hasChildNodes()).toBeTruthy();
+    expect(subTitleElement.childNodes).toMatchInlineSnapshot(`
+      Array [
+        This is an updated,
+        <span style="color: #d000d0; font-weight: bold;">
+        custom
+      </span>,
+        sub title custom.,
+      ]
+    `);
+  }
+};
+
+export const legend_subTitle_text_mode_update = {
+  prop: 'subTitle',
+  group: 'base',
+  name: 'set legend subTitle with text mode on update',
+  testProps: {},
+  testSelector: '[data-testid=sub-title]',
+  testFunc: async (component: any, page: SpecPage, testProps: object, testSelector: string) => {
+    // render
+    page.root.appendChild(component);
+    await page.waitForChanges();
+
+    // ARRANGE
+    Object.keys(testProps).forEach(prop => {
+      component[prop] = testProps[prop];
+    });
+    // set subTitle for testing
+    component.subTitle = {
+      text: 'This is an updated custom sub title',
+      keywordsHighlight: [{ text: 'custom', mode: 'text', color: '#FFFEFF' }]
+    };
+
+    // ACT
+    await page.waitForChanges();
+
+    // ASSERT
+    const subTitleElement = page.doc.querySelector(testSelector);
+
+    // we need to filter out the chart relevant class name
+    if (subTitleElement.classList.length > 0) {
+      subTitleElement.classList.remove(subTitleElement.classList.item(1)); // remove the first class
+    }
+
+    // note: snapshots flip the order of classes; keep this as is; and the order in the given components as well
+    expect(subTitleElement.hasChildNodes()).toBeTruthy();
+    expect(subTitleElement.childNodes).toMatchInlineSnapshot(`
+      Array [
+        This is an updated,
+        <span style="color: #d000d0; font-weight: bold;">
+        custom
+      </span>,
+        sub title,
+      ]
+    `);
   }
 };
 
