@@ -49,14 +49,14 @@
     "watch": "webpack --watch --mode=development"
   },
   "devDependencies": {
-    "@jupyterlab/builder": "^3.6.3",
-    "@visa/charts-types": "^0.6.3",
+    "@jupyterlab/builder": "^4.1.1",
+    "@visa/charts-types": "^0.6.4",
     "rimraf": "^2.6.1",
     "webpack": "^5.76.0"
   },
   "dependencies": {
     "@jupyter-widgets/base": "^1.1 || ^2 || ^3 || ^4 || ^6",
-    "@visa/charts": "^7.3.0"
+    "@visa/charts": "^8.0.0"
   },
   "resolutions": {
     "got": "^11.8.5",
