@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023, 2024 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -52,6 +52,44 @@ describe('<world-map />', () => {
       { ID: 1, Name: 'Angola', 'Birth Rate': 14.2, 'Other Rate': 100, 'Country Code': '024', Type: 'B' },
       { ID: 2, Name: 'Brazil', 'Birth Rate': 25, 'Other Rate': 33, 'Country Code': '076', Type: 'A' },
       { ID: 3, Name: 'Greenland', 'Birth Rate': 39.2, 'Other Rate': 75, 'Country Code': '304', Type: 'B' }
+    ];
+    const EXPECTEDDATADATALABELFORMATTEXT = [
+      {
+        ID: 0,
+        Name: 'USA',
+        'Birth Rate': 50,
+        'Other Rate': 25,
+        'Country Code': '840',
+        Type: 'A',
+        text: 'customDataLabelText'
+      },
+      {
+        ID: 1,
+        Name: 'Angola',
+        'Birth Rate': 14.2,
+        'Other Rate': 100,
+        'Country Code': '024',
+        Type: 'B',
+        text: 'customDataLabelText'
+      },
+      {
+        ID: 2,
+        Name: 'Brazil',
+        'Birth Rate': 25,
+        'Other Rate': 33,
+        'Country Code': '076',
+        Type: 'A',
+        text: 'customDataLabelText'
+      },
+      {
+        ID: 3,
+        Name: 'Greenland',
+        'Birth Rate': 39.2,
+        'Other Rate': 75,
+        'Country Code': '304',
+        Type: 'B',
+        text: 'customDataLabelText'
+      }
     ];
     const MINVALUE = 14.2;
     const MAXVALUE = 50;
@@ -1343,6 +1381,26 @@ describe('<world-map />', () => {
           const label = page.doc.querySelector('[data-testid=dataLabel]');
           flushTransitions(label);
           expect(label).toEqualText('$50');
+        });
+        it('should pass through label text with no format when passed as prop', async () => {
+          // ARRANGE
+          component.data = EXPECTEDDATADATALABELFORMATTEXT;
+          const customDataLabelText = 'customDataLabelText';
+          component.dataLabel = {
+            visible: true,
+            labelAccessor: 'text',
+            format: 'text'
+          };
+
+          // ACT RENDER
+          page.root.appendChild(component);
+          await page.waitForChanges();
+
+          // ASSERT
+          const label = page.doc.querySelector('[data-testid=dataLabel]');
+          flushTransitions(label);
+          await page.waitForChanges();
+          expect(label.textContent).toBe(customDataLabelText);
         });
       });
     });

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.4](https://github.com/visa/visa-chart-components/compare/@visa/visa-charts-utils-dev@4.1.3...@visa/visa-charts-utils-dev@4.1.4) (2024-10-25)
+
+### Bug Fixes
+
+- d3-array bump and utils-dev compilation fix for d3-array 3.2.4 ([8aa325b](https://github.com/visa/visa-chart-components/commit/8aa325b203054b4fde80aaa6e5dc59fc209921ab))
+
 ## [4.1.3](https://github.com/visa/visa-chart-components/compare/@visa/visa-charts-utils-dev@4.1.1...@visa/visa-charts-utils-dev@4.1.3) (2024-02-16)
 
 ### Bug Fixes

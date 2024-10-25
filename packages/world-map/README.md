@@ -65,13 +65,35 @@
 
 ### <a name="base-props" href="#base-props">#</a> Base Props [<>](./src/components/world-map/world-map.tsx 'Source')
 
-| Name                  | Type          | Default Value(s)           | Description                                                                                                                                      |
-| --------------------- | ------------- | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `height`              | number        | 325                        | Height in px of the map container                                                                                                                |
-| `width`               | number        | 500                        | Width in px of the map container                                                                                                                 |
-| `mainTitle`           | string        | 'This is the Map title'    | The `dynamic` tag of title for the map (or you can create your own separately). See `highestHeadingLevel` prop for how tags get assigned.        |
-| `subTitle`            | string        | 'This is the Map subtitle' | The `dynamic` tag for a sub title for the map (or you can create your own separately). See `highestHeadingLevel` prop for how tags get assigned. |
-| `highestHeadingLevel` | string/number | 'h2'                       | Sets the heading level (which also sets sublevels) for the map. "p", "span", and "div" are also valid.                                           |
+| Name                  | Type                                               | Default Value(s)        | Description                                                                                                                                        |
+| --------------------- | -------------------------------------------------- | ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `height`              | number                                             | 325                     | Height in px of the map container                                                                                                                  |
+| `width`               | number                                             | 500                     | Width in px of the map container                                                                                                                   |
+| `mainTitle`           | string                                             | 'This is the Map title' | The `dynamic` tag of title for the map (or you can create your own separately). See `highestHeadingLevel` prop for how tags get assigned.          |
+| `subTitle`            | string/[ISubTitleType](../types/src/prop-types.ts) | 'This is a subtitle'    | The `dynamic` tag for a sub title for the chart (or you can create your own separately). See `highestHeadingLevel` prop for how tags get assigned. |
+| `highestHeadingLevel` | string/number                                      | 'h2'                    | Sets the heading level (which also sets sublevels) for the map. "p", "span", and "div" are also valid.                                             |
+
+<br>
+<br>
+
+### ISubTitleType Definition
+
+| Name                | Type                                                   | Default Value(s) | Description                                                                                                                                                                                                        |
+| ------------------- | ------------------------------------------------------ | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `text`              | string                                                 | ‘’               | Text of the subtitle.                                                                                                                                                                                              |
+| `keywordsHighlight` | [IKeywordsHighlightType](../types/src/prop-types.ts)[] | ''               | Configuration used to create highlighted words in the subtitle, an array of objects which includes `text`, `mode`, `color` and `index` keys. See `IKeywordsHighlightType` definition below for additional details. |
+
+<br>
+<br>
+
+### IKeywordsHighlightType Definition
+
+| Name (keywordsHighlight.) | Type                   | Default Value(s) | Description                                                                                                                                                                                                                |
+| ------------------------- | ---------------------- | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `text`                    | string                 | ''               | A string of one or multiple words in the subtitle text to be given the highlight treatment                                                                                                                                 |
+| `color`                   | string                 | ''               | HEX code color string to apply to the highlight treatment.                                                                                                                                                                 |
+| `mode`                    | 'text' or 'background' | 'background'     | 'text' will highlight the text itself with the provided color, using `ensureTextContrast` utility to ensure text contrast. 'background' will highlight the background-color of the created `span` with the provided color. |
+| `index`                   | number                 |                  | If provided, highlight treatment is provided to the specific instance of the text within the sub-title. Otherwise, all instances of the provided string will be given highlight treatment.                                 |
 
 <br>
 <br>
@@ -333,13 +355,13 @@ const mouseOutHandler = evt => {
 
 #### IDataLabelType Definition
 
-| Name                | Type    | Default Value(s) | Description                                                                                                                                                                                                                           |
-| ------------------- | ------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `labelAccessor`     | string  | ''               | Key that determines which property of the data is displayed in the label.                                                                                                                                                             |
-| `visible`           | boolean | false            | Toggles the visibility (opacity) of the data labels.                                                                                                                                                                                  |
-| `placement`         | string  | 'bottom'         | Sets the placement of the data label, accepts 'bottom'. Placement option 'auto' leverages the [resolveLabelCollision](../utils#resolve-label-collision) algorithm and places labels without overlaps in available space on the chart. |
-| `format`            | string  | ''               | Sets the formatting for the data labels, EG %b, refer to [d3-time-format](https://github.com/d3/d3-time-format) and [numeral.js](http://numeraljs.com/).                                                                              |
-| `collisionHideOnly` | boolean | false            | Toggles whether to run [resolveLabelCollision](../utils#resolve-label-collision) algorithm and hide labels if collision is detected (vs hide and then place). This is overridden by placement being set to `auto`.                    |
+| Name                | Type    | Default Value(s) | Description                                                                                                                                                                                                                                                                            |
+| ------------------- | ------- | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `labelAccessor`     | string  | ''               | Key that determines which property of the data is displayed in the label.                                                                                                                                                                                                              |
+| `visible`           | boolean | false            | Toggles the visibility (opacity) of the data labels.                                                                                                                                                                                                                                   |
+| `placement`         | string  | 'bottom'         | Sets the placement of the data label, accepts 'bottom'. Placement option 'auto' leverages the [resolveLabelCollision](../utils#resolve-label-collision) algorithm and places labels without overlaps in available space on the chart.                                                  |
+| `format`            | string  | ''               | Sets the formatting for the data labels, EG %b, refer to [d3-time-format](https://github.com/d3/d3-time-format) and [numeral.js](http://numeraljs.com/). If used with `text` or `string` values, the value declared in `labelAccessor` will be used without any additional formatting. |
+| `collisionHideOnly` | boolean | false            | Toggles whether to run [resolveLabelCollision](../utils#resolve-label-collision) algorithm and hide labels if collision is detected (vs hide and then place). This is overridden by placement being set to `auto`.                                                                     |
 
 <br>
 

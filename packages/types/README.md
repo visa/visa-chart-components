@@ -39,6 +39,9 @@ Default values for all of these types can be found the [propDefaultValues file i
         <li>
           <a href="#ISubTitleType">ISubTitleType</a>
         </li>
+         <li>
+          <a href="#IKeywordsHighlightType">IKeywordsHighlightType</a>
+        </li>
       </ul>
     </li>
     <li><a href="#dumbbell-specific">Dumbbell Specific</a>
@@ -173,10 +176,24 @@ Used by every chart for both the `padding` and `margin` props.
 
 Used by every chart for to declare subtitles as a simple string, or as an object that allows certain text to be highlighted.
 
-| Name                | Type     | Default Value(s) | Description                                                                                                                                                                                                                                                                                                                                             |
-| ------------------- | -------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `text`              | string   | ''               | Text of the subtitle.                                                                                                                                                                                                                                                                                                                                   |
-| `keywordsHighlight` | object[] | ''               | Data used to create highlighted words in the subtitle, an array of objects which includes `text`, `color` and `index` keys. `text` correspond to one more multiple words/numbers as a single string in the subtitle text. `color` takes a HEX color string. `index` takes a number, if not specified all occurrences of the `text` will be highlighted. |
+| Name                | Type                                                   | Default Value(s) | Description                                                                                                                                                                                                        |
+| ------------------- | ------------------------------------------------------ | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `text`              | string                                                 | ‘’               | Text of the subtitle.                                                                                                                                                                                              |
+| `keywordsHighlight` | [IKeywordsHighlightType](../types/src/prop-types.ts)[] | ''               | Configuration used to create highlighted words in the subtitle, an array of objects which includes `text`, `mode`, `color` and `index` keys. See `IKeywordsHighlightType` definition below for additional details. |
+
+<br>
+<hr>
+
+### <a name="IKeywordsHighlightType" href="#IKeywordsHighlightType">#</a> IKeywordsHighlightType
+
+Used when `keywordsHighlight` is declared in a subtitle.
+
+| Name (keywordsHighlight.) | Type                   | Default Value(s) | Description                                                                                                                                                                                                                |
+| ------------------------- | ---------------------- | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `text`                    | string                 | ''               | A string of one or multiple words in the subtitle text to be given the highlight treatment                                                                                                                                 |
+| `color`                   | string                 | ''               | HEX code color string to apply to the highlight treatment.                                                                                                                                                                 |
+| `mode`                    | 'text' or 'background' | 'background'     | 'text' will highlight the text itself with the provided color, using `ensureTextContrast` utility to ensure text contrast. 'background' will highlight the background-color of the created `span` with the provided color. |
+| `index`                   | number                 |                  | If provided, highlight treatment is provided to the specific instance of the text within the sub-title. Otherwise, all instances of the provided string will be given highlight treatment.                                 |
 
 <br>
 <hr>

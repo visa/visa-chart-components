@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.0.0](https://github.com/visa/visa-chart-components/compare/@visa/alluvial-diagram@3.2.0...@visa/alluvial-diagram@4.0.0) (2024-10-25)
+
+### chore
+
+- bump to stencil 4.21.0 and angular 17 ([e056f8c](https://github.com/visa/visa-chart-components/commit/e056f8c95e59ee58ce9facbd4e57552586746f30))
+
+### Features
+
+- subTitle mode prop added for choosing between background and text ([8aa325b](https://github.com/visa/visa-chart-components/commit/8aa325b203054b4fde80aaa6e5dc59fc209921ab))
+
+### BREAKING CHANGES
+
+- Older node, react and angular versions may no longer be compatible with stencil 4 and updated output targets.
+
 # [3.2.0](https://github.com/visa/visa-chart-components/compare/@visa/alluvial-diagram@3.1.1...@visa/alluvial-diagram@3.2.0) (2024-02-16)
 
 ### Features

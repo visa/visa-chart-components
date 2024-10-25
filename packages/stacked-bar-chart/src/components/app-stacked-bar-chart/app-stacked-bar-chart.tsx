@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023, 2024 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -56,10 +56,10 @@ export class AppStackedBarChart {
   @State() fixedData: any;
   @State() dataLabel: any = {
     visible: true,
-    placement: 'end',
+    placement: 'middle',
     labelAccessor: this.dataLabelAccessor,
-    format: '',
-    collisionPlacement: 'right',
+    format: '0.0[a]',
+    // collisionPlacement: 'right',
     collisionHideOnly: true
   };
   interactionKeys: any = ['category'];
@@ -80,6 +80,7 @@ export class AppStackedBarChart {
     visible: true,
     gridVisible: true,
     format: this.layout === 'horizontal' ? '%b' : '0[.][0][0]a',
+    label: '',
     tickInterval: 1
   };
   clickStyle: any = {
@@ -313,7 +314,7 @@ export class AppStackedBarChart {
       otherGroup: '6',
       otherValue: 72,
       category: 'Travel',
-      value: 85,
+      value: 0,
       count: 376
     },
     {
@@ -2940,7 +2941,7 @@ export class AppStackedBarChart {
           xAxis={this.xAxis}
           yAxis={this.yAxis}
           data={this.dataStorage[this.stateTrigger]}
-          normalized={true}
+          // normalized={true}
           sortOrder={this.sort}
           showZeroLabels={this.zeroLabel}
           barIntervalRatio={0.008}

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022, 2023 Visa, Inc.
+ * Copyright (c) 2022, 2023, 2024 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -504,6 +504,21 @@ export function setProperties(recipes, name, argList) {
 export function registerLocalization() {
   registerI18NextLanguage(hu);
   registerNumeralLocale('hu', HU);
+}
+
+export function removeEventBooleans(args) {
+  const {
+    clickEvent,
+    hoverEvent,
+    mouseOutEvent,
+    initialLoadEvent,
+    initialLoadEndEvent,
+    drawStartEvent,
+    drawEndEvent,
+    transitionEndEvent,
+    ...renderArgs
+  } = args;
+  return renderArgs;
 }
 
 export function transformDates(args) {

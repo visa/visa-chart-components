@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023, 2024 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -109,19 +109,19 @@ export class AppClusteredBarChart {
       otherGroup: 'D',
       otherValue: 15,
       item: 'A',
-      value: -30,
+      value: 0,
       note: 'Worst performance in history.'
     },
     { year: '2017', otherCategory: '1991', otherGroup: 'D', otherValue: 27, item: 'A', value: 15 },
     { year: '2018', otherCategory: '1992', otherGroup: 'D', otherValue: 32, item: 'A', value: 4 },
     { year: '2019', otherCategory: '1993', otherGroup: 'D', otherValue: 15, item: 'A', value: 73 },
     { year: '2020', otherCategory: '1994', otherGroup: 'D', otherValue: 11, item: 'A', value: 64 },
-    { year: '2016', otherCategory: '1990', otherGroup: 'E', otherValue: 25, item: 'B', value: -5 },
+    { year: '2016', otherCategory: '1990', otherGroup: 'E', otherValue: 25, item: 'B', value: 0 },
     { year: '2017', otherCategory: '1991', otherGroup: 'E', otherValue: 38, item: 'B', value: 23 },
     { year: '2018', otherCategory: '1992', otherGroup: 'E', otherValue: 41, item: 'B', value: 6 },
     { year: '2019', otherCategory: '1993', otherGroup: 'E', otherValue: 12, item: 'B', value: 21 },
     { year: '2020', otherCategory: '1994', otherGroup: 'E', otherValue: 54, item: 'B', value: 57 },
-    { year: '2016', otherCategory: '1990', otherGroup: 'F', otherValue: 48, item: 'C', value: 22 },
+    { year: '2016', otherCategory: '1990', otherGroup: 'F', otherValue: 48, item: 'C', value: 0 },
     { year: '2017', otherCategory: '1991', otherGroup: 'F', otherValue: 31, item: 'C', value: 45 },
     { year: '2018', otherCategory: '1992', otherGroup: 'F', otherValue: 29, item: 'C', value: 78 },
     { year: '2019', otherCategory: '1993', otherGroup: 'F', otherValue: 13, item: 'C', value: 51 },

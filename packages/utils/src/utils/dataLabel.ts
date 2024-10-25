@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023, 2024 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -10,10 +10,13 @@ import { select } from 'd3-selection';
 import { scaleSqrt } from 'd3-scale';
 import { symbolCircle, symbolCross, symbolSquare, symbolStar, symbolTriangle, symbolDiamond } from 'd3-shape';
 import { resolveLabelCollision } from './collisionDetection';
+import { checkClicked } from './interaction';
 
 export function formatDataLabel(d, labelAccessor, format, normalized?) {
-  const modifier = normalized ? d.getSum() : 1;
-  return format
+  const modifier = !normalized || d.getSum() === 0 ? 1 : d.getSum();
+  return format === 'text' || format === 'string'
+    ? d[labelAccessor]
+    : format
     ? formatStats(d[labelAccessor] / modifier, format === 'normalized' ? '0[.][0]%' : format)
     : d[labelAccessor] / modifier;
 }
@@ -145,7 +148,7 @@ export const placeDataLabels = ({
         break;
     }
   } else if (chartType === 'stacked') {
-    const getMod = d => (normalized ? d.getSum() : 1);
+    const getMod = d => (!normalized || d.getSum() === 0 ? 1 : d.getSum());
     if (layout === 'vertical') {
       switch (placement) {
         case 'auto':
@@ -549,4 +552,38 @@ export function getDataSymbol(symbolFunc, symbolType) {
   };
 
   return symbolMap[symbolType] ? symbolFunc.type(symbolMap[symbolType])() : symbolFunc.type(symbolCircle)();
+}
+
+export function checkLabelDisplayOnly(
+  dataLabelVisibilityVal,
+  dataLabelDisplayOnlyVal,
+  d,
+  selectiveLabelData,
+  interactionKeys
+) {
+  // create variable to be returned and set to 0 for starters
+  let elementOpacity = 0;
+
+  // force anything that comes in (string or array) to be an array for easier handling below
+  const innerDataLabelDisplayOnlyVal =
+    typeof dataLabelDisplayOnlyVal === 'string'
+      ? [dataLabelDisplayOnlyVal]
+      : Array.isArray(dataLabelDisplayOnlyVal)
+      ? dataLabelDisplayOnlyVal
+      : ['all'];
+
+  // if we have 'all' we just return 1 (basically no effect from this)
+  if (!dataLabelVisibilityVal) {
+    elementOpacity = 0;
+  } else if (innerDataLabelDisplayOnlyVal.includes('all')) {
+    elementOpacity = 1;
+  } else {
+    // else we iterate through the display only values and assign opacity of 1 if they match the data
+    innerDataLabelDisplayOnlyVal.forEach(displayOnlyVal => {
+      if (checkClicked(d, selectiveLabelData[displayOnlyVal], interactionKeys)) {
+        elementOpacity = 1;
+      }
+    });
+  }
+  return elementOpacity;
 }

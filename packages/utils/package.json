@@ -1,6 +1,6 @@
 {
   "name": "@visa/visa-charts-utils",
-  "version": "5.3.0",
+  "version": "5.4.0",
   "description": "Utilities for charts lib",
   "main": "dist/visa-charts-utils.cjs.js",
   "module": "dist/visa-charts-utils.esm.js",
@@ -43,7 +43,7 @@
   },
   "devDependencies": {
     "@types/node": "^11.13.5",
-    "rollup": "^1.32.1",
+    "rollup": "^2.79.0",
     "rollup-plugin-commonjs": "^9.2.0",
     "rollup-plugin-node-resolve": "^4.0.0",
     "rollup-plugin-typescript": "^1.0.0",

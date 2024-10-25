@@ -1,15 +1,15 @@
 /**
- * Copyright (c) 2022 Visa, Inc.
+ * Copyright (c) 2022, 2024 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
  *
  **/
 import React from 'react';
-import { WorldMap } from '../../charts-react/dist/components/visa-charts';
+import { WorldMap } from '../../charts-react/dist';
 import md from '!raw-loader!../README.md';
 import docpage from './world-map.mdx';
-import { getProperties, setProperties } from '../../../.storybook/utils.js';
+import { getProperties, setProperties, removeEventBooleans } from '../../../.storybook/utils.js';
 import { useArgs } from '@storybook/client-api';
 
 let { chartRecipes, argTypes, distinctArgs } = getProperties('world-map');
@@ -98,6 +98,10 @@ const Template = args => {
       args.onTransitionEnd(e);
     }
   };
+
+  // we also need to remove the event booleans from the args we use to render the chart
+  const renderArgs = removeEventBooleans(args);
+
   return (
     <WorldMap
       onClickEvent={click}
@@ -108,7 +112,7 @@ const Template = args => {
       onInitialLoadEvent={initialLoad}
       onInitialLoadEndEvent={initialLoadEnd}
       onTransitionEndEvent={transitionEnd}
-      {...args}
+      {...renderArgs}
     />
   );
 };

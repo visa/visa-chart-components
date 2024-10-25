@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.0.0](https://github.com/visa/visa-chart-components/compare/@visa/charts-python@2.1.3...@visa/charts-python@3.0.0) (2024-10-25)
+
+### chore
+
+- bump to stencil 4.21.0 and angular 17 ([e056f8c](https://github.com/visa/visa-chart-components/commit/e056f8c95e59ee58ce9facbd4e57552586746f30))
+
 ## [2.1.3](https://github.com/visa/visa-chart-components/compare/@visa/charts-python@2.1.1...@visa/charts-python@2.1.3) (2024-02-16)
 
 **Note:** Version bump only for package @visa/charts-python

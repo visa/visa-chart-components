@@ -5,6 +5,5 @@
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
  *
  **/
-
 export * from './components';
 export * from './plugin';
