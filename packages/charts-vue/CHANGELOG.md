@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0](https://github.com/visa/visa-chart-components/compare/@visa/charts-vue@1.2.0...@visa/charts-vue@2.0.0) (2024-10-25)
+
+### chore
+
+- bump to stencil 4.21.0 and angular 17 ([e056f8c](https://github.com/visa/visa-chart-components/commit/e056f8c95e59ee58ce9facbd4e57552586746f30))
+
+### BREAKING CHANGES
+
+- Older node, react and angular versions may no longer be compatible with stencil 4 and updated output targets.
+
 # [1.2.0](https://github.com/visa/visa-chart-components/compare/@visa/charts-vue@1.1.0...@visa/charts-vue@1.2.0) (2024-02-16)
 
 ### Bug Fixes

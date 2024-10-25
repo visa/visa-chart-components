@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.0.0](https://github.com/visa/visa-chart-components/compare/@visa/bar-chart@6.2.2...@visa/bar-chart@7.0.0) (2024-10-25)
+
+### Bug Fixes
+
+- d3-array bump and utils-dev compilation fix for d3-array 3.2.4 ([8aa325b](https://github.com/visa/visa-chart-components/commit/8aa325b203054b4fde80aaa6e5dc59fc209921ab))
+- selective label data label feature hardcoded value to valueAccessor ([8aa325b](https://github.com/visa/visa-chart-components/commit/8aa325b203054b4fde80aaa6e5dc59fc209921ab))
+
+### chore
+
+- bump to stencil 4.21.0 and angular 17 ([e056f8c](https://github.com/visa/visa-chart-components/commit/e056f8c95e59ee58ce9facbd4e57552586746f30))
+
+### Features
+
+- bar chart, clustered bar chart, stacked bar chart, line chart, dumbbell plot, scatter plot, world map, parallel plot format text value as dataLabel ([8aa325b](https://github.com/visa/visa-chart-components/commit/8aa325b203054b4fde80aaa6e5dc59fc209921ab))
+- selectiveLabel for bar, line, dumbbell ([8aa325b](https://github.com/visa/visa-chart-components/commit/8aa325b203054b4fde80aaa6e5dc59fc209921ab))
+- subTitle mode prop added for choosing between background and text ([8aa325b](https://github.com/visa/visa-chart-components/commit/8aa325b203054b4fde80aaa6e5dc59fc209921ab))
+
+### BREAKING CHANGES
+
+- Older node, react and angular versions may no longer be compatible with stencil 4 and updated output targets.
+
 ## [6.2.2](https://github.com/visa/visa-chart-components/compare/@visa/bar-chart@6.2.0...@visa/bar-chart@6.2.2) (2024-02-16)
 
 ### Bug Fixes
