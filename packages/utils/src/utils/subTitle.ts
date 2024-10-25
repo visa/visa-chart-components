@@ -1,59 +1,67 @@
 /**
- * Copyright (c) 2023 Visa, Inc.
+ * Copyright (c) 2023, 2024 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
  *
  **/
+
 import { isEmpty, isObject } from './utilFunctions';
-import { getContrastingStroke, autoTextColor } from './colors';
+import { getContrastingStroke, autoTextColor, ensureTextContrast } from './colors';
 import { propDefaultValues } from '.';
 
-export const setSubTitle = ({ root, uniqueID, subTitle }: { root?: any; uniqueID?: string; subTitle?: any }) => {
+export const setSubTitle = ({ root, subTitle }: { root?: any; subTitle?: any }) => {
   if (isObject(subTitle)) {
     if (!isEmpty(subTitle.text)) {
+      const rootElement = root.node();
+      rootElement.innerHTML = '';
+
       if (!isEmpty(subTitle.keywordsHighlight)) {
-        let sentence = subTitle.text;
         let terms = subTitle.keywordsHighlight;
+        let sentence = subTitle.text;
 
+        let lastIndex = 0;
         terms.forEach(term => {
-          let styleColor = `color: ${autoTextColor(term.color)};`;
-          let styleBackgroundColor = `background-color: ${term.color};`;
-          let styleBorder = `border: 1px solid ${getContrastingStroke(term.color)};`;
-          let counter = 0;
           const regex = new RegExp(`\\b${term.text}\\b`, 'gi');
+          let match;
+          let counter = 0;
 
-          sentence = sentence.replace(regex, match => {
+          while ((match = regex.exec(sentence)) !== null) {
             counter++;
             if (!term.index || counter === term.index) {
-              return `<span class="vcl-sub-title-keyword" style="${styleBackgroundColor} ${styleBorder} ${styleColor}">${match}</span>`;
+              if (match.index > lastIndex) {
+                const textNode = document.createTextNode(sentence.slice(lastIndex, match.index));
+                rootElement.appendChild(textNode);
+              }
+              const span = document.createElement('span');
+              span.textContent = match[0];
+
+              if (term.mode === 'text') {
+                span.style.color = ensureTextContrast(term.color);
+                span.style.fontWeight = 'bold';
+              } else if (term.mode === 'background') {
+                span.style.color = autoTextColor(term.color);
+                span.style.padding = '2px 4px';
+                span.style.backgroundColor = term.color;
+                span.style.border = `1px solid ${getContrastingStroke(term.color)}`;
+              } else {
+                span.style.color = autoTextColor(term.color);
+                span.style.padding = '2px 4px';
+                span.style.backgroundColor = term.color;
+                span.style.border = `1px solid ${getContrastingStroke(term.color)}`;
+              }
+              rootElement.appendChild(span);
+
+              lastIndex = regex.lastIndex;
             }
-            return match;
-          });
+          }
         });
-        root.html(sentence);
-        // svg approach
-        // if we want to have subtitle with svgs:
-        // display: inline-block'>
-        //     <svg overflow="visible">
-        //       <text x="0" y="0" fill="${autoTextColor(subTitle.colors[index])}">${key}</text>
-        //     </svg>
-        //   </span>`
-        // if we want to have subtitle with svgs:
-        // let svgs = selectAll('span.vcl-sub-title-keyword svg');
-        // Array.from(svgs['_groups'][0]).forEach((svg: any) => {
-        //   let bbox = svg.getBBox();
-        //   svg.setAttribute('width', bbox.x + bbox.width + bbox.x);
-        //   svg.setAttribute('height', bbox.y + bbox.height + bbox.y);
-        // });
-        // let svgs = selectAll('span.vcl-sub-title-keyword svg');
-        // Array.from(svgs['_groups'][0]).forEach((svg: any) => {
-        //   let bbox = svg.getBBox();
-        //   svg.setAttribute('width', bbox.x + bbox.width + bbox.x);
-        //   svg.setAttribute('height', bbox.y + bbox.height + bbox.y);
-        // });
+        if (lastIndex < sentence.length) {
+          const textNode = document.createTextNode(sentence.slice(lastIndex));
+          rootElement.appendChild(textNode);
+        }
       } else {
-        root.text(subTitle.text);
+        rootElement.textContent = subTitle.text;
       }
     } else {
       root.text(propDefaultValues.subTitle.text);

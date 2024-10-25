@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.4.0](https://github.com/visa/visa-chart-components/compare/@visa/visa-charts-utils@5.3.0...@visa/visa-charts-utils@5.4.0) (2024-10-25)
+
+### Bug Fixes
+
+- add transition check logic to collision detection util ([8aa325b](https://github.com/visa/visa-chart-components/commit/8aa325b203054b4fde80aaa6e5dc59fc209921ab))
+- fix zero sum error in stacked bar data label, normalized format ([8aa325b](https://github.com/visa/visa-chart-components/commit/8aa325b203054b4fde80aaa6e5dc59fc209921ab))
+
+### Features
+
+- dataLabel format text or string capability added ([8aa325b](https://github.com/visa/visa-chart-components/commit/8aa325b203054b4fde80aaa6e5dc59fc209921ab))
+- selectiveLabel for bar, line, dumbbell ([8aa325b](https://github.com/visa/visa-chart-components/commit/8aa325b203054b4fde80aaa6e5dc59fc209921ab))
+- subTitle mode prop added for choosing between background and text ([8aa325b](https://github.com/visa/visa-chart-components/commit/8aa325b203054b4fde80aaa6e5dc59fc209921ab))
+
 # [5.3.0](https://github.com/visa/visa-chart-components/compare/@visa/visa-charts-utils@5.2.0...@visa/visa-charts-utils@5.3.0) (2024-02-16)
 
 ### Bug Fixes

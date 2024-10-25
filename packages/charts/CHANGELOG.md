@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [8.0.0](https://github.com/visa/visa-chart-components/compare/@visa/charts@7.3.0...@visa/charts@8.0.0) (2024-10-25)
+
+### Bug Fixes
+
+- revert react-output-target to 0.5.3 and adjust configs to match ([e056f8c](https://github.com/visa/visa-chart-components/commit/e056f8c95e59ee58ce9facbd4e57552586746f30))
+
+### chore
+
+- bump to stencil 4.21.0 and angular 17 ([e056f8c](https://github.com/visa/visa-chart-components/commit/e056f8c95e59ee58ce9facbd4e57552586746f30))
+
+### BREAKING CHANGES
+
+- Older node, react and angular versions may no longer be compatible with stencil 4 and updated output targets.
+
 # [7.3.0](https://github.com/visa/visa-chart-components/compare/@visa/charts@7.2.0...@visa/charts@7.3.0) (2024-02-16)
 
 ### Bug Fixes

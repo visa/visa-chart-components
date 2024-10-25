@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023, 2024 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -45,6 +45,7 @@ export class AppLineChart {
   @State() dataLabel: any = {
     visible: true,
     placement: 'auto',
+    displayOnly: ['last'], // all | first | last | min | max
     labelAccessor: this.valueAccessor,
     format: '0.0[a]'
   };

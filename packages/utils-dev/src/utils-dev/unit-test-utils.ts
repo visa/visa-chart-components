@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023, 2024 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -88,7 +88,8 @@ export const getTransitionDurations = jsDomEle => {
 // in stencil test configuration for the specified items
 export const esModules = [
   '@visa/charts-types',
-  // 'd3-array',
+  'd3-array',
+  'internmap',
   'd3-color',
   'd3-shape',
   'd3-path'
@@ -102,5 +103,4 @@ export const esModules = [
   // 'd3-time-format',
   // 'd3-timer',
   // 'd3-transition',
-  // 'internmap'
 ].join('|');

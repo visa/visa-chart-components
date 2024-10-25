@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.4](https://github.com/visa/visa-chart-components/compare/@visa/charts-types@0.6.3...@visa/charts-types@0.6.4) (2024-10-25)
+
+### Bug Fixes
+
+- add keyword highlight object type ([3826e0b](https://github.com/visa/visa-chart-components/commit/3826e0bc53027f7a4f250f0948284a1cb3a00443))
+
 ## [0.6.3](https://github.com/visa/visa-chart-components/compare/@visa/charts-types@0.6.1...@visa/charts-types@0.6.3) (2024-02-16)
 
 **Note:** Version bump only for package @visa/charts-types
