@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.2](https://github.com/visa/visa-chart-components/compare/@visa/charts-figma@2.2.1...@visa/charts-figma@2.2.2) (2024-11-15)
+
+### Bug Fixes
+
+- package and version bumps for 8.0.1 fix release ([a021bdc](https://github.com/visa/visa-chart-components/commit/a021bdc3906bff451395cc60aca1d5cafa14d131))
+
 ## [2.2.1](https://github.com/visa/visa-chart-components/compare/@visa/charts-figma@2.2.0...@visa/charts-figma@2.2.1) (2024-10-25)
 
 **Note:** Version bump only for package @visa/charts-figma
