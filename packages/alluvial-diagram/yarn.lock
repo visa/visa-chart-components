@@ -3,40 +3,40 @@
 
 
 "@babel/runtime@^7.10.5", "@babel/runtime@^7.22.5":
-  version "7.23.9"
-  resolved "https://registry.npmjs.org/@babel/runtime/-/runtime-7.23.9.tgz#47791a15e4603bb5f905bc0753801cf21d6345f7"
-  integrity sha512-0CX6F+BI2s9dkUqr08KFrAIZgNFj75rdBU/DjCyYLIaV/quFjkk6T+EJ2LkZHyZTbEV4L5p97mNkUsHl2wLFAw==
+  version "7.26.0"
+  resolved "https://registry.npmjs.org/@babel/runtime/-/runtime-7.26.0.tgz#8600c2f595f277c60815256418b85356a65173c1"
+  integrity sha512-FDSOghenHTiToteC/QRlv2q3DhPZ/oOXTBoirfWNx1Cx3TMVcGWQtMMmQcSvb/JjpNeGzx8Pq/b4fKEJuWm1sw==
   dependencies:
     regenerator-runtime "^0.14.0"
 
-"@visa/charts-types@^0.6.3", "@visa/charts-types@^0.6.4":
-  version "0.6.3"
-  resolved "https://registry.npmjs.org/@visa/charts-types/-/charts-types-0.6.3.tgz#90ba77466cbd9f64536027cf23d57b58694c20bf"
-  integrity sha512-nX4gM3lI2wcJaUcelmDh9dG9QdO+/BGc4SR6KVk97LegXyO0//I9JPsiX4wSQY+NX/BY5aWlNS71NQUDDPAfeQ==
+"@visa/charts-types@^0.6.4":
+  version "0.6.4"
+  resolved "https://registry.npmjs.org/@visa/charts-types/-/charts-types-0.6.4.tgz#1861bd842b9666f0d49860f80009d4e1e6f6c7fb"
+  integrity sha512-7zjDfHgc8LkDptc1BSL8vRIElKpxA0qxspeEiEbOlgdPt1zji3ihhdak/qemnQDP563B6tVH8aQ4EL9ls/2pgg==
 
 "@visa/keyboard-instructions@^2.0.0":
-  version "1.3.3"
-  resolved "https://registry.npmjs.org/@visa/keyboard-instructions/-/keyboard-instructions-1.3.3.tgz#9feb0835a6c4a23416071bf87f137de598c5ebb6"
-  integrity sha512-znIoYaDWf6C37PuwVgaTaSjKSGbDu5+hm3kDWZ3EuFilGIq0lFWrFktsLaHr4ie905bVnmfqltu6OOusdRYT5A==
+  version "2.0.0"
+  resolved "https://registry.npmjs.org/@visa/keyboard-instructions/-/keyboard-instructions-2.0.0.tgz#95750310532cf11ace3d52d283fd646ba1dd95c4"
+  integrity sha512-8BqCKV3Xl9KhhIx1ixojlWaNtGDrD5+gBadSYjoUYH90hfPL6ie09ZtL/asSYW/YIVb7GOujlDK1Ptnl9Cv9+w==
   dependencies:
-    "@visa/visa-charts-utils" "^5.3.0"
+    "@visa/visa-charts-utils" "^5.4.0"
 
 "@visa/visa-charts-data-table@^3.0.0":
-  version "2.4.3"
-  resolved "https://registry.npmjs.org/@visa/visa-charts-data-table/-/visa-charts-data-table-2.4.3.tgz#edb5c3b30602f4f3e6536e824052428fcf0a5b8b"
-  integrity sha512-YeZgqAQZm9iDbIwAlnbi5zaWkXJtLnGE8NOig94AEUKa/qcv5fUlyOGlF6Eqz3a/n91gl0GHlDZHhbzN2SpKnA==
+  version "3.0.0"
+  resolved "https://registry.npmjs.org/@visa/visa-charts-data-table/-/visa-charts-data-table-3.0.0.tgz#04433e068100108b0317d8bd2420506c25c85cf2"
+  integrity sha512-kjX/yxrDP4a82s3A1UrHjHSFfDG4Mfi3hTuf1+U5qL63y0Z7iePw93Ysy7+ZiJVEtbB375fvJRhWtQ3o9GSFbQ==
   dependencies:
-    "@visa/charts-types" "^0.6.3"
-    "@visa/visa-charts-utils" "^5.3.0"
+    "@visa/charts-types" "^0.6.4"
+    "@visa/visa-charts-utils" "^5.4.0"
     d3-selection "^1.4.2"
 
 "@visa/visa-charts-utils-dev@^4.1.4":
-  version "4.1.3"
-  resolved "https://registry.npmjs.org/@visa/visa-charts-utils-dev/-/visa-charts-utils-dev-4.1.3.tgz#067c04ce0ec0863276b1f2055f42d56a8befa9b2"
-  integrity sha512-Eq2AuL1Sg3hrwsxmD5d0gvTfVc24+5Q78Qf3AW7r6agxkPY/D4nBQHqmJZah93YRDjKO9ee4sMbP5yK73BLM6w==
+  version "4.1.4"
+  resolved "https://registry.npmjs.org/@visa/visa-charts-utils-dev/-/visa-charts-utils-dev-4.1.4.tgz#2258e629eae01a5e68f2807a2503ea498abb965e"
+  integrity sha512-EDawCgYyrFZk51mF0yD/pguPSCtJvunpXyI4YWj/TxctZOPX6szu9YNEfvy70KPlNXDs6Q9s7JdWcyxoBZWKQQ==
   dependencies:
-    "@visa/charts-types" "^0.6.3"
-    "@visa/visa-charts-utils" "^5.3.0"
+    "@visa/charts-types" "^0.6.4"
+    "@visa/visa-charts-utils" "^5.4.0"
     d3 "^4.13.0"
     d3-axis "^1.0.12"
     d3-color "^3.1.0"
@@ -49,10 +49,10 @@
     d3-time-format "^2.3.0"
     d3-transition "1.1.3"
 
-"@visa/visa-charts-utils@^5.3.0", "@visa/visa-charts-utils@^5.4.0":
-  version "5.3.0"
-  resolved "https://registry.npmjs.org/@visa/visa-charts-utils/-/visa-charts-utils-5.3.0.tgz#411e5b2c11e9562fab34794a5b938845f03c56d3"
-  integrity sha512-cZtM3X3UGNrWyIPPsGJp+6Y0ZNkhM0jdyH/KoV3mAsQ2eBz/z4DSPrqS/j04YPuW+elQySdhXPHGkLc/mDwZhQ==
+"@visa/visa-charts-utils@^5.4.0":
+  version "5.4.0"
+  resolved "https://registry.npmjs.org/@visa/visa-charts-utils/-/visa-charts-utils-5.4.0.tgz#f8435300cdaaf0484ec7caa7d1a74e428032fff9"
+  integrity sha512-m74MMV/ePQPMjW2ytvEl1F/pMF5T/1DmnzjHv7sfHCUHVzJEiYE0IrXmbG7uEOSZ4sva22uNvBoKX04UKo9c+g==
   dependencies:
     d3 "^4.13.0"
     d3-axis "^1.0.12"

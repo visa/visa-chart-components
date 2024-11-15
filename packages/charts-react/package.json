@@ -42,8 +42,8 @@
     "@visa/charts-types": "^0.6.4"
   },
   "devDependencies": {
-    "@types/node": "^20.14.12",
-    "@types/react": "^18.2.74",
+    "@types/node": "20.16.2",
+    "@types/react": "18.3.4",
     "@types/react-dom": "^18.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -52,6 +52,9 @@
     "typescript": "^5.5.3"
   },
   "resolutions": {
+    "@types/node": "20.16.2",
+    "@types/react": "18.3.4",
+    "@types/react-dom": "^18.3.0",
     "minimist": "^1.2.6",
     "path-parse": "^1.0.7",
     "d3-color": "^3.1.0"
