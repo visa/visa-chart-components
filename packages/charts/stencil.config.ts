@@ -37,7 +37,7 @@ export const config: Config | any = {
       includeImportCustomElements: true,
       includePolyfills: false,
       customElementsDir: 'dist/components',
-      excludeComponents: ['visa-charts']
+      // excludeComponents: ['visa-charts']
     }),
     angularOutputTarget({
       componentCorePackage: '@visa/charts',

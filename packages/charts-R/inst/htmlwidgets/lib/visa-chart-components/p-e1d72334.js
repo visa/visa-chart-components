@@ -1,0 +1,2 @@
+function e(e,n){let f;if(n===undefined){for(const n of e){if(n!=null&&(f<n||f===undefined&&n>=n)){f=n}}}else{let l=-1;for(let i of e){if((i=n(i,++l,e))!=null&&(f<i||f===undefined&&i>=i)){f=i}}}return f}export{e as m};
+//# sourceMappingURL=p-e1d72334.js.map
