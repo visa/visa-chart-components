@@ -43,7 +43,6 @@
     "d3-color": "^3.1.0",
     "d3-array": "^3.2.4"
   },
-  "author": "Frank Elavsky",
   "jest": {
     "transform": {
       "^.+\\.(ts|tsx)$": "<rootDir>/node_modules/@stencil/core/testing/jest.preprocessor.js"
