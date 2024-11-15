@@ -1,6 +1,6 @@
 {
   "name": "@visa/line-chart",
-  "version": "7.0.0",
+  "version": "7.0.1",
   "description": "visa line-chart.",
   "license": "SEE LICENCE IN LICENSE",
   "module": "dist/index.js",
@@ -37,10 +37,10 @@
     "access": "public"
   },
   "dependencies": {
-    "@visa/charts-types": "^0.6.4",
-    "@visa/keyboard-instructions": "^2.0.0",
-    "@visa/visa-charts-data-table": "^3.0.0",
-    "@visa/visa-charts-utils": "^5.4.0",
+    "@visa/charts-types": "^0.6.5",
+    "@visa/keyboard-instructions": "^2.0.1",
+    "@visa/visa-charts-data-table": "^3.0.1",
+    "@visa/visa-charts-utils": "^5.4.1",
     "d3-array": "^3.2.4",
     "d3-collection": "^1.0.7",
     "d3-scale": "^2.2.2",
@@ -52,7 +52,7 @@
     "uuid": "8.3.2"
   },
   "devDependencies": {
-    "@visa/visa-charts-utils-dev": "^4.1.4"
+    "@visa/visa-charts-utils-dev": "^4.1.5"
   },
   "resolutions": {
     "d3-color": "^3.1.0",

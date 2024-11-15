@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.1](https://github.com/visa/visa-chart-components/compare/@visa/charts-python@2.1.3...@visa/charts-python@3.0.1) (2024-11-15)
+
+### Bug Fixes
+
+- manually bump charts-python js package for fix ([7935678](https://github.com/visa/visa-chart-components/commit/793567895da157eb8282f833c17f310034e9896b))
+- package and version bumps for 8.0.1 fix release ([a021bdc](https://github.com/visa/visa-chart-components/commit/a021bdc3906bff451395cc60aca1d5cafa14d131))
+
 # [3.0.0](https://github.com/visa/visa-chart-components/compare/@visa/charts-python@2.1.3...@visa/charts-python@3.0.0) (2024-10-25)
 
 ### chore
