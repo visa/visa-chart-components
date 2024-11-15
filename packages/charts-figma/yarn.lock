@@ -117,9 +117,9 @@
     "@visa/charts-types" "^0.6.3"
 
 "@visa/charts-types@^0.6.3":
-  version "0.6.3"
-  resolved "https://registry.npmjs.org/@visa/charts-types/-/charts-types-0.6.3.tgz#90ba77466cbd9f64536027cf23d57b58694c20bf"
-  integrity sha512-nX4gM3lI2wcJaUcelmDh9dG9QdO+/BGc4SR6KVk97LegXyO0//I9JPsiX4wSQY+NX/BY5aWlNS71NQUDDPAfeQ==
+  version "0.6.4"
+  resolved "https://registry.npmjs.org/@visa/charts-types/-/charts-types-0.6.4.tgz#1861bd842b9666f0d49860f80009d4e1e6f6c7fb"
+  integrity sha512-7zjDfHgc8LkDptc1BSL8vRIElKpxA0qxspeEiEbOlgdPt1zji3ihhdak/qemnQDP563B6tVH8aQ4EL9ls/2pgg==
 
 "@visa/charts@^7.3.0":
   version "7.3.0"
