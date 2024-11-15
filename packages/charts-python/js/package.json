@@ -1,6 +1,6 @@
 {
   "name": "@visa/charts-python",
-  "version": "2.1.3",
+  "version": "3.0.0",
   "description": "A Custom Jupyter Widget Library for Visa Chart Components",
   "license": "SEE LICENCE IN LICENSE",
   "author": "Visa Data Experience Team",
