@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022, 2023, 2024 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023, 2024, 2025 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -1742,10 +1742,7 @@ describe('<parallel-plot>', () => {
 
             // ASSERT
             const legendSVG = page.doc.querySelector('[data-testid=legend-container]');
-            const legendContainer = legendSVG.parentElement;
-            expect(legendContainer.getAttribute('style')).toEqual('display: none;');
-            // expect(legendSVG).toEqualAttribute('opacity', 0);
-            expect(legendSVG.getAttribute('style')).toEqual('display: none;');
+            expect(legendSVG).toHaveClass('vcc-style-display-none');
           });
           it('should render, and be visible if true is passed', async () => {
             component.legend = {
@@ -2115,7 +2112,7 @@ describe('<parallel-plot>', () => {
           });
 
           const lines = page.doc.querySelectorAll('[data-testid=parallel-line]');
-          lines.forEach((line, i) => {
+          lines.forEach(line => {
             const lineRegion = line.getAttribute('data-id').replace('parallel-line-', '');
             const EXPECTEDSTROKE =
               lineRegion === 'South-America' || lineRegion === 'Europe'
@@ -2152,7 +2149,7 @@ describe('<parallel-plot>', () => {
           });
 
           const lines = page.doc.querySelectorAll('[data-testid=parallel-line]');
-          lines.forEach((line, i) => {
+          lines.forEach(line => {
             const lineRegion = line.getAttribute('data-id').replace('parallel-line-', '');
             const EXPECTEDSTROKE =
               lineRegion === 'South-America' || lineRegion === 'Europe'

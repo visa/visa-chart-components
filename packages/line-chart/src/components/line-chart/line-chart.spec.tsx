@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022, 2023, 2024 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023, 2024, 2025 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -2139,7 +2139,7 @@ describe('<line-chart>', () => {
             const legendContainer = legendSVG.parentElement;
             expect(legendContainer.getAttribute('style')).toEqual('display: none;');
             // expect(legendSVG).toEqualAttribute('opacity', 0);
-            expect(legendSVG.getAttribute('style')).toEqual('display: none;');
+            expect(legendSVG).toHaveClass('vcc-style-display-none');
           });
           it('should render, but not be visible if false is passed on update', async () => {
             // ACT
@@ -2160,7 +2160,7 @@ describe('<line-chart>', () => {
             const legendContainer = legendSVG.parentElement;
             expect(legendContainer.getAttribute('style')).toEqual('display: none;');
             // expect(legendSVG).toEqualAttribute('opacity', 0);
-            expect(legendSVG.getAttribute('style').includes('display: none')).toBeTruthy();
+            expect(legendSVG).toHaveClass('vcc-style-display-none');
           });
         });
         describe('type', () => {
