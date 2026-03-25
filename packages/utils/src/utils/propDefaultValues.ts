@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022, 2023, 2024 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023, 2024, 2025 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -146,6 +146,7 @@ export const strokeWidth2 = 2;
 
 export const roundedCorner = 0;
 export const barIntervalRatio = 0.2;
+export const barOverlapRatio = 0;
 
 export const dotRadius6 = 6;
 export const dotRadius5 = 5;

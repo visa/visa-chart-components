@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2025 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -348,7 +348,7 @@ function hideOverlappingAnnotations(source, width, height, padding, margin, bitm
   const annotationsG = select(source)
     .select('.vcl-annotation-group')
     .select('.annotations');
-  annotationsG.selectAll('.annotation').style('visibility', null);
+  annotationsG.selectAll('.annotation').classed('vcc-style-visibility-hidden', false);
   annotationsG.selectAll('.annotation-detect-collision').each((_, i, n) => {
     // annotationsG.selectAll('.annotation').each((_, i, n) => {
     const me = n[i];
@@ -481,9 +481,9 @@ function hideOverlappingAnnotations(source, width, height, padding, margin, bitm
 
     // this will flip visibility on the full element if we don't find any visible text
     if (textShownIndicator || select(me).attr('data-no-text') === 'true') {
-      select(me).style('visibility', null);
+      select(me).classed('vcc-style-visibility-hidden', false);
     } else {
-      select(me).style('visibility', 'hidden');
+      select(me).classed('vcc-style-visibility-hidden', true);
     }
   });
 }

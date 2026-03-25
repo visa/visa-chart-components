@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022, 2023, 2024 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023, 2024, 2025 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -11,7 +11,6 @@ import { formatStats } from './formatStats';
 import { capitalized } from './calculation';
 import { formatDataLabel } from './dataLabel';
 import { formatDate } from './formatDate';
-import { transition } from 'd3-transition';
 
 const buildTooltipContent = ({
   data,
@@ -328,6 +327,9 @@ export const initTooltipStyle = root => {
     .style('z-index', 10);
 
   root.append('p').style('margin', 0);
+
+  // assign event handlers to tooltip (to keep it alive on mouseover)
+  root.on('mouseover', () => tooltipMouseoverHandler(root)).on('mouseout', () => tooltipMouseOutHandler(root));
 };
 
 export const drawTooltip = ({
@@ -373,6 +375,9 @@ export const drawTooltip = ({
 }) => {
   const toShow = () => {
     const positions = [event.pageX, event.pageY];
+    onTrigger = true;
+    root.interrupt('tooltipTriggerOut');
+    root.interrupt('tooltipTooltipOut');
     const tooltipContent = buildTooltipContent({
       data,
       tooltipLabel,
@@ -416,17 +421,58 @@ export const drawTooltip = ({
     root
       .style('left', `${positions[0] - bounds.left - adjLeft - adjLeftFlip}px`)
       .style('top', `${positions[1] - bounds.top - bounds.height - adjTop}px`)
-      .transition(transition().duration(200))
+      .style('pointer-events', null)
+      .transition('tooltipToShow')
+      .duration(200)
       .style('opacity', 1);
   };
 
-  const toHide = () => {
-    root.transition(transition().duration(500)).style('opacity', 0);
-  };
-
   if (root) {
-    isToShow ? toShow() : toHide();
+    isToShow ? toShow() : toHide(root);
     setTooltipAccess(root.node());
     hideTooltipListener(isToShow);
+  }
+};
+
+// the below code enables the tooltip to stay hovered when mouseover'd
+let onTooltip = false;
+let onTrigger = false;
+
+const toHide = root => {
+  onTrigger = false;
+  if (!onTooltip) {
+    root.interrupt('tooltipTriggerOut');
+    root.interrupt('tooltipTooltipOut');
+    root
+      .transition('tooltipTriggerOut')
+      .delay(250)
+      .duration(500)
+      .style('opacity', 0)
+      .on('end', (_, i, n) => {
+        select(n[i]).style('pointer-events', 'none');
+      });
+  }
+};
+const tooltipMouseoverHandler = root => {
+  onTooltip = true;
+  root.interrupt('tooltipTriggerOut');
+  root.interrupt('tooltipTooltipOut');
+
+  root.style('pointer-events', null).style('opacity', 1);
+};
+
+const tooltipMouseOutHandler = root => {
+  onTooltip = false;
+  if (!onTrigger) {
+    root.interrupt('tooltipTriggerOut');
+    root.interrupt('tooltipTooltipOut');
+    root
+      .transition('tooltipTooltipOut')
+      .delay(250)
+      .duration(500)
+      .style('opacity', 0)
+      .on('end', (_, i, n) => {
+        select(n[i]).style('pointer-events', 'none');
+      });
   }
 };
