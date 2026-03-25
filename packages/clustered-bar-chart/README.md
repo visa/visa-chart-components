@@ -212,15 +212,16 @@ const changeHandler = d => {
 
 ### <a name="axis-props" href="#axis-props">#</a> Axis Props [<>](./src/components/clustered-bar-chart/clustered-bar-chart.tsx 'Source')
 
-| Name                 | Type                 | Default Value(s)                        | Description                                                             |
-| -------------------- | -------------------- | --------------------------------------- | ----------------------------------------------------------------------- |
-| `xAxis`              | object (custom type) | [IAxisType](../types/src/prop-types.ts) | Manages settings for the chart's x axis, _see object definition below_. |
-| `yAxis`              | object (custom type) | [IAxisType](../types/src/prop-types.ts) | Manages settings for the chart's y axis, _see object definition below_. |
-| `minValueOverride`   | number               | `undefined`                             | Overrides the calculated default min value.                             |
-| `maxValueOverride`   | number               | `undefined`                             | Overrides the calculated default max value.                             |
-| `wrapLabel`          | boolean              | true                                    | When selected, wraps axis labels.                                       |
-| `barIntervalRatio`   | number               | 0.2                                     | Percent of bar padding.                                                 |
-| `groupIntervalRatio` | number               | 0.2                                     | Percent of group padding.                                               |
+| Name                 | Type                 | Default Value(s)                        | Description                                                                                                                            |
+| -------------------- | -------------------- | --------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `xAxis`              | object (custom type) | [IAxisType](../types/src/prop-types.ts) | Manages settings for the chart's x axis, _see object definition below_.                                                                |
+| `yAxis`              | object (custom type) | [IAxisType](../types/src/prop-types.ts) | Manages settings for the chart's y axis, _see object definition below_.                                                                |
+| `minValueOverride`   | number               | `undefined`                             | Overrides the calculated default min value.                                                                                            |
+| `maxValueOverride`   | number               | `undefined`                             | Overrides the calculated default max value.                                                                                            |
+| `wrapLabel`          | boolean              | true                                    | When selected, wraps axis labels.                                                                                                      |
+| `barIntervalRatio`   | number               | 0.2                                     | Percent of bar padding.                                                                                                                |
+| `barOverlapRatio`    | number               | 0                                       | Percentage of overlap between adjacent bars in the group. When this value is not 0, `barIntervalRatio` will automatically be set to 0. |
+| `groupIntervalRatio` | number               | 0.2                                     | Percent of group padding.                                                                                                              |
 
 <br>
 
@@ -391,11 +392,12 @@ const mouseOutHandler = evt => {
 
 ### <a name="style-props" href="#style-props">#</a> Style Props [<>](./src/components/clustered-bar-chart/clustered-bar-chart.tsx 'Source')
 
-| Name            | Type     | Default Value(s) | Description                                                                                                                                    |
-| --------------- | -------- | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| `colorPalette`  | string   | 'single_blue'    | Included color palettes can be found in our [color utility](../utils#colors). Overridden by colors.                                            |
-| `colors`        | string[] | `undefined`      | Accepts array of color strings or color values to customize colors beyond our palettes. Overridden by groupAccessor, colors assigned in order. |
-| `roundedCorner` | number   | 0                | Sets the border radius of the chart geometries.                                                                                                |
+| Name            | Type     | Default Value(s)                                                          | Description                                                                                                                                                                                                                                                                                                                                                                            |
+| --------------- | -------- | ------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `colorPalette`  | string   | 'single_blue'                                                             | Included color palettes can be found in our [color utility](../utils#colors). Overridden by colors.                                                                                                                                                                                                                                                                                    |
+| `colors`        | string[] | `undefined`                                                               | Accepts array of color strings or color values to customize colors beyond our palettes. Overridden by groupAccessor, colors assigned in order.                                                                                                                                                                                                                                         |
+| `textureOrder`  | string[] | ['lines-diagonal', 'dots-grid', 'cross-hatch', 'x-grid', 'ring-diagonal'] | Sets the order of texture patterns applied to chart groups when textures are enabled. Provide an array of valid texture pattern names to customize the sequence of textures used for differentiating groups. Valid values include: `'lines-diagonal'`, `'dots-grid'`, `'cross-hatch'`, `'x-grid'`, `'ring-diagonal'`, and '' to skip applying a texture for a specific group/category. |
+| `roundedCorner` | number   | 0                                                                         | Sets the border radius of the chart geometries.                                                                                                                                                                                                                                                                                                                                        |
 
 <br>
 <br>
