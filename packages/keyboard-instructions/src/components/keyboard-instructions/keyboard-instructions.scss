@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2021, 2023 Visa, Inc.
+ * Copyright (c) 2021, 2023, 2025 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -117,4 +117,14 @@ svg.vcc-ki-icons {
   .vcc-ki-minimize {
     display: block;
   }
+}
+
+.vcc-ki-td,
+.vcc-ki-th {
+  padding: 0.25rem;
+}
+
+.vcc-note-table-header {
+  margin-top: 25px;
+  margin-bottom: 0px;
 }
