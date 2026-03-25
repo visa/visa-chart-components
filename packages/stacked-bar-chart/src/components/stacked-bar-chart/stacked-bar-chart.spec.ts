@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022, 2023, 2024 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023, 2024, 2025 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -27,7 +27,6 @@ const { getColors, visaColors, formatStats, getContrastingStroke } = Utils;
 const {
   asyncForEach,
   flushTransitions,
-  parseTransform,
   unitTestAxis,
   unitTestGeneric,
   unitTestAccessibility,
@@ -2054,6 +2053,57 @@ describe('<stacked-bar-chart>', () => {
             const barFillURL = patterns[i % patterns.length].getAttribute('id');
             expect(bar).toEqualAttribute('fill', `url(#${barFillURL})`);
           });
+        });
+      });
+      describe('textureOrder', () => {
+        it('should use textureOrder prop for bar textures and set to new textureOrder when update', async () => {
+          component.colorPalette = 'categorical';
+          component.textureOrder = ['cross-hatch', 'x-grid', 'ring-diagonal'];
+          page.root.appendChild(component);
+          await page.waitForChanges();
+          const patterns = page.doc.querySelector('[data-testid=pattern-defs]').querySelectorAll('pattern');
+          expect(patterns[0].getAttribute('id')).toContain('cross-hatch');
+          expect(patterns[1].getAttribute('id')).toContain('x-grid');
+          expect(patterns[2].getAttribute('id')).toContain('ring-diagonal');
+
+          // ACT UPDATE
+          component.textureOrder = ['dots-grid', 'cross-hatch', 'lines-diagonal'];
+          await page.waitForChanges();
+
+          // ASSERT
+          const newPatterns = page.doc.querySelector('[data-testid=pattern-defs]').querySelectorAll('pattern');
+          expect(newPatterns[0].getAttribute('id')).toContain('dots-grid');
+          expect(newPatterns[1].getAttribute('id')).toContain('cross-hatch');
+          expect(newPatterns[2].getAttribute('id')).toContain('lines-diagonal');
+        });
+
+        it('should fall back to default pattern sequence when invalid textureOrder entries are provided', async () => {
+          component.colorPalette = 'categorical';
+          component.textureOrder = ['invalid-pattern', 'another-bad-pattern', 'not-a-pattern'];
+          page.root.appendChild(component);
+          await page.waitForChanges();
+          const patterns = page.doc.querySelector('[data-testid=pattern-defs]').querySelectorAll('pattern');
+          const expectedPatterns = ['lines-diagonal', 'dots-grid', 'cross-hatch'];
+          patterns.forEach((pattern, i) => {
+            expect(pattern.getAttribute('id')).toContain(expectedPatterns[i]);
+          });
+        });
+
+        it('should render no pattern (just color) when textureOrder contains invalid or empty string', async () => {
+          component.colorPalette = 'categorical';
+          component.textureOrder = ['', 'invalid-pattern', ''];
+          page.root.appendChild(component);
+          await page.waitForChanges();
+          const bars = page.doc.querySelectorAll('[data-testid=bar]');
+          bars.forEach(bar => {
+            // Should be a color, not a url(#pattern)
+            expect(bar.getAttribute('fill')).toMatch(/^#|rgb|hsl/i);
+          });
+          // Should not render any pattern elements
+          const patternDefs = page.doc.querySelector('[data-testid=pattern-defs]');
+          if (patternDefs) {
+            expect(patternDefs.querySelectorAll('pattern').length).toBe(0);
+          }
         });
       });
     });

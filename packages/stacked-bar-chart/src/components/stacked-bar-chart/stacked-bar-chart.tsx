@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022, 2023, 2024 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023, 2024, 2025 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -146,6 +146,7 @@ export class StackedBarChart {
   @Prop({ mutable: true }) barIntervalRatio: number = StackedBarChartDefaultValues.barIntervalRatio;
   @Prop({ mutable: true }) hoverOpacity: number = StackedBarChartDefaultValues.hoverOpacity;
   @Prop({ mutable: true }) animationConfig: IAnimationConfig = StackedBarChartDefaultValues.animationConfig;
+  @Prop({ mutable: true }) textureOrder: string[];
 
   // Data label (5/7)
   @Prop({ mutable: true }) dataLabel: IDataLabelType = StackedBarChartDefaultValues.dataLabel;
@@ -585,17 +586,9 @@ export class StackedBarChart {
     this.shouldSetGroupAccessibilityLabel = true;
   }
 
-  @Watch('colorPalette')
-  paletteWatcher(_newVal, _oldVal) {
-    this.shouldSetColors = true;
-    this.shouldDrawInteractionState = true;
-    this.shouldUpdateLegend = true;
-    this.shouldCheckLabelColor = true;
-    this.shouldSetStrokes = true;
-    this.shouldSetTextures = true;
-  }
-
   @Watch('colors')
+  @Watch('colorPalette')
+  @Watch('textureOrder')
   colorsWatcher(_newVal, _oldVal) {
     this.shouldSetColors = true;
     this.shouldDrawInteractionState = true;
@@ -1546,7 +1539,8 @@ export class StackedBarChart {
         rootSVG: this.svg.node(),
         id: this.chartID,
         scheme: 'categorical',
-        disableTransitions: !this.duration
+        disableTransitions: !this.duration,
+        textureOrder: this.textureOrder
       });
       this.colorArr = this.preparedColors.range ? this.preparedColors.copy().range(textures) : textures;
     }
@@ -2456,7 +2450,7 @@ export class StackedBarChart {
 
     selection.attr('opacity', (d, i, n) => {
       const prevOpacity = +select(n[i]).attr('opacity');
-      const styleVisibility = select(n[i]).style('visibility');
+      const styleVisibility = select(n[i]).classed('vcc-style-visibility-hidden');
       const dimensions = {};
       dimensions[ordinalDimension] = this[ordinalAxis].bandwidth();
       dimensions[valueDimension] =
@@ -2486,14 +2480,11 @@ export class StackedBarChart {
             : 0
           : 1
         : 0;
-      if (
-        ((targetOpacity === 1 && styleVisibility === 'hidden') || prevOpacity !== targetOpacity) &&
-        addCollisionClass
-      ) {
+      if (((targetOpacity === 1 && styleVisibility) || prevOpacity !== targetOpacity) && addCollisionClass) {
         if (targetOpacity === 1) {
           select(n[i])
             .classed('collision-added', true)
-            .style('visibility', null);
+            .classed('vcc-style-visibility-hidden', false);
         } else {
           select(n[i]).classed('collision-removed', true);
         }
@@ -2572,7 +2563,7 @@ export class StackedBarChart {
     this.update.attr('cursor', !this.suppressEvents ? this.cursor : null);
     select(this.stackedBarChartEl)
       .selectAll('.legend')
-      .style('cursor', !this.suppressEvents && this.legend.interactive && this.legend.visible ? this.cursor : null);
+      .attr('cursor', !this.suppressEvents && this.legend.interactive && this.legend.visible ? this.cursor : null);
   }
 
   enterDataLabels() {
@@ -2581,7 +2572,7 @@ export class StackedBarChart {
 
     this.enterLabels
       .attr('class', 'stacked-bar-dataLabel entering')
-      .style('pointer-events', 'none')
+      .classed('vcc-style-point-events-none', true)
       .classed('stacked-bar-dataLabel-' + this.layout, true)
       .attr(
         'opacity',
@@ -2668,6 +2659,11 @@ export class StackedBarChart {
       .classed('stacked-bar-dataLabel-horizontal', false)
       .classed('stacked-bar-dataLabel-vertical', false)
       .classed('stacked-bar-dataLabel-' + this.layout, true)
+      .classed('vcc-style-visibility-hidden', (_, i, n) =>
+        this.dataLabel.placement === 'auto' || this.dataLabel.collisionHideOnly
+          ? select(n[i]).classed('vcc-style-visibility-hidden')
+          : false
+      )
       .text((d, i, n) => {
         if (d[this.valueAccessor] === 0 && !this.showZeroLabels) {
           return '';
@@ -2680,12 +2676,7 @@ export class StackedBarChart {
           textHeight = Math.max(fontSize - 1, 1); // clone.getBBox().height;
         }
         return formatDataLabel(d, this.innerLabelAccessor, this.dataLabel.format, this.normalized);
-      })
-      .style('visibility', (_, i, n) =>
-        this.dataLabel.placement === 'auto' || this.dataLabel.collisionHideOnly
-          ? select(n[i]).style('visibility')
-          : null
-      );
+      });
 
     this.updateLabelWrappers
       .transition('update')
@@ -2828,6 +2819,11 @@ export class StackedBarChart {
       .classed('bar-dataLabel-horizontal', false)
       .classed('bar-dataLabel-vertical', false)
       .classed('bar-dataLabel-' + this.layout, true)
+      .classed('vcc-style-visibility-hidden', (_, i, n) =>
+        this.dataLabel.placement === 'auto' || this.dataLabel.collisionHideOnly
+          ? select(n[i]).classed('vcc-style-visibility-hidden')
+          : false
+      )
       .attr(`data-${groupDimension}`, d => {
         return this[groupDimension](d.key) + this[groupDimension].bandwidth() / 2;
       })
@@ -2840,11 +2836,6 @@ export class StackedBarChart {
       .attr('data-translate-y', this.padding.top + this.margin.top)
       .attr('dx', this.layout === 'vertical' ? '0' : '0.3em')
       .attr('dy', this.layout === 'vertical' ? '-0.3em' : '.3em')
-      .style('visibility', (_, i, n) =>
-        this.dataLabel.placement === 'auto' || this.dataLabel.collisionHideOnly
-          ? select(n[i]).style('visibility')
-          : null
-      )
       .transition('update')
       .ease(easeCircleIn)
       .duration(this.duration)
@@ -2962,7 +2953,7 @@ export class StackedBarChart {
   bindLegendInteractivity() {
     select(this.stackedBarChartEl)
       .selectAll('.legend')
-      .style('cursor', !this.suppressEvents && this.legend.interactive && this.legend.visible ? this.cursor : null)
+      .attr('cursor', !this.suppressEvents && this.legend.interactive && this.legend.visible ? this.cursor : null)
       .on(
         'click',
         !this.suppressEvents && this.legend.interactive && this.legend.visible
