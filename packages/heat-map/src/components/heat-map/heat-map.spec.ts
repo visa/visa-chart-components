@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2022, 2023, 2024 Visa, Inc.
+ * Copyright (c) 2020, 2022, 2023, 2024, 2025 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -1214,7 +1214,7 @@ describe('<heat-map>', () => {
 
           // FLUSH TRANSITIONS
           const markers = page.doc.querySelectorAll('[data-testid=marker]');
-          await asyncForEach(markers, async (marker, i) => {
+          await asyncForEach(markers, async marker => {
             flushTransitions(marker);
             await page.waitForChanges();
           });
@@ -1269,7 +1269,7 @@ describe('<heat-map>', () => {
 
           // FLUSH TRANSITIONS
           const markers = page.doc.querySelectorAll('[data-testid=marker]');
-          await asyncForEach(markers, async (marker, i) => {
+          await asyncForEach(markers, async marker => {
             flushTransitions(marker);
             await page.waitForChanges();
           });
@@ -1502,7 +1502,7 @@ describe('<heat-map>', () => {
               const legendContainer = legendSVG.parentElement;
               expect(legendContainer.getAttribute('style')).toEqual('display: none;');
               expect(legendSVG).toEqualAttribute('opacity', 0);
-              expect(legendSVG.getAttribute('style')).toEqual('display: none;');
+              expect(legendSVG).toHaveClass('vcc-style-display-none');
             });
           });
           describe('type', () => {

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023, 2025 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -142,6 +142,7 @@ export class HeatMap {
   @Prop({ mutable: true }) hoverOpacity: number = HeatMapDefaultValues.hoverOpacity;
   @Prop({ mutable: true }) animationConfig: IAnimationConfig = HeatMapDefaultValues.animationConfig;
   @Prop({ mutable: true }) strokeWidth: number = HeatMapDefaultValues.strokeWidth;
+  @Prop({ mutable: true }) textureOrder: string[];
 
   // Data label (5/7)
   @Prop({ mutable: true }) dataLabel: IDataLabelType = HeatMapDefaultValues.dataLabel;
@@ -555,6 +556,7 @@ export class HeatMap {
   @Watch('colorPalette')
   @Watch('colors')
   @Watch('colorSteps')
+  @Watch('textureOrder')
   colorsWatcher(_newVal, _oldVal) {
     this.shouldSetColors = true;
     this.shouldUpdateScales = true;
@@ -1324,7 +1326,8 @@ export class HeatMap {
         rootSVG: this.svg.node(),
         id: this.chartID,
         scheme,
-        disableTransitions: !this.duration
+        disableTransitions: !this.duration,
+        textureOrder: this.textureOrder
       });
       this.colorArr = textures;
     }
