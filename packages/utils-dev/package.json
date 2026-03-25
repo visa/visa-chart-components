@@ -2,11 +2,11 @@
   "name": "@visa/visa-charts-utils-dev",
   "version": "4.1.5",
   "description": "Utilities for development of the charts lib",
+  "license": "SEE LICENCE IN LICENSE",
+  "author": "Visa Data Experience Team",
   "main": "dist/visa-charts-utils-dev.cjs.js",
   "module": "dist/visa-charts-utils-dev.esm.js",
   "browser": "dist/visa-charts-utils-dev.umd.js",
-  "license": "SEE LICENCE IN LICENSE",
-  "author": "Visa Data Experience Team",
   "scripts": {
     "audit": "yarn audit --json --level low > yarn-audit.json",
     "yarn-install": "yarn",
