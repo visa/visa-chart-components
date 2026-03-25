@@ -3,7 +3,11 @@
 exports[`<bar-chart> rendered-html accessibility generic accessibility test suite accessibility: keyboard instruction component displays table in click state 1`] = `
 <div class="visa-viz-keyboard-instructions-container" id="visa-viz-keyboard-instructions-container-bar-chart-unit-test">
   <div>
-    <table class="vcc-ki-data-table vcc-ki-keyboard-instructions vcc-ki-state--compact vcc-ki-state--single-select" data-header="header">
+    <table aria-label="Keyboard Instructions" class="vcc-ki-data-table vcc-ki-keyboard-instructions vcc-ki-state--compact vcc-ki-state--single-select" data-header="header" role="table" tabindex="0">
+      <colgroup>
+        <col class="vcc-ki-col-action">
+        <col class="vcc-ki-col-result">
+      </colgroup>
       <thead class="vcc-ki-thead">
         <tr class="vcc-ki-tr">
           <th class="vcc-ki-th" scope="col">
@@ -74,12 +78,23 @@ exports[`<bar-chart> rendered-html accessibility generic accessibility test suit
           </td>
         </tr>
       </tbody>
+    </table>
+    <p class="vcc-ki-keyboard-heading vcc-note-table-header">
+      Note
+    </p>
+    <table aria-label="Note" class="vcc-ki-data-table vcc-ki-keyboard-instructions vcc-ki-state--compact vcc-ki-state--single-select" data-header="header" role="table" tabindex="0">
+      <colgroup>
+        <col class="vcc-ki-col-action">
+        <col class="vcc-ki-col-result">
+      </colgroup>
       <thead class="vcc-ki-thead">
         <tr class="vcc-ki-tr">
           <th class="vcc-ki-th" scope="col">
-            Note
+            Action
           </th>
-          <th class="vcc-ki-th" scope="col"></th>
+          <th class="vcc-ki-th" scope="col">
+            Result
+          </th>
         </tr>
       </thead>
       <tbody class="vcc-ki-tbody">
@@ -106,7 +121,11 @@ exports[`<bar-chart> rendered-html accessibility generic accessibility test suit
 exports[`<bar-chart> rendered-html accessibility generic accessibility test suite accessibility: keyboard instruction component displays table in click state with space enabled 1`] = `
 <div class="visa-viz-keyboard-instructions-container" id="visa-viz-keyboard-instructions-container-bar-chart-unit-test">
   <div>
-    <table class="vcc-ki-data-table vcc-ki-keyboard-instructions vcc-ki-state--compact vcc-ki-state--single-select" data-header="header">
+    <table aria-label="Keyboard Instructions" class="vcc-ki-data-table vcc-ki-keyboard-instructions vcc-ki-state--compact vcc-ki-state--single-select" data-header="header" role="table" tabindex="0">
+      <colgroup>
+        <col class="vcc-ki-col-action">
+        <col class="vcc-ki-col-result">
+      </colgroup>
       <thead class="vcc-ki-thead">
         <tr class="vcc-ki-tr">
           <th class="vcc-ki-th" scope="col">
@@ -187,12 +206,23 @@ exports[`<bar-chart> rendered-html accessibility generic accessibility test suit
           </td>
         </tr>
       </tbody>
+    </table>
+    <p class="vcc-ki-keyboard-heading vcc-note-table-header">
+      Note
+    </p>
+    <table aria-label="Note" class="vcc-ki-data-table vcc-ki-keyboard-instructions vcc-ki-state--compact vcc-ki-state--single-select" data-header="header" role="table" tabindex="0">
+      <colgroup>
+        <col class="vcc-ki-col-action">
+        <col class="vcc-ki-col-result">
+      </colgroup>
       <thead class="vcc-ki-thead">
         <tr class="vcc-ki-tr">
           <th class="vcc-ki-th" scope="col">
-            Note
+            Action
           </th>
-          <th class="vcc-ki-th" scope="col"></th>
+          <th class="vcc-ki-th" scope="col">
+            Result
+          </th>
         </tr>
       </thead>
       <tbody class="vcc-ki-tbody">
@@ -216,7 +246,7 @@ exports[`<bar-chart> rendered-html accessibility generic accessibility test suit
 </div>
 `;
 
-exports[`<bar-chart> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: test whether space bar performs click action 1`] = `<rect class="bar vcl-accessibility-focus-source" cursor="default" data-height="41.132822334144294" data-id="bar-Apr-17" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="8.877049180327845" data-y="207.3671776658557" fill="url(#bar-chart-unit-test_texture_0)" focusable="false" height="41.1328" id="chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.5082" x="8.877" y="207.3672"></rect>`;
+exports[`<bar-chart> rendered-html accessibility generic accessibility test suite accessibility: keyboard nav: test whether space bar performs click action 1`] = `<rect class="bar vcl-accessibility-focus-source" cursor="default" data-height="41.132822334144294" data-id="bar-Apr-17" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="8.877049180327845" data-y="207.3671776658557" fill="url(#bar-chart-unit-test_texture_0_lines-diagonal)" focusable="false" height="41.1328" id="chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.5082" x="8.877" y="207.3672"></rect>`;
 
 exports[`<bar-chart> rendered-html annotations should pass annotation prop 1`] = `
 <g aria-hidden="true" class="vcl-annotation-group" data-testid="annotation-group" focusable="false" role="presentation">
@@ -248,9 +278,9 @@ exports[`<bar-chart> rendered-html annotations should pass annotation prop 1`] =
 </g>
 `;
 
-exports[`<bar-chart> rendered-html event-emitter generic event testing bar based events [event] clickEvent: event object should emit and contain first data record when first mark is clicked 1`] = `<rect class="bar" cursor="default" data-height="41.132822334144294" data-id="bar-Apr-17" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="8.877049180327845" data-y="207.3671776658557" fill="url(#bar-chart-unit-test_texture_0)" focusable="false" height="41.132822334144294" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="8.877049180327845" y="207.3671776658557"></rect>`;
+exports[`<bar-chart> rendered-html event-emitter generic event testing bar based events [event] clickEvent: event object should emit and contain first data record when first mark is clicked 1`] = `<rect class="bar" cursor="default" data-height="41.132822334144294" data-id="bar-Apr-17" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="8.877049180327845" data-y="207.3671776658557" fill="url(#bar-chart-unit-test_texture_0_lines-diagonal)" focusable="false" height="41.132822334144294" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="8.877049180327845" y="207.3671776658557"></rect>`;
 
-exports[`<bar-chart> rendered-html event-emitter generic event testing bar based events [event] hoverEvent: event object should emit and contain first data record when first mark is hovered 1`] = `<rect class="bar" cursor="default" data-height="41.132822334144294" data-id="bar-Apr-17" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="8.877049180327845" data-y="207.3671776658557" fill="url(#bar-chart-unit-test_texture_0)" focusable="false" height="41.132822334144294" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="8.877049180327845" y="207.3671776658557"></rect>`;
+exports[`<bar-chart> rendered-html event-emitter generic event testing bar based events [event] hoverEvent: event object should emit and contain first data record when first mark is hovered 1`] = `<rect class="bar" cursor="default" data-height="41.132822334144294" data-id="bar-Apr-17" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="8.877049180327845" data-y="207.3671776658557" fill="url(#bar-chart-unit-test_texture_0_lines-diagonal)" focusable="false" height="41.132822334144294" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="8.877049180327845" y="207.3671776658557"></rect>`;
 
 exports[`<bar-chart> rendered-html generic test suite accessibility: should not print accessibility console warnings and logs when accessibility.disableValidation set to true 1`] = `Array []`;
 
@@ -323,8 +353,8 @@ Array [
 exports[`<bar-chart> rendered-html reference line should pass referenceLines prop 1`] = `
 <g aria-hidden="true" class="bar-reference-line-group" data-testid="reference-line-group" focusable="false" role="presentation">
   <g class="bar-reference" data-testid="reference-g" opacity="1" transform="translate(0,43.93803895226644)">
-    <line class="bar-reference-line" data-testid="reference-line" opacity="1" stroke-dasharray="" x1="0" x2="541.5" y1="0" y2="0" style="stroke: rgb(92, 92, 92); stroke-width: 1px;"></line>
-    <text class="bar-reference-line-label" data-testid="reference-line-label" dx="0.5em" dy="1em" opacity="1" text-anchor="start" x="0" y="0" style="fill: rgb(92, 92, 92); paint-order: stroke; stroke: rgb(255, 255, 255); stroke-width: 4px;">
+    <line class="bar-reference-line" data-testid="reference-line" opacity="1" stroke="rgb(92, 92, 92)" stroke-dasharray="" stroke-width="1px" x1="0" x2="541.5" y1="0" y2="0"></line>
+    <text class="bar-reference-line-label" data-testid="reference-line-label" dx="0.5em" dy="1em" fill="rgb(92, 92, 92)" opacity="1" paint-order="stroke" stroke="rgb(255, 255, 255)" stroke-width="4px" text-anchor="start" x="0" y="0">
       Market
     </text>
   </g>
@@ -334,8 +364,8 @@ exports[`<bar-chart> rendered-html reference line should pass referenceLines pro
 exports[`<bar-chart> rendered-html reference line should pass referenceStyle prop 1`] = `
 <g aria-hidden="true" class="bar-reference-line-group" data-testid="reference-line-group" focusable="false" role="presentation">
   <g class="bar-reference" data-testid="reference-g" opacity="1" transform="translate(0,43.93803895226644)">
-    <line class="bar-reference-line" data-testid="reference-line" opacity="0.65" stroke-dasharray="" x1="0" x2="541.5" y1="0" y2="0" style="stroke: rgb(92, 92, 92); stroke-width: 1px;"></line>
-    <text class="bar-reference-line-label" data-testid="reference-line-label" dx="0.5em" dy="1em" opacity="1" text-anchor="start" x="0" y="0" style="fill: rgb(92, 92, 92); paint-order: stroke; stroke: rgb(255, 255, 255); stroke-width: 4px;">
+    <line class="bar-reference-line" data-testid="reference-line" opacity="0.65" stroke="rgb(92, 92, 92)" stroke-dasharray="" stroke-width="1px" x1="0" x2="541.5" y1="0" y2="0"></line>
+    <text class="bar-reference-line-label" data-testid="reference-line-label" dx="0.5em" dy="1em" fill="rgb(92, 92, 92)" opacity="1" paint-order="stroke" stroke="rgb(255, 255, 255)" stroke-width="4px" text-anchor="start" x="0" y="0">
       Market
     </text>
   </g>
@@ -385,11 +415,11 @@ exports[`<bar-chart> rendered-html render localization: should render localized 
       <p aria-hidden="true" class="bar-sub-title vcl-sub-title visa-ui-text--instructions" data-testid="sub-title">
         This is a subtitle
       </p>
-      <div aria-hidden="true" class="bar-legend vcl-legend" role="presentation" style="display: none;">
-        <svg aria-hidden="true" class="vcl-svg" data-testid="legend-container" data-type="bar" focusable="false" height="0" opacity="0" role="presentation" viewBox="0 0 666.5 0" width="666.5" style="display: none;">
+      <div aria-hidden="true" class="bar-legend vcc-style-display-none vcl-legend" role="presentation" style="display: none;">
+        <svg aria-hidden="true" class="vcc-style-display-none vcl-svg" data-testid="legend-container" data-type="bar" focusable="false" height="0" opacity="0" role="presentation" viewBox="0 0 666.5 0" width="666.5">
           <g class="legend-padding-wrapper" transform="translate(70.75,24)">
             <g class="bar legend">
-              <rect class="bar-rect" height="20" opacity="1" stroke="" stroke-dasharray="none" stroke-width="1" width="20" x="0" y="0" style="stroke-width: 1; stroke-dasharray: none;"></rect>
+              <rect class="bar-rect" height="20" opacity="1" stroke="" stroke-dasharray="none" stroke-width="1" width="20" x="0" y="0"></rect>
               <text class="bar-text" dx=".2em" dy="16" filter="url(#VCL-t-s-f-ffffffbar-chart-unit-test-legend)" opacity="1" x="25" y="0"></text>
             </g>
           </g>
@@ -424,7 +454,10 @@ exports[`<bar-chart> rendered-html render localization: should render localized 
               </button>
               <svg class="vcc-ki-icons">
                 <symbol id="visa-viz-keyboard-instructions-info--tiny-bar-chart-unit-test" viewbox="0 0 16 16">
-                  <path d="M8.7,3.8a.68.68,0,0,1,.7.7.79.79,0,0,1-.8.8H8.5c-.4,0-.6-.3-.6-.7A.79.79,0,0,1,8.7,3.8ZM6.6,12.1l1.2-6H9l-1.2,6ZM14,8a6,6,0,1,0-6,6A6,6,0,0,0,14,8Zm2,0A8,8,0,1,1,8,0,8,8,0,0,1,16,8Z"></path>
+                  <g>
+                    <path clip-rule="evenodd" d="M3.75736 3.75736C1.41421 6.1005 1.41421 9.89949 3.75736 12.2426L2.34315 13.6569C-0.781049 10.5327 -0.781049 5.46734 2.34315 2.34315C5.46734 -0.781049 10.5327 -0.781049 13.6569 2.34315C16.781 5.46734 16.781 10.5327 13.6569 13.6569L12.2426 12.2426C14.5858 9.8995 14.5858 6.1005 12.2426 3.75736C9.89949 1.41421 6.1005 1.41421 3.75736 3.75736Z" fill-rule="evenodd"></path>
+                    <path clip-rule="evenodd" d="M8 8C9.10457 8 10 7.10457 10 6C10 4.89543 9.10457 4 8 4C6.89543 4 6 4.89543 6 6C6 7.10457 6.89543 8 8 8ZM8 8H12V10H9V10.9628L10.8844 14.5332L9.11562 15.4668L8 13.353L6.88438 15.4668L5.11562 14.5332L7 10.9628V10H4V8H8Z" fill-rule="evenodd"></path>
+                  </g>
                 </symbol>
               </svg>
             </div>
@@ -532,18 +565,18 @@ exports[`<bar-chart> rendered-html render localization: should render localized 
                 </g>
               </g>
               <g class="bar-group" data-testid="bar-group" focusable="false" id="bar-chart-unit-test-123457-123457-123457" role="presentation" tabindex="-1">
-                <rect class="bar" cursor="default" data-height="41.132822334144294" data-id="bar-Apr-17" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="8.877049180327845" data-y="207.3671776658557" fill="url(#bar-chart-unit-test_texture_0)" focusable="false" height="41.132822334144294" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="8.877049180327845" y="207.3671776658557"></rect>
-                <rect class="bar" cursor="default" data-height="176.5755469254202" data-id="bar-May-17" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="53.26229508196719" data-y="71.92445307457979" fill="url(#bar-chart-unit-test_texture_0)" focusable="false" height="176.5755469254202" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="53.26229508196719" y="71.92445307457979"></rect>
-                <rect class="bar" cursor="default" data-height="94.5076844503275" data-id="bar-Jun-17" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="97.64754098360653" data-y="153.9923155496725" fill="url(#bar-chart-unit-test_texture_0)" focusable="false" height="94.5076844503275" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="97.64754098360653" y="153.9923155496725"></rect>
-                <rect class="bar" cursor="default" data-height="64.91139691770576" data-id="bar-Jul-17" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="142.03278688524588" data-y="183.58860308229424" fill="url(#bar-chart-unit-test_texture_0)" focusable="false" height="64.91139691770576" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="142.03278688524588" y="183.58860308229424"></rect>
-                <rect class="bar" cursor="default" data-height="130.81214314845025" data-id="bar-Aug-17" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="186.41803278688522" data-y="117.68785685154975" fill="url(#bar-chart-unit-test_texture_0)" focusable="false" height="130.81214314845025" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="186.41803278688522" y="117.68785685154975"></rect>
-                <rect class="bar" cursor="default" data-height="110.73292551475055" data-id="bar-Sep-17" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="230.80327868852456" data-y="137.76707448524945" fill="url(#bar-chart-unit-test_texture_0)" focusable="false" height="110.73292551475055" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="230.80327868852456" y="137.76707448524945"></rect>
-                <rect class="bar" cursor="default" data-height="191.22262168349732" data-id="bar-Oct-17" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="275.1885245901639" data-y="57.27737831650268" fill="url(#bar-chart-unit-test_texture_0)" focusable="false" height="191.22262168349732" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="275.1885245901639" y="57.27737831650268"></rect>
-                <rect class="bar" cursor="default" data-height="217.92955918573168" data-id="bar-Nov-17" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="319.57377049180326" data-y="30.57044081426832" fill="url(#bar-chart-unit-test_texture_0)" focusable="false" height="217.92955918573168" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="319.57377049180326" y="30.57044081426832"></rect>
-                <rect class="bar" cursor="default" data-height="77.04230110862119" data-id="bar-Dec-17" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="363.9590163934426" data-y="171.4576988913788" fill="url(#bar-chart-unit-test_texture_0)" focusable="false" height="77.04230110862119" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="363.9590163934426" y="171.4576988913788"></rect>
-                <rect class="bar" cursor="default" data-height="68.38214126452806" data-id="bar-Jan-18" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="408.34426229508193" data-y="180.11785873547194" fill="url(#bar-chart-unit-test_texture_0)" focusable="false" height="68.38214126452806" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="408.34426229508193" y="180.11785873547194"></rect>
-                <rect class="bar" cursor="default" data-height="93.5824214773713" data-id="bar-Feb-18" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="452.72950819672127" data-y="154.9175785226287" fill="url(#bar-chart-unit-test_texture_0)" focusable="false" height="93.5824214773713" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="452.72950819672127" y="154.9175785226287"></rect>
-                <rect class="bar" cursor="default" data-height="248.5" data-id="bar-Mar-18" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="497.1147540983606" data-y="0" fill="url(#bar-chart-unit-test_texture_0)" focusable="false" height="248.5" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="497.1147540983606" y="0"></rect>
+                <rect class="bar" cursor="default" data-height="41.132822334144294" data-id="bar-Apr-17" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="8.877049180327845" data-y="207.3671776658557" fill="url(#bar-chart-unit-test_texture_0_lines-diagonal)" focusable="false" height="41.132822334144294" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="8.877049180327845" y="207.3671776658557"></rect>
+                <rect class="bar" cursor="default" data-height="176.5755469254202" data-id="bar-May-17" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="53.26229508196719" data-y="71.92445307457979" fill="url(#bar-chart-unit-test_texture_0_lines-diagonal)" focusable="false" height="176.5755469254202" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="53.26229508196719" y="71.92445307457979"></rect>
+                <rect class="bar" cursor="default" data-height="94.5076844503275" data-id="bar-Jun-17" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="97.64754098360653" data-y="153.9923155496725" fill="url(#bar-chart-unit-test_texture_0_lines-diagonal)" focusable="false" height="94.5076844503275" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="97.64754098360653" y="153.9923155496725"></rect>
+                <rect class="bar" cursor="default" data-height="64.91139691770576" data-id="bar-Jul-17" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="142.03278688524588" data-y="183.58860308229424" fill="url(#bar-chart-unit-test_texture_0_lines-diagonal)" focusable="false" height="64.91139691770576" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="142.03278688524588" y="183.58860308229424"></rect>
+                <rect class="bar" cursor="default" data-height="130.81214314845025" data-id="bar-Aug-17" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="186.41803278688522" data-y="117.68785685154975" fill="url(#bar-chart-unit-test_texture_0_lines-diagonal)" focusable="false" height="130.81214314845025" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="186.41803278688522" y="117.68785685154975"></rect>
+                <rect class="bar" cursor="default" data-height="110.73292551475055" data-id="bar-Sep-17" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="230.80327868852456" data-y="137.76707448524945" fill="url(#bar-chart-unit-test_texture_0_lines-diagonal)" focusable="false" height="110.73292551475055" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="230.80327868852456" y="137.76707448524945"></rect>
+                <rect class="bar" cursor="default" data-height="191.22262168349732" data-id="bar-Oct-17" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="275.1885245901639" data-y="57.27737831650268" fill="url(#bar-chart-unit-test_texture_0_lines-diagonal)" focusable="false" height="191.22262168349732" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="275.1885245901639" y="57.27737831650268"></rect>
+                <rect class="bar" cursor="default" data-height="217.92955918573168" data-id="bar-Nov-17" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="319.57377049180326" data-y="30.57044081426832" fill="url(#bar-chart-unit-test_texture_0_lines-diagonal)" focusable="false" height="217.92955918573168" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="319.57377049180326" y="30.57044081426832"></rect>
+                <rect class="bar" cursor="default" data-height="77.04230110862119" data-id="bar-Dec-17" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="363.9590163934426" data-y="171.4576988913788" fill="url(#bar-chart-unit-test_texture_0_lines-diagonal)" focusable="false" height="77.04230110862119" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="363.9590163934426" y="171.4576988913788"></rect>
+                <rect class="bar" cursor="default" data-height="68.38214126452806" data-id="bar-Jan-18" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="408.34426229508193" data-y="180.11785873547194" fill="url(#bar-chart-unit-test_texture_0_lines-diagonal)" focusable="false" height="68.38214126452806" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="408.34426229508193" y="180.11785873547194"></rect>
+                <rect class="bar" cursor="default" data-height="93.5824214773713" data-id="bar-Feb-18" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="452.72950819672127" data-y="154.9175785226287" fill="url(#bar-chart-unit-test_texture_0_lines-diagonal)" focusable="false" height="93.5824214773713" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="452.72950819672127" y="154.9175785226287"></rect>
+                <rect class="bar" cursor="default" data-height="248.5" data-id="bar-Mar-18" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="497.1147540983606" data-y="0" fill="url(#bar-chart-unit-test_texture_0_lines-diagonal)" focusable="false" height="248.5" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="497.1147540983606" y="0"></rect>
               </g>
               <g aria-hidden="true" class="bar-dataLabel-group" data-testid="dataLabel-group" focusable="false" role="presentation">
                 <text class="bar-dataLabel" cursor="default" data-height="41.132822334144294" data-id="label-Apr-17" data-testid="dataLabel" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="8.877049180327845" data-y="207.3671776658557" dy="-.3em" fill="#222222" filter="url(#VCL-t-s-f-ffffffbar-chart-unit-test)" opacity="1" text-anchor="middle" x="26.631147540983584" y="207.3671776658557">
@@ -827,7 +860,7 @@ exports[`<bar-chart> rendered-html render localization: should render localized 
         0 0 0 1 0"></feColorMatrix>
               <feColorMatrix type="hueRotate" values="180"></feColorMatrix>
             </filter>
-            <pattern class="VCL-texture-pattern" height="12" id="bar-chart-unit-test_texture_0" patternContentUnits="userSpaceOnUse" patternUnits="userSpaceOnUse" width="12" x="0" y="0">
+            <pattern class="VCL-texture-pattern" height="12" id="bar-chart-unit-test_texture_0_lines-diagonal" patternContentUnits="userSpaceOnUse" patternUnits="userSpaceOnUse" width="12" x="0" y="0">
               <rect class="VCL-t-p-e" fill="#226092" height="12" width="12"></rect>
               <path class="VCL-t-p-e" d="M 0,0 l 12,12 M -3,9 l 6,6 M 9,-3 l 6,6" shape-rendering="auto" stroke="#80b6e1" stroke-linecap="square" stroke-width="1"></path>
             </pattern>
@@ -914,7 +947,7 @@ exports[`<bar-chart> rendered-html render localization: should render localized 
           </defs>
         </svg>
       </div>
-      <div class="bar-tooltip vcl-tooltip" data-testid="tooltip-container" style="display: block; position: absolute; padding: 0.5rem; opacity: 0; background-color: #ffffff; font-size: 14px; font-weight: 400; color: #222222; border: 1px solid #565656; border-radius: 3px; pointer-events: none; min-width: 80px; max-width: 300px; z-index: 10;">
+      <div class="bar-tooltip vcc-style-display-block vcl-tooltip" data-testid="tooltip-container" style="position: absolute; padding: 0.5rem; opacity: 0; background-color: #ffffff; font-size: 14px; font-weight: 400; color: #222222; border: 1px solid #565656; border-radius: 3px; pointer-events: none; min-width: 80px; max-width: 300px; z-index: 10;">
         <p style="margin: 0;"></p>
       </div>
       <data-table>
@@ -928,7 +961,7 @@ exports[`<bar-chart> rendered-html render localization: should render localized 
             </button>
             <svg class="vcc-icons">
               <symbol id="visa-viz-view-grid--tiny-bar-chart-unit-test" viewbox="0 0 16 16">
-                <path d="M5,5 L5,2 L2,2 L2,5 L5,5 Z M5,7 L2,7 C0.894905844,7 0,6.1044757 0,5 L0,2 C0,0.8955243 0.894905844,3.55271368e-15 2,3.55271368e-15 L5,3.55271368e-15 C6.10509416,3.55271368e-15 7,0.8955243 7,2 L7,5 C7,6.1044757 6.10509416,7 5,7 Z M14,5 L14,2 L11,2 L11,5 L14,5 Z M14,7 L11,7 C9.89490584,7 9,6.1044757 9,5 L9,2 C9,0.8955243 9.89490584,3.55271368e-15 11,3.55271368e-15 L14,3.55271368e-15 C15.1050942,3.55271368e-15 16,0.8955243 16,2 L16,5 C16,6.1044757 15.1050942,7 14,7 Z M5,14 L5,11 L2,11 L2,14 L5,14 Z M5,16 L2,16 C0.894905844,16 0,15.1044757 0,14 L0,11 C0,9.8955243 0.894905844,9 2,9 L5,9 C6.10509416,9 7,9.8955243 7,11 L7,14 C7,15.1044757 6.10509416,16 5,16 Z M14,14 L14,11 L11,11 L11,14 L14,14 Z M14,16 L11,16 C9.89490584,16 9,15.1044757 9,14 L9,11 C9,9.8955243 9.89490584,9 11,9 L14,9 C15.1050942,9 16,9.8955243 16,11 L16,14 C16,15.1044757 15.1050942,16 14,16 Z"></path>
+                <path clip-rule="evenodd" d="M4 2.99219H2V4.99219H4V2.99219ZM0 0.992188V6.99219H6V0.992188H0ZM8 4.99219H16V2.99219H8V4.99219ZM8 12.9922H16V10.9922H8V12.9922ZM2 10.9922H4V12.9922H2V10.9922ZM0 14.9922V8.99219H6V14.9922H0Z" fill-rule="evenodd"></path>
                 <g fill="none" fill-rule="evenodd" stroke="none" stroke-width="1">
                   <mask fill="#fff">
                     <use xlink:href="#path-1"></use>
@@ -989,11 +1022,11 @@ exports[`<bar-chart> rendered-html render should render with minimal props[data,
       <p aria-hidden="true" class="bar-sub-title vcl-sub-title visa-ui-text--instructions" data-testid="sub-title">
         This is a subtitle
       </p>
-      <div aria-hidden="true" class="bar-legend vcl-legend" role="presentation" style="display: none;">
-        <svg aria-hidden="true" class="vcl-svg" data-testid="legend-container" data-type="bar" focusable="false" height="0" opacity="0" role="presentation" viewBox="0 0 666.5 0" width="666.5" style="display: none;">
+      <div aria-hidden="true" class="bar-legend vcc-style-display-none vcl-legend" role="presentation" style="display: none;">
+        <svg aria-hidden="true" class="vcc-style-display-none vcl-svg" data-testid="legend-container" data-type="bar" focusable="false" height="0" opacity="0" role="presentation" viewBox="0 0 666.5 0" width="666.5">
           <g class="legend-padding-wrapper" transform="translate(70.75,24)">
             <g class="bar legend">
-              <rect class="bar-rect" height="20" opacity="1" stroke="" stroke-dasharray="none" stroke-width="1" width="20" x="0" y="0" style="stroke-width: 1; stroke-dasharray: none;"></rect>
+              <rect class="bar-rect" height="20" opacity="1" stroke="" stroke-dasharray="none" stroke-width="1" width="20" x="0" y="0"></rect>
               <text class="bar-text" dx=".2em" dy="16" filter="url(#VCL-t-s-f-ffffffbar-chart-unit-test-legend)" opacity="1" x="25" y="0"></text>
             </g>
           </g>
@@ -1028,7 +1061,10 @@ exports[`<bar-chart> rendered-html render should render with minimal props[data,
               </button>
               <svg class="vcc-ki-icons">
                 <symbol id="visa-viz-keyboard-instructions-info--tiny-bar-chart-unit-test" viewbox="0 0 16 16">
-                  <path d="M8.7,3.8a.68.68,0,0,1,.7.7.79.79,0,0,1-.8.8H8.5c-.4,0-.6-.3-.6-.7A.79.79,0,0,1,8.7,3.8ZM6.6,12.1l1.2-6H9l-1.2,6ZM14,8a6,6,0,1,0-6,6A6,6,0,0,0,14,8Zm2,0A8,8,0,1,1,8,0,8,8,0,0,1,16,8Z"></path>
+                  <g>
+                    <path clip-rule="evenodd" d="M3.75736 3.75736C1.41421 6.1005 1.41421 9.89949 3.75736 12.2426L2.34315 13.6569C-0.781049 10.5327 -0.781049 5.46734 2.34315 2.34315C5.46734 -0.781049 10.5327 -0.781049 13.6569 2.34315C16.781 5.46734 16.781 10.5327 13.6569 13.6569L12.2426 12.2426C14.5858 9.8995 14.5858 6.1005 12.2426 3.75736C9.89949 1.41421 6.1005 1.41421 3.75736 3.75736Z" fill-rule="evenodd"></path>
+                    <path clip-rule="evenodd" d="M8 8C9.10457 8 10 7.10457 10 6C10 4.89543 9.10457 4 8 4C6.89543 4 6 4.89543 6 6C6 7.10457 6.89543 8 8 8ZM8 8H12V10H9V10.9628L10.8844 14.5332L9.11562 15.4668L8 13.353L6.88438 15.4668L5.11562 14.5332L7 10.9628V10H4V8H8Z" fill-rule="evenodd"></path>
+                  </g>
                 </symbol>
               </svg>
             </div>
@@ -1136,18 +1172,18 @@ exports[`<bar-chart> rendered-html render should render with minimal props[data,
                 </g>
               </g>
               <g class="bar-group" data-testid="bar-group" focusable="false" id="bar-chart-unit-test-123457-123457-123457" role="presentation" tabindex="-1">
-                <rect class="bar" cursor="default" data-height="41.132822334144294" data-id="bar-Apr-17" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="8.877049180327845" data-y="207.3671776658557" fill="url(#bar-chart-unit-test_texture_0)" focusable="false" height="41.132822334144294" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="8.877049180327845" y="207.3671776658557"></rect>
-                <rect class="bar" cursor="default" data-height="176.5755469254202" data-id="bar-May-17" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="53.26229508196719" data-y="71.92445307457979" fill="url(#bar-chart-unit-test_texture_0)" focusable="false" height="176.5755469254202" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="53.26229508196719" y="71.92445307457979"></rect>
-                <rect class="bar" cursor="default" data-height="94.5076844503275" data-id="bar-Jun-17" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="97.64754098360653" data-y="153.9923155496725" fill="url(#bar-chart-unit-test_texture_0)" focusable="false" height="94.5076844503275" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="97.64754098360653" y="153.9923155496725"></rect>
-                <rect class="bar" cursor="default" data-height="64.91139691770576" data-id="bar-Jul-17" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="142.03278688524588" data-y="183.58860308229424" fill="url(#bar-chart-unit-test_texture_0)" focusable="false" height="64.91139691770576" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="142.03278688524588" y="183.58860308229424"></rect>
-                <rect class="bar" cursor="default" data-height="130.81214314845025" data-id="bar-Aug-17" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="186.41803278688522" data-y="117.68785685154975" fill="url(#bar-chart-unit-test_texture_0)" focusable="false" height="130.81214314845025" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="186.41803278688522" y="117.68785685154975"></rect>
-                <rect class="bar" cursor="default" data-height="110.73292551475055" data-id="bar-Sep-17" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="230.80327868852456" data-y="137.76707448524945" fill="url(#bar-chart-unit-test_texture_0)" focusable="false" height="110.73292551475055" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="230.80327868852456" y="137.76707448524945"></rect>
-                <rect class="bar" cursor="default" data-height="191.22262168349732" data-id="bar-Oct-17" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="275.1885245901639" data-y="57.27737831650268" fill="url(#bar-chart-unit-test_texture_0)" focusable="false" height="191.22262168349732" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="275.1885245901639" y="57.27737831650268"></rect>
-                <rect class="bar" cursor="default" data-height="217.92955918573168" data-id="bar-Nov-17" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="319.57377049180326" data-y="30.57044081426832" fill="url(#bar-chart-unit-test_texture_0)" focusable="false" height="217.92955918573168" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="319.57377049180326" y="30.57044081426832"></rect>
-                <rect class="bar" cursor="default" data-height="77.04230110862119" data-id="bar-Dec-17" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="363.9590163934426" data-y="171.4576988913788" fill="url(#bar-chart-unit-test_texture_0)" focusable="false" height="77.04230110862119" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="363.9590163934426" y="171.4576988913788"></rect>
-                <rect class="bar" cursor="default" data-height="68.38214126452806" data-id="bar-Jan-18" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="408.34426229508193" data-y="180.11785873547194" fill="url(#bar-chart-unit-test_texture_0)" focusable="false" height="68.38214126452806" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="408.34426229508193" y="180.11785873547194"></rect>
-                <rect class="bar" cursor="default" data-height="93.5824214773713" data-id="bar-Feb-18" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="452.72950819672127" data-y="154.9175785226287" fill="url(#bar-chart-unit-test_texture_0)" focusable="false" height="93.5824214773713" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="452.72950819672127" y="154.9175785226287"></rect>
-                <rect class="bar" cursor="default" data-height="248.5" data-id="bar-Mar-18" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="497.1147540983606" data-y="0" fill="url(#bar-chart-unit-test_texture_0)" focusable="false" height="248.5" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="497.1147540983606" y="0"></rect>
+                <rect class="bar" cursor="default" data-height="41.132822334144294" data-id="bar-Apr-17" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="8.877049180327845" data-y="207.3671776658557" fill="url(#bar-chart-unit-test_texture_0_lines-diagonal)" focusable="false" height="41.132822334144294" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="8.877049180327845" y="207.3671776658557"></rect>
+                <rect class="bar" cursor="default" data-height="176.5755469254202" data-id="bar-May-17" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="53.26229508196719" data-y="71.92445307457979" fill="url(#bar-chart-unit-test_texture_0_lines-diagonal)" focusable="false" height="176.5755469254202" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="53.26229508196719" y="71.92445307457979"></rect>
+                <rect class="bar" cursor="default" data-height="94.5076844503275" data-id="bar-Jun-17" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="97.64754098360653" data-y="153.9923155496725" fill="url(#bar-chart-unit-test_texture_0_lines-diagonal)" focusable="false" height="94.5076844503275" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="97.64754098360653" y="153.9923155496725"></rect>
+                <rect class="bar" cursor="default" data-height="64.91139691770576" data-id="bar-Jul-17" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="142.03278688524588" data-y="183.58860308229424" fill="url(#bar-chart-unit-test_texture_0_lines-diagonal)" focusable="false" height="64.91139691770576" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="142.03278688524588" y="183.58860308229424"></rect>
+                <rect class="bar" cursor="default" data-height="130.81214314845025" data-id="bar-Aug-17" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="186.41803278688522" data-y="117.68785685154975" fill="url(#bar-chart-unit-test_texture_0_lines-diagonal)" focusable="false" height="130.81214314845025" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="186.41803278688522" y="117.68785685154975"></rect>
+                <rect class="bar" cursor="default" data-height="110.73292551475055" data-id="bar-Sep-17" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="230.80327868852456" data-y="137.76707448524945" fill="url(#bar-chart-unit-test_texture_0_lines-diagonal)" focusable="false" height="110.73292551475055" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="230.80327868852456" y="137.76707448524945"></rect>
+                <rect class="bar" cursor="default" data-height="191.22262168349732" data-id="bar-Oct-17" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="275.1885245901639" data-y="57.27737831650268" fill="url(#bar-chart-unit-test_texture_0_lines-diagonal)" focusable="false" height="191.22262168349732" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="275.1885245901639" y="57.27737831650268"></rect>
+                <rect class="bar" cursor="default" data-height="217.92955918573168" data-id="bar-Nov-17" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="319.57377049180326" data-y="30.57044081426832" fill="url(#bar-chart-unit-test_texture_0_lines-diagonal)" focusable="false" height="217.92955918573168" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="319.57377049180326" y="30.57044081426832"></rect>
+                <rect class="bar" cursor="default" data-height="77.04230110862119" data-id="bar-Dec-17" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="363.9590163934426" data-y="171.4576988913788" fill="url(#bar-chart-unit-test_texture_0_lines-diagonal)" focusable="false" height="77.04230110862119" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="363.9590163934426" y="171.4576988913788"></rect>
+                <rect class="bar" cursor="default" data-height="68.38214126452806" data-id="bar-Jan-18" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="408.34426229508193" data-y="180.11785873547194" fill="url(#bar-chart-unit-test_texture_0_lines-diagonal)" focusable="false" height="68.38214126452806" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="408.34426229508193" y="180.11785873547194"></rect>
+                <rect class="bar" cursor="default" data-height="93.5824214773713" data-id="bar-Feb-18" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="452.72950819672127" data-y="154.9175785226287" fill="url(#bar-chart-unit-test_texture_0_lines-diagonal)" focusable="false" height="93.5824214773713" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="452.72950819672127" y="154.9175785226287"></rect>
+                <rect class="bar" cursor="default" data-height="248.5" data-id="bar-Mar-18" data-role="img" data-testid="bar" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="497.1147540983606" data-y="0" fill="url(#bar-chart-unit-test_texture_0_lines-diagonal)" focusable="false" height="248.5" id="bar-chart-unit-test-123457-123457-123457" opacity="1" role="presentation" rx="0" ry="0" tabindex="-1" width="35.50819672131148" x="497.1147540983606" y="0"></rect>
               </g>
               <g aria-hidden="true" class="bar-dataLabel-group" data-testid="dataLabel-group" focusable="false" role="presentation">
                 <text class="bar-dataLabel" cursor="default" data-height="41.132822334144294" data-id="label-Apr-17" data-testid="dataLabel" data-translate-x="66.75" data-translate-y="23.25" data-width="35.50819672131148" data-x="8.877049180327845" data-y="207.3671776658557" dy="-.3em" fill="#222222" filter="url(#VCL-t-s-f-ffffffbar-chart-unit-test)" opacity="1" text-anchor="middle" x="26.631147540983584" y="207.3671776658557">
@@ -1431,7 +1467,7 @@ exports[`<bar-chart> rendered-html render should render with minimal props[data,
         0 0 0 1 0"></feColorMatrix>
               <feColorMatrix type="hueRotate" values="180"></feColorMatrix>
             </filter>
-            <pattern class="VCL-texture-pattern" height="12" id="bar-chart-unit-test_texture_0" patternContentUnits="userSpaceOnUse" patternUnits="userSpaceOnUse" width="12" x="0" y="0">
+            <pattern class="VCL-texture-pattern" height="12" id="bar-chart-unit-test_texture_0_lines-diagonal" patternContentUnits="userSpaceOnUse" patternUnits="userSpaceOnUse" width="12" x="0" y="0">
               <rect class="VCL-t-p-e" fill="#226092" height="12" width="12"></rect>
               <path class="VCL-t-p-e" d="M 0,0 l 12,12 M -3,9 l 6,6 M 9,-3 l 6,6" shape-rendering="auto" stroke="#80b6e1" stroke-linecap="square" stroke-width="1"></path>
             </pattern>
@@ -1518,7 +1554,7 @@ exports[`<bar-chart> rendered-html render should render with minimal props[data,
           </defs>
         </svg>
       </div>
-      <div class="bar-tooltip vcl-tooltip" data-testid="tooltip-container" style="display: block; position: absolute; padding: 0.5rem; opacity: 0; background-color: #ffffff; font-size: 14px; font-weight: 400; color: #222222; border: 1px solid #565656; border-radius: 3px; pointer-events: none; min-width: 80px; max-width: 300px; z-index: 10;">
+      <div class="bar-tooltip vcc-style-display-block vcl-tooltip" data-testid="tooltip-container" style="position: absolute; padding: 0.5rem; opacity: 0; background-color: #ffffff; font-size: 14px; font-weight: 400; color: #222222; border: 1px solid #565656; border-radius: 3px; pointer-events: none; min-width: 80px; max-width: 300px; z-index: 10;">
         <p style="margin: 0;"></p>
       </div>
       <data-table>
@@ -1532,7 +1568,7 @@ exports[`<bar-chart> rendered-html render should render with minimal props[data,
             </button>
             <svg class="vcc-icons">
               <symbol id="visa-viz-view-grid--tiny-bar-chart-unit-test" viewbox="0 0 16 16">
-                <path d="M5,5 L5,2 L2,2 L2,5 L5,5 Z M5,7 L2,7 C0.894905844,7 0,6.1044757 0,5 L0,2 C0,0.8955243 0.894905844,3.55271368e-15 2,3.55271368e-15 L5,3.55271368e-15 C6.10509416,3.55271368e-15 7,0.8955243 7,2 L7,5 C7,6.1044757 6.10509416,7 5,7 Z M14,5 L14,2 L11,2 L11,5 L14,5 Z M14,7 L11,7 C9.89490584,7 9,6.1044757 9,5 L9,2 C9,0.8955243 9.89490584,3.55271368e-15 11,3.55271368e-15 L14,3.55271368e-15 C15.1050942,3.55271368e-15 16,0.8955243 16,2 L16,5 C16,6.1044757 15.1050942,7 14,7 Z M5,14 L5,11 L2,11 L2,14 L5,14 Z M5,16 L2,16 C0.894905844,16 0,15.1044757 0,14 L0,11 C0,9.8955243 0.894905844,9 2,9 L5,9 C6.10509416,9 7,9.8955243 7,11 L7,14 C7,15.1044757 6.10509416,16 5,16 Z M14,14 L14,11 L11,11 L11,14 L14,14 Z M14,16 L11,16 C9.89490584,16 9,15.1044757 9,14 L9,11 C9,9.8955243 9.89490584,9 11,9 L14,9 C15.1050942,9 16,9.8955243 16,11 L16,14 C16,15.1044757 15.1050942,16 14,16 Z"></path>
+                <path clip-rule="evenodd" d="M4 2.99219H2V4.99219H4V2.99219ZM0 0.992188V6.99219H6V0.992188H0ZM8 4.99219H16V2.99219H8V4.99219ZM8 12.9922H16V10.9922H8V12.9922ZM2 10.9922H4V12.9922H2V10.9922ZM0 14.9922V8.99219H6V14.9922H0Z" fill-rule="evenodd"></path>
                 <g fill="none" fill-rule="evenodd" stroke="none" stroke-width="1">
                   <mask fill="#fff">
                     <use xlink:href="#path-1"></use>

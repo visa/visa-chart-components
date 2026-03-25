@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022, 2023, 2024 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023, 2024, 2025 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -390,6 +390,7 @@ export class AppBarChart {
           dataKeyNames={this.keyNames}
           sortOrder={'desc'}
           dataLabel={this.dataLabel}
+          textureOrder={['cross-hatch', 'lines-diagonal', 'dots-grid']}
           tooltipLabel={this.tooltipLabel}
           colorPalette={'categorical'}
           legend={{ visible: true, interactive: true }}
