@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.6](https://github.com/visa/visa-chart-components/compare/@visa/visa-charts-utils-dev@4.1.5...@visa/visa-charts-utils-dev@4.1.6) (2026-03-26)
+
+### Bug Fixes
+
+- update tooltip and a11y unit tests for changes ([00e9c58](https://github.com/visa/visa-chart-components/commit/00e9c586cf1f0be6c2f2ddd964e353d838739aee))
+
 ## [4.1.5](https://github.com/visa/visa-chart-components/compare/@visa/visa-charts-utils-dev@4.1.4...@visa/visa-charts-utils-dev@4.1.5) (2024-11-15)
 
 **Note:** Version bump only for package @visa/visa-charts-utils-dev

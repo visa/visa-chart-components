@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.2](https://github.com/visa/visa-chart-components/compare/@visa/bar-chart@7.0.1...@visa/bar-chart@7.0.2) (2026-03-26)
+
+### Bug Fixes
+
+- alluvial and bar tooltip persistence, texture order, bar overlap and more ([4206653](https://github.com/visa/visa-chart-components/commit/4206653276131dfa2e0df81493c81ed5db84fdda))
+
 ## [7.0.1](https://github.com/visa/visa-chart-components/compare/@visa/bar-chart@7.0.0...@visa/bar-chart@7.0.1) (2024-11-15)
 
 ### Bug Fixes

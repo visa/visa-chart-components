@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.0.2](https://github.com/visa/visa-chart-components/compare/@visa/scatter-plot@8.0.1...@visa/scatter-plot@8.0.2) (2026-03-26)
+
+### Bug Fixes
+
+- dumbbell, line, parallel readme update, tooltip persistence, remove inline styles and more ([b9298ba](https://github.com/visa/visa-chart-components/commit/b9298ba1272c5f9a6ba215ee931201522051f2f0))
+
 ## [8.0.1](https://github.com/visa/visa-chart-components/compare/@visa/scatter-plot@8.0.0...@visa/scatter-plot@8.0.1) (2024-11-15)
 
 ### Bug Fixes

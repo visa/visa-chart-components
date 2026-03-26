@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.5.0](https://github.com/visa/visa-chart-components/compare/@visa/visa-charts-utils@5.4.1...@visa/visa-charts-utils@5.5.0) (2026-03-26)
+
+### Features
+
+- tooltip persistence, remove inline styles, texture order and more ([95552f0](https://github.com/visa/visa-chart-components/commit/95552f0a1d48465b8a9a0a264c726ae9cf4435f0))
+
 ## [5.4.1](https://github.com/visa/visa-chart-components/compare/@visa/visa-charts-utils@5.4.0...@visa/visa-charts-utils@5.4.1) (2024-11-15)
 
 **Note:** Version bump only for package @visa/visa-charts-utils

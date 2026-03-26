@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.1.0](https://github.com/visa/visa-chart-components/compare/@visa/charts-angular@5.0.1...@visa/charts-angular@5.1.0) (2026-03-26)
+
+### Features
+
+- readme update, tooltip persistence, remove inline styles, texture order, angular bump and more ([2b8a426](https://github.com/visa/visa-chart-components/commit/2b8a42625186d9a1e74f395f16383f649dc5fd29))
+
 ## [5.0.1](https://github.com/visa/visa-chart-components/compare/@visa/charts-angular@5.0.0...@visa/charts-angular@5.0.1) (2024-11-15)
 
 ### Bug Fixes

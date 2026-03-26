@@ -1,6 +1,6 @@
 {
   "name": "@visa/heat-map",
-  "version": "7.0.1",
+  "version": "7.1.0",
   "description": "heat-map component",
   "license": "SEE LICENCE IN LICENSE",
   "author": "Visa Data Experience Team",
@@ -37,10 +37,10 @@
     "access": "public"
   },
   "dependencies": {
-    "@visa/charts-types": "^0.6.5",
-    "@visa/keyboard-instructions": "^2.0.1",
-    "@visa/visa-charts-data-table": "^3.0.1",
-    "@visa/visa-charts-utils": "^5.4.1",
+    "@visa/charts-types": "^0.6.6",
+    "@visa/keyboard-instructions": "^2.1.0",
+    "@visa/visa-charts-data-table": "^3.0.2",
+    "@visa/visa-charts-utils": "^5.5.0",
     "d3-array": "^3.2.4",
     "d3-scale": "^2.2.2",
     "d3-selection": "^1.4.2",
@@ -48,7 +48,7 @@
     "uuid": "8.3.2"
   },
   "devDependencies": {
-    "@visa/visa-charts-utils-dev": "^4.1.5"
+    "@visa/visa-charts-utils-dev": "^4.1.6"
   },
   "resolutions": {
     "d3-array": "^3.2.4",

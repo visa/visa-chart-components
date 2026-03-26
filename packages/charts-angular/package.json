@@ -1,6 +1,6 @@
 {
   "name": "@visa/charts-angular",
-  "version": "5.0.1",
+  "version": "5.1.0",
   "description": "An angular wrapper built with Stencil's bindings for the visa-charts-lib stencil.js based component library.",
   "license": "SEE LICENCE IN LICENSE",
   "author": "Visa Data Experience Team",
@@ -32,8 +32,8 @@
   "dependencies": {
     "@angular/common": "^18 || ^19 || ^20",
     "@angular/core": "^18 || ^19 || ^20",
-    "@visa/charts": "^8.0.1",
-    "@visa/charts-types": "^0.6.5",
+    "@visa/charts": "^8.0.2",
+    "@visa/charts-types": "^0.6.6",
     "rxjs": "^7.8.1",
     "tslib": "^2.6.2",
     "zone.js": "^0.14.6"

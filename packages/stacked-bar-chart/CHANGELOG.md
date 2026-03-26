@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.1.0](https://github.com/visa/visa-chart-components/compare/@visa/stacked-bar-chart@7.0.1...@visa/stacked-bar-chart@7.1.0) (2026-03-26)
+
+### Features
+
+- stacked, world readme update, tooltip persistence, texture order, remove inline styles and more ([3d39743](https://github.com/visa/visa-chart-components/commit/3d39743ebc3662d3046741caa2d2596310d0d24f))
+
 ## [7.0.1](https://github.com/visa/visa-chart-components/compare/@visa/stacked-bar-chart@7.0.0...@visa/stacked-bar-chart@7.0.1) (2024-11-15)
 
 ### Bug Fixes

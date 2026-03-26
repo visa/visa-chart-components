@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [8.1.0](https://github.com/visa/visa-chart-components/compare/@visa/circle-packing@8.0.1...@visa/circle-packing@8.1.0) (2026-03-26)
+
+### Features
+
+- circle-packing, clustered readme update, tooltip persistence, texture order, remove inline styles and more ([0a605f5](https://github.com/visa/visa-chart-components/commit/0a605f5e6497797abfb8b32716747557b947dfa0))
+
 ## [8.0.1](https://github.com/visa/visa-chart-components/compare/@visa/circle-packing@8.0.0...@visa/circle-packing@8.0.1) (2024-11-15)
 
 ### Bug Fixes

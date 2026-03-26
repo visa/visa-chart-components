@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.1.0](https://github.com/visa/visa-chart-components/compare/@visa/charts-react@5.0.1...@visa/charts-react@5.1.0) (2026-03-26)
+
+### Features
+
+- readme update, tooltip persistence, remove inline styles, texture order, react bump and more ([0f567a5](https://github.com/visa/visa-chart-components/commit/0f567a598dc0f9df6d12081c4809da5d084d7049))
+
 ## [5.0.1](https://github.com/visa/visa-chart-components/compare/@visa/charts-react@5.0.0...@visa/charts-react@5.0.1) (2024-11-15)
 
 ### Bug Fixes
