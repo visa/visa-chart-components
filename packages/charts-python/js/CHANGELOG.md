@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.2](https://github.com/visa/visa-chart-components/compare/@visa/charts-python@3.0.1...@visa/charts-python@3.0.2) (2026-03-26)
+
+### Bug Fixes
+
+- readme update, tooltip persistence, remove inline styles, texture order and more ([e37135f](https://github.com/visa/visa-chart-components/commit/e37135f62d1783ef8577cf19a8fce8521c5cc984))
+
 ## [3.0.1](https://github.com/visa/visa-chart-components/compare/@visa/charts-python@2.1.3...@visa/charts-python@3.0.1) (2024-11-15)
 
 ### Bug Fixes

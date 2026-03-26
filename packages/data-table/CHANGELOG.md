@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.2](https://github.com/visa/visa-chart-components/compare/@visa/visa-charts-data-table@3.0.1...@visa/visa-charts-data-table@3.0.2) (2026-03-26)
+
+### Bug Fixes
+
+- update data-table buttons and bump ts for types ([70c9706](https://github.com/visa/visa-chart-components/commit/70c9706661428423d80135c398c836a5f3be8470))
+
 ## [3.0.1](https://github.com/visa/visa-chart-components/compare/@visa/visa-charts-data-table@3.0.0...@visa/visa-charts-data-table@3.0.1) (2024-11-15)
 
 ### Bug Fixes

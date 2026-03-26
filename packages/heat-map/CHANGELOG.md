@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.1.0](https://github.com/visa/visa-chart-components/compare/@visa/heat-map@7.0.1...@visa/heat-map@7.1.0) (2026-03-26)
+
+### Features
+
+- heat, pie readme update, tooltip persistence, texture order, remove inline styles and more ([d399db6](https://github.com/visa/visa-chart-components/commit/d399db671de415e2337d92d98363cfc9fa90990d))
+
 ## [7.0.1](https://github.com/visa/visa-chart-components/compare/@visa/heat-map@7.0.0...@visa/heat-map@7.0.1) (2024-11-15)
 
 ### Bug Fixes

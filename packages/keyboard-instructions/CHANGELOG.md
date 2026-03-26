@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0](https://github.com/visa/visa-chart-components/compare/@visa/keyboard-instructions@2.0.1...@visa/keyboard-instructions@2.1.0) (2026-03-26)
+
+### Features
+
+- address table semantic issues and add table tag ([3095019](https://github.com/visa/visa-chart-components/commit/3095019b7459c48d83183401d7d1c9eaa4db13f9))
+
 ## [2.0.1](https://github.com/visa/visa-chart-components/compare/@visa/keyboard-instructions@2.0.0...@visa/keyboard-instructions@2.0.1) (2024-11-15)
 
 ### Bug Fixes

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://www.conventionalcommits.org/) for commit guidelines.
 
+## [4.1.0](https://github.com/visa/visa-chart-components/compare/@visa/charts@8.0.1...@visa/charts@8.0.2) (2026-03-26)
+
+### Features
+
+- readme update, tooltip persistence, remove inline styles, texture order and more ([1784d92](https://github.com/visa/visa-chart-components/commit/1784d9279e50320513fabdf47d5e35808950bcaa))
+
 ## [4.0.1](https://github.com/visa/visa-chart-components/compare/@visa/charts@8.0.0...@visa/charts@8.0.1) (2024-11-15)
 
 ### Bug Fixes

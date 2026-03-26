@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.2](https://github.com/visa/visa-chart-components/compare/@visa/charts-vue@2.0.1...@visa/charts-vue@2.0.2) (2026-03-26)
+
+### Bug Fixes
+
+- readme update, tooltip persistence, remove inline styles, texture order and more ([e37135f](https://github.com/visa/visa-chart-components/commit/e37135f62d1783ef8577cf19a8fce8521c5cc984))
+
 ## [2.0.1](https://github.com/visa/visa-chart-components/compare/@visa/charts-vue@2.0.0...@visa/charts-vue@2.0.1) (2024-11-15)
 
 **Note:** Version bump only for package @visa/charts-vue
