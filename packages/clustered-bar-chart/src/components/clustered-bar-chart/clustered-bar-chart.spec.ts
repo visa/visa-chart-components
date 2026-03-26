@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022, 2023, 2024 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023, 2024, 2025 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -854,6 +854,97 @@ describe('<clustered-bar-chart>', () => {
             await page.waitForChanges();
             expect(bar).toEqualAttribute('width', EXPECTEDSCALEX1.bandwidth());
           });
+        });
+      });
+
+      describe('barOverlapRatio', () => {
+        beforeEach(() => {
+          component.width = 500;
+          component.height = 500;
+          component.margin = { bottom: 0, left: 0, right: 0, top: 0 };
+          component.padding = { bottom: 0, left: 0, right: 0, top: 0 };
+        });
+
+        it('By default there will not be any overlap between the bars, and the gap between bars is default barIntervalRatio', async () => {
+          // ARRANGE
+          page.root.appendChild(component);
+          await page.waitForChanges();
+
+          // Get all bars in the first group
+          const bars = Array.from(page.doc.querySelectorAll('[data-testid=bar]')).filter(bar =>
+            bar.getAttribute('data-id').startsWith('bar-2016-')
+          );
+
+          // Sort bars by x position
+          const barData = bars
+            .map(bar => ({
+              x: parseFloat(bar.getAttribute('x')),
+              width: parseFloat(bar.getAttribute('width'))
+            }))
+            .sort((a, b) => a.x - b.x);
+
+          // Check gap between first and second bar
+          const gap = barData[0].x + barData[0].width - barData[1].x;
+          const expectedGap = barData[0].width * 0.2; // default barIntervalRatio is 0.2
+          expect(gap - expectedGap).toBeLessThan(0.1);
+        });
+
+        it('should have 50% overlap between bars when barOverlapRatio is 0.5 on load', async () => {
+          // ARRANGE
+          component.barOverlapRatio = 0.5;
+          page.root.appendChild(component);
+          await page.waitForChanges();
+
+          // Get all bars in the first group
+          const bars = Array.from(page.doc.querySelectorAll('[data-testid=bar]')).filter(bar =>
+            bar.getAttribute('data-id').startsWith('bar-2016-')
+          );
+
+          // Sort bars by x position
+          const barData = bars
+            .map(bar => ({
+              x: parseFloat(bar.getAttribute('x')),
+              width: parseFloat(bar.getAttribute('width'))
+            }))
+            .sort((a, b) => a.x - b.x);
+
+          // Check overlap between first and second bar
+          const overlap = barData[0].x + barData[0].width - barData[1].x;
+          const expectedOverlap = barData[0].width * 0.5;
+          expect(Math.abs(overlap - expectedOverlap)).toBeLessThan(0.1); // allow small rounding error
+        });
+
+        it('should have 50% overlap between bars when barOverlapRatio is 0.5 on update', async () => {
+          // ARRANGE
+          page.root.appendChild(component);
+          await page.waitForChanges();
+
+          component.barOverlapRatio = 0.5;
+          await page.waitForChanges();
+
+          // Get all bars in the first group
+          const bars = Array.from(page.doc.querySelectorAll('[data-testid=bar]')).filter(bar =>
+            bar.getAttribute('data-id').startsWith('bar-2016-')
+          );
+
+          // flush transitions on the bars
+          await asyncForEach(bars, async (bar, i) => {
+            flushTransitions(bar);
+            await page.waitForChanges();
+          });
+
+          // Sort bars by x position
+          const barData = bars
+            .map(bar => ({
+              x: parseFloat(bar.getAttribute('x')),
+              width: parseFloat(bar.getAttribute('width'))
+            }))
+            .sort((a, b) => a.x - b.x);
+
+          // Check overlap between first and second bar
+          const overlap = barData[0].x + barData[0].width - barData[1].x;
+          const expectedOverlap = barData[0].width * 0.5;
+          expect(Math.abs(overlap - expectedOverlap)).toBeLessThan(0.1); // allow small rounding error
         });
       });
 
@@ -1948,127 +2039,179 @@ describe('<clustered-bar-chart>', () => {
           });
         });
       });
-    });
-
-    describe('style no textures', () => {
-      const EXPECTEDCOLORPALETTE = 'categorical';
-      const EXPECTEDSCALE = getColors(
-        EXPECTEDCOLORPALETTE,
-        scaleOrdinal()
-          .domain(EXPECTEDDATA.map(d => d.item))
-          .domain()
-      );
-      beforeEach(() => {
-        component.accessibility = { ...component.accessibility, hideTextures: true };
-      });
-
-      describe('colorPalette', () => {
-        it('should render categorical by default', async () => {
-          // ACT
+      describe('textureOrder', () => {
+        it('should use textureOrder prop for bar textures and set to new textureOrder when update', async () => {
+          component.colorPalette = 'categorical';
+          component.textureOrder = ['cross-hatch', 'x-grid', 'ring-diagonal'];
           page.root.appendChild(component);
           await page.waitForChanges();
 
-          // ASSERT
-          const bars = page.doc.querySelectorAll('[data-testid=bar]');
-          bars.forEach((bar, i) => {
-            expect(bar).toEqualAttribute('fill', EXPECTEDSCALE(EXPECTEDDATA[i].item));
-          });
-        });
-        it('should load diverging R to B when colorPalette is diverging_RtoB', async () => {
-          // ARRANGE
-          const EXPECTEDCOLORPALETTE = 'diverging_RtoB';
-          const EXPECTEDSCALE = getColors(
-            EXPECTEDCOLORPALETTE,
-            scaleOrdinal()
-              .domain(EXPECTEDDATA.map(d => d.item))
-              .domain()
-          );
-          component.colorPalette = EXPECTEDCOLORPALETTE;
-
-          // ACT
-          page.root.appendChild(component);
-          await page.waitForChanges();
-
-          // ASSERT
-          const bars = page.doc.querySelectorAll('[data-testid=bar]');
-          await asyncForEach(bars, async (bar, i) => {
-            flushTransitions(bar);
-            await page.waitForChanges();
-            expect(bar).toEqualAttribute('fill', EXPECTEDSCALE(EXPECTEDDATA[i].item));
-          });
-        });
-        it('should update diverging R to B when colorPalette is diverging_RtoB', async () => {
-          // ARRANGE
-          const EXPECTEDCOLORPALETTE = 'diverging_RtoB';
-          const EXPECTEDSCALE = getColors(
-            EXPECTEDCOLORPALETTE,
-            scaleOrdinal()
-              .domain(EXPECTEDDATA.map(d => d.item))
-              .domain()
-          );
-
-          // ACT LOAD
-          page.root.appendChild(component);
-          await page.waitForChanges();
+          const patterns = page.doc.querySelector('[data-testid=pattern-defs]').querySelectorAll('pattern');
+          expect(patterns[0].getAttribute('id')).toContain('cross-hatch');
+          expect(patterns[1].getAttribute('id')).toContain('x-grid');
+          expect(patterns[2].getAttribute('id')).toContain('ring-diagonal');
 
           // ACT UPDATE
-          component.colorPalette = EXPECTEDCOLORPALETTE;
+          component.textureOrder = ['dots-grid', 'cross-hatch', 'lines-diagonal'];
           await page.waitForChanges();
 
           // ASSERT
-          const bars = page.doc.querySelectorAll('[data-testid=bar]');
-          await asyncForEach(bars, async (bar, i) => {
-            flushTransitions(bar);
-            await page.waitForChanges();
-            expect(bar).toEqualAttribute('fill', EXPECTEDSCALE(EXPECTEDDATA[i].item));
+          const newPatterns = page.doc.querySelector('[data-testid=pattern-defs]').querySelectorAll('pattern');
+          expect(newPatterns[0].getAttribute('id')).toContain('dots-grid');
+          expect(newPatterns[1].getAttribute('id')).toContain('cross-hatch');
+          expect(newPatterns[2].getAttribute('id')).toContain('lines-diagonal');
+        });
+
+        it('should fall back to default pattern sequence when invalid textureOrder entries are provided', async () => {
+          component.colorPalette = 'categorical';
+          component.textureOrder = ['invalid-pattern', 'another-bad-pattern', 'not-a-pattern'];
+          page.root.appendChild(component);
+          await page.waitForChanges();
+          const patterns = page.doc.querySelector('[data-testid=pattern-defs]').querySelectorAll('pattern');
+          const expectedPatterns = ['lines-diagonal', 'dots-grid', 'cross-hatch'];
+          patterns.forEach((pattern, i) => {
+            expect(pattern.getAttribute('id')).toContain(expectedPatterns[i]);
           });
         });
 
-        it('should render sequential orange when colorPalette is sequential_orange', async () => {
-          // ARRANGE
-          const EXPECTEDCOLORPALETTE = 'sequential_secOrange';
-          const EXPECTEDSCALE = getColors(
-            EXPECTEDCOLORPALETTE,
-            scaleOrdinal()
-              .domain(EXPECTEDDATA.map(d => d.item))
-              .domain()
-          );
-          component.colorPalette = EXPECTEDCOLORPALETTE;
-
-          // ACT
+        it('should render no pattern (just color) when textureOrder contains invalid or empty string', async () => {
+          component.colorPalette = 'categorical';
+          component.textureOrder = ['', 'invalid-pattern', ''];
           page.root.appendChild(component);
           await page.waitForChanges();
-
-          // ASSERT
           const bars = page.doc.querySelectorAll('[data-testid=bar]');
-          await asyncForEach(bars, async (bar, i) => {
-            flushTransitions(bar);
-            await page.waitForChanges();
-            expect(bar).toEqualAttribute('fill', EXPECTEDSCALE(EXPECTEDDATA[i].item));
+          bars.forEach(bar => {
+            // Should be a color, not a url(#pattern)
+            expect(bar.getAttribute('fill')).toMatch(/^#|rgb|hsl/i);
           });
+          // Should not render any pattern elements
+          const patternDefs = page.doc.querySelector('[data-testid=pattern-defs]');
+          if (patternDefs) {
+            expect(patternDefs.querySelectorAll('pattern').length).toBe(0);
+          }
         });
       });
-      describe('colors', () => {
-        it('should render colors instead of palette when passed', async () => {
-          const colors = ['#829e46', '#c18174', '#7a6763'];
-          const EXPECTEDSCALE = getColors(
-            colors,
-            scaleOrdinal()
-              .domain(EXPECTEDDATA.map(d => d.item))
-              .domain()
-          );
-          component.colors = colors;
 
-          // ACT
-          page.root.appendChild(component);
-          await page.waitForChanges();
+      describe('style no textures', () => {
+        const EXPECTEDCOLORPALETTE = 'categorical';
+        const EXPECTEDSCALE = getColors(
+          EXPECTEDCOLORPALETTE,
+          scaleOrdinal()
+            .domain(EXPECTEDDATA.map(d => d.item))
+            .domain()
+        );
+        beforeEach(() => {
+          component.accessibility = { ...component.accessibility, hideTextures: true };
+        });
 
-          // ASSERT
-          const bars = page.doc.querySelectorAll('[data-testid=bar]');
-          await asyncForEach(bars, async (bar, i) => {
-            flushTransitions(bar);
+        describe('colorPalette', () => {
+          it('should render categorical by default', async () => {
+            // ACT
+            page.root.appendChild(component);
             await page.waitForChanges();
-            expect(bar).toEqualAttribute('fill', EXPECTEDSCALE(EXPECTEDDATA[i].item));
+
+            // ASSERT
+            const bars = page.doc.querySelectorAll('[data-testid=bar]');
+            bars.forEach((bar, i) => {
+              expect(bar).toEqualAttribute('fill', EXPECTEDSCALE(EXPECTEDDATA[i].item));
+            });
+          });
+          it('should load diverging R to B when colorPalette is diverging_RtoB', async () => {
+            // ARRANGE
+            const EXPECTEDCOLORPALETTE = 'diverging_RtoB';
+            const EXPECTEDSCALE = getColors(
+              EXPECTEDCOLORPALETTE,
+              scaleOrdinal()
+                .domain(EXPECTEDDATA.map(d => d.item))
+                .domain()
+            );
+            component.colorPalette = EXPECTEDCOLORPALETTE;
+
+            // ACT
+            page.root.appendChild(component);
+            await page.waitForChanges();
+
+            // ASSERT
+            const bars = page.doc.querySelectorAll('[data-testid=bar]');
+            await asyncForEach(bars, async (bar, i) => {
+              flushTransitions(bar);
+              await page.waitForChanges();
+              expect(bar).toEqualAttribute('fill', EXPECTEDSCALE(EXPECTEDDATA[i].item));
+            });
+          });
+          it('should update diverging R to B when colorPalette is diverging_RtoB', async () => {
+            // ARRANGE
+            const EXPECTEDCOLORPALETTE = 'diverging_RtoB';
+            const EXPECTEDSCALE = getColors(
+              EXPECTEDCOLORPALETTE,
+              scaleOrdinal()
+                .domain(EXPECTEDDATA.map(d => d.item))
+                .domain()
+            );
+
+            // ACT LOAD
+            page.root.appendChild(component);
+            await page.waitForChanges();
+
+            // ACT UPDATE
+            component.colorPalette = EXPECTEDCOLORPALETTE;
+            await page.waitForChanges();
+
+            // ASSERT
+            const bars = page.doc.querySelectorAll('[data-testid=bar]');
+            await asyncForEach(bars, async (bar, i) => {
+              flushTransitions(bar);
+              await page.waitForChanges();
+              expect(bar).toEqualAttribute('fill', EXPECTEDSCALE(EXPECTEDDATA[i].item));
+            });
+          });
+
+          it('should render sequential orange when colorPalette is sequential_orange', async () => {
+            // ARRANGE
+            const EXPECTEDCOLORPALETTE = 'sequential_secOrange';
+            const EXPECTEDSCALE = getColors(
+              EXPECTEDCOLORPALETTE,
+              scaleOrdinal()
+                .domain(EXPECTEDDATA.map(d => d.item))
+                .domain()
+            );
+            component.colorPalette = EXPECTEDCOLORPALETTE;
+
+            // ACT
+            page.root.appendChild(component);
+            await page.waitForChanges();
+
+            // ASSERT
+            const bars = page.doc.querySelectorAll('[data-testid=bar]');
+            await asyncForEach(bars, async (bar, i) => {
+              flushTransitions(bar);
+              await page.waitForChanges();
+              expect(bar).toEqualAttribute('fill', EXPECTEDSCALE(EXPECTEDDATA[i].item));
+            });
+          });
+        });
+        describe('colors', () => {
+          it('should render colors instead of palette when passed', async () => {
+            const colors = ['#829e46', '#c18174', '#7a6763'];
+            const EXPECTEDSCALE = getColors(
+              colors,
+              scaleOrdinal()
+                .domain(EXPECTEDDATA.map(d => d.item))
+                .domain()
+            );
+            component.colors = colors;
+
+            // ACT
+            page.root.appendChild(component);
+            await page.waitForChanges();
+
+            // ASSERT
+            const bars = page.doc.querySelectorAll('[data-testid=bar]');
+            await asyncForEach(bars, async (bar, i) => {
+              flushTransitions(bar);
+              await page.waitForChanges();
+              expect(bar).toEqualAttribute('fill', EXPECTEDSCALE(EXPECTEDDATA[i].item));
+            });
           });
         });
       });

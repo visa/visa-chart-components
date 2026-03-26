@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022, 2023, 2024 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023, 2024, 2025 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -1049,6 +1049,86 @@ describe('<dumbbell-plot>', () => {
             unitTestAxis[test].testSelector === 'component-name' ? 'dumbbell-plot' : unitTestAxis[test].testSelector;
           it(`${unitTestAxis[test].prop}: ${unitTestAxis[test].name}`, () =>
             unitTestAxis[test].testFunc(component, page, innerTestProps, innerTestSelector, expectedValues[test]));
+        });
+      });
+
+      describe('sortOrder', () => {
+        it('should update chart and x-axis when sortOrder changes in vertical layout (bug fix)', async () => {
+          // ARRANGE
+          component.data = [
+            { region: 'C', category: '2015', value: 7 },
+            { region: 'C', category: '2014', value: 4 },
+            { region: 'A', category: '2015', value: 2 },
+            { region: 'A', category: '2014', value: 1 },
+            { region: 'B', category: '2015', value: 5 },
+            { region: 'B', category: '2014', value: 3 }
+          ];
+          component.ordinalAccessor = 'region';
+          component.seriesAccessor = 'category';
+          component.valueAccessor = 'value';
+          component.layout = 'vertical';
+          component.sortOrder = 'asc';
+          page.root.appendChild(component);
+          await page.waitForChanges();
+
+          // Capture y-axis tick values after asc sort
+          const xAxisAsc = Array.from(page.doc.querySelectorAll('[data-testid=x-axis] [data-testid=axis-tick]')).map(
+            tick => tick.textContent
+          );
+
+          // ASSERT: y-axis ticks should be in ascending order
+          expect(xAxisAsc).toEqual(['A', 'B', 'C']);
+
+          // ACT: Change sortOrder to desc
+          component.sortOrder = 'desc';
+          await page.waitForChanges();
+
+          // Capture y-axis tick values after desc sort
+          const xAxisDesc = Array.from(page.doc.querySelectorAll('[data-testid=x-axis] [data-testid=axis-tick]')).map(
+            tick => tick.textContent
+          );
+
+          // ASSERT: y-axis ticks should be in descending order
+          expect(xAxisDesc).toEqual(['C', 'B', 'A']);
+        });
+
+        it('should update chart and y-axis when sortOrder changes in horizontal layout (bug fix)', async () => {
+          // ARRANGE
+          component.data = [
+            { region: 'C', category: '2015', value: 7 },
+            { region: 'C', category: '2014', value: 4 },
+            { region: 'A', category: '2015', value: 2 },
+            { region: 'A', category: '2014', value: 1 },
+            { region: 'B', category: '2015', value: 5 },
+            { region: 'B', category: '2014', value: 3 }
+          ];
+          component.ordinalAccessor = 'region';
+          component.seriesAccessor = 'category';
+          component.valueAccessor = 'value';
+          component.layout = 'horizontal';
+          component.sortOrder = 'asc';
+          page.root.appendChild(component);
+          await page.waitForChanges();
+
+          // Capture y-axis tick values after asc sort
+          const yAxisAsc = Array.from(page.doc.querySelectorAll('[data-testid=y-axis] [data-testid=axis-tick]')).map(
+            tick => tick.textContent
+          );
+
+          // ASSERT: y-axis ticks should be in ascending order
+          expect(yAxisAsc).toEqual(['A', 'B', 'C']);
+
+          // ACT: Change sortOrder to desc
+          component.sortOrder = 'desc';
+          await page.waitForChanges();
+
+          // Capture y-axis tick values after desc sort
+          const yAxisDesc = Array.from(page.doc.querySelectorAll('[data-testid=y-axis] [data-testid=axis-tick]')).map(
+            tick => tick.textContent
+          );
+
+          // ASSERT: y-axis ticks should be in descending order
+          expect(yAxisDesc).toEqual(['C', 'B', 'A']);
         });
       });
     });
@@ -2953,7 +3033,7 @@ describe('<dumbbell-plot>', () => {
               .querySelector('g')
               .querySelector('g');
             expect(legendG['__on'].length).toEqual(3); // tslint:disable-line: no-string-literal
-            expect(legendG.getAttribute('style')).toEqual('cursor: pointer;');
+            expect(legendG.getAttribute('cursor')).toEqual('pointer');
           });
           it('should be interactive when interactive prop is true and interaction keys is series accessor on update', async () => {
             // ARRANGE
@@ -2981,7 +3061,7 @@ describe('<dumbbell-plot>', () => {
             flushTransitions(legendG);
             await page.waitForChanges();
             expect(legendG['__on'].length).toEqual(3); // tslint:disable-line: no-string-literal
-            expect(legendG.getAttribute('style')).toEqual('cursor: pointer;');
+            expect(legendG.getAttribute('cursor')).toEqual('pointer');
           });
           it('should be interactive when interactive prop is true on load and interaction keys is series accessor on update', async () => {
             // ARRANGE
@@ -3003,7 +3083,7 @@ describe('<dumbbell-plot>', () => {
               .querySelector('g')
               .querySelector('g');
             expect(legendGLoad['__on']).toBeUndefined(); // tslint:disable-line: no-string-literal
-            expect(legendGLoad.getAttribute('style')).toBeNull();
+            expect(legendGLoad.getAttribute('cursor')).toBeNull();
 
             // ACT UPDATE
             component.interactionKeys = ['category'];
@@ -3017,7 +3097,7 @@ describe('<dumbbell-plot>', () => {
             flushTransitions(legendGUpdate);
             await page.waitForChanges();
             expect(legendGUpdate['__on'].length).toEqual(3); // tslint:disable-line: no-string-literal
-            expect(legendGUpdate.getAttribute('style')).toEqual('cursor: pointer;');
+            expect(legendGUpdate.getAttribute('cursor')).toEqual('pointer');
           });
         });
         describe('labels', () => {

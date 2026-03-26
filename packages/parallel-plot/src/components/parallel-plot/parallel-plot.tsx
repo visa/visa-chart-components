@@ -2565,9 +2565,9 @@ export class ParallelPlot {
           ? ''
           : d.key
       )
-      .style('visibility', (_, i, n) =>
+      .classed('vcc-style-visibility-hidden', (_, i, n) =>
         this.labelDetails.placement === 'auto' || this.labelDetails.collisionHideOnly
-          ? select(n[i]).style('visibility')
+          ? select(n[i]).classed('vcc-style-visibility-hidden')
           : null
       )
       .attr('data-x', this.isRight ? this.innerPaddedWidth + 10 : 0)
@@ -2835,12 +2835,12 @@ export class ParallelPlot {
     });
     if (this.interpolating) {
       updateChildren = this.updatingLabels
-        .style('visibility', (d, i, n) =>
+        .classed('vcc-style-visibility-hidden', (d, i, n) =>
           this.dataLabel.placement === 'auto' || this.dataLabel.collisionHideOnly
             ? d.hidden
-              ? 'hidden'
-              : select(n[i]).style('visibility')
-            : null
+              ? true
+              : select(n[i]).classed('vcc-style-visibility-hidden')
+            : false
         )
         .attr('data-x', d => this.interpolating.x(d[this.ordinalAccessor]))
         .attr('data-y', this.interpolateDynamicY)
@@ -2862,12 +2862,12 @@ export class ParallelPlot {
         });
     } else {
       updateChildren = this.updatingLabels
-        .style('visibility', (d, i, n) =>
+        .classed('vcc-style-visibility-hidden', (d, i, n) =>
           this.dataLabel.placement === 'auto' || this.dataLabel.collisionHideOnly
             ? d.hidden
-              ? 'hidden'
-              : select(n[i]).style('visibility')
-            : null
+              ? true
+              : select(n[i]).classed('vcc-style-visibility-hidden')
+            : false
         )
         .attr('data-x', d => this.x(d[this.ordinalAccessor]))
         .attr('data-y', this.dynamicY)
@@ -3031,7 +3031,7 @@ export class ParallelPlot {
     this.seriesLabelUpdate.each((d, i, n) => {
       const me = select(n[i]);
       const prevOpacity = +me.attr('opacity');
-      const styleVisibility = me.style('visibility');
+      const styleVisibility = me.classed('vcc-style-visibility-hidden');
       if (!me.classed('entering')) {
         me.attr('opacity', () => {
           const seriesLabelOpacity =
@@ -3051,7 +3051,7 @@ export class ParallelPlot {
               if (seriesLabelOpacity === 1) {
                 select(n[i])
                   .classed('collision-added', true)
-                  .style('visibility', null);
+                  .classed('vcc-style-visibility-hidden', false);
               } else {
                 select(n[i]).classed('collision-removed', true);
               }
@@ -3071,13 +3071,13 @@ export class ParallelPlot {
                 : 1;
             select(n[i]).attr('data-hidden', targetOpacity === 0 ? 'true' : null);
             if (
-              ((targetOpacity === 1 && styleVisibility === 'hidden') || prevOpacity !== targetOpacity) &&
+              ((targetOpacity === 1 && styleVisibility) || prevOpacity !== targetOpacity) &&
               (this.labelDetails.placement === 'auto' || hideOnly)
             ) {
               if (targetOpacity === 1) {
                 select(n[i])
                   .classed('collision-added', true)
-                  .style('visibility', null);
+                  .classed('vcc-style-visibility-hidden', false);
               } else {
                 select(n[i]).classed('collision-removed', true);
               }
@@ -3097,13 +3097,13 @@ export class ParallelPlot {
                 : 1;
             select(n[i]).attr('data-hidden', targetOpacity === 0 ? 'true' : null);
             if (
-              ((targetOpacity === 1 && styleVisibility === 'hidden') || prevOpacity !== targetOpacity) &&
+              ((targetOpacity === 1 && styleVisibility) || prevOpacity !== targetOpacity) &&
               (this.labelDetails.placement === 'auto' || hideOnly)
             ) {
               if (targetOpacity === 1) {
                 select(n[i])
                   .classed('collision-added', true)
-                  .style('visibility', null);
+                  .classed('vcc-style-visibility-hidden', false);
               } else {
                 select(n[i]).classed('collision-removed', true);
               }
@@ -3205,7 +3205,7 @@ export class ParallelPlot {
     });
     this.updatingLabels.each((d, i, n) => {
       const prevOpacity = +select(n[i]).attr('opacity');
-      const styleVisibility = select(n[i]).style('visibility');
+      const styleVisibility = select(n[i]).classed('vcc-style-visibility-hidden');
       if (!d.enter && !d.enterWholeGroup && !d.exit && !d.exitWholeGroup) {
         select(n[i]).attr('opacity', () => {
           const targetOpacity =
@@ -3222,13 +3222,13 @@ export class ParallelPlot {
           const parentOpacity = +select(n[i].parentNode).attr('opacity');
           select(n[i]).attr('data-hidden', parentOpacity === 0 || targetOpacity === 0 ? 'true' : null);
           if (
-            ((targetOpacity === 1 && styleVisibility === 'hidden') || prevOpacity !== targetOpacity) &&
+            ((targetOpacity === 1 && styleVisibility) || prevOpacity !== targetOpacity) &&
             (this.dataLabel.placement === 'auto' || hideOnly)
           ) {
             if (targetOpacity === 1) {
               select(n[i])
                 .classed('collision-added', true)
-                .style('visibility', null);
+                .classed('vcc-style-visibility-hidden', false);
             } else {
               select(n[i]).classed('collision-removed', true);
             }
@@ -3807,7 +3807,7 @@ export class ParallelPlot {
   setLegendCursor() {
     select(this.parallelChartEl)
       .selectAll('.legend')
-      .style('cursor', !this.suppressEvents && this.legend.interactive && this.seriesInteraction ? this.cursor : null);
+      .attr('cursor', !this.suppressEvents && this.legend.interactive && this.seriesInteraction ? this.cursor : null);
   }
 
   drawLegendElements() {

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023, 2025 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -1986,7 +1986,7 @@ export const accessibility_keyboard_nav_tooltip_esc_hide = {
     await page.waitForChanges();
 
     // ASSERT - CHECK THAT TOOLTIP IS BEING DISPLAYED
-    expect(parseFloat(tooltipContainer.style.opacity)).toEqual(1);
+    expect(parseFloat((tooltipContainer as HTMLElement).style.opacity)).toEqual(1);
 
     // ACT - TRIGGER ESC
     const mockKeyboardEvent = new KeyboardEvent('keydown', { key: 'Escape', code: 'Escape', keyCode: 27 });
@@ -1997,7 +1997,7 @@ export const accessibility_keyboard_nav_tooltip_esc_hide = {
     await page.waitForChanges();
 
     // ASSERT - CHECK THAT TOOLTIP HAS BEEN HIDDEN
-    expect(parseFloat(tooltipContainer.style.opacity)).toEqual(0);
+    expect(parseFloat((tooltipContainer as HTMLElement).style.opacity)).toEqual(0);
   }
 };
 
@@ -2133,9 +2133,7 @@ export const accessibility_xaxis_description_added_on_update = {
 
     // ASSERT
     const xAxisAccessibilityDescriptionContainer = page.doc.querySelector(testSelector);
-    const xAxisTicks = page.doc.querySelectorAll(
-      '[data-testid=padding-container] > [data-testid=x-axis] [data-testid=axis-tick-text]'
-    );
+    const xAxisTicks = page.doc.querySelectorAll('[data-testid=x-axis] [data-testid=axis-tick-text]');
 
     // we are going to use the existing axis to mock the description
     const firstTickText = xAxisTicks[0].textContent;
@@ -2179,9 +2177,7 @@ export const accessibility_yaxis_description_set_on_load = {
 
     // ACT
     const yAxisAccessibilityDescriptionContainer = page.doc.querySelector(testSelector);
-    const yAxisTicks = page.doc.querySelectorAll(
-      '[data-testid=padding-container] > [data-testid=y-axis] [data-testid=axis-tick-text]'
-    );
+    const yAxisTicks = page.doc.querySelectorAll('[data-testid=y-axis] [data-testid=axis-tick-text]');
 
     // we are going to use the existing axis to mock the description
     const firstTickText = yAxisTicks[0].textContent;

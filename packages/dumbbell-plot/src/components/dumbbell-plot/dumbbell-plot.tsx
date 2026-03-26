@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022, 2023, 2024 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023, 2024, 2025 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -573,6 +573,8 @@ export class DumbbellPlot {
     this.shouldSetLabelOpacity = true;
     this.shouldSetGeometryAccessibilityAttributes = true;
     this.shouldSetGeometryAriaLabels = true;
+    this.shouldUpdateYAxis = true;
+    this.shouldUpdateXAxis = true;
   }
 
   @Watch('xAxis')
@@ -2979,8 +2981,10 @@ export class DumbbellPlot {
 
     const seriesLabelUpdate = this.updateSeriesLabel
       .text((d, i) => (this.seriesLabelDetails.label ? this.seriesLabelDetails.label[i] : d.label))
-      .style('visibility', (_, i, n) =>
-        isAuto || this.seriesLabelDetails.collisionHideOnly ? select(n[i]).style('visibility') : null
+      .classed('vcc-style-visibility-hidden', (_, i, n) =>
+        isAuto || this.seriesLabelDetails.collisionHideOnly
+          ? select(n[i]).classed('vcc-style-visibility-hidden')
+          : false
       )
       .attr('fill', this.handleSeriesLabelColors)
       .attr('data-x', d =>
@@ -3193,8 +3197,8 @@ export class DumbbellPlot {
 
     const updatingDiffLabels = this.updateDiffLabel
       .text(d => formatDataLabel(d, this.differenceLabel.calculation, this.differenceLabel.format))
-      .style('visibility', (_, i, n) =>
-        isAuto || this.differenceLabel.collisionHideOnly ? select(n[i]).style('visibility') : null
+      .classed('vcc-style-visibility-hidden', (_, i, n) =>
+        isAuto || this.differenceLabel.collisionHideOnly ? select(n[i]).classed('vcc-style-visibility-hidden') : false
       )
       .attr('data-x', d => (this.isVertical ? this.x(d.values[0][this.ordinalAccessor]) : this.x(d.middle)))
       .attr('data-y', d =>
@@ -3417,8 +3421,8 @@ export class DumbbellPlot {
 
     const labelUpdate = this.updateLabelChildren
       .attr('fill', this.handleLabelColors)
-      .style('visibility', (_, i, n) =>
-        isAuto || this.dataLabel.collisionHideOnly ? select(n[i]).style('visibility') : null
+      .classed('vcc-style-visibility-hidden', (_, i, n) =>
+        isAuto || this.dataLabel.collisionHideOnly ? select(n[i]).classed('vcc-style-visibility-hidden') : false
       )
       .attr('data-translate-x', this.margin.left + this.padding.left)
       .attr('data-translate-y', this.margin.top + this.padding.top)
@@ -3875,7 +3879,7 @@ export class DumbbellPlot {
   setLegendCursor() {
     select(this.dumbbellPlotEl)
       .selectAll('.legend')
-      .style('cursor', this.legend.interactive && this.seriesInteraction && !this.suppressEvents ? this.cursor : null);
+      .attr('cursor', this.legend.interactive && this.seriesInteraction && !this.suppressEvents ? this.cursor : null);
   }
 
   setSeriesCursor() {

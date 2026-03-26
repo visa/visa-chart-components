@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022, 2023, 2024 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023, 2024, 2025 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -142,6 +142,7 @@ export class BarChart {
   // Color & Shape (4/10)
   @Prop({ mutable: true }) colorPalette: string = BarChartDefaultValues.colorPalette;
   @Prop({ mutable: true }) colors: string[];
+  @Prop({ mutable: true }) textureOrder: string[];
   @Prop({ mutable: true }) hoverStyle: IHoverStyleType = BarChartDefaultValues.hoverStyle;
   @Prop({ mutable: true }) clickStyle: IClickStyleType = BarChartDefaultValues.clickStyle;
   @Prop({ mutable: true }) referenceStyle: IReferenceStyleType = BarChartDefaultValues.referenceStyle;
@@ -342,6 +343,8 @@ export class BarChart {
     this.shouldSetLabelContent = true;
     this.shouldSetLabelPosition = true;
     this.shouldUpdateAnnotations = true;
+    this.shouldUpdateXAxis = true;
+    this.shouldUpdateYAxis = true;
   }
 
   @Watch('groupAccessor')
@@ -520,6 +523,7 @@ export class BarChart {
 
   @Watch('colors')
   @Watch('colorPalette')
+  @Watch('textureOrder')
   colorsWatcher(_newVal, _oldVal) {
     this.shouldSetColors = true;
     this.shouldSetTextures = true;
@@ -1437,7 +1441,8 @@ export class BarChart {
         rootSVG: this.svg.node(),
         id: this.chartID,
         scheme,
-        disableTransitions: !this.duration
+        disableTransitions: !this.duration,
+        textureOrder: this.textureOrder
       });
       this.colorArr = this.preparedColors.copy().range(textures);
     }
@@ -2239,7 +2244,7 @@ export class BarChart {
 
     selection.attr('opacity', (d, i, n) => {
       const prevOpacity = +select(n[i]).attr('opacity');
-      const styleVisibility = select(n[i]).style('visibility');
+      const styleVisibility = select(n[i]).classed('vcc-style-visibility-hidden');
       const dimensions = {};
       dimensions[ordinalDimension] =
         this.placement === 'left' || this.placement === 'bottom' ? this[ordinalAxis].bandwidth() : fullBandwidth;
@@ -2273,14 +2278,11 @@ export class BarChart {
           ? 0
           : 1
         : 0;
-      if (
-        ((targetOpacity === 1 && styleVisibility === 'hidden') || prevOpacity !== targetOpacity) &&
-        addCollisionClass
-      ) {
+      if (((targetOpacity === 1 && styleVisibility) || prevOpacity !== targetOpacity) && addCollisionClass) {
         if (targetOpacity === 1) {
           select(n[i])
             .classed('collision-added', true)
-            .style('visibility', null);
+            .classed('vcc-style-visibility-hidden', false);
         } else {
           select(n[i]).classed('collision-removed', true);
         }
@@ -2387,7 +2389,7 @@ export class BarChart {
   setLegendCursor() {
     select(this.barChartEl)
       .selectAll('.legend')
-      .style('cursor', this.legend.interactive && !this.suppressEvents ? this.cursor : null);
+      .attr('cursor', this.legend.interactive && !this.suppressEvents ? this.cursor : '');
   }
 
   bindInteractivity() {
@@ -2525,7 +2527,7 @@ export class BarChart {
         : 'right';
 
     selection
-      .style('visibility', (_, i, n) => {
+      .classed('vcc-style-visibility-hidden', (_, i, n) => {
         if (i === 0) {
           // we just need to check this on one element
           const textElement = n[i];
@@ -2533,8 +2535,9 @@ export class BarChart {
           const fontSize = parseFloat(style.fontSize);
           textHeight = Math.max(fontSize - 1, 1); // clone.getBBox().height;
         }
-
-        return this.placement === 'auto' || this.dataLabel.collisionHideOnly ? select(n[i]).style('visibility') : null;
+        return this.placement === 'auto' || this.dataLabel.collisionHideOnly
+          ? select(n[i]).classed('vcc-style-visibility-hidden')
+          : false;
       })
       .attr(`data-${ordinalAxis}`, d => this[ordinalAxis](d[this.ordinalAccessor]))
       .attr(`data-${ordinalDimension}`, this[ordinalAxis].bandwidth())
@@ -2945,7 +2948,9 @@ export class BarChart {
           <this.topLevel class="bar-main-title vcl-main-title">{this.mainTitle}</this.topLevel>
           <this.bottomLevel class="visa-ui-text--instructions bar-sub-title vcl-sub-title" />
           <div
-            class="bar-legend vcl-legend"
+            class={`bar-legend vcl-legend ${
+              this.legend.visible && this.groupAccessor ? 'vcc-style-display-block' : 'vcc-style-display-none'
+            }`}
             style={{ display: this.legend.visible && this.groupAccessor ? 'block' : 'none' }}
           />
           <keyboard-instructions
@@ -2965,7 +2970,9 @@ export class BarChart {
             } // the chart is "simple"
           />
           <div class="visa-viz-d3-bar-container" />
-          <div class="bar-tooltip vcl-tooltip" style={{ display: this.showTooltip ? 'block' : 'none' }} />
+          <div
+            class={`bar-tooltip vcl-tooltip ${this.showTooltip ? 'vcc-style-display-block' : 'vcc-style-display-none'}`}
+          />
           <data-table
             uniqueID={this.chartID}
             isCompact

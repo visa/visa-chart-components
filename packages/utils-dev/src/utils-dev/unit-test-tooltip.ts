@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2022 Visa, Inc.
+ * Copyright (c) 2020, 2022, 2025 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -53,7 +53,7 @@ export const tooltip_showTooltip_default = {
 
     // ASSERT
     expect(tooltipContainer).toHaveClass('vcl-tooltip');
-    expect(parseFloat(tooltipContainer.style.opacity)).toEqual(0);
+    expect(parseFloat((tooltipContainer as HTMLElement).style.opacity)).toEqual(0);
   }
 };
 
@@ -91,9 +91,9 @@ export const tooltip_showTooltip_hover = {
     flushTransitions(tooltipContainer);
     await page.waitForChanges();
 
-    expect(parseFloat(tooltipContainer.style.opacity)).toEqual(1);
-    expect(tooltipContainer.style.left).toEqual(`${fakePosition.pageX}px`);
-    expect(tooltipContainer.style.top).toEqual(`${fakePosition.pageY}px`);
+    expect(parseFloat((tooltipContainer as HTMLElement).style.opacity)).toEqual(1);
+    expect((tooltipContainer as HTMLElement).style.left).toEqual(`${fakePosition.pageX}px`);
+    expect((tooltipContainer as HTMLElement).style.top).toEqual(`${fakePosition.pageY}px`);
   }
 };
 
@@ -130,7 +130,7 @@ export const tooltip_showTooltip_false = {
     flushTransitions(tooltipContainer);
     await page.waitForChanges();
 
-    expect(parseFloat(tooltipContainer.style.opacity)).toEqual(0);
+    expect(parseFloat((tooltipContainer as HTMLElement).style.opacity)).toEqual(0);
   }
 };
 
@@ -169,9 +169,9 @@ export const tooltip_tooltipLabel_default = {
 
     const tooltipContent = tooltipContainer.querySelector('p');
     expect(tooltipContent).toEqualHtml(expectedTooltipContent);
-    expect(parseFloat(tooltipContainer.style.opacity)).toEqual(1);
-    expect(tooltipContainer.style.left).toEqual(`${fakePosition.pageX}px`);
-    expect(tooltipContainer.style.top).toEqual(`${fakePosition.pageY}px`);
+    expect(parseFloat((tooltipContainer as HTMLElement).style.opacity)).toEqual(1);
+    expect((tooltipContainer as HTMLElement).style.left).toEqual(`${fakePosition.pageX}px`);
+    expect((tooltipContainer as HTMLElement).style.top).toEqual(`${fakePosition.pageY}px`);
   }
 };
 
@@ -210,9 +210,9 @@ export const tooltip_tooltipLabel_custom_load = {
 
     const tooltipContent = tooltipContainer.querySelector('p');
     expect(tooltipContent).toEqualHtml(expectedTooltipContent);
-    expect(parseFloat(tooltipContainer.style.opacity)).toEqual(1);
-    expect(tooltipContainer.style.left).toEqual(`${fakePosition.pageX}px`);
-    expect(tooltipContainer.style.top).toEqual(`${fakePosition.pageY}px`);
+    expect(parseFloat((tooltipContainer as HTMLElement).style.opacity)).toEqual(1);
+    expect((tooltipContainer as HTMLElement).style.left).toEqual(`${fakePosition.pageX}px`);
+    expect((tooltipContainer as HTMLElement).style.top).toEqual(`${fakePosition.pageY}px`);
   }
 };
 
@@ -254,9 +254,9 @@ export const tooltip_tooltipLabel_custom_update = {
 
     const tooltipContent = tooltipContainer.querySelector('p');
     expect(tooltipContent).toEqualHtml(expectedTooltipContent);
-    expect(parseFloat(tooltipContainer.style.opacity)).toEqual(1);
-    expect(tooltipContainer.style.left).toEqual(`${fakePosition.pageX}px`);
-    expect(tooltipContainer.style.top).toEqual(`${fakePosition.pageY}px`);
+    expect(parseFloat((tooltipContainer as HTMLElement).style.opacity)).toEqual(1);
+    expect((tooltipContainer as HTMLElement).style.left).toEqual(`${fakePosition.pageX}px`);
+    expect((tooltipContainer as HTMLElement).style.top).toEqual(`${fakePosition.pageY}px`);
   }
 };
 
@@ -295,9 +295,9 @@ export const tooltip_tooltipLabel_custom_format_load = {
 
     const tooltipContent = tooltipContainer.querySelector('p');
     expect(tooltipContent).toEqualHtml(expectedTooltipContent);
-    expect(parseFloat(tooltipContainer.style.opacity)).toEqual(1);
-    expect(tooltipContainer.style.left).toEqual(`${fakePosition.pageX}px`);
-    expect(tooltipContainer.style.top).toEqual(`${fakePosition.pageY}px`);
+    expect(parseFloat((tooltipContainer as HTMLElement).style.opacity)).toEqual(1);
+    expect((tooltipContainer as HTMLElement).style.left).toEqual(`${fakePosition.pageX}px`);
+    expect((tooltipContainer as HTMLElement).style.top).toEqual(`${fakePosition.pageY}px`);
   }
 };
 
@@ -339,9 +339,9 @@ export const tooltip_tooltipLabel_custom_format_update = {
 
     const tooltipContent = tooltipContainer.querySelector('p');
     expect(tooltipContent).toEqualHtml(expectedTooltipContent);
-    expect(parseFloat(tooltipContainer.style.opacity)).toEqual(1);
-    expect(tooltipContainer.style.left).toEqual(`${fakePosition.pageX}px`);
-    expect(tooltipContainer.style.top).toEqual(`${fakePosition.pageY}px`);
+    expect(parseFloat((tooltipContainer as HTMLElement).style.opacity)).toEqual(1);
+    expect((tooltipContainer as HTMLElement).style.left).toEqual(`${fakePosition.pageX}px`);
+    expect((tooltipContainer as HTMLElement).style.top).toEqual(`${fakePosition.pageY}px`);
   }
 };
 

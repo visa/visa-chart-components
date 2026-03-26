@@ -21,6 +21,8 @@ This package bundles [visa chart components](../../) web components for use in [
 
 #### Components with `Ready` status in this bundle
 
+<!-- components -->
+
 - [@visa/bar-chart](../bar-chart)
 - [@visa/clustered-bar-chart](../clustered-bar-chart)
 - [@visa/stacked-bar-chart](../stacked-bar-chart)

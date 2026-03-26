@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023, 2024, 2025 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -130,6 +130,7 @@ export class PieChart {
   @Prop({ mutable: true }) cursor: string = PieChartDefaultValues.cursor;
   @Prop({ mutable: true }) hoverOpacity: number = PieChartDefaultValues.hoverOpacity;
   @Prop({ mutable: true }) animationConfig: IAnimationConfig = PieChartDefaultValues.animationConfig;
+  @Prop({ mutable: true }) textureOrder: string[];
 
   // Data label (5/7)
   @Prop({ mutable: true }) showPercentage: boolean = PieChartDefaultValues.showPercentage;
@@ -433,16 +434,9 @@ export class PieChart {
     this.shouldSetGeometryAriaLabels = true;
   }
 
-  @Watch('colorPalette')
-  paletteWatcher(_newVal, _oldVal) {
-    this.shouldSetColors = true;
-    this.shouldDrawInteractionState = true;
-    this.shouldCheckLabelColor = true;
-    this.shouldSetTextures = true;
-    this.shouldSetStrokes = true;
-  }
-
   @Watch('colors')
+  @Watch('colorPalette')
+  @Watch('textureOrder')
   colorsWatcher(_newVal, _oldVal) {
     this.shouldSetColors = true;
     this.shouldDrawInteractionState = true;
@@ -1181,7 +1175,8 @@ export class PieChart {
         rootSVG: this.svg.node(),
         id: this.chartID,
         scheme: 'categorical',
-        disableTransitions: !this.duration
+        disableTransitions: !this.duration,
+        textureOrder: this.textureOrder
       });
       this.colorArr = this.preparedColors.range ? this.preparedColors.copy().range(textures) : textures;
     }
@@ -1280,7 +1275,7 @@ export class PieChart {
     this.svg = select(this.pieChartEl)
       .select('.visa-viz-d3-pie-container')
       .append('svg')
-      .style('isolation', 'isolate')
+      .classed('vcc-style-isolation-isolate', true)
       .attr('width', this.width)
       .attr('height', this.height)
       .attr('viewBox', '0 0 ' + this.width + ' ' + this.height);
@@ -1458,7 +1453,7 @@ export class PieChart {
       .attr('data-use-dy', true)
       .attr('opacity', (d, i, n) => {
         const prevOpacity = +select(n[i]).attr('opacity');
-        const styleVisibility = select(n[i]).style('visibility');
+        const styleVisibility = select(n[i]).classed('vcc-style-visibility-hidden');
         const targetOpacity =
           checkInteraction(
             d.data,
@@ -1470,11 +1465,11 @@ export class PieChart {
           ) < 1
             ? 0
             : 1;
-        if ((targetOpacity === 1 && styleVisibility === 'hidden') || prevOpacity !== targetOpacity) {
+        if ((targetOpacity === 1 && styleVisibility) || prevOpacity !== targetOpacity) {
           if (targetOpacity === 1) {
             select(n[i])
               .classed('collision-added', true)
-              .style('visibility', null);
+              .classed('vcc-style-visibility-hidden', false);
           } else {
             select(n[i]).classed('collision-removed', true);
           }
@@ -1488,7 +1483,7 @@ export class PieChart {
       .attr('data-use-dy', true)
       .attr('opacity', (d, i, n) => {
         const prevOpacity = +select(n[i]).attr('opacity');
-        const styleVisibility = select(n[i]).style('visibility');
+        const styleVisibility = select(n[i]).classed('vcc-style-visibility-hidden');
         const targetOpacity =
           checkInteraction(
             d.data,
@@ -1500,11 +1495,11 @@ export class PieChart {
           ) < 1
             ? 0
             : 1;
-        if ((targetOpacity === 1 && styleVisibility === 'hidden') || prevOpacity !== targetOpacity) {
+        if ((targetOpacity === 1 && styleVisibility) || prevOpacity !== targetOpacity) {
           if (targetOpacity === 1) {
             select(n[i])
               .classed('collision-added', true)
-              .style('visibility', null);
+              .classed('vcc-style-visibility-hidden', false);
           } else {
             select(n[i]).classed('collision-removed', true);
           }
@@ -2123,10 +2118,10 @@ export class PieChart {
     }
 
     this['updating' + group]
-      .style('visibility', (_, i, n) =>
+      .classed('vcc-style-visibility-hidden', (_, i, n) =>
         this.dataLabel.placement === 'auto' || this.dataLabel.collisionHideOnly
-          ? select(n[i]).style('visibility')
-          : null
+          ? select(n[i]).classed('vcc-style-visibility-hidden')
+          : false
       )
       .transition('update')
       .duration(this.duration)
@@ -2247,10 +2242,10 @@ export class PieChart {
       });
 
     this['updating' + group + 'Notes']
-      .style('visibility', (_, i, n) =>
+      .classed('vcc-style-visibility-hidden', (_, i, n) =>
         this.dataLabel.placement === 'auto' || this.dataLabel.collisionHideOnly
-          ? select(n[i]).style('visibility')
-          : null
+          ? select(n[i]).classed('vcc-style-visibility-hidden')
+          : false
       )
       .transition('update')
       .duration(this.duration)
@@ -2337,7 +2332,7 @@ export class PieChart {
       titleRoot = this.rootG
         .append('g')
         .attr('class', 'pie-center-title-group')
-        .style('opacity', 1);
+        .attr('opacity', 1);
 
       titleRoot
         .append('text')

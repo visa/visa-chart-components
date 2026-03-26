@@ -34,6 +34,7 @@
   ],
   "scripts": {
     "audit": "yarn audit --json --level low > yarn-audit.json",
+    "yarn-install": "yarn",
     "clean": "rimraf dist/ && rimraf ../pyvisacharts/labextension/ && rimraf ../pyvisacharts/nbextension",
     "build-js-install-python": "yarn clean && yarn build && yarn pip-install && yarn prep-notebook1 && yarn prep-notebook2",
     "pip-install": "cd ../ && pip install -e . && cd ./js",
@@ -49,10 +50,10 @@
     "watch": "webpack --watch --mode=development"
   },
   "devDependencies": {
-    "@jupyterlab/builder": "^3.6.8",
+    "@jupyterlab/builder": "^4.2.5",
     "@visa/charts-types": "^0.6.5",
     "rimraf": "^2.6.1",
-    "webpack": "^5.76.0"
+    "webpack": "^5.95.0"
   },
   "dependencies": {
     "@jupyter-widgets/base": "^1.1 || ^2 || ^3 || ^4 || ^6",
@@ -63,7 +64,7 @@
     "loader-utils": "^3.2.1",
     "verdaccio": "^5.19.1",
     "d3-color": "^3.1.0",
-    "webpack": "^5.76.0"
+    "webpack": "^5.95.0"
   },
   "jupyterlab": {
     "extension": "lib/labplugin",

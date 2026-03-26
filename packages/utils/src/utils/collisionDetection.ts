@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2021, 2024 Visa, Inc.
+ * Copyright (c) 2021, 2024, 2025 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -307,31 +307,38 @@ export const resolveLabelCollision = ({
     });
 
     // now that we are done we set the selection values onto the transition
-    labelSelection.style('visibility', (d, i, n) => {
-      const innerD = d && d.data && d.data.data ? d.data.data : d && d.data ? d.data : d ? d : {};
-      const accessorValues = accessors.map(key => innerD[key] || 'Not Found');
-      const attributes =
-        accessorValues.join('-') === 'Not Found' ? attributeHash[i] : attributeHash[`${i}-${accessorValues.join('-')}`];
-      // first we check if we are not supposed to do anything
-      if (accessors && accessors.length && attributes && attributes['do-nothing']) {
-        // console.log('we are in do nothing', i, d, n[i], attributes);
-        return select(n[i]).style('visibility');
-      } else {
-        // console.log('we are in do something', i, d, n[i], attributes);
-        // if we get past that, then we can apply visibility update
-        select(n[i])
-          .attr('data-label-hidden', accessors && accessors.length && attributes && attributes['data-label-hidden'])
-          .attr('data-label-moved', accessors && accessors.length && attributes && attributes['data-label-moved'])
-          .attr('data-align', attributes['data-align'])
-          .attr('data-baseline', attributes['data-baseline'])
-          .attr('dx', !(select(n[i]).attr('data-use-dx') === 'true') ? null : select(n[i]).attr('dx'))
-          .attr('dy', !(select(n[i]).attr('data-use-dy') === 'true') ? null : select(n[i]).attr('dy'))
-          .attr('data-use-dx', null)
-          .attr('data-use-dy', null); // we may still need these, but it was causing a blip of placement on world-map during hideOnly mode
-        return accessors && accessors.length && attributes && (attributes.visibility === null || !attributes.visibility)
-          ? null
-          : 'hidden';
-      }
+    labelSelection.each((_outerD, outerI, outerN) => {
+      select(outerN[outerI]).classed('vcc-style-visibility-hidden', (d, i, n) => {
+        const innerD = d && d.data && d.data.data ? d.data.data : d && d.data ? d.data : d ? d : {};
+        const accessorValues = accessors.map(key => innerD[key] || 'Not Found');
+        const attributes =
+          accessorValues.join('-') === 'Not Found'
+            ? attributeHash[outerI]
+            : attributeHash[`${outerI}-${accessorValues.join('-')}`];
+        // first we check if we are not supposed to do anything
+        if (accessors && accessors.length && attributes && attributes['do-nothing']) {
+          // console.log('we are in do nothing', i, d, n[i], attributes);
+          return select(n[i]).classed('vcc-style-visibility-hidden');
+        } else {
+          // console.log('we are in do something', i, d, n[i], attributes);
+          // if we get past that, then we can apply visibility update
+          select(n[i])
+            .attr('data-label-hidden', accessors && accessors.length && attributes && attributes['data-label-hidden'])
+            .attr('data-label-moved', accessors && accessors.length && attributes && attributes['data-label-moved'])
+            .attr('data-align', attributes['data-align'])
+            .attr('data-baseline', attributes['data-baseline'])
+            .attr('dx', !(select(n[i]).attr('data-use-dx') === 'true') ? null : select(n[i]).attr('dx'))
+            .attr('dy', !(select(n[i]).attr('data-use-dy') === 'true') ? null : select(n[i]).attr('dy'))
+            .attr('data-use-dx', null)
+            .attr('data-use-dy', null); // we may still need these, but it was causing a blip of placement on world-map during hideOnly mode
+          return accessors &&
+            accessors.length &&
+            attributes &&
+            (attributes.visibility === null || !attributes.visibility)
+            ? false
+            : true;
+        }
+      });
     });
     // we only update placement if hideOnly is not passed/truthy, which should be default
     // matching the selection to the array above has lead to a lot of repeated code
@@ -352,7 +359,7 @@ export const resolveLabelCollision = ({
         // .transition('collision-update') // this does not work
         // .ease(labelSelection.ease())
         // .duration(labelSelection.duration())
-        // .style('visibility', attributes && attributes.visibility === null ? null : 'hidden')
+        // .classed('vcc-style-visibility-hidden', attributes && attributes.visibility === null ? false : true)
         // .attr('x', attributes && attributes.x ? attributes.x : select(n[i]).attr('x'))
         // .attr('y', attributes && attributes.y ? attributes.y : select(n[i]).attr('y'))
         // .attr('dx', (_, i, n) => (!select(n[i]).attr('data-use-dx') ? null : select(n[i]).attr('dx')))

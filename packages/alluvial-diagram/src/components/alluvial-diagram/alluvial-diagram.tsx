@@ -1760,12 +1760,12 @@ export class AlluvialDiagram {
       .classed(className + '-highlight ' + className + '-hover', true)
       .classed('duplicated-clicked-link', true)
       .classed('entering', false)
+      .classed('vcc-style-point-events-none', true)
       .data([d.data])
       .attr('focusable', false)
       .attr('aria-label', null)
       .attr('aria-hidden', true)
       .attr('role', null)
-      .style('pointer-events', 'none')
       .attr('tabindex', null);
 
     if (this.innerLinkFillMode === 'source' || this.innerLinkFillMode === 'target') {
@@ -2279,13 +2279,13 @@ export class AlluvialDiagram {
               .classed('alluvial-node', false)
               .classed(className, true)
               .classed('entering', false)
+              .classed('vcc-style-point-events-none', true)
+              .classed('vcc-style-visibility-hidden', true)
               .data([d])
               .attr('focusable', false)
               .attr('aria-label', null)
               .attr('aria-hidden', true)
               .attr('role', null)
-              .style('pointer-events', 'none')
-              .style('visibility', 'hidden')
               .attr('tabindex', null)
               .attr(
                 'data-x',
@@ -2374,7 +2374,7 @@ export class AlluvialDiagram {
 
     this.updatingLabels.attr('opacity', (d, i, n) => {
       const prevOpacity = +select(n[i]).attr('opacity');
-      const styleVisibility = select(n[i]).style('visibility');
+      const styleVisibility = select(n[i]).classed('vcc-style-visibility-hidden');
       let targetOpacity;
       if (this.linkConfig.visible) {
         let matchHover = true;
@@ -2408,14 +2408,11 @@ export class AlluvialDiagram {
       } else {
         targetOpacity = d.layer === 0 ? opacity : d.layer === this.nodeCount ? opacity : 0;
       }
-      if (
-        ((targetOpacity === 1 && styleVisibility === 'hidden') || prevOpacity !== targetOpacity) &&
-        addCollisionClass
-      ) {
+      if (((targetOpacity === 1 && styleVisibility) || prevOpacity !== targetOpacity) && addCollisionClass) {
         if (targetOpacity === 1) {
           select(n[i])
             .classed('collision-added', true)
-            .style('visibility', null);
+            .classed('vcc-style-visibility-hidden', false);
         } else {
           select(n[i]).classed('collision-removed', true);
         }
@@ -2473,13 +2470,13 @@ export class AlluvialDiagram {
                 .classed('alluvial-node', false)
                 .classed(className, true)
                 .classed('entering', false)
+                .classed('vcc-style-point-events-none', true)
+                .classed('vcc-style-visibility-hidden', true)
                 .data([d])
                 .attr('focusable', false)
                 .attr('aria-label', null)
                 .attr('aria-hidden', true)
                 .attr('role', null)
-                .style('pointer-events', 'none')
-                .style('visibility', 'hidden')
                 .attr('tabindex', null)
                 .attr(
                   'data-x',

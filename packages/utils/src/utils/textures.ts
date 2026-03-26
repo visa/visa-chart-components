@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2023 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2023, 2025 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -57,16 +57,21 @@ const indices = {
   ]
 };
 
+// --- Texture pattern lookup by name for categorical ---
+const patternNames = ['lines-diagonal', 'dots-grid', 'cross-hatch', 'x-grid', 'ring-diagonal'];
+
 export function getTexture({
   scheme,
   id,
   index,
+  patternName,
   fillColor,
   textureColor
 }: {
   scheme: string;
   id: string;
-  index: number;
+  index?: number; // still allow index for non-categorical
+  patternName?: string; // new: pattern name for categorical
   fillColor: string;
   textureColor: string;
 }) {
@@ -240,35 +245,6 @@ export function getTexture({
               'stroke-width': '1',
               'stroke-linecap': 'square',
               'shape-rendering': 'auto'
-            }
-          }
-        ]
-      },
-      {
-        attributes: {
-          width: 10,
-          height: 10,
-          patternUnits: 'userSpaceOnUse',
-          id: `${id}`,
-          class: 'VCL-texture-pattern'
-        },
-        children: [
-          {
-            name: 'rect',
-            attributes: {
-              width: '10',
-              height: '10',
-              fill: `${fillColor}`
-            }
-          },
-          {
-            name: 'path',
-            attributes: {
-              d: 'M 5, 0 l 0, 10',
-              'stroke-width': '1',
-              'shape-rendering': 'auto',
-              stroke: `${textureColor}`,
-              'stroke-linecap': 'square'
             }
           }
         ]
@@ -1260,7 +1236,11 @@ export function getTexture({
       }
     ]
   };
-  // need to check categorical index to fill constancy!! Should import the scheme here
+  if (scheme === 'categorical' && patternName) {
+    const idx = patternNames.indexOf(patternName);
+    return textureData.categorical[idx]; // Only valid pattern names will get passed in
+  }
+  // fallback to index for other schemes
   return textureData[scheme][index];
 }
 
@@ -1335,45 +1315,59 @@ export function convertColorsToTextures({
   rootSVG,
   id,
   scheme,
-  disableTransitions
+  disableTransitions,
+  textureOrder = patternNames
 }: {
   colors: any;
   rootSVG: any;
   id: string;
   scheme?: string;
   disableTransitions?: boolean;
+  textureOrder?: string[]; // string array only
 }) {
   const output = [];
   const textures = [];
-  let i = 0;
   const colorArray = colors.range ? colors.range() : colors;
-  // if (colorArray.length === 1) {
-  //   output.push;
-  // }
-  // removePatterns(rootSVG);
-  colorArray.forEach(color => {
-    // we create a unique ID for each texture
-    let textureId = id + '_texture_' + i;
-
-    // get one color for the texture/stroke and one for the fill, depending on the scheme
-    const contrastedColors = prepareStrokeColorsFromScheme(color, i, colorArray, scheme);
-
-    // we retrieve the appropriate pattern data for the texture
-    const texture = getTexture({
-      scheme: contrastedColors.textureScheme,
-      id: textureId,
-      index: indices[contrastedColors.textureScheme][colors.length][i],
-      fillColor: contrastedColors.fillColor,
-      textureColor: contrastedColors.textureColor
-    });
-    // we append the pattern to the dom
-    // appendPattern(rootSVG, texture);
-    texture.scheme = contrastedColors.textureScheme;
-    texture.index = indices[contrastedColors.textureScheme][colors.length][i];
+  colorArray.forEach((color, colorIdx) => {
+    let textureName = textureOrder[colorIdx % textureOrder.length];
+    if (textureName === '' || (scheme === 'categorical' && textureName && !patternNames.includes(textureName))) {
+      // For categorical, if textureName is not in patternNames, do not use any texture (just color)
+      output.push(color);
+      return;
+    }
+    const textureId = id + '_texture_' + colorIdx + '_' + textureName;
+    const contrastedColors = prepareStrokeColorsFromScheme(color, colorIdx, colorArray, scheme);
+    const schemeType = contrastedColors.textureScheme;
+    let texture;
+    if (schemeType === 'categorical') {
+      texture = getTexture({
+        scheme: schemeType,
+        id: textureId,
+        patternName: textureName,
+        fillColor: contrastedColors.fillColor,
+        textureColor: contrastedColors.textureColor
+      });
+    } else {
+      // fallback to index logic for other schemes
+      const availableIndices = indices[schemeType][colors.length];
+      let patternIdx = colorIdx;
+      if (availableIndices && availableIndices.length > 0) {
+        patternIdx = colorIdx % availableIndices.length;
+        patternIdx = availableIndices[patternIdx];
+      }
+      texture = getTexture({
+        scheme: schemeType,
+        id: textureId,
+        index: patternIdx,
+        fillColor: contrastedColors.fillColor,
+        textureColor: contrastedColors.textureColor
+      });
+    }
+    texture.scheme = schemeType;
+    texture.index = colorIdx;
     textures.push(texture);
     // we add the url to this pattern to our output array
     output.push(createUrl(textureId));
-    i++;
   });
   runTextureLifecycle(rootSVG, textures, disableTransitions);
   // return array of "url(#[id])" strings for use in place of hex codes for element fills

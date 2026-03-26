@@ -3550,6 +3550,32 @@ Object {
       "ancestorTitles": Array [
         "<bar-chart>",
         "rendered-html",
+        "axes",
+        "sortOrder",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<bar-chart> rendered-html axes sortOrder should update x-axis when sortOrder changes in vertical layout",
+      "location": null,
+      "status": "passed",
+      "title": "should update x-axis when sortOrder changes in vertical layout",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<bar-chart>",
+        "rendered-html",
+        "axes",
+        "sortOrder",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<bar-chart> rendered-html axes sortOrder should update y-axis when sortOrder changes in horizontal layout",
+      "location": null,
+      "status": "passed",
+      "title": "should update y-axis when sortOrder changes in horizontal layout",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<bar-chart>",
+        "rendered-html",
         "interaction",
         "bar based interaction tests",
       ],
@@ -4567,6 +4593,45 @@ Object {
       "location": null,
       "status": "passed",
       "title": "should pass referenceStyle prop",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<bar-chart>",
+        "rendered-html",
+        "style with textures",
+        "textureOrder",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<bar-chart> rendered-html style with textures textureOrder should use textureOrder prop for bar textures and set to new textureOrder when update",
+      "location": null,
+      "status": "passed",
+      "title": "should use textureOrder prop for bar textures and set to new textureOrder when update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<bar-chart>",
+        "rendered-html",
+        "style with textures",
+        "textureOrder",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<bar-chart> rendered-html style with textures textureOrder should fall back to default pattern sequence when invalid textureOrder entries are provided",
+      "location": null,
+      "status": "passed",
+      "title": "should fall back to default pattern sequence when invalid textureOrder entries are provided",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<bar-chart>",
+        "rendered-html",
+        "style with textures",
+        "textureOrder",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<bar-chart> rendered-html style with textures textureOrder should render no pattern (just color) when textureOrder contains invalid or empty string",
+      "location": null,
+      "status": "passed",
+      "title": "should render no pattern (just color) when textureOrder contains invalid or empty string",
     },
     Object {
       "ancestorTitles": Array [
@@ -7837,6 +7902,45 @@ Object {
         "<clustered-bar-chart>",
         "rendered-html",
         "axes",
+        "barOverlapRatio",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<clustered-bar-chart> rendered-html axes barOverlapRatio By default there will not be any overlap between the bars, and the gap between bars is default barIntervalRatio",
+      "location": null,
+      "status": "passed",
+      "title": "By default there will not be any overlap between the bars, and the gap between bars is default barIntervalRatio",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<clustered-bar-chart>",
+        "rendered-html",
+        "axes",
+        "barOverlapRatio",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<clustered-bar-chart> rendered-html axes barOverlapRatio should have 50% overlap between bars when barOverlapRatio is 0.5 on load",
+      "location": null,
+      "status": "passed",
+      "title": "should have 50% overlap between bars when barOverlapRatio is 0.5 on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<clustered-bar-chart>",
+        "rendered-html",
+        "axes",
+        "barOverlapRatio",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<clustered-bar-chart> rendered-html axes barOverlapRatio should have 50% overlap between bars when barOverlapRatio is 0.5 on update",
+      "location": null,
+      "status": "passed",
+      "title": "should have 50% overlap between bars when barOverlapRatio is 0.5 on update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<clustered-bar-chart>",
+        "rendered-html",
+        "axes",
         "minValueOverride",
       ],
       "failureMessages": Array [],
@@ -9052,7 +9156,7 @@ Object {
       ],
       "failureMessages": Array [
         "Error: expected textContent \\"$15\\" to equal \\"15\\"
-    at Object.<anonymous> (./packages/clustered-bar-chart/src/components/clustered-bar-chart/clustered-bar-chart.spec.ts:1611:33)
+    at Object.<anonymous> (./packages/clustered-bar-chart/src/components/clustered-bar-chart/clustered-bar-chart.spec.ts:1766:33)
     at processTicksAndRejections (node:internal/process/task_queues:95:5)",
       ],
       "fullName": "<clustered-bar-chart> rendered-html labels legend format should format number if passed as prop",
@@ -9181,11 +9285,51 @@ Object {
       "ancestorTitles": Array [
         "<clustered-bar-chart>",
         "rendered-html",
+        "style with textures",
+        "textureOrder",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<clustered-bar-chart> rendered-html style with textures textureOrder should use textureOrder prop for bar textures and set to new textureOrder when update",
+      "location": null,
+      "status": "passed",
+      "title": "should use textureOrder prop for bar textures and set to new textureOrder when update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<clustered-bar-chart>",
+        "rendered-html",
+        "style with textures",
+        "textureOrder",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<clustered-bar-chart> rendered-html style with textures textureOrder should fall back to default pattern sequence when invalid textureOrder entries are provided",
+      "location": null,
+      "status": "passed",
+      "title": "should fall back to default pattern sequence when invalid textureOrder entries are provided",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<clustered-bar-chart>",
+        "rendered-html",
+        "style with textures",
+        "textureOrder",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<clustered-bar-chart> rendered-html style with textures textureOrder should render no pattern (just color) when textureOrder contains invalid or empty string",
+      "location": null,
+      "status": "passed",
+      "title": "should render no pattern (just color) when textureOrder contains invalid or empty string",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<clustered-bar-chart>",
+        "rendered-html",
+        "style with textures",
         "style no textures",
         "colorPalette",
       ],
       "failureMessages": Array [],
-      "fullName": "<clustered-bar-chart> rendered-html style no textures colorPalette should render categorical by default",
+      "fullName": "<clustered-bar-chart> rendered-html style with textures style no textures colorPalette should render categorical by default",
       "location": null,
       "status": "passed",
       "title": "should render categorical by default",
@@ -9194,11 +9338,12 @@ Object {
       "ancestorTitles": Array [
         "<clustered-bar-chart>",
         "rendered-html",
+        "style with textures",
         "style no textures",
         "colorPalette",
       ],
       "failureMessages": Array [],
-      "fullName": "<clustered-bar-chart> rendered-html style no textures colorPalette should load diverging R to B when colorPalette is diverging_RtoB",
+      "fullName": "<clustered-bar-chart> rendered-html style with textures style no textures colorPalette should load diverging R to B when colorPalette is diverging_RtoB",
       "location": null,
       "status": "passed",
       "title": "should load diverging R to B when colorPalette is diverging_RtoB",
@@ -9207,11 +9352,12 @@ Object {
       "ancestorTitles": Array [
         "<clustered-bar-chart>",
         "rendered-html",
+        "style with textures",
         "style no textures",
         "colorPalette",
       ],
       "failureMessages": Array [],
-      "fullName": "<clustered-bar-chart> rendered-html style no textures colorPalette should update diverging R to B when colorPalette is diverging_RtoB",
+      "fullName": "<clustered-bar-chart> rendered-html style with textures style no textures colorPalette should update diverging R to B when colorPalette is diverging_RtoB",
       "location": null,
       "status": "passed",
       "title": "should update diverging R to B when colorPalette is diverging_RtoB",
@@ -9220,11 +9366,12 @@ Object {
       "ancestorTitles": Array [
         "<clustered-bar-chart>",
         "rendered-html",
+        "style with textures",
         "style no textures",
         "colorPalette",
       ],
       "failureMessages": Array [],
-      "fullName": "<clustered-bar-chart> rendered-html style no textures colorPalette should render sequential orange when colorPalette is sequential_orange",
+      "fullName": "<clustered-bar-chart> rendered-html style with textures style no textures colorPalette should render sequential orange when colorPalette is sequential_orange",
       "location": null,
       "status": "passed",
       "title": "should render sequential orange when colorPalette is sequential_orange",
@@ -9233,11 +9380,12 @@ Object {
       "ancestorTitles": Array [
         "<clustered-bar-chart>",
         "rendered-html",
+        "style with textures",
         "style no textures",
         "colors",
       ],
       "failureMessages": Array [],
-      "fullName": "<clustered-bar-chart> rendered-html style no textures colors should render colors instead of palette when passed",
+      "fullName": "<clustered-bar-chart> rendered-html style with textures style no textures colors should render colors instead of palette when passed",
       "location": null,
       "status": "passed",
       "title": "should render colors instead of palette when passed",
@@ -9246,11 +9394,11 @@ Object {
       "ancestorTitles": Array [
         "<clustered-bar-chart>",
         "rendered-html",
-        "style no textures",
+        "style with textures",
         "cursor",
       ],
       "failureMessages": Array [],
-      "fullName": "<clustered-bar-chart> rendered-html style no textures cursor refer to generic interaction results above for cursor tests",
+      "fullName": "<clustered-bar-chart> rendered-html style with textures cursor refer to generic interaction results above for cursor tests",
       "location": null,
       "status": "passed",
       "title": "refer to generic interaction results above for cursor tests",
@@ -9259,11 +9407,11 @@ Object {
       "ancestorTitles": Array [
         "<clustered-bar-chart>",
         "rendered-html",
-        "style no textures",
+        "style with textures",
         "roundedCorner",
       ],
       "failureMessages": Array [],
-      "fullName": "<clustered-bar-chart> rendered-html style no textures roundedCorner should render rectangle bars when roundedCorner is zero (default)",
+      "fullName": "<clustered-bar-chart> rendered-html style with textures roundedCorner should render rectangle bars when roundedCorner is zero (default)",
       "location": null,
       "status": "passed",
       "title": "should render rectangle bars when roundedCorner is zero (default)",
@@ -9272,11 +9420,11 @@ Object {
       "ancestorTitles": Array [
         "<clustered-bar-chart>",
         "rendered-html",
-        "style no textures",
+        "style with textures",
         "roundedCorner",
       ],
       "failureMessages": Array [],
-      "fullName": "<clustered-bar-chart> rendered-html style no textures roundedCorner should render rounded bars when roundedCorner is non-zero positive number",
+      "fullName": "<clustered-bar-chart> rendered-html style with textures roundedCorner should render rounded bars when roundedCorner is non-zero positive number",
       "location": null,
       "status": "passed",
       "title": "should render rounded bars when roundedCorner is non-zero positive number",
@@ -10084,10 +10232,17 @@ Object {
         "accessibility",
         "generic accessibility test suite",
       ],
-      "failureMessages": Array [],
+      "failureMessages": Array [
+        "Error: expected textContent \\"The chart has a primary vertical Y axis. Title Y Axis. Start value 3000000000, end value 10b.\\" to equal \\"The chart has a primary vertical Y axis. Title Y Axis. Start value 3b, end value 10b.\\"
+    at call (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:2056:68)
+    at step (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:68:23)
+    at Object.next (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:49:53)
+    at fulfilled (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:39:58)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)",
+      ],
       "fullName": "<dumbbell-plot> rendered-html accessibility generic accessibility test suite accessibility: instruction elements should contain yAxis description on load if yAxis exists on chart",
       "location": null,
-      "status": "passed",
+      "status": "failed",
       "title": "accessibility: instruction elements should contain yAxis description on load if yAxis exists on chart",
     },
     Object {
@@ -10866,6 +11021,32 @@ Object {
       "location": null,
       "status": "passed",
       "title": "xAxis.unit: axis date format should be unit millisecond when passed on load",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<dumbbell-plot>",
+        "rendered-html",
+        "axes",
+        "sortOrder",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<dumbbell-plot> rendered-html axes sortOrder should update chart and x-axis when sortOrder changes in vertical layout (bug fix)",
+      "location": null,
+      "status": "passed",
+      "title": "should update chart and x-axis when sortOrder changes in vertical layout (bug fix)",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<dumbbell-plot>",
+        "rendered-html",
+        "axes",
+        "sortOrder",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<dumbbell-plot> rendered-html axes sortOrder should update chart and y-axis when sortOrder changes in horizontal layout (bug fix)",
+      "location": null,
+      "status": "passed",
+      "title": "should update chart and y-axis when sortOrder changes in horizontal layout (bug fix)",
     },
     Object {
       "ancestorTitles": Array [
@@ -18432,17 +18613,10 @@ Received string:    [31m\\"update\\"[39m
         "accessibility",
         "generic accessibility test suite",
       ],
-      "failureMessages": Array [
-        "TypeError: Cannot read properties of undefined (reading 'textContent')
-    at call (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:2047:51)
-    at step (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:68:23)
-    at Object.next (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:49:53)
-    at fulfilled (./packages/utils-dev/dist/visa-charts-utils-dev.cjs.js:39:58)
-    at processTicksAndRejections (node:internal/process/task_queues:95:5)",
-      ],
+      "failureMessages": Array [],
       "fullName": "<parallel-plot> rendered-html accessibility generic accessibility test suite accessibility: instruction elements should contain yAxis description on load if yAxis exists on chart",
       "location": null,
-      "status": "failed",
+      "status": "passed",
       "title": "accessibility: instruction elements should contain yAxis description on load if yAxis exists on chart",
     },
     Object {
@@ -19927,7 +20101,7 @@ Received string:    [31m\\"update\\"[39m
       ],
       "failureMessages": Array [
         "Error: expected textContent \\"$15\\" to equal \\"15\\"
-    at Object.<anonymous> (./packages/parallel-plot/src/components/parallel-plot/parallel-plot.spec.ts:1904:33)
+    at Object.<anonymous> (./packages/parallel-plot/src/components/parallel-plot/parallel-plot.spec.ts:1901:33)
     at processTicksAndRejections (node:internal/process/task_queues:95:5)",
       ],
       "fullName": "<parallel-plot> rendered-html labels legend format should format number if passed as prop",
@@ -22050,6 +22224,45 @@ Received: [31m\\"[7m14[27mpx\\"[39m
       "location": null,
       "status": "passed",
       "title": "should pass referenceStyle prop",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "style with textures",
+        "textureOrder",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html style with textures textureOrder should use textureOrder prop for pie chart and set to new textureOrder when update",
+      "location": null,
+      "status": "passed",
+      "title": "should use textureOrder prop for pie chart and set to new textureOrder when update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "style with textures",
+        "textureOrder",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html style with textures textureOrder should fall back to default pattern sequence when invalid textureOrder entries are provided",
+      "location": null,
+      "status": "passed",
+      "title": "should fall back to default pattern sequence when invalid textureOrder entries are provided",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<pie-chart>",
+        "rendered-html",
+        "style with textures",
+        "textureOrder",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<pie-chart> rendered-html style with textures textureOrder should render no pattern (just color) when textureOrder contains invalid or empty string",
+      "location": null,
+      "status": "passed",
+      "title": "should render no pattern (just color) when textureOrder contains invalid or empty string",
     },
     Object {
       "ancestorTitles": Array [
@@ -27487,7 +27700,7 @@ Received: [31m\\"[7m14[27mpx\\"[39m
       ],
       "failureMessages": Array [
         "Error: expected textContent \\"$15\\" to equal \\"15\\"
-    at Object.<anonymous> (./packages/stacked-bar-chart/src/components/stacked-bar-chart/stacked-bar-chart.spec.ts:1699:33)
+    at Object.<anonymous> (./packages/stacked-bar-chart/src/components/stacked-bar-chart/stacked-bar-chart.spec.ts:1762:33)
     at processTicksAndRejections (node:internal/process/task_queues:95:5)",
       ],
       "fullName": "<stacked-bar-chart> rendered-html labels legend format should format number if passed as prop",
@@ -27625,6 +27838,45 @@ Received: [31m\\"[7m14[27mpx\\"[39m
       "location": null,
       "status": "passed",
       "title": "should render colors texture instead of palette when passed",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<stacked-bar-chart>",
+        "rendered-html",
+        "style with textures",
+        "textureOrder",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<stacked-bar-chart> rendered-html style with textures textureOrder should use textureOrder prop for bar textures and set to new textureOrder when update",
+      "location": null,
+      "status": "passed",
+      "title": "should use textureOrder prop for bar textures and set to new textureOrder when update",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<stacked-bar-chart>",
+        "rendered-html",
+        "style with textures",
+        "textureOrder",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<stacked-bar-chart> rendered-html style with textures textureOrder should fall back to default pattern sequence when invalid textureOrder entries are provided",
+      "location": null,
+      "status": "passed",
+      "title": "should fall back to default pattern sequence when invalid textureOrder entries are provided",
+    },
+    Object {
+      "ancestorTitles": Array [
+        "<stacked-bar-chart>",
+        "rendered-html",
+        "style with textures",
+        "textureOrder",
+      ],
+      "failureMessages": Array [],
+      "fullName": "<stacked-bar-chart> rendered-html style with textures textureOrder should render no pattern (just color) when textureOrder contains invalid or empty string",
+      "location": null,
+      "status": "passed",
+      "title": "should render no pattern (just color) when textureOrder contains invalid or empty string",
     },
     Object {
       "ancestorTitles": Array [

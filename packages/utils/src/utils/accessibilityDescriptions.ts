@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2021, 2022, 2023 Visa, Inc.
+ * Copyright (c) 2021, 2022, 2023, 2025 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -75,9 +75,6 @@ export const initializeDescriptionRoot = ({
     }
 
     instructionsWrapper.append(level4).attr('class', 'screen-reader-info vcl-region-label');
-    // .on('focus', focusInstructions)
-    // .on('blur', blurInstructions)
-    // .attr('tabindex', 0);
 
     instructionsWrapper
       .append(level1)
@@ -644,26 +641,6 @@ export const findTagLevel = (startLevel: any, depthFromStart?: number) => {
     return 'h' + (+start + depth);
   }
   return 'p';
-};
-
-const focusInstructions = (_, i, n) => {
-  select(n[i])
-    .style('width', 'auto')
-    .style('height', 'auto')
-    .style('left', 'auto')
-    .style('top', '15px')
-    .style('background', 'white')
-    .style('z-index', 9999);
-};
-
-const blurInstructions = (_, i, n) => {
-  select(n[i])
-    .style('width', null)
-    .style('height', null)
-    .style('left', null)
-    .style('top', null)
-    .style('background', null)
-    .style('z-index', null);
 };
 
 const setDescriptionNode = (
