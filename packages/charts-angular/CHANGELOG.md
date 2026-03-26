@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [5.1.0](https://github.com/visa/visa-chart-components/compare/@visa/charts-angular@5.0.1...@visa/charts-angular@5.1.0) (2026-03-26)
+# [5.1.0,5.1.1,5.1.2](https://github.com/visa/visa-chart-components/compare/@visa/charts-angular@5.0.1...@visa/charts-angular@5.1.0) (2026-03-26)
 
 ### Features
 
