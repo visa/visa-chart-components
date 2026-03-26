@@ -6,15 +6,15 @@
 
 Visa Chart Components (VCC) is provided under the [MIT license](LICENSE).
 
-<hr>
+<br>
 
-### Installation Process:
+## Installation Process:
 
 To use VCC in your projects run `yarn add @visa/charts`, or you can also install a single component by running `yarn add @visa/bar-chart`. We recommend leveraging bundles if you are going to install three (3) or more specific components for your project.
 
 While we do deliver React (`@visa/charts-react`) and Angular (`@visa/charts-angular`) bundles, VCC components are compiled to standard web components within (`@visa/charts`), leveraging [Stencil.js](https://stenciljs.com/) and can be reused directly in many web environments and/or frameworks.
 
-#### Bundles
+### Bundles
 
 - [@visa/charts](packages/charts) (web components)
 - [@visa/charts-react](packages/charts-react) (react)
@@ -23,7 +23,7 @@ While we do deliver React (`@visa/charts-react`) and Angular (`@visa/charts-angu
 - [@visa/charts-python](packages/charts-python) (Python), `pyvisacharts` package in Python
 - [@visa/charts-figma](packages/charts-figma) (Figma), `Visa Chart Components` plugin for Figma
 
-#### Components with `Ready` status
+### Components with `Ready` status
 
 - [@visa/bar-chart](packages/bar-chart)
 - [@visa/clustered-bar-chart](packages/clustered-bar-chart)
@@ -42,18 +42,18 @@ While we do deliver React (`@visa/charts-react`) and Angular (`@visa/charts-angu
 
 <!-- #### Components with `Development` status -->
 
-#### Our utilities can also be leveraged directly
+### Our utilities can also be leveraged directly
 
 - [@visa/visa-charts-utils](packages/utils)
 - [@visa/visa-charts-utils-dev](packages/utils-dev)
 
-<hr>
+<br>
 
-### Development
+## Development
 
 VCC is built as a monorepo containing a set of packages. These packages include specific chart components (e.g., `@visa/bar-chart`), our utilities (e.g., `@visa/visa-charts-utils`) as well as component bundles (e.g., `@visa/charts` or `@visa/charts-react`).
 
-##### Steps to get up and running for development
+### Steps to get up and running for development
 
 _note: the initial install and build process can take some time._
 
@@ -65,7 +65,7 @@ _note: the initial install and build process can take some time._
 
 <br>
 
-##### Single component development
+### Single component development
 
 For development work on a single component, we launch local stencil applications, which allow for faster development iterations and features like hot reloading. To run a single component development environment run the below command. _Note: these local/dev applications are not included in our builds._
 
@@ -85,7 +85,7 @@ This can helpful if you are making changes to dependencies of the chart componen
 
 <br>
 
-##### Running unit tests
+### Running unit tests
 
 We have built extensive unit testing out for some of our components and are working towards propagating this across the rest. To run unit tests the command is:
 
@@ -106,7 +106,7 @@ We use [vscode](https://code.visualstudio.com/) as our development environment, 
 
 <br>
 
-##### Running components through yarn audit / dependency check
+### Running components through yarn audit / dependency check
 
 We enable a repo wide scan using [yarn audit](https://classic.yarnpkg.com/en/docs/cli/audit/) to check for known dependency vulnerabilities. To run the audit command(s):
 
@@ -121,7 +121,7 @@ Once you have finished running your audit you can leverage the below scripts to 
 
 <br>
 
-##### Cleaning the repo
+### Cleaning the repo
 
 _caution: this will require you to re-install the entire monorepo, which can take some time_
 
@@ -139,9 +139,11 @@ Here, `<options>` can be
 
 `NODE`-- deletes only node_modules folder across repo.
 
-<hr>
+<br>
 
-#### Credits
+## Acknowledgements
+
+### Credits
 
 You can find license information for all dependencies included in our build [here](packages/utils/src/utils/license.ts). Below is a list of key dependencies.
 
@@ -156,15 +158,7 @@ You can find license information for all dependencies included in our build [her
 - [widget-cookiecutter](https://github.com/jupyter-widgets/widget-cookiecutter)
 - [figma plugin api](https://www.figma.com/plugin-docs/api/api-reference)
 
-This project was/is built with tireless efforts from:
 
-- Chris DeMartini ([@visa](https://github.com/chris-demartini) / [personal](https://github.com/demartsc))
-- David Kutas ([@visa](https://github.com/david-kutas))
-- Lilach Manheim ([personal](https://github.com/lmanheim))
-- Tanvi Modi ([@visa](https://github.com/tan-modi))
-- Stephanie Modica ([personal](https://github.com/stephmod))
-- Jaime Tanner ([personal](https://github.com/tannerjaime))
-- Frank Elavsky ([personal](https://github.com/frankelavsky))
-- Tica Lin ([personal](https://github.com/ticahere))
-- Basavaraj Kabbure ([personal](https://github.com/basavarajk))
-- Akhil Gupta ([personal](https://github.com/akhil9tiet))
+<br>
+
+This project was/is built by Visa's Data Experience Team. 

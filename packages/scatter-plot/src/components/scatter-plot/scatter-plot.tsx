@@ -1583,9 +1583,9 @@ export class ScatterPlot {
     this.gridG = this.rootG.append('g').attr('class', 'scatter-grid-group');
     this.dotG = this.rootG
       .append('g')
+      .classed('vcc-style-isolation-isolate', true)
       .attr('class', 'scatter-dot-group')
-      .attr('isolation', 'isolate')
-      .style('isolation', 'isolate');
+      .attr('isolation', 'isolate');
     this.fitLine = this.rootG.append('g').attr('class', 'scatter-fit-line-group');
     this.labelG = this.rootG.append('g').attr('class', 'scatter-dataLabel-group');
     this.legendG = select(this.scatterChartEl)
@@ -1714,7 +1714,7 @@ export class ScatterPlot {
 
     this.enterPoints
       .attr('class', 'data-point entering')
-      .style('mix-blend-mode', 'multiply')
+      .classed('vcc-style-mix-blend-multiply', true)
       .attr('filter', this.filter)
       .each((_d, i, n) => {
         initializeElementAccess(n[i]);
@@ -2114,7 +2114,7 @@ export class ScatterPlot {
   setLegendCursor() {
     select(this.scatterChartEl)
       .selectAll('.legend')
-      .style('cursor', this.legend.interactive && !this.suppressEvents ? this.cursor : null);
+      .attr('cursor', this.legend.interactive && !this.suppressEvents ? this.cursor : null);
   }
 
   bindInteractivity() {
@@ -2280,10 +2280,10 @@ export class ScatterPlot {
       //     me.classed('moving', true);
       //   }
       // })
-      .style('visibility', (_, i, n) =>
+      .classed('vcc-style-visibility-hidden', (_, i, n) =>
         this.dataLabel.placement === 'auto' || this.dataLabel.collisionHideOnly
-          ? select(n[i]).style('visibility')
-          : null
+          ? select(n[i]).classed('vcc-style-visibility-hidden')
+          : false
       )
       .attr('data-x', d => this.x(d[this.xAccessor]))
       .attr('data-y', d => this.y(d[this.yAccessor]))
@@ -2388,7 +2388,7 @@ export class ScatterPlot {
       .attr('data-use-dy', hideOnly)
       .attr('opacity', (d, i, n) => {
         const prevOpacity = +select(n[i]).attr('opacity');
-        const styleVisibility = select(n[i]).style('visibility');
+        const styleVisibility = select(n[i]).classed('vcc-style-visibility-hidden');
         const targetOpacity =
           checkInteraction(
             d,
@@ -2401,13 +2401,13 @@ export class ScatterPlot {
             ? 0
             : 1;
         if (
-          ((targetOpacity === 1 && styleVisibility === 'hidden') || prevOpacity !== targetOpacity) &&
+          ((targetOpacity === 1 && styleVisibility) || prevOpacity !== targetOpacity) &&
           (this.dataLabel.placement === 'auto' || hideOnly)
         ) {
           if (targetOpacity === 1) {
             select(n[i])
               .classed('collision-added', true)
-              .style('visibility', null);
+              .classed('vcc-style-visibility-hidden', false);
           } else {
             select(n[i]).classed('collision-removed', true);
           }
@@ -2501,8 +2501,8 @@ export class ScatterPlot {
       .attr('y1', this.y(intercept)) // intercept
       .attr('x2', this.x(this.xMax))
       .attr('y2', this.y(this.xMax * slope + intercept)) // this.xMax * slope + intercept
-      .style('stroke', visaColors[this.fitLineStyle.color] || this.fitLineStyle.color)
-      .style('stroke-width', this.fitLineStyle.strokeWidth)
+      .attr('stroke', visaColors[this.fitLineStyle.color] || this.fitLineStyle.color)
+      .attr('stroke-width', this.fitLineStyle.strokeWidth)
       .attr('stroke-dasharray', this.fitLineStyle.dashed ? this.fitLineStyle.dashed : '')
       .attr('opacity', fitlineOpacity);
 

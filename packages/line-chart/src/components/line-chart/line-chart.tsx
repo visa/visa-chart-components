@@ -2593,10 +2593,10 @@ export class LineChart {
     );
 
     const seriesUpdate = this.seriesLabelUpdate
-      .style('visibility', (_, i, n) =>
+      .classed('vcc-style-visibility-hidden', (_, i, n) =>
         this.labelDetails.placement === 'auto' || this.labelDetails.collisionHideOnly
-          ? select(n[i]).style('visibility')
-          : null
+          ? select(n[i]).classed('vcc-style-visibility-hidden')
+          : false
       )
       .attr('data-x', this.isRight ? this.innerPaddedWidth + 10 : 0)
       .attr('data-y', (d, i, n) => {
@@ -2873,12 +2873,12 @@ export class LineChart {
     });
     if (this.interpolating) {
       updateChildren = this.updatingLabels
-        .style('visibility', (d, i, n) =>
+        .classed('vcc-style-visibility-hidden', (d, i, n) =>
           this.dataLabel.placement === 'auto' || this.dataLabel.collisionHideOnly
             ? d.hidden
-              ? 'hidden'
-              : select(n[i]).style('visibility')
-            : null
+              ? true
+              : select(n[i]).classed('vcc-style-visibility-hidden')
+            : false
         )
         .attr('data-x', d => this.x(d[this.ordinalAccessor]))
         .attr('data-y', d => this.y(d[this.valueAccessor]))
@@ -2899,12 +2899,12 @@ export class LineChart {
         });
     } else {
       updateChildren = this.updatingLabels
-        .style('visibility', (d, i, n) =>
+        .classed('vcc-style-visibility-hidden', (d, i, n) =>
           this.dataLabel.placement === 'auto' || this.dataLabel.collisionHideOnly
             ? d.hidden
-              ? 'hidden'
-              : select(n[i]).style('visibility')
-            : null
+              ? true
+              : select(n[i]).classed('vcc-style-visibility-hidden')
+            : false
         )
         .attr('data-x', d => this.x(d[this.ordinalAccessor]))
         .attr('data-y', d => this.y(d[this.valueAccessor]))
@@ -3082,7 +3082,7 @@ export class LineChart {
       this.updatingLabels.each((d, i, n) => {
         const me = select(n[i]);
         const prevOpacity = +me.attr('opacity');
-        const styleVisibility = me.style('visibility');
+        const styleVisibility = me.classed('vcc-style-visibility-hidden');
         if (!d.enter && !me.classed('entering') && !d.exit) {
           me.attr('opacity', () => {
             const targetOpacity =
@@ -3112,13 +3112,13 @@ export class LineChart {
             const parentOpacity = +select(n[i].parentNode).attr('opacity');
             me.attr('data-hidden', parentOpacity === 0 || targetOpacity === 0 ? 'true' : null);
             if (
-              ((targetOpacity === 1 && styleVisibility === 'hidden') || prevOpacity !== targetOpacity) &&
+              ((targetOpacity === 1 && styleVisibility) || prevOpacity !== targetOpacity) &&
               (this.dataLabel.placement === 'auto' || hideOnly)
             ) {
               if (targetOpacity === 1) {
                 select(n[i])
                   .classed('collision-added', true)
-                  .style('visibility', null);
+                  .classed('vcc-style-visibility-hidden', false);
               } else {
                 select(n[i]).classed('collision-removed', true);
               }
@@ -3130,7 +3130,7 @@ export class LineChart {
     } else {
       this.updatingLabels.attr('opacity', (d, i, n) => {
         const prevOpacity = +select(n[i]).attr('opacity');
-        const styleVisibility = select(n[i]).style('visibility');
+        const styleVisibility = select(n[i]).classed('vcc-style-visibility-hidden');
         const targetOpacity =
           checkInteraction(
             d,
@@ -3151,13 +3151,13 @@ export class LineChart {
         const parentOpacity = +select(n[i].parentNode).attr('opacity');
         select(n[i]).attr('data-hidden', parentOpacity === 0 || targetOpacity === 0 ? 'true' : null);
         if (
-          ((targetOpacity === 1 && styleVisibility === 'hidden') || prevOpacity !== targetOpacity) &&
+          ((targetOpacity === 1 && styleVisibility) || prevOpacity !== targetOpacity) &&
           (this.dataLabel.placement === 'auto' || hideOnly)
         ) {
           if (targetOpacity === 1) {
             select(n[i])
               .classed('collision-added', true)
-              .style('visibility', null);
+              .classed('vcc-style-visibility-hidden', false);
           } else {
             select(n[i]).classed('collision-removed', true);
           }
@@ -3250,7 +3250,7 @@ export class LineChart {
 
     this.seriesLabelUpdate.attr('opacity', (d, i, n) => {
       const prevOpacity = +select(n[i]).attr('opacity');
-      const styleVisibility = select(n[i]).style('visibility');
+      const styleVisibility = select(n[i]).classed('vcc-style-visibility-hidden');
       const seriesLabelOpacity = !this.seriesLabel.visible
         ? 0
         : this.secondaryLines.keys.includes(d.key) &&
@@ -3275,13 +3275,13 @@ export class LineChart {
             : 1;
         select(n[i]).attr('data-hidden', targetOpacity === 0 ? 'true' : null);
         if (
-          ((targetOpacity === 1 && styleVisibility === 'hidden') || prevOpacity !== targetOpacity) &&
+          ((targetOpacity === 1 && styleVisibility) || prevOpacity !== targetOpacity) &&
           (this.labelDetails.placement === 'auto' || hideOnly)
         ) {
           if (targetOpacity === 1) {
             select(n[i])
               .classed('collision-added', true)
-              .style('visibility', null);
+              .classed('vcc-style-visibility-hidden', false);
           } else {
             select(n[i]).classed('collision-removed', true);
           }
@@ -3549,7 +3549,7 @@ export class LineChart {
   setLegendCursor() {
     select(this.lineChartEl)
       .selectAll('.legend')
-      .style('cursor', !this.suppressEvents && this.legend.interactive && this.seriesInteraction ? this.cursor : null);
+      .attr('cursor', !this.suppressEvents && this.legend.interactive && this.seriesInteraction ? this.cursor : null);
   }
 
   bindInteractivity() {

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2025 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -115,7 +115,7 @@ export const drawLegend = ({
         .attr('opacity', opacity)
         .attr('width', totalWidth)
         .attr('height', height)
-        .attr('style', hide ? 'display: none;' : null)
+        .attr('class', hide ? 'vcc-style-display-none' : null)
         .attr('transform', `translate(0, 0)`);
 
       const defaultLegend = paddingWrapper.selectAll('.legend.default').data([0].concat(colorArr));
@@ -210,7 +210,7 @@ export const drawLegend = ({
       root
         .attr('width', totalWidth)
         .attr('height', height)
-        .attr('style', hide ? 'display: none;' : null)
+        .attr('class', hide ? 'vcc-style-display-none' : null)
         .attr('transform', `translate(0, 20)`)
         .attr('opacity', opacity);
 
@@ -278,7 +278,7 @@ export const drawLegend = ({
         .attr('y', 0)
         .attr('width', width)
         .attr('height', legendHeight)
-        .attr('style', 'fill: url(#mainGradient-' + gradientId + ')');
+        .attr('fill', 'url(#mainGradient-' + gradientId + ')');
 
       break;
 
@@ -290,7 +290,7 @@ export const drawLegend = ({
         .attr('width', totalWidth)
         .attr('height', height)
         .attr('opacity', opacity)
-        .attr('style', hide ? 'display: none;' : null);
+        .attr('class', hide ? 'vcc-style-display-none' : null);
 
       const currentKeyLegend = paddingWrapper.selectAll('.legend.key').data(colorArr);
 
@@ -404,7 +404,7 @@ export const drawLegend = ({
         .attr('width', totalWidth)
         .attr('height', height)
         .attr('opacity', 1)
-        .attr('style', hide ? 'display: none;' : null);
+        .attr('class', hide ? 'vcc-style-display-none' : null);
 
       const currentLineLegend = paddingWrapper.selectAll('.legend').data(data);
 
@@ -431,19 +431,13 @@ export const drawLegend = ({
             .enter()
             .append('line')
             .merge(keyDot)
-            .style('stroke-width', secondary.includes(d.key) ? strokeWidth - 1 : strokeWidth)
-            .style('stroke', colorArr[i])
-            .style(
-              'stroke-dasharray',
-              secondary.includes(d.key) ? '2,2' : dashPatterns && i < dashPatterns.length ? dashPatterns[i] : ''
-            )
             .attr('stroke-width', secondary.includes(d.key) ? strokeWidth - 1 : strokeWidth)
             .attr('stroke', colorArr[i])
             .attr(
               'stroke-dasharray',
               secondary.includes(d.key) ? '2,2' : dashPatterns && i < dashPatterns.length ? dashPatterns[i] : ''
             )
-            .style('opacity', opacity);
+            .attr('opacity', opacity);
 
           let exitContext = keyDot.exit();
 
@@ -522,7 +516,7 @@ export const drawLegend = ({
         .attr('width', totalWidth)
         .attr('height', height)
         .attr('opacity', opacity)
-        .attr('style', hide ? 'display: none;' : null);
+        .attr('class', hide ? 'vcc-style-display-none' : null);
 
       const currentBarLegend = paddingWrapper.selectAll('.legend.bar').data(data);
 
@@ -638,7 +632,7 @@ export const drawLegend = ({
         .attr('width', totalWidth)
         .attr('height', height)
         .attr('opacity', opacity)
-        .attr('style', hide ? 'display: none;' : null);
+        .attr('class', hide ? 'vcc-style-display-none' : null);
 
       const currentScatterLegend = paddingWrapper.selectAll('.legend').data(data);
 
@@ -818,7 +812,6 @@ export const setLegendInteractionState = ({
         const hoverColor = hoverStyle ? visaColorToHex(hoverStyle.color) : '';
         const resultingFill = clicked ? clickColor || fill : hovered && hoverColor ? hoverColor : fill;
         child.attr('fill', resultingFill);
-        child.style('fill', resultingFill);
         const hasStroke = child.attr('stroke');
         const baseColor = child.attr('data-base-color');
         const resultingClick =
@@ -844,7 +837,6 @@ export const setLegendInteractionState = ({
         resultingStroke = clicked ? clickColor[1] || clickColor[0] : hovered ? hoverColor[1] || hoverColor[0] : stroke;
       }
       child.attr('stroke', resultingStroke);
-      child.style('stroke', resultingStroke);
       const baseStrokeWidth = parseFloat(child.attr('data-stroke-width')) || (stroke === 'none' ? 0 : 1);
       const strokeWidthDenominator = baseStrokeWidth < 1 ? baseStrokeWidth : 1;
       const strokeWidthMultiplier = type !== 'line' ? 1 : 2;
@@ -859,13 +851,11 @@ export const setLegendInteractionState = ({
           ? (parseFloat(hoverStyle.strokeWidth + '') * strokeWidthMultiplier) / strokeWidthDenominator
           : baseStrokeWidth) / scale
       );
-      child.style('stroke-width', child.attr('stroke-width'));
       const disableDash = type === 'scatter' || type === 'line';
       child.attr(
         'stroke-dasharray',
         hovered && !clicked && !disableDash ? '8 6' : type !== 'line' ? 'none' : child.attr('stroke-dasharray')
       );
-      child.style('stroke-dasharray', child.attr('stroke-dasharray'));
       const opacity = checkInteraction(d, 1, hoverOpacity, hoverHighlight, clickHighlight || [], interactionKeys);
       child.attr('opacity', opacity);
       text.attr('opacity', !opacity ? 0 : 1);

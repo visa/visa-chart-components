@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023, 2024, 2025 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -119,6 +119,7 @@ export class CirclePacking {
   @Prop({ mutable: true }) clickStyle: IClickStyleType = CirclePackingDefaultValues.clickStyle;
   @Prop({ mutable: true }) hoverOpacity: number = CirclePackingDefaultValues.hoverOpacity;
   @Prop({ mutable: true }) animationConfig: IAnimationConfig = CirclePackingDefaultValues.animationConfig;
+  @Prop({ mutable: true }) textureOrder: string[];
 
   // Data label (5/7)
   @Prop({ mutable: true }) showTooltip: boolean = CirclePackingDefaultValues.showTooltip;
@@ -344,6 +345,7 @@ export class CirclePacking {
 
   @Watch('colors')
   @Watch('colorPalette')
+  @Watch('textureOrder')
   colorsWatcher(_new, _old) {
     this.shouldSetColors = true;
     this.shouldDrawInteractionState = true;
@@ -1201,12 +1203,11 @@ export class CirclePacking {
       .attr('data-y', d => roundTo((d.y - this.view[1]) * this.zoomRatio, 4))
       .attr('data-translate-x', this.diameter / 2 + this.margin.left)
       .attr('data-translate-y', this.diameter / 2 + this.margin.top)
-      .style('visibility', (_, i, n) =>
+      .classed('vcc-style-visibility-hidden', (_, i, n) =>
         this.dataLabel.placement === 'auto' || this.dataLabel.collisionHideOnly
-          ? select(n[i]).style('visibility')
-          : null
+          ? select(n[i]).classed('vcc-style-visibility-hidden')
+          : false
       )
-
       // .filter('.moving') // not sure why we filter this on moving
       .attr('filter', null)
       .transition('place')
@@ -1389,7 +1390,8 @@ export class CirclePacking {
         rootSVG: this.svg.node(),
         id: this.chartID,
         scheme: 'categorical',
-        disableTransitions: !this.duration
+        disableTransitions: !this.duration,
+        textureOrder: this.textureOrder
       });
       this.colorArr = this.preparedColors.range ? this.preparedColors.copy().range(textures) : textures;
     }

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022, 2023 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023, 2025 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -47,6 +47,7 @@ export class ClusteredBarChartDefaultValues {
   static readonly roundedCorner = propDefaultValues.roundedCorner;
   static readonly barIntervalRatio = propDefaultValues.barIntervalRatio;
   static readonly groupIntervalRatio = propDefaultValues.barIntervalRatio;
+  static readonly barOverlapRatio = propDefaultValues.barOverlapRatio;
   static readonly hoverOpacity = propDefaultValues.hoverOpacity;
 
   static readonly dataLabel = propDefaultValues.dataLabel;

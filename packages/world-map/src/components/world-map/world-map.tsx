@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022, 2023, 2024 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023, 2024, 2025 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -142,6 +142,7 @@ export class WorldMap {
   @Prop({ mutable: true }) cursor: string = WorldMapDefaultValues.cursor;
   @Prop({ mutable: true }) hoverOpacity: number = WorldMapDefaultValues.hoverOpacity;
   @Prop({ mutable: true }) animationConfig: IAnimationConfig = WorldMapDefaultValues.animationConfig;
+  @Prop({ mutable: true }) textureOrder: string[];
 
   // Data label (5/7)
   @Prop({ mutable: true }) showTooltip: boolean = WorldMapDefaultValues.showTooltip;
@@ -454,6 +455,7 @@ export class WorldMap {
   @Watch('colorPalette')
   @Watch('colors')
   @Watch('colorSteps')
+  @Watch('textureOrder')
   colorsWatcher(_newVal, _oldVal) {
     this.shouldSetColors = true;
     this.shouldUpdateScales = true;
@@ -1435,7 +1437,7 @@ export class WorldMap {
 
   updateMarkerStyle(innerDuration) {
     this.updateMarker
-      .style('mix-blend-mode', this.markerStyle.blend ? 'multiply' : 'normal')
+      .classed(this.markerStyle.blend ? 'vcc-style-mix-blend-mode-multiply' : 'vcc-style-mix-blend-mode-normal', true)
       .transition('update-marker')
       .duration(innerDuration || 0)
       .ease(easeCircleIn)
@@ -1502,7 +1504,7 @@ export class WorldMap {
 
     this.updatingLabels.attr('opacity', (d, i, n) => {
       const prevOpacity = +select(n[i]).attr('opacity');
-      const styleVisibility = select(n[i]).style('visibility');
+      const styleVisibility = select(n[i]).classed('vcc-style-visibility-hidden');
       const showText =
         checkClicked(d, this.clickHighlight, this.innerInteractionKeys) ||
         checkHovered(d, this.hoverHighlight, this.innerInteractionKeys);
@@ -1519,14 +1521,11 @@ export class WorldMap {
           ? 0
           : 1; // we need this to be epsilon initially to enable auto placement algorithm to run on load;
       // we capture any item with opacity changing OR any item with opacity 1 and currently hidden
-      if (
-        ((targetOpacity === 1 && styleVisibility === 'hidden') || prevOpacity !== targetOpacity) &&
-        addCollisionClass
-      ) {
+      if (((targetOpacity === 1 && styleVisibility) || prevOpacity !== targetOpacity) && addCollisionClass) {
         if (targetOpacity === 1) {
           select(n[i])
             .classed('collision-added', true)
-            .style('visibility', null);
+            .classed('vcc-style-visibility-hidden', false);
         } else {
           select(n[i]).classed('collision-removed', true);
         }
@@ -1763,7 +1762,8 @@ export class WorldMap {
         rootSVG: this.svg.node(),
         id: this.chartID,
         scheme,
-        disableTransitions: !this.duration
+        disableTransitions: !this.duration,
+        textureOrder: this.textureOrder
       });
       this.colorArr = textures;
     }
@@ -1858,7 +1858,7 @@ export class WorldMap {
   }
 
   updateLegendCursor() {
-    this.innerLegend.style('cursor', !this.suppressEvents && this.legend.interactive ? this.cursor : null);
+    this.innerLegend.attr('cursor', !this.suppressEvents && this.legend.interactive ? this.cursor : null);
   }
 
   bindLegendInteractivity() {
@@ -2216,10 +2216,10 @@ export class WorldMap {
     const hideOnly = this.dataLabel.placement !== 'auto' && this.dataLabel.collisionHideOnly;
 
     const labelUpdate = this.updatingLabels
-      .style('visibility', (_, i, n) =>
+      .classed('vcc-style-visibility-hidden', (_, i, n) =>
         this.dataLabel.placement === 'auto' || this.dataLabel.collisionHideOnly
-          ? select(n[i]).style('visibility')
-          : null
+          ? select(n[i]).classed('vcc-style-visibility-hidden')
+          : false
       )
       .attr('opacity', d => {
         // since we don't have an updateLabels() adding opacity update to draw as well
@@ -2382,7 +2382,7 @@ export class WorldMap {
       .attr('filter', this.strokeFilter)
       .attr('class', 'marker')
       .attr('cursor', !this.suppressEvents && this.markerStyle.visible ? this.cursor : null)
-      .style('mix-blend-mode', this.markerStyle.blend ? 'multiply' : 'normal')
+      .classed(this.markerStyle.blend ? 'vcc-style-mix-blend-mode-multiply' : 'vcc-style-mix-blend-mode-normal', true)
       .attr('cx', d => {
         if (this.latitudeAccessor && this.longitudeAccessor) {
           return this.projection([+d[this.longitudeAccessor], +d[this.latitudeAccessor]])[0];
@@ -2461,8 +2461,8 @@ export class WorldMap {
       .transition('exit')
       .duration(this.hoverHighlight ? 0 : this.duration)
       .ease(easeCircleIn)
-      .style('fill-opacity', 0)
-      .style('stroke-opacity', 0)
+      .attr('fill-opacity', 0)
+      .attr('stroke-opacity', 0)
       .attr('r', 0);
 
     this.updateMarker

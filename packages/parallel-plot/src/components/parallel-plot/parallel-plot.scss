@@ -22,6 +22,30 @@ parallel-plot {
     overflow: hidden;
   }
 
+  .vcc-style-visibility-hidden {
+    visibility: hidden;
+  }
+
+  .vcc-style-display-none {
+    display: none;
+  }
+
+  .vcc-style-display-block {
+    display: block;
+  }
+
+  .vcc-style-point-events-none {
+    pointer-events: none;
+  }
+
+  .vcc-style-cursor-pointer {
+    cursor: pointer;
+  }
+
+  .vcc-style-cursor-default {
+    cursor: default;
+  }
+
   .data-table-link {
     color: #767676;
     text-decoration: none;

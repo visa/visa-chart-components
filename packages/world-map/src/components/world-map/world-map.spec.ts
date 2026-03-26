@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022, 2023, 2024 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023, 2024, 2025 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -773,7 +773,7 @@ describe('<world-map />', () => {
 
           // ASSERT
           const marker = page.doc.querySelector('[data-testid=marker]');
-          expect(marker.getAttribute('style')).toEqual('mix-blend-mode: multiply;');
+          expect(marker).toHaveClass('vcc-style-mix-blend-mode-multiply');
         });
       });
       describe('opacity', () => {
@@ -1413,9 +1413,7 @@ describe('<world-map />', () => {
 
           // ASSERT
           const legendSVG = page.doc.querySelector('[data-testid=legend-container]');
-          const legendContainer = legendSVG.parentElement;
           const legendG = legendSVG.querySelector('g').querySelector('g');
-          expect(legendContainer.getAttribute('style')).toEqual('display: block;');
           expect(legendSVG).toEqualAttribute('opacity', 1);
           expect(legendG).toHaveClass('key');
         });
@@ -1434,10 +1432,8 @@ describe('<world-map />', () => {
 
           // ASSERT
           const legendSVG = page.doc.querySelector('[data-testid=legend-container]');
-          const legendContainer = legendSVG.parentElement;
-          expect(legendContainer.getAttribute('style')).toEqual('display: none;');
           expect(legendSVG).toEqualAttribute('opacity', 0);
-          expect(legendSVG.getAttribute('style')).toEqual('display: none;');
+          expect(legendSVG).toHaveClass('vcc-style-display-none');
         });
       });
       describe('type', () => {
@@ -1653,7 +1649,7 @@ describe('<world-map />', () => {
           flushTransitions(tooltipContainer);
           await page.waitForChanges();
 
-          expect(parseFloat(tooltipContainer.style.opacity)).toEqual(0);
+          expect(parseFloat((tooltipContainer as HTMLElement).style.opacity)).toEqual(0);
         });
       });
       describe('generic tooltip tests for markers', () => {

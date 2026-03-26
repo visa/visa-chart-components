@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2023, 2024 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2023, 2024, 2025 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -11,6 +11,38 @@ world-map {
     .handle {
       pointer-events: all;
     }
+  }
+
+  .vcc-style-mix-blend-mode-multiply {
+    mix-blend-mode: multiply;
+  }
+
+  .vcc-style-mix-blend-mode-normal {
+    mix-blend-mode: normal;
+  }
+
+  .vcc-style-visibility-hidden {
+    visibility: hidden;
+  }
+
+  .vcc-style-display-none {
+    display: none;
+  }
+
+  .vcc-style-display-block {
+    display: block;
+  }
+
+  .vcc-style-point-events-none {
+    pointer-events: none;
+  }
+
+  .vcc-style-cursor-pointer {
+    cursor: pointer;
+  }
+
+  .vcc-style-cursor-default {
+    cursor: default;
   }
 
   .data-table-link {

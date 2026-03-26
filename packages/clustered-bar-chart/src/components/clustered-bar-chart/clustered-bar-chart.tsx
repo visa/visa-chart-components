@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022, 2023, 2024 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023, 2024, 2025 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -119,6 +119,7 @@ export class ClusteredBarChart {
   @Prop({ mutable: true }) margin: IBoxModelType = ClusteredBarChartDefaultValues.margin;
   @Prop({ mutable: true }) padding: IBoxModelType = ClusteredBarChartDefaultValues.padding;
   @Prop({ mutable: true }) highestHeadingLevel: string | number = ClusteredBarChartDefaultValues.highestHeadingLevel;
+  @Prop({ mutable: true }) barOverlapRatio: number = ClusteredBarChartDefaultValues.barOverlapRatio;
 
   // Data (2/7)
   @Prop() data;
@@ -146,6 +147,7 @@ export class ClusteredBarChart {
   @Prop({ mutable: true }) groupIntervalRatio: number = ClusteredBarChartDefaultValues.groupIntervalRatio;
   @Prop({ mutable: true }) hoverOpacity: number = ClusteredBarChartDefaultValues.hoverOpacity;
   @Prop({ mutable: true }) animationConfig: IAnimationConfig = ClusteredBarChartDefaultValues.animationConfig;
+  @Prop({ mutable: true }) textureOrder: string[];
 
   // Data label (5/7)
   @Prop({ mutable: true }) dataLabel: IDataLabelType = ClusteredBarChartDefaultValues.dataLabel;
@@ -290,10 +292,12 @@ export class ClusteredBarChart {
   shouldSetTextures: boolean = false;
   shouldSetStrokes: boolean = false;
   shouldSetLocalizationConfig: boolean = false;
+  shouldValidateBarOverlapRatio: boolean = false;
   strokes: any = {};
   topLevel: string = 'h2';
   bottomLevel: string = 'p';
   bitmaps: any;
+  innerBarOverlapRatio: number = ClusteredBarChartDefaultValues.barOverlapRatio;
 
   @Watch('data')
   dataWatcher(_newData, _oldData) {
@@ -313,6 +317,7 @@ export class ClusteredBarChart {
     this.shouldSetGeometryAriaLabels = true;
     this.shouldUpdateLegendData = true;
     this.shouldUpdateScales = true;
+    this.shouldValidateBarOverlapRatio = true;
     this.shouldValidate = true;
     this.shouldUpdateGeometries = true;
     this.shouldUpdateXAxis = true;
@@ -401,11 +406,13 @@ export class ClusteredBarChart {
     this.shouldUpdateReferenceLines = true;
     this.shouldUpdateBaseline = true;
     this.shouldUpdateAnnotations = true;
+    this.shouldValidateBarOverlapRatio = true;
   }
 
   @Watch('layout')
   layoutWatcher(_newVal, _oldVal) {
     this.shouldValidateLabelPlacement = true;
+    this.shouldValidateBarOverlapRatio = true;
     this.shouldUpdateScales = true;
     this.shouldValidateAxes = true;
     this.shouldResetRoot = true;
@@ -428,6 +435,7 @@ export class ClusteredBarChart {
   ordinalAccessorWatcher(_newVal, _oldVal) {
     this.shouldUpdateTableData = true;
     this.shouldUpdateLegendData = true;
+    this.shouldValidateBarOverlapRatio = true;
     this.shouldUpdateScales = true;
     this.shouldSetColors = true;
     this.shouldUpdateGeometries = true;
@@ -491,6 +499,7 @@ export class ClusteredBarChart {
 
   @Watch('reverseOrder')
   reverseOrderWatcher(_newVal, _oldVal) {
+    this.shouldValidateBarOverlapRatio = true;
     this.shouldUpdateTableData = true;
     this.shouldUpdateScales = true;
     this.shouldUpdateGeometries = true;
@@ -546,6 +555,7 @@ export class ClusteredBarChart {
 
   @Watch('colors')
   @Watch('colorPalette')
+  @Watch('textureOrder')
   colorsWatcher(_newVal, _oldVal) {
     this.shouldSetColors = true;
     this.shouldDrawInteractionState = true;
@@ -588,6 +598,7 @@ export class ClusteredBarChart {
 
   @Watch('barIntervalRatio')
   intervalRatioWatcher(_newVal, _oldVal) {
+    this.shouldValidateBarOverlapRatio = true;
     this.shouldUpdateScales = true;
     this.shouldUpdateGeometries = true;
     this.shouldCheckLabelAxis = true;
@@ -598,8 +609,20 @@ export class ClusteredBarChart {
 
   @Watch('groupIntervalRatio')
   groupIntervalRatioWatcher(_newVal, _oldVal) {
+    this.shouldValidateBarOverlapRatio = true;
     this.shouldUpdateScales = true;
     this.shouldUpdateGeometries = true;
+    this.shouldSetLabelPosition = true;
+    this.shouldCheckLabelColor = true;
+    this.shouldUpdateAnnotations = true;
+  }
+
+  @Watch('barOverlapRatio')
+  barOverlapRatioWatcher(_newVal, _oldVal) {
+    this.shouldValidateBarOverlapRatio = true;
+    this.shouldUpdateScales = true;
+    this.shouldUpdateGeometries = true;
+    this.shouldCheckLabelAxis = true;
     this.shouldSetLabelPosition = true;
     this.shouldCheckLabelColor = true;
     this.shouldUpdateAnnotations = true;
@@ -825,6 +848,7 @@ export class ClusteredBarChart {
   @Watch('maxValueOverride')
   @Watch('minValueOverride')
   valueOverrideWatcher(_newVal, _oldVal) {
+    this.shouldValidateBarOverlapRatio = true;
     this.shouldUpdateScales = true;
     this.shouldCheckValueAxis = true;
     this.shouldUpdateGeometries = true;
@@ -912,6 +936,7 @@ export class ClusteredBarChart {
       this.prepareData();
       this.prepareLegendData();
       this.setDimensions();
+      this.validateBarOverlapRatio();
       this.prepareScales();
       this.validateInteractionKeys();
       this.validateDataLabelAccessor();
@@ -1002,6 +1027,10 @@ export class ClusteredBarChart {
   componentDidUpdate() {
     return new Promise(resolve => {
       this.duration = !this.animationConfig || !this.animationConfig.disabled ? 750 : 0;
+      if (this.shouldUpdateScales) {
+        this.prepareScales();
+        this.shouldUpdateScales = false;
+      }
       if (this.shouldUpdateDescriptionWrapper) {
         this.setChartDescriptionWrapper();
         this.shouldUpdateDescriptionWrapper = false;
@@ -1253,6 +1282,15 @@ export class ClusteredBarChart {
     }
   }
 
+  // Utility: Clamp barOverlapRatio between 0 and 1, but do not mutate the prop
+  validateBarOverlapRatio() {
+    let ratio = this.barOverlapRatio;
+    if (typeof ratio !== 'number' || isNaN(ratio)) ratio = 0;
+    if (ratio < 0) ratio = 0;
+    if (ratio > 1) ratio = 1;
+    this.innerBarOverlapRatio = ratio;
+  }
+
   getLanguageString() {
     return getActiveLanguageString(this.localization);
   }
@@ -1323,10 +1361,26 @@ export class ClusteredBarChart {
         .range(this.reverseOrder ? [this.innerPaddedWidth, 0] : [0, this.innerPaddedWidth])
         .padding(this.groupIntervalRatio);
 
-      this.x1 = scaleBand()
-        .domain(this.nest[0].values.map(d => d[this.ordinalAccessor]))
+      // Use all unique ordinal values across the dataset for robustness
+      const ordinalValues = Array.from(new Set(this.data.map(d => d[this.ordinalAccessor])));
+
+      // Define x1 scale conditionally based on whether barOverlapRatio is 0 (aka. not overlapping)
+      const innerX1 = scaleBand()
+        .domain(ordinalValues)
         .rangeRound([0, this.x0.bandwidth()])
-        .padding(this.barIntervalRatio);
+        .padding(this.innerBarOverlapRatio === 0 ? this.barIntervalRatio : 0);
+
+      // Adjust x1 scale to account for barOverlapRatio
+      // This is done by shifting the position of each bar based on its order index
+      this.x1 = d => {
+        const pos = innerX1(d);
+        if (this.innerBarOverlapRatio !== 0) {
+          const orderIndex = ordinalValues.indexOf(d);
+          return pos - innerX1.bandwidth() * this.innerBarOverlapRatio * (orderIndex - 1);
+        }
+        return pos;
+      };
+      this.x1.bandwidth = innerX1.bandwidth;
     } else if (this.layout === 'horizontal') {
       this.x = scaleLinear()
         .domain([Math.min(0, minBarValue), Math.max(0, maxBarValue)])
@@ -1337,10 +1391,25 @@ export class ClusteredBarChart {
         .range(this.reverseOrder ? [this.innerPaddedHeight, 0] : [0, this.innerPaddedHeight])
         .padding(this.groupIntervalRatio);
 
-      this.y1 = scaleBand()
-        .domain(this.nest[0].values.map(d => d[this.ordinalAccessor]))
+      // Use all unique ordinal values across the dataset for robustness
+      const ordinalValues = Array.from(new Set(this.data.map(d => d[this.ordinalAccessor])));
+
+      const innerY1 = scaleBand()
+        .domain(ordinalValues)
         .rangeRound([0, this.y0.bandwidth()])
-        .padding(this.barIntervalRatio);
+        .padding(this.innerBarOverlapRatio === 0 ? this.barIntervalRatio : 0);
+
+      // Adjust y1 scale to account for barOverlapRatio
+      // This is done by shifting the position of each bar based on its order index
+      this.y1 = d => {
+        const pos = innerY1(d);
+        if (this.innerBarOverlapRatio !== 0) {
+          const orderIndex = ordinalValues.indexOf(d);
+          return pos - innerY1.bandwidth() * this.innerBarOverlapRatio * (orderIndex - 1);
+        }
+        return pos;
+      };
+      this.y1.bandwidth = innerY1.bandwidth;
     }
   }
 
@@ -1374,7 +1443,8 @@ export class ClusteredBarChart {
         rootSVG: this.svg.node(),
         id: this.chartID,
         scheme: 'categorical',
-        disableTransitions: !this.duration
+        disableTransitions: !this.duration,
+        textureOrder: this.textureOrder
       });
       this.colorArr = this.preparedColors.range ? this.preparedColors.copy().range(textures) : textures;
     }
@@ -2101,7 +2171,7 @@ export class ClusteredBarChart {
 
     selection.attr('opacity', (d, i, n) => {
       const prevOpacity = +select(n[i]).attr('opacity');
-      const styleVisibility = select(n[i]).style('visibility');
+      const styleVisibility = select(n[i]).classed('vcc-style-visibility-hidden');
       const dimensions = {};
       dimensions[ordinalDimension] =
         this.dataLabel.placement === 'left' || this.dataLabel.placement === 'bottom'
@@ -2135,14 +2205,11 @@ export class ClusteredBarChart {
           ? 0
           : 1
         : 0;
-      if (
-        ((targetOpacity === 1 && styleVisibility === 'hidden') || prevOpacity !== targetOpacity) &&
-        addCollisionClass
-      ) {
+      if (((targetOpacity === 1 && styleVisibility) || prevOpacity !== targetOpacity) && addCollisionClass) {
         if (targetOpacity === 1) {
           select(n[i])
             .classed('collision-added', true)
-            .style('visibility', null);
+            .classed('vcc-style-visibility-hidden', false);
         } else {
           select(n[i]).classed('collision-removed', true);
         }
@@ -2435,10 +2502,10 @@ export class ClusteredBarChart {
     // prep the data- attributes for label collision algorithm
     // only needs to be run if we are running collision though
     selection
-      .style('visibility', (_, i, n) =>
+      .classed('vcc-style-visibility-hidden', (_, i, n) =>
         this.dataLabel.placement === 'auto' || this.dataLabel.collisionHideOnly
-          ? select(n[i]).style('visibility')
-          : null
+          ? select(n[i]).classed('vcc-style-visibility-hidden')
+          : false
       )
       .attr(`data-${ordinalAxis}`, (d, i, n) => {
         if (i === 0) {
@@ -2557,7 +2624,7 @@ export class ClusteredBarChart {
   bindLegendInteractivity() {
     select(this.clusteredBarChartEl)
       .selectAll('.legend')
-      .style('cursor', this.legend.interactive && !this.suppressEvents ? this.cursor : '')
+      .attr('cursor', this.legend.interactive && !this.suppressEvents ? this.cursor : '')
       .on('click', this.legend.interactive && !this.suppressEvents ? (d, i, n) => this.onClickHandler(d, n[i]) : null)
       .on(
         'mouseover',
@@ -2573,7 +2640,7 @@ export class ClusteredBarChart {
   setLegendCursor() {
     select(this.clusteredBarChartEl)
       .selectAll('.legend')
-      .style('cursor', this.legend.interactive && !this.suppressEvents ? this.cursor : null);
+      .attr('cursor', this.legend.interactive && !this.suppressEvents ? this.cursor : null);
   }
 
   bindInteractivity() {
@@ -2741,7 +2808,6 @@ export class ClusteredBarChart {
   setChartAccessibilityStructureNotes() {
     setAccessStructure(this.getLanguageString(), this.clusteredBarChartEl, this.accessibility.structureNotes);
   }
-  // new accessibility stuff ends here
 
   onChangeHandler() {
     if (this.accessibility && typeof this.accessibility.onChangeFunc === 'function') {
@@ -2840,6 +2906,10 @@ export class ClusteredBarChart {
       }
       this.shouldCheckLabelAxis = false;
     }
+    if (this.shouldValidateBarOverlapRatio) {
+      this.validateBarOverlapRatio();
+      this.shouldValidateBarOverlapRatio = false;
+    }
     if (this.shouldUpdateData) {
       this.prepareData();
       this.shouldUpdateData = false;
@@ -2929,6 +2999,7 @@ export class ClusteredBarChart {
       </div>
     );
   }
+
   private init() {
     // reading properties
     const keys = Object.keys(ClusteredBarChartDefaultValues);
@@ -2942,6 +3013,9 @@ export class ClusteredBarChart {
         exception: ''
       },
       barIntervalRatio: {
+        exception: 0
+      },
+      barOverlapRatio: {
         exception: 0
       },
       groupIntervalRatio: {

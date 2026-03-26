@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2023 Visa, Inc.
+ * Copyright (c) 2023, 2025 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -258,18 +258,18 @@ export const setReferenceLine = ({
 
   // update colors outside of the transitioned update above
   mergeLines
-    .style('stroke', visaColors[referenceStyle.color] || referenceStyle.color)
-    .style('stroke-width', referenceStyle.strokeWidth)
+    .attr('stroke', visaColors[referenceStyle.color] || referenceStyle.color)
+    .attr('stroke-width', referenceStyle.strokeWidth)
     .attr('stroke-dasharray', referenceStyle.dashed ? referenceStyle.dashed : '')
     .attr('opacity', referenceStyle.opacity);
 
   // need to check whether we should just use our text color function here?
   mergeLabels
-    .style('fill', visaColors[referenceStyle.color] || referenceStyle.color)
+    .attr('fill', visaColors[referenceStyle.color] || referenceStyle.color)
     .attr('opacity', 1)
-    .style('paint-order', 'stroke')
-    .style('stroke', 'white')
-    .style('stroke-width', '4px');
+    .attr('paint-order', 'stroke')
+    .attr('stroke', 'white')
+    .attr('stroke-width', '4px');
 
   // exit lifecycle for reference lines
   const exitReferences = currentReferences.exit();

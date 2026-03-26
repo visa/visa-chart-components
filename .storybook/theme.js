@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022 Visa, Inc.
+ * Copyright (c) 2022, 2025 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -8,7 +8,7 @@
 import { create } from '@storybook/theming';
 import { version } from '../packages/charts/package.json';
 
-import Utils from '../packages/utils/dist/visa-charts-utils.cjs';
+import Utils from '../packages/utils/dist/visa-charts-utils.esm.js';
 
 const { visaColors } = Utils;
 

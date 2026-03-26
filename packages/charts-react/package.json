@@ -3,6 +3,7 @@
   "version": "5.0.1",
   "description": "A react wrapper built with Stencil's bindings for the visa-charts-lib stencil.js based component library. ",
   "license": "SEE LICENCE IN LICENSE",
+  "author": "Visa Data Experience Team",
   "sideEffects": false,
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -23,7 +24,6 @@
     "registry": "https://registry.npmjs.org/",
     "access": "public"
   },
-  "author": "Visa Data Experience Team",
   "scripts": {
     "audit": "yarn audit --json --level low > yarn-audit.json",
     "yarn-install": "yarn",
@@ -34,8 +34,8 @@
     "test:es5-check": "es-check es5 'dist/*.js'"
   },
   "peerDependencies": {
-    "react": ">=16.9.0",
-    "react-dom": ">=16.9.0"
+    "react": "^18 || ^19",
+    "react-dom": "^18 || ^19"
   },
   "dependencies": {
     "@visa/charts": "^8.0.1",
@@ -45,19 +45,15 @@
     "@types/node": "20.16.2",
     "@types/react": "18.3.4",
     "@types/react-dom": "^18.3.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "^18 || ^19",
+    "react-dom": "^18 || ^19",
     "rollup": "^2.79.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "typescript": "^5.5.3"
   },
   "resolutions": {
-    "@types/node": "20.16.2",
-    "@types/react": "18.3.4",
-    "@types/react-dom": "^18.3.0",
     "minimist": "^1.2.6",
-    "path-parse": "^1.0.7",
-    "d3-color": "^3.1.0"
+    "path-parse": "^1.0.7"
   },
   "jest": {
     "preset": "ts-jest",

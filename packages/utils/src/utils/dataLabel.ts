@@ -17,8 +17,8 @@ export function formatDataLabel(d, labelAccessor, format, normalized?) {
   return format === 'text' || format === 'string'
     ? d[labelAccessor]
     : format
-    ? formatStats(d[labelAccessor] / modifier, format === 'normalized' ? '0[.][0]%' : format)
-    : d[labelAccessor] / modifier;
+      ? formatStats(d[labelAccessor] / modifier, format === 'normalized' ? '0[.][0]%' : format)
+      : d[labelAccessor] / modifier;
 }
 
 export const placeDataLabels = ({

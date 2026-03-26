@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, 2021, 2022, 2023, 2024 Visa, Inc.
+ * Copyright (c) 2020, 2021, 2022, 2023, 2024, 2025 Visa, Inc.
  *
  * This source code is licensed under the MIT license
  * https://github.com/visa/visa-chart-components/blob/master/LICENSE
@@ -1172,6 +1172,114 @@ describe('<bar-chart>', () => {
           });
         });
       });
+      describe('sortOrder', () => {
+        it('should update x-axis when sortOrder changes in vertical layout', async () => {
+          // ARRANGE
+          component.sortOrder = 'asc';
+          page.root.appendChild(component);
+          await page.waitForChanges();
+
+          // Capture y-axis tick values after asc sort
+          const xAxisAsc = Array.from(page.doc.querySelectorAll('[data-testid=x-axis] [data-testid=axis-tick]')).map(
+            tick => tick.textContent
+          );
+
+          // ASSERT: x-axis ticks be ascending order
+          expect(xAxisAsc).toEqual([
+            'Apr-17',
+            'Jul-17',
+            'Jan-18',
+            'Dec-17',
+            'Feb-18',
+            'Jun-17',
+            'Sep-17',
+            'Aug-17',
+            'May-17',
+            'Oct-17',
+            'Nov-17',
+            'Mar-18'
+          ]);
+
+          // ACT: Change sortOrder to desc
+          component.sortOrder = 'desc';
+          await page.waitForChanges();
+
+          // Capture y-axis tick values after desc sort
+          const xAxisDesc = Array.from(page.doc.querySelectorAll('[data-testid=x-axis] [data-testid=axis-tick]')).map(
+            tick => tick.textContent
+          );
+
+          // ASSERT: x-axis ticks are now descending order
+          expect(xAxisDesc).toEqual([
+            'Mar-18',
+            'Nov-17',
+            'Oct-17',
+            'May-17',
+            'Aug-17',
+            'Sep-17',
+            'Jun-17',
+            'Feb-18',
+            'Dec-17',
+            'Jan-18',
+            'Jul-17',
+            'Apr-17'
+          ]);
+        });
+
+        it('should update y-axis when sortOrder changes in horizontal layout', async () => {
+          // ARRANGE
+          component.layout = 'horizontal';
+          component.sortOrder = 'asc';
+          page.root.appendChild(component);
+          await page.waitForChanges();
+
+          // Capture y-axis tick values after asc sort
+          const yAxisAsc = Array.from(page.doc.querySelectorAll('[data-testid=y-axis] [data-testid=axis-tick]')).map(
+            tick => tick.textContent
+          );
+
+          // ASSERT: y-axis ticks should be in ascending order
+          expect(yAxisAsc).toEqual([
+            'Apr-17',
+            'Jul-17',
+            'Jan-18',
+            'Dec-17',
+            'Feb-18',
+            'Jun-17',
+            'Sep-17',
+            'Aug-17',
+            'May-17',
+            'Oct-17',
+            'Nov-17',
+            'Mar-18'
+          ]);
+
+          // ACT: Change sortOrder to desc
+          component.sortOrder = 'desc';
+          await page.waitForChanges();
+
+          // Capture y-axis tick values after desc sort
+          const yAxisDesc = Array.from(page.doc.querySelectorAll('[data-testid=y-axis] [data-testid=axis-tick]')).map(
+            tick => tick.textContent
+          );
+
+          // ASSERT: y-axis ticks should update
+          expect(yAxisDesc).toEqual([
+            'Mar-18',
+            'Nov-17',
+            'Oct-17',
+            'May-17',
+            'Aug-17',
+            'Sep-17',
+            'Jun-17',
+            'Feb-18',
+            'Dec-17',
+            'Jan-18',
+            'Jul-17',
+            'Apr-17'
+          ]);
+        });
+      });
     });
 
     describe('interaction', () => {
@@ -2160,7 +2268,7 @@ describe('<bar-chart>', () => {
             const legendContainer = legendSVG.parentElement;
             const legendPaddingG = legendSVG.querySelector('g');
             const legendG = legendPaddingG.querySelector('g');
-            expect(legendContainer.getAttribute('style')).toEqual('display: none;');
+            expect(legendContainer).toHaveClass('vcc-style-display-none');
             expect(legendContainer).toHaveClass('bar-legend');
             expect(legendSVG).toEqualAttribute('opacity', 0);
             expect(legendPaddingG).toHaveClass('legend-padding-wrapper');
@@ -2183,9 +2291,9 @@ describe('<bar-chart>', () => {
             // ASSERT
             const legendSVG = page.doc.querySelector('[data-testid=legend-container]');
             const legendContainer = legendSVG.parentElement;
-            expect(legendContainer.getAttribute('style')).toEqual('display: none;');
+            expect(legendContainer).toHaveClass('vcc-style-display-none');
             expect(legendSVG).toEqualAttribute('opacity', 0);
-            expect(legendSVG.getAttribute('style')).toEqual('display: none;');
+            expect(legendSVG).toHaveClass('vcc-style-display-none');
           });
           it('should render, and be visible if groupAccessor is passed', async () => {
             component.groupAccessor = 'cat';
@@ -2199,7 +2307,7 @@ describe('<bar-chart>', () => {
             const legendContainer = legendSVG.parentElement;
             const legendPaddingG = legendSVG.querySelector('g');
             const legendG = legendPaddingG.querySelectorAll('g');
-            expect(legendContainer.getAttribute('style')).toEqual('display: block;');
+            expect(legendContainer).toHaveClass('vcc-style-display-block');
             expect(legendSVG).toEqualAttribute('opacity', 1);
             expect(legendG.length).toEqual(3);
           });
@@ -2414,6 +2522,74 @@ describe('<bar-chart>', () => {
     });
 
     describe('style with textures', () => {
+      describe('textureOrder', () => {
+        const TEST_DATA = [{ category: 'A', value: 10 }, { category: 'B', value: 20 }, { category: 'C', value: 30 }];
+        beforeEach(() => {
+          component.data = [...TEST_DATA];
+          component.groupAccessor = 'category';
+          component.ordinalAccessor = 'category';
+          component.valueAccessor = 'value';
+        });
+
+        it('should use textureOrder prop for bar textures and set to new textureOrder when update', async () => {
+          component.colorPalette = 'categorical';
+          component.textureOrder = ['cross-hatch', 'x-grid', 'ring-diagonal'];
+
+          // ACT
+          page.root.appendChild(component);
+          await page.waitForChanges();
+
+          // ASSERT
+          const patterns = page.doc.querySelector('[data-testid=pattern-defs]').querySelectorAll('pattern');
+          expect(patterns[0].getAttribute('id')).toContain('cross-hatch');
+          expect(patterns[1].getAttribute('id')).toContain('x-grid');
+          expect(patterns[2].getAttribute('id')).toContain('ring-diagonal');
+
+          // ACT UPDATE
+          component.textureOrder = ['dots-grid', 'cross-hatch', 'lines-diagonal'];
+          await page.waitForChanges();
+
+          // ASSERT
+          const newPatterns = page.doc.querySelector('[data-testid=pattern-defs]').querySelectorAll('pattern');
+          expect(newPatterns[0].getAttribute('id')).toContain('dots-grid');
+          expect(newPatterns[1].getAttribute('id')).toContain('cross-hatch');
+          expect(newPatterns[2].getAttribute('id')).toContain('lines-diagonal');
+        });
+
+        it('should fall back to default pattern sequence when invalid textureOrder entries are provided', async () => {
+          component.colorPalette = 'categorical';
+          component.textureOrder = ['invalid-pattern', 'another-bad-pattern', 'not-a-pattern'];
+
+          // ACT
+          page.root.appendChild(component);
+          await page.waitForChanges();
+
+          // ASSERT
+          const patterns = page.doc.querySelector('[data-testid=pattern-defs]').querySelectorAll('pattern');
+          const expectedPatterns = ['lines-diagonal', 'dots-grid', 'cross-hatch'];
+          patterns.forEach((pattern, i) => {
+            expect(pattern.getAttribute('id')).toContain(expectedPatterns[i]);
+          });
+        });
+
+        it('should render no pattern (just color) when textureOrder contains invalid or empty string', async () => {
+          component.colorPalette = 'categorical';
+          component.textureOrder = ['', 'invalid-pattern', ''];
+          page.root.appendChild(component);
+          await page.waitForChanges();
+          const bars = page.doc.querySelectorAll('[data-testid=bar]');
+          bars.forEach(bar => {
+            // Should be a color, not a url(#pattern)
+            expect(bar.getAttribute('fill')).toMatch(/^#|rgb|hsl/i);
+          });
+          // Should not render any pattern elements
+          const patternDefs = page.doc.querySelector('[data-testid=pattern-defs]');
+          if (patternDefs) {
+            expect(patternDefs.querySelectorAll('pattern').length).toBe(0);
+          }
+        });
+      });
+
       describe('colorPalette', () => {
         it('should render texture single blue by default', async () => {
           const EXPECTEDFILLCOLOR = getColors('single_blue');
@@ -2513,8 +2689,8 @@ describe('<bar-chart>', () => {
             // check pattern settings
             expect(patternFill).toEqualAttribute('fill', barColor);
             const patternStrokeColorTest =
-              patternStroke.getAttribute('stroke') === getContrastingStroke(barColor) ||
-              patternStroke.getAttribute('fill') === getContrastingStroke(barColor);
+              (patternStroke as Element).getAttribute('stroke') === getContrastingStroke(barColor) ||
+              (patternStroke as Element).getAttribute('fill') === getContrastingStroke(barColor);
             expect(patternStrokeColorTest).toBeTruthy();
             expect(bar).toEqualAttribute('fill', `url(#${barFillURL})`);
           });
@@ -2549,8 +2725,8 @@ describe('<bar-chart>', () => {
             // check pattern settings
             expect(patternFill).toEqualAttribute('fill', barColor);
             const patternStrokeColorTest =
-              patternStroke.getAttribute('stroke') === getContrastingStroke(barColor) ||
-              patternStroke.getAttribute('fill') === getContrastingStroke(barColor);
+              (patternStroke as Element).getAttribute('stroke') === getContrastingStroke(barColor) ||
+              (patternStroke as Element).getAttribute('fill') === getContrastingStroke(barColor);
             expect(patternStrokeColorTest).toBeTruthy();
             expect(bar).toEqualAttribute('fill', `url(#${barFillURL})`);
           });
