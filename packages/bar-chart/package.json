@@ -4,14 +4,31 @@
   "description": "visa bar-chart",
   "license": "SEE LICENCE IN LICENSE",
   "author": "Visa Data Experience Team",
-  "module": "dist/index.js",
+  "module": "dist/components/index.js",
   "main": "dist/index.cjs.js",
-  "es2015": "dist/esm/index.js",
-  "es2017": "dist/esm/index.js",
-  "jsnext:main": "dist/esm/index.js",
+  "es2015": "dist/components/index.js",
+  "es2017": "dist/components/index.js",
+  "jsnext:main": "dist/components/index.js",
   "unpkg": "dist/bar-chart.js",
   "types": "dist/types/components.d.ts",
   "collection": "dist/collection/collection-manifest.json",
+  "exports": {
+    ".": {
+      "types": "./dist/types/components.d.ts",
+      "import": "./dist/components/index.js",
+      "require": "./dist/index.cjs.js"
+    },
+    "./components/*": {
+      "types": "./dist/types/components/*.d.ts",
+      "import": "./dist/components/*.js"
+    },
+    "./custom-elements": {
+      "types": "./dist/types/components.d.ts",
+      "import": "./dist/components/index.js"
+    },
+    "./dist/*": "./dist/*",
+    "./package.json": "./package.json"
+  },
   "files": [
     "dist/"
   ],
